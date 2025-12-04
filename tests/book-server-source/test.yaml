@@ -1,0 +1,13 @@
+# SKIPPED: Skip test. Fails due to https://github.com/konveyor/analyzer-lsp/issues/936
+
+name: "book-server_source"
+description: ""
+analysis:
+  application: "https://github.com/konveyor-ecosystem/book-server#ci-oct2025"
+  labelSelector: ""
+  analysisMode: "source-only"
+timeout: 10m
+expect:
+  exitCode: 0
+  output:
+    result: []

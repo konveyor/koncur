@@ -1,0 +1,7 @@
+type: tackle-ui
+tackleUI:
+  url: https://tackle.example.com
+  username: admin
+  password: secret
+  browser: chrome  # chrome or firefox
+  headless: true   # Run browser in headless mode

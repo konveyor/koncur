@@ -1,0 +1,5 @@
+type: vscode
+vscode:
+  binaryPath: /usr/local/bin/code  # Optional, will use 'code' in PATH if not specified
+  extensionId: konveyor.konveyor-analyzer
+  workspaceDir: /path/to/workspace  # Optional workspace directory

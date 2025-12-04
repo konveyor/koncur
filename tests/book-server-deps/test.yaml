@@ -1,0 +1,9 @@
+name: book-server_deps
+analysis:
+    application: https://github.com/konveyor-ecosystem/book-server#ci-oct2025
+    analysisMode: source-only
+timeout: 10m0s
+expect:
+    exitCode: 0
+    output:
+        file: expected-output.yaml

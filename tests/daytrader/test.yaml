@@ -1,0 +1,11 @@
+name: Daytrader
+description: Daytrader 7 EE application
+analysis:
+    application: https://github.com/konveyor-ecosystem/sample.daytrader7.git#ci-oct2025
+    labelSelector: konveyor.io/target=cloud-readiness || konveyor.io/target=quarkus
+    analysisMode: source-only
+timeout: 10m0s
+expect:
+    exitCode: 0
+    output:
+        file: expected-output.yaml

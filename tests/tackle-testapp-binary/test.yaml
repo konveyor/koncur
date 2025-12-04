@@ -1,0 +1,33 @@
+# SKIPPED: Skip binary test. https://issues.redhat.com/browse/MTA-5588
+
+name: "tackle-testapp-binary"
+description: ""
+analysis:
+  application: "mvn://io.konveyor.demo:customers-tomcat:0.0.1-SNAPSHOT:war"
+  labelSelector: "konveyor.io/target=cloud-readiness"
+  analysisMode: "binary"
+timeout: 10m
+expect:
+  exitCode: 0
+  output:
+    result:
+      - name: "cloud-readiness"
+        violations:
+          local-storage-00001:
+            description: "File system - Java IO"
+            category: "mandatory"
+            effort: 1
+            incidents:
+              - uri: "/shared/bin/java-project/src/main/java/io/konveyor/demo/config/ApplicationConfiguration.java"
+                message: "An application running inside a container could lose access to a file in local storage."
+                lineNumber: 14
+      - name: "discovery-rules"
+        violations:
+          hardcoded-ip-address:
+            description: "Hardcoded IP Address"
+            category: "mandatory"
+            effort: 1
+            incidents:
+              - uri: "/shared/bin/java-project/customers-tomcat-0-0-1-20240913-093117-1-war-exploded/WEB-INF/classes/persistence.properties"
+                message: "When migrating environments, hard-coded IP addresses may need to be modified or eliminated."
+                lineNumber: 2

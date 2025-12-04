@@ -1,0 +1,10 @@
+name: Tackle Testapp public with package filter
+analysis:
+    application: https://github.com/konveyor/tackle-testapp-public#ci-2024
+    labelSelector: konveyor.io/target=cloud-readiness || konveyor.io/target=linux
+    analysisMode: source-only
+timeout: 10m0s
+expect:
+    exitCode: 0
+    output:
+        file: expected-output.yaml

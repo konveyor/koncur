@@ -1,0 +1,4 @@
+type: kai-rpc
+kaiRPC:
+  host: localhost
+  port: 8080

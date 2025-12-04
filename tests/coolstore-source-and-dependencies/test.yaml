@@ -1,0 +1,10 @@
+name: Coolstore-Source and dependencies
+analysis:
+    application: https://github.com/konveyor-ecosystem/coolstore#ci-2024
+    labelSelector: konveyor.io/target=cloud-readiness || konveyor.io/target=jakarta-ee
+    analysisMode: source-only
+timeout: 10m0s
+expect:
+    exitCode: 0
+    output:
+        file: expected-output.yaml

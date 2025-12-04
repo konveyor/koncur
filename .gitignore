@@ -1,0 +1,6 @@
+# Cloned source code repositories
+tests/*/source/
+
+# Koncur output directory
+.koncur/
+koncur

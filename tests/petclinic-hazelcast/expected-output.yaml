@@ -1,0 +1,2005 @@
+- name: cloud-readiness
+  description: This ruleset detects logging configurations that may be problematic
+    when migrating an application to a cloud environment.
+  tags:
+  - Caching - Hazelcast embedded library
+  - Hazelcast
+  violations:
+    localhost-jdbc-00002:
+      description: Local JDBC Calls
+      category: mandatory
+      labels:
+      - konveyor.io/source
+      - konveyor.io/target=cloud-readiness
+      - localhost
+      incidents:
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/pom.xml
+        message: The app is trying to access local resource by JDBC, please try to
+          migrate the resource to cloud
+        codeSnip: "461  \t\t\t\t\t</execution>\n462  \t\t\t\t</executions>\n463  \t\t\t\t<configuration>\n464
+          \ \t\t\t\t\t<wroManagerFactory>\n465  \t\t\t\t\t\tro.isdc.wro.maven.plugin.manager.factory.ConfigurableWroManagerFactory</wroManagerFactory>\n466
+          \ \t\t\t\t\t<cssDestinationFolder>\n467  \t\t\t\t\t\t${project.build.directory}/petclinic/resources/css</cssDestinationFolder>\n468
+          \ \t\t\t\t\t<wroFile>${basedir}/src/main/wro/wro.xml</wroFile>\n469  \t\t\t\t\t<extraConfigFile>${basedir}/src/main/wro/wro.properties</extraConfigFile>\n470
+          \ \t\t\t\t\t<contextFolder>${basedir}/src/main/webapp/resources/less</contextFolder>\n471
+          \ \t\t\t\t</configuration>\n472  \t\t\t\t<dependencies>\n473  \t\t\t\t\t<dependency>\n474
+          \ \t\t\t\t\t\t<groupId>org.webjars</groupId>\n475  \t\t\t\t\t\t<artifactId>bootstrap</artifactId>\n476
+          \ \t\t\t\t\t\t<version>${webjars-bootstrap.version}</version>\n477  \t\t\t\t\t</dependency>\n478
+          \ \t\t\t\t\t<!-- Required for Java 9 and above -->\n479  \t\t\t\t\t<dependency>\n480
+          \ \t\t\t\t\t\t<groupId>org.mockito</groupId>\n481  \t\t\t\t\t\t<artifactId>mockito-core</artifactId>\n482
+          \ \t\t\t\t\t\t<version>${mockito.version}</version>\n483  \t\t\t\t\t</dependency>\n484
+          \ \t\t\t\t</dependencies>\n485  \t\t\t</plugin>\n486  \n487  \t\t\t<plugin>\n488
+          \ \t\t\t\t<groupId>org.eclipse.jetty</groupId>\n489  \t\t\t\t<artifactId>jetty-maven-plugin</artifactId>\n490
+          \ \t\t\t\t<version>${jetty-maven-plugin.version}</version>\n491  \t\t\t</plugin>\n492
+          \ \n493  \t\t\t<plugin>\n494  \t\t\t\t<groupId>com.google.cloud.tools</groupId>\n495
+          \ \t\t\t\t<artifactId>jib-maven-plugin</artifactId>\n496  \t\t\t\t<version>${docker.jib-maven-plugin.version}</version>\n497
+          \ \t\t\t\t<configuration>\n498  \t\t\t\t\t<to>\n499  \t\t\t\t\t\t<image>\n500
+          \ \t\t\t\t\t\t\tdocker.io/${docker.image.prefix}/${project.artifactId}</image>\n501
+          \ \t\t\t\t\t\t<tags>\n502  \t\t\t\t\t\t\t<tag>${project.version}</tag>\n503
+          \ \t\t\t\t\t\t\t<tag>latest</tag>\n504  \t\t\t\t\t\t</tags>\n505  \t\t\t\t\t</to>\n506
+          \ \t\t\t\t</configuration>\n507  \t\t\t</plugin>\n508  \n509  \t\t</plugins>\n510
+          \ \t</build>\n511  \n512  \t<profiles>\n513  \t\t<profile>\n514  \t\t\t<id>H2</id>\n515
+          \ \t\t\t<activation>\n516  \t\t\t\t<activeByDefault>true</activeByDefault>\n517
+          \ \t\t\t</activation>\n518  \t\t\t<properties>\n519  \t\t\t\t<db.script>h2</db.script>\n520
+          \ \t\t\t\t<jpa.database>H2</jpa.database>\n521  \t\t\t\t<jdbc.driverClassName>org.h2.Driver</jdbc.driverClassName>\n522
+          \ \t\t\t\t<jdbc.url>jdbc:h2:mem:petclinic</jdbc.url>\n523  \t\t\t\t<jdbc.username>sa</jdbc.username>\n524
+          \ \t\t\t\t<jdbc.password />\n525  \t\t\t</properties>\n526  \t\t\t<dependencies>\n527
+          \ \t\t\t\t<dependency>\n528  \t\t\t\t\t<groupId>com.h2database</groupId>\n529
+          \ \t\t\t\t\t<artifactId>h2</artifactId>\n530  \t\t\t\t\t<version>${h2database.version}</version>\n531
+          \ \t\t\t\t\t<scope>runtime</scope>\n532  \t\t\t\t</dependency>\n533  \t\t\t</dependencies>\n534
+          \ \t\t</profile>\n535  \t\t<profile>\n536  \t\t\t<id>HSQLDB</id>\n537  \t\t\t<properties>\n538
+          \ \t\t\t\t<db.script>hsqldb</db.script>\n539  \t\t\t\t<jpa.database>HSQL</jpa.database>\n540
+          \ \t\t\t\t<jdbc.driverClassName>org.hsqldb.jdbcDriver</jdbc.driverClassName>\n541
+          \ \t\t\t\t<jdbc.url>jdbc:hsqldb:mem:petclinic</jdbc.url>\n542  \t\t\t\t<jdbc.username>sa</jdbc.username>\n543
+          \ \t\t\t\t<jdbc.password />\n544  \t\t\t</properties>\n545  \t\t\t<dependencies>\n546
+          \ \t\t\t\t<dependency>\n547  \t\t\t\t\t<groupId>org.hsqldb</groupId>\n548
+          \ \t\t\t\t\t<artifactId>hsqldb</artifactId>\n549  \t\t\t\t\t<version>${hsqldb.version}</version>\n550
+          \ \t\t\t\t\t<scope>runtime</scope>\n551  \t\t\t\t</dependency>\n552  \t\t\t</dependencies>\n553
+          \ \t\t</profile>\n554  \t\t<profile>\n555  \t\t\t<id>MySQL</id>\n556  \t\t\t<properties>\n557
+          \ \t\t\t\t<db.script>mysql</db.script>\n558  \t\t\t\t<jpa.database>MYSQL</jpa.database>\n559
+          \ \t\t\t\t<jdbc.driverClassName>com.mysql.cj.jdbc.Driver</jdbc.driverClassName>\n560
+          \ \t\t\t\t<jdbc.url>jdbc:mysql://localhost:3306/petclinic?useUnicode=true</jdbc.url>\n561
+          \ \t\t\t\t<jdbc.username>petclinic</jdbc.username>\n562  \t\t\t\t<jdbc.password>petclinic</jdbc.password>\n563
+          \ \t\t\t</properties>\n564  \t\t\t<dependencies>\n565  \t\t\t\t<dependency>\n566
+          \ \t\t\t\t\t<groupId>mysql</groupId>\n567  \t\t\t\t\t<artifactId>mysql-connector-java</artifactId>\n568
+          \ \t\t\t\t\t<version>${mysql-driver.version}</version>\n569  \t\t\t\t\t<scope>runtime</scope>\n570
+          \ \t\t\t\t</dependency>\n571  \t\t\t</dependencies>\n572  \t\t</profile>\n573
+          \ \t\t<profile>\n574  \t\t\t<id>PostgreSQL</id>\n575  \t\t\t<properties>\n576
+          \ \t\t\t\t<db.script>postgresql</db.script>\n577  \t\t\t\t<jpa.database>POSTGRESQL</jpa.database>\n578
+          \ \t\t\t\t<jdbc.driverClassName>org.postgresql.Driver</jdbc.driverClassName>\n579
+          \ \t\t\t\t<jdbc.url>jdbc:postgresql://localhost:5432/petclinic</jdbc.url>\n580
+          \ \t\t\t\t<jdbc.username>postgres</jdbc.username>\n581  \t\t\t\t<jdbc.password>petclinic</jdbc.password>\n582
+          \ \t\t\t</properties>\n583  \t\t\t<dependencies>\n584  \t\t\t\t<dependency>\n585
+          \ \t\t\t\t\t<groupId>org.postgresql</groupId>\n586  \t\t\t\t\t<artifactId>postgresql</artifactId>\n587
+          \ \t\t\t\t\t<version>${postgresql-driver.version}</version>\n588  \t\t\t\t\t<scope>runtime</scope>\n589
+          \ \t\t\t\t</dependency>\n590  \t\t\t</dependencies>\n591  \t\t</profile>\n592
+          \ \t</profiles>\n593  \n594  \t<repositories>\n595  \t\t<repository>\n596
+          \ \t\t\t<id>repository.spring.milestone</id>\n597  \t\t\t<name>Spring Milestone
+          Repository</name>\n598  \t\t\t<url>https://repo.spring.io/milestone</url>\n599
+          \ \t\t</repository>\n600  \t</repositories>\n601  \n602  </project>\n"
+        lineNumber: 560
+        variables:
+          matchingText: mysql
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/pom.xml
+        message: The app is trying to access local resource by JDBC, please try to
+          migrate the resource to cloud
+        codeSnip: "480  \t\t\t\t\t\t<groupId>org.mockito</groupId>\n481  \t\t\t\t\t\t<artifactId>mockito-core</artifactId>\n482
+          \ \t\t\t\t\t\t<version>${mockito.version}</version>\n483  \t\t\t\t\t</dependency>\n484
+          \ \t\t\t\t</dependencies>\n485  \t\t\t</plugin>\n486  \n487  \t\t\t<plugin>\n488
+          \ \t\t\t\t<groupId>org.eclipse.jetty</groupId>\n489  \t\t\t\t<artifactId>jetty-maven-plugin</artifactId>\n490
+          \ \t\t\t\t<version>${jetty-maven-plugin.version}</version>\n491  \t\t\t</plugin>\n492
+          \ \n493  \t\t\t<plugin>\n494  \t\t\t\t<groupId>com.google.cloud.tools</groupId>\n495
+          \ \t\t\t\t<artifactId>jib-maven-plugin</artifactId>\n496  \t\t\t\t<version>${docker.jib-maven-plugin.version}</version>\n497
+          \ \t\t\t\t<configuration>\n498  \t\t\t\t\t<to>\n499  \t\t\t\t\t\t<image>\n500
+          \ \t\t\t\t\t\t\tdocker.io/${docker.image.prefix}/${project.artifactId}</image>\n501
+          \ \t\t\t\t\t\t<tags>\n502  \t\t\t\t\t\t\t<tag>${project.version}</tag>\n503
+          \ \t\t\t\t\t\t\t<tag>latest</tag>\n504  \t\t\t\t\t\t</tags>\n505  \t\t\t\t\t</to>\n506
+          \ \t\t\t\t</configuration>\n507  \t\t\t</plugin>\n508  \n509  \t\t</plugins>\n510
+          \ \t</build>\n511  \n512  \t<profiles>\n513  \t\t<profile>\n514  \t\t\t<id>H2</id>\n515
+          \ \t\t\t<activation>\n516  \t\t\t\t<activeByDefault>true</activeByDefault>\n517
+          \ \t\t\t</activation>\n518  \t\t\t<properties>\n519  \t\t\t\t<db.script>h2</db.script>\n520
+          \ \t\t\t\t<jpa.database>H2</jpa.database>\n521  \t\t\t\t<jdbc.driverClassName>org.h2.Driver</jdbc.driverClassName>\n522
+          \ \t\t\t\t<jdbc.url>jdbc:h2:mem:petclinic</jdbc.url>\n523  \t\t\t\t<jdbc.username>sa</jdbc.username>\n524
+          \ \t\t\t\t<jdbc.password />\n525  \t\t\t</properties>\n526  \t\t\t<dependencies>\n527
+          \ \t\t\t\t<dependency>\n528  \t\t\t\t\t<groupId>com.h2database</groupId>\n529
+          \ \t\t\t\t\t<artifactId>h2</artifactId>\n530  \t\t\t\t\t<version>${h2database.version}</version>\n531
+          \ \t\t\t\t\t<scope>runtime</scope>\n532  \t\t\t\t</dependency>\n533  \t\t\t</dependencies>\n534
+          \ \t\t</profile>\n535  \t\t<profile>\n536  \t\t\t<id>HSQLDB</id>\n537  \t\t\t<properties>\n538
+          \ \t\t\t\t<db.script>hsqldb</db.script>\n539  \t\t\t\t<jpa.database>HSQL</jpa.database>\n540
+          \ \t\t\t\t<jdbc.driverClassName>org.hsqldb.jdbcDriver</jdbc.driverClassName>\n541
+          \ \t\t\t\t<jdbc.url>jdbc:hsqldb:mem:petclinic</jdbc.url>\n542  \t\t\t\t<jdbc.username>sa</jdbc.username>\n543
+          \ \t\t\t\t<jdbc.password />\n544  \t\t\t</properties>\n545  \t\t\t<dependencies>\n546
+          \ \t\t\t\t<dependency>\n547  \t\t\t\t\t<groupId>org.hsqldb</groupId>\n548
+          \ \t\t\t\t\t<artifactId>hsqldb</artifactId>\n549  \t\t\t\t\t<version>${hsqldb.version}</version>\n550
+          \ \t\t\t\t\t<scope>runtime</scope>\n551  \t\t\t\t</dependency>\n552  \t\t\t</dependencies>\n553
+          \ \t\t</profile>\n554  \t\t<profile>\n555  \t\t\t<id>MySQL</id>\n556  \t\t\t<properties>\n557
+          \ \t\t\t\t<db.script>mysql</db.script>\n558  \t\t\t\t<jpa.database>MYSQL</jpa.database>\n559
+          \ \t\t\t\t<jdbc.driverClassName>com.mysql.cj.jdbc.Driver</jdbc.driverClassName>\n560
+          \ \t\t\t\t<jdbc.url>jdbc:mysql://localhost:3306/petclinic?useUnicode=true</jdbc.url>\n561
+          \ \t\t\t\t<jdbc.username>petclinic</jdbc.username>\n562  \t\t\t\t<jdbc.password>petclinic</jdbc.password>\n563
+          \ \t\t\t</properties>\n564  \t\t\t<dependencies>\n565  \t\t\t\t<dependency>\n566
+          \ \t\t\t\t\t<groupId>mysql</groupId>\n567  \t\t\t\t\t<artifactId>mysql-connector-java</artifactId>\n568
+          \ \t\t\t\t\t<version>${mysql-driver.version}</version>\n569  \t\t\t\t\t<scope>runtime</scope>\n570
+          \ \t\t\t\t</dependency>\n571  \t\t\t</dependencies>\n572  \t\t</profile>\n573
+          \ \t\t<profile>\n574  \t\t\t<id>PostgreSQL</id>\n575  \t\t\t<properties>\n576
+          \ \t\t\t\t<db.script>postgresql</db.script>\n577  \t\t\t\t<jpa.database>POSTGRESQL</jpa.database>\n578
+          \ \t\t\t\t<jdbc.driverClassName>org.postgresql.Driver</jdbc.driverClassName>\n579
+          \ \t\t\t\t<jdbc.url>jdbc:postgresql://localhost:5432/petclinic</jdbc.url>\n580
+          \ \t\t\t\t<jdbc.username>postgres</jdbc.username>\n581  \t\t\t\t<jdbc.password>petclinic</jdbc.password>\n582
+          \ \t\t\t</properties>\n583  \t\t\t<dependencies>\n584  \t\t\t\t<dependency>\n585
+          \ \t\t\t\t\t<groupId>org.postgresql</groupId>\n586  \t\t\t\t\t<artifactId>postgresql</artifactId>\n587
+          \ \t\t\t\t\t<version>${postgresql-driver.version}</version>\n588  \t\t\t\t\t<scope>runtime</scope>\n589
+          \ \t\t\t\t</dependency>\n590  \t\t\t</dependencies>\n591  \t\t</profile>\n592
+          \ \t</profiles>\n593  \n594  \t<repositories>\n595  \t\t<repository>\n596
+          \ \t\t\t<id>repository.spring.milestone</id>\n597  \t\t\t<name>Spring Milestone
+          Repository</name>\n598  \t\t\t<url>https://repo.spring.io/milestone</url>\n599
+          \ \t\t</repository>\n600  \t</repositories>\n601  \n602  </project>\n"
+        lineNumber: 579
+        variables:
+          matchingText: postgresql
+      effort: 7
+  insights:
+    embedded-cache-libraries-06000:
+      description: Caching - Hazelcast embedded library
+      labels:
+      - konveyor.io/source
+      - konveyor.io/target=cloud-readiness
+      - tag=Caching - Hazelcast embedded library
+      - tag=Hazelcast
+      incidents:
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/.mvn/wrapper/maven-wrapper.jar
+        message: ""
+  unmatched:
+  - embedded-cache-libraries-01000
+  - embedded-cache-libraries-02000
+  - embedded-cache-libraries-03000
+  - embedded-cache-libraries-04000
+  - embedded-cache-libraries-05000
+  - embedded-cache-libraries-07000
+  - embedded-cache-libraries-08000
+  - embedded-cache-libraries-09000
+  - embedded-cache-libraries-10000
+  - embedded-cache-libraries-11000
+  - embedded-cache-libraries-12000
+  - embedded-cache-libraries-13000
+  - embedded-cache-libraries-14000
+  - embedded-cache-libraries-15000
+  - embedded-cache-libraries-16000
+  - java-corba-00000
+  - java-rmi-00000
+  - java-rmi-00000
+  - java-rmi-00001
+  - java-rpc-00000
+  - jca-00000
+  - jni-native-code-00000
+  - jni-native-code-00001
+  - local-storage-00001
+  - local-storage-00002
+  - local-storage-00003
+  - local-storage-00004
+  - local-storage-00005
+  - local-storage-00006
+  - localhost-http-00001
+  - localhost-ws-00003
+  - logging-0000
+  - logging-0000
+  - logging-0001
+  - logging-0001
+  - mail-00000
+  - session-00000
+  - session-00001
+  - socket-communication-00000
+  - socket-communication-00001
+- name: discovery-rules
+  tags:
+  - EJB XML
+  - Java Source
+  - Maven XML
+  - Properties
+  insights:
+    discover-java-files:
+      description: Java source files
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - konveyor.io/target=discovery
+      - tag=Java Source
+      incidents:
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/.mvn/wrapper/MavenWrapperDownloader.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/PetclinicInitializer.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/config/BusinessConfig.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/config/DataSourceConfig.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/config/InitDataSourceConfig.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/config/Initializer.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/config/JdbcConfig.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/config/JpaConfig.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/config/MvcCoreConfig.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/config/NotProfile.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/config/NotProfileCondition.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/config/RootApplicationContextConfig.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/config/SessionConfiguration.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/config/SharedJpaConfig.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/config/SpringDataJpaConfig.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/config/ToolsConfig.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/model/BaseEntity.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/model/NamedEntity.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/model/Owner.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/model/Person.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/model/Pet.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/model/PetType.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/model/Specialty.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/model/Vet.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/model/Vets.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/model/Visit.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/model/package-info.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/OwnerRepository.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/PetRepository.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/VetRepository.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/VisitRepository.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcOwnerRepositoryImpl.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcPet.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcPetRepositoryImpl.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcPetRowMapper.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcPetVisitExtractor.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcVetRepositoryImpl.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcVisitRepositoryImpl.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcVisitRowMapper.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/OneToManyResultSetExtractor.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/package-info.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/jpa/JpaOwnerRepositoryImpl.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/jpa/JpaPetRepositoryImpl.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/jpa/JpaVetRepositoryImpl.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/jpa/JpaVisitRepositoryImpl.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/jpa/package-info.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/springdatajpa/SpringDataOwnerRepository.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/springdatajpa/SpringDataPetRepository.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/springdatajpa/SpringDataVetRepository.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/springdatajpa/SpringDataVisitRepository.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/service/ClinicService.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/service/ClinicServiceImpl.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/util/CallMonitoringAspect.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/util/EntityUtils.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/web/CrashController.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/web/OwnerController.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/web/PetController.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/web/PetTypeFormatter.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/web/PetValidator.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/web/VetController.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/web/VisitController.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/web/package-info.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/test/java/org/springframework/samples/petclinic/config/MvcTestConfig.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/test/java/org/springframework/samples/petclinic/model/ValidatorTests.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/test/java/org/springframework/samples/petclinic/service/AbstractClinicServiceTests.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/test/java/org/springframework/samples/petclinic/service/ClinicServiceJdbcTests.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/test/java/org/springframework/samples/petclinic/service/ClinicServiceJpaTests.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/test/java/org/springframework/samples/petclinic/service/ClinicServiceSpringDataJpaTests.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/test/java/org/springframework/samples/petclinic/web/CrashControllerTests.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/test/java/org/springframework/samples/petclinic/web/OwnerControllerTests.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/test/java/org/springframework/samples/petclinic/web/PetControllerTests.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/test/java/org/springframework/samples/petclinic/web/PetTypeFormatterTests.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/test/java/org/springframework/samples/petclinic/web/VetControllerTests.java
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/test/java/org/springframework/samples/petclinic/web/VisitControllerTests.java
+        message: ""
+    discover-maven-xml:
+      description: Maven XML file
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - konveyor.io/target=discovery
+      - tag=Maven XML
+      incidents:
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/pom.xml
+        message: ""
+    discover-properties-file:
+      description: Properties file
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - konveyor.io/target=discovery
+      - tag=Properties
+      incidents:
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/.mvn/wrapper/maven-wrapper.properties
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/resources/messages/messages.properties
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/resources/messages/messages_de.properties
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/resources/messages/messages_en.properties
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/resources/messages/messages_es.properties
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/resources/session/session.properties
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/resources/spring/data-access.properties
+        message: ""
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/wro/wro.properties
+        message: ""
+    windup-discover-ejb-configuration:
+      description: EJB XML Configuration
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - konveyor.io/target=discovery
+      - tag=EJB XML
+      incidents:
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/pom.xml
+        message: ""
+        codeSnip: "  1  <?xml version=\"1.0\" encoding=\"UTF-8\"?>\n  2  <project
+          xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n  3  \txmlns=\"http://maven.apache.org/POM/4.0.0\"\n
+          \ 4  \txsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd\">\n
+          \ 5  \t<modelVersion>4.0.0</modelVersion>\n  6  \t<groupId>org.springframework.samples</groupId>\n
+          \ 7  \t<artifactId>spring-framework-petclinic</artifactId>\n  8  \t<version>5.3.13</version>\n
+          \ 9  \n 10  \t<name>Spring Framework Petclinic</name>\n 11  \t<packaging>war</packaging>\n
+          12  \t<description>A Spring Framework application based on JSP, Spring MVC,
+          Spring\n 13  \t\tData JPA, Hibernate and JDBC</description>\n 14  \t<url>https://spring-petclinic.github.io/</url>\n
+          15  \n 16  \t<properties>\n 17  \n 18  \t\t<!-- Generic properties -->\n
+          19  \t\t<java.version>1.8</java.version>\n 20  \t\t<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n
+          21  \t\t<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>\n
+          22  \t\t<maven.compiler.source>${java.version}</maven.compiler.source>\n
+          23  \t\t<maven.compiler.target>${java.version}</maven.compiler.target>\n
+          24  \n 25  \t\t<!-- Spring -->\n 26  \t\t<!-- For framework compatibility,
+          refer to the Spring Boot Dependencies\n 27  \t\tBOM -->\n 28  \t\t<!--\n
+          29  \t\thttps://github.com/spring-projects/spring-boot/blob/master/spring-boot-project/spring-boot-dependencies/build.gradle
+          -->\n 30  \t\t<spring-framework.version>5.3.12</spring-framework.version>\n
+          31  \n 32  \t\t<!-- Web dependencies -->\n 33  \t\t<!-- Version update should
+          also be done in wro.xml, petclinic.less and\n 34  \t\tstatic resources:
+          htmlHeader.tag and footer.tag-->\n 35  \t\t<webjars-bootstrap.version>3.3.6</webjars-bootstrap.version>\n
+          36  \t\t<webjars-jquery-ui.version>1.12.1</webjars-jquery-ui.version>\n
+          37  \t\t<webjars-jquery.version>3.5.1</webjars-jquery.version>\n 38  \t\t<wro4j.version>1.8.0</wro4j.version>
+          <!-- wro4j 1.0.0 requires Java 9 -->\n 39  \n 40  \t\t<!-- Java EE / Java
+          SE dependencies -->\n 41  \t\t<tomcat.version>9.0.46</tomcat.version>\n
+          42  \t\t<jaxb-api.version>2.3.1</jaxb-api.version>\n 43  \t\t<jaxb-runtime.version>2.3.4</jaxb-runtime.version>\n
+          44  \t\t<javax-activation.version>1.2.0</javax-activation.version>\n 45
+          \ \t\t<servlet-api.version>4.0.4</servlet-api.version>\n 46  \t\t<taglibs-standard.version>1.2.5</taglibs-standard.version>\n
+          47  \t\t<javax-annotation.version>1.3.2</javax-annotation.version>\n 48
+          \ \n 49  \t\t<!-- Persistence -->\n 50  \t\t<spring-data.version>2021.1.0-RC1</spring-data.version>\n
+          51  \t\t<hibernate.version>5.6.0.Final</hibernate.version>\n 52  \t\t<hibernate-validator.version>6.2.0.Final</hibernate-validator.version>\n
+          53  \t\t<hsqldb.version>2.5.2</hsqldb.version>\n 54  \t\t<h2database.version>1.4.200</h2database.version>\n
+          55  \n 56  \t\t<!-- Session Management -->\n 57  \t\t<spring-session.version>2021.0.2</spring-session.version>\n
+          58  \t\t<hazelcast.version>4.2.2</hazelcast.version>\n 59  \t\t\n 60  \t\t<!--
+          Logging -->\n 61  \t\t<slf4j.version>1.7.32</slf4j.version>\n 62  \t\t<logback.version>1.2.6</logback.version>\n
+          63  \n 64  \t\t<!-- Test -->\n 65  \t\t<assertj.version>3.21.0</assertj.version>\n
+          66  \t\t<json-path.version>2.6.0</json-path.version>\n 67  \t\t<mockito.version>4.0.0</mockito.version>\n
+          68  \t\t<hamcrest.version>2.2</hamcrest.version>\n 69  \t\t<junit-jupiter.version>5.8.1</junit-jupiter.version>\n
+          70  \n 71  \t\t<!-- JDBC Drivers -->\n 72  \t\t<mysql-driver.version>8.0.19</mysql-driver.version>\n
+          73  \t\t<postgresql-driver.version>9.4.1211.jre7</postgresql-driver.version>\n
+          74  \n 75  \t\t<!-- Others -->\n 76  \t\t<jackson.version>2.12.4</jackson.version>\n
+          77  \t\t<aspectj.version>1.9.7</aspectj.version>\n 78  \n 79  \t\t<!-- Maven
+          plugins -->\n 80  \t\t<jetty-maven-plugin.version>9.4.43.v20210629</jetty-maven-plugin.version>\n
+          81  \t\t<maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>\n
+          82  \t\t<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>\n
+          83  \t\t<maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version>\n
+          84  \t\t<maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>\n
+          85  \t\t<maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>\n
+          86  \t\t<maven-war-plugin.version>3.3.1</maven-war-plugin.version>\n 87
+          \ \t\t<jacoco-maven-plugin>0.8.6</jacoco-maven-plugin>\n 88  \n 89  \t\t<!--
+          Docker image -->\n 90  \t\t<docker.jib-maven-plugin.version>2.6.0</docker.jib-maven-plugin.version>\n
+          91  \t\t<docker.image.prefix>springcommunity</docker.image.prefix>\n 92
+          \ \n 93  \t</properties>\n 94  \n 95  \t<dependencyManagement>\n 96  \t\t<dependencies>\n
+          97  \t\t\t<dependency>\n 98  \t\t\t\t<groupId>com.fasterxml.jackson</groupId>\n
+          99  \t\t\t\t<artifactId>jackson-bom</artifactId>\n100  \t\t\t\t<version>${jackson.version}</version>\n101
+          \ \t\t\t\t<scope>import</scope>\n102  \t\t\t\t<type>pom</type>\n103  \t\t\t</dependency>\n104
+          \ \t\t\t<dependency>\n105  \t\t\t\t<groupId>org.springframework.data</groupId>\n106
+          \ \t\t\t\t<artifactId>spring-data-bom</artifactId>"
+        lineNumber: 5
+        variables:
+          data: ""
+          innerText: "\n\n\t4.0.0\n\torg.springframework.samples\n\tspring-framework-petclinic\n\t5.3.13\n\n\tSpring
+            Framework Petclinic\n\twar\n\tA Spring Framework application based on
+            JSP, Spring MVC, Spring\n\t\tData JPA, Hibernate and JDBC\n\thttps://spring-petclinic.github.io/\n\n\t\n\n\t\t\n\t\t1.8\n\t\tUTF-8\n\t\tUTF-8\n\t\t${java.version}\n\t\t${java.version}\n\n\t\t\n\t\t\n\t\t\n\t\t5.3.12\n\n\t\t\n\t\t\n\t\t3.3.6\n\t\t1.12.1\n\t\t3.5.1\n\t\t1.8.0
+            \n\n\t\t\n\t\t9.0.46\n\t\t2.3.1\n\t\t2.3.4\n\t\t1.2.0\n\t\t4.0.4\n\t\t1.2.5\n\t\t1.3.2\n\n\t\t\n\t\t2021.1.0-RC1\n\t\t5.6.0.Final\n\t\t6.2.0.Final\n\t\t2.5.2\n\t\t1.4.200\n\n\t\t\n\t\t2021.0.2\n\t\t4.2.2\n\t\t\n\t\t\n\t\t1.7.32\n\t\t1.2.6\n\n\t\t\n\t\t3.21.0\n\t\t2.6.0\n\t\t4.0.0\n\t\t2.2\n\t\t5.8.1\n\n\t\t\n\t\t8.0.19\n\t\t9.4.1211.jre7\n\n\t\t\n\t\t2.12.4\n\t\t1.9.7\n\n\t\t\n\t\t9.4.43.v20210629\n\t\t3.3.0\n\t\t3.8.1\n\t\t2.10\n\t\t3.1.0\n\t\t2.22.1\n\t\t3.3.1\n\t\t0.8.6\n\n\t\t\n\t\t2.6.0\n\t\tspringcommunity\n\n\t\n\n\t\n\t\t\n\t\t\t\n\t\t\t\tcom.fasterxml.jackson\n\t\t\t\tjackson-bom\n\t\t\t\t${jackson.version}\n\t\t\t\timport\n\t\t\t\tpom\n\t\t\t\n\t\t\t\n\t\t\t\torg.springframework.data\n\t\t\t\tspring-data-bom\n\t\t\t\t${spring-data.version}\n\t\t\t\timport\n\t\t\t\tpom\n\t\t\t\n\t\t\t\n\t\t\t\torg.springframework.session\n\t\t\t\tspring-session-bom\n\t\t\t\t${spring-session.version}\n\t\t\t\tpom\n\t\t\t\timport\n\t\t\t\n\t\t\n\t\n\n\t\n\t\t\n\t\t\torg.apache.tomcat\n\t\t\ttomcat-servlet-api\n\t\t\t${tomcat.version}\n\t\t\tprovided\n\t\t\n\t\t\n\t\t\torg.apache.tomcat\n\t\t\ttomcat-jasper-el\n\t\t\t${tomcat.version}\n\t\t\tprovided\n\t\t\n\n\t\t\n\t\t\torg.apache.taglibs\n\t\t\ttaglibs-standard-jstlel\n\t\t\t${taglibs-standard.version}\n\t\t\n\t\t\n\t\t\n\t\t\tcom.fasterxml.jackson.core\n\t\t\tjackson-core\n\t\t\n\t\t\n\t\t\tcom.fasterxml.jackson.core\n\t\t\tjackson-databind\n\t\t\n\t\t\n\t\t\tcom.jayway.jsonpath\n\t\t\tjson-path\n\t\t\t${json-path.version}\n\t\t\ttest\n\t\t\n\t\t\n\t\t\n\t\t\torg.springframework.data\n\t\t\tspring-data-jpa\n\t\t\n\n\t\t\n\t\t\torg.springframework\n\t\t\tspring-jdbc\n\t\t\t${spring-framework.version}\n\t\t\n\t\t\n\t\t\torg.springframework\n\t\t\tspring-webmvc\n\t\t\t${spring-framework.version}\n\t\t\n\t\t\n\t\t\torg.springframework.session\n\t\t\tspring-session-core\n\t\t\n\t\t\n\t\t\torg.springframework.session\n\t\t\tspring-session-hazelcast\n\t\t\n\t\t\n\t\t\n\t\t\torg.springframework\n\t\t\tspring-context-support\n\t\t\t${spring-framework.version}\n\t\t\n\t\t\n\t\t\torg.springframework\n\t\t\tspring-oxm\n\t\t\t${spring-framework.version}\n\t\t\n\n\t\t\n\t\t\torg.aspectj\n\t\t\taspectjrt\n\t\t\t${aspectj.version}\n\t\t\n\t\t\n\t\t\torg.aspectj\n\t\t\taspectjweaver\n\t\t\t${aspectj.version}\n\t\t\truntime\n\t\t\n\n\t\t\n\t\t\n\t\t\torg.apache.tomcat\n\t\t\ttomcat-jdbc\n\t\t\t${tomcat.version}\n\t\t\n\n\t\t\n\t\t\n\t\t\tcom.hazelcast\n\t\t\thazelcast\n\t\t\t${hazelcast.version}\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\torg.slf4j\n\t\t\tslf4j-api\n\t\t\t${slf4j.version}\n\t\t\n\t\t\n\t\t\tch.qos.logback\n\t\t\tlogback-classic\n\t\t\t${logback.version}\n\t\t\truntime\n\t\t\n\n\t\t\n\t\t\n\t\t\torg.hibernate\n\t\t\thibernate-entitymanager\n\t\t\t${hibernate.version}\n\t\t\n\t\t\n\t\t\torg.hibernate.validator\n\t\t\thibernate-validator\n\t\t\t${hibernate-validator.version}\n\t\t\n\t\t\n\t\t\torg.hibernate\n\t\t\thibernate-ehcache\n\t\t\t${hibernate.version}\n\t\t\n\n\n\t\t\n\t\t\n\t\t\torg.webjars\n\t\t\tjquery\n\t\t\t${webjars-jquery.version}\n\t\t\n\t\t\n\t\t\torg.webjars\n\t\t\tjquery-ui\n\t\t\t${webjars-jquery-ui.version}\n\t\t\n\t\t\n\t\t\torg.webjars\n\t\t\tbootstrap\n\t\t\t${webjars-bootstrap.version}\n\t\t\n\n\t\t\n\t\t\n\t\t\torg.springframework\n\t\t\tspring-test\n\t\t\t${spring-framework.version}\n\t\t\ttest\n\t\t\n\t\t\n\t\t\torg.junit.jupiter\n\t\t\tjunit-jupiter-engine\n\t\t\t${junit-jupiter.version}\n\t\t\n\t\t\n\t\t\torg.assertj\n\t\t\tassertj-core\n\t\t\t${assertj.version}\n\t\t\ttest\n\t\t\n\t\t\n\t\t\torg.mockito\n\t\t\tmockito-core\n\t\t\t${mockito.version}\n\t\t\ttest\n\t\t\n\t\t\n\t\t\torg.mockito\n\t\t\tmockito-junit-jupiter\n\t\t\t${mockito.version}\n\t\t\n\t\t\n\t\t\torg.hamcrest\n\t\t\thamcrest\n\t\t\t${hamcrest.version}\n\t\t\ttest\n\t\t\n\n\t\t\n\t\t\n\t\t\tjavax.xml.bind\n\t\t\tjaxb-api\n\t\t\t${jaxb-api.version}\n\t\t\n\t\t\n\t\t\torg.glassfish.jaxb\n\t\t\tjaxb-runtime\n\t\t\t${jaxb-runtime.version}\n\t\t\n\t\t\n\t\t\tjavax.activation\n\t\t\tjavax.activation-api\n\t\t\t${javax-activation.version}\n\t\t\n\t\t\n\t\t\tjavax.annotation\n\t\t\tjavax.annotation-api\n\t\t\t${javax-annotation.version}\n\t\t\n\n\t\n\n\t\n\t\n\t\tinstall\n\t\tpetclinic\n\t\t\n\t\t\t\n\t\t\t\t${basedir}/src/main/resources\n\t\t\t\ttrue\n\t\t\t\n\t\t\n\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t${project.basedir}/src/test/java\n\t\t\t\n\t\t\t\n\t\t\t\t${project.basedir}/src/test/resources\n\t\t\t\n\t\t\n\t\t\n\t\t\t\n\t\t\t\torg.apache.maven.plugins\n\t\t\t\tmaven-compiler-plugin\n\t\t\t\t${maven-compiler-plugin.version}\n\t\t\t\n\n\t\t\t\n\t\t\t\torg.apache.maven.plugins\n\t\t\t\tmaven-surefire-plugin\n\t\t\t\t${maven-surefire-plugin.version}\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t**/*Tests.java\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\n\t\t\t\n\t\t\t\torg.apache.maven.plugins\n\t\t\t\tmaven-war-plugin\n\t\t\t\t${maven-war-plugin.version}\n\t\t\t\t\n\t\t\t\t\tfalse\n\t\t\t\t\n\t\t\t\n\n\t\t\t\n\t\t\t\torg.apache.maven.plugins\n\t\t\t\tmaven-eclipse-plugin\n\t\t\t\t${maven-eclipse-plugin.version}\n\t\t\t\t\n\t\t\t\t\ttrue\n\t\t\t\t\ttrue\n\t\t\t\t\t2.0\n\t\t\t\t\t\n\t\t\t\t\t\t**/*.*\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\torg.springframework.ide.eclipse.core.springbuilder\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\torg.eclipse.m2e.core.maven2Builder\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\torg.eclipse.jdt.core.javanature\n\t\t\t\t\t\t\n\t\t\t\t\t\t\torg.springframework.ide.eclipse.core.springnature\n\t\t\t\t\t\torg.eclipse.m2e.core.maven2Nature\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\n\t\t\t\n\t\t\t\torg.apache.maven.plugins\n\t\t\t\tmaven-assembly-plugin\n\t\t\t\t${maven-assembly-plugin.version}\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tjar-with-dependencies\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\n\t\t\t\n\t\t\t\torg.jacoco\n\t\t\t\tjacoco-maven-plugin\n\t\t\t\t${jacoco-maven-plugin}\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tprepare-agent\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\treport\n\t\t\t\t\t\tprepare-package\n\t\t\t\t\t\t\n\t\t\t\t\t\t\treport\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\n\t\t\t\n\t\t\t\n\t\t\t\torg.apache.maven.plugins\n\t\t\t\tmaven-resources-plugin\n\t\t\t\t${maven-resources-plugin.version}\n\t\t\t\t\n\t\t\t\t\tUTF-8\n\t\t\t\t\n\t\t\t\n\n\t\t\t\n\t\t\t\tro.isdc.wro4j\n\t\t\t\twro4j-maven-plugin\n\t\t\t\t${wro4j.version}\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tgenerate-resources\n\t\t\t\t\t\t\n\t\t\t\t\t\t\trun\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tro.isdc.wro.maven.plugin.manager.factory.ConfigurableWroManagerFactory\n\t\t\t\t\t\n\t\t\t\t\t\t${project.build.directory}/petclinic/resources/css\n\t\t\t\t\t${basedir}/src/main/wro/wro.xml\n\t\t\t\t\t${basedir}/src/main/wro/wro.properties\n\t\t\t\t\t${basedir}/src/main/webapp/resources/less\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\torg.webjars\n\t\t\t\t\t\tbootstrap\n\t\t\t\t\t\t${webjars-bootstrap.version}\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\torg.mockito\n\t\t\t\t\t\tmockito-core\n\t\t\t\t\t\t${mockito.version}\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\n\t\t\t\n\t\t\t\torg.eclipse.jetty\n\t\t\t\tjetty-maven-plugin\n\t\t\t\t${jetty-maven-plugin.version}\n\t\t\t\n\n\t\t\t\n\t\t\t\tcom.google.cloud.tools\n\t\t\t\tjib-maven-plugin\n\t\t\t\t${docker.jib-maven-plugin.version}\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tdocker.io/${docker.image.prefix}/${project.artifactId}\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t${project.version}\n\t\t\t\t\t\t\tlatest\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\n\t\t\n\t\n\n\t\n\t\t\n\t\t\tH2\n\t\t\t\n\t\t\t\ttrue\n\t\t\t\n\t\t\t\n\t\t\t\th2\n\t\t\t\tH2\n\t\t\t\torg.h2.Driver\n\t\t\t\tjdbc:h2:mem:petclinic\n\t\t\t\tsa\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\tcom.h2database\n\t\t\t\t\th2\n\t\t\t\t\t${h2database.version}\n\t\t\t\t\truntime\n\t\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\tHSQLDB\n\t\t\t\n\t\t\t\thsqldb\n\t\t\t\tHSQL\n\t\t\t\torg.hsqldb.jdbcDriver\n\t\t\t\tjdbc:hsqldb:mem:petclinic\n\t\t\t\tsa\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\torg.hsqldb\n\t\t\t\t\thsqldb\n\t\t\t\t\t${hsqldb.version}\n\t\t\t\t\truntime\n\t\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\tMySQL\n\t\t\t\n\t\t\t\tmysql\n\t\t\t\tMYSQL\n\t\t\t\tcom.mysql.cj.jdbc.Driver\n\t\t\t\tjdbc:mysql://localhost:3306/petclinic?useUnicode=true\n\t\t\t\tpetclinic\n\t\t\t\tpetclinic\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\tmysql\n\t\t\t\t\tmysql-connector-java\n\t\t\t\t\t${mysql-driver.version}\n\t\t\t\t\truntime\n\t\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\tPostgreSQL\n\t\t\t\n\t\t\t\tpostgresql\n\t\t\t\tPOSTGRESQL\n\t\t\t\torg.postgresql.Driver\n\t\t\t\tjdbc:postgresql://localhost:5432/petclinic\n\t\t\t\tpostgres\n\t\t\t\tpetclinic\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\torg.postgresql\n\t\t\t\t\tpostgresql\n\t\t\t\t\t${postgresql-driver.version}\n\t\t\t\t\truntime\n\t\t\t\t\n\t\t\t\n\t\t\n\t\n\n\t\n\t\t\n\t\t\trepository.spring.milestone\n\t\t\tSpring
+            Milestone Repository\n\t\t\thttps://repo.spring.io/milestone\n\t\t\n\t\n\n\n"
+          matchingXML: "<?xml version=\"1.0\" encoding=\"UTF-8\"?><project xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
+            xmlns=\"http://maven.apache.org/POM/4.0.0\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0
+            http://maven.apache.org/maven-v4_0_0.xsd\"><modelVersion>4.0.0</modelVersion><groupId>org.springframework.samples</groupId><artifactId>spring-framework-petclinic</artifactId><version>5.3.13</version><name>Spring
+            Framework Petclinic</name><packaging>war</packaging><description>A Spring
+            Framework application based on JSP, Spring MVC, Spring\n\t\tData JPA,
+            Hibernate and JDBC</description><url>https://spring-petclinic.github.io/</url><properties><!--
+            Generic properties --><java.version>1.8</java.version><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding><maven.compiler.source>${java.version}</maven.compiler.source><maven.compiler.target>${java.version}</maven.compiler.target><!--
+            Spring --><!-- For framework compatibility, refer to the Spring Boot Dependencies\n\t\tBOM
+            --><!--\n\t\thttps://github.com/spring-projects/spring-boot/blob/master/spring-boot-project/spring-boot-dependencies/build.gradle
+            --><spring-framework.version>5.3.12</spring-framework.version><!-- Web
+            dependencies --><!-- Version update should also be done in wro.xml, petclinic.less
+            and\n\t\tstatic resources: htmlHeader.tag and footer.tag--><webjars-bootstrap.version>3.3.6</webjars-bootstrap.version><webjars-jquery-ui.version>1.12.1</webjars-jquery-ui.version><webjars-jquery.version>3.5.1</webjars-jquery.version><wro4j.version>1.8.0</wro4j.version><!--
+            wro4j 1.0.0 requires Java 9 --><!-- Java EE / Java SE dependencies --><tomcat.version>9.0.46</tomcat.version><jaxb-api.version>2.3.1</jaxb-api.version><jaxb-runtime.version>2.3.4</jaxb-runtime.version><javax-activation.version>1.2.0</javax-activation.version><servlet-api.version>4.0.4</servlet-api.version><taglibs-standard.version>1.2.5</taglibs-standard.version><javax-annotation.version>1.3.2</javax-annotation.version><!--
+            Persistence --><spring-data.version>2021.1.0-RC1</spring-data.version><hibernate.version>5.6.0.Final</hibernate.version><hibernate-validator.version>6.2.0.Final</hibernate-validator.version><hsqldb.version>2.5.2</hsqldb.version><h2database.version>1.4.200</h2database.version><!--
+            Session Management --><spring-session.version>2021.0.2</spring-session.version><hazelcast.version>4.2.2</hazelcast.version><!--
+            Logging --><slf4j.version>1.7.32</slf4j.version><logback.version>1.2.6</logback.version><!--
+            Test --><assertj.version>3.21.0</assertj.version><json-path.version>2.6.0</json-path.version><mockito.version>4.0.0</mockito.version><hamcrest.version>2.2</hamcrest.version><junit-jupiter.version>5.8.1</junit-jupiter.version><!--
+            JDBC Drivers --><mysql-driver.version>8.0.19</mysql-driver.version><postgresql-driver.version>9.4.1211.jre7</postgresql-driver.version><!--
+            Others --><jackson.version>2.12.4</jackson.version><aspectj.version>1.9.7</aspectj.version><!--
+            Maven plugins --><jetty-maven-plugin.version>9.4.43.v20210629</jetty-maven-plugin.version><maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version><maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version><maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version><maven-resources-plugin.version>3.1.0</maven-resources-plugin.version><maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version><maven-war-plugin.version>3.3.1</maven-war-plugin.version><jacoco-maven-plugin>0.8.6</jacoco-maven-plugin><!--
+            Docker image --><docker.jib-maven-plugin.version>2.6.0</docker.jib-maven-plugin.version><docker.image.prefix>springcommunity</docker.image.prefix></properties><dependencyManagement><dependencies><dependency><groupId>com.fasterxml.jackson</groupId><artifactId>jackson-bom</artifactId><version>${jackson.version}</version><scope>import</scope><type>pom</type></dependency><dependency><groupId>org.springframework.data</groupId><artifactId>spring-data-bom</artifactId><version>${spring-data.version}</version><scope>import</scope><type>pom</type></dependency><dependency><groupId>org.springframework.session</groupId><artifactId>spring-session-bom</artifactId><version>${spring-session.version}</version><type>pom</type><scope>import</scope></dependency></dependencies></dependencyManagement><dependencies><dependency><groupId>org.apache.tomcat</groupId><artifactId>tomcat-servlet-api</artifactId><version>${tomcat.version}</version><scope>provided</scope></dependency><dependency><groupId>org.apache.tomcat</groupId><artifactId>tomcat-jasper-el</artifactId><version>${tomcat.version}</version><scope>provided</scope></dependency><dependency><groupId>org.apache.taglibs</groupId><artifactId>taglibs-standard-jstlel</artifactId><version>${taglibs-standard.version}</version></dependency><!--
+            \ JSon --><dependency><groupId>com.fasterxml.jackson.core</groupId><artifactId>jackson-core</artifactId></dependency><dependency><groupId>com.fasterxml.jackson.core</groupId><artifactId>jackson-databind</artifactId></dependency><dependency><groupId>com.jayway.jsonpath</groupId><artifactId>json-path</artifactId><version>${json-path.version}</version><scope>test</scope></dependency><!--
+            SPRING, SPRING, SPRINGITY SPRING --><dependency><groupId>org.springframework.data</groupId><artifactId>spring-data-jpa</artifactId></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-jdbc</artifactId><version>${spring-framework.version}</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-webmvc</artifactId><version>${spring-framework.version}</version></dependency><dependency><groupId>org.springframework.session</groupId><artifactId>spring-session-core</artifactId></dependency><dependency><groupId>org.springframework.session</groupId><artifactId>spring-session-hazelcast</artifactId></dependency><!--
+            used for EhCacheCacheManager --><dependency><groupId>org.springframework</groupId><artifactId>spring-context-support</artifactId><version>${spring-framework.version}</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-oxm</artifactId><version>${spring-framework.version}</version></dependency><dependency><groupId>org.aspectj</groupId><artifactId>aspectjrt</artifactId><version>${aspectj.version}</version></dependency><dependency><groupId>org.aspectj</groupId><artifactId>aspectjweaver</artifactId><version>${aspectj.version}</version><scope>runtime</scope></dependency><!--
+            Database connection pool\n        See here for more details on\n\t\tcommons-dbcp
+            versus tomcat-jdbc:\n\t\thttp://blog.ippon.fr/2013/03/13/improving-the-performance-of-the-spring-petclinic-sample-application-part-3-of-5/\n
+            \   --><dependency><groupId>org.apache.tomcat</groupId><artifactId>tomcat-jdbc</artifactId><version>${tomcat.version}</version></dependency><!--
+            Session caching --><dependency><groupId>com.hazelcast</groupId><artifactId>hazelcast</artifactId><version>${hazelcast.version}</version></dependency><!--
+            Logging with SLF4J & LogBack --><dependency><groupId>org.slf4j</groupId><artifactId>slf4j-api</artifactId><version>${slf4j.version}</version></dependency><dependency><groupId>ch.qos.logback</groupId><artifactId>logback-classic</artifactId><version>${logback.version}</version><scope>runtime</scope></dependency><!--
+            HIBERNATE --><dependency><groupId>org.hibernate</groupId><artifactId>hibernate-entitymanager</artifactId><version>${hibernate.version}</version></dependency><dependency><groupId>org.hibernate.validator</groupId><artifactId>hibernate-validator</artifactId><version>${hibernate-validator.version}</version></dependency><dependency><groupId>org.hibernate</groupId><artifactId>hibernate-ehcache</artifactId><version>${hibernate.version}</version></dependency><!--
+            Webjars --><dependency><groupId>org.webjars</groupId><artifactId>jquery</artifactId><version>${webjars-jquery.version}</version></dependency><dependency><groupId>org.webjars</groupId><artifactId>jquery-ui</artifactId><version>${webjars-jquery-ui.version}</version></dependency><dependency><groupId>org.webjars</groupId><artifactId>bootstrap</artifactId><version>${webjars-bootstrap.version}</version></dependency><!--
+            Test Artifacts --><dependency><groupId>org.springframework</groupId><artifactId>spring-test</artifactId><version>${spring-framework.version}</version><scope>test</scope></dependency><dependency><groupId>org.junit.jupiter</groupId><artifactId>junit-jupiter-engine</artifactId><version>${junit-jupiter.version}</version></dependency><dependency><groupId>org.assertj</groupId><artifactId>assertj-core</artifactId><version>${assertj.version}</version><scope>test</scope></dependency><dependency><groupId>org.mockito</groupId><artifactId>mockito-core</artifactId><version>${mockito.version}</version><scope>test</scope></dependency><dependency><groupId>org.mockito</groupId><artifactId>mockito-junit-jupiter</artifactId><version>${mockito.version}</version></dependency><dependency><groupId>org.hamcrest</groupId><artifactId>hamcrest</artifactId><version>${hamcrest.version}</version><scope>test</scope></dependency><!--
+            JAXB and Activation added for Java 9 compatibility.\n             The\n\t\tJAXB
+            API is considered to be Java EE API and therefore is\n             no\n\t\tlonger
+            contained on the default class path in Java SE 9 --><dependency><groupId>javax.xml.bind</groupId><artifactId>jaxb-api</artifactId><version>${jaxb-api.version}</version></dependency><dependency><groupId>org.glassfish.jaxb</groupId><artifactId>jaxb-runtime</artifactId><version>${jaxb-runtime.version}</version></dependency><dependency><groupId>javax.activation</groupId><artifactId>javax.activation-api</artifactId><version>${javax-activation.version}</version></dependency><dependency><groupId>javax.annotation</groupId><artifactId>javax.annotation-api</artifactId><version>${javax-annotation.version}</version></dependency></dependencies><!--
+            Maven plugin versions are mentioned in order to guarantee the build\n\treproducibility
+            in the long term --><build><defaultGoal>install</defaultGoal><finalName>petclinic</finalName><resources><resource><directory>${basedir}/src/main/resources</directory><filtering>true</filtering></resource></resources><testResources><testResource><!--
+            declared explicitly so Spring config files can be placed\n\t\t\t\tnext
+            to their corresponding JUnit test class  --><directory>${project.basedir}/src/test/java</directory></testResource><testResource><directory>${project.basedir}/src/test/resources</directory></testResource></testResources><plugins><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>${maven-compiler-plugin.version}</version></plugin><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-surefire-plugin</artifactId><version>${maven-surefire-plugin.version}</version><configuration><includes><include>**/*Tests.java</include></includes></configuration></plugin><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-war-plugin</artifactId><version>${maven-war-plugin.version}</version><configuration><failOnMissingWebXml>false</failOnMissingWebXml></configuration></plugin><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-eclipse-plugin</artifactId><version>${maven-eclipse-plugin.version}</version><configuration><downloadSources>true</downloadSources><downloadJavadocs>true</downloadJavadocs><wtpversion>2.0</wtpversion><sourceIncludes><sourceInclude>**/*.*</sourceInclude></sourceIncludes><additionalBuildcommands><buildCommand><name>org.springframework.ide.eclipse.core.springbuilder</name></buildCommand><buildCommand><name>org.eclipse.m2e.core.maven2Builder</name></buildCommand></additionalBuildcommands><additionalProjectnatures><projectnature>org.eclipse.jdt.core.javanature</projectnature><projectnature>org.springframework.ide.eclipse.core.springnature</projectnature><projectnature>org.eclipse.m2e.core.maven2Nature</projectnature></additionalProjectnatures></configuration></plugin><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-assembly-plugin</artifactId><version>${maven-assembly-plugin.version}</version><configuration><descriptorRefs><descriptorRef>jar-with-dependencies</descriptorRef></descriptorRefs></configuration></plugin><plugin><groupId>org.jacoco</groupId><artifactId>jacoco-maven-plugin</artifactId><version>${jacoco-maven-plugin}</version><executions><execution><goals><goal>prepare-agent</goal></goals></execution><execution><id>report</id><phase>prepare-package</phase><goals><goal>report</goal></goals></execution></executions></plugin><!--Specify
+            the encoding for copying resources--><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-resources-plugin</artifactId><version>${maven-resources-plugin.version}</version><configuration><encoding>UTF-8</encoding></configuration></plugin><plugin><groupId>ro.isdc.wro4j</groupId><artifactId>wro4j-maven-plugin</artifactId><version>${wro4j.version}</version><executions><execution><phase>generate-resources</phase><goals><goal>run</goal></goals></execution></executions><configuration><wroManagerFactory>ro.isdc.wro.maven.plugin.manager.factory.ConfigurableWroManagerFactory</wroManagerFactory><cssDestinationFolder>${project.build.directory}/petclinic/resources/css</cssDestinationFolder><wroFile>${basedir}/src/main/wro/wro.xml</wroFile><extraConfigFile>${basedir}/src/main/wro/wro.properties</extraConfigFile><contextFolder>${basedir}/src/main/webapp/resources/less</contextFolder></configuration><dependencies><dependency><groupId>org.webjars</groupId><artifactId>bootstrap</artifactId><version>${webjars-bootstrap.version}</version></dependency><!--
+            Required for Java 9 and above --><dependency><groupId>org.mockito</groupId><artifactId>mockito-core</artifactId><version>${mockito.version}</version></dependency></dependencies></plugin><plugin><groupId>org.eclipse.jetty</groupId><artifactId>jetty-maven-plugin</artifactId><version>${jetty-maven-plugin.version}</version></plugin><plugin><groupId>com.google.cloud.tools</groupId><artifactId>jib-maven-plugin</artifactId><version>${docker.jib-maven-plugin.version}</version><configuration><to><image>docker.io/${docker.image.prefix}/${project.artifactId}</image><tags><tag>${project.version}</tag><tag>latest</tag></tags></to></configuration></plugin></plugins></build><profiles><profile><id>H2</id><activation><activeByDefault>true</activeByDefault></activation><properties><db.script>h2</db.script><jpa.database>H2</jpa.database><jdbc.driverClassName>org.h2.Driver</jdbc.driverClassName><jdbc.url>jdbc:h2:mem:petclinic</jdbc.url><jdbc.username>sa</jdbc.username><jdbc.password></jdbc.password></properties><dependencies><dependency><groupId>com.h2database</groupId><artifactId>h2</artifactId><version>${h2database.version}</version><scope>runtime</scope></dependency></dependencies></profile><profile><id>HSQLDB</id><properties><db.script>hsqldb</db.script><jpa.database>HSQL</jpa.database><jdbc.driverClassName>org.hsqldb.jdbcDriver</jdbc.driverClassName><jdbc.url>jdbc:hsqldb:mem:petclinic</jdbc.url><jdbc.username>sa</jdbc.username><jdbc.password></jdbc.password></properties><dependencies><dependency><groupId>org.hsqldb</groupId><artifactId>hsqldb</artifactId><version>${hsqldb.version}</version><scope>runtime</scope></dependency></dependencies></profile><profile><id>MySQL</id><properties><db.script>mysql</db.script><jpa.database>MYSQL</jpa.database><jdbc.driverClassName>com.mysql.cj.jdbc.Driver</jdbc.driverClassName><jdbc.url>jdbc:mysql://localhost:3306/petclinic?useUnicode=true</jdbc.url><jdbc.username>petclinic</jdbc.username><jdbc.password>petclinic</jdbc.password></properties><dependencies><dependency><groupId>mysql</groupId><artifactId>mysql-connector-java</artifactId><version>${mysql-driver.version}</version><scope>runtime</scope></dependency></dependencies></profile><profile><id>PostgreSQL</id><properties><db.script>postgresql</db.script><jpa.database>POSTGRESQL</jpa.database><jdbc.driverClassName>org.postgresql.Driver</jdbc.driverClassName><jdbc.url>jdbc:postgresql://localhost:5432/petclinic</jdbc.url><jdbc.username>postgres</jdbc.username><jdbc.password>petclinic</jdbc.password></properties><dependencies><dependency><groupId>org.postgresql</groupId><artifactId>postgresql</artifactId><version>${postgresql-driver.version}</version><scope>runtime</scope></dependency></dependencies></profile></profiles><repositories><repository><id>repository.spring.milestone</id><name>Spring
+            Milestone Repository</name><url>https://repo.spring.io/milestone</url></repository></repositories></project>"
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/resources/cache/ehcache.xml
+        message: ""
+        variables:
+          data: ""
+          innerText: "\n    \n\n    \n    \n\n\n"
+          matchingXML: <?xml version="1.0"?><ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:noNamespaceSchemaLocation="ehcache.xsd" updateCheck="false"><diskStore
+            path="java.io.tmpdir"></diskStore><!-- objects are evicted from the cache
+            every 60 seconds --><cache name="vets" timeToLiveSeconds="60" maxElementsInMemory="100"
+            eternal="false" overflowToDisk="false" maxElementsOnDisk="10000000" diskPersistent="false"
+            diskExpiryThreadIntervalSeconds="1" memoryStoreEvictionPolicy="LRU"></cache></ehcache>
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/resources/logback.xml
+        message: ""
+        codeSnip: "  1  <?xml version=\"1.0\" encoding=\"UTF-8\"?>\n  2  <!DOCTYPE
+          xml>\n  3  \n  4  <configuration scan=\"true\" scanPeriod=\"30 seconds\">\n
+          \ 5  \n  6      <contextListener class=\"ch.qos.logback.classic.jul.LevelChangePropagator\">\n
+          \ 7          <resetJUL>true</resetJUL>\n  8      </contextListener>\n  9
+          \     \n 10      <appender name=\"console\" class=\"ch.qos.logback.core.ConsoleAppender\">\n
+          11          <encoder>\n 12              <pattern>%-5level %logger{0} - %msg%n</pattern>\n
+          13          </encoder>\n 14      </appender>\n 15  \n 16      <!--<logger
+          name=\"org.hibernate\" level=\"debug\"/> -->\n 17      <logger name=\"org.springframework.samples.petclinic\"
+          level=\"debug\"/>\n 18  \n 19      <root level=\"debug\">\n 20          <appender-ref
+          ref=\"console\"/>\n 21      </root>\n 22  </configuration>\n"
+        lineNumber: 1
+        variables:
+          data: ""
+          innerText: "\n\n\n\n\n    \n        true\n    \n    \n    \n        \n            %-5level
+            %logger{0} - %msg%n\n        \n    \n\n    \n    \n\n    \n        \n
+            \   \n\n"
+          matchingXML: <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE xml><configuration
+            scan="true" scanPeriod="30 seconds"><contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator"><resetJUL>true</resetJUL></contextListener><appender
+            name="console" class="ch.qos.logback.core.ConsoleAppender"><encoder><pattern>%-5level
+            %logger{0} - %msg%n</pattern></encoder></appender><!--<logger name="org.hibernate"
+            level="debug"/> --><logger name="org.springframework.samples.petclinic"
+            level="debug"></logger><root level="debug"><appender-ref ref="console"></appender-ref></root></configuration>
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/webapp/WEB-INF/jetty-web.xml
+        message: ""
+        codeSnip: |2
+            1  <?xml version="1.0" encoding="UTF-8"?>
+            2  <!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure.dtd">
+            3  <Configure class="org.eclipse.jetty.webapp.WebAppContext">
+            4      <!-- Fix Jetty 9 issue -->
+            5      <!-- http://stackoverflow.com/questions/32643530/classpath-issue-between-jetty-maven-plugin-and-tomcat-jdbc-8-0-9-leading-to-ser -->
+            6      <Set name="parentLoaderPriority">true</Set>
+            7  </Configure>
+        lineNumber: 6
+        variables:
+          data: ""
+          innerText: "\n\n\n    \n    \n    true\n\n"
+          matchingXML: <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE Configure PUBLIC
+            "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure.dtd"><Configure
+            class="org.eclipse.jetty.webapp.WebAppContext"><!-- Fix Jetty 9 issue
+            --><!-- http://stackoverflow.com/questions/32643530/classpath-issue-between-jetty-maven-plugin-and-tomcat-jdbc-8-0-9-leading-to-ser
+            --><Set name="parentLoaderPriority">true</Set></Configure>
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/wro/wro.xml
+        message: ""
+        codeSnip: |2
+            1  <groups xmlns="http://www.isdc.ro/wro">
+            2    <group name="petclinic">
+            3      <css>classpath:META-INF/resources/webjars/bootstrap/3.3.6/less/bootstrap.less</css>
+            4      <css>/petclinic.less</css>
+            5     </group>
+            6  </groups>
+        lineNumber: 3
+        variables:
+          data: ""
+          innerText: "\n  \n    classpath:META-INF/resources/webjars/bootstrap/3.3.6/less/bootstrap.less\n
+            \   /petclinic.less\n   \n\n"
+          matchingXML: <?xml version="1.0"?><groups xmlns="http://www.isdc.ro/wro"><group
+            name="petclinic"><css>classpath:META-INF/resources/webjars/bootstrap/3.3.6/less/bootstrap.less</css><css>/petclinic.less</css></group></groups>
+  unmatched:
+  - discover-license
+  - discover-manifest-file
+  - hardcoded-ip-address
+  - windup-discover-jpa-configuration
+  - windup-discover-spring-configuration
+  - windup-discover-web-configuration
+- name: technology-usage
+  description: This ruleset provides analysis of logging libraries.
+  tags:
+  - Bean Validation
+  - Bean=EJB XML
+  - Caching=Hazelcast
+  - Common Annotations
+  - Connect=Common Annotations
+  - Connect=EJB XML
+  - Connect=Servlet
+  - Embedded framework - Spring DI
+  - Embedded framework - Spring MVC
+  - Embedded framework - Spring Web
+  - Embedded technology - Java Server Pages
+  - Embedded=Hazelcast
+  - Embedded=Properties
+  - Embedded=Spring DI
+  - Embedded=Spring MVC
+  - Embedded=Spring Web
+  - Execute=Spring DI
+  - HTTP=Servlet
+  - Hazelcast
+  - Hazelcast embedded library
+  - Inversion of Control=Spring DI
+  - JSP
+  - Java EE=Bean Validation
+  - Java EE=Common Annotations
+  - Java EE=EJB XML
+  - Java EE=JPA named queries
+  - Java EE=JSP Page
+  - Java EE=Servlet
+  - Java Servlet
+  - MVC=Spring MVC
+  - Other=Common Annotations
+  - Other=Properties
+  - Persistence=JPA named queries
+  - Servlet
+  - Spring DI
+  - Spring MVC
+  - Spring Web
+  - Store=Bean Validation
+  - Store=Hazelcast
+  - Store=JPA named queries
+  - Sustain=Properties
+  - Validation=Bean Validation
+  - View=JSP Page
+  - View=Spring MVC
+  - View=Spring Web
+  - Web=JSP Page
+  - Web=Spring Web
+  insights:
+    embedded-cache-libraries-06000:
+      description: Hazelcast embedded library
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Hazelcast
+      - tag=Hazelcast embedded library
+      incidents:
+      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/.mvn/wrapper/maven-wrapper.jar
+        message: ""
+    embedded-framework-08200:
+      description: Embedded framework - Spring DI
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded framework - Spring DI
+      - tag=Spring DI
+      incidents:
+      - uri: file:///opt/input/source/pom.xml
+        message: ""
+        codeSnip: "148  \t\t</dependency>\n149  \t\t<dependency>\n150  \t\t\t<groupId>com.jayway.jsonpath</groupId>\n151
+          \ \t\t\t<artifactId>json-path</artifactId>\n152  \t\t\t<version>${json-path.version}</version>\n153
+          \ \t\t\t<scope>test</scope>\n154  \t\t</dependency>\n155  \t\t<!-- SPRING,
+          SPRING, SPRINGITY SPRING -->\n156  \t\t<dependency>\n157  \t\t\t<groupId>org.springframework.data</groupId>\n158
+          \ \t\t\t<artifactId>spring-data-jpa</artifactId>\n159  \t\t</dependency>\n160
+          \ \n161  \t\t<dependency>\n162  \t\t\t<groupId>org.springframework</groupId>\n163
+          \ \t\t\t<artifactId>spring-jdbc</artifactId>\n164  \t\t\t<version>${spring-framework.version}</version>\n165
+          \ \t\t</dependency>\n166  \t\t<dependency>\n167  \t\t\t<groupId>org.springframework</groupId>\n168
+          \ \t\t\t<artifactId>spring-webmvc</artifactId>"
+        lineNumber: 157
+        variables:
+          name: org.springframework.spring-beans
+          version: 5.3.11
+    embedded-framework-08400:
+      description: Embedded framework - Spring Web
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded framework - Spring Web
+      - tag=Spring Web
+      incidents:
+      - uri: file:///opt/input/source/pom.xml
+        message: ""
+        codeSnip: "158  \t\t\t<artifactId>spring-data-jpa</artifactId>\n159  \t\t</dependency>\n160
+          \ \n161  \t\t<dependency>\n162  \t\t\t<groupId>org.springframework</groupId>\n163
+          \ \t\t\t<artifactId>spring-jdbc</artifactId>\n164  \t\t\t<version>${spring-framework.version}</version>\n165
+          \ \t\t</dependency>\n166  \t\t<dependency>\n167  \t\t\t<groupId>org.springframework</groupId>\n168
+          \ \t\t\t<artifactId>spring-webmvc</artifactId>\n169  \t\t\t<version>${spring-framework.version}</version>\n170
+          \ \t\t</dependency>\n171  \t\t<dependency>\n172  \t\t\t<groupId>org.springframework.session</groupId>\n173
+          \ \t\t\t<artifactId>spring-session-core</artifactId>\n174  \t\t</dependency>\n175
+          \ \t\t<dependency>\n176  \t\t\t<groupId>org.springframework.session</groupId>\n177
+          \ \t\t\t<artifactId>spring-session-hazelcast</artifactId>\n178  \t\t</dependency>"
+        lineNumber: 167
+        variables:
+          name: org.springframework.spring-web
+          version: 5.3.12
+    embedded-framework-embedded-framework-03900:
+      description: Hazelcast
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Caching=Hazelcast
+      - tag=Embedded=Hazelcast
+      - tag=Store=Hazelcast
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - Hazelcast
+    javaee-technology-usage-00080:
+      description: Common Annotations
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Common Annotations
+      incidents:
+      - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/config/InitDataSourceConfig.java
+        message: ""
+        codeSnip: "23   *      http://www.apache.org/licenses/LICENSE-2.0\n24   *\n25
+          \  * Unless required by applicable law or agreed to in writing, software\n26
+          \  * distributed under the License is distributed on an \"AS IS\" BASIS,\n27
+          \  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n28
+          \  * See the License for the specific language governing permissions and\n29
+          \  * limitations under the License.\n30   */\n31  package org.springframework.samples.petclinic.config;\n32
+          \ \n33  import javax.annotation.PostConstruct;\n34  import javax.sql.DataSource;\n35
+          \ \n36  import org.springframework.beans.factory.annotation.Autowired;\n37
+          \ import org.springframework.context.annotation.Configuration;\n38  import
+          org.springframework.core.env.Environment;\n39  import org.springframework.core.io.ClassPathResource;\n40
+          \ import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;\n41
+          \ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;\n42
+          \ \n43  @Configuration"
+        lineNumber: 33
+        variables:
+          annotation: PostConstruct
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/config/InitDataSourceConfig.java
+          kind: Module
+          name: javax.annotation.PostConstruct
+          package: org.springframework.samples.petclinic.config
+      - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/config/RootApplicationContextConfig.java
+        message: ""
+        codeSnip: "23   *      http://www.apache.org/licenses/LICENSE-2.0\n24   *\n25
+          \  * Unless required by applicable law or agreed to in writing, software\n26
+          \  * distributed under the License is distributed on an \"AS IS\" BASIS,\n27
+          \  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n28
+          \  * See the License for the specific language governing permissions and\n29
+          \  * limitations under the License.\n30   */\n31  package org.springframework.samples.petclinic.config;\n32
+          \ \n33  import javax.annotation.PostConstruct;\n34  \n35  import org.slf4j.Logger;\n36
+          \ import org.slf4j.LoggerFactory;\n37  import org.springframework.beans.factory.annotation.Autowired;\n38
+          \ import org.springframework.context.annotation.Configuration;\n39  import
+          org.springframework.context.annotation.Import;\n40  import org.springframework.core.env.Environment;\n41
+          \ \n42  @Configuration\n43  @Import({BusinessConfig.class, ToolsConfig.class,
+          SessionConfiguration.class})"
+        lineNumber: 33
+        variables:
+          annotation: PostConstruct
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/config/RootApplicationContextConfig.java
+          kind: Module
+          name: javax.annotation.PostConstruct
+          package: org.springframework.samples.petclinic.config
+    javaee-technology-usage-00110:
+      description: Bean Validation
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Bean Validation
+      incidents:
+      - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Owner.java
+        message: ""
+        codeSnip: "19  import java.util.Collections;\n20  import java.util.HashSet;\n21
+          \ import java.util.List;\n22  import java.util.Set;\n23  \n24  import javax.persistence.CascadeType;\n25
+          \ import javax.persistence.Column;\n26  import javax.persistence.Entity;\n27
+          \ import javax.persistence.OneToMany;\n28  import javax.persistence.Table;\n29
+          \ import javax.validation.constraints.Digits;\n30  import javax.validation.constraints.NotEmpty;\n31
+          \ \n32  import org.springframework.beans.support.MutableSortDefinition;\n33
+          \ import org.springframework.beans.support.PropertyComparator;\n34  import
+          org.springframework.core.style.ToStringCreator;\n35  \n36  /**\n37   * Simple
+          JavaBean domain object representing an owner.\n38   *\n39   * @author Ken
+          Krebs"
+        lineNumber: 29
+        variables:
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Owner.java
+          kind: Module
+          name: javax.validation.constraints.Digits
+          package: org.springframework.samples.petclinic.model
+      - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Owner.java
+        message: ""
+        codeSnip: "20  import java.util.HashSet;\n21  import java.util.List;\n22  import
+          java.util.Set;\n23  \n24  import javax.persistence.CascadeType;\n25  import
+          javax.persistence.Column;\n26  import javax.persistence.Entity;\n27  import
+          javax.persistence.OneToMany;\n28  import javax.persistence.Table;\n29  import
+          javax.validation.constraints.Digits;\n30  import javax.validation.constraints.NotEmpty;\n31
+          \ \n32  import org.springframework.beans.support.MutableSortDefinition;\n33
+          \ import org.springframework.beans.support.PropertyComparator;\n34  import
+          org.springframework.core.style.ToStringCreator;\n35  \n36  /**\n37   * Simple
+          JavaBean domain object representing an owner.\n38   *\n39   * @author Ken
+          Krebs\n40   * @author Juergen Hoeller"
+        lineNumber: 30
+        variables:
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Owner.java
+          kind: Module
+          name: javax.validation.constraints.NotEmpty
+          package: org.springframework.samples.petclinic.model
+      - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Person.java
+        message: ""
+        codeSnip: "10   * Unless required by applicable law or agreed to in writing,
+          software\n11   * distributed under the License is distributed on an \"AS
+          IS\" BASIS,\n12   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+          express or implied.\n13   * See the License for the specific language governing
+          permissions and\n14   * limitations under the License.\n15   */\n16  package
+          org.springframework.samples.petclinic.model;\n17  \n18  import javax.persistence.Column;\n19
+          \ import javax.persistence.MappedSuperclass;\n20  import javax.validation.constraints.NotEmpty;\n21
+          \ \n22  /**\n23   * Simple JavaBean domain object representing an person.\n24
+          \  *\n25   * @author Ken Krebs\n26   */\n27  @MappedSuperclass\n28  public
+          class Person extends BaseEntity {\n29  \n30      @Column(name = \"first_name\")"
+        lineNumber: 20
+        variables:
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Person.java
+          kind: Module
+          name: javax.validation.constraints.NotEmpty
+          package: org.springframework.samples.petclinic.model
+      - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Visit.java
+        message: ""
+        codeSnip: "15   */\n16  package org.springframework.samples.petclinic.model;\n17
+          \ \n18  import org.springframework.format.annotation.DateTimeFormat;\n19
+          \ \n20  import javax.persistence.Column;\n21  import javax.persistence.Entity;\n22
+          \ import javax.persistence.JoinColumn;\n23  import javax.persistence.ManyToOne;\n24
+          \ import javax.persistence.Table;\n25  import javax.validation.constraints.NotEmpty;\n26
+          \ import java.time.LocalDate;\n27  \n28  /**\n29   * Simple JavaBean domain
+          object representing a visit.\n30   *\n31   * @author Ken Krebs\n32   */\n33
+          \ @Entity\n34  @Table(name = \"visits\")\n35  public class Visit extends
+          BaseEntity {"
+        lineNumber: 25
+        variables:
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Visit.java
+          kind: Module
+          name: javax.validation.constraints.NotEmpty
+          package: org.springframework.samples.petclinic.model
+    javaee-technology-usage-00120:
+      description: Java Servlet
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Java Servlet
+      - tag=Servlet
+      incidents:
+      - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/PetclinicInitializer.java
+        message: ""
+        codeSnip: "16  package org.springframework.samples.petclinic;\n17  \n18  import
+          org.springframework.samples.petclinic.config.MvcCoreConfig;\n19  import
+          org.springframework.samples.petclinic.config.RootApplicationContextConfig;\n20
+          \ import org.springframework.web.context.WebApplicationContext;\n21  import
+          org.springframework.web.context.support.AnnotationConfigWebApplicationContext;\n22
+          \ import org.springframework.web.filter.CharacterEncodingFilter;\n23  import
+          org.springframework.web.servlet.DispatcherServlet;\n24  import org.springframework.web.servlet.support.AbstractDispatcherServletInitializer;\n25
+          \ \n26  import javax.servlet.Filter;\n27  import javax.servlet.ServletContext;\n28
+          \ \n29  \n30  /**\n31   * In Servlet 3.0+ environments, this class replaces
+          the traditional {@code web.xml}-based approach in order to configure the\n32
+          \  * {@link ServletContext} programmatically.\n33   * <p/>\n34   * Create
+          the Spring \"<strong>root</strong>\" application context.<br/>\n35   * Register
+          a {@link DispatcherServlet}  in the servlet context.<br/>\n36   * For both
+          servlets, register a {@link CharacterEncodingFilter}."
+        lineNumber: 26
+        variables:
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/PetclinicInitializer.java
+          kind: Module
+          name: javax.servlet.Filter
+          package: org.springframework.samples.petclinic
+      - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/PetclinicInitializer.java
+        message: ""
+        codeSnip: "17  \n18  import org.springframework.samples.petclinic.config.MvcCoreConfig;\n19
+          \ import org.springframework.samples.petclinic.config.RootApplicationContextConfig;\n20
+          \ import org.springframework.web.context.WebApplicationContext;\n21  import
+          org.springframework.web.context.support.AnnotationConfigWebApplicationContext;\n22
+          \ import org.springframework.web.filter.CharacterEncodingFilter;\n23  import
+          org.springframework.web.servlet.DispatcherServlet;\n24  import org.springframework.web.servlet.support.AbstractDispatcherServletInitializer;\n25
+          \ \n26  import javax.servlet.Filter;\n27  import javax.servlet.ServletContext;\n28
+          \ \n29  \n30  /**\n31   * In Servlet 3.0+ environments, this class replaces
+          the traditional {@code web.xml}-based approach in order to configure the\n32
+          \  * {@link ServletContext} programmatically.\n33   * <p/>\n34   * Create
+          the Spring \"<strong>root</strong>\" application context.<br/>\n35   * Register
+          a {@link DispatcherServlet}  in the servlet context.<br/>\n36   * For both
+          servlets, register a {@link CharacterEncodingFilter}.\n37   * <p/>"
+        lineNumber: 27
+        variables:
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/PetclinicInitializer.java
+          kind: Module
+          name: javax.servlet.ServletContext
+          package: org.springframework.samples.petclinic
+      - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/config/SessionConfiguration.java
+        message: ""
+        codeSnip: " 1  package org.springframework.samples.petclinic.config;\n 2  \n
+          3  import java.util.List;\n 4  \n 5  import javax.servlet.ServletContext;\n
+          6  import javax.servlet.SessionCookieConfig;\n 7  \n 8  import org.springframework.beans.factory.annotation.Value;\n
+          9  import org.springframework.context.annotation.Bean;\n10  import org.springframework.context.annotation.Configuration;\n11
+          \ import org.springframework.context.annotation.PropertySource;\n12  import
+          org.springframework.session.FlushMode;\n13  import org.springframework.session.MapSession;\n14
+          \ import org.springframework.session.SaveMode;\n15  import org.springframework.session.config.SessionRepositoryCustomizer;"
+        lineNumber: 5
+        variables:
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/config/SessionConfiguration.java
+          kind: Module
+          name: javax.servlet.ServletContext
+          package: org.springframework.samples.petclinic.config
+      - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/config/SessionConfiguration.java
+        message: ""
+        codeSnip: " 1  package org.springframework.samples.petclinic.config;\n 2  \n
+          3  import java.util.List;\n 4  \n 5  import javax.servlet.ServletContext;\n
+          6  import javax.servlet.SessionCookieConfig;\n 7  \n 8  import org.springframework.beans.factory.annotation.Value;\n
+          9  import org.springframework.context.annotation.Bean;\n10  import org.springframework.context.annotation.Configuration;\n11
+          \ import org.springframework.context.annotation.PropertySource;\n12  import
+          org.springframework.session.FlushMode;\n13  import org.springframework.session.MapSession;\n14
+          \ import org.springframework.session.SaveMode;\n15  import org.springframework.session.config.SessionRepositoryCustomizer;\n16
+          \ import org.springframework.session.hazelcast.Hazelcast4IndexedSessionRepository;"
+        lineNumber: 6
+        variables:
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/config/SessionConfiguration.java
+          kind: Module
+          name: javax.servlet.SessionCookieConfig
+          package: org.springframework.samples.petclinic.config
+    javaee-technology-usage-00180:
+      description: Common Annotations
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Connect=Common Annotations
+      - tag=Java EE=Common Annotations
+      - tag=Other=Common Annotations
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - Common Annotations
+    javaee-technology-usage-00210:
+      description: Bean Validation
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Java EE=Bean Validation
+      - tag=Store=Bean Validation
+      - tag=Validation=Bean Validation
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - Bean Validation
+    javaee-technology-usage-00230:
+      description: Servlet
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Connect=Servlet
+      - tag=HTTP=Servlet
+      - tag=Java EE=Servlet
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - Servlet
+    mvc-01220:
+      description: Embedded framework - Spring MVC
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded framework - Spring MVC
+      - tag=Spring MVC
+      incidents:
+      - uri: file:///opt/input/source/pom.xml
+        message: ""
+        codeSnip: "158  \t\t\t<artifactId>spring-data-jpa</artifactId>\n159  \t\t</dependency>\n160
+          \ \n161  \t\t<dependency>\n162  \t\t\t<groupId>org.springframework</groupId>\n163
+          \ \t\t\t<artifactId>spring-jdbc</artifactId>\n164  \t\t\t<version>${spring-framework.version}</version>\n165
+          \ \t\t</dependency>\n166  \t\t<dependency>\n167  \t\t\t<groupId>org.springframework</groupId>\n168
+          \ \t\t\t<artifactId>spring-webmvc</artifactId>\n169  \t\t\t<version>${spring-framework.version}</version>\n170
+          \ \t\t</dependency>\n171  \t\t<dependency>\n172  \t\t\t<groupId>org.springframework.session</groupId>\n173
+          \ \t\t\t<artifactId>spring-session-core</artifactId>\n174  \t\t</dependency>\n175
+          \ \t\t<dependency>\n176  \t\t\t<groupId>org.springframework.session</groupId>\n177
+          \ \t\t\t<artifactId>spring-session-hazelcast</artifactId>\n178  \t\t</dependency>"
+        lineNumber: 167
+        variables:
+          name: org.springframework.spring-webmvc
+          version: 5.3.12
+    non-xml-technology-usage-02000:
+      description: Non-XML EJB
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Bean=EJB XML
+      - tag=Connect=EJB XML
+      - tag=Java EE=EJB XML
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - EJB XML
+    non-xml-technology-usage-20000:
+      description: Properties
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded=Properties
+      - tag=Other=Properties
+      - tag=Sustain=Properties
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - Properties
+    technology-usage-database-01200:
+      description: JPA Queries
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Java EE=JPA named queries
+      - tag=Persistence=JPA named queries
+      - tag=Store=JPA named queries
+      incidents:
+      - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Owner.java
+        message: ""
+        codeSnip: "34  import org.springframework.core.style.ToStringCreator;\n35
+          \ \n36  /**\n37   * Simple JavaBean domain object representing an owner.\n38
+          \  *\n39   * @author Ken Krebs\n40   * @author Juergen Hoeller\n41   * @author
+          Sam Brannen\n42   * @author Michael Isvy\n43   */\n44  @Entity\n45  @Table(name
+          = \"owners\")\n46  public class Owner extends Person {\n47      @Column(name
+          = \"address\")\n48      @NotEmpty\n49      private String address;\n50  \n51
+          \     @Column(name = \"city\")\n52      @NotEmpty\n53      private String
+          city;\n54  "
+        lineNumber: 44
+        variables:
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Owner.java
+          kind: Property
+          name: Entity
+          package: org.springframework.samples.petclinic.model
+      - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Owner.java
+        message: ""
+        codeSnip: "35  \n36  /**\n37   * Simple JavaBean domain object representing
+          an owner.\n38   *\n39   * @author Ken Krebs\n40   * @author Juergen Hoeller\n41
+          \  * @author Sam Brannen\n42   * @author Michael Isvy\n43   */\n44  @Entity\n45
+          \ @Table(name = \"owners\")\n46  public class Owner extends Person {\n47
+          \     @Column(name = \"address\")\n48      @NotEmpty\n49      private String
+          address;\n50  \n51      @Column(name = \"city\")\n52      @NotEmpty\n53
+          \     private String city;\n54  \n55      @Column(name = \"telephone\")"
+        lineNumber: 45
+        variables:
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Owner.java
+          kind: Property
+          name: Entity
+          package: org.springframework.samples.petclinic.model
+      - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Pet.java
+        message: ""
+        codeSnip: "35  import java.util.List;\n36  import java.util.Set;\n37  \n38
+          \ /**\n39   * Simple business object representing a pet.\n40   *\n41   *
+          @author Ken Krebs\n42   * @author Juergen Hoeller\n43   * @author Sam Brannen\n44
+          \  */\n45  @Entity\n46  @Table(name = \"pets\")\n47  public class Pet extends
+          NamedEntity {\n48  \n49      @Column(name = \"birth_date\")\n50      @DateTimeFormat(pattern
+          = \"yyyy/MM/dd\")\n51      private LocalDate birthDate;\n52  \n53      @ManyToOne\n54
+          \     @JoinColumn(name = \"type_id\")\n55      private PetType type;"
+        lineNumber: 45
+        variables:
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Pet.java
+          kind: Property
+          name: Entity
+          package: org.springframework.samples.petclinic.model
+      - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Pet.java
+        message: ""
+        codeSnip: "36  import java.util.Set;\n37  \n38  /**\n39   * Simple business
+          object representing a pet.\n40   *\n41   * @author Ken Krebs\n42   * @author
+          Juergen Hoeller\n43   * @author Sam Brannen\n44   */\n45  @Entity\n46  @Table(name
+          = \"pets\")\n47  public class Pet extends NamedEntity {\n48  \n49      @Column(name
+          = \"birth_date\")\n50      @DateTimeFormat(pattern = \"yyyy/MM/dd\")\n51
+          \     private LocalDate birthDate;\n52  \n53      @ManyToOne\n54      @JoinColumn(name
+          = \"type_id\")\n55      private PetType type;\n56  "
+        lineNumber: 46
+        variables:
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Pet.java
+          kind: Property
+          name: Entity
+          package: org.springframework.samples.petclinic.model
+      - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/PetType.java
+        message: ""
+        codeSnip: "15   */\n16  package org.springframework.samples.petclinic.model;\n17
+          \ \n18  import javax.persistence.Entity;\n19  import javax.persistence.Table;\n20
+          \ \n21  /**\n22   * @author Juergen Hoeller\n23   *         Can be Cat,
+          Dog, Hamster...\n24   */\n25  @Entity\n26  @Table(name = \"types\")\n27
+          \ public class PetType extends NamedEntity {\n28  \n29  }\n"
+        lineNumber: 25
+        variables:
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/PetType.java
+          kind: Property
+          name: Entity
+          package: org.springframework.samples.petclinic.model
+      - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/PetType.java
+        message: ""
+        codeSnip: "16  package org.springframework.samples.petclinic.model;\n17  \n18
+          \ import javax.persistence.Entity;\n19  import javax.persistence.Table;\n20
+          \ \n21  /**\n22   * @author Juergen Hoeller\n23   *         Can be Cat,
+          Dog, Hamster...\n24   */\n25  @Entity\n26  @Table(name = \"types\")\n27
+          \ public class PetType extends NamedEntity {\n28  \n29  }\n"
+        lineNumber: 26
+        variables:
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/PetType.java
+          kind: Property
+          name: Entity
+          package: org.springframework.samples.petclinic.model
+      - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Specialty.java
+        message: ""
+        codeSnip: "16  package org.springframework.samples.petclinic.model;\n17  \n18
+          \ import javax.persistence.Entity;\n19  import javax.persistence.Table;\n20
+          \ \n21  /**\n22   * Models a {@link Vet Vet's} specialty (for example, dentistry).\n23
+          \  *\n24   * @author Juergen Hoeller\n25   */\n26  @Entity\n27  @Table(name
+          = \"specialties\")\n28  public class Specialty extends NamedEntity {\n29
+          \ \n30  }\n"
+        lineNumber: 26
+        variables:
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Specialty.java
+          kind: Property
+          name: Entity
+          package: org.springframework.samples.petclinic.model
+      - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Specialty.java
+        message: ""
+        codeSnip: "17  \n18  import javax.persistence.Entity;\n19  import javax.persistence.Table;\n20
+          \ \n21  /**\n22   * Models a {@link Vet Vet's} specialty (for example, dentistry).\n23
+          \  *\n24   * @author Juergen Hoeller\n25   */\n26  @Entity\n27  @Table(name
+          = \"specialties\")\n28  public class Specialty extends NamedEntity {\n29
+          \ \n30  }\n"
+        lineNumber: 27
+        variables:
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Specialty.java
+          kind: Property
+          name: Entity
+          package: org.springframework.samples.petclinic.model
+      - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Vet.java
+        message: ""
+        codeSnip: "33  import org.springframework.beans.support.PropertyComparator;\n34
+          \ \n35  /**\n36   * Simple JavaBean domain object representing a veterinarian.\n37
+          \  *\n38   * @author Ken Krebs\n39   * @author Juergen Hoeller\n40   * @author
+          Sam Brannen\n41   * @author Arjen Poutsma\n42   */\n43  @Entity\n44  @Table(name
+          = \"vets\")\n45  public class Vet extends Person {\n46  \n47      @ManyToMany(fetch
+          = FetchType.EAGER)\n48      @JoinTable(name = \"vet_specialties\", joinColumns
+          = @JoinColumn(name = \"vet_id\"),\n49          inverseJoinColumns = @JoinColumn(name
+          = \"specialty_id\"))\n50      private Set<Specialty> specialties;\n51  \n52
+          \     protected Set<Specialty> getSpecialtiesInternal() {\n53          if
+          (this.specialties == null) {"
+        lineNumber: 43
+        variables:
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Vet.java
+          kind: Property
+          name: Entity
+          package: org.springframework.samples.petclinic.model
+      - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Vet.java
+        message: ""
+        codeSnip: "34  \n35  /**\n36   * Simple JavaBean domain object representing
+          a veterinarian.\n37   *\n38   * @author Ken Krebs\n39   * @author Juergen
+          Hoeller\n40   * @author Sam Brannen\n41   * @author Arjen Poutsma\n42   */\n43
+          \ @Entity\n44  @Table(name = \"vets\")\n45  public class Vet extends Person
+          {\n46  \n47      @ManyToMany(fetch = FetchType.EAGER)\n48      @JoinTable(name
+          = \"vet_specialties\", joinColumns = @JoinColumn(name = \"vet_id\"),\n49
+          \         inverseJoinColumns = @JoinColumn(name = \"specialty_id\"))\n50
+          \     private Set<Specialty> specialties;\n51  \n52      protected Set<Specialty>
+          getSpecialtiesInternal() {\n53          if (this.specialties == null) {\n54
+          \             this.specialties = new HashSet<>();"
+        lineNumber: 44
+        variables:
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Vet.java
+          kind: Property
+          name: Entity
+          package: org.springframework.samples.petclinic.model
+      - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Visit.java
+        message: ""
+        codeSnip: "23  import javax.persistence.ManyToOne;\n24  import javax.persistence.Table;\n25
+          \ import javax.validation.constraints.NotEmpty;\n26  import java.time.LocalDate;\n27
+          \ \n28  /**\n29   * Simple JavaBean domain object representing a visit.\n30
+          \  *\n31   * @author Ken Krebs\n32   */\n33  @Entity\n34  @Table(name =
+          \"visits\")\n35  public class Visit extends BaseEntity {\n36  \n37      /**\n38
+          \      * Holds value of property date.\n39       */\n40      @Column(name
+          = \"visit_date\")\n41      @DateTimeFormat(pattern = \"yyyy/MM/dd\")\n42
+          \     private LocalDate date;\n43  "
+        lineNumber: 33
+        variables:
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Visit.java
+          kind: Property
+          name: Entity
+          package: org.springframework.samples.petclinic.model
+      - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Visit.java
+        message: ""
+        codeSnip: "24  import javax.persistence.Table;\n25  import javax.validation.constraints.NotEmpty;\n26
+          \ import java.time.LocalDate;\n27  \n28  /**\n29   * Simple JavaBean domain
+          object representing a visit.\n30   *\n31   * @author Ken Krebs\n32   */\n33
+          \ @Entity\n34  @Table(name = \"visits\")\n35  public class Visit extends
+          BaseEntity {\n36  \n37      /**\n38       * Holds value of property date.\n39
+          \      */\n40      @Column(name = \"visit_date\")\n41      @DateTimeFormat(pattern
+          = \"yyyy/MM/dd\")\n42      private LocalDate date;\n43  \n44      /**"
+        lineNumber: 34
+        variables:
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Visit.java
+          kind: Property
+          name: Entity
+          package: org.springframework.samples.petclinic.model
+    technology-usage-embedded-framework-08200:
+      description: Spring DI
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded=Spring DI
+      - tag=Execute=Spring DI
+      - tag=Inversion of Control=Spring DI
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - Spring DI
+    technology-usage-embedded-framework-08400:
+      description: Spring Web
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded=Spring Web
+      - tag=View=Spring Web
+      - tag=Web=Spring Web
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - Spring Web
+    technology-usage-mvc-01200:
+      description: Spring MVC
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded=Spring MVC
+      - tag=MVC=Spring MVC
+      - tag=View=Spring MVC
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - Spring MVC
+    technology-usage-web-01100:
+      description: JSP
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Java EE=JSP Page
+      - tag=View=JSP Page
+      - tag=Web=JSP Page
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - JSP
+  unmatched:
+  - 3rd-party-01000
+  - 3rd-party-02000
+  - 3rd-party-03000
+  - 3rd-party-04000
+  - 3rd-party-05000
+  - 3rd-party-06000
+  - 3rd-party-07000
+  - 3rd-party-08000
+  - 3rd-party-09000
+  - 3rd-party-10000
+  - 3rd-party-11000
+  - 3rd-party-12000
+  - 3rd-party-13000
+  - 3rd-party-14000
+  - 3rd-party-15000
+  - 3rd-party-16000
+  - 3rd-party-17000
+  - 3rd-party-18000
+  - 3rd-party-19000
+  - 3rd-party-spring-03001
+  - 3rd-party-spring-03002
+  - apm-00000
+  - apm-00001
+  - apm-00002
+  - apm-00003
+  - clustering-00000
+  - clustering-00001
+  - configuration-management-0100
+  - configuration-management-0200
+  - configuration-management-0300
+  - configuration-management-0400
+  - configuration-management-0500
+  - configuration-management-technology-usage-0100
+  - configuration-management-technology-usage-0200
+  - configuration-management-technology-usage-0300
+  - connect-01400
+  - connect-01500
+  - connect-01600
+  - connect-01700
+  - connect-01800
+  - connect-01900
+  - connect-02000
+  - connect-02100
+  - connect-02200
+  - connect-02300
+  - connect-02400
+  - connect-02500
+  - connect-02600
+  - connect-02700
+  - connect-02800
+  - connect-02900
+  - database-01400
+  - database-01400
+  - database-01500
+  - database-01600
+  - database-01700
+  - database-01800
+  - database-01805
+  - database-01900
+  - database-02000
+  - database-02100
+  - database-02200
+  - database-02300
+  - database-02400
+  - database-02500
+  - database-02600
+  - database-02700
+  - database-02800
+  - database-02900
+  - database-03000
+  - database-03100
+  - ejb-01000
+  - embedded-cache-libraries-01000
+  - embedded-cache-libraries-02000
+  - embedded-cache-libraries-03000
+  - embedded-cache-libraries-04000
+  - embedded-cache-libraries-05000
+  - embedded-cache-libraries-07000
+  - embedded-cache-libraries-08000
+  - embedded-cache-libraries-09000
+  - embedded-cache-libraries-10000
+  - embedded-cache-libraries-11000
+  - embedded-cache-libraries-12000
+  - embedded-cache-libraries-13000
+  - embedded-cache-libraries-14000
+  - embedded-cache-libraries-15000
+  - embedded-cache-libraries-16000
+  - embedded-framework-01000
+  - embedded-framework-01010
+  - embedded-framework-01100
+  - embedded-framework-01200
+  - embedded-framework-01300
+  - embedded-framework-01400
+  - embedded-framework-01500
+  - embedded-framework-01600
+  - embedded-framework-01700
+  - embedded-framework-02000
+  - embedded-framework-02200
+  - embedded-framework-02300
+  - embedded-framework-02400
+  - embedded-framework-03000
+  - embedded-framework-03100
+  - embedded-framework-03200
+  - embedded-framework-03300
+  - embedded-framework-03400
+  - embedded-framework-04700
+  - embedded-framework-05000
+  - embedded-framework-05100
+  - embedded-framework-05300
+  - embedded-framework-05400
+  - embedded-framework-05500
+  - embedded-framework-05600
+  - embedded-framework-05700
+  - embedded-framework-05800
+  - embedded-framework-05900
+  - embedded-framework-06000
+  - embedded-framework-06100
+  - embedded-framework-06200
+  - embedded-framework-06300
+  - embedded-framework-06400
+  - embedded-framework-06500
+  - embedded-framework-06600
+  - embedded-framework-06700
+  - embedded-framework-06800
+  - embedded-framework-06900
+  - embedded-framework-07000
+  - embedded-framework-07100
+  - embedded-framework-07200
+  - embedded-framework-07300
+  - embedded-framework-07400
+  - embedded-framework-07500
+  - embedded-framework-07600
+  - embedded-framework-07700
+  - embedded-framework-07800
+  - embedded-framework-07900
+  - embedded-framework-08000
+  - embedded-framework-08100
+  - embedded-framework-08300
+  - embedded-framework-08500
+  - embedded-framework-08600
+  - embedded-framework-08700
+  - embedded-framework-08800
+  - embedded-framework-08900
+  - embedded-framework-09000
+  - embedded-framework-09100
+  - embedded-framework-09300
+  - embedded-framework-embedded-framework-02700
+  - embedded-framework-embedded-framework-02800
+  - embedded-framework-embedded-framework-02900
+  - embedded-framework-embedded-framework-03000
+  - embedded-framework-embedded-framework-03100
+  - embedded-framework-embedded-framework-03200
+  - embedded-framework-embedded-framework-03300
+  - embedded-framework-embedded-framework-03400
+  - embedded-framework-embedded-framework-03500
+  - embedded-framework-embedded-framework-03600
+  - embedded-framework-embedded-framework-03700
+  - embedded-framework-embedded-framework-03800
+  - embedded-framework-embedded-framework-04000
+  - embedded-framework-embedded-framework-04100
+  - embedded-framework-embedded-framework-04200
+  - embedded-framework-embedded-framework-04300
+  - embedded-framework-embedded-framework-04400
+  - embedded-framework-embedded-framework-04500
+  - embedded-framework-embedded-framework-04600
+  - embedded-framework-embedded-framework-09200
+  - embedded-framework-embedded-framework-09300
+  - integration-00001
+  - integration-00002
+  - integration-00003
+  - integration-00004
+  - integration-00005
+  - integration-00006
+  - integration-00007
+  - integration-00008
+  - integration-00009
+  - integration-00010
+  - integration-00011
+  - integration-00012
+  - integration-00013
+  - integration-00014
+  - integration-00015
+  - integration-00016
+  - integration-00017
+  - javaee-technology-usage-00010
+  - javaee-technology-usage-00011
+  - javaee-technology-usage-00012
+  - javaee-technology-usage-00013
+  - javaee-technology-usage-00020-jakarta
+  - javaee-technology-usage-00020-javax
+  - javaee-technology-usage-00021
+  - javaee-technology-usage-00030
+  - javaee-technology-usage-00031
+  - javaee-technology-usage-00040
+  - javaee-technology-usage-00050
+  - javaee-technology-usage-00060
+  - javaee-technology-usage-00070
+  - javaee-technology-usage-00090
+  - javaee-technology-usage-00100
+  - javaee-technology-usage-00130
+  - javaee-technology-usage-00140
+  - javaee-technology-usage-00150
+  - javaee-technology-usage-00160
+  - javaee-technology-usage-00170
+  - javaee-technology-usage-00190
+  - javaee-technology-usage-00200
+  - javaee-technology-usage-00220
+  - javaee-technology-usage-00902
+  - javaee-technology-usage-00903
+  - javaee-technology-usage-00905
+  - javaee-technology-usage-00906
+  - javaee-technology-usage-00910
+  - javaee-technology-usage-00911
+  - javaee-technology-usage-00912
+  - javaee-technology-usage-00913
+  - javaee-technology-usage-00914
+  - javaee-technology-usage-00915
+  - javaee-technology-usage-00916
+  - javaee-technology-usage-00917
+  - javaee-technology-usage-00918
+  - javaee-technology-usage-00926
+  - javaee-technology-usage-00927
+  - javaee-technology-usage-00928
+  - javaee-technology-usage-00930
+  - javaee-technology-usage-00931
+  - javaee-technology-usage-00932
+  - javaee-technology-usage-00950
+  - javaee-technology-usage-00951
+  - javaee-technology-usage-00952
+  - javaee-technology-usage-00953
+  - javaee-technology-usage-00954
+  - javaee-technology-usage-00955
+  - javaee-technology-usage-00956
+  - javaee-technology-usage-00957
+  - javaee-technology-usage-00958
+  - javase-01000
+  - javase-01100
+  - javase-technology-usage-01000
+  - jta-00020
+  - jta-00030
+  - jta-00040
+  - jta-00050
+  - jta-00060
+  - jta-00070
+  - jta-00080
+  - jta-00090
+  - jta-00100
+  - jta-00110
+  - jta-00120
+  - jta-00130
+  - jta-00140
+  - jta-00150
+  - jta-00160
+  - jta-00170
+  - jta-00180
+  - jta-00190
+  - jta-00200
+  - jta-00210
+  - logging-usage-00010
+  - logging-usage-00020
+  - logging-usage-00030
+  - logging-usage-00040
+  - logging-usage-00050
+  - logging-usage-00080
+  - logging-usage-00090
+  - logging-usage-00100
+  - logging-usage-00110
+  - logging-usage-00120
+  - logging-usage-00130
+  - logging-usage-00140
+  - logging-usage-00150
+  - logging-usage-00160
+  - logging-usage-00170
+  - logging-usage-00180
+  - logging-usage-00190
+  - logging-usage-00200
+  - logging-usage-00210
+  - logging-usage-00220
+  - logging-usage-00230
+  - logging-usage-00240
+  - logging-usage-00250
+  - logging-usage-00260
+  - logging-usage-00270
+  - logging-usage-00280
+  - logging-usage-00290
+  - mvc-01000
+  - mvc-01100
+  - mvc-01200
+  - mvc-01210
+  - mvc-01300
+  - mvc-01400
+  - mvc-01500
+  - mvc-01600
+  - mvc-01700
+  - mvc-01800
+  - mvc-01900
+  - mvc-02000
+  - mvc-02100
+  - mvc-02200
+  - mvc-02300
+  - mvc-02400
+  - mvc-02500
+  - mvc-02600
+  - mvc-02700
+  - mvc-02800
+  - mvc-02900
+  - mvc-03000
+  - mvc-03100
+  - mvc-03200
+  - mvc-03300
+  - mvc-03400
+  - mvc-03500
+  - mvc-03600
+  - mvc-03700
+  - mvc-03800
+  - mvc-03900
+  - mvc-04000
+  - mvc-04100
+  - mvc-04200
+  - mvc-04300
+  - mvc-04400
+  - mvc-04500
+  - mvc-04600
+  - mvc-04700
+  - mvc-04800
+  - mvc-04900
+  - mvc-05000
+  - mvc-05100
+  - mvc-05200
+  - mvc-05300
+  - mvc-05400
+  - mvc-05500
+  - mvc-05600
+  - mvc-05700
+  - mvc-05800
+  - mvc-05900
+  - mvc-06000
+  - non-xml-technology-usage-05000
+  - non-xml-technology-usage-06000
+  - non-xml-technology-usage-12000
+  - non-xml-technology-usage-13000
+  - non-xml-technology-usage-14000
+  - non-xml-technology-usage-17000
+  - non-xml-technology-usage-18000
+  - non-xml-technology-usage-19000
+  - non-xml-technology-usage-21000
+  - non-xml-technology-usage-22000
+  - non-xml-technology-usage-23000
+  - non-xml-technology-usage-24000
+  - non-xml-technology-usage-25000
+  - non-xml-technology-usage-26000
+  - non-xml-technology-usage-27000
+  - observability-0100
+  - observability-0200
+  - observability-technology-usage-0100
+  - observability-technology-usage-0200
+  - security-01100
+  - security-01200
+  - security-01300
+  - security-01400
+  - security-01500
+  - security-01600
+  - security-01700
+  - security-01800
+  - security-01900
+  - security-02000
+  - security-02100
+  - security-02200
+  - security-02300
+  - security-02400
+  - security-02500
+  - security-02600
+  - security-02700
+  - security-02800
+  - security-02900
+  - security-03000
+  - security-03100
+  - security-03200
+  - security-03300
+  - security-03400
+  - security-03500
+  - security-03600
+  - spring-catchall-00001
+  - technology-usage-3rd-party-01000
+  - technology-usage-3rd-party-02000
+  - technology-usage-3rd-party-03000
+  - technology-usage-3rd-party-04000
+  - technology-usage-3rd-party-05000
+  - technology-usage-3rd-party-06000
+  - technology-usage-3rd-party-08000
+  - technology-usage-3rd-party-09000
+  - technology-usage-3rd-party-10000
+  - technology-usage-3rd-party-11000
+  - technology-usage-3rd-party-12000
+  - technology-usage-3rd-party-13000
+  - technology-usage-3rd-party-14000
+  - technology-usage-3rd-party-15000
+  - technology-usage-3rd-party-16000
+  - technology-usage-3rd-party-17000
+  - technology-usage-3rd-party-18000
+  - technology-usage-3rd-party-19000
+  - technology-usage-3rd-party-20000
+  - technology-usage-3rd-party-spring-03001-0
+  - technology-usage-3rd-party-spring-03001-1
+  - technology-usage-3rd-party-spring-03001-2
+  - technology-usage-3rd-party-spring-03002
+  - technology-usage-apm-00010
+  - technology-usage-apm-00020
+  - technology-usage-apm-00030
+  - technology-usage-apm-00040
+  - technology-usage-clustering-01000
+  - technology-usage-clustering-02000
+  - technology-usage-connect-01000
+  - technology-usage-connect-01100
+  - technology-usage-connect-01101
+  - technology-usage-connect-01200
+  - technology-usage-connect-01300
+  - technology-usage-connect-01400
+  - technology-usage-connect-01500
+  - technology-usage-connect-01600
+  - technology-usage-connect-01700
+  - technology-usage-connect-01800
+  - technology-usage-connect-01900
+  - technology-usage-connect-02000
+  - technology-usage-connect-02100
+  - technology-usage-connect-02200
+  - technology-usage-connect-02300
+  - technology-usage-connect-02400
+  - technology-usage-connect-02500
+  - technology-usage-connect-02600
+  - technology-usage-connect-02700
+  - technology-usage-connect-02800
+  - technology-usage-connect-02900
+  - technology-usage-database-01000
+  - technology-usage-database-01001
+  - technology-usage-database-01100
+  - technology-usage-database-01300
+  - technology-usage-database-01400
+  - technology-usage-database-01500
+  - technology-usage-database-01600
+  - technology-usage-database-01700
+  - technology-usage-database-01800
+  - technology-usage-database-01900
+  - technology-usage-database-02000
+  - technology-usage-database-02100
+  - technology-usage-database-02200
+  - technology-usage-database-02300
+  - technology-usage-database-02400
+  - technology-usage-database-02500
+  - technology-usage-database-02600
+  - technology-usage-database-02700
+  - technology-usage-database-02800
+  - technology-usage-database-02900
+  - technology-usage-database-03000
+  - technology-usage-database-03100
+  - technology-usage-database-03200
+  - technology-usage-ejb-01400
+  - technology-usage-embedded-framework-01000
+  - technology-usage-embedded-framework-01010
+  - technology-usage-embedded-framework-01100
+  - technology-usage-embedded-framework-01200
+  - technology-usage-embedded-framework-01300
+  - technology-usage-embedded-framework-01400
+  - technology-usage-embedded-framework-01500
+  - technology-usage-embedded-framework-01600
+  - technology-usage-embedded-framework-01700
+  - technology-usage-embedded-framework-02000
+  - technology-usage-embedded-framework-02100
+  - technology-usage-embedded-framework-02200
+  - technology-usage-embedded-framework-02300
+  - technology-usage-embedded-framework-02400
+  - technology-usage-embedded-framework-04700
+  - technology-usage-embedded-framework-05000
+  - technology-usage-embedded-framework-05100
+  - technology-usage-embedded-framework-05300
+  - technology-usage-embedded-framework-05400
+  - technology-usage-embedded-framework-05600
+  - technology-usage-embedded-framework-05700
+  - technology-usage-embedded-framework-05800
+  - technology-usage-embedded-framework-05900
+  - technology-usage-embedded-framework-06000
+  - technology-usage-embedded-framework-06100
+  - technology-usage-embedded-framework-06200
+  - technology-usage-embedded-framework-06300
+  - technology-usage-embedded-framework-06400
+  - technology-usage-embedded-framework-06500
+  - technology-usage-embedded-framework-06600
+  - technology-usage-embedded-framework-06700
+  - technology-usage-embedded-framework-06800
+  - technology-usage-embedded-framework-06900
+  - technology-usage-embedded-framework-07000
+  - technology-usage-embedded-framework-07100
+  - technology-usage-embedded-framework-07200
+  - technology-usage-embedded-framework-07300
+  - technology-usage-embedded-framework-07400
+  - technology-usage-embedded-framework-07500
+  - technology-usage-embedded-framework-07600
+  - technology-usage-embedded-framework-07700
+  - technology-usage-embedded-framework-07800
+  - technology-usage-embedded-framework-07900
+  - technology-usage-embedded-framework-08000
+  - technology-usage-embedded-framework-08100
+  - technology-usage-embedded-framework-08300
+  - technology-usage-embedded-framework-08500
+  - technology-usage-embedded-framework-08600
+  - technology-usage-embedded-framework-08700
+  - technology-usage-embedded-framework-08800
+  - technology-usage-embedded-framework-08900
+  - technology-usage-embedded-framework-09000
+  - technology-usage-embedded-framework-09100
+  - technology-usage-integration-00001
+  - technology-usage-integration-00002
+  - technology-usage-integration-00003
+  - technology-usage-integration-00004
+  - technology-usage-integration-00005
+  - technology-usage-integration-00006
+  - technology-usage-integration-00007
+  - technology-usage-integration-00008
+  - technology-usage-integration-00009
+  - technology-usage-integration-00010
+  - technology-usage-integration-00011
+  - technology-usage-integration-00012
+  - technology-usage-integration-00013
+  - technology-usage-integration-00014
+  - technology-usage-integration-00015
+  - technology-usage-jta-00020
+  - technology-usage-jta-00030
+  - technology-usage-jta-00040
+  - technology-usage-jta-00050
+  - technology-usage-jta-00060
+  - technology-usage-jta-00070
+  - technology-usage-jta-00080
+  - technology-usage-jta-00090
+  - technology-usage-jta-00100
+  - technology-usage-jta-00110
+  - technology-usage-jta-00120
+  - technology-usage-jta-00130
+  - technology-usage-jta-00140
+  - technology-usage-jta-00150
+  - technology-usage-jta-00160
+  - technology-usage-jta-00170
+  - technology-usage-jta-00180
+  - technology-usage-jta-00190
+  - technology-usage-jta-00200
+  - technology-usage-jta-00210
+  - technology-usage-logging-00010
+  - technology-usage-logging-000100
+  - technology-usage-logging-000110
+  - technology-usage-logging-000120
+  - technology-usage-logging-000130
+  - technology-usage-logging-000140
+  - technology-usage-logging-000150
+  - technology-usage-logging-000160
+  - technology-usage-logging-000170
+  - technology-usage-logging-000180
+  - technology-usage-logging-000190
+  - technology-usage-logging-00020
+  - technology-usage-logging-000200
+  - technology-usage-logging-000210
+  - technology-usage-logging-000220
+  - technology-usage-logging-000230
+  - technology-usage-logging-000240
+  - technology-usage-logging-000250
+  - technology-usage-logging-000260
+  - technology-usage-logging-000270
+  - technology-usage-logging-000280
+  - technology-usage-logging-000290
+  - technology-usage-logging-00030
+  - technology-usage-logging-00040
+  - technology-usage-logging-00050
+  - technology-usage-logging-00060
+  - technology-usage-logging-00070
+  - technology-usage-logging-00080
+  - technology-usage-logging-00090
+  - technology-usage-markup-01300
+  - technology-usage-mvc-01000
+  - technology-usage-mvc-01100
+  - technology-usage-mvc-01300
+  - technology-usage-mvc-01400
+  - technology-usage-mvc-01500
+  - technology-usage-mvc-01600
+  - technology-usage-mvc-01700
+  - technology-usage-mvc-01800
+  - technology-usage-mvc-01900
+  - technology-usage-mvc-02000
+  - technology-usage-mvc-02100
+  - technology-usage-mvc-02200
+  - technology-usage-mvc-02300
+  - technology-usage-mvc-02400
+  - technology-usage-mvc-02500
+  - technology-usage-mvc-02600
+  - technology-usage-mvc-02700
+  - technology-usage-mvc-02800
+  - technology-usage-mvc-02900
+  - technology-usage-mvc-03000
+  - technology-usage-mvc-03100
+  - technology-usage-mvc-03200
+  - technology-usage-mvc-03300
+  - technology-usage-mvc-03400
+  - technology-usage-mvc-03500
+  - technology-usage-mvc-03600
+  - technology-usage-mvc-03700
+  - technology-usage-mvc-03800
+  - technology-usage-mvc-03900
+  - technology-usage-mvc-04000
+  - technology-usage-mvc-04100
+  - technology-usage-mvc-04300
+  - technology-usage-mvc-04400
+  - technology-usage-mvc-04500
+  - technology-usage-mvc-04600
+  - technology-usage-mvc-04700
+  - technology-usage-mvc-04800
+  - technology-usage-mvc-04900
+  - technology-usage-mvc-05000
+  - technology-usage-mvc-05100
+  - technology-usage-mvc-05200
+  - technology-usage-mvc-05300
+  - technology-usage-mvc-05400
+  - technology-usage-mvc-05500
+  - technology-usage-mvc-05600
+  - technology-usage-mvc-05700
+  - technology-usage-mvc-05800
+  - technology-usage-mvc-05900
+  - technology-usage-mvc-06000
+  - technology-usage-mvc-0x4200
+  - technology-usage-security-01000
+  - technology-usage-security-01100
+  - technology-usage-security-01200
+  - technology-usage-security-01300
+  - technology-usage-security-01400
+  - technology-usage-security-01500
+  - technology-usage-security-01600
+  - technology-usage-security-01700
+  - technology-usage-security-01800
+  - technology-usage-security-01900
+  - technology-usage-security-02000
+  - technology-usage-security-02100
+  - technology-usage-security-02200
+  - technology-usage-security-02300
+  - technology-usage-security-02400
+  - technology-usage-security-02500
+  - technology-usage-security-02600
+  - technology-usage-security-02700
+  - technology-usage-security-02800
+  - technology-usage-security-02900
+  - technology-usage-security-03000
+  - technology-usage-security-03100
+  - technology-usage-security-03200
+  - technology-usage-security-03300
+  - technology-usage-security-03400
+  - technology-usage-security-03500
+  - technology-usage-test-frameworks-00010
+  - technology-usage-test-frameworks-00020
+  - technology-usage-test-frameworks-00030
+  - technology-usage-test-frameworks-00040
+  - technology-usage-test-frameworks-00050
+  - technology-usage-test-frameworks-00060
+  - technology-usage-test-frameworks-00070
+  - technology-usage-test-frameworks-00080
+  - technology-usage-test-frameworks-00090
+  - technology-usage-test-frameworks-00100
+  - technology-usage-test-frameworks-00110
+  - technology-usage-test-frameworks-00120
+  - technology-usage-test-frameworks-00130
+  - technology-usage-test-frameworks-00140
+  - technology-usage-test-frameworks-00150
+  - technology-usage-test-frameworks-00160
+  - technology-usage-test-frameworks-00170
+  - technology-usage-test-frameworks-00180
+  - technology-usage-test-frameworks-00190
+  - technology-usage-test-frameworks-00200
+  - technology-usage-test-frameworks-00210
+  - technology-usage-test-frameworks-00220
+  - technology-usage-test-frameworks-00230
+  - technology-usage-test-frameworks-00240
+  - technology-usage-test-frameworks-00250
+  - technology-usage-test-frameworks-00260
+  - technology-usage-test-frameworks-00270
+  - technology-usage-test-frameworks-00280
+  - technology-usage-test-frameworks-00290
+  - technology-usage-test-frameworks-00300
+  - technology-usage-test-frameworks-00310
+  - technology-usage-test-frameworks-00320
+  - technology-usage-test-frameworks-00330
+  - technology-usage-test-frameworks-00340
+  - technology-usage-test-frameworks-00350
+  - technology-usage-test-frameworks-00360
+  - technology-usage-test-frameworks-00370
+  - technology-usage-web-01000
+  - technology-usage-web-01200
+  - technology-usage-web-01300
+  - technology-usage-web-01300
+  - technology-usage-web-01400
+  - technology-usage-web-01400
+  - technology-usage-web-01500
+  - technology-usage-web-01500
+  - technology-usage-web-01600
+  - technology-usage-web-01600
+  - technology-usage-web-01700
+  - technology-usage-web-01700
+  - technology-usage-web-01800
+  - technology-usage-web-01800
+  - technology-usage-web-01900
+  - technology-usage-web-01900
+  - technology-usage-web-02000
+  - technology-usage-web-02000
+  - technology-usage-web-02100
+  - technology-usage-web-02100
+  - technology-usage-web-02200
+  - technology-usage-web-02200
+  - technology-usage-web-02300
+  - technology-usage-web-02300
+  - technology-usage-web-02400
+  - technology-usage-web-02400
+  - test-frameworks-sauge-00010
+  - test-frameworks-sauge-00020
+  - test-frameworks-sauge-00030
+  - test-frameworks-sauge-00040
+  - test-frameworks-sauge-00050
+  - test-frameworks-sauge-00060
+  - test-frameworks-sauge-00070
+  - test-frameworks-sauge-00080
+  - test-frameworks-sauge-00090
+  - test-frameworks-sauge-00100
+  - test-frameworks-sauge-00110
+  - test-frameworks-sauge-00120
+  - test-frameworks-sauge-00130
+  - test-frameworks-sauge-00140
+  - test-frameworks-sauge-00150
+  - test-frameworks-sauge-00160
+  - test-frameworks-sauge-00170
+  - test-frameworks-sauge-00180
+  - test-frameworks-sauge-00190
+  - test-frameworks-sauge-00200
+  - test-frameworks-sauge-00210
+  - test-frameworks-sauge-00220
+  - test-frameworks-sauge-00230
+  - test-frameworks-sauge-00240
+  - test-frameworks-sauge-00260
+  - test-frameworks-sauge-00270
+  - test-frameworks-sauge-00280
+  - test-frameworks-sauge-00290
+  - test-frameworks-sauge-00300
+  - test-frameworks-sauge-00310
+  - test-frameworks-sauge-00320
+  - test-frameworks-sauge-00330
+  - test-frameworks-sauge-00340
+  - test-frameworks-sauge-00350
+  - test-frameworks-sauge-00360
+  - test-frameworks-sauge-00370
+  - test-frameworks-sauge-00560
+  - web-01000

@@ -1,0 +1,3 @@
+type: kantra
+kantra:
+  binaryPath: /usr/local/bin/kantra  # Optional, will use PATH if not specified

@@ -1,0 +1,20 @@
+# SKIPPED: Skip binary test. https://issues.redhat.com/browse/MTA-5588
+
+name: "administracion-efectivo"
+description: ""
+analysis:
+  application: "binary:administracion_efectivo.ear"
+  labelSelector: "konveyor.io/target=cloud-readiness"
+  analysisMode: "binary"
+timeout: 10m
+expect:
+  exitCode: 0
+  output:
+    result:
+      - name: "cloud-readiness"
+        violations:
+          local-storage-00001:
+            description: "File system - Java IO"
+            category: "mandatory"
+            effort: 1
+            incidents: []

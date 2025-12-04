@@ -1,0 +1,26 @@
+# SKIPPED: Skip test. Investigate on changes and fix https://github.com/konveyor/go-konveyor-tests/issues/353
+
+name: "Seam booking"
+description: ""
+analysis:
+  application: "https://github.com/konveyor-ecosystem/windup.git#ci-2024/test-files/seam-booking-5.2"
+  labelSelector: "konveyor.io/target=cloud-readiness || konveyor.io/target=eap"
+  analysisMode: "source-only"
+timeout: 10m
+expect:
+  exitCode: 0
+  output:
+    result:
+      - name: "eap7/weblogic/tests/data"
+        violations:
+          hibernate51-53-01000:
+            description: "Hibernate 5.3 - default_schema or default_catalog must be defined or set jdbc_metadata_extraction_strategy"
+            category: "mandatory"
+            effort: 1
+            incidents:
+              - uri: "/shared/source/windup/test-files/seam-booking-5.2/resources/META-INF/persistence.xml"
+                message: "Define `hibernate.default_schema` or `hibernate.default_catalog` (whichever is used by the selected dialect), or, alternatively, set `hibernate.hbm2ddl.jdbc_metadata_extraction_strategy=individually`."
+                lineNumber: 7
+              - uri: "/shared/source/windup/test-files/seam-booking-5.2/resources/META-INF/persistence.xml"
+                message: "Define `hibernate.default_schema` or `hibernate.default_catalog` (whichever is used by the selected dialect), or, alternatively, set `hibernate.hbm2ddl.jdbc_metadata_extraction_strategy=individually`."
+                lineNumber: 9

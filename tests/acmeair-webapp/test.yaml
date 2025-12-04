@@ -1,0 +1,18 @@
+name: "acmeair-webapp"
+description: ""
+analysis:
+  application: "binary:acmeair-webapp-1.0-SNAPSHOT.war"
+  labelSelector: "konveyor.io/target=cloud-readiness || konveyor.io/target=jakarta-ee"
+  analysisMode: "full"
+timeout: 10m
+expect:
+  exitCode: 0
+  output:
+    result:
+      - name: "eap8/eap7"
+        violations:
+          javax-to-jakarta-import-00001:
+            description: "The package 'javax' has been replaced by 'jakarta'."
+            category: "mandatory"
+            effort: 1
+            incidents: []

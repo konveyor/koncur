@@ -1,0 +1,26 @@
+name: "Sample Kantra Test"
+description: "A simple example test for kantra analyze"
+
+analysis:
+  application: /path/to/application/source
+  labelSelector: "konveyor.io/target=quarkus"
+  analysisMode: source-only
+
+timeout: 10m
+workDir: /tmp/test-harness
+
+expect:
+  exitCode: 0
+  output:
+    result:
+      - name: cloud-readiness
+        description: "Rules for cloud readiness"
+        violations:
+          session-00001:
+            description: "Avoid use of HttpSession"
+            category: mandatory
+            incidents:
+              - uri: "file:///src/main/java/com/example/MyServlet.java"
+                message: "HttpSession is not recommended for cloud environments"
+                lineNumber: 42
+            effort: 3

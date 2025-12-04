@@ -1,0 +1,8 @@
+type: tackle-hub
+tackleHub:
+  url: https://tackle-hub.example.com
+  # Option 1: Username/password authentication
+  username: admin
+  password: secret
+  # Option 2: Token authentication
+  # token: your-api-token-here
