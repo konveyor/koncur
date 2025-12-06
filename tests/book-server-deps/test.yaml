@@ -1,6 +1,11 @@
 name: book-server_deps
 analysis:
     application: https://github.com/konveyor-ecosystem/book-server#ci-oct2025
+    context_lines: 0
+    incident_selector: ""
+    source: []
+    target: []
+    rules: []
     analysisMode: source-only
 timeout: 10m0s
 expect:

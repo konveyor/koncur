@@ -30,15 +30,17 @@ type TargetConfig struct {
 
 // KantraConfig for Kantra CLI execution
 type KantraConfig struct {
-	BinaryPath string `yaml:"binaryPath,omitempty"`
+	BinaryPath    string `yaml:"binaryPath,omitempty"`
+	MavenSettings string `yaml:"mavenSettings,omitempty"`
 }
 
 // TackleHubConfig for Tackle Hub API execution
 type TackleHubConfig struct {
-	URL      string `yaml:"url" validate:"required"`
-	Username string `yaml:"username,omitempty"`
-	Password string `yaml:"password,omitempty"`
-	Token    string `yaml:"token,omitempty"`
+	URL           string `yaml:"url" validate:"required"`
+	Username      string `yaml:"username,omitempty"`
+	Password      string `yaml:"password,omitempty"`
+	Token         string `yaml:"token,omitempty"`
+	MavenSettings string `yaml:"mavenSettings,omitempty"`
 }
 
 // TackleUIConfig for Tackle UI browser automation

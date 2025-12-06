@@ -19,11 +19,12 @@ import (
 )
 
 var (
-	testDir        string
-	outputDir      string
-	generateFilter string
-	dryRun         bool
-	targetTypeGen  string
+	testDir              string
+	outputDir            string
+	generateFilter       string
+	dryRun               bool
+	targetTypeGen        string
+	targetConfigFileGen  string
 )
 
 // NewGenerateCmd creates the generate command
@@ -105,8 +106,38 @@ This is useful when:
 					continue
 				}
 
-				// Create target config
-				targetConfig := &config.TargetConfig{Type: targetTypeGen}
+				// Load or create target config
+				var targetConfig *config.TargetConfig
+				if targetConfigFileGen != "" {
+					log.Info("Loading target configuration", "file", targetConfigFileGen)
+					targetConfig, err = config.LoadTargetConfig(targetConfigFileGen)
+					if err != nil {
+						color.Red("  ✗ Failed to load target config: %v", err)
+						failCount++
+						continue
+					}
+				} else if targetTypeGen != "" {
+					// Create default config for specified type
+					targetConfig = &config.TargetConfig{Type: targetTypeGen}
+				} else {
+					// Default to kantra
+					targetConfig = &config.TargetConfig{Type: "kantra"}
+				}
+
+				// Check if test requires maven settings but target doesn't have it
+				if test.RequireMavenSettings {
+					hasSettings := false
+					if targetConfig.Kantra != nil && targetConfig.Kantra.MavenSettings != "" {
+						hasSettings = true
+					} else if targetConfig.TackleHub != nil && targetConfig.TackleHub.MavenSettings != "" {
+						hasSettings = true
+					}
+					if !hasSettings {
+						color.Red("  ✗ Test requires maven settings but none configured in target config")
+						failCount++
+						continue
+					}
+				}
 
 				// Create target
 				target, err := targets.NewTarget(targetConfig)
@@ -152,11 +183,11 @@ This is useful when:
 				test.Expect.Output.Result = nil // Clear inline expectation
 
 				// Save the filtered output.yaml file to the test directory
-				testDir := filepath.Dir(testFile)
-				expectedOutputFile := filepath.Join(testDir, "expected-output.yaml")
+				testDirPath := test.GetTestDir() // Use the absolute path stored in test
+				expectedOutputFile := filepath.Join(testDirPath, "expected-output.yaml")
 
-				// Save the filtered output as YAML
-				if err := saveFilteredOutput(filteredOutput, expectedOutputFile); err != nil {
+				// Save the filtered output as YAML with path normalization
+				if err := saveFilteredOutput(filteredOutput, expectedOutputFile, testDirPath); err != nil {
 					color.Red("  ✗ Failed to save filtered output: %v", err)
 					failCount++
 					continue
@@ -198,6 +229,7 @@ This is useful when:
 	generateCmd.Flags().StringVarP(&generateFilter, "filter", "f", "", "Filter tests by name pattern")
 	generateCmd.Flags().BoolVar(&dryRun, "dry-run", false, "Show what would be done without executing")
 	generateCmd.Flags().StringVarP(&targetTypeGen, "target", "t", "kantra", "Target type to use (kantra, tackle-hub, tackle-ui, kai-rpc, vscode)")
+	generateCmd.Flags().StringVarP(&targetConfigFileGen, "target-config", "c", "", "Path to target configuration file")
 
 	return generateCmd
 }
@@ -265,20 +297,22 @@ func saveSimpleTestDefinition(testFile string, test *config.TestDefinition) erro
 	}
 
 	type SimpleTestDefinition struct {
-		Name        string                `yaml:"name"`
-		Description string                `yaml:"description,omitempty"`
-		Analysis    config.AnalysisConfig `yaml:"analysis"`
-		Timeout     *config.Duration      `yaml:"timeout,omitempty"`
-		WorkDir     string                `yaml:"workDir,omitempty"`
-		Expect      SimpleExpectConfig    `yaml:"expect"`
+		Name                 string                `yaml:"name"`
+		Description          string                `yaml:"description,omitempty"`
+		Analysis             config.AnalysisConfig `yaml:"analysis"`
+		Timeout              *config.Duration      `yaml:"timeout,omitempty"`
+		WorkDir              string                `yaml:"workDir,omitempty"`
+		RequireMavenSettings bool                  `yaml:"requireMavenSettings,omitempty"`
+		Expect               SimpleExpectConfig    `yaml:"expect"`
 	}
 
 	simpleTest := SimpleTestDefinition{
-		Name:        test.Name,
-		Description: test.Description,
-		Analysis:    test.Analysis,
-		Timeout:     test.Timeout,
-		WorkDir:     test.WorkDir,
+		Name:                 test.Name,
+		Description:          test.Description,
+		Analysis:             test.Analysis,
+		Timeout:              test.Timeout,
+		WorkDir:              test.WorkDir,
+		RequireMavenSettings: test.RequireMavenSettings,
 		Expect: SimpleExpectConfig{
 			ExitCode: test.Expect.ExitCode,
 			Output: SimpleExpectedOutput{
@@ -316,9 +350,9 @@ func copyFile(src, dst string) error {
 	return nil
 }
 
-// saveFilteredOutput saves the filtered rulesets to a YAML file
+// saveFilteredOutput saves the filtered rulesets to a YAML file with path normalization
 // Uses yaml.v2 to match analyzer-lsp's marshalling behavior and avoid circular reference issues
-func saveFilteredOutput(rulesets []konveyor.RuleSet, path string) error {
+func saveFilteredOutput(rulesets []konveyor.RuleSet, path string, testDir string) error {
 	// Use yaml.v2 because konveyor types were designed for v2
 	// v3 has different MarshalYAML behavior that causes infinite recursion
 	data, err := yaml2.Marshal(rulesets)
@@ -326,7 +360,13 @@ func saveFilteredOutput(rulesets []konveyor.RuleSet, path string) error {
 		return fmt.Errorf("failed to marshal rulesets: %w", err)
 	}
 
-	err = os.WriteFile(path, data, 0644)
+	// Normalize paths by removing the test directory path
+	yamlStr := string(data)
+	if testDir != "" {
+		yamlStr = strings.ReplaceAll(yamlStr, testDir, "")
+	}
+
+	err = os.WriteFile(path, []byte(yamlStr), 0644)
 	if err != nil {
 		return fmt.Errorf("failed to write file: %w", err)
 	}

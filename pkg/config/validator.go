@@ -36,7 +36,9 @@ func validateExpectedOutput(output *ExpectedOutput) error {
 		return fmt.Errorf("expected output must specify either 'result' or 'file'")
 	}
 
-	if hasResult && hasFile {
+	// If ResolvedFilePath is set, it means we loaded the file and populated Result
+	// In this case, both Result and File being set is expected and valid
+	if hasResult && hasFile && output.ResolvedFilePath == "" {
 		return fmt.Errorf("expected output cannot specify both 'result' and 'file'")
 	}
 

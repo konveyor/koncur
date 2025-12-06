@@ -1,3 +1,98 @@
+- name: cloud-readiness
+  description: This ruleset detects logging configurations that may be problematic
+    when migrating an application to a cloud environment.
+  violations:
+    local-storage-00001:
+      description: File system - Java IO
+      category: mandatory
+      labels:
+      - konveyor.io/source
+      - konveyor.io/target=cloud-readiness
+      - storage
+      incidents:
+      - uri: file:///root/.m2/repository/io/konveyor/demo/configuration-utils/1.0.0/io/konveyor/demo/config/ApplicationConfiguration.java
+        message: |-
+          An application running inside a container could lose access to a file in local storage.
+
+           Recommendations
+
+           The following recommendations depend on the function of the file in local storage:
+
+           * Logging: Log to standard output and use a centralized log collector to analyze the logs.
+           * Caching: Use a cache backing service.
+           * Configuration: Store configuration settings in environment variables so that they can be updated without code changes.
+           * Data storage: Use a database backing service for relational data or use a persistent data storage system.
+           * Temporary data storage: Use the file system of a running container as a brief, single-transaction cache.
+        codeSnip: "\n 4  import java.io.InputStream;\n 5  import java.util.Properties;\n
+          6  \n 7  public class ApplicationConfiguration {\n 8  private Properties
+          config = this.loadProperties();\n 9  \n10  private Properties loadProperties()
+          {\n11  Properties properties = new Properties();\n12  \n13  try {\n14  InputStream
+          inputStream = new FileInputStream(\"/opt/config/configuration.properties\");\n15
+          \ \n16  try {\n17  properties.load(inputStream);\n18  } catch (Throwable
+          var6) {\n19  try {\n20  inputStream.close();\n21  } catch (Throwable var5)
+          {\n22  var6.addSuppressed(var5);\n23  }\n24  "
+        lineNumber: 14
+        variables:
+          file: file:///root/.m2/repository/io/konveyor/demo/configuration-utils/1.0.0/io/konveyor/demo/config/ApplicationConfiguration.java
+          kind: Constructor
+          name: loadProperties
+          package: io.konveyor.demo.config
+      links:
+      - url: https://docs.openshift.com/container-platform/4.5/builds/creating-build-inputs.html#builds-input-secrets-configmaps_creating-build-inputs
+        title: 'OpenShift Container Platform: Input secrets and ConfigMaps'
+      - url: https://docs.openshift.com/container-platform/4.5/logging/cluster-logging.html
+        title: 'OpenShift Container Platform: Understanding cluster logging'
+      - url: https://docs.openshift.com/container-platform/4.5/storage/understanding-persistent-storage.html
+        title: 'OpenShift Container Platform: Understanding persistent storage'
+      - url: https://12factor.net/backing-services
+        title: 'Twelve-Factor App: Backing services'
+      - url: https://12factor.net/config
+        title: 'Twelve-Factor App: Config'
+      - url: https://12factor.net/logs
+        title: 'Twelve-Factor App: Logs'
+      effort: 1
+  unmatched:
+  - embedded-cache-libraries-01000
+  - embedded-cache-libraries-02000
+  - embedded-cache-libraries-03000
+  - embedded-cache-libraries-04000
+  - embedded-cache-libraries-05000
+  - embedded-cache-libraries-06000
+  - embedded-cache-libraries-07000
+  - embedded-cache-libraries-08000
+  - embedded-cache-libraries-09000
+  - embedded-cache-libraries-10000
+  - embedded-cache-libraries-11000
+  - embedded-cache-libraries-12000
+  - embedded-cache-libraries-13000
+  - embedded-cache-libraries-14000
+  - embedded-cache-libraries-15000
+  - embedded-cache-libraries-16000
+  - java-corba-00000
+  - java-rmi-00000
+  - java-rmi-00000
+  - java-rmi-00001
+  - java-rpc-00000
+  - jca-00000
+  - jni-native-code-00000
+  - jni-native-code-00001
+  - local-storage-00002
+  - local-storage-00003
+  - local-storage-00004
+  - local-storage-00005
+  - local-storage-00006
+  - localhost-http-00001
+  - localhost-jdbc-00002
+  - localhost-ws-00003
+  - logging-0000
+  - logging-0000
+  - logging-0001
+  - logging-0001
+  - mail-00000
+  - session-00000
+  - session-00001
+  - socket-communication-00000
+  - socket-communication-00001
 - name: discovery-rules
   tags:
   - EJB XML
@@ -13,16 +108,10 @@
       - konveyor.io/target=cloud-readiness
       - konveyor.io/target=discovery
       incidents:
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Tackle-Testapp-public-with-deps-20251204-010845/source/src/main/resources/persistence.properties
+      - uri: file:///source/src/main/resources/persistence.properties
         message: When migrating environments, hard-coded IP addresses may need to
           be modified or eliminated.
-        codeSnip: "  1   jdbc.driverClassName=oracle.jdbc.driver.OracleDriver\n  2
-          \  jdbc.url=jdbc:oracle:thin:@10.19.2.93:1521:xe\n  3   jdbc.user=customers\n
-          \ 4   jdbc.password=customers\n  5   hibernate.hbm2ddl.auto=create-drop\n
-          \ 6   hibernate.dialect=org.hibernate.dialect.OracleDialect\n  7  \n  8
-          \ # PostgreSQL\n  9  #jdbc.driverClassName=org.postgresql.Driver \n 10  #jdbc.url=jdbc:postgresql://customers-postgresql:5432/customers\n
-          11  #jdbc.user=customers\n 12  #jdbc.password=customers\n 13  #hibernate.hbm2ddl.auto=create-drop\n
-          14  #hibernate.dialect=org.hibernate.dialect.PostgreSQL9Dialect\n"
+        codeSnip: 3   jdbc.user=customers
         lineNumber: 2
         variables:
           matchingText: "2."
@@ -36,25 +125,25 @@
       - konveyor.io/target=discovery
       - tag=Java Source
       incidents:
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Tackle-Testapp-public-with-deps-20251204-010845/source/configuration-utils/src/main/java/io/konveyor/demo/config/ApplicationConfiguration.java
+      - uri: file:///source/configuration-utils/src/main/java/io/konveyor/demo/config/ApplicationConfiguration.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Tackle-Testapp-public-with-deps-20251204-010845/source/src/main/java/io/konveyor/demo/ordermanagement/OrderManagementAppInitializer.java
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/OrderManagementAppInitializer.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Tackle-Testapp-public-with-deps-20251204-010845/source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Tackle-Testapp-public-with-deps-20251204-010845/source/src/main/java/io/konveyor/demo/ordermanagement/config/WebConfig.java
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/config/WebConfig.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Tackle-Testapp-public-with-deps-20251204-010845/source/src/main/java/io/konveyor/demo/ordermanagement/controller/CustomerController.java
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/controller/CustomerController.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Tackle-Testapp-public-with-deps-20251204-010845/source/src/main/java/io/konveyor/demo/ordermanagement/exception/ResourceNotFoundException.java
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/exception/ResourceNotFoundException.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Tackle-Testapp-public-with-deps-20251204-010845/source/src/main/java/io/konveyor/demo/ordermanagement/exception/handler/ExceptionHandlingController.java
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/exception/handler/ExceptionHandlingController.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Tackle-Testapp-public-with-deps-20251204-010845/source/src/main/java/io/konveyor/demo/ordermanagement/model/Customer.java
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/model/Customer.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Tackle-Testapp-public-with-deps-20251204-010845/source/src/main/java/io/konveyor/demo/ordermanagement/repository/CustomerRepository.java
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/repository/CustomerRepository.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Tackle-Testapp-public-with-deps-20251204-010845/source/src/main/java/io/konveyor/demo/ordermanagement/service/CustomerService.java
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/service/CustomerService.java
         message: ""
     discover-maven-xml:
       description: Maven XML file
@@ -64,9 +153,9 @@
       - konveyor.io/target=discovery
       - tag=Maven XML
       incidents:
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Tackle-Testapp-public-with-deps-20251204-010845/source/configuration-utils/pom.xml
+      - uri: file:///source/configuration-utils/pom.xml
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Tackle-Testapp-public-with-deps-20251204-010845/source/pom.xml
+      - uri: file:///source/pom.xml
         message: ""
     discover-properties-file:
       description: Properties file
@@ -76,7 +165,7 @@
       - konveyor.io/target=discovery
       - tag=Properties
       incidents:
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Tackle-Testapp-public-with-deps-20251204-010845/source/src/main/resources/persistence.properties
+      - uri: file:///source/src/main/resources/persistence.properties
         message: ""
     windup-discover-ejb-configuration:
       description: EJB XML Configuration
@@ -86,34 +175,9 @@
       - konveyor.io/target=discovery
       - tag=EJB XML
       incidents:
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Tackle-Testapp-public-with-deps-20251204-010845/source/configuration-utils/pom.xml
+      - uri: file:///source/configuration-utils/pom.xml
         message: ""
-        codeSnip: "  1  <?xml version=\"1.0\" encoding=\"UTF-8\"?>\n  2  \n  3  <project
-          xmlns=\"http://maven.apache.org/POM/4.0.0\"\n  4  \txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n
-          \ 5  \txsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n
-          \ 6  \t<modelVersion>4.0.0</modelVersion>\n  7  \t<groupId>io.konveyor.demo</groupId>\n
-          \ 8  \t<artifactId>configuration-utils</artifactId>\n  9  \t<version>1.0.0</version>\n
-          10  \n 11  \t<name>configuration-utils</name>\n 12  \n 13  \t<properties>\n
-          14  \t\t<java.version>1.8</java.version>\n 15  \t\t<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n
-          16  \t\t<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>\n
-          17  \t\t<maven.compiler.source>${java.version}</maven.compiler.source>\n
-          18  \t\t<maven.compiler.target>${java.version}</maven.compiler.target>\n
-          19  \n 20  \t\t<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>\n
-          21  \t\t<maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>\n
-          22  \t</properties>\n 23  \n 24  \t<dependencies>\n 25  \t\t<dependency>\n
-          26  \t\t\t<groupId>junit</groupId>\n 27  \t\t\t<artifactId>junit</artifactId>\n
-          28  \t\t\t<version>4.11</version>\n 29  \t\t\t<scope>test</scope>\n 30  \t\t</dependency>\n
-          31  \t</dependencies>\n 32  \n 33  \t<build>\n 34  \t\t<plugins>\n 35  \t\t\t<plugin>\n
-          36  \t\t\t\t<groupId>org.apache.maven.plugins</groupId>\n 37  \t\t\t\t<artifactId>maven-compiler-plugin</artifactId>\n
-          38  \t\t\t\t<version>${maven-compiler-plugin.version}</version>\n 39  \t\t\t</plugin>\n
-          40  \t\t\t<plugin>\n 41  \t\t\t\t<groupId>org.apache.maven.plugins</groupId>\n
-          42  \t\t\t\t<artifactId>maven-resources-plugin</artifactId>\n 43  \t\t\t\t<version>${maven-resources-plugin.version}</version>\n
-          44  \t\t\t\t<configuration>\n 45  \t\t\t\t\t<encoding>UTF-8</encoding>\n
-          46  \t\t\t\t</configuration>\n 47  \t\t\t</plugin>\n 48  \t\t</plugins>\n
-          49  \t</build>\n 50  \t<distributionManagement>\n 51  \t <repository>\n
-          52  \t\t <id>tackle-testapp-public</id>\n 53  \t\t <name>GitHub tackle-testapp-public
-          Apache Maven Packages</name>\n 54  \t\t <url>https://maven.pkg.github.com/konveyor/tackle-testapp-public</url>\n
-          55  \t </repository>\n 56  \t</distributionManagement>\n 57  </project>\n"
+        codeSnip: "7  \t<groupId>io.konveyor.demo</groupId>"
         lineNumber: 6
         variables:
           data: ""
@@ -125,57 +189,9 @@
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
             http://maven.apache.org/xsd/maven-4.0.0.xsd"><modelVersion>4.0.0</modelVersion><groupId>io.konveyor.demo</groupId><artifactId>configuration-utils</artifactId><version>1.0.0</version><name>configuration-utils</name><properties><java.version>1.8</java.version><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding><maven.compiler.source>${java.version}</maven.compiler.source><maven.compiler.target>${java.version}</maven.compiler.target><maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version><maven-resources-plugin.version>3.2.0</maven-resources-plugin.version></properties><dependencies><dependency><groupId>junit</groupId><artifactId>junit</artifactId><version>4.11</version><scope>test</scope></dependency></dependencies><build><plugins><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>${maven-compiler-plugin.version}</version></plugin><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-resources-plugin</artifactId><version>${maven-resources-plugin.version}</version><configuration><encoding>UTF-8</encoding></configuration></plugin></plugins></build><distributionManagement><repository><id>tackle-testapp-public</id><name>GitHub
             tackle-testapp-public Apache Maven Packages</name><url>https://maven.pkg.github.com/konveyor/tackle-testapp-public</url></repository></distributionManagement></project>
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Tackle-Testapp-public-with-deps-20251204-010845/source/pom.xml
+      - uri: file:///source/pom.xml
         message: ""
-        codeSnip: "  1  <project xmlns=\"http://maven.apache.org/POM/4.0.0\"\n  2
-          \ \txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n  3  \txsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0
-          https://maven.apache.org/xsd/maven-4.0.0.xsd\">\n  4  \t<modelVersion>4.0.0</modelVersion>\n
-          \ 5  \t<groupId>io.konveyor.demo</groupId>\n  6  \t<artifactId>customers-tomcat</artifactId>\n
-          \ 7  \t<version>0.0.1-SNAPSHOT</version>\n  8  \n  9  \t<name>Order Management</name>\n
-          10  \t<packaging>war</packaging>\n 11  \t<description>Remaining services
-          for the legacy Order Management application</description>\n 12  \n 13  \t<properties>\n
-          14  \t\t<java.version>1.8</java.version>\n 15  \t\t<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n
-          16  \t\t<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>\n
-          17  \t\t<maven.compiler.source>${java.version}</maven.compiler.source>\n
-          18  \t\t<maven.compiler.target>${java.version}</maven.compiler.target>\n
-          19  \t\t<spring-framework.version>5.3.7</spring-framework.version>\n 20
-          \ \t\t<tomcat.version>9.0.46</tomcat.version>\n 21  \t\t<spring-data.version>2021.0.1</spring-data.version>\n
-          22  \t\t<hibernate.version>5.4.32.Final</hibernate.version>\n 23  \t\t<hibernate-validator.version>6.2.0.Final</hibernate-validator.version>\n
-          24  \n 25  \t\t<postgresql-driver.version>42.2.20</postgresql-driver.version>\n
-          26  \t\t<jackson.version>2.12.3</jackson.version>\n 27  \n 28  \t\t<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>\n
-          29  \t\t<maven-war-plugin.version>3.3.1</maven-war-plugin.version>\n 30
-          \ \t\t<maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>\n
-          31  \n 32  \t</properties>\n 33  \n 34  \t<dependencyManagement>\n 35  \t\t<dependencies>\n
-          36  \t\t\t<dependency>\n 37  \t\t\t\t<groupId>com.fasterxml.jackson</groupId>\n
-          38  \t\t\t\t<artifactId>jackson-bom</artifactId>\n 39  \t\t\t\t<version>${jackson.version}</version>\n
-          40  \t\t\t\t<scope>import</scope>\n 41  \t\t\t\t<type>pom</type>\n 42  \t\t\t</dependency>\n
-          43  \t\t\t<dependency>\n 44  \t\t\t\t<groupId>org.springframework.data</groupId>\n
-          45  \t\t\t\t<artifactId>spring-data-bom</artifactId>\n 46  \t\t\t\t<version>${spring-data.version}</version>\n
-          47  \t\t\t\t<scope>import</scope>\n 48  \t\t\t\t<type>pom</type>\n 49  \t\t\t</dependency>\n
-          50  \t\t</dependencies>\n 51  \t</dependencyManagement>\n 52  \t<dependencies>\n
-          53  \t\t<dependency>\n 54  \t\t\t<groupId>org.apache.tomcat</groupId>\n
-          55  \t\t\t<artifactId>tomcat-servlet-api</artifactId>\n 56  \t\t\t<version>${tomcat.version}</version>\n
-          57  \t\t\t<scope>provided</scope>\n 58  \t\t</dependency>\n 59  \t\t<dependency>\n
-          60  \t\t\t<groupId>com.fasterxml.jackson.core</groupId>\n 61  \t\t\t<artifactId>jackson-core</artifactId>\n
-          62  \t\t</dependency>\n 63  \t\t<dependency>\n 64  \t\t\t<groupId>com.fasterxml.jackson.core</groupId>\n
-          65  \t\t\t<artifactId>jackson-databind</artifactId>\n 66  \t\t</dependency>\n
-          67  \t\t<dependency>\n 68  \t\t\t<groupId>org.springframework.data</groupId>\n
-          69  \t\t\t<artifactId>spring-data-jpa</artifactId>\n 70  \t\t</dependency>\n
-          71  \n 72  \t\t<dependency>\n 73  \t\t\t<groupId>org.springframework</groupId>\n
-          74  \t\t\t<artifactId>spring-jdbc</artifactId>\n 75  \t\t\t<version>${spring-framework.version}</version>\n
-          76  \t\t</dependency>\n 77  \t\t<dependency>\n 78  \t\t\t<groupId>org.springframework</groupId>\n
-          79  \t\t\t<artifactId>spring-webmvc</artifactId>\n 80  \t\t\t<version>${spring-framework.version}</version>\n
-          81  \t\t</dependency>\n 82  \t\t<dependency>\n 83  \t\t\t<groupId>org.springframework</groupId>\n
-          84  \t\t\t<artifactId>spring-web</artifactId>\n 85  \t\t\t<version>${spring-framework.version}</version>\n
-          86  \t\t</dependency>\n 87  \t\t<dependency>\n 88  \t\t\t<groupId>org.springframework.boot</groupId>\n
-          89  \t\t\t<artifactId>spring-boot-starter-actuator</artifactId>\n 90  \t\t\t<version>2.5.0</version>\n
-          91  \t\t</dependency>\n 92  \t\t<dependency>\n 93  \t\t\t<groupId>org.apache.tomcat</groupId>\n
-          94  \t\t\t<artifactId>tomcat-jdbc</artifactId>\n 95  \t\t\t<version>${tomcat.version}</version>\n
-          96  \t\t\t<scope>runtime</scope>\n 97  \t\t</dependency>\n 98  \t\t<dependency>\n
-          99  \t\t\t<groupId>org.hibernate</groupId>\n100  \t\t\t<artifactId>hibernate-entitymanager</artifactId>\n101
-          \ \t\t\t<version>${hibernate.version}</version>\n102  \t\t</dependency>\n103
-          \ \t\t<dependency>\n104  \t\t\t<groupId>org.hibernate.validator</groupId>\n105
-          \ \t\t\t<artifactId>hibernate-validator</artifactId>"
+        codeSnip: "5  \t<groupId>io.konveyor.demo</groupId>"
         lineNumber: 4
         variables:
           data: ""
@@ -207,18 +223,166 @@
   - Bean=EJB XML
   - Connect=EJB XML
   - Connect=Servlet
+  - Embedded Spring Data JPA
+  - Embedded framework - Micrometer
+  - Embedded framework - Spring DI
+  - Embedded framework - Spring MVC
+  - Embedded framework - Spring Web
+  - Embedded library - Spring Boot Actuator
+  - Embedded=Micrometer
   - Embedded=Properties
+  - Embedded=Spring Boot Actuator
+  - Embedded=Spring DI
+  - Embedded=Spring Data JPA
+  - Embedded=Spring MVC
+  - Embedded=Spring Web
+  - Execute=Micrometer
+  - Execute=Spring DI
   - HTTP=Servlet
+  - Integration=Micrometer
+  - Inversion of Control=Spring DI
   - Java EE=EJB XML
   - Java EE=JPA named queries
   - Java EE=Servlet
   - Java Servlet
+  - MVC=Spring MVC
+  - Micrometer
+  - Observability=Spring Boot Actuator
   - Other=Properties
   - Persistence=JPA named queries
+  - Persistence=Spring Data JPA
   - Servlet
+  - Spring Boot Actuator
+  - Spring DI
+  - Spring Data JPA
+  - Spring MVC
+  - Spring Web
   - Store=JPA named queries
+  - Store=Spring Data JPA
   - Sustain=Properties
+  - Sustain=Spring Boot Actuator
+  - View=Spring MVC
+  - View=Spring Web
+  - Web=Spring Web
   insights:
+    database-03000:
+      description: Embedded Spring Data JPA
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded Spring Data JPA
+      - tag=Spring Data JPA
+      incidents:
+      - uri: file:///opt/input/source/pom.xml
+        message: ""
+        codeSnip: "\n59  <dependency>\n60  <groupId>com.fasterxml.jackson.core</groupId>\n61
+          \ <artifactId>jackson-core</artifactId>\n62  </dependency>\n63  <dependency>\n64
+          \ <groupId>com.fasterxml.jackson.core</groupId>\n65  <artifactId>jackson-databind</artifactId>\n66
+          \ </dependency>\n67  <dependency>\n68  <groupId>org.springframework.data</groupId>\n69
+          \ <artifactId>spring-data-jpa</artifactId>\n70  </dependency>\n71  \n72
+          \ <dependency>\n73  <groupId>org.springframework</groupId>\n74  <artifactId>spring-jdbc</artifactId>\n75
+          \ <version>${spring-framework.version}</version>\n76  </dependency>\n77
+          \ <dependency>\n78  <groupId>org.springframework</groupId>\n79  <artifactId>spring-webmvc</artifactId>"
+        lineNumber: 68
+        variables:
+          name: org.springframework.data.spring-data-jpa
+          version: 2.5.1
+    embedded-framework-08200:
+      description: Embedded framework - Spring DI
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded framework - Spring DI
+      - tag=Spring DI
+      incidents:
+      - uri: file:///opt/input/source/pom.xml
+        message: ""
+        codeSnip: "\n59  <dependency>\n60  <groupId>com.fasterxml.jackson.core</groupId>\n61
+          \ <artifactId>jackson-core</artifactId>\n62  </dependency>\n63  <dependency>\n64
+          \ <groupId>com.fasterxml.jackson.core</groupId>\n65  <artifactId>jackson-databind</artifactId>\n66
+          \ </dependency>\n67  <dependency>\n68  <groupId>org.springframework.data</groupId>\n69
+          \ <artifactId>spring-data-jpa</artifactId>\n70  </dependency>\n71  \n72
+          \ <dependency>\n73  <groupId>org.springframework</groupId>\n74  <artifactId>spring-jdbc</artifactId>\n75
+          \ <version>${spring-framework.version}</version>\n76  </dependency>\n77
+          \ <dependency>\n78  <groupId>org.springframework</groupId>\n79  <artifactId>spring-webmvc</artifactId>"
+        lineNumber: 68
+        variables:
+          name: org.springframework.spring-beans
+          version: 5.3.7
+    embedded-framework-08300:
+      description: Embedded framework - Micrometer
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded framework - Micrometer
+      - tag=Micrometer
+      incidents:
+      - uri: file:///opt/input/source/pom.xml
+        message: ""
+        codeSnip: |2-
+
+          79  <artifactId>spring-webmvc</artifactId>
+          80  <version>${spring-framework.version}</version>
+          81  </dependency>
+          82  <dependency>
+          83  <groupId>org.springframework</groupId>
+          84  <artifactId>spring-web</artifactId>
+          85  <version>${spring-framework.version}</version>
+          86  </dependency>
+          87  <dependency>
+          88  <groupId>org.springframework.boot</groupId>
+          89  <artifactId>spring-boot-starter-actuator</artifactId>
+          90  <version>2.5.0</version>
+          91  </dependency>
+          92  <dependency>
+          93  <groupId>org.apache.tomcat</groupId>
+          94  <artifactId>tomcat-jdbc</artifactId>
+          95  <version>${tomcat.version}</version>
+          96  <scope>runtime</scope>
+          97  </dependency>
+          98  <dependency>
+          99  <groupId>org.hibernate</groupId>
+        lineNumber: 88
+        variables:
+          name: io.micrometer.micrometer-core
+          version: 1.7.0
+    embedded-framework-08400:
+      description: Embedded framework - Spring Web
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded framework - Spring Web
+      - tag=Spring Web
+      incidents:
+      - uri: file:///opt/input/source/pom.xml
+        message: ""
+        codeSnip: |2-
+
+          74  <artifactId>spring-jdbc</artifactId>
+          75  <version>${spring-framework.version}</version>
+          76  </dependency>
+          77  <dependency>
+          78  <groupId>org.springframework</groupId>
+          79  <artifactId>spring-webmvc</artifactId>
+          80  <version>${spring-framework.version}</version>
+          81  </dependency>
+          82  <dependency>
+          83  <groupId>org.springframework</groupId>
+          84  <artifactId>spring-web</artifactId>
+          85  <version>${spring-framework.version}</version>
+          86  </dependency>
+          87  <dependency>
+          88  <groupId>org.springframework.boot</groupId>
+          89  <artifactId>spring-boot-starter-actuator</artifactId>
+          90  <version>2.5.0</version>
+          91  </dependency>
+          92  <dependency>
+          93  <groupId>org.apache.tomcat</groupId>
+          94  <artifactId>tomcat-jdbc</artifactId>
+        lineNumber: 83
+        variables:
+          name: org.springframework.spring-web
+          version: 5.3.7
     javaee-technology-usage-00120:
       description: Java Servlet
       labels:
@@ -229,7 +393,7 @@
       incidents:
       - uri: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/OrderManagementAppInitializer.java
         message: ""
-        codeSnip: " 1  package io.konveyor.demo.ordermanagement;\n 2  \n 3  import
+        codeSnip: "\n 1  package io.konveyor.demo.ordermanagement;\n 2  \n 3  import
           javax.servlet.ServletContext;\n 4  import javax.servlet.ServletException;\n
           5  import javax.servlet.ServletRegistration;\n 6  \n 7  import org.springframework.web.WebApplicationInitializer;\n
           8  import org.springframework.web.context.ContextLoaderListener;\n 9  import
@@ -245,14 +409,14 @@
           package: io.konveyor.demo.ordermanagement
       - uri: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/OrderManagementAppInitializer.java
         message: ""
-        codeSnip: " 1  package io.konveyor.demo.ordermanagement;\n 2  \n 3  import
+        codeSnip: "\n 1  package io.konveyor.demo.ordermanagement;\n 2  \n 3  import
           javax.servlet.ServletContext;\n 4  import javax.servlet.ServletException;\n
           5  import javax.servlet.ServletRegistration;\n 6  \n 7  import org.springframework.web.WebApplicationInitializer;\n
           8  import org.springframework.web.context.ContextLoaderListener;\n 9  import
           org.springframework.web.context.support.AnnotationConfigWebApplicationContext;\n10
           \ import org.springframework.web.servlet.DispatcherServlet;\n11  \n12  public
           class OrderManagementAppInitializer implements WebApplicationInitializer
-          \ {\n13  \n14  \t@Override"
+          \ {\n13  \n14  @Override"
         lineNumber: 4
         variables:
           file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/OrderManagementAppInitializer.java
@@ -261,14 +425,14 @@
           package: io.konveyor.demo.ordermanagement
       - uri: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/OrderManagementAppInitializer.java
         message: ""
-        codeSnip: " 1  package io.konveyor.demo.ordermanagement;\n 2  \n 3  import
+        codeSnip: "\n 1  package io.konveyor.demo.ordermanagement;\n 2  \n 3  import
           javax.servlet.ServletContext;\n 4  import javax.servlet.ServletException;\n
           5  import javax.servlet.ServletRegistration;\n 6  \n 7  import org.springframework.web.WebApplicationInitializer;\n
           8  import org.springframework.web.context.ContextLoaderListener;\n 9  import
           org.springframework.web.context.support.AnnotationConfigWebApplicationContext;\n10
           \ import org.springframework.web.servlet.DispatcherServlet;\n11  \n12  public
           class OrderManagementAppInitializer implements WebApplicationInitializer
-          \ {\n13  \n14  \t@Override\n15  \tpublic void onStartup(ServletContext container)
+          \ {\n13  \n14  @Override\n15  public void onStartup(ServletContext container)
           throws ServletException {"
         lineNumber: 5
         variables:
@@ -290,6 +454,28 @@
         variables:
           tags:
           - Servlet
+    mvc-01220:
+      description: Embedded framework - Spring MVC
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded framework - Spring MVC
+      - tag=Spring MVC
+      incidents:
+      - uri: file:///opt/input/source/pom.xml
+        message: ""
+        codeSnip: "\n69  <artifactId>spring-data-jpa</artifactId>\n70  </dependency>\n71
+          \ \n72  <dependency>\n73  <groupId>org.springframework</groupId>\n74  <artifactId>spring-jdbc</artifactId>\n75
+          \ <version>${spring-framework.version}</version>\n76  </dependency>\n77
+          \ <dependency>\n78  <groupId>org.springframework</groupId>\n79  <artifactId>spring-webmvc</artifactId>\n80
+          \ <version>${spring-framework.version}</version>\n81  </dependency>\n82
+          \ <dependency>\n83  <groupId>org.springframework</groupId>\n84  <artifactId>spring-web</artifactId>\n85
+          \ <version>${spring-framework.version}</version>\n86  </dependency>\n87
+          \ <dependency>\n88  <groupId>org.springframework.boot</groupId>\n89  <artifactId>spring-boot-starter-actuator</artifactId>"
+        lineNumber: 78
+        variables:
+          name: org.springframework.spring-webmvc
+          version: 5.3.7
     non-xml-technology-usage-02000:
       description: Non-XML EJB
       labels:
@@ -318,6 +504,57 @@
         variables:
           tags:
           - Properties
+    observability-0100:
+      description: Embedded library - Spring Boot Actuator
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded library - Spring Boot Actuator
+      - tag=Spring Boot Actuator
+      incidents:
+      - uri: file:///opt/input/source/pom.xml
+        message: ""
+        codeSnip: |2-
+
+          79  <artifactId>spring-webmvc</artifactId>
+          80  <version>${spring-framework.version}</version>
+          81  </dependency>
+          82  <dependency>
+          83  <groupId>org.springframework</groupId>
+          84  <artifactId>spring-web</artifactId>
+          85  <version>${spring-framework.version}</version>
+          86  </dependency>
+          87  <dependency>
+          88  <groupId>org.springframework.boot</groupId>
+          89  <artifactId>spring-boot-starter-actuator</artifactId>
+          90  <version>2.5.0</version>
+          91  </dependency>
+          92  <dependency>
+          93  <groupId>org.apache.tomcat</groupId>
+          94  <artifactId>tomcat-jdbc</artifactId>
+          95  <version>${tomcat.version}</version>
+          96  <scope>runtime</scope>
+          97  </dependency>
+          98  <dependency>
+          99  <groupId>org.hibernate</groupId>
+        lineNumber: 88
+        variables:
+          name: org.springframework.boot.spring-boot-starter-actuator
+          version: 2.5.0
+    observability-technology-usage-0100:
+      description: Spring Boot Actuator
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded=Spring Boot Actuator
+      - tag=Observability=Spring Boot Actuator
+      - tag=Sustain=Spring Boot Actuator
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - Spring Boot Actuator
     technology-usage-database-01200:
       description: JPA Queries
       labels:
@@ -329,16 +566,16 @@
       incidents:
       - uri: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/model/Customer.java
         message: ""
-        codeSnip: " 1  package io.konveyor.demo.ordermanagement.model;\n 2  \n 3  import
-          javax.persistence.Column;\n 4  import javax.persistence.Entity;\n 5  import
-          javax.persistence.GeneratedValue;\n 6  import javax.persistence.GenerationType;\n
+        codeSnip: "\n 1  package io.konveyor.demo.ordermanagement.model;\n 2  \n 3
+          \ import javax.persistence.Column;\n 4  import javax.persistence.Entity;\n
+          5  import javax.persistence.GeneratedValue;\n 6  import javax.persistence.GenerationType;\n
           7  import javax.persistence.Id;\n 8  import javax.persistence.SequenceGenerator;\n
           9  import javax.persistence.Table;\n10  \n11  @Entity\n12  @Table(name =
-          \"customers\")\n13  public class Customer {\n14  \t@Id\n15      @SequenceGenerator(\n16
-          \             name = \"customersSequence\",\n17              sequenceName
-          = \"customers_id_seq\",\n18              allocationSize = 1,\n19              initialValue
-          = 6)\n20      @GeneratedValue(strategy = GenerationType.SEQUENCE, generator
-          = \"customersSequence\")\n21  \tprivate Long id;"
+          \"customers\")\n13  public class Customer {\n14  @Id\n15  @SequenceGenerator(\n16
+          \ name = \"customersSequence\",\n17  sequenceName = \"customers_id_seq\",\n18
+          \ allocationSize = 1,\n19  initialValue = 6)\n20  @GeneratedValue(strategy
+          = GenerationType.SEQUENCE, generator = \"customersSequence\")\n21  private
+          Long id;"
         lineNumber: 11
         variables:
           file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/model/Customer.java
@@ -347,21 +584,91 @@
           package: io.konveyor.demo.ordermanagement.model
       - uri: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/model/Customer.java
         message: ""
-        codeSnip: " 2  \n 3  import javax.persistence.Column;\n 4  import javax.persistence.Entity;\n
+        codeSnip: "\n 2  \n 3  import javax.persistence.Column;\n 4  import javax.persistence.Entity;\n
           5  import javax.persistence.GeneratedValue;\n 6  import javax.persistence.GenerationType;\n
           7  import javax.persistence.Id;\n 8  import javax.persistence.SequenceGenerator;\n
           9  import javax.persistence.Table;\n10  \n11  @Entity\n12  @Table(name =
-          \"customers\")\n13  public class Customer {\n14  \t@Id\n15      @SequenceGenerator(\n16
-          \             name = \"customersSequence\",\n17              sequenceName
-          = \"customers_id_seq\",\n18              allocationSize = 1,\n19              initialValue
-          = 6)\n20      @GeneratedValue(strategy = GenerationType.SEQUENCE, generator
-          = \"customersSequence\")\n21  \tprivate Long id;\n22  \t"
+          \"customers\")\n13  public class Customer {\n14  @Id\n15  @SequenceGenerator(\n16
+          \ name = \"customersSequence\",\n17  sequenceName = \"customers_id_seq\",\n18
+          \ allocationSize = 1,\n19  initialValue = 6)\n20  @GeneratedValue(strategy
+          = GenerationType.SEQUENCE, generator = \"customersSequence\")\n21  private
+          Long id;\n22  "
         lineNumber: 12
         variables:
           file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/model/Customer.java
           kind: Property
           name: Entity
           package: io.konveyor.demo.ordermanagement.model
+    technology-usage-database-03100:
+      description: Spring Data JPA
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded=Spring Data JPA
+      - tag=Persistence=Spring Data JPA
+      - tag=Store=Spring Data JPA
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - Spring Data JPA
+    technology-usage-embedded-framework-08200:
+      description: Spring DI
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded=Spring DI
+      - tag=Execute=Spring DI
+      - tag=Inversion of Control=Spring DI
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - Spring DI
+    technology-usage-embedded-framework-08300:
+      description: Micrometer
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded=Micrometer
+      - tag=Execute=Micrometer
+      - tag=Integration=Micrometer
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - Micrometer
+    technology-usage-embedded-framework-08400:
+      description: Spring Web
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded=Spring Web
+      - tag=View=Spring Web
+      - tag=Web=Spring Web
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - Spring Web
+    technology-usage-mvc-01200:
+      description: Spring MVC
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded=Spring MVC
+      - tag=MVC=Spring MVC
+      - tag=View=Spring MVC
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - Spring MVC
   unmatched:
   - 3rd-party-01000
   - 3rd-party-02000
@@ -432,7 +739,6 @@
   - database-02700
   - database-02800
   - database-02900
-  - database-03000
   - database-03100
   - ejb-01000
   - embedded-cache-libraries-01000
@@ -501,9 +807,6 @@
   - embedded-framework-07900
   - embedded-framework-08000
   - embedded-framework-08100
-  - embedded-framework-08200
-  - embedded-framework-08300
-  - embedded-framework-08400
   - embedded-framework-08500
   - embedded-framework-08600
   - embedded-framework-08700
@@ -660,7 +963,6 @@
   - mvc-01100
   - mvc-01200
   - mvc-01210
-  - mvc-01220
   - mvc-01300
   - mvc-01400
   - mvc-01500
@@ -724,9 +1026,7 @@
   - non-xml-technology-usage-25000
   - non-xml-technology-usage-26000
   - non-xml-technology-usage-27000
-  - observability-0100
   - observability-0200
-  - observability-technology-usage-0100
   - observability-technology-usage-0200
   - security-01100
   - security-01200
@@ -826,7 +1126,6 @@
   - technology-usage-database-02800
   - technology-usage-database-02900
   - technology-usage-database-03000
-  - technology-usage-database-03100
   - technology-usage-database-03200
   - technology-usage-ejb-01400
   - technology-usage-embedded-framework-01000
@@ -874,9 +1173,6 @@
   - technology-usage-embedded-framework-07900
   - technology-usage-embedded-framework-08000
   - technology-usage-embedded-framework-08100
-  - technology-usage-embedded-framework-08200
-  - technology-usage-embedded-framework-08300
-  - technology-usage-embedded-framework-08400
   - technology-usage-embedded-framework-08500
   - technology-usage-embedded-framework-08600
   - technology-usage-embedded-framework-08700
@@ -951,7 +1247,6 @@
   - technology-usage-markup-01300
   - technology-usage-mvc-01000
   - technology-usage-mvc-01100
-  - technology-usage-mvc-01200
   - technology-usage-mvc-01300
   - technology-usage-mvc-01400
   - technology-usage-mvc-01500

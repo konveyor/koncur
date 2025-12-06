@@ -2,6 +2,11 @@ name: Tackle Testapp public with package filter
 analysis:
     application: https://github.com/konveyor/tackle-testapp-public#ci-2024
     labelSelector: konveyor.io/target=cloud-readiness || konveyor.io/target=linux
+    context_lines: 0
+    incident_selector: ""
+    source: []
+    target: []
+    rules: []
     analysisMode: source-only
 timeout: 10m0s
 expect:

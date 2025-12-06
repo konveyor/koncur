@@ -35,3 +35,9 @@ func FilterRuleSets(rulesets []konveyor.RuleSet) []konveyor.RuleSet {
 	}
 	return filtered
 }
+
+// NormalizeRuleSets normalizes rulesets for comparison by removing dynamic content
+// This is a no-op now - normalization happens at the YAML string level in the validator
+func NormalizeRuleSets(rulesets []konveyor.RuleSet) []konveyor.RuleSet {
+	return rulesets
+}

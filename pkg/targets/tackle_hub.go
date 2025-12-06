@@ -28,8 +28,9 @@ const (
 
 // TackleHubTarget implements Target for Tackle Hub API
 type TackleHubTarget struct {
-	url    string
-	client *binding.RichClient
+	url           string
+	client        *binding.RichClient
+	mavenSettings string
 }
 
 // NewTackleHubTarget creates a new Tackle Hub API target
@@ -40,19 +41,19 @@ func NewTackleHubTarget(cfg *config.TackleHubConfig) (*TackleHubTarget, error) {
 
 	client := binding.New(cfg.URL)
 
-	// Set authentication token if provided
+	// Set authentication if provided (optional for instances with auth disabled)
 	if cfg.Token != "" {
 		client.Client.Login.Token = cfg.Token
 	} else if cfg.Username != "" && cfg.Password != "" {
 		client.Client.Login.User = cfg.Username
 		client.Client.Login.Password = cfg.Password
-	} else {
-		return nil, fmt.Errorf("either token or username/password required")
 	}
+	// If no credentials provided, assume auth is disabled on the Tackle instance
 
 	return &TackleHubTarget{
-		url:    cfg.URL,
-		client: client,
+		url:           cfg.URL,
+		client:        client,
+		mavenSettings: cfg.MavenSettings,
 	}, nil
 }
 
@@ -65,6 +66,11 @@ func (t *TackleHubTarget) Name() string {
 func (t *TackleHubTarget) Execute(ctx context.Context, test *config.TestDefinition) (*ExecutionResult, error) {
 	log := util.GetLogger()
 	start := time.Now()
+
+	// Validate maven settings requirement
+	if test.RequireMavenSettings && t.mavenSettings == "" {
+		return nil, fmt.Errorf("test requires maven settings but none configured in target config")
+	}
 
 	// Prepare work directory
 	workDir, err := PrepareWorkDir(test.GetWorkDir(), test.Name)
@@ -116,8 +122,22 @@ func (t *TackleHubTarget) Execute(ctx context.Context, test *config.TestDefiniti
 	return result, nil
 }
 
-// createApplication creates a new application in Tackle Hub
+// createApplication creates a new application in Tackle Hub or finds existing one
 func (t *TackleHubTarget) createApplication(test *config.TestDefinition) (*api.Application, error) {
+	// First, try to find an existing application with the same name
+	apps, err := t.client.Application.List()
+	if err != nil {
+		return nil, fmt.Errorf("failed to list applications: %w", err)
+	}
+
+	// Look for existing application with matching name
+	for _, existingApp := range apps {
+		if existingApp.Name == test.Name {
+			return &existingApp, nil
+		}
+	}
+
+	// Application doesn't exist, create new one
 	app := &api.Application{
 		Name:        test.Name,
 		Description: test.Description,
@@ -127,7 +147,7 @@ func (t *TackleHubTarget) createApplication(test *config.TestDefinition) (*api.A
 		},
 	}
 
-	err := t.client.Application.Create(app)
+	err = t.client.Application.Create(app)
 	if err != nil {
 		return nil, err
 	}
@@ -157,6 +177,11 @@ func (t *TackleHubTarget) createAnalysisTask(ctx context.Context, test *config.T
 	// Add label selector
 	if test.Analysis.LabelSelector != "" {
 		taskData["labelSelector"] = test.Analysis.LabelSelector
+	}
+
+	// Add maven settings if specified
+	if t.mavenSettings != "" {
+		taskData["mavenSettings"] = t.mavenSettings
 	}
 
 	task := &api.Task{

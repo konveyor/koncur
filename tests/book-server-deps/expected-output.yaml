@@ -16,15 +16,14 @@
         message: |-
           Spring boot version is out of any spring boot support scope.
            Update to open source support version of Spring Boot.
-        codeSnip: "15                  <artifactId>spring-boot-maven-plugin</artifactId>\n16
-          \                 <version>2.1.0.RELEASE</version>  \t\t\t<!--  09.11.2018
-          -->\n17              </plugin>\n18          </plugins>\n19      </build>\n20
-          \ \n21      <dependencies>\n22          <!-- spring boot -->\n23          <dependency>\n24
-          \             <groupId>org.springframework.boot</groupId>\n25              <artifactId>spring-boot-starter-web</artifactId>\n26
-          \             <version>2.1.0.RELEASE</version>                <!--  09.11.2018
-          -->\n27          </dependency>\n28  \n29          <!--  lombok -->\n30          <dependency>\n31
-          \             <groupId>org.projectlombok</groupId>\n32              <artifactId>lombok</artifactId>\n33
-          \             <version>1.18.2</version>\n34          </dependency>\n35  "
+        codeSnip: "\n15  <artifactId>spring-boot-maven-plugin</artifactId>\n16  <version>2.1.0.RELEASE</version>
+          \ \t\t\t<!--  09.11.2018 -->\n17  </plugin>\n18  </plugins>\n19  </build>\n20
+          \ \n21  <dependencies>\n22  <!-- spring boot -->\n23  <dependency>\n24  <groupId>org.springframework.boot</groupId>\n25
+          \ <artifactId>spring-boot-starter-web</artifactId>\n26  <version>2.1.0.RELEASE</version>
+          \               <!--  09.11.2018 -->\n27  </dependency>\n28  \n29  <!--
+          \ lombok -->\n30  <dependency>\n31  <groupId>org.projectlombok</groupId>\n32
+          \ <artifactId>lombok</artifactId>\n33  <version>1.18.2</version>\n34  </dependency>\n35
+          \ "
         lineNumber: 24
         variables:
           name: org.springframework.boot.spring-boot-starter-web
@@ -96,7 +95,7 @@
       - konveyor.io/target=camel
       - konveyor.io/target=camel3+
       incidents:
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/book-server_deps-20251204-010606/source/pom.xml
+      - uri: file:///source/pom.xml
         message: |-
           `jaxb-api` Maven dependency missing.
 
@@ -141,7 +140,7 @@
       - konveyor.io/target=camel
       - konveyor.io/target=camel3+
       incidents:
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/book-server_deps-20251204-010606/source/pom.xml
+      - uri: file:///source/pom.xml
         message: |-
           `jaxb-core` Maven dependency missing.
 
@@ -186,7 +185,7 @@
       - konveyor.io/target=camel
       - konveyor.io/target=camel3+
       incidents:
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/book-server_deps-20251204-010606/source/pom.xml
+      - uri: file:///source/pom.xml
         message: |-
           `jaxb-impl` Maven dependency missing.
 
@@ -526,17 +525,16 @@
            * Configuration: Store configuration settings in environment variables so that they can be updated without code changes.
            * Data storage: Use a database backing service for relational data or use a persistent data storage system.
            * Temporary data storage: Use the file system of a running container as a brief, single-transaction cache.
-        codeSnip: " 4  import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;\n
+        codeSnip: "\n 4  import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;\n
           5  import com.telran.application.model.dto.Book;\n 6  \n 7  import java.io.*;\n
-          8  import java.util.HashMap;\n 9  \n10  public class BookModel {\n11      private
+          8  import java.util.HashMap;\n 9  \n10  public class BookModel {\n11  private
           static HashMap<Long, Book> library = new HashMap<Long, Book>();\n12  \n13
-          \     public static void writeBooksToFile(String fileName, int numBooks)
-          throws IOException {\n14          File file = new File(fileName);\n15          file.createNewFile();\n16
-          \ \n17          PrintWriter pw = new PrintWriter(new FileWriter(file));\n18
-          \ \n19          ObjectMapper mapper = new ObjectMapper();\n20          mapper.registerModule(new
-          JavaTimeModule());\n21  \n22          for (int i = 0; i < numBooks; i++)\n23
-          \             pw.println(mapper.writeValueAsString(Book.getRandomBook()));\n24
-          \         pw.close();"
+          \ public static void writeBooksToFile(String fileName, int numBooks) throws
+          IOException {\n14  File file = new File(fileName);\n15  file.createNewFile();\n16
+          \ \n17  PrintWriter pw = new PrintWriter(new FileWriter(file));\n18  \n19
+          \ ObjectMapper mapper = new ObjectMapper();\n20  mapper.registerModule(new
+          JavaTimeModule());\n21  \n22  for (int i = 0; i < numBooks; i++)\n23  pw.println(mapper.writeValueAsString(Book.getRandomBook()));\n24
+          \ pw.close();"
         lineNumber: 14
         variables:
           file: file:///opt/input/source/src/main/java/com/telran/application/model/BookModel.java
@@ -556,16 +554,16 @@
            * Configuration: Store configuration settings in environment variables so that they can be updated without code changes.
            * Data storage: Use a database backing service for relational data or use a persistent data storage system.
            * Temporary data storage: Use the file system of a running container as a brief, single-transaction cache.
-        codeSnip: " 7  import java.io.*;\n 8  import java.util.HashMap;\n 9  \n10
-          \ public class BookModel {\n11      private static HashMap<Long, Book> library
-          = new HashMap<Long, Book>();\n12  \n13      public static void writeBooksToFile(String
-          fileName, int numBooks) throws IOException {\n14          File file = new
-          File(fileName);\n15          file.createNewFile();\n16  \n17          PrintWriter
-          pw = new PrintWriter(new FileWriter(file));\n18  \n19          ObjectMapper
-          mapper = new ObjectMapper();\n20          mapper.registerModule(new JavaTimeModule());\n21
-          \ \n22          for (int i = 0; i < numBooks; i++)\n23              pw.println(mapper.writeValueAsString(Book.getRandomBook()));\n24
-          \         pw.close();\n25      }\n26  \n27      public static void readDB(String
-          filename) throws IOException {"
+        codeSnip: "\n 7  import java.io.*;\n 8  import java.util.HashMap;\n 9  \n10
+          \ public class BookModel {\n11  private static HashMap<Long, Book> library
+          = new HashMap<Long, Book>();\n12  \n13  public static void writeBooksToFile(String
+          fileName, int numBooks) throws IOException {\n14  File file = new File(fileName);\n15
+          \ file.createNewFile();\n16  \n17  PrintWriter pw = new PrintWriter(new
+          FileWriter(file));\n18  \n19  ObjectMapper mapper = new ObjectMapper();\n20
+          \ mapper.registerModule(new JavaTimeModule());\n21  \n22  for (int i = 0;
+          i < numBooks; i++)\n23  pw.println(mapper.writeValueAsString(Book.getRandomBook()));\n24
+          \ pw.close();\n25  }\n26  \n27  public static void readDB(String filename)
+          throws IOException {"
         lineNumber: 17
         variables:
           file: file:///opt/input/source/src/main/java/com/telran/application/model/BookModel.java
@@ -585,17 +583,14 @@
            * Configuration: Store configuration settings in environment variables so that they can be updated without code changes.
            * Data storage: Use a database backing service for relational data or use a persistent data storage system.
            * Temporary data storage: Use the file system of a running container as a brief, single-transaction cache.
-        codeSnip: "19          ObjectMapper mapper = new ObjectMapper();\n20          mapper.registerModule(new
-          JavaTimeModule());\n21  \n22          for (int i = 0; i < numBooks; i++)\n23
-          \             pw.println(mapper.writeValueAsString(Book.getRandomBook()));\n24
-          \         pw.close();\n25      }\n26  \n27      public static void readDB(String
-          filename) throws IOException {\n28  \n29          File file = new File(filename);\n30
-          \         if (!file.exists()) return;\n31  \n32          BufferedReader
-          br = new BufferedReader(new FileReader(file));\n33          ObjectMapper
-          mapper = new ObjectMapper();\n34          mapper.registerModule(new JavaTimeModule());\n35
-          \ \n36          while (true){\n37              String line = br.readLine();\n38
-          \             if (line == null) break;\n39              Book book = mapper.readValue(line,
-          Book.class);"
+        codeSnip: "\n19  ObjectMapper mapper = new ObjectMapper();\n20  mapper.registerModule(new
+          JavaTimeModule());\n21  \n22  for (int i = 0; i < numBooks; i++)\n23  pw.println(mapper.writeValueAsString(Book.getRandomBook()));\n24
+          \ pw.close();\n25  }\n26  \n27  public static void readDB(String filename)
+          throws IOException {\n28  \n29  File file = new File(filename);\n30  if
+          (!file.exists()) return;\n31  \n32  BufferedReader br = new BufferedReader(new
+          FileReader(file));\n33  ObjectMapper mapper = new ObjectMapper();\n34  mapper.registerModule(new
+          JavaTimeModule());\n35  \n36  while (true){\n37  String line = br.readLine();\n38
+          \ if (line == null) break;\n39  Book book = mapper.readValue(line, Book.class);"
         lineNumber: 29
         variables:
           file: file:///opt/input/source/src/main/java/com/telran/application/model/BookModel.java
@@ -615,16 +610,15 @@
            * Configuration: Store configuration settings in environment variables so that they can be updated without code changes.
            * Data storage: Use a database backing service for relational data or use a persistent data storage system.
            * Temporary data storage: Use the file system of a running container as a brief, single-transaction cache.
-        codeSnip: "22          for (int i = 0; i < numBooks; i++)\n23              pw.println(mapper.writeValueAsString(Book.getRandomBook()));\n24
-          \         pw.close();\n25      }\n26  \n27      public static void readDB(String
-          filename) throws IOException {\n28  \n29          File file = new File(filename);\n30
-          \         if (!file.exists()) return;\n31  \n32          BufferedReader
-          br = new BufferedReader(new FileReader(file));\n33          ObjectMapper
-          mapper = new ObjectMapper();\n34          mapper.registerModule(new JavaTimeModule());\n35
-          \ \n36          while (true){\n37              String line = br.readLine();\n38
-          \             if (line == null) break;\n39              Book book = mapper.readValue(line,
-          Book.class);\n40              library.put(book.getISBN(), book);\n41  //
-          \           System.out.println(book);\n42          }"
+        codeSnip: "\n22  for (int i = 0; i < numBooks; i++)\n23  pw.println(mapper.writeValueAsString(Book.getRandomBook()));\n24
+          \ pw.close();\n25  }\n26  \n27  public static void readDB(String filename)
+          throws IOException {\n28  \n29  File file = new File(filename);\n30  if
+          (!file.exists()) return;\n31  \n32  BufferedReader br = new BufferedReader(new
+          FileReader(file));\n33  ObjectMapper mapper = new ObjectMapper();\n34  mapper.registerModule(new
+          JavaTimeModule());\n35  \n36  while (true){\n37  String line = br.readLine();\n38
+          \ if (line == null) break;\n39  Book book = mapper.readValue(line, Book.class);\n40
+          \ library.put(book.getISBN(), book);\n41  //            System.out.println(book);\n42
+          \ }"
         lineNumber: 32
         variables:
           file: file:///opt/input/source/src/main/java/com/telran/application/model/BookModel.java
@@ -701,15 +695,15 @@
       - konveyor.io/target=discovery
       - tag=Java Source
       incidents:
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/book-server_deps-20251204-010606/source/src/main/java/com/telran/application/BookServerApp.java
+      - uri: file:///source/src/main/java/com/telran/application/BookServerApp.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/book-server_deps-20251204-010606/source/src/main/java/com/telran/application/controller/BookQuerriesController.java
+      - uri: file:///source/src/main/java/com/telran/application/controller/BookQuerriesController.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/book-server_deps-20251204-010606/source/src/main/java/com/telran/application/controller/BookStartEndController.java
+      - uri: file:///source/src/main/java/com/telran/application/controller/BookStartEndController.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/book-server_deps-20251204-010606/source/src/main/java/com/telran/application/model/BookModel.java
+      - uri: file:///source/src/main/java/com/telran/application/model/BookModel.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/book-server_deps-20251204-010606/source/src/main/java/com/telran/application/model/dto/Book.java
+      - uri: file:///source/src/main/java/com/telran/application/model/dto/Book.java
         message: ""
     discover-maven-xml:
       description: Maven XML file
@@ -719,7 +713,7 @@
       - konveyor.io/target=discovery
       - tag=Maven XML
       incidents:
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/book-server_deps-20251204-010606/source/pom.xml
+      - uri: file:///source/pom.xml
         message: ""
     windup-discover-ejb-configuration:
       description: EJB XML Configuration
@@ -729,43 +723,9 @@
       - konveyor.io/target=discovery
       - tag=EJB XML
       incidents:
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/book-server_deps-20251204-010606/source/custom-rules/JBoss1-web-class-loading.windup.xml
+      - uri: file:///source/custom-rules/JBoss1-web-class-loading.windup.xml
         message: ""
-        codeSnip: "  1  <?xml version=\"1.0\"?>\n  2  <ruleset id=\"JBoss5-web-class-loading-1\"\n
-          \ 3      xmlns=\"http://windup.jboss.org/schema/jboss-ruleset\"\n  4      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n
-          \ 5      xsi:schemaLocation=\"http://windup.jboss.org/schema/jboss-ruleset
-          http://windup.jboss.org/schema/jboss-ruleset/windup-jboss-ruleset.xsd\">\n
-          \ 6      <metadata>\n  7          <description>\n  8              This ruleset
-          looks for the class-loading element in a jboss-web.xml file, which is no
-          longer valid in JBoss EAP 6\n  9          </description>\n 10           <dependencies>\n
-          11              <addon id=\"org.jboss.windup.rules,windup-rules-javaee,3.0.0.Final\"/>\n
-          12              <addon id=\"org.jboss.windup.rules,windup-rules-java,3.0.0.Final\"/>\n
-          13          </dependencies>        \n 14          <sourceTechnology id=\"customSource\"/>\n
-          15          <targetTechnology id=\"azureAppservice\"/>\n 16      </metadata>\n
-          17      <rules>\n 18          <rule id=\"JBoss5-web-class-loading_001\">\n
-          19              <when>\n 20                  <xmlfile matches=\"jboss-web/class-loading\"
-          />\n 21              </when>\n 22              <perform>\n 23                  <iteration>\n
-          24                      <classification title=\"JBoss Web Application Descriptor\"
-          effort=\"1\"/>\n 25                      <hint title=\"JBoss Web XML class-loading
-          element is no longer valid\">\n 26                        <message>\n 27
-          \                         Fist message: The class-loading element is no
-          longer valid in the jboss-web.xml file.\n 28                        </message>\n
-          29                        <link href=\"https://access.redhat.com/documentation/en-US/JBoss_Enterprise_Application_Platform/6.4/html-single/Migration_Guide/index.html#Create_or_Modify_Files_That_Control_Class_Loading_in_JBoss_Enterprise_Application_Platform_6\"
-          title=\"Create or Modify Files That Control Class Loading in JBoss EAP 6\"/>\n
-          30                      </hint>\n 31                  </iteration>\n 32
-          \             </perform>\n 33          </rule>\n 34  \t<rule id=\"JBoss5-web-class-loading_002\">\n
-          35              <when>\n 36                  <xmlfile matches=\"jboss-web/class-loading\"
-          />\n 37              </when>\n 38              <perform>\n 39                  <iteration>\n
-          40                      <classification title=\"JBoss Web Application Descriptor\"
-          effort=\"1\"/>\n 41                      <hint title=\"JBoss Web XML class-loading
-          element is no longer valid\">\n 42                        <message>\n 43
-          \ \t\t\t Second message: The class-loading element is no longer valid in
-          the jboss-web.xml file.\n 44                        </message>\n 45                        <link
-          href=\"https://access.redhat.com/documentation/en-US/JBoss_Enterprise_Application_Platform/6.4/html-single/Migration_Guide/index.html#Create_or_Modify_Files_That_Control_Class_Loading_in_JBoss_Enterprise_Application_Platform_6\"
-          title=\"Create or Modify Files That Control Class Loading in JBoss EAP 6\"/>\n
-          46                      </hint>\n 47                  </iteration>\n 48
-          \             </perform>\n 49          </rule>\n 50       </rules>\n 51
-          \ </ruleset>\n"
+        codeSnip: 6      <metadata>
         lineNumber: 5
         variables:
           data: ""
@@ -803,28 +763,9 @@
             file.</message><link href="https://access.redhat.com/documentation/en-US/JBoss_Enterprise_Application_Platform/6.4/html-single/Migration_Guide/index.html#Create_or_Modify_Files_That_Control_Class_Loading_in_JBoss_Enterprise_Application_Platform_6"
             title="Create or Modify Files That Control Class Loading in JBoss EAP
             6"></link></hint></iteration></perform></rule></rules></ruleset>'
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/book-server_deps-20251204-010606/source/custom-rules/custom-rule-example.windup.xml
+      - uri: file:///source/custom-rules/custom-rule-example.windup.xml
         message: ""
-        codeSnip: "  1  <?xml version=\"1.0\"?>\n  2  <ruleset xmlns=\"http://windup.jboss.org/schema/jboss-ruleset\"
-          id=\"custom-rule-example\"\n  3           xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
-          xsi:schemaLocation=\"http://windup.jboss.org/schema/jboss-ruleset http://windup.jboss.org/schema/jboss-ruleset/windup-jboss-ruleset.xsd\">\n
-          \ 4      <metadata>\n  5          <description>\n  6              This is
-          an example custom rule\n  7          </description>\n  8          <dependencies>\n
-          \ 9              <addon id=\"org.jboss.windup.rules,windup-rules-javaee,3.0.0.Final\"
-          />\n 10              <addon id=\"org.jboss.windup.rules,windup-rules-java,3.0.0.Final\"
-          />\n 11              <addon id=\"org.jboss.windup.rules,windup-rules-xml,3.0.0.Final\"
-          />\n 12          </dependencies>\n 13      </metadata>\n 14  \t<rules>\n
-          15  \t<rule id=\"Test-002-00001\" xmlns=\"http://windup.jboss.org/schema/jboss-ruleset\">\n
-          16  \t\t\t<!-- rule condition, when it could be fired -->\n 17  \t\t\t<when>\n
-          18  \t\t\t\t<project>\n 19  \t\t\t\t\t<artifact groupId=\"com.fasterxml.jackson.core\"
-          artifactId=\"jackson-databind\" />\n 20  \t\t\t\t</project>\n 21  \n 22
-          \ \t\t\t</when>\n 23  \t\t\t<!-- rule operation, what to do if it is fired
-          -->\n 24  \t\t\t<perform>\n 25  \t\t\t\t<hint category-id=\"potential\"
-          effort=\"0\" title=\"jackson-databind identified in the pom.xml\">\n 26
-          \ \t\t\t\t\t<message><![CDATA[Test-002 Custom rule]]></message>\n 27  \t\t\t\t\t<tag>tag</tag>\n
-          28  \t\t\t\t\t<link href=\"http://nufc.com\" title=\"Test-002 Test link\">link</link>\n
-          29  \t\t\t\t</hint>\n 30  \n 31  \t\t\t</perform>\n 32  \t\t</rule>\n 33
-          \ \t</rules>\n 34  </ruleset>\n"
+        codeSnip: 4      <metadata>
         lineNumber: 3
         variables:
           data: ""
@@ -845,24 +786,9 @@
             title="jackson-databind identified in the pom.xml"><message><![CDATA[Test-002
             Custom rule]]></message><tag>tag</tag><link href="http://nufc.com" title="Test-002
             Test link">link</link></hint></perform></rule></rules></ruleset>
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/book-server_deps-20251204-010606/source/custom-rules/custom.Test1rules.windup.xml
+      - uri: file:///source/custom-rules/custom.Test1rules.windup.xml
         message: ""
-        codeSnip: "  1  <?xml version=\"1.0\"?>\n  2  <ruleset id=\"Test-002\" xmlns=\"http://windup.jboss.org/schema/jboss-ruleset\"\n
-          \ 3  \txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n  4  \txsi:schemaLocation=\"http://windup.jboss.org/schema/jboss-ruleset
-          http://windup.jboss.org/schema/jboss-ruleset/windup-jboss-ruleset.xsd\">\n
-          \ 5  \t<metadata>\n  6  \t\t<description>\n  7              This is a description
-          of rules. This is a template for new rulesets. Change this.\n  8          </description>\n
-          \ 9  \t\t<!-- version ranges applied to from and to technologies -->\n 10
-          \ \t\t<dependencies>\n 11  \t\t</dependencies>\n 12  \t</metadata>\n 13
-          \ \t<rules>\n 14  \t\t<rule id=\"Test1-002-00001\">\n 15  \t\t\t<!-- rule
-          condition, when it could be fired -->\n 16  \t\t\t<when>\n 17  \t\t\t\t<file
-          filename=\"AdministracionEfectivo-jpa{*}.jar\" />\n 18  \n 19  \t\t\t</when>\n
-          20  \t\t\t<!-- rule operation, what to do if it is fired -->\n 21  \t\t\t<perform>\n
-          22  \t\t\t\t<hint title=\"Test-002 Remote Exception\" effort=\"0\"\n 23
-          \ \t\t\t\t\tcategory-id=\"potential\">\n 24  \t\t\t\t\t<message><![CDATA[Test-002
-          Message markdown]]></message>\n 25  \t\t\t\t\t<tag>tag</tag>\n 26  \t\t\t\t\t<link
-          href=\"http://nufc.com\" title=\"Test-002 Test link\">link</link>\n 27  \t\t\t\t</hint>\n
-          28  \n 29  \t\t\t</perform>\n 30  \t\t</rule>\n 31  \t</rules>\n 32  </ruleset>\n"
+        codeSnip: "5  \t<metadata>"
         lineNumber: 4
         variables:
           data: ""
@@ -880,92 +806,9 @@
             Remote Exception" effort="0" category-id="potential"><message><![CDATA[Test-002
             Message markdown]]></message><tag>tag</tag><link href="http://nufc.com"
             title="Test-002 Test link">link</link></hint></perform></rule></rules></ruleset>
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/book-server_deps-20251204-010606/source/custom-rules/customWebLogic.windup.label.xml
+      - uri: file:///source/custom-rules/customWebLogic.windup.label.xml
         message: ""
-        codeSnip: |2
-            1  <?xml version="1.0" encoding="UTF-8"?>
-            2  <labelset id="custom_labels"
-            3            priority="1"
-            4            xmlns="http://windup.jboss.org/schema/jboss-labelset"
-            5            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            6            xsi:schemaLocation="http://windup.jboss.org/schema/jboss-labelset http://windup.jboss.org/schema/jboss-labelset/windup-jboss-labelset.xsd">
-            7      <labels>
-            8          <label id="customweblogic">
-            9              <name>Weblogic</name>
-           10              <description>Custom WebLogic</description>
-           11              <supported>
-           12                  <tag>Bean Validation</tag>
-           13                  <tag>CDI</tag>
-           14                  <tag>Clustering EJB</tag>
-           15                  <tag>Clustering Web Session</tag>
-           16                  <tag>Common Annotations</tag>
-           17                  <tag>EAR</tag>
-           18                  <tag>EJB</tag>
-           19                  <tag>EJB XML*</tag>
-           20                  <tag>Enterprise Web Services</tag>
-           21                  <tag>JACC</tag>
-           22                  <tag>Java EE</tag>
-           23                  <tag>Java EE Batch</tag>
-           24                  <tag>Java EE Batch API</tag>
-           25                  <tag>Java EE JSON-P</tag>
-           26                  <tag>Java EE Security</tag>
-           27                  <tag>JavaMail</tag>
-           28                  <tag>JAX-RS</tag>
-           29                  <tag>JAX-WS</tag>
-           30                  <tag>JAXB</tag>
-           31                  <tag>JAXR</tag>
-           32                  <tag>JBoss EJB XML</tag>
-           33                  <tag>JBoss Web XML</tag>
-           34                  <tag>JCA</tag>
-           35                  <tag>JMS</tag>
-           36                  <tag>JMS Connection Factory</tag>
-           37                  <tag>JMS Queue</tag>
-           38                  <tag>JMS Topic</tag>
-           39                  <tag>JPA</tag>
-           40                  <tag>JPA entities</tag>
-           41                  <tag>JPA named queries</tag>
-           42                  <tag>JPA XML*</tag>
-           43                  <tag>JSF Page</tag>
-           44                  <tag>JSON-B</tag>
-           45                  <tag>JSP Page</tag>
-           46                  <tag>JTA</tag>
-           47                  <tag>MEJB</tag>
-           48                  <tag>Message (MDB)</tag>
-           49                  <tag>Persistence units</tag>
-           50                  <tag>Servlet</tag>
-           51                  <tag>SOAP (SAAJ)</tag>
-           52                  <tag>Stateful (SFSB)</tag>
-           53                  <tag>Stateless (SLSB)</tag>
-           54                  <tag>WebLogic Web XML</tag>
-           55                  <tag>WS Metadata</tag>
-           56              </supported>
-           57              <unsuitable>
-           58                  <tag>JAX-RPC</tag>
-           59                  <tag>RMI</tag>
-           60                  <tag>WebSphere EJB</tag>
-           61                  <tag>WebSphere EJB Ext</tag>
-           62                  <tag>WebSphere Web XML</tag>
-           63                  <tag>WebSphere WS Binding</tag>
-           64                  <tag>WebSphere WS Extension</tag>
-           65              </unsuitable>
-           66              <neutral>
-           67                  <tag>Bouncy Castle (embedded)</tag>
-           68                  <tag>Java Source</tag>
-           69                  <tag>JDBC datasources</tag>
-           70                  <tag>JDBC XA datasources</tag>
-           71                  <tag>Manifest</tag>
-           72                  <tag>Maven XML</tag>
-           73                  <tag>Properties</tag>
-           74                  <tag>Spring (embedded)</tag>          <!-- Spring Core is supported, but Spring XML part of Spring Data Access is not supported-->
-           75                  <tag>Spring MVC (embedded)</tag>      <!-- Spring MVC is supported -->
-           76                  <tag>Spring Security (embedded)</tag> <!-- Spring Security is supported -->
-           77                  <tag>Swagger (embedded)</tag>
-           78                  <tag>Web XML*</tag>
-           79                  <tag>WSDL (embedded)</tag>
-           80              </neutral>
-           81          </label>
-           82      </labels>
-           83  </labelset>
+        codeSnip: 10              <description>Custom WebLogic</description>
         lineNumber: 9
         variables:
           data: ""
@@ -1021,30 +864,9 @@
             Spring MVC is supported --><tag>Spring Security (embedded)</tag><!-- Spring
             Security is supported --><tag>Swagger (embedded)</tag><tag>Web XML*</tag><tag>WSDL
             (embedded)</tag></neutral></label></labels></labelset>
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/book-server_deps-20251204-010606/source/custom-rules/java-internals-custom.windup.xml
+      - uri: file:///source/custom-rules/java-internals-custom.windup.xml
         message: ""
-        codeSnip: "  1  <?xml version=\"1.0\"?>\n  2  <ruleset xmlns=\"http://windup.jboss.org/schema/jboss-ruleset\"
-          id=\"java-internals-custom\"\n  3           xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
-          xsi:schemaLocation=\"http://windup.jboss.org/schema/jboss-ruleset http://windup.jboss.org/schema/jboss-ruleset/windup-jboss-ruleset.xsd\">\n
-          \ 4      <metadata>\n  5          <description>\n  6              Custom
-          rule to investigate some issues pertaining to the migraton path OpenJDK
-          8 and 11.\n  7          </description>\n  8          <dependencies>\n  9
-          \             <addon id=\"org.jboss.windup.rules,windup-rules-java,3.0.0.Final\"
-          />\n 10          </dependencies>\n 11      </metadata>\n 12      <rules>\n
-          13          <rule id=\"java-internals-custom-getFont\">\n 14              <when>\n
-          15                  <javaclass references=\"java.awt.Font.getFont({*})\"></javaclass>
-          \ \n 16              </when>\n 17              <perform>\n 18                  <hint
-          title=\"custom rule identified java.awt.Font.getFont()\" effort=\"3\" category-id=\"mandatory\">\n
-          19                      <message>\n 20                          `java.awt.Font.getFont()`
-          referened in this class\n 21                      </message>\n 22                  </hint>\n
-          23              </perform>\n 24          </rule>\n 25          <rule id=\"java-internals-custom-getPeer\">\n
-          26              <when>\n 27                  <javaclass references=\"java.awt.Font.getPeer({*})\"></javaclass>\n
-          28              </when>\n 29              <perform>\n 30                  <hint
-          title=\"custom rule identified java.awt.Font.getPeer()\" effort=\"3\" category-id=\"mandatory\">\n
-          31                      <message>\n 32                          `java.awt.Font.getPeer()`
-          referenced in this class\n 33                      </message>\n 34                  </hint>\n
-          35              </perform>\n 36          </rule>\n 37      </rules>\n 38
-          \ </ruleset>\n"
+        codeSnip: 4      <metadata>
         lineNumber: 3
         variables:
           data: ""
@@ -1068,39 +890,9 @@
             references="java.awt.Font.getPeer({*})"></javaclass></when><perform><hint
             title="custom rule identified java.awt.Font.getPeer()" effort="3" category-id="mandatory"><message>`java.awt.Font.getPeer()`
             referenced in this class</message></hint></perform></rule></rules></ruleset>
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/book-server_deps-20251204-010606/source/custom-rules/javax-package-custom-target.windup.xml
+      - uri: file:///source/custom-rules/javax-package-custom-target.windup.xml
         message: ""
-        codeSnip: |2
-            1  <?xml version="1.0"?>
-            2  <ruleset xmlns="http://windup.jboss.org/schema/jboss-ruleset" id="javax-package-custom-target"
-            3           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            4           xsi:schemaLocation="http://windup.jboss.org/schema/jboss-ruleset http://windup.jboss.org/schema/jboss-ruleset/windup-jboss-ruleset.xsd">
-            5      <metadata>
-            6          <description>
-            7              This ruleset evaluates whether a custom target can be used within a custom rule
-            8          </description>
-            9          <dependencies>
-           10              <addon id="org.jboss.windup.rules,windup-rules-javaee,3.0.0.Final" />
-           11              <addon id="org.jboss.windup.rules,windup-rules-java,3.0.0.Final" />
-           12          </dependencies>
-           13          <targetTechnology id="phil" versionRange="[7,8)" />
-           14      </metadata>
-           15      <rules>
-           16          <rule id="javax-package-custom-target-00001">
-           17              <when>
-           18                  <javaclass references="javax.{*}">
-           19                      <location>IMPORT</location>
-           20                  </javaclass>
-           21              </when>
-           22              <perform>
-           23                  <hint title="CUSTOM RULE for javax.* package import" effort="1" category-id="potential">
-           24                      <message>`javax.*` packages must be renamed to `jakarta.*` for Jakarta EE9 compatibility.</message>
-           25                      <link title="Renamed Packages" href="https://github.com/wildfly-extras/batavia/blob/master/impl/ecl/src/main/resources/org/wildfly/extras/transformer/eclipse/jakarta-renames.properties"/>
-           26                  </hint>
-           27              </perform>
-           28          </rule>
-           29      </rules>
-           30  </ruleset>
+        codeSnip: 5      <metadata>
         lineNumber: 4
         variables:
           data: ""
@@ -1122,39 +914,9 @@
             title="CUSTOM RULE for javax.* package import" effort="1" category-id="potential"><message>`javax.*`
             packages must be renamed to `jakarta.*` for Jakarta EE9 compatibility.</message><link
             title="Renamed Packages" href="https://github.com/wildfly-extras/batavia/blob/master/impl/ecl/src/main/resources/org/wildfly/extras/transformer/eclipse/jakarta-renames.properties"></link></hint></perform></rule></rules></ruleset>
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/book-server_deps-20251204-010606/source/custom-rules/javax-package-custom.windup.xml
+      - uri: file:///source/custom-rules/javax-package-custom.windup.xml
         message: ""
-        codeSnip: |2
-            1  <?xml version="1.0"?>
-            2  <ruleset xmlns="http://windup.jboss.org/schema/jboss-ruleset" id="javax-package-custom"
-            3           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            4           xsi:schemaLocation="http://windup.jboss.org/schema/jboss-ruleset http://windup.jboss.org/schema/jboss-ruleset/windup-jboss-ruleset.xsd">
-            5      <metadata>
-            6          <description>
-            7              This ruleset provides analysis of applications that use RESTEasy 3.0 and may require
-            8              individual attention when migrating to RESTEasy 3.6.
-            9          </description>
-           10          <dependencies>
-           11              <addon id="org.jboss.windup.rules,windup-rules-javaee,3.0.0.Final" />
-           12              <addon id="org.jboss.windup.rules,windup-rules-java,3.0.0.Final" />
-           13          </dependencies>
-           14      </metadata>
-           15      <rules>
-           16          <rule id="javax-package-00001">
-           17              <when>
-           18                  <javaclass references="javax.{*}">
-           19                      <location>IMPORT</location>
-           20                  </javaclass>
-           21              </when>
-           22              <perform>
-           23                  <hint title="CUSTOM RULE for javax.* package import" effort="1" category-id="potential">
-           24                      <message>`javax.*` packages must be renamed to `jakarta.*` for Jakarta EE9 compatibility.</message>
-           25                      <link title="Renamed Packages" href="https://github.com/wildfly-extras/batavia/blob/master/impl/ecl/src/main/resources/org/wildfly/extras/transformer/eclipse/jakarta-renames.properties"/>
-           26                  </hint>
-           27              </perform>
-           28          </rule>
-           29      </rules>
-           30  </ruleset>
+        codeSnip: 6          <description>
         lineNumber: 5
         variables:
           data: ""
@@ -1169,57 +931,9 @@
           matchingXML: |-
             <?xml version="1.0"?><ruleset xmlns="http://windup.jboss.org/schema/jboss-ruleset" id="javax-package-custom" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://windup.jboss.org/schema/jboss-ruleset http://windup.jboss.org/schema/jboss-ruleset/windup-jboss-ruleset.xsd"><metadata><description>This ruleset provides analysis of applications that use RESTEasy 3.0 and may require
                         individual attention when migrating to RESTEasy 3.6.</description><dependencies><addon id="org.jboss.windup.rules,windup-rules-javaee,3.0.0.Final"></addon><addon id="org.jboss.windup.rules,windup-rules-java,3.0.0.Final"></addon></dependencies></metadata><rules><rule id="javax-package-00001"><when><javaclass references="javax.{*}"><location>IMPORT</location></javaclass></when><perform><hint title="CUSTOM RULE for javax.* package import" effort="1" category-id="potential"><message>`javax.*` packages must be renamed to `jakarta.*` for Jakarta EE9 compatibility.</message><link title="Renamed Packages" href="https://github.com/wildfly-extras/batavia/blob/master/impl/ecl/src/main/resources/org/wildfly/extras/transformer/eclipse/jakarta-renames.properties"></link></hint></perform></rule></rules></ruleset>
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/book-server_deps-20251204-010606/source/custom-rules/log4shell.custom.windup.xml
+      - uri: file:///source/custom-rules/log4shell.custom.windup.xml
         message: ""
-        codeSnip: |2
-            1  <?xml version="1.0"?>
-            2  <ruleset id="log4shell" xmlns="http://windup.jboss.org/schema/jboss-ruleset"
-            3           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            4           xsi:schemaLocation="http://windup.jboss.org/schema/jboss-ruleset http://windup.jboss.org/schema/jboss-ruleset/windup-jboss-ruleset.xsd">
-            5      <metadata>
-            6          <description>
-            7              Discover dependencies to log4j versions with security vulnerability CVE-2021-44228
-            8          </description>
-            9          <!-- version ranges applied to from and to technologies -->
-           10          <dependencies>
-           11              <addon id="org.jboss.windup.rules,windup-rules-javaee,3.0.0.Final" />
-           12              <addon id="org.jboss.windup.rules,windup-rules-java,3.0.0.Final" />
-           13              <addon id="org.jboss.windup.rules,windup-rules-xml,3.0.0.Final" />
-           14          </dependencies>
-           15      </metadata>
-           16      <rules>
-           17          <rule id="log4shell-identifier-00001">
-           18              <!-- rule condition, when it could be fired -->
-           19              <when>
-           20                  <project>
-           21                      <artifact groupId="org.apache.logging.log4j" artifactId="log4j-core" fromVersion="2.0-beta9" toVersion="2.14.1" />
-           22                  </project>
-           23              </when>
-           24              <!-- rule operation, what to do if it is fired -->
-           25              <perform>
-           26                  <hint title="Log4j import with log4shell vulnerability identified" effort="1" category-id="mandatory">
-           27                  <message>You must upgrade to Log4j 2.15.0 to remove the log4shell vulnerability identified in CVE-2021-44228.</message>
-           28                  <link href="https://logging.apache.org/log4j/2.x/security.html" title="Apache Log4J Security Vulnerabilities" />
-           29                  <link href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-44228" title="CVE-2021-44228" />
-           30                  </hint>
-           31              </perform>
-           32          </rule>
-           33          <rule id="log4shell-identifier-00002">
-           34              <!-- rule condition, when it could be fired -->
-           35              <when>
-           36                  <dependency groupId="org.apache.logging.log4j" artifactId="log4j-core" fromVersion="2.0-beta9" toVersion="2.14.1" />
-           37              </when>
-           38              <!-- rule operation, what to do if it is fired -->
-           39              <perform>
-           40                  <hint title="Log4j binary with log4shell vulnerability identified" effort="5" category-id="mandatory">
-           41                      <message>You must upgrade to Log4j 2.15.0 to remove the log4shell vulnerability identified in CVE-2021-44228.</message>
-           42                      <link href="https://logging.apache.org/log4j/2.x/security.html" title="Apache Log4J Security Vulnerabilities" />
-           43                      <link href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-44228" title="CVE-2021-44228" />
-           44                  </hint>
-           45              </perform>
-           46          </rule>
-           47      </rules>
-           48  </ruleset>
+        codeSnip: 5      <metadata>
         lineNumber: 4
         variables:
           data: ""
@@ -1260,37 +974,9 @@
             in CVE-2021-44228.</message><link href="https://logging.apache.org/log4j/2.x/security.html"
             title="Apache Log4J Security Vulnerabilities"></link><link href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-44228"
             title="CVE-2021-44228"></link></hint></perform></rule></rules></ruleset>
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/book-server_deps-20251204-010606/source/pom.xml
+      - uri: file:///source/pom.xml
         message: ""
-        codeSnip: "  1  <?xml version=\"1.0\" encoding=\"UTF-8\"?>\n  2  <project
-          xmlns=\"http://maven.apache.org/POM/4.0.0\"\n  3           xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n
-          \ 4           xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n
-          \ 5      <modelVersion>4.0.0</modelVersion>\n  6  \n  7      <groupId>com.telran</groupId>\n
-          \ 8      <artifactId>BookServer</artifactId>\n  9      <version>1.0-SNAPSHOT</version>\n
-          10  \n 11      <build>\n 12          <plugins>\n 13              <plugin>\n
-          14                  <groupId>org.springframework.boot</groupId>\n 15                  <artifactId>spring-boot-maven-plugin</artifactId>\n
-          16                  <version>2.1.0.RELEASE</version>  \t\t\t<!--  09.11.2018
-          -->\n 17              </plugin>\n 18          </plugins>\n 19      </build>\n
-          20  \n 21      <dependencies>\n 22          <!-- spring boot -->\n 23          <dependency>\n
-          24              <groupId>org.springframework.boot</groupId>\n 25              <artifactId>spring-boot-starter-web</artifactId>\n
-          26              <version>2.1.0.RELEASE</version>                <!--  09.11.2018
-          -->\n 27          </dependency>\n 28  \n 29          <!--  lombok -->\n
-          30          <dependency>\n 31              <groupId>org.projectlombok</groupId>\n
-          32              <artifactId>lombok</artifactId>\n 33              <version>1.18.2</version>\n
-          34          </dependency>\n 35  \n 36          <!-- jackson -->\n 37          <dependency>\n
-          38              <groupId>com.fasterxml.jackson.core</groupId>\n 39              <artifactId>jackson-databind</artifactId>\n
-          40              <version>2.9.5</version>\n 41          </dependency>\n 42
-          \ \n 43          <dependency>\n 44              <groupId>com.fasterxml.jackson.datatype</groupId>\n
-          45              <artifactId>jackson-datatype-jsr310</artifactId>\n 46              <version>2.9.5</version>\n
-          47          </dependency>\n 48  \n 49          <dependency>\n 50              <groupId>com.fasterxml.jackson.dataformat</groupId>\n
-          51              <artifactId>jackson-dataformat-xml</artifactId>\n 52              <version>2.9.5</version>\n
-          53          </dependency>\n 54  \n 55          <!--&lt;!&ndash; jdbc connector
-          &ndash;&gt;-->\n 56          <!--<dependency>-->\n 57              <!--<groupId>mysql</groupId>-->\n
-          58              <!--<artifactId>mysql-connector-java</artifactId>-->\n 59
-          \             <!--&lt;!&ndash; <version>8.0.12</version> &ndash;&gt;               &lt;!&ndash;
-          TimeZone bug not fixed since 5.1.39 &ndash;&gt;-->\n 60              <!--<version>5.1.39</version>-->\n
-          61          <!--</dependency>-->\n 62  \n 63      </dependencies>\n 64  \n
-          65  </project>\n"
+        codeSnip: '6  '
         lineNumber: 5
         variables:
           data: ""
@@ -1339,15 +1025,14 @@
       - uri: file:///opt/input/source/pom.xml
         message: Version 3.0.0 is the minimum version of Spring Boot that is Jakarta
           EE 9+ compatible
-        codeSnip: "15                  <artifactId>spring-boot-maven-plugin</artifactId>\n16
-          \                 <version>2.1.0.RELEASE</version>  \t\t\t<!--  09.11.2018
-          -->\n17              </plugin>\n18          </plugins>\n19      </build>\n20
-          \ \n21      <dependencies>\n22          <!-- spring boot -->\n23          <dependency>\n24
-          \             <groupId>org.springframework.boot</groupId>\n25              <artifactId>spring-boot-starter-web</artifactId>\n26
-          \             <version>2.1.0.RELEASE</version>                <!--  09.11.2018
-          -->\n27          </dependency>\n28  \n29          <!--  lombok -->\n30          <dependency>\n31
-          \             <groupId>org.projectlombok</groupId>\n32              <artifactId>lombok</artifactId>\n33
-          \             <version>1.18.2</version>\n34          </dependency>\n35  "
+        codeSnip: "\n15  <artifactId>spring-boot-maven-plugin</artifactId>\n16  <version>2.1.0.RELEASE</version>
+          \ \t\t\t<!--  09.11.2018 -->\n17  </plugin>\n18  </plugins>\n19  </build>\n20
+          \ \n21  <dependencies>\n22  <!-- spring boot -->\n23  <dependency>\n24  <groupId>org.springframework.boot</groupId>\n25
+          \ <artifactId>spring-boot-starter-web</artifactId>\n26  <version>2.1.0.RELEASE</version>
+          \               <!--  09.11.2018 -->\n27  </dependency>\n28  \n29  <!--
+          \ lombok -->\n30  <dependency>\n31  <groupId>org.projectlombok</groupId>\n32
+          \ <artifactId>lombok</artifactId>\n33  <version>1.18.2</version>\n34  </dependency>\n35
+          \ "
         lineNumber: 24
         variables:
           name: org.springframework.boot.spring-boot-starter-web
@@ -1369,15 +1054,14 @@
       - uri: file:///opt/input/source/pom.xml
         message: Version 6.0.0 is the minimum version of Spring that is Jakarta EE
           9+ compatible
-        codeSnip: "15                  <artifactId>spring-boot-maven-plugin</artifactId>\n16
-          \                 <version>2.1.0.RELEASE</version>  \t\t\t<!--  09.11.2018
-          -->\n17              </plugin>\n18          </plugins>\n19      </build>\n20
-          \ \n21      <dependencies>\n22          <!-- spring boot -->\n23          <dependency>\n24
-          \             <groupId>org.springframework.boot</groupId>\n25              <artifactId>spring-boot-starter-web</artifactId>\n26
-          \             <version>2.1.0.RELEASE</version>                <!--  09.11.2018
-          -->\n27          </dependency>\n28  \n29          <!--  lombok -->\n30          <dependency>\n31
-          \             <groupId>org.projectlombok</groupId>\n32              <artifactId>lombok</artifactId>\n33
-          \             <version>1.18.2</version>\n34          </dependency>\n35  "
+        codeSnip: "\n15  <artifactId>spring-boot-maven-plugin</artifactId>\n16  <version>2.1.0.RELEASE</version>
+          \ \t\t\t<!--  09.11.2018 -->\n17  </plugin>\n18  </plugins>\n19  </build>\n20
+          \ \n21  <dependencies>\n22  <!-- spring boot -->\n23  <dependency>\n24  <groupId>org.springframework.boot</groupId>\n25
+          \ <artifactId>spring-boot-starter-web</artifactId>\n26  <version>2.1.0.RELEASE</version>
+          \               <!--  09.11.2018 -->\n27  </dependency>\n28  \n29  <!--
+          \ lombok -->\n30  <dependency>\n31  <groupId>org.projectlombok</groupId>\n32
+          \ <artifactId>lombok</artifactId>\n33  <version>1.18.2</version>\n34  </dependency>\n35
+          \ "
         lineNumber: 24
         variables:
           name: org.springframework.boot.spring-boot-starter-web
@@ -1400,15 +1084,14 @@
       incidents:
       - uri: file:///opt/input/source/pom.xml
         message: Version 10.1.0 is the minimum version recommended
-        codeSnip: "15                  <artifactId>spring-boot-maven-plugin</artifactId>\n16
-          \                 <version>2.1.0.RELEASE</version>  \t\t\t<!--  09.11.2018
-          -->\n17              </plugin>\n18          </plugins>\n19      </build>\n20
-          \ \n21      <dependencies>\n22          <!-- spring boot -->\n23          <dependency>\n24
-          \             <groupId>org.springframework.boot</groupId>\n25              <artifactId>spring-boot-starter-web</artifactId>\n26
-          \             <version>2.1.0.RELEASE</version>                <!--  09.11.2018
-          -->\n27          </dependency>\n28  \n29          <!--  lombok -->\n30          <dependency>\n31
-          \             <groupId>org.projectlombok</groupId>\n32              <artifactId>lombok</artifactId>\n33
-          \             <version>1.18.2</version>\n34          </dependency>\n35  "
+        codeSnip: "\n15  <artifactId>spring-boot-maven-plugin</artifactId>\n16  <version>2.1.0.RELEASE</version>
+          \ \t\t\t<!--  09.11.2018 -->\n17  </plugin>\n18  </plugins>\n19  </build>\n20
+          \ \n21  <dependencies>\n22  <!-- spring boot -->\n23  <dependency>\n24  <groupId>org.springframework.boot</groupId>\n25
+          \ <artifactId>spring-boot-starter-web</artifactId>\n26  <version>2.1.0.RELEASE</version>
+          \               <!--  09.11.2018 -->\n27  </dependency>\n28  \n29  <!--
+          \ lombok -->\n30  <dependency>\n31  <groupId>org.projectlombok</groupId>\n32
+          \ <artifactId>lombok</artifactId>\n33  <version>1.18.2</version>\n34  </dependency>\n35
+          \ "
         lineNumber: 24
         variables:
           name: org.apache.tomcat.embed.tomcat-embed-core
@@ -1433,15 +1116,14 @@
         message: Lombok supports Java 17 since version 1.18.22. The version of Lombok
           used in this project is too old and not compatible with Java 17. You should
           consider upgrading it.
-        codeSnip: "22          <!-- spring boot -->\n23          <dependency>\n24
-          \             <groupId>org.springframework.boot</groupId>\n25              <artifactId>spring-boot-starter-web</artifactId>\n26
-          \             <version>2.1.0.RELEASE</version>                <!--  09.11.2018
-          -->\n27          </dependency>\n28  \n29          <!--  lombok -->\n30          <dependency>\n31
-          \             <groupId>org.projectlombok</groupId>\n32              <artifactId>lombok</artifactId>\n33
-          \             <version>1.18.2</version>\n34          </dependency>\n35  \n36
-          \         <!-- jackson -->\n37          <dependency>\n38              <groupId>com.fasterxml.jackson.core</groupId>\n39
-          \             <artifactId>jackson-databind</artifactId>\n40              <version>2.9.5</version>\n41
-          \         </dependency>\n42  "
+        codeSnip: "\n22  <!-- spring boot -->\n23  <dependency>\n24  <groupId>org.springframework.boot</groupId>\n25
+          \ <artifactId>spring-boot-starter-web</artifactId>\n26  <version>2.1.0.RELEASE</version>
+          \               <!--  09.11.2018 -->\n27  </dependency>\n28  \n29  <!--
+          \ lombok -->\n30  <dependency>\n31  <groupId>org.projectlombok</groupId>\n32
+          \ <artifactId>lombok</artifactId>\n33  <version>1.18.2</version>\n34  </dependency>\n35
+          \ \n36  <!-- jackson -->\n37  <dependency>\n38  <groupId>com.fasterxml.jackson.core</groupId>\n39
+          \ <artifactId>jackson-databind</artifactId>\n40  <version>2.9.5</version>\n41
+          \ </dependency>\n42  "
         lineNumber: 31
         variables:
           name: org.projectlombok.lombok
@@ -1480,16 +1162,16 @@
           \n If you haven't provided the character set, and UTF-8 is not appropriate
           for your class, then supply the appropriate character set to the constructor
           call."
-        codeSnip: " 7  import java.io.*;\n 8  import java.util.HashMap;\n 9  \n10
-          \ public class BookModel {\n11      private static HashMap<Long, Book> library
-          = new HashMap<Long, Book>();\n12  \n13      public static void writeBooksToFile(String
-          fileName, int numBooks) throws IOException {\n14          File file = new
-          File(fileName);\n15          file.createNewFile();\n16  \n17          PrintWriter
-          pw = new PrintWriter(new FileWriter(file));\n18  \n19          ObjectMapper
-          mapper = new ObjectMapper();\n20          mapper.registerModule(new JavaTimeModule());\n21
-          \ \n22          for (int i = 0; i < numBooks; i++)\n23              pw.println(mapper.writeValueAsString(Book.getRandomBook()));\n24
-          \         pw.close();\n25      }\n26  \n27      public static void readDB(String
-          filename) throws IOException {"
+        codeSnip: "\n 7  import java.io.*;\n 8  import java.util.HashMap;\n 9  \n10
+          \ public class BookModel {\n11  private static HashMap<Long, Book> library
+          = new HashMap<Long, Book>();\n12  \n13  public static void writeBooksToFile(String
+          fileName, int numBooks) throws IOException {\n14  File file = new File(fileName);\n15
+          \ file.createNewFile();\n16  \n17  PrintWriter pw = new PrintWriter(new
+          FileWriter(file));\n18  \n19  ObjectMapper mapper = new ObjectMapper();\n20
+          \ mapper.registerModule(new JavaTimeModule());\n21  \n22  for (int i = 0;
+          i < numBooks; i++)\n23  pw.println(mapper.writeValueAsString(Book.getRandomBook()));\n24
+          \ pw.close();\n25  }\n26  \n27  public static void readDB(String filename)
+          throws IOException {"
         lineNumber: 17
         variables:
           className: ""
@@ -1502,16 +1184,15 @@
           \n If you haven't provided the character set, and UTF-8 is not appropriate
           for your class, then supply the appropriate character set to the constructor
           call."
-        codeSnip: "22          for (int i = 0; i < numBooks; i++)\n23              pw.println(mapper.writeValueAsString(Book.getRandomBook()));\n24
-          \         pw.close();\n25      }\n26  \n27      public static void readDB(String
-          filename) throws IOException {\n28  \n29          File file = new File(filename);\n30
-          \         if (!file.exists()) return;\n31  \n32          BufferedReader
-          br = new BufferedReader(new FileReader(file));\n33          ObjectMapper
-          mapper = new ObjectMapper();\n34          mapper.registerModule(new JavaTimeModule());\n35
-          \ \n36          while (true){\n37              String line = br.readLine();\n38
-          \             if (line == null) break;\n39              Book book = mapper.readValue(line,
-          Book.class);\n40              library.put(book.getISBN(), book);\n41  //
-          \           System.out.println(book);\n42          }"
+        codeSnip: "\n22  for (int i = 0; i < numBooks; i++)\n23  pw.println(mapper.writeValueAsString(Book.getRandomBook()));\n24
+          \ pw.close();\n25  }\n26  \n27  public static void readDB(String filename)
+          throws IOException {\n28  \n29  File file = new File(filename);\n30  if
+          (!file.exists()) return;\n31  \n32  BufferedReader br = new BufferedReader(new
+          FileReader(file));\n33  ObjectMapper mapper = new ObjectMapper();\n34  mapper.registerModule(new
+          JavaTimeModule());\n35  \n36  while (true){\n37  String line = br.readLine();\n38
+          \ if (line == null) break;\n39  Book book = mapper.readValue(line, Book.class);\n40
+          \ library.put(book.getISBN(), book);\n41  //            System.out.println(book);\n42
+          \ }"
         lineNumber: 32
         variables:
           className: ""
@@ -1549,7 +1230,7 @@
       - konveyor.io/source=java-ee
       - konveyor.io/target=quarkus
       incidents:
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/book-server_deps-20251204-010606/source/pom.xml
+      - uri: file:///source/pom.xml
         message: "Use the Quarkus BOM to omit the version of the different Quarkus
           dependencies. \n Add the following sections to the `pom.xml` file: \n\n
           ```xml\n <properties> \n <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
@@ -1560,35 +1241,7 @@
           \n <scope>import</scope> \n </dependency> \n </dependencies> \n </dependencyManagement>
           \n ```\n Check the latest Quarkus version available from the `Quarkus -
           Releases` link below."
-        codeSnip: "  1  <?xml version=\"1.0\" encoding=\"UTF-8\"?>\n  2  <project
-          xmlns=\"http://maven.apache.org/POM/4.0.0\"\n  3           xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n
-          \ 4           xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n
-          \ 5      <modelVersion>4.0.0</modelVersion>\n  6  \n  7      <groupId>com.telran</groupId>\n
-          \ 8      <artifactId>BookServer</artifactId>\n  9      <version>1.0-SNAPSHOT</version>\n
-          10  \n 11      <build>\n 12          <plugins>\n 13              <plugin>\n
-          14                  <groupId>org.springframework.boot</groupId>\n 15                  <artifactId>spring-boot-maven-plugin</artifactId>\n
-          16                  <version>2.1.0.RELEASE</version>  \t\t\t<!--  09.11.2018
-          -->\n 17              </plugin>\n 18          </plugins>\n 19      </build>\n
-          20  \n 21      <dependencies>\n 22          <!-- spring boot -->\n 23          <dependency>\n
-          24              <groupId>org.springframework.boot</groupId>\n 25              <artifactId>spring-boot-starter-web</artifactId>\n
-          26              <version>2.1.0.RELEASE</version>                <!--  09.11.2018
-          -->\n 27          </dependency>\n 28  \n 29          <!--  lombok -->\n
-          30          <dependency>\n 31              <groupId>org.projectlombok</groupId>\n
-          32              <artifactId>lombok</artifactId>\n 33              <version>1.18.2</version>\n
-          34          </dependency>\n 35  \n 36          <!-- jackson -->\n 37          <dependency>\n
-          38              <groupId>com.fasterxml.jackson.core</groupId>\n 39              <artifactId>jackson-databind</artifactId>\n
-          40              <version>2.9.5</version>\n 41          </dependency>\n 42
-          \ \n 43          <dependency>\n 44              <groupId>com.fasterxml.jackson.datatype</groupId>\n
-          45              <artifactId>jackson-datatype-jsr310</artifactId>\n 46              <version>2.9.5</version>\n
-          47          </dependency>\n 48  \n 49          <dependency>\n 50              <groupId>com.fasterxml.jackson.dataformat</groupId>\n
-          51              <artifactId>jackson-dataformat-xml</artifactId>\n 52              <version>2.9.5</version>\n
-          53          </dependency>\n 54  \n 55          <!--&lt;!&ndash; jdbc connector
-          &ndash;&gt;-->\n 56          <!--<dependency>-->\n 57              <!--<groupId>mysql</groupId>-->\n
-          58              <!--<artifactId>mysql-connector-java</artifactId>-->\n 59
-          \             <!--&lt;!&ndash; <version>8.0.12</version> &ndash;&gt;               &lt;!&ndash;
-          TimeZone bug not fixed since 5.1.39 &ndash;&gt;-->\n 60              <!--<version>5.1.39</version>-->\n
-          61          <!--</dependency>-->\n 62  \n 63      </dependencies>\n 64  \n
-          65  </project>\n"
+        codeSnip: '6  '
         lineNumber: 5
         variables:
           data: project
@@ -1625,7 +1278,7 @@
       - konveyor.io/source=java-ee
       - konveyor.io/target=quarkus
       incidents:
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/book-server_deps-20251204-010606/source/pom.xml
+      - uri: file:///source/pom.xml
         message: "Use the Quarkus Maven plugin adding the following sections to the
           `pom.xml` file: \n\n ```xml\n <properties> \n <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
           \n <quarkus.platform.version>3.1.0.Final</quarkus.platform.version>\n </properties>
@@ -1634,35 +1287,7 @@
           <goals>\n <goal>build</goal>\n <goal>generate-code</goal>\n <goal>generate-code-tests</goal>\n
           </goals>\n </execution>\n </executions>\n </plugin>\n </plugins>\n </build>\n
           ```"
-        codeSnip: "  1  <?xml version=\"1.0\" encoding=\"UTF-8\"?>\n  2  <project
-          xmlns=\"http://maven.apache.org/POM/4.0.0\"\n  3           xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n
-          \ 4           xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n
-          \ 5      <modelVersion>4.0.0</modelVersion>\n  6  \n  7      <groupId>com.telran</groupId>\n
-          \ 8      <artifactId>BookServer</artifactId>\n  9      <version>1.0-SNAPSHOT</version>\n
-          10  \n 11      <build>\n 12          <plugins>\n 13              <plugin>\n
-          14                  <groupId>org.springframework.boot</groupId>\n 15                  <artifactId>spring-boot-maven-plugin</artifactId>\n
-          16                  <version>2.1.0.RELEASE</version>  \t\t\t<!--  09.11.2018
-          -->\n 17              </plugin>\n 18          </plugins>\n 19      </build>\n
-          20  \n 21      <dependencies>\n 22          <!-- spring boot -->\n 23          <dependency>\n
-          24              <groupId>org.springframework.boot</groupId>\n 25              <artifactId>spring-boot-starter-web</artifactId>\n
-          26              <version>2.1.0.RELEASE</version>                <!--  09.11.2018
-          -->\n 27          </dependency>\n 28  \n 29          <!--  lombok -->\n
-          30          <dependency>\n 31              <groupId>org.projectlombok</groupId>\n
-          32              <artifactId>lombok</artifactId>\n 33              <version>1.18.2</version>\n
-          34          </dependency>\n 35  \n 36          <!-- jackson -->\n 37          <dependency>\n
-          38              <groupId>com.fasterxml.jackson.core</groupId>\n 39              <artifactId>jackson-databind</artifactId>\n
-          40              <version>2.9.5</version>\n 41          </dependency>\n 42
-          \ \n 43          <dependency>\n 44              <groupId>com.fasterxml.jackson.datatype</groupId>\n
-          45              <artifactId>jackson-datatype-jsr310</artifactId>\n 46              <version>2.9.5</version>\n
-          47          </dependency>\n 48  \n 49          <dependency>\n 50              <groupId>com.fasterxml.jackson.dataformat</groupId>\n
-          51              <artifactId>jackson-dataformat-xml</artifactId>\n 52              <version>2.9.5</version>\n
-          53          </dependency>\n 54  \n 55          <!--&lt;!&ndash; jdbc connector
-          &ndash;&gt;-->\n 56          <!--<dependency>-->\n 57              <!--<groupId>mysql</groupId>-->\n
-          58              <!--<artifactId>mysql-connector-java</artifactId>-->\n 59
-          \             <!--&lt;!&ndash; <version>8.0.12</version> &ndash;&gt;               &lt;!&ndash;
-          TimeZone bug not fixed since 5.1.39 &ndash;&gt;-->\n 60              <!--<version>5.1.39</version>-->\n
-          61          <!--</dependency>-->\n 62  \n 63      </dependencies>\n 64  \n
-          65  </project>\n"
+        codeSnip: '6  '
         lineNumber: 5
         variables:
           data: project
@@ -1697,7 +1322,7 @@
       - konveyor.io/source=java-ee
       - konveyor.io/target=quarkus
       incidents:
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/book-server_deps-20251204-010606/source/pom.xml
+      - uri: file:///source/pom.xml
         message: "Use the Maven Compiler plugin adding the following sections to the
           `pom.xml` file: \n\n ```xml\n <properties> \n <compiler-plugin.version>3.10.1</compiler-plugin.version>\n
           <maven.compiler.release>11</maven.compiler.release>\n </properties> \n <build>\n
@@ -1705,35 +1330,7 @@
           <version>$</version>\n <configuration>\n <compilerArgs>\n <arg>-parameters</arg>\n
           </compilerArgs>\n </configuration>\n </plugin>\n </plugins>\n </build>\n
           ```"
-        codeSnip: "  1  <?xml version=\"1.0\" encoding=\"UTF-8\"?>\n  2  <project
-          xmlns=\"http://maven.apache.org/POM/4.0.0\"\n  3           xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n
-          \ 4           xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n
-          \ 5      <modelVersion>4.0.0</modelVersion>\n  6  \n  7      <groupId>com.telran</groupId>\n
-          \ 8      <artifactId>BookServer</artifactId>\n  9      <version>1.0-SNAPSHOT</version>\n
-          10  \n 11      <build>\n 12          <plugins>\n 13              <plugin>\n
-          14                  <groupId>org.springframework.boot</groupId>\n 15                  <artifactId>spring-boot-maven-plugin</artifactId>\n
-          16                  <version>2.1.0.RELEASE</version>  \t\t\t<!--  09.11.2018
-          -->\n 17              </plugin>\n 18          </plugins>\n 19      </build>\n
-          20  \n 21      <dependencies>\n 22          <!-- spring boot -->\n 23          <dependency>\n
-          24              <groupId>org.springframework.boot</groupId>\n 25              <artifactId>spring-boot-starter-web</artifactId>\n
-          26              <version>2.1.0.RELEASE</version>                <!--  09.11.2018
-          -->\n 27          </dependency>\n 28  \n 29          <!--  lombok -->\n
-          30          <dependency>\n 31              <groupId>org.projectlombok</groupId>\n
-          32              <artifactId>lombok</artifactId>\n 33              <version>1.18.2</version>\n
-          34          </dependency>\n 35  \n 36          <!-- jackson -->\n 37          <dependency>\n
-          38              <groupId>com.fasterxml.jackson.core</groupId>\n 39              <artifactId>jackson-databind</artifactId>\n
-          40              <version>2.9.5</version>\n 41          </dependency>\n 42
-          \ \n 43          <dependency>\n 44              <groupId>com.fasterxml.jackson.datatype</groupId>\n
-          45              <artifactId>jackson-datatype-jsr310</artifactId>\n 46              <version>2.9.5</version>\n
-          47          </dependency>\n 48  \n 49          <dependency>\n 50              <groupId>com.fasterxml.jackson.dataformat</groupId>\n
-          51              <artifactId>jackson-dataformat-xml</artifactId>\n 52              <version>2.9.5</version>\n
-          53          </dependency>\n 54  \n 55          <!--&lt;!&ndash; jdbc connector
-          &ndash;&gt;-->\n 56          <!--<dependency>-->\n 57              <!--<groupId>mysql</groupId>-->\n
-          58              <!--<artifactId>mysql-connector-java</artifactId>-->\n 59
-          \             <!--&lt;!&ndash; <version>8.0.12</version> &ndash;&gt;               &lt;!&ndash;
-          TimeZone bug not fixed since 5.1.39 &ndash;&gt;-->\n 60              <!--<version>5.1.39</version>-->\n
-          61          <!--</dependency>-->\n 62  \n 63      </dependencies>\n 64  \n
-          65  </project>\n"
+        codeSnip: '6  '
         lineNumber: 5
         variables:
           data: project
@@ -1768,42 +1365,14 @@
       - konveyor.io/source=java-ee
       - konveyor.io/target=quarkus
       incidents:
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/book-server_deps-20251204-010606/source/pom.xml
+      - uri: file:///source/pom.xml
         message: "Use the Maven Surefire plugin adding the following sections to the
           `pom.xml` file: \n\n ```xml\n <properties> \n <surefire-plugin.version>3.0.0</compiler-plugin.version>\n
           </properties> \n <build>\n <plugins>\n <plugin>\n <artifactId>maven-surefire-plugin</artifactId>\n
           <version>$</version>\n <configuration>\n <systemPropertyVariables>\n <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>\n
           <maven.home>$</maven.home>\n </systemPropertyVariables>\n </configuration>\n
           </plugin>\n </plugins>\n </build>\n ```"
-        codeSnip: "  1  <?xml version=\"1.0\" encoding=\"UTF-8\"?>\n  2  <project
-          xmlns=\"http://maven.apache.org/POM/4.0.0\"\n  3           xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n
-          \ 4           xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n
-          \ 5      <modelVersion>4.0.0</modelVersion>\n  6  \n  7      <groupId>com.telran</groupId>\n
-          \ 8      <artifactId>BookServer</artifactId>\n  9      <version>1.0-SNAPSHOT</version>\n
-          10  \n 11      <build>\n 12          <plugins>\n 13              <plugin>\n
-          14                  <groupId>org.springframework.boot</groupId>\n 15                  <artifactId>spring-boot-maven-plugin</artifactId>\n
-          16                  <version>2.1.0.RELEASE</version>  \t\t\t<!--  09.11.2018
-          -->\n 17              </plugin>\n 18          </plugins>\n 19      </build>\n
-          20  \n 21      <dependencies>\n 22          <!-- spring boot -->\n 23          <dependency>\n
-          24              <groupId>org.springframework.boot</groupId>\n 25              <artifactId>spring-boot-starter-web</artifactId>\n
-          26              <version>2.1.0.RELEASE</version>                <!--  09.11.2018
-          -->\n 27          </dependency>\n 28  \n 29          <!--  lombok -->\n
-          30          <dependency>\n 31              <groupId>org.projectlombok</groupId>\n
-          32              <artifactId>lombok</artifactId>\n 33              <version>1.18.2</version>\n
-          34          </dependency>\n 35  \n 36          <!-- jackson -->\n 37          <dependency>\n
-          38              <groupId>com.fasterxml.jackson.core</groupId>\n 39              <artifactId>jackson-databind</artifactId>\n
-          40              <version>2.9.5</version>\n 41          </dependency>\n 42
-          \ \n 43          <dependency>\n 44              <groupId>com.fasterxml.jackson.datatype</groupId>\n
-          45              <artifactId>jackson-datatype-jsr310</artifactId>\n 46              <version>2.9.5</version>\n
-          47          </dependency>\n 48  \n 49          <dependency>\n 50              <groupId>com.fasterxml.jackson.dataformat</groupId>\n
-          51              <artifactId>jackson-dataformat-xml</artifactId>\n 52              <version>2.9.5</version>\n
-          53          </dependency>\n 54  \n 55          <!--&lt;!&ndash; jdbc connector
-          &ndash;&gt;-->\n 56          <!--<dependency>-->\n 57              <!--<groupId>mysql</groupId>-->\n
-          58              <!--<artifactId>mysql-connector-java</artifactId>-->\n 59
-          \             <!--&lt;!&ndash; <version>8.0.12</version> &ndash;&gt;               &lt;!&ndash;
-          TimeZone bug not fixed since 5.1.39 &ndash;&gt;-->\n 60              <!--<version>5.1.39</version>-->\n
-          61          <!--</dependency>-->\n 62  \n 63      </dependencies>\n 64  \n
-          65  </project>\n"
+        codeSnip: '6  '
         lineNumber: 5
         variables:
           data: project
@@ -1838,7 +1407,7 @@
       - konveyor.io/source=java-ee
       - konveyor.io/target=quarkus
       incidents:
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/book-server_deps-20251204-010606/source/pom.xml
+      - uri: file:///source/pom.xml
         message: "Use the Maven Failsafe plugin adding the following sections to the
           `pom.xml` file: \n\n ```xml\n <properties> \n <surefire-plugin.version>3.0.0</compiler-plugin.version>\n
           </properties> \n <build>\n <plugins>\n <plugin>\n <artifactId>maven-failsafe-plugin</artifactId>\n
@@ -1847,35 +1416,7 @@
           <native.image.path>$/$-runner</native.image.path>\n <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>\n
           <maven.home>$</maven.home>\n </systemPropertyVariables>\n </configuration>\n
           </execution>\n </executions>\n </plugin>\n </plugins>\n </build>\n ```"
-        codeSnip: "  1  <?xml version=\"1.0\" encoding=\"UTF-8\"?>\n  2  <project
-          xmlns=\"http://maven.apache.org/POM/4.0.0\"\n  3           xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n
-          \ 4           xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n
-          \ 5      <modelVersion>4.0.0</modelVersion>\n  6  \n  7      <groupId>com.telran</groupId>\n
-          \ 8      <artifactId>BookServer</artifactId>\n  9      <version>1.0-SNAPSHOT</version>\n
-          10  \n 11      <build>\n 12          <plugins>\n 13              <plugin>\n
-          14                  <groupId>org.springframework.boot</groupId>\n 15                  <artifactId>spring-boot-maven-plugin</artifactId>\n
-          16                  <version>2.1.0.RELEASE</version>  \t\t\t<!--  09.11.2018
-          -->\n 17              </plugin>\n 18          </plugins>\n 19      </build>\n
-          20  \n 21      <dependencies>\n 22          <!-- spring boot -->\n 23          <dependency>\n
-          24              <groupId>org.springframework.boot</groupId>\n 25              <artifactId>spring-boot-starter-web</artifactId>\n
-          26              <version>2.1.0.RELEASE</version>                <!--  09.11.2018
-          -->\n 27          </dependency>\n 28  \n 29          <!--  lombok -->\n
-          30          <dependency>\n 31              <groupId>org.projectlombok</groupId>\n
-          32              <artifactId>lombok</artifactId>\n 33              <version>1.18.2</version>\n
-          34          </dependency>\n 35  \n 36          <!-- jackson -->\n 37          <dependency>\n
-          38              <groupId>com.fasterxml.jackson.core</groupId>\n 39              <artifactId>jackson-databind</artifactId>\n
-          40              <version>2.9.5</version>\n 41          </dependency>\n 42
-          \ \n 43          <dependency>\n 44              <groupId>com.fasterxml.jackson.datatype</groupId>\n
-          45              <artifactId>jackson-datatype-jsr310</artifactId>\n 46              <version>2.9.5</version>\n
-          47          </dependency>\n 48  \n 49          <dependency>\n 50              <groupId>com.fasterxml.jackson.dataformat</groupId>\n
-          51              <artifactId>jackson-dataformat-xml</artifactId>\n 52              <version>2.9.5</version>\n
-          53          </dependency>\n 54  \n 55          <!--&lt;!&ndash; jdbc connector
-          &ndash;&gt;-->\n 56          <!--<dependency>-->\n 57              <!--<groupId>mysql</groupId>-->\n
-          58              <!--<artifactId>mysql-connector-java</artifactId>-->\n 59
-          \             <!--&lt;!&ndash; <version>8.0.12</version> &ndash;&gt;               &lt;!&ndash;
-          TimeZone bug not fixed since 5.1.39 &ndash;&gt;-->\n 60              <!--<version>5.1.39</version>-->\n
-          61          <!--</dependency>-->\n 62  \n 63      </dependencies>\n 64  \n
-          65  </project>\n"
+        codeSnip: '6  '
         lineNumber: 5
         variables:
           data: project
@@ -1910,42 +1451,14 @@
       - konveyor.io/source=java-ee
       - konveyor.io/target=quarkus
       incidents:
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/book-server_deps-20251204-010606/source/pom.xml
+      - uri: file:///source/pom.xml
         message: "Leverage a Maven profile to run the Quarkus native build adding
           the following section to the `pom.xml` file: \n\n ```xml\n <profiles>\n
           <profile>\n <id>native</id>\n <activation>\n <property>\n <name>native</name>\n
           </property>\n </activation>\n <properties>\n <skipITs>false</skipITs>\n
           <quarkus.package.type>native</quarkus.package.type>\n </properties>\n </profile>\n
           </profiles>\n ```"
-        codeSnip: "  1  <?xml version=\"1.0\" encoding=\"UTF-8\"?>\n  2  <project
-          xmlns=\"http://maven.apache.org/POM/4.0.0\"\n  3           xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n
-          \ 4           xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n
-          \ 5      <modelVersion>4.0.0</modelVersion>\n  6  \n  7      <groupId>com.telran</groupId>\n
-          \ 8      <artifactId>BookServer</artifactId>\n  9      <version>1.0-SNAPSHOT</version>\n
-          10  \n 11      <build>\n 12          <plugins>\n 13              <plugin>\n
-          14                  <groupId>org.springframework.boot</groupId>\n 15                  <artifactId>spring-boot-maven-plugin</artifactId>\n
-          16                  <version>2.1.0.RELEASE</version>  \t\t\t<!--  09.11.2018
-          -->\n 17              </plugin>\n 18          </plugins>\n 19      </build>\n
-          20  \n 21      <dependencies>\n 22          <!-- spring boot -->\n 23          <dependency>\n
-          24              <groupId>org.springframework.boot</groupId>\n 25              <artifactId>spring-boot-starter-web</artifactId>\n
-          26              <version>2.1.0.RELEASE</version>                <!--  09.11.2018
-          -->\n 27          </dependency>\n 28  \n 29          <!--  lombok -->\n
-          30          <dependency>\n 31              <groupId>org.projectlombok</groupId>\n
-          32              <artifactId>lombok</artifactId>\n 33              <version>1.18.2</version>\n
-          34          </dependency>\n 35  \n 36          <!-- jackson -->\n 37          <dependency>\n
-          38              <groupId>com.fasterxml.jackson.core</groupId>\n 39              <artifactId>jackson-databind</artifactId>\n
-          40              <version>2.9.5</version>\n 41          </dependency>\n 42
-          \ \n 43          <dependency>\n 44              <groupId>com.fasterxml.jackson.datatype</groupId>\n
-          45              <artifactId>jackson-datatype-jsr310</artifactId>\n 46              <version>2.9.5</version>\n
-          47          </dependency>\n 48  \n 49          <dependency>\n 50              <groupId>com.fasterxml.jackson.dataformat</groupId>\n
-          51              <artifactId>jackson-dataformat-xml</artifactId>\n 52              <version>2.9.5</version>\n
-          53          </dependency>\n 54  \n 55          <!--&lt;!&ndash; jdbc connector
-          &ndash;&gt;-->\n 56          <!--<dependency>-->\n 57              <!--<groupId>mysql</groupId>-->\n
-          58              <!--<artifactId>mysql-connector-java</artifactId>-->\n 59
-          \             <!--&lt;!&ndash; <version>8.0.12</version> &ndash;&gt;               &lt;!&ndash;
-          TimeZone bug not fixed since 5.1.39 &ndash;&gt;-->\n 60              <!--<version>5.1.39</version>-->\n
-          61          <!--</dependency>-->\n 62  \n 63      </dependencies>\n 64  \n
-          65  </project>\n"
+        codeSnip: '6  '
         lineNumber: 5
         variables:
           data: project
@@ -1991,11 +1504,11 @@
           at runtime. Doing this would allow the application to compile without modification,
           but you\n would also need to maintain a Spring version along with the Quarkus
           application."
-        codeSnip: " 1  package com.telran.application;\n 2  \n 3  import org.springframework.boot.SpringApplication;\n
+        codeSnip: "\n 1  package com.telran.application;\n 2  \n 3  import org.springframework.boot.SpringApplication;\n
           4  import org.springframework.boot.autoconfigure.SpringBootApplication;\n
-          5  \n 6  @SpringBootApplication\n 7  public class BookServerApp {\n 8      public
-          static void main(String[] args) {\n 9          SpringApplication.run(BookServerApp.class,
-          args);\n10  \n11      }\n12  }\n"
+          5  \n 6  @SpringBootApplication\n 7  public class BookServerApp {\n 8  public
+          static void main(String[] args) {\n 9  SpringApplication.run(BookServerApp.class,
+          args);\n10  \n11  }\n12  }"
         lineNumber: 6
         variables:
           file: file:///opt/input/source/src/main/java/com/telran/application/BookServerApp.java
@@ -2017,15 +1530,14 @@
 
            Spring DI is in spring-beans artifact brought transitively by any `org.springframework.boot:spring-boot-*` dependency
            Add Quarkus dependency `io.quarkus:quarkus-spring-di`
-        codeSnip: "15                  <artifactId>spring-boot-maven-plugin</artifactId>\n16
-          \                 <version>2.1.0.RELEASE</version>  \t\t\t<!--  09.11.2018
-          -->\n17              </plugin>\n18          </plugins>\n19      </build>\n20
-          \ \n21      <dependencies>\n22          <!-- spring boot -->\n23          <dependency>\n24
-          \             <groupId>org.springframework.boot</groupId>\n25              <artifactId>spring-boot-starter-web</artifactId>\n26
-          \             <version>2.1.0.RELEASE</version>                <!--  09.11.2018
-          -->\n27          </dependency>\n28  \n29          <!--  lombok -->\n30          <dependency>\n31
-          \             <groupId>org.projectlombok</groupId>\n32              <artifactId>lombok</artifactId>\n33
-          \             <version>1.18.2</version>\n34          </dependency>\n35  "
+        codeSnip: "\n15  <artifactId>spring-boot-maven-plugin</artifactId>\n16  <version>2.1.0.RELEASE</version>
+          \ \t\t\t<!--  09.11.2018 -->\n17  </plugin>\n18  </plugins>\n19  </build>\n20
+          \ \n21  <dependencies>\n22  <!-- spring boot -->\n23  <dependency>\n24  <groupId>org.springframework.boot</groupId>\n25
+          \ <artifactId>spring-boot-starter-web</artifactId>\n26  <version>2.1.0.RELEASE</version>
+          \               <!--  09.11.2018 -->\n27  </dependency>\n28  \n29  <!--
+          \ lombok -->\n30  <dependency>\n31  <groupId>org.projectlombok</groupId>\n32
+          \ <artifactId>lombok</artifactId>\n33  <version>1.18.2</version>\n34  </dependency>\n35
+          \ "
         lineNumber: 24
         variables:
           name: org.springframework.spring-beans
@@ -2041,39 +1553,11 @@
       - konveyor.io/source=springboot
       - konveyor.io/target=quarkus
       incidents:
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/book-server_deps-20251204-010606/source/pom.xml
+      - uri: file:///source/pom.xml
         message: |-
           Replace the `spring-boot-maven-plugin` dependency.
            The `spring-boot-maven-plugin` dependency needs to be replaced with `quarkus-maven-plugin`, so that the application is built with Quarkus, both for running on the JVM and in native mode.
-        codeSnip: "  1  <?xml version=\"1.0\" encoding=\"UTF-8\"?>\n  2  <project
-          xmlns=\"http://maven.apache.org/POM/4.0.0\"\n  3           xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n
-          \ 4           xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n
-          \ 5      <modelVersion>4.0.0</modelVersion>\n  6  \n  7      <groupId>com.telran</groupId>\n
-          \ 8      <artifactId>BookServer</artifactId>\n  9      <version>1.0-SNAPSHOT</version>\n
-          10  \n 11      <build>\n 12          <plugins>\n 13              <plugin>\n
-          14                  <groupId>org.springframework.boot</groupId>\n 15                  <artifactId>spring-boot-maven-plugin</artifactId>\n
-          16                  <version>2.1.0.RELEASE</version>  \t\t\t<!--  09.11.2018
-          -->\n 17              </plugin>\n 18          </plugins>\n 19      </build>\n
-          20  \n 21      <dependencies>\n 22          <!-- spring boot -->\n 23          <dependency>\n
-          24              <groupId>org.springframework.boot</groupId>\n 25              <artifactId>spring-boot-starter-web</artifactId>\n
-          26              <version>2.1.0.RELEASE</version>                <!--  09.11.2018
-          -->\n 27          </dependency>\n 28  \n 29          <!--  lombok -->\n
-          30          <dependency>\n 31              <groupId>org.projectlombok</groupId>\n
-          32              <artifactId>lombok</artifactId>\n 33              <version>1.18.2</version>\n
-          34          </dependency>\n 35  \n 36          <!-- jackson -->\n 37          <dependency>\n
-          38              <groupId>com.fasterxml.jackson.core</groupId>\n 39              <artifactId>jackson-databind</artifactId>\n
-          40              <version>2.9.5</version>\n 41          </dependency>\n 42
-          \ \n 43          <dependency>\n 44              <groupId>com.fasterxml.jackson.datatype</groupId>\n
-          45              <artifactId>jackson-datatype-jsr310</artifactId>\n 46              <version>2.9.5</version>\n
-          47          </dependency>\n 48  \n 49          <dependency>\n 50              <groupId>com.fasterxml.jackson.dataformat</groupId>\n
-          51              <artifactId>jackson-dataformat-xml</artifactId>\n 52              <version>2.9.5</version>\n
-          53          </dependency>\n 54  \n 55          <!--&lt;!&ndash; jdbc connector
-          &ndash;&gt;-->\n 56          <!--<dependency>-->\n 57              <!--<groupId>mysql</groupId>-->\n
-          58              <!--<artifactId>mysql-connector-java</artifactId>-->\n 59
-          \             <!--&lt;!&ndash; <version>8.0.12</version> &ndash;&gt;               &lt;!&ndash;
-          TimeZone bug not fixed since 5.1.39 &ndash;&gt;-->\n 60              <!--<version>5.1.39</version>-->\n
-          61          <!--</dependency>-->\n 62  \n 63      </dependencies>\n 64  \n
-          65  </project>\n"
+        codeSnip: 15                  <artifactId>spring-boot-maven-plugin</artifactId>
         lineNumber: 14
         variables:
           data: plugin
@@ -2099,15 +1583,14 @@
 
            Spring Configuration Properties is in spring-boot artifact brought transitively by any `org.springframework.boot:spring-boot-*` dependency
            Add Quarkus dependency `io.quarkus:quarkus-spring-boot-properties`
-        codeSnip: "15                  <artifactId>spring-boot-maven-plugin</artifactId>\n16
-          \                 <version>2.1.0.RELEASE</version>  \t\t\t<!--  09.11.2018
-          -->\n17              </plugin>\n18          </plugins>\n19      </build>\n20
-          \ \n21      <dependencies>\n22          <!-- spring boot -->\n23          <dependency>\n24
-          \             <groupId>org.springframework.boot</groupId>\n25              <artifactId>spring-boot-starter-web</artifactId>\n26
-          \             <version>2.1.0.RELEASE</version>                <!--  09.11.2018
-          -->\n27          </dependency>\n28  \n29          <!--  lombok -->\n30          <dependency>\n31
-          \             <groupId>org.projectlombok</groupId>\n32              <artifactId>lombok</artifactId>\n33
-          \             <version>1.18.2</version>\n34          </dependency>\n35  "
+        codeSnip: "\n15  <artifactId>spring-boot-maven-plugin</artifactId>\n16  <version>2.1.0.RELEASE</version>
+          \ \t\t\t<!--  09.11.2018 -->\n17  </plugin>\n18  </plugins>\n19  </build>\n20
+          \ \n21  <dependencies>\n22  <!-- spring boot -->\n23  <dependency>\n24  <groupId>org.springframework.boot</groupId>\n25
+          \ <artifactId>spring-boot-starter-web</artifactId>\n26  <version>2.1.0.RELEASE</version>
+          \               <!--  09.11.2018 -->\n27  </dependency>\n28  \n29  <!--
+          \ lombok -->\n30  <dependency>\n31  <groupId>org.projectlombok</groupId>\n32
+          \ <artifactId>lombok</artifactId>\n33  <version>1.18.2</version>\n34  </dependency>\n35
+          \ "
         lineNumber: 24
         variables:
           name: org.springframework.boot.spring-boot
@@ -2130,15 +1613,14 @@
           \n Starting with Quarkus version 2.5, the underlying JAX-RS engine must
           be chosen. For performance reasons,\n the `quarkus-resteasy-reactive-jackson`
           dependency should be used."
-        codeSnip: "15                  <artifactId>spring-boot-maven-plugin</artifactId>\n16
-          \                 <version>2.1.0.RELEASE</version>  \t\t\t<!--  09.11.2018
-          -->\n17              </plugin>\n18          </plugins>\n19      </build>\n20
-          \ \n21      <dependencies>\n22          <!-- spring boot -->\n23          <dependency>\n24
-          \             <groupId>org.springframework.boot</groupId>\n25              <artifactId>spring-boot-starter-web</artifactId>\n26
-          \             <version>2.1.0.RELEASE</version>                <!--  09.11.2018
-          -->\n27          </dependency>\n28  \n29          <!--  lombok -->\n30          <dependency>\n31
-          \             <groupId>org.projectlombok</groupId>\n32              <artifactId>lombok</artifactId>\n33
-          \             <version>1.18.2</version>\n34          </dependency>\n35  "
+        codeSnip: "\n15  <artifactId>spring-boot-maven-plugin</artifactId>\n16  <version>2.1.0.RELEASE</version>
+          \ \t\t\t<!--  09.11.2018 -->\n17  </plugin>\n18  </plugins>\n19  </build>\n20
+          \ \n21  <dependencies>\n22  <!-- spring boot -->\n23  <dependency>\n24  <groupId>org.springframework.boot</groupId>\n25
+          \ <artifactId>spring-boot-starter-web</artifactId>\n26  <version>2.1.0.RELEASE</version>
+          \               <!--  09.11.2018 -->\n27  </dependency>\n28  \n29  <!--
+          \ lombok -->\n30  <dependency>\n31  <groupId>org.projectlombok</groupId>\n32
+          \ <artifactId>lombok</artifactId>\n33  <version>1.18.2</version>\n34  </dependency>\n35
+          \ "
         lineNumber: 24
         variables:
           name: org.springframework.spring-web
@@ -2235,15 +1717,14 @@
       - uri: file:///opt/input/source/pom.xml
         message: Spring Boot has to be updated to Spring Boot 2.2.6 before being able
           to be migrated to a version supported by Red Hat Runtimes
-        codeSnip: "15                  <artifactId>spring-boot-maven-plugin</artifactId>\n16
-          \                 <version>2.1.0.RELEASE</version>  \t\t\t<!--  09.11.2018
-          -->\n17              </plugin>\n18          </plugins>\n19      </build>\n20
-          \ \n21      <dependencies>\n22          <!-- spring boot -->\n23          <dependency>\n24
-          \             <groupId>org.springframework.boot</groupId>\n25              <artifactId>spring-boot-starter-web</artifactId>\n26
-          \             <version>2.1.0.RELEASE</version>                <!--  09.11.2018
-          -->\n27          </dependency>\n28  \n29          <!--  lombok -->\n30          <dependency>\n31
-          \             <groupId>org.projectlombok</groupId>\n32              <artifactId>lombok</artifactId>\n33
-          \             <version>1.18.2</version>\n34          </dependency>\n35  "
+        codeSnip: "\n15  <artifactId>spring-boot-maven-plugin</artifactId>\n16  <version>2.1.0.RELEASE</version>
+          \ \t\t\t<!--  09.11.2018 -->\n17  </plugin>\n18  </plugins>\n19  </build>\n20
+          \ \n21  <dependencies>\n22  <!-- spring boot -->\n23  <dependency>\n24  <groupId>org.springframework.boot</groupId>\n25
+          \ <artifactId>spring-boot-starter-web</artifactId>\n26  <version>2.1.0.RELEASE</version>
+          \               <!--  09.11.2018 -->\n27  </dependency>\n28  \n29  <!--
+          \ lombok -->\n30  <dependency>\n31  <groupId>org.projectlombok</groupId>\n32
+          \ <artifactId>lombok</artifactId>\n33  <version>1.18.2</version>\n34  </dependency>\n35
+          \ "
         lineNumber: 24
         variables:
           name: org.springframework.boot.spring-boot-starter-web
@@ -2283,15 +1764,14 @@
       - uri: file:///opt/input/source/pom.xml
         message: |
           Spring Framework 6.0 and above must use at least JakartaEE 9. Check the migration guide in the link for more information.
-        codeSnip: "15                  <artifactId>spring-boot-maven-plugin</artifactId>\n16
-          \                 <version>2.1.0.RELEASE</version>  \t\t\t<!--  09.11.2018
-          -->\n17              </plugin>\n18          </plugins>\n19      </build>\n20
-          \ \n21      <dependencies>\n22          <!-- spring boot -->\n23          <dependency>\n24
-          \             <groupId>org.springframework.boot</groupId>\n25              <artifactId>spring-boot-starter-web</artifactId>\n26
-          \             <version>2.1.0.RELEASE</version>                <!--  09.11.2018
-          -->\n27          </dependency>\n28  \n29          <!--  lombok -->\n30          <dependency>\n31
-          \             <groupId>org.projectlombok</groupId>\n32              <artifactId>lombok</artifactId>\n33
-          \             <version>1.18.2</version>\n34          </dependency>\n35  "
+        codeSnip: "\n15  <artifactId>spring-boot-maven-plugin</artifactId>\n16  <version>2.1.0.RELEASE</version>
+          \ \t\t\t<!--  09.11.2018 -->\n17  </plugin>\n18  </plugins>\n19  </build>\n20
+          \ \n21  <dependencies>\n22  <!-- spring boot -->\n23  <dependency>\n24  <groupId>org.springframework.boot</groupId>\n25
+          \ <artifactId>spring-boot-starter-web</artifactId>\n26  <version>2.1.0.RELEASE</version>
+          \               <!--  09.11.2018 -->\n27  </dependency>\n28  \n29  <!--
+          \ lombok -->\n30  <dependency>\n31  <groupId>org.projectlombok</groupId>\n32
+          \ <artifactId>lombok</artifactId>\n33  <version>1.18.2</version>\n34  </dependency>\n35
+          \ "
         lineNumber: 24
         variables:
           name: javax.annotation.javax.annotation-api
@@ -2321,15 +1801,14 @@
           ```
 
           Please check the Hibernate Validator migration guidelines in the links for more information.
-        codeSnip: "15                  <artifactId>spring-boot-maven-plugin</artifactId>\n16
-          \                 <version>2.1.0.RELEASE</version>  \t\t\t<!--  09.11.2018
-          -->\n17              </plugin>\n18          </plugins>\n19      </build>\n20
-          \ \n21      <dependencies>\n22          <!-- spring boot -->\n23          <dependency>\n24
-          \             <groupId>org.springframework.boot</groupId>\n25              <artifactId>spring-boot-starter-web</artifactId>\n26
-          \             <version>2.1.0.RELEASE</version>                <!--  09.11.2018
-          -->\n27          </dependency>\n28  \n29          <!--  lombok -->\n30          <dependency>\n31
-          \             <groupId>org.projectlombok</groupId>\n32              <artifactId>lombok</artifactId>\n33
-          \             <version>1.18.2</version>\n34          </dependency>\n35  "
+        codeSnip: "\n15  <artifactId>spring-boot-maven-plugin</artifactId>\n16  <version>2.1.0.RELEASE</version>
+          \ \t\t\t<!--  09.11.2018 -->\n17  </plugin>\n18  </plugins>\n19  </build>\n20
+          \ \n21  <dependencies>\n22  <!-- spring boot -->\n23  <dependency>\n24  <groupId>org.springframework.boot</groupId>\n25
+          \ <artifactId>spring-boot-starter-web</artifactId>\n26  <version>2.1.0.RELEASE</version>
+          \               <!--  09.11.2018 -->\n27  </dependency>\n28  \n29  <!--
+          \ lombok -->\n30  <dependency>\n31  <groupId>org.projectlombok</groupId>\n32
+          \ <artifactId>lombok</artifactId>\n33  <version>1.18.2</version>\n34  </dependency>\n35
+          \ "
         lineNumber: 24
         variables:
           name: org.hibernate.validator.hibernate-validator
@@ -2383,13 +1862,13 @@
               }
           }
           ```
-        codeSnip: " 6  import org.springframework.web.bind.annotation.GetMapping;\n
+        codeSnip: "\n 6  import org.springframework.web.bind.annotation.GetMapping;\n
           7  import org.springframework.web.bind.annotation.RequestMapping;\n 8  //import
           org.springframework.web.bind.annotation.RequestParam;\n 9  import org.springframework.web.bind.annotation.RestController;\n10
           \ \n11  import java.util.HashMap;\n12  \n13  @RestController\n14  @RequestMapping(value
-          = \"/query\")\n15  public class BookQuerriesController {\n16      @GetMapping(value
-          = \"/getAllBooks\")\n17      public HashMap<Long, Book> getAllBooks(){\n18
-          \         return BookModel.getAllBooks();\n19      }\n20  }\n"
+          = \"/query\")\n15  public class BookQuerriesController {\n16  @GetMapping(value
+          = \"/getAllBooks\")\n17  public HashMap<Long, Book> getAllBooks(){\n18  return
+          BookModel.getAllBooks();\n19  }\n20  }"
         lineNumber: 16
         variables:
           file: file:///opt/input/source/src/main/java/com/telran/application/controller/BookQuerriesController.java
@@ -2428,18 +1907,17 @@
               }
           }
           ```
-        codeSnip: " 5  import org.springframework.web.bind.annotation.RequestMapping;\n
+        codeSnip: "\n 5  import org.springframework.web.bind.annotation.RequestMapping;\n
           6  import org.springframework.web.bind.annotation.RequestParam;\n 7  import
           org.springframework.web.bind.annotation.RestController;\n 8  \n 9  import
           java.io.IOException;\n10  \n11  @RestController\n12  @RequestMapping(value=\"/startend\")\n13
-          \ public class BookStartEndController {\n14  \n15      @GetMapping(value
-          = \"/createDB\")\n16      public Boolean createDB(@RequestParam(value =
-          \"file\") String filename,\n17                              @RequestParam(value
-          = \"num\") int numBooks) throws IOException {\n18          BookModel.writeBooksToFile(filename,
-          numBooks);\n19          return true;\n20      }\n21  \n22      @GetMapping(value
-          = \"/readDB\")\n23      public void readDB(@RequestParam(value = \"file\")
-          String filename) throws IOException {\n24          BookModel.readDB(filename);\n25
-          \     }"
+          \ public class BookStartEndController {\n14  \n15  @GetMapping(value = \"/createDB\")\n16
+          \ public Boolean createDB(@RequestParam(value = \"file\") String filename,\n17
+          \ @RequestParam(value = \"num\") int numBooks) throws IOException {\n18
+          \ BookModel.writeBooksToFile(filename, numBooks);\n19  return true;\n20
+          \ }\n21  \n22  @GetMapping(value = \"/readDB\")\n23  public void readDB(@RequestParam(value
+          = \"file\") String filename) throws IOException {\n24  BookModel.readDB(filename);\n25
+          \ }"
         lineNumber: 15
         variables:
           file: file:///opt/input/source/src/main/java/com/telran/application/controller/BookStartEndController.java
@@ -2478,14 +1956,13 @@
               }
           }
           ```
-        codeSnip: "12  @RequestMapping(value=\"/startend\")\n13  public class BookStartEndController
-          {\n14  \n15      @GetMapping(value = \"/createDB\")\n16      public Boolean
-          createDB(@RequestParam(value = \"file\") String filename,\n17                              @RequestParam(value
-          = \"num\") int numBooks) throws IOException {\n18          BookModel.writeBooksToFile(filename,
-          numBooks);\n19          return true;\n20      }\n21  \n22      @GetMapping(value
-          = \"/readDB\")\n23      public void readDB(@RequestParam(value = \"file\")
-          String filename) throws IOException {\n24          BookModel.readDB(filename);\n25
-          \     }\n26  }\n"
+        codeSnip: "\n12  @RequestMapping(value=\"/startend\")\n13  public class BookStartEndController
+          {\n14  \n15  @GetMapping(value = \"/createDB\")\n16  public Boolean createDB(@RequestParam(value
+          = \"file\") String filename,\n17  @RequestParam(value = \"num\") int numBooks)
+          throws IOException {\n18  BookModel.writeBooksToFile(filename, numBooks);\n19
+          \ return true;\n20  }\n21  \n22  @GetMapping(value = \"/readDB\")\n23  public
+          void readDB(@RequestParam(value = \"file\") String filename) throws IOException
+          {\n24  BookModel.readDB(filename);\n25  }\n26  }"
         lineNumber: 22
         variables:
           file: file:///opt/input/source/src/main/java/com/telran/application/controller/BookStartEndController.java
@@ -2510,14 +1987,14 @@
           Spring MVC and Spring WebFlux no longer detect controllers based solely on a type-level @RequestMapping
           annotation. That means interface-based AOP proxying for web controllers may no longer work. Please, enable
           class-based proxying for such controllers; otherwise the interface must also be annotated with @Controller.
-        codeSnip: " 4  import com.telran.application.model.dto.Book;\n 5  \n 6  import
+        codeSnip: "\n 4  import com.telran.application.model.dto.Book;\n 5  \n 6  import
           org.springframework.web.bind.annotation.GetMapping;\n 7  import org.springframework.web.bind.annotation.RequestMapping;\n
           8  //import org.springframework.web.bind.annotation.RequestParam;\n 9  import
           org.springframework.web.bind.annotation.RestController;\n10  \n11  import
           java.util.HashMap;\n12  \n13  @RestController\n14  @RequestMapping(value
-          = \"/query\")\n15  public class BookQuerriesController {\n16      @GetMapping(value
-          = \"/getAllBooks\")\n17      public HashMap<Long, Book> getAllBooks(){\n18
-          \         return BookModel.getAllBooks();\n19      }\n20  }\n"
+          = \"/query\")\n15  public class BookQuerriesController {\n16  @GetMapping(value
+          = \"/getAllBooks\")\n17  public HashMap<Long, Book> getAllBooks(){\n18  return
+          BookModel.getAllBooks();\n19  }\n20  }"
         lineNumber: 14
         variables:
           file: file:///opt/input/source/src/main/java/com/telran/application/controller/BookQuerriesController.java
@@ -2529,17 +2006,16 @@
           Spring MVC and Spring WebFlux no longer detect controllers based solely on a type-level @RequestMapping
           annotation. That means interface-based AOP proxying for web controllers may no longer work. Please, enable
           class-based proxying for such controllers; otherwise the interface must also be annotated with @Controller.
-        codeSnip: " 2  \n 3  import com.telran.application.model.BookModel;\n 4  import
-          org.springframework.web.bind.annotation.GetMapping;\n 5  import org.springframework.web.bind.annotation.RequestMapping;\n
-          6  import org.springframework.web.bind.annotation.RequestParam;\n 7  import
-          org.springframework.web.bind.annotation.RestController;\n 8  \n 9  import
-          java.io.IOException;\n10  \n11  @RestController\n12  @RequestMapping(value=\"/startend\")\n13
-          \ public class BookStartEndController {\n14  \n15      @GetMapping(value
-          = \"/createDB\")\n16      public Boolean createDB(@RequestParam(value =
-          \"file\") String filename,\n17                              @RequestParam(value
-          = \"num\") int numBooks) throws IOException {\n18          BookModel.writeBooksToFile(filename,
-          numBooks);\n19          return true;\n20      }\n21  \n22      @GetMapping(value
-          = \"/readDB\")"
+        codeSnip: "\n 2  \n 3  import com.telran.application.model.BookModel;\n 4
+          \ import org.springframework.web.bind.annotation.GetMapping;\n 5  import
+          org.springframework.web.bind.annotation.RequestMapping;\n 6  import org.springframework.web.bind.annotation.RequestParam;\n
+          7  import org.springframework.web.bind.annotation.RestController;\n 8  \n
+          9  import java.io.IOException;\n10  \n11  @RestController\n12  @RequestMapping(value=\"/startend\")\n13
+          \ public class BookStartEndController {\n14  \n15  @GetMapping(value = \"/createDB\")\n16
+          \ public Boolean createDB(@RequestParam(value = \"file\") String filename,\n17
+          \ @RequestParam(value = \"num\") int numBooks) throws IOException {\n18
+          \ BookModel.writeBooksToFile(filename, numBooks);\n19  return true;\n20
+          \ }\n21  \n22  @GetMapping(value = \"/readDB\")"
         lineNumber: 12
         variables:
           file: file:///opt/input/source/src/main/java/com/telran/application/controller/BookStartEndController.java
@@ -2646,11 +2122,11 @@
       incidents:
       - uri: file:///opt/input/source/src/main/java/com/telran/application/BookServerApp.java
         message: ""
-        codeSnip: " 1  package com.telran.application;\n 2  \n 3  import org.springframework.boot.SpringApplication;\n
+        codeSnip: "\n 1  package com.telran.application;\n 2  \n 3  import org.springframework.boot.SpringApplication;\n
           4  import org.springframework.boot.autoconfigure.SpringBootApplication;\n
-          5  \n 6  @SpringBootApplication\n 7  public class BookServerApp {\n 8      public
-          static void main(String[] args) {\n 9          SpringApplication.run(BookServerApp.class,
-          args);\n10  \n11      }\n12  }\n"
+          5  \n 6  @SpringBootApplication\n 7  public class BookServerApp {\n 8  public
+          static void main(String[] args) {\n 9  SpringApplication.run(BookServerApp.class,
+          args);\n10  \n11  }\n12  }"
         lineNumber: 6
         variables:
           file: file:///opt/input/source/src/main/java/com/telran/application/BookServerApp.java
@@ -2667,15 +2143,14 @@
       incidents:
       - uri: file:///opt/input/source/pom.xml
         message: ""
-        codeSnip: "15                  <artifactId>spring-boot-maven-plugin</artifactId>\n16
-          \                 <version>2.1.0.RELEASE</version>  \t\t\t<!--  09.11.2018
-          -->\n17              </plugin>\n18          </plugins>\n19      </build>\n20
-          \ \n21      <dependencies>\n22          <!-- spring boot -->\n23          <dependency>\n24
-          \             <groupId>org.springframework.boot</groupId>\n25              <artifactId>spring-boot-starter-web</artifactId>\n26
-          \             <version>2.1.0.RELEASE</version>                <!--  09.11.2018
-          -->\n27          </dependency>\n28  \n29          <!--  lombok -->\n30          <dependency>\n31
-          \             <groupId>org.projectlombok</groupId>\n32              <artifactId>lombok</artifactId>\n33
-          \             <version>1.18.2</version>\n34          </dependency>\n35  "
+        codeSnip: "\n15  <artifactId>spring-boot-maven-plugin</artifactId>\n16  <version>2.1.0.RELEASE</version>
+          \ \t\t\t<!--  09.11.2018 -->\n17  </plugin>\n18  </plugins>\n19  </build>\n20
+          \ \n21  <dependencies>\n22  <!-- spring boot -->\n23  <dependency>\n24  <groupId>org.springframework.boot</groupId>\n25
+          \ <artifactId>spring-boot-starter-web</artifactId>\n26  <version>2.1.0.RELEASE</version>
+          \               <!--  09.11.2018 -->\n27  </dependency>\n28  \n29  <!--
+          \ lombok -->\n30  <dependency>\n31  <groupId>org.projectlombok</groupId>\n32
+          \ <artifactId>lombok</artifactId>\n33  <version>1.18.2</version>\n34  </dependency>\n35
+          \ "
         lineNumber: 24
         variables:
           name: org.springframework.spring-beans
@@ -2690,15 +2165,14 @@
       incidents:
       - uri: file:///opt/input/source/pom.xml
         message: ""
-        codeSnip: "15                  <artifactId>spring-boot-maven-plugin</artifactId>\n16
-          \                 <version>2.1.0.RELEASE</version>  \t\t\t<!--  09.11.2018
-          -->\n17              </plugin>\n18          </plugins>\n19      </build>\n20
-          \ \n21      <dependencies>\n22          <!-- spring boot -->\n23          <dependency>\n24
-          \             <groupId>org.springframework.boot</groupId>\n25              <artifactId>spring-boot-starter-web</artifactId>\n26
-          \             <version>2.1.0.RELEASE</version>                <!--  09.11.2018
-          -->\n27          </dependency>\n28  \n29          <!--  lombok -->\n30          <dependency>\n31
-          \             <groupId>org.projectlombok</groupId>\n32              <artifactId>lombok</artifactId>\n33
-          \             <version>1.18.2</version>\n34          </dependency>\n35  "
+        codeSnip: "\n15  <artifactId>spring-boot-maven-plugin</artifactId>\n16  <version>2.1.0.RELEASE</version>
+          \ \t\t\t<!--  09.11.2018 -->\n17  </plugin>\n18  </plugins>\n19  </build>\n20
+          \ \n21  <dependencies>\n22  <!-- spring boot -->\n23  <dependency>\n24  <groupId>org.springframework.boot</groupId>\n25
+          \ <artifactId>spring-boot-starter-web</artifactId>\n26  <version>2.1.0.RELEASE</version>
+          \               <!--  09.11.2018 -->\n27  </dependency>\n28  \n29  <!--
+          \ lombok -->\n30  <dependency>\n31  <groupId>org.projectlombok</groupId>\n32
+          \ <artifactId>lombok</artifactId>\n33  <version>1.18.2</version>\n34  </dependency>\n35
+          \ "
         lineNumber: 24
         variables:
           name: org.springframework.spring-web
@@ -2713,15 +2187,14 @@
       incidents:
       - uri: file:///opt/input/source/pom.xml
         message: ""
-        codeSnip: "15                  <artifactId>spring-boot-maven-plugin</artifactId>\n16
-          \                 <version>2.1.0.RELEASE</version>  \t\t\t<!--  09.11.2018
-          -->\n17              </plugin>\n18          </plugins>\n19      </build>\n20
-          \ \n21      <dependencies>\n22          <!-- spring boot -->\n23          <dependency>\n24
-          \             <groupId>org.springframework.boot</groupId>\n25              <artifactId>spring-boot-starter-web</artifactId>\n26
-          \             <version>2.1.0.RELEASE</version>                <!--  09.11.2018
-          -->\n27          </dependency>\n28  \n29          <!--  lombok -->\n30          <dependency>\n31
-          \             <groupId>org.projectlombok</groupId>\n32              <artifactId>lombok</artifactId>\n33
-          \             <version>1.18.2</version>\n34          </dependency>\n35  "
+        codeSnip: "\n15  <artifactId>spring-boot-maven-plugin</artifactId>\n16  <version>2.1.0.RELEASE</version>
+          \ \t\t\t<!--  09.11.2018 -->\n17  </plugin>\n18  </plugins>\n19  </build>\n20
+          \ \n21  <dependencies>\n22  <!-- spring boot -->\n23  <dependency>\n24  <groupId>org.springframework.boot</groupId>\n25
+          \ <artifactId>spring-boot-starter-web</artifactId>\n26  <version>2.1.0.RELEASE</version>
+          \               <!--  09.11.2018 -->\n27  </dependency>\n28  \n29  <!--
+          \ lombok -->\n30  <dependency>\n31  <groupId>org.projectlombok</groupId>\n32
+          \ <artifactId>lombok</artifactId>\n33  <version>1.18.2</version>\n34  </dependency>\n35
+          \ "
         lineNumber: 24
         variables:
           name: org.springframework.spring-webmvc

@@ -4,3 +4,6 @@ tests/*/source/
 # Koncur output directory
 .koncur/
 koncur
+
+# Maven settings file (contains credentials)
+settings.xml

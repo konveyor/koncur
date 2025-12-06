@@ -27,6 +27,13 @@ func LoadWithOptions(path string, skipExpectedOutput bool) (*TestDefinition, err
 		return nil, fmt.Errorf("failed to parse test YAML: %w", err)
 	}
 
+	// Store the absolute path to the test file
+	absPath, err := filepath.Abs(path)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get absolute path: %w", err)
+	}
+	test.SetTestFilePath(absPath)
+
 	// If the expected output specifies a file, load it (unless skipped)
 	if test.Expect.Output.File != "" && !skipExpectedOutput {
 		// Resolve the expected output file path relative to the test file's directory
@@ -36,13 +43,19 @@ func LoadWithOptions(path string, skipExpectedOutput bool) (*TestDefinition, err
 			expectedOutputPath = filepath.Join(testDir, expectedOutputPath)
 		}
 
+		// Store the resolved absolute path
+		absExpectedPath, err := filepath.Abs(expectedOutputPath)
+		if err != nil {
+			return nil, fmt.Errorf("failed to get absolute path for expected output: %w", err)
+		}
+		test.Expect.Output.ResolvedFilePath = absExpectedPath
+
 		rulesets, err := LoadExpectedOutput(expectedOutputPath)
 		if err != nil {
 			return nil, fmt.Errorf("failed to load expected output from %s: %w", test.Expect.Output.File, err)
 		}
 
 		test.Expect.Output.Result = rulesets
-		test.Expect.Output.File = "" // Clear the file path since we've loaded it
 	}
 
 	return &test, nil

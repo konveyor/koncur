@@ -6,3 +6,5 @@ tackleHub:
   password: secret
   # Option 2: Token authentication
   # token: your-api-token-here
+  # Maven settings (optional, only for Maven projects requiring custom settings)
+  # mavenSettings: /path/to/settings.xml

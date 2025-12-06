@@ -1,0 +1,20 @@
+name: "Maven Project Test with Settings"
+description: "Example test that requires Maven settings to be configured in the target config"
+
+analysis:
+  application: /path/to/maven/project
+  labelSelector: "konveyor.io/target=quarkus"
+  analysisMode: source-only
+
+# Flag to indicate this test requires Maven settings to be configured in the target config
+requireMavenSettings: true
+
+timeout: 10m
+
+expect:
+  exitCode: 0
+  output:
+    result:
+      - name: cloud-readiness
+        description: "Rules for cloud readiness"
+        violations: {}

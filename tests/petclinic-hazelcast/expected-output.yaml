@@ -13,126 +13,17 @@
       - konveyor.io/target=cloud-readiness
       - localhost
       incidents:
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/pom.xml
+      - uri: file:///source/pom.xml
         message: The app is trying to access local resource by JDBC, please try to
           migrate the resource to cloud
-        codeSnip: "461  \t\t\t\t\t</execution>\n462  \t\t\t\t</executions>\n463  \t\t\t\t<configuration>\n464
-          \ \t\t\t\t\t<wroManagerFactory>\n465  \t\t\t\t\t\tro.isdc.wro.maven.plugin.manager.factory.ConfigurableWroManagerFactory</wroManagerFactory>\n466
-          \ \t\t\t\t\t<cssDestinationFolder>\n467  \t\t\t\t\t\t${project.build.directory}/petclinic/resources/css</cssDestinationFolder>\n468
-          \ \t\t\t\t\t<wroFile>${basedir}/src/main/wro/wro.xml</wroFile>\n469  \t\t\t\t\t<extraConfigFile>${basedir}/src/main/wro/wro.properties</extraConfigFile>\n470
-          \ \t\t\t\t\t<contextFolder>${basedir}/src/main/webapp/resources/less</contextFolder>\n471
-          \ \t\t\t\t</configuration>\n472  \t\t\t\t<dependencies>\n473  \t\t\t\t\t<dependency>\n474
-          \ \t\t\t\t\t\t<groupId>org.webjars</groupId>\n475  \t\t\t\t\t\t<artifactId>bootstrap</artifactId>\n476
-          \ \t\t\t\t\t\t<version>${webjars-bootstrap.version}</version>\n477  \t\t\t\t\t</dependency>\n478
-          \ \t\t\t\t\t<!-- Required for Java 9 and above -->\n479  \t\t\t\t\t<dependency>\n480
-          \ \t\t\t\t\t\t<groupId>org.mockito</groupId>\n481  \t\t\t\t\t\t<artifactId>mockito-core</artifactId>\n482
-          \ \t\t\t\t\t\t<version>${mockito.version}</version>\n483  \t\t\t\t\t</dependency>\n484
-          \ \t\t\t\t</dependencies>\n485  \t\t\t</plugin>\n486  \n487  \t\t\t<plugin>\n488
-          \ \t\t\t\t<groupId>org.eclipse.jetty</groupId>\n489  \t\t\t\t<artifactId>jetty-maven-plugin</artifactId>\n490
-          \ \t\t\t\t<version>${jetty-maven-plugin.version}</version>\n491  \t\t\t</plugin>\n492
-          \ \n493  \t\t\t<plugin>\n494  \t\t\t\t<groupId>com.google.cloud.tools</groupId>\n495
-          \ \t\t\t\t<artifactId>jib-maven-plugin</artifactId>\n496  \t\t\t\t<version>${docker.jib-maven-plugin.version}</version>\n497
-          \ \t\t\t\t<configuration>\n498  \t\t\t\t\t<to>\n499  \t\t\t\t\t\t<image>\n500
-          \ \t\t\t\t\t\t\tdocker.io/${docker.image.prefix}/${project.artifactId}</image>\n501
-          \ \t\t\t\t\t\t<tags>\n502  \t\t\t\t\t\t\t<tag>${project.version}</tag>\n503
-          \ \t\t\t\t\t\t\t<tag>latest</tag>\n504  \t\t\t\t\t\t</tags>\n505  \t\t\t\t\t</to>\n506
-          \ \t\t\t\t</configuration>\n507  \t\t\t</plugin>\n508  \n509  \t\t</plugins>\n510
-          \ \t</build>\n511  \n512  \t<profiles>\n513  \t\t<profile>\n514  \t\t\t<id>H2</id>\n515
-          \ \t\t\t<activation>\n516  \t\t\t\t<activeByDefault>true</activeByDefault>\n517
-          \ \t\t\t</activation>\n518  \t\t\t<properties>\n519  \t\t\t\t<db.script>h2</db.script>\n520
-          \ \t\t\t\t<jpa.database>H2</jpa.database>\n521  \t\t\t\t<jdbc.driverClassName>org.h2.Driver</jdbc.driverClassName>\n522
-          \ \t\t\t\t<jdbc.url>jdbc:h2:mem:petclinic</jdbc.url>\n523  \t\t\t\t<jdbc.username>sa</jdbc.username>\n524
-          \ \t\t\t\t<jdbc.password />\n525  \t\t\t</properties>\n526  \t\t\t<dependencies>\n527
-          \ \t\t\t\t<dependency>\n528  \t\t\t\t\t<groupId>com.h2database</groupId>\n529
-          \ \t\t\t\t\t<artifactId>h2</artifactId>\n530  \t\t\t\t\t<version>${h2database.version}</version>\n531
-          \ \t\t\t\t\t<scope>runtime</scope>\n532  \t\t\t\t</dependency>\n533  \t\t\t</dependencies>\n534
-          \ \t\t</profile>\n535  \t\t<profile>\n536  \t\t\t<id>HSQLDB</id>\n537  \t\t\t<properties>\n538
-          \ \t\t\t\t<db.script>hsqldb</db.script>\n539  \t\t\t\t<jpa.database>HSQL</jpa.database>\n540
-          \ \t\t\t\t<jdbc.driverClassName>org.hsqldb.jdbcDriver</jdbc.driverClassName>\n541
-          \ \t\t\t\t<jdbc.url>jdbc:hsqldb:mem:petclinic</jdbc.url>\n542  \t\t\t\t<jdbc.username>sa</jdbc.username>\n543
-          \ \t\t\t\t<jdbc.password />\n544  \t\t\t</properties>\n545  \t\t\t<dependencies>\n546
-          \ \t\t\t\t<dependency>\n547  \t\t\t\t\t<groupId>org.hsqldb</groupId>\n548
-          \ \t\t\t\t\t<artifactId>hsqldb</artifactId>\n549  \t\t\t\t\t<version>${hsqldb.version}</version>\n550
-          \ \t\t\t\t\t<scope>runtime</scope>\n551  \t\t\t\t</dependency>\n552  \t\t\t</dependencies>\n553
-          \ \t\t</profile>\n554  \t\t<profile>\n555  \t\t\t<id>MySQL</id>\n556  \t\t\t<properties>\n557
-          \ \t\t\t\t<db.script>mysql</db.script>\n558  \t\t\t\t<jpa.database>MYSQL</jpa.database>\n559
-          \ \t\t\t\t<jdbc.driverClassName>com.mysql.cj.jdbc.Driver</jdbc.driverClassName>\n560
-          \ \t\t\t\t<jdbc.url>jdbc:mysql://localhost:3306/petclinic?useUnicode=true</jdbc.url>\n561
-          \ \t\t\t\t<jdbc.username>petclinic</jdbc.username>\n562  \t\t\t\t<jdbc.password>petclinic</jdbc.password>\n563
-          \ \t\t\t</properties>\n564  \t\t\t<dependencies>\n565  \t\t\t\t<dependency>\n566
-          \ \t\t\t\t\t<groupId>mysql</groupId>\n567  \t\t\t\t\t<artifactId>mysql-connector-java</artifactId>\n568
-          \ \t\t\t\t\t<version>${mysql-driver.version}</version>\n569  \t\t\t\t\t<scope>runtime</scope>\n570
-          \ \t\t\t\t</dependency>\n571  \t\t\t</dependencies>\n572  \t\t</profile>\n573
-          \ \t\t<profile>\n574  \t\t\t<id>PostgreSQL</id>\n575  \t\t\t<properties>\n576
-          \ \t\t\t\t<db.script>postgresql</db.script>\n577  \t\t\t\t<jpa.database>POSTGRESQL</jpa.database>\n578
-          \ \t\t\t\t<jdbc.driverClassName>org.postgresql.Driver</jdbc.driverClassName>\n579
-          \ \t\t\t\t<jdbc.url>jdbc:postgresql://localhost:5432/petclinic</jdbc.url>\n580
-          \ \t\t\t\t<jdbc.username>postgres</jdbc.username>\n581  \t\t\t\t<jdbc.password>petclinic</jdbc.password>\n582
-          \ \t\t\t</properties>\n583  \t\t\t<dependencies>\n584  \t\t\t\t<dependency>\n585
-          \ \t\t\t\t\t<groupId>org.postgresql</groupId>\n586  \t\t\t\t\t<artifactId>postgresql</artifactId>\n587
-          \ \t\t\t\t\t<version>${postgresql-driver.version}</version>\n588  \t\t\t\t\t<scope>runtime</scope>\n589
-          \ \t\t\t\t</dependency>\n590  \t\t\t</dependencies>\n591  \t\t</profile>\n592
-          \ \t</profiles>\n593  \n594  \t<repositories>\n595  \t\t<repository>\n596
-          \ \t\t\t<id>repository.spring.milestone</id>\n597  \t\t\t<name>Spring Milestone
-          Repository</name>\n598  \t\t\t<url>https://repo.spring.io/milestone</url>\n599
-          \ \t\t</repository>\n600  \t</repositories>\n601  \n602  </project>\n"
+        codeSnip: "561  \t\t\t\t<jdbc.username>petclinic</jdbc.username>"
         lineNumber: 560
         variables:
           matchingText: mysql
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/pom.xml
+      - uri: file:///source/pom.xml
         message: The app is trying to access local resource by JDBC, please try to
           migrate the resource to cloud
-        codeSnip: "480  \t\t\t\t\t\t<groupId>org.mockito</groupId>\n481  \t\t\t\t\t\t<artifactId>mockito-core</artifactId>\n482
-          \ \t\t\t\t\t\t<version>${mockito.version}</version>\n483  \t\t\t\t\t</dependency>\n484
-          \ \t\t\t\t</dependencies>\n485  \t\t\t</plugin>\n486  \n487  \t\t\t<plugin>\n488
-          \ \t\t\t\t<groupId>org.eclipse.jetty</groupId>\n489  \t\t\t\t<artifactId>jetty-maven-plugin</artifactId>\n490
-          \ \t\t\t\t<version>${jetty-maven-plugin.version}</version>\n491  \t\t\t</plugin>\n492
-          \ \n493  \t\t\t<plugin>\n494  \t\t\t\t<groupId>com.google.cloud.tools</groupId>\n495
-          \ \t\t\t\t<artifactId>jib-maven-plugin</artifactId>\n496  \t\t\t\t<version>${docker.jib-maven-plugin.version}</version>\n497
-          \ \t\t\t\t<configuration>\n498  \t\t\t\t\t<to>\n499  \t\t\t\t\t\t<image>\n500
-          \ \t\t\t\t\t\t\tdocker.io/${docker.image.prefix}/${project.artifactId}</image>\n501
-          \ \t\t\t\t\t\t<tags>\n502  \t\t\t\t\t\t\t<tag>${project.version}</tag>\n503
-          \ \t\t\t\t\t\t\t<tag>latest</tag>\n504  \t\t\t\t\t\t</tags>\n505  \t\t\t\t\t</to>\n506
-          \ \t\t\t\t</configuration>\n507  \t\t\t</plugin>\n508  \n509  \t\t</plugins>\n510
-          \ \t</build>\n511  \n512  \t<profiles>\n513  \t\t<profile>\n514  \t\t\t<id>H2</id>\n515
-          \ \t\t\t<activation>\n516  \t\t\t\t<activeByDefault>true</activeByDefault>\n517
-          \ \t\t\t</activation>\n518  \t\t\t<properties>\n519  \t\t\t\t<db.script>h2</db.script>\n520
-          \ \t\t\t\t<jpa.database>H2</jpa.database>\n521  \t\t\t\t<jdbc.driverClassName>org.h2.Driver</jdbc.driverClassName>\n522
-          \ \t\t\t\t<jdbc.url>jdbc:h2:mem:petclinic</jdbc.url>\n523  \t\t\t\t<jdbc.username>sa</jdbc.username>\n524
-          \ \t\t\t\t<jdbc.password />\n525  \t\t\t</properties>\n526  \t\t\t<dependencies>\n527
-          \ \t\t\t\t<dependency>\n528  \t\t\t\t\t<groupId>com.h2database</groupId>\n529
-          \ \t\t\t\t\t<artifactId>h2</artifactId>\n530  \t\t\t\t\t<version>${h2database.version}</version>\n531
-          \ \t\t\t\t\t<scope>runtime</scope>\n532  \t\t\t\t</dependency>\n533  \t\t\t</dependencies>\n534
-          \ \t\t</profile>\n535  \t\t<profile>\n536  \t\t\t<id>HSQLDB</id>\n537  \t\t\t<properties>\n538
-          \ \t\t\t\t<db.script>hsqldb</db.script>\n539  \t\t\t\t<jpa.database>HSQL</jpa.database>\n540
-          \ \t\t\t\t<jdbc.driverClassName>org.hsqldb.jdbcDriver</jdbc.driverClassName>\n541
-          \ \t\t\t\t<jdbc.url>jdbc:hsqldb:mem:petclinic</jdbc.url>\n542  \t\t\t\t<jdbc.username>sa</jdbc.username>\n543
-          \ \t\t\t\t<jdbc.password />\n544  \t\t\t</properties>\n545  \t\t\t<dependencies>\n546
-          \ \t\t\t\t<dependency>\n547  \t\t\t\t\t<groupId>org.hsqldb</groupId>\n548
-          \ \t\t\t\t\t<artifactId>hsqldb</artifactId>\n549  \t\t\t\t\t<version>${hsqldb.version}</version>\n550
-          \ \t\t\t\t\t<scope>runtime</scope>\n551  \t\t\t\t</dependency>\n552  \t\t\t</dependencies>\n553
-          \ \t\t</profile>\n554  \t\t<profile>\n555  \t\t\t<id>MySQL</id>\n556  \t\t\t<properties>\n557
-          \ \t\t\t\t<db.script>mysql</db.script>\n558  \t\t\t\t<jpa.database>MYSQL</jpa.database>\n559
-          \ \t\t\t\t<jdbc.driverClassName>com.mysql.cj.jdbc.Driver</jdbc.driverClassName>\n560
-          \ \t\t\t\t<jdbc.url>jdbc:mysql://localhost:3306/petclinic?useUnicode=true</jdbc.url>\n561
-          \ \t\t\t\t<jdbc.username>petclinic</jdbc.username>\n562  \t\t\t\t<jdbc.password>petclinic</jdbc.password>\n563
-          \ \t\t\t</properties>\n564  \t\t\t<dependencies>\n565  \t\t\t\t<dependency>\n566
-          \ \t\t\t\t\t<groupId>mysql</groupId>\n567  \t\t\t\t\t<artifactId>mysql-connector-java</artifactId>\n568
-          \ \t\t\t\t\t<version>${mysql-driver.version}</version>\n569  \t\t\t\t\t<scope>runtime</scope>\n570
-          \ \t\t\t\t</dependency>\n571  \t\t\t</dependencies>\n572  \t\t</profile>\n573
-          \ \t\t<profile>\n574  \t\t\t<id>PostgreSQL</id>\n575  \t\t\t<properties>\n576
-          \ \t\t\t\t<db.script>postgresql</db.script>\n577  \t\t\t\t<jpa.database>POSTGRESQL</jpa.database>\n578
-          \ \t\t\t\t<jdbc.driverClassName>org.postgresql.Driver</jdbc.driverClassName>\n579
-          \ \t\t\t\t<jdbc.url>jdbc:postgresql://localhost:5432/petclinic</jdbc.url>\n580
-          \ \t\t\t\t<jdbc.username>postgres</jdbc.username>\n581  \t\t\t\t<jdbc.password>petclinic</jdbc.password>\n582
-          \ \t\t\t</properties>\n583  \t\t\t<dependencies>\n584  \t\t\t\t<dependency>\n585
-          \ \t\t\t\t\t<groupId>org.postgresql</groupId>\n586  \t\t\t\t\t<artifactId>postgresql</artifactId>\n587
-          \ \t\t\t\t\t<version>${postgresql-driver.version}</version>\n588  \t\t\t\t\t<scope>runtime</scope>\n589
-          \ \t\t\t\t</dependency>\n590  \t\t\t</dependencies>\n591  \t\t</profile>\n592
-          \ \t</profiles>\n593  \n594  \t<repositories>\n595  \t\t<repository>\n596
-          \ \t\t\t<id>repository.spring.milestone</id>\n597  \t\t\t<name>Spring Milestone
-          Repository</name>\n598  \t\t\t<url>https://repo.spring.io/milestone</url>\n599
-          \ \t\t</repository>\n600  \t</repositories>\n601  \n602  </project>\n"
+        codeSnip: "580  \t\t\t\t<jdbc.username>postgres</jdbc.username>"
         lineNumber: 579
         variables:
           matchingText: postgresql
@@ -146,7 +37,7 @@
       - tag=Caching - Hazelcast embedded library
       - tag=Hazelcast
       incidents:
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/.mvn/wrapper/maven-wrapper.jar
+      - uri: file:///source/.mvn/wrapper/maven-wrapper.jar
         message: ""
   unmatched:
   - embedded-cache-libraries-01000
@@ -204,153 +95,153 @@
       - konveyor.io/target=discovery
       - tag=Java Source
       incidents:
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/.mvn/wrapper/MavenWrapperDownloader.java
+      - uri: file:///source/.mvn/wrapper/MavenWrapperDownloader.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/PetclinicInitializer.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/PetclinicInitializer.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/config/BusinessConfig.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/config/BusinessConfig.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/config/DataSourceConfig.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/config/DataSourceConfig.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/config/InitDataSourceConfig.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/config/InitDataSourceConfig.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/config/Initializer.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/config/Initializer.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/config/JdbcConfig.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/config/JdbcConfig.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/config/JpaConfig.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/config/JpaConfig.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/config/MvcCoreConfig.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/config/MvcCoreConfig.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/config/NotProfile.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/config/NotProfile.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/config/NotProfileCondition.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/config/NotProfileCondition.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/config/RootApplicationContextConfig.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/config/RootApplicationContextConfig.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/config/SessionConfiguration.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/config/SessionConfiguration.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/config/SharedJpaConfig.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/config/SharedJpaConfig.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/config/SpringDataJpaConfig.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/config/SpringDataJpaConfig.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/config/ToolsConfig.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/config/ToolsConfig.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/model/BaseEntity.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/model/BaseEntity.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/model/NamedEntity.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/model/NamedEntity.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/model/Owner.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/model/Owner.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/model/Person.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/model/Person.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/model/Pet.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/model/Pet.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/model/PetType.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/model/PetType.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/model/Specialty.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/model/Specialty.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/model/Vet.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/model/Vet.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/model/Vets.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/model/Vets.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/model/Visit.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/model/Visit.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/model/package-info.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/model/package-info.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/OwnerRepository.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/OwnerRepository.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/PetRepository.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/PetRepository.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/VetRepository.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/VetRepository.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/VisitRepository.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/VisitRepository.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcOwnerRepositoryImpl.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcOwnerRepositoryImpl.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcPet.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcPet.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcPetRepositoryImpl.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcPetRepositoryImpl.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcPetRowMapper.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcPetRowMapper.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcPetVisitExtractor.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcPetVisitExtractor.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcVetRepositoryImpl.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcVetRepositoryImpl.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcVisitRepositoryImpl.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcVisitRepositoryImpl.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcVisitRowMapper.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcVisitRowMapper.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/OneToManyResultSetExtractor.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/OneToManyResultSetExtractor.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/package-info.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/package-info.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/jpa/JpaOwnerRepositoryImpl.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/jpa/JpaOwnerRepositoryImpl.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/jpa/JpaPetRepositoryImpl.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/jpa/JpaPetRepositoryImpl.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/jpa/JpaVetRepositoryImpl.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/jpa/JpaVetRepositoryImpl.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/jpa/JpaVisitRepositoryImpl.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/jpa/JpaVisitRepositoryImpl.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/jpa/package-info.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/jpa/package-info.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/springdatajpa/SpringDataOwnerRepository.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/springdatajpa/SpringDataOwnerRepository.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/springdatajpa/SpringDataPetRepository.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/springdatajpa/SpringDataPetRepository.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/springdatajpa/SpringDataVetRepository.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/springdatajpa/SpringDataVetRepository.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/repository/springdatajpa/SpringDataVisitRepository.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/springdatajpa/SpringDataVisitRepository.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/service/ClinicService.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/service/ClinicService.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/service/ClinicServiceImpl.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/service/ClinicServiceImpl.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/util/CallMonitoringAspect.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/util/CallMonitoringAspect.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/util/EntityUtils.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/util/EntityUtils.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/web/CrashController.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/web/CrashController.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/web/OwnerController.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/web/OwnerController.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/web/PetController.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/web/PetController.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/web/PetTypeFormatter.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/web/PetTypeFormatter.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/web/PetValidator.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/web/PetValidator.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/web/VetController.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/web/VetController.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/web/VisitController.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/web/VisitController.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/java/org/springframework/samples/petclinic/web/package-info.java
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/web/package-info.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/test/java/org/springframework/samples/petclinic/config/MvcTestConfig.java
+      - uri: file:///source/src/test/java/org/springframework/samples/petclinic/config/MvcTestConfig.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/test/java/org/springframework/samples/petclinic/model/ValidatorTests.java
+      - uri: file:///source/src/test/java/org/springframework/samples/petclinic/model/ValidatorTests.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/test/java/org/springframework/samples/petclinic/service/AbstractClinicServiceTests.java
+      - uri: file:///source/src/test/java/org/springframework/samples/petclinic/service/AbstractClinicServiceTests.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/test/java/org/springframework/samples/petclinic/service/ClinicServiceJdbcTests.java
+      - uri: file:///source/src/test/java/org/springframework/samples/petclinic/service/ClinicServiceJdbcTests.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/test/java/org/springframework/samples/petclinic/service/ClinicServiceJpaTests.java
+      - uri: file:///source/src/test/java/org/springframework/samples/petclinic/service/ClinicServiceJpaTests.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/test/java/org/springframework/samples/petclinic/service/ClinicServiceSpringDataJpaTests.java
+      - uri: file:///source/src/test/java/org/springframework/samples/petclinic/service/ClinicServiceSpringDataJpaTests.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/test/java/org/springframework/samples/petclinic/web/CrashControllerTests.java
+      - uri: file:///source/src/test/java/org/springframework/samples/petclinic/web/CrashControllerTests.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/test/java/org/springframework/samples/petclinic/web/OwnerControllerTests.java
+      - uri: file:///source/src/test/java/org/springframework/samples/petclinic/web/OwnerControllerTests.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/test/java/org/springframework/samples/petclinic/web/PetControllerTests.java
+      - uri: file:///source/src/test/java/org/springframework/samples/petclinic/web/PetControllerTests.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/test/java/org/springframework/samples/petclinic/web/PetTypeFormatterTests.java
+      - uri: file:///source/src/test/java/org/springframework/samples/petclinic/web/PetTypeFormatterTests.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/test/java/org/springframework/samples/petclinic/web/VetControllerTests.java
+      - uri: file:///source/src/test/java/org/springframework/samples/petclinic/web/VetControllerTests.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/test/java/org/springframework/samples/petclinic/web/VisitControllerTests.java
+      - uri: file:///source/src/test/java/org/springframework/samples/petclinic/web/VisitControllerTests.java
         message: ""
     discover-maven-xml:
       description: Maven XML file
@@ -360,7 +251,7 @@
       - konveyor.io/target=discovery
       - tag=Maven XML
       incidents:
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/pom.xml
+      - uri: file:///source/pom.xml
         message: ""
     discover-properties-file:
       description: Properties file
@@ -370,21 +261,21 @@
       - konveyor.io/target=discovery
       - tag=Properties
       incidents:
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/.mvn/wrapper/maven-wrapper.properties
+      - uri: file:///source/.mvn/wrapper/maven-wrapper.properties
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/resources/messages/messages.properties
+      - uri: file:///source/src/main/resources/messages/messages.properties
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/resources/messages/messages_de.properties
+      - uri: file:///source/src/main/resources/messages/messages_de.properties
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/resources/messages/messages_en.properties
+      - uri: file:///source/src/main/resources/messages/messages_en.properties
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/resources/messages/messages_es.properties
+      - uri: file:///source/src/main/resources/messages/messages_es.properties
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/resources/session/session.properties
+      - uri: file:///source/src/main/resources/session/session.properties
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/resources/spring/data-access.properties
+      - uri: file:///source/src/main/resources/spring/data-access.properties
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/wro/wro.properties
+      - uri: file:///source/src/main/wro/wro.properties
         message: ""
     windup-discover-ejb-configuration:
       description: EJB XML Configuration
@@ -394,65 +285,9 @@
       - konveyor.io/target=discovery
       - tag=EJB XML
       incidents:
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/pom.xml
+      - uri: file:///source/pom.xml
         message: ""
-        codeSnip: "  1  <?xml version=\"1.0\" encoding=\"UTF-8\"?>\n  2  <project
-          xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n  3  \txmlns=\"http://maven.apache.org/POM/4.0.0\"\n
-          \ 4  \txsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd\">\n
-          \ 5  \t<modelVersion>4.0.0</modelVersion>\n  6  \t<groupId>org.springframework.samples</groupId>\n
-          \ 7  \t<artifactId>spring-framework-petclinic</artifactId>\n  8  \t<version>5.3.13</version>\n
-          \ 9  \n 10  \t<name>Spring Framework Petclinic</name>\n 11  \t<packaging>war</packaging>\n
-          12  \t<description>A Spring Framework application based on JSP, Spring MVC,
-          Spring\n 13  \t\tData JPA, Hibernate and JDBC</description>\n 14  \t<url>https://spring-petclinic.github.io/</url>\n
-          15  \n 16  \t<properties>\n 17  \n 18  \t\t<!-- Generic properties -->\n
-          19  \t\t<java.version>1.8</java.version>\n 20  \t\t<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n
-          21  \t\t<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>\n
-          22  \t\t<maven.compiler.source>${java.version}</maven.compiler.source>\n
-          23  \t\t<maven.compiler.target>${java.version}</maven.compiler.target>\n
-          24  \n 25  \t\t<!-- Spring -->\n 26  \t\t<!-- For framework compatibility,
-          refer to the Spring Boot Dependencies\n 27  \t\tBOM -->\n 28  \t\t<!--\n
-          29  \t\thttps://github.com/spring-projects/spring-boot/blob/master/spring-boot-project/spring-boot-dependencies/build.gradle
-          -->\n 30  \t\t<spring-framework.version>5.3.12</spring-framework.version>\n
-          31  \n 32  \t\t<!-- Web dependencies -->\n 33  \t\t<!-- Version update should
-          also be done in wro.xml, petclinic.less and\n 34  \t\tstatic resources:
-          htmlHeader.tag and footer.tag-->\n 35  \t\t<webjars-bootstrap.version>3.3.6</webjars-bootstrap.version>\n
-          36  \t\t<webjars-jquery-ui.version>1.12.1</webjars-jquery-ui.version>\n
-          37  \t\t<webjars-jquery.version>3.5.1</webjars-jquery.version>\n 38  \t\t<wro4j.version>1.8.0</wro4j.version>
-          <!-- wro4j 1.0.0 requires Java 9 -->\n 39  \n 40  \t\t<!-- Java EE / Java
-          SE dependencies -->\n 41  \t\t<tomcat.version>9.0.46</tomcat.version>\n
-          42  \t\t<jaxb-api.version>2.3.1</jaxb-api.version>\n 43  \t\t<jaxb-runtime.version>2.3.4</jaxb-runtime.version>\n
-          44  \t\t<javax-activation.version>1.2.0</javax-activation.version>\n 45
-          \ \t\t<servlet-api.version>4.0.4</servlet-api.version>\n 46  \t\t<taglibs-standard.version>1.2.5</taglibs-standard.version>\n
-          47  \t\t<javax-annotation.version>1.3.2</javax-annotation.version>\n 48
-          \ \n 49  \t\t<!-- Persistence -->\n 50  \t\t<spring-data.version>2021.1.0-RC1</spring-data.version>\n
-          51  \t\t<hibernate.version>5.6.0.Final</hibernate.version>\n 52  \t\t<hibernate-validator.version>6.2.0.Final</hibernate-validator.version>\n
-          53  \t\t<hsqldb.version>2.5.2</hsqldb.version>\n 54  \t\t<h2database.version>1.4.200</h2database.version>\n
-          55  \n 56  \t\t<!-- Session Management -->\n 57  \t\t<spring-session.version>2021.0.2</spring-session.version>\n
-          58  \t\t<hazelcast.version>4.2.2</hazelcast.version>\n 59  \t\t\n 60  \t\t<!--
-          Logging -->\n 61  \t\t<slf4j.version>1.7.32</slf4j.version>\n 62  \t\t<logback.version>1.2.6</logback.version>\n
-          63  \n 64  \t\t<!-- Test -->\n 65  \t\t<assertj.version>3.21.0</assertj.version>\n
-          66  \t\t<json-path.version>2.6.0</json-path.version>\n 67  \t\t<mockito.version>4.0.0</mockito.version>\n
-          68  \t\t<hamcrest.version>2.2</hamcrest.version>\n 69  \t\t<junit-jupiter.version>5.8.1</junit-jupiter.version>\n
-          70  \n 71  \t\t<!-- JDBC Drivers -->\n 72  \t\t<mysql-driver.version>8.0.19</mysql-driver.version>\n
-          73  \t\t<postgresql-driver.version>9.4.1211.jre7</postgresql-driver.version>\n
-          74  \n 75  \t\t<!-- Others -->\n 76  \t\t<jackson.version>2.12.4</jackson.version>\n
-          77  \t\t<aspectj.version>1.9.7</aspectj.version>\n 78  \n 79  \t\t<!-- Maven
-          plugins -->\n 80  \t\t<jetty-maven-plugin.version>9.4.43.v20210629</jetty-maven-plugin.version>\n
-          81  \t\t<maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>\n
-          82  \t\t<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>\n
-          83  \t\t<maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version>\n
-          84  \t\t<maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>\n
-          85  \t\t<maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>\n
-          86  \t\t<maven-war-plugin.version>3.3.1</maven-war-plugin.version>\n 87
-          \ \t\t<jacoco-maven-plugin>0.8.6</jacoco-maven-plugin>\n 88  \n 89  \t\t<!--
-          Docker image -->\n 90  \t\t<docker.jib-maven-plugin.version>2.6.0</docker.jib-maven-plugin.version>\n
-          91  \t\t<docker.image.prefix>springcommunity</docker.image.prefix>\n 92
-          \ \n 93  \t</properties>\n 94  \n 95  \t<dependencyManagement>\n 96  \t\t<dependencies>\n
-          97  \t\t\t<dependency>\n 98  \t\t\t\t<groupId>com.fasterxml.jackson</groupId>\n
-          99  \t\t\t\t<artifactId>jackson-bom</artifactId>\n100  \t\t\t\t<version>${jackson.version}</version>\n101
-          \ \t\t\t\t<scope>import</scope>\n102  \t\t\t\t<type>pom</type>\n103  \t\t\t</dependency>\n104
-          \ \t\t\t<dependency>\n105  \t\t\t\t<groupId>org.springframework.data</groupId>\n106
-          \ \t\t\t\t<artifactId>spring-data-bom</artifactId>"
+        codeSnip: "6  \t<groupId>org.springframework.samples</groupId>"
         lineNumber: 5
         variables:
           data: ""
@@ -503,7 +338,7 @@
             the encoding for copying resources--><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-resources-plugin</artifactId><version>${maven-resources-plugin.version}</version><configuration><encoding>UTF-8</encoding></configuration></plugin><plugin><groupId>ro.isdc.wro4j</groupId><artifactId>wro4j-maven-plugin</artifactId><version>${wro4j.version}</version><executions><execution><phase>generate-resources</phase><goals><goal>run</goal></goals></execution></executions><configuration><wroManagerFactory>ro.isdc.wro.maven.plugin.manager.factory.ConfigurableWroManagerFactory</wroManagerFactory><cssDestinationFolder>${project.build.directory}/petclinic/resources/css</cssDestinationFolder><wroFile>${basedir}/src/main/wro/wro.xml</wroFile><extraConfigFile>${basedir}/src/main/wro/wro.properties</extraConfigFile><contextFolder>${basedir}/src/main/webapp/resources/less</contextFolder></configuration><dependencies><dependency><groupId>org.webjars</groupId><artifactId>bootstrap</artifactId><version>${webjars-bootstrap.version}</version></dependency><!--
             Required for Java 9 and above --><dependency><groupId>org.mockito</groupId><artifactId>mockito-core</artifactId><version>${mockito.version}</version></dependency></dependencies></plugin><plugin><groupId>org.eclipse.jetty</groupId><artifactId>jetty-maven-plugin</artifactId><version>${jetty-maven-plugin.version}</version></plugin><plugin><groupId>com.google.cloud.tools</groupId><artifactId>jib-maven-plugin</artifactId><version>${docker.jib-maven-plugin.version}</version><configuration><to><image>docker.io/${docker.image.prefix}/${project.artifactId}</image><tags><tag>${project.version}</tag><tag>latest</tag></tags></to></configuration></plugin></plugins></build><profiles><profile><id>H2</id><activation><activeByDefault>true</activeByDefault></activation><properties><db.script>h2</db.script><jpa.database>H2</jpa.database><jdbc.driverClassName>org.h2.Driver</jdbc.driverClassName><jdbc.url>jdbc:h2:mem:petclinic</jdbc.url><jdbc.username>sa</jdbc.username><jdbc.password></jdbc.password></properties><dependencies><dependency><groupId>com.h2database</groupId><artifactId>h2</artifactId><version>${h2database.version}</version><scope>runtime</scope></dependency></dependencies></profile><profile><id>HSQLDB</id><properties><db.script>hsqldb</db.script><jpa.database>HSQL</jpa.database><jdbc.driverClassName>org.hsqldb.jdbcDriver</jdbc.driverClassName><jdbc.url>jdbc:hsqldb:mem:petclinic</jdbc.url><jdbc.username>sa</jdbc.username><jdbc.password></jdbc.password></properties><dependencies><dependency><groupId>org.hsqldb</groupId><artifactId>hsqldb</artifactId><version>${hsqldb.version}</version><scope>runtime</scope></dependency></dependencies></profile><profile><id>MySQL</id><properties><db.script>mysql</db.script><jpa.database>MYSQL</jpa.database><jdbc.driverClassName>com.mysql.cj.jdbc.Driver</jdbc.driverClassName><jdbc.url>jdbc:mysql://localhost:3306/petclinic?useUnicode=true</jdbc.url><jdbc.username>petclinic</jdbc.username><jdbc.password>petclinic</jdbc.password></properties><dependencies><dependency><groupId>mysql</groupId><artifactId>mysql-connector-java</artifactId><version>${mysql-driver.version}</version><scope>runtime</scope></dependency></dependencies></profile><profile><id>PostgreSQL</id><properties><db.script>postgresql</db.script><jpa.database>POSTGRESQL</jpa.database><jdbc.driverClassName>org.postgresql.Driver</jdbc.driverClassName><jdbc.url>jdbc:postgresql://localhost:5432/petclinic</jdbc.url><jdbc.username>postgres</jdbc.username><jdbc.password>petclinic</jdbc.password></properties><dependencies><dependency><groupId>org.postgresql</groupId><artifactId>postgresql</artifactId><version>${postgresql-driver.version}</version><scope>runtime</scope></dependency></dependencies></profile></profiles><repositories><repository><id>repository.spring.milestone</id><name>Spring
             Milestone Repository</name><url>https://repo.spring.io/milestone</url></repository></repositories></project>"
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/resources/cache/ehcache.xml
+      - uri: file:///source/src/main/resources/cache/ehcache.xml
         message: ""
         variables:
           data: ""
@@ -514,18 +349,9 @@
             every 60 seconds --><cache name="vets" timeToLiveSeconds="60" maxElementsInMemory="100"
             eternal="false" overflowToDisk="false" maxElementsOnDisk="10000000" diskPersistent="false"
             diskExpiryThreadIntervalSeconds="1" memoryStoreEvictionPolicy="LRU"></cache></ehcache>
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/resources/logback.xml
+      - uri: file:///source/src/main/resources/logback.xml
         message: ""
-        codeSnip: "  1  <?xml version=\"1.0\" encoding=\"UTF-8\"?>\n  2  <!DOCTYPE
-          xml>\n  3  \n  4  <configuration scan=\"true\" scanPeriod=\"30 seconds\">\n
-          \ 5  \n  6      <contextListener class=\"ch.qos.logback.classic.jul.LevelChangePropagator\">\n
-          \ 7          <resetJUL>true</resetJUL>\n  8      </contextListener>\n  9
-          \     \n 10      <appender name=\"console\" class=\"ch.qos.logback.core.ConsoleAppender\">\n
-          11          <encoder>\n 12              <pattern>%-5level %logger{0} - %msg%n</pattern>\n
-          13          </encoder>\n 14      </appender>\n 15  \n 16      <!--<logger
-          name=\"org.hibernate\" level=\"debug\"/> -->\n 17      <logger name=\"org.springframework.samples.petclinic\"
-          level=\"debug\"/>\n 18  \n 19      <root level=\"debug\">\n 20          <appender-ref
-          ref=\"console\"/>\n 21      </root>\n 22  </configuration>\n"
+        codeSnip: 2  <!DOCTYPE xml>
         lineNumber: 1
         variables:
           data: ""
@@ -538,16 +364,9 @@
             %logger{0} - %msg%n</pattern></encoder></appender><!--<logger name="org.hibernate"
             level="debug"/> --><logger name="org.springframework.samples.petclinic"
             level="debug"></logger><root level="debug"><appender-ref ref="console"></appender-ref></root></configuration>
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/webapp/WEB-INF/jetty-web.xml
+      - uri: file:///source/src/main/webapp/WEB-INF/jetty-web.xml
         message: ""
-        codeSnip: |2
-            1  <?xml version="1.0" encoding="UTF-8"?>
-            2  <!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure.dtd">
-            3  <Configure class="org.eclipse.jetty.webapp.WebAppContext">
-            4      <!-- Fix Jetty 9 issue -->
-            5      <!-- http://stackoverflow.com/questions/32643530/classpath-issue-between-jetty-maven-plugin-and-tomcat-jdbc-8-0-9-leading-to-ser -->
-            6      <Set name="parentLoaderPriority">true</Set>
-            7  </Configure>
+        codeSnip: 7  </Configure>
         lineNumber: 6
         variables:
           data: ""
@@ -557,15 +376,9 @@
             class="org.eclipse.jetty.webapp.WebAppContext"><!-- Fix Jetty 9 issue
             --><!-- http://stackoverflow.com/questions/32643530/classpath-issue-between-jetty-maven-plugin-and-tomcat-jdbc-8-0-9-leading-to-ser
             --><Set name="parentLoaderPriority">true</Set></Configure>
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/src/main/wro/wro.xml
+      - uri: file:///source/src/main/wro/wro.xml
         message: ""
-        codeSnip: |2
-            1  <groups xmlns="http://www.isdc.ro/wro">
-            2    <group name="petclinic">
-            3      <css>classpath:META-INF/resources/webjars/bootstrap/3.3.6/less/bootstrap.less</css>
-            4      <css>/petclinic.less</css>
-            5     </group>
-            6  </groups>
+        codeSnip: 4      <css>/petclinic.less</css>
         lineNumber: 3
         variables:
           data: ""
@@ -639,7 +452,7 @@
       - tag=Hazelcast
       - tag=Hazelcast embedded library
       incidents:
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Petclinic-legacy-cloud-readiness-with-tagger-and-hazelcast-custom-rules-20251204-010806/source/.mvn/wrapper/maven-wrapper.jar
+      - uri: file:///source/.mvn/wrapper/maven-wrapper.jar
         message: ""
     embedded-framework-08200:
       description: Embedded framework - Spring DI
@@ -651,15 +464,14 @@
       incidents:
       - uri: file:///opt/input/source/pom.xml
         message: ""
-        codeSnip: "148  \t\t</dependency>\n149  \t\t<dependency>\n150  \t\t\t<groupId>com.jayway.jsonpath</groupId>\n151
-          \ \t\t\t<artifactId>json-path</artifactId>\n152  \t\t\t<version>${json-path.version}</version>\n153
-          \ \t\t\t<scope>test</scope>\n154  \t\t</dependency>\n155  \t\t<!-- SPRING,
-          SPRING, SPRINGITY SPRING -->\n156  \t\t<dependency>\n157  \t\t\t<groupId>org.springframework.data</groupId>\n158
-          \ \t\t\t<artifactId>spring-data-jpa</artifactId>\n159  \t\t</dependency>\n160
-          \ \n161  \t\t<dependency>\n162  \t\t\t<groupId>org.springframework</groupId>\n163
-          \ \t\t\t<artifactId>spring-jdbc</artifactId>\n164  \t\t\t<version>${spring-framework.version}</version>\n165
-          \ \t\t</dependency>\n166  \t\t<dependency>\n167  \t\t\t<groupId>org.springframework</groupId>\n168
-          \ \t\t\t<artifactId>spring-webmvc</artifactId>"
+        codeSnip: "\n148  </dependency>\n149  <dependency>\n150  <groupId>com.jayway.jsonpath</groupId>\n151
+          \ <artifactId>json-path</artifactId>\n152  <version>${json-path.version}</version>\n153
+          \ <scope>test</scope>\n154  </dependency>\n155  <!-- SPRING, SPRING, SPRINGITY
+          SPRING -->\n156  <dependency>\n157  <groupId>org.springframework.data</groupId>\n158
+          \ <artifactId>spring-data-jpa</artifactId>\n159  </dependency>\n160  \n161
+          \ <dependency>\n162  <groupId>org.springframework</groupId>\n163  <artifactId>spring-jdbc</artifactId>\n164
+          \ <version>${spring-framework.version}</version>\n165  </dependency>\n166
+          \ <dependency>\n167  <groupId>org.springframework</groupId>\n168  <artifactId>spring-webmvc</artifactId>"
         lineNumber: 157
         variables:
           name: org.springframework.spring-beans
@@ -674,15 +486,15 @@
       incidents:
       - uri: file:///opt/input/source/pom.xml
         message: ""
-        codeSnip: "158  \t\t\t<artifactId>spring-data-jpa</artifactId>\n159  \t\t</dependency>\n160
-          \ \n161  \t\t<dependency>\n162  \t\t\t<groupId>org.springframework</groupId>\n163
-          \ \t\t\t<artifactId>spring-jdbc</artifactId>\n164  \t\t\t<version>${spring-framework.version}</version>\n165
-          \ \t\t</dependency>\n166  \t\t<dependency>\n167  \t\t\t<groupId>org.springframework</groupId>\n168
-          \ \t\t\t<artifactId>spring-webmvc</artifactId>\n169  \t\t\t<version>${spring-framework.version}</version>\n170
-          \ \t\t</dependency>\n171  \t\t<dependency>\n172  \t\t\t<groupId>org.springframework.session</groupId>\n173
-          \ \t\t\t<artifactId>spring-session-core</artifactId>\n174  \t\t</dependency>\n175
-          \ \t\t<dependency>\n176  \t\t\t<groupId>org.springframework.session</groupId>\n177
-          \ \t\t\t<artifactId>spring-session-hazelcast</artifactId>\n178  \t\t</dependency>"
+        codeSnip: "\n158  <artifactId>spring-data-jpa</artifactId>\n159  </dependency>\n160
+          \ \n161  <dependency>\n162  <groupId>org.springframework</groupId>\n163
+          \ <artifactId>spring-jdbc</artifactId>\n164  <version>${spring-framework.version}</version>\n165
+          \ </dependency>\n166  <dependency>\n167  <groupId>org.springframework</groupId>\n168
+          \ <artifactId>spring-webmvc</artifactId>\n169  <version>${spring-framework.version}</version>\n170
+          \ </dependency>\n171  <dependency>\n172  <groupId>org.springframework.session</groupId>\n173
+          \ <artifactId>spring-session-core</artifactId>\n174  </dependency>\n175
+          \ <dependency>\n176  <groupId>org.springframework.session</groupId>\n177
+          \ <artifactId>spring-session-hazelcast</artifactId>\n178  </dependency>"
         lineNumber: 167
         variables:
           name: org.springframework.spring-web
@@ -710,12 +522,12 @@
       incidents:
       - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/config/InitDataSourceConfig.java
         message: ""
-        codeSnip: "23   *      http://www.apache.org/licenses/LICENSE-2.0\n24   *\n25
-          \  * Unless required by applicable law or agreed to in writing, software\n26
-          \  * distributed under the License is distributed on an \"AS IS\" BASIS,\n27
-          \  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n28
-          \  * See the License for the specific language governing permissions and\n29
-          \  * limitations under the License.\n30   */\n31  package org.springframework.samples.petclinic.config;\n32
+        codeSnip: "\n23  *      http://www.apache.org/licenses/LICENSE-2.0\n24  *\n25
+          \ * Unless required by applicable law or agreed to in writing, software\n26
+          \ * distributed under the License is distributed on an \"AS IS\" BASIS,\n27
+          \ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n28
+          \ * See the License for the specific language governing permissions and\n29
+          \ * limitations under the License.\n30  */\n31  package org.springframework.samples.petclinic.config;\n32
           \ \n33  import javax.annotation.PostConstruct;\n34  import javax.sql.DataSource;\n35
           \ \n36  import org.springframework.beans.factory.annotation.Autowired;\n37
           \ import org.springframework.context.annotation.Configuration;\n38  import
@@ -732,12 +544,12 @@
           package: org.springframework.samples.petclinic.config
       - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/config/RootApplicationContextConfig.java
         message: ""
-        codeSnip: "23   *      http://www.apache.org/licenses/LICENSE-2.0\n24   *\n25
-          \  * Unless required by applicable law or agreed to in writing, software\n26
-          \  * distributed under the License is distributed on an \"AS IS\" BASIS,\n27
-          \  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n28
-          \  * See the License for the specific language governing permissions and\n29
-          \  * limitations under the License.\n30   */\n31  package org.springframework.samples.petclinic.config;\n32
+        codeSnip: "\n23  *      http://www.apache.org/licenses/LICENSE-2.0\n24  *\n25
+          \ * Unless required by applicable law or agreed to in writing, software\n26
+          \ * distributed under the License is distributed on an \"AS IS\" BASIS,\n27
+          \ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n28
+          \ * See the License for the specific language governing permissions and\n29
+          \ * limitations under the License.\n30  */\n31  package org.springframework.samples.petclinic.config;\n32
           \ \n33  import javax.annotation.PostConstruct;\n34  \n35  import org.slf4j.Logger;\n36
           \ import org.slf4j.LoggerFactory;\n37  import org.springframework.beans.factory.annotation.Autowired;\n38
           \ import org.springframework.context.annotation.Configuration;\n39  import
@@ -760,15 +572,15 @@
       incidents:
       - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Owner.java
         message: ""
-        codeSnip: "19  import java.util.Collections;\n20  import java.util.HashSet;\n21
+        codeSnip: "\n19  import java.util.Collections;\n20  import java.util.HashSet;\n21
           \ import java.util.List;\n22  import java.util.Set;\n23  \n24  import javax.persistence.CascadeType;\n25
           \ import javax.persistence.Column;\n26  import javax.persistence.Entity;\n27
           \ import javax.persistence.OneToMany;\n28  import javax.persistence.Table;\n29
           \ import javax.validation.constraints.Digits;\n30  import javax.validation.constraints.NotEmpty;\n31
           \ \n32  import org.springframework.beans.support.MutableSortDefinition;\n33
           \ import org.springframework.beans.support.PropertyComparator;\n34  import
-          org.springframework.core.style.ToStringCreator;\n35  \n36  /**\n37   * Simple
-          JavaBean domain object representing an owner.\n38   *\n39   * @author Ken
+          org.springframework.core.style.ToStringCreator;\n35  \n36  /**\n37  * Simple
+          JavaBean domain object representing an owner.\n38  *\n39  * @author Ken
           Krebs"
         lineNumber: 29
         variables:
@@ -778,16 +590,16 @@
           package: org.springframework.samples.petclinic.model
       - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Owner.java
         message: ""
-        codeSnip: "20  import java.util.HashSet;\n21  import java.util.List;\n22  import
-          java.util.Set;\n23  \n24  import javax.persistence.CascadeType;\n25  import
-          javax.persistence.Column;\n26  import javax.persistence.Entity;\n27  import
-          javax.persistence.OneToMany;\n28  import javax.persistence.Table;\n29  import
-          javax.validation.constraints.Digits;\n30  import javax.validation.constraints.NotEmpty;\n31
+        codeSnip: "\n20  import java.util.HashSet;\n21  import java.util.List;\n22
+          \ import java.util.Set;\n23  \n24  import javax.persistence.CascadeType;\n25
+          \ import javax.persistence.Column;\n26  import javax.persistence.Entity;\n27
+          \ import javax.persistence.OneToMany;\n28  import javax.persistence.Table;\n29
+          \ import javax.validation.constraints.Digits;\n30  import javax.validation.constraints.NotEmpty;\n31
           \ \n32  import org.springframework.beans.support.MutableSortDefinition;\n33
           \ import org.springframework.beans.support.PropertyComparator;\n34  import
-          org.springframework.core.style.ToStringCreator;\n35  \n36  /**\n37   * Simple
-          JavaBean domain object representing an owner.\n38   *\n39   * @author Ken
-          Krebs\n40   * @author Juergen Hoeller"
+          org.springframework.core.style.ToStringCreator;\n35  \n36  /**\n37  * Simple
+          JavaBean domain object representing an owner.\n38  *\n39  * @author Ken
+          Krebs\n40  * @author Juergen Hoeller"
         lineNumber: 30
         variables:
           file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Owner.java
@@ -796,16 +608,16 @@
           package: org.springframework.samples.petclinic.model
       - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Person.java
         message: ""
-        codeSnip: "10   * Unless required by applicable law or agreed to in writing,
-          software\n11   * distributed under the License is distributed on an \"AS
-          IS\" BASIS,\n12   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
-          express or implied.\n13   * See the License for the specific language governing
-          permissions and\n14   * limitations under the License.\n15   */\n16  package
+        codeSnip: "\n10  * Unless required by applicable law or agreed to in writing,
+          software\n11  * distributed under the License is distributed on an \"AS
+          IS\" BASIS,\n12  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+          express or implied.\n13  * See the License for the specific language governing
+          permissions and\n14  * limitations under the License.\n15  */\n16  package
           org.springframework.samples.petclinic.model;\n17  \n18  import javax.persistence.Column;\n19
           \ import javax.persistence.MappedSuperclass;\n20  import javax.validation.constraints.NotEmpty;\n21
-          \ \n22  /**\n23   * Simple JavaBean domain object representing an person.\n24
-          \  *\n25   * @author Ken Krebs\n26   */\n27  @MappedSuperclass\n28  public
-          class Person extends BaseEntity {\n29  \n30      @Column(name = \"first_name\")"
+          \ \n22  /**\n23  * Simple JavaBean domain object representing an person.\n24
+          \ *\n25  * @author Ken Krebs\n26  */\n27  @MappedSuperclass\n28  public
+          class Person extends BaseEntity {\n29  \n30  @Column(name = \"first_name\")"
         lineNumber: 20
         variables:
           file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Person.java
@@ -814,13 +626,13 @@
           package: org.springframework.samples.petclinic.model
       - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Visit.java
         message: ""
-        codeSnip: "15   */\n16  package org.springframework.samples.petclinic.model;\n17
+        codeSnip: "\n15  */\n16  package org.springframework.samples.petclinic.model;\n17
           \ \n18  import org.springframework.format.annotation.DateTimeFormat;\n19
           \ \n20  import javax.persistence.Column;\n21  import javax.persistence.Entity;\n22
           \ import javax.persistence.JoinColumn;\n23  import javax.persistence.ManyToOne;\n24
           \ import javax.persistence.Table;\n25  import javax.validation.constraints.NotEmpty;\n26
-          \ import java.time.LocalDate;\n27  \n28  /**\n29   * Simple JavaBean domain
-          object representing a visit.\n30   *\n31   * @author Ken Krebs\n32   */\n33
+          \ import java.time.LocalDate;\n27  \n28  /**\n29  * Simple JavaBean domain
+          object representing a visit.\n30  *\n31  * @author Ken Krebs\n32  */\n33
           \ @Entity\n34  @Table(name = \"visits\")\n35  public class Visit extends
           BaseEntity {"
         lineNumber: 25
@@ -839,19 +651,19 @@
       incidents:
       - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/PetclinicInitializer.java
         message: ""
-        codeSnip: "16  package org.springframework.samples.petclinic;\n17  \n18  import
-          org.springframework.samples.petclinic.config.MvcCoreConfig;\n19  import
-          org.springframework.samples.petclinic.config.RootApplicationContextConfig;\n20
+        codeSnip: "\n16  package org.springframework.samples.petclinic;\n17  \n18
+          \ import org.springframework.samples.petclinic.config.MvcCoreConfig;\n19
+          \ import org.springframework.samples.petclinic.config.RootApplicationContextConfig;\n20
           \ import org.springframework.web.context.WebApplicationContext;\n21  import
           org.springframework.web.context.support.AnnotationConfigWebApplicationContext;\n22
           \ import org.springframework.web.filter.CharacterEncodingFilter;\n23  import
           org.springframework.web.servlet.DispatcherServlet;\n24  import org.springframework.web.servlet.support.AbstractDispatcherServletInitializer;\n25
           \ \n26  import javax.servlet.Filter;\n27  import javax.servlet.ServletContext;\n28
-          \ \n29  \n30  /**\n31   * In Servlet 3.0+ environments, this class replaces
+          \ \n29  \n30  /**\n31  * In Servlet 3.0+ environments, this class replaces
           the traditional {@code web.xml}-based approach in order to configure the\n32
-          \  * {@link ServletContext} programmatically.\n33   * <p/>\n34   * Create
-          the Spring \"<strong>root</strong>\" application context.<br/>\n35   * Register
-          a {@link DispatcherServlet}  in the servlet context.<br/>\n36   * For both
+          \ * {@link ServletContext} programmatically.\n33  * <p/>\n34  * Create the
+          Spring \"<strong>root</strong>\" application context.<br/>\n35  * Register
+          a {@link DispatcherServlet}  in the servlet context.<br/>\n36  * For both
           servlets, register a {@link CharacterEncodingFilter}."
         lineNumber: 26
         variables:
@@ -861,19 +673,19 @@
           package: org.springframework.samples.petclinic
       - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/PetclinicInitializer.java
         message: ""
-        codeSnip: "17  \n18  import org.springframework.samples.petclinic.config.MvcCoreConfig;\n19
+        codeSnip: "\n17  \n18  import org.springframework.samples.petclinic.config.MvcCoreConfig;\n19
           \ import org.springframework.samples.petclinic.config.RootApplicationContextConfig;\n20
           \ import org.springframework.web.context.WebApplicationContext;\n21  import
           org.springframework.web.context.support.AnnotationConfigWebApplicationContext;\n22
           \ import org.springframework.web.filter.CharacterEncodingFilter;\n23  import
           org.springframework.web.servlet.DispatcherServlet;\n24  import org.springframework.web.servlet.support.AbstractDispatcherServletInitializer;\n25
           \ \n26  import javax.servlet.Filter;\n27  import javax.servlet.ServletContext;\n28
-          \ \n29  \n30  /**\n31   * In Servlet 3.0+ environments, this class replaces
+          \ \n29  \n30  /**\n31  * In Servlet 3.0+ environments, this class replaces
           the traditional {@code web.xml}-based approach in order to configure the\n32
-          \  * {@link ServletContext} programmatically.\n33   * <p/>\n34   * Create
-          the Spring \"<strong>root</strong>\" application context.<br/>\n35   * Register
-          a {@link DispatcherServlet}  in the servlet context.<br/>\n36   * For both
-          servlets, register a {@link CharacterEncodingFilter}.\n37   * <p/>"
+          \ * {@link ServletContext} programmatically.\n33  * <p/>\n34  * Create the
+          Spring \"<strong>root</strong>\" application context.<br/>\n35  * Register
+          a {@link DispatcherServlet}  in the servlet context.<br/>\n36  * For both
+          servlets, register a {@link CharacterEncodingFilter}.\n37  * <p/>"
         lineNumber: 27
         variables:
           file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/PetclinicInitializer.java
@@ -882,8 +694,8 @@
           package: org.springframework.samples.petclinic
       - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/config/SessionConfiguration.java
         message: ""
-        codeSnip: " 1  package org.springframework.samples.petclinic.config;\n 2  \n
-          3  import java.util.List;\n 4  \n 5  import javax.servlet.ServletContext;\n
+        codeSnip: "\n 1  package org.springframework.samples.petclinic.config;\n 2
+          \ \n 3  import java.util.List;\n 4  \n 5  import javax.servlet.ServletContext;\n
           6  import javax.servlet.SessionCookieConfig;\n 7  \n 8  import org.springframework.beans.factory.annotation.Value;\n
           9  import org.springframework.context.annotation.Bean;\n10  import org.springframework.context.annotation.Configuration;\n11
           \ import org.springframework.context.annotation.PropertySource;\n12  import
@@ -897,8 +709,8 @@
           package: org.springframework.samples.petclinic.config
       - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/config/SessionConfiguration.java
         message: ""
-        codeSnip: " 1  package org.springframework.samples.petclinic.config;\n 2  \n
-          3  import java.util.List;\n 4  \n 5  import javax.servlet.ServletContext;\n
+        codeSnip: "\n 1  package org.springframework.samples.petclinic.config;\n 2
+          \ \n 3  import java.util.List;\n 4  \n 5  import javax.servlet.ServletContext;\n
           6  import javax.servlet.SessionCookieConfig;\n 7  \n 8  import org.springframework.beans.factory.annotation.Value;\n
           9  import org.springframework.context.annotation.Bean;\n10  import org.springframework.context.annotation.Configuration;\n11
           \ import org.springframework.context.annotation.PropertySource;\n12  import
@@ -963,15 +775,15 @@
       incidents:
       - uri: file:///opt/input/source/pom.xml
         message: ""
-        codeSnip: "158  \t\t\t<artifactId>spring-data-jpa</artifactId>\n159  \t\t</dependency>\n160
-          \ \n161  \t\t<dependency>\n162  \t\t\t<groupId>org.springframework</groupId>\n163
-          \ \t\t\t<artifactId>spring-jdbc</artifactId>\n164  \t\t\t<version>${spring-framework.version}</version>\n165
-          \ \t\t</dependency>\n166  \t\t<dependency>\n167  \t\t\t<groupId>org.springframework</groupId>\n168
-          \ \t\t\t<artifactId>spring-webmvc</artifactId>\n169  \t\t\t<version>${spring-framework.version}</version>\n170
-          \ \t\t</dependency>\n171  \t\t<dependency>\n172  \t\t\t<groupId>org.springframework.session</groupId>\n173
-          \ \t\t\t<artifactId>spring-session-core</artifactId>\n174  \t\t</dependency>\n175
-          \ \t\t<dependency>\n176  \t\t\t<groupId>org.springframework.session</groupId>\n177
-          \ \t\t\t<artifactId>spring-session-hazelcast</artifactId>\n178  \t\t</dependency>"
+        codeSnip: "\n158  <artifactId>spring-data-jpa</artifactId>\n159  </dependency>\n160
+          \ \n161  <dependency>\n162  <groupId>org.springframework</groupId>\n163
+          \ <artifactId>spring-jdbc</artifactId>\n164  <version>${spring-framework.version}</version>\n165
+          \ </dependency>\n166  <dependency>\n167  <groupId>org.springframework</groupId>\n168
+          \ <artifactId>spring-webmvc</artifactId>\n169  <version>${spring-framework.version}</version>\n170
+          \ </dependency>\n171  <dependency>\n172  <groupId>org.springframework.session</groupId>\n173
+          \ <artifactId>spring-session-core</artifactId>\n174  </dependency>\n175
+          \ <dependency>\n176  <groupId>org.springframework.session</groupId>\n177
+          \ <artifactId>spring-session-hazelcast</artifactId>\n178  </dependency>"
         lineNumber: 167
         variables:
           name: org.springframework.spring-webmvc
@@ -1015,14 +827,13 @@
       incidents:
       - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Owner.java
         message: ""
-        codeSnip: "34  import org.springframework.core.style.ToStringCreator;\n35
-          \ \n36  /**\n37   * Simple JavaBean domain object representing an owner.\n38
-          \  *\n39   * @author Ken Krebs\n40   * @author Juergen Hoeller\n41   * @author
-          Sam Brannen\n42   * @author Michael Isvy\n43   */\n44  @Entity\n45  @Table(name
-          = \"owners\")\n46  public class Owner extends Person {\n47      @Column(name
-          = \"address\")\n48      @NotEmpty\n49      private String address;\n50  \n51
-          \     @Column(name = \"city\")\n52      @NotEmpty\n53      private String
-          city;\n54  "
+        codeSnip: "\n34  import org.springframework.core.style.ToStringCreator;\n35
+          \ \n36  /**\n37  * Simple JavaBean domain object representing an owner.\n38
+          \ *\n39  * @author Ken Krebs\n40  * @author Juergen Hoeller\n41  * @author
+          Sam Brannen\n42  * @author Michael Isvy\n43  */\n44  @Entity\n45  @Table(name
+          = \"owners\")\n46  public class Owner extends Person {\n47  @Column(name
+          = \"address\")\n48  @NotEmpty\n49  private String address;\n50  \n51  @Column(name
+          = \"city\")\n52  @NotEmpty\n53  private String city;\n54  "
         lineNumber: 44
         variables:
           file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Owner.java
@@ -1031,13 +842,13 @@
           package: org.springframework.samples.petclinic.model
       - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Owner.java
         message: ""
-        codeSnip: "35  \n36  /**\n37   * Simple JavaBean domain object representing
-          an owner.\n38   *\n39   * @author Ken Krebs\n40   * @author Juergen Hoeller\n41
-          \  * @author Sam Brannen\n42   * @author Michael Isvy\n43   */\n44  @Entity\n45
+        codeSnip: "\n35  \n36  /**\n37  * Simple JavaBean domain object representing
+          an owner.\n38  *\n39  * @author Ken Krebs\n40  * @author Juergen Hoeller\n41
+          \ * @author Sam Brannen\n42  * @author Michael Isvy\n43  */\n44  @Entity\n45
           \ @Table(name = \"owners\")\n46  public class Owner extends Person {\n47
-          \     @Column(name = \"address\")\n48      @NotEmpty\n49      private String
-          address;\n50  \n51      @Column(name = \"city\")\n52      @NotEmpty\n53
-          \     private String city;\n54  \n55      @Column(name = \"telephone\")"
+          \ @Column(name = \"address\")\n48  @NotEmpty\n49  private String address;\n50
+          \ \n51  @Column(name = \"city\")\n52  @NotEmpty\n53  private String city;\n54
+          \ \n55  @Column(name = \"telephone\")"
         lineNumber: 45
         variables:
           file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Owner.java
@@ -1046,13 +857,13 @@
           package: org.springframework.samples.petclinic.model
       - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Pet.java
         message: ""
-        codeSnip: "35  import java.util.List;\n36  import java.util.Set;\n37  \n38
-          \ /**\n39   * Simple business object representing a pet.\n40   *\n41   *
-          @author Ken Krebs\n42   * @author Juergen Hoeller\n43   * @author Sam Brannen\n44
-          \  */\n45  @Entity\n46  @Table(name = \"pets\")\n47  public class Pet extends
-          NamedEntity {\n48  \n49      @Column(name = \"birth_date\")\n50      @DateTimeFormat(pattern
-          = \"yyyy/MM/dd\")\n51      private LocalDate birthDate;\n52  \n53      @ManyToOne\n54
-          \     @JoinColumn(name = \"type_id\")\n55      private PetType type;"
+        codeSnip: "\n35  import java.util.List;\n36  import java.util.Set;\n37  \n38
+          \ /**\n39  * Simple business object representing a pet.\n40  *\n41  * @author
+          Ken Krebs\n42  * @author Juergen Hoeller\n43  * @author Sam Brannen\n44
+          \ */\n45  @Entity\n46  @Table(name = \"pets\")\n47  public class Pet extends
+          NamedEntity {\n48  \n49  @Column(name = \"birth_date\")\n50  @DateTimeFormat(pattern
+          = \"yyyy/MM/dd\")\n51  private LocalDate birthDate;\n52  \n53  @ManyToOne\n54
+          \ @JoinColumn(name = \"type_id\")\n55  private PetType type;"
         lineNumber: 45
         variables:
           file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Pet.java
@@ -1061,13 +872,13 @@
           package: org.springframework.samples.petclinic.model
       - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Pet.java
         message: ""
-        codeSnip: "36  import java.util.Set;\n37  \n38  /**\n39   * Simple business
-          object representing a pet.\n40   *\n41   * @author Ken Krebs\n42   * @author
-          Juergen Hoeller\n43   * @author Sam Brannen\n44   */\n45  @Entity\n46  @Table(name
-          = \"pets\")\n47  public class Pet extends NamedEntity {\n48  \n49      @Column(name
-          = \"birth_date\")\n50      @DateTimeFormat(pattern = \"yyyy/MM/dd\")\n51
-          \     private LocalDate birthDate;\n52  \n53      @ManyToOne\n54      @JoinColumn(name
-          = \"type_id\")\n55      private PetType type;\n56  "
+        codeSnip: "\n36  import java.util.Set;\n37  \n38  /**\n39  * Simple business
+          object representing a pet.\n40  *\n41  * @author Ken Krebs\n42  * @author
+          Juergen Hoeller\n43  * @author Sam Brannen\n44  */\n45  @Entity\n46  @Table(name
+          = \"pets\")\n47  public class Pet extends NamedEntity {\n48  \n49  @Column(name
+          = \"birth_date\")\n50  @DateTimeFormat(pattern = \"yyyy/MM/dd\")\n51  private
+          LocalDate birthDate;\n52  \n53  @ManyToOne\n54  @JoinColumn(name = \"type_id\")\n55
+          \ private PetType type;\n56  "
         lineNumber: 46
         variables:
           file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Pet.java
@@ -1076,11 +887,11 @@
           package: org.springframework.samples.petclinic.model
       - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/PetType.java
         message: ""
-        codeSnip: "15   */\n16  package org.springframework.samples.petclinic.model;\n17
+        codeSnip: "\n15  */\n16  package org.springframework.samples.petclinic.model;\n17
           \ \n18  import javax.persistence.Entity;\n19  import javax.persistence.Table;\n20
-          \ \n21  /**\n22   * @author Juergen Hoeller\n23   *         Can be Cat,
-          Dog, Hamster...\n24   */\n25  @Entity\n26  @Table(name = \"types\")\n27
-          \ public class PetType extends NamedEntity {\n28  \n29  }\n"
+          \ \n21  /**\n22  * @author Juergen Hoeller\n23  *         Can be Cat, Dog,
+          Hamster...\n24  */\n25  @Entity\n26  @Table(name = \"types\")\n27  public
+          class PetType extends NamedEntity {\n28  \n29  }"
         lineNumber: 25
         variables:
           file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/PetType.java
@@ -1089,11 +900,11 @@
           package: org.springframework.samples.petclinic.model
       - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/PetType.java
         message: ""
-        codeSnip: "16  package org.springframework.samples.petclinic.model;\n17  \n18
-          \ import javax.persistence.Entity;\n19  import javax.persistence.Table;\n20
-          \ \n21  /**\n22   * @author Juergen Hoeller\n23   *         Can be Cat,
-          Dog, Hamster...\n24   */\n25  @Entity\n26  @Table(name = \"types\")\n27
-          \ public class PetType extends NamedEntity {\n28  \n29  }\n"
+        codeSnip: "\n16  package org.springframework.samples.petclinic.model;\n17
+          \ \n18  import javax.persistence.Entity;\n19  import javax.persistence.Table;\n20
+          \ \n21  /**\n22  * @author Juergen Hoeller\n23  *         Can be Cat, Dog,
+          Hamster...\n24  */\n25  @Entity\n26  @Table(name = \"types\")\n27  public
+          class PetType extends NamedEntity {\n28  \n29  }"
         lineNumber: 26
         variables:
           file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/PetType.java
@@ -1102,12 +913,12 @@
           package: org.springframework.samples.petclinic.model
       - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Specialty.java
         message: ""
-        codeSnip: "16  package org.springframework.samples.petclinic.model;\n17  \n18
-          \ import javax.persistence.Entity;\n19  import javax.persistence.Table;\n20
-          \ \n21  /**\n22   * Models a {@link Vet Vet's} specialty (for example, dentistry).\n23
-          \  *\n24   * @author Juergen Hoeller\n25   */\n26  @Entity\n27  @Table(name
+        codeSnip: "\n16  package org.springframework.samples.petclinic.model;\n17
+          \ \n18  import javax.persistence.Entity;\n19  import javax.persistence.Table;\n20
+          \ \n21  /**\n22  * Models a {@link Vet Vet's} specialty (for example, dentistry).\n23
+          \ *\n24  * @author Juergen Hoeller\n25  */\n26  @Entity\n27  @Table(name
           = \"specialties\")\n28  public class Specialty extends NamedEntity {\n29
-          \ \n30  }\n"
+          \ \n30  }"
         lineNumber: 26
         variables:
           file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Specialty.java
@@ -1116,11 +927,11 @@
           package: org.springframework.samples.petclinic.model
       - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Specialty.java
         message: ""
-        codeSnip: "17  \n18  import javax.persistence.Entity;\n19  import javax.persistence.Table;\n20
-          \ \n21  /**\n22   * Models a {@link Vet Vet's} specialty (for example, dentistry).\n23
-          \  *\n24   * @author Juergen Hoeller\n25   */\n26  @Entity\n27  @Table(name
+        codeSnip: "\n17  \n18  import javax.persistence.Entity;\n19  import javax.persistence.Table;\n20
+          \ \n21  /**\n22  * Models a {@link Vet Vet's} specialty (for example, dentistry).\n23
+          \ *\n24  * @author Juergen Hoeller\n25  */\n26  @Entity\n27  @Table(name
           = \"specialties\")\n28  public class Specialty extends NamedEntity {\n29
-          \ \n30  }\n"
+          \ \n30  }"
         lineNumber: 27
         variables:
           file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Specialty.java
@@ -1129,16 +940,16 @@
           package: org.springframework.samples.petclinic.model
       - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Vet.java
         message: ""
-        codeSnip: "33  import org.springframework.beans.support.PropertyComparator;\n34
-          \ \n35  /**\n36   * Simple JavaBean domain object representing a veterinarian.\n37
-          \  *\n38   * @author Ken Krebs\n39   * @author Juergen Hoeller\n40   * @author
-          Sam Brannen\n41   * @author Arjen Poutsma\n42   */\n43  @Entity\n44  @Table(name
-          = \"vets\")\n45  public class Vet extends Person {\n46  \n47      @ManyToMany(fetch
-          = FetchType.EAGER)\n48      @JoinTable(name = \"vet_specialties\", joinColumns
-          = @JoinColumn(name = \"vet_id\"),\n49          inverseJoinColumns = @JoinColumn(name
-          = \"specialty_id\"))\n50      private Set<Specialty> specialties;\n51  \n52
-          \     protected Set<Specialty> getSpecialtiesInternal() {\n53          if
-          (this.specialties == null) {"
+        codeSnip: "\n33  import org.springframework.beans.support.PropertyComparator;\n34
+          \ \n35  /**\n36  * Simple JavaBean domain object representing a veterinarian.\n37
+          \ *\n38  * @author Ken Krebs\n39  * @author Juergen Hoeller\n40  * @author
+          Sam Brannen\n41  * @author Arjen Poutsma\n42  */\n43  @Entity\n44  @Table(name
+          = \"vets\")\n45  public class Vet extends Person {\n46  \n47  @ManyToMany(fetch
+          = FetchType.EAGER)\n48  @JoinTable(name = \"vet_specialties\", joinColumns
+          = @JoinColumn(name = \"vet_id\"),\n49  inverseJoinColumns = @JoinColumn(name
+          = \"specialty_id\"))\n50  private Set<Specialty> specialties;\n51  \n52
+          \ protected Set<Specialty> getSpecialtiesInternal() {\n53  if (this.specialties
+          == null) {"
         lineNumber: 43
         variables:
           file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Vet.java
@@ -1147,16 +958,15 @@
           package: org.springframework.samples.petclinic.model
       - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Vet.java
         message: ""
-        codeSnip: "34  \n35  /**\n36   * Simple JavaBean domain object representing
-          a veterinarian.\n37   *\n38   * @author Ken Krebs\n39   * @author Juergen
-          Hoeller\n40   * @author Sam Brannen\n41   * @author Arjen Poutsma\n42   */\n43
-          \ @Entity\n44  @Table(name = \"vets\")\n45  public class Vet extends Person
-          {\n46  \n47      @ManyToMany(fetch = FetchType.EAGER)\n48      @JoinTable(name
-          = \"vet_specialties\", joinColumns = @JoinColumn(name = \"vet_id\"),\n49
-          \         inverseJoinColumns = @JoinColumn(name = \"specialty_id\"))\n50
-          \     private Set<Specialty> specialties;\n51  \n52      protected Set<Specialty>
-          getSpecialtiesInternal() {\n53          if (this.specialties == null) {\n54
-          \             this.specialties = new HashSet<>();"
+        codeSnip: "\n34  \n35  /**\n36  * Simple JavaBean domain object representing
+          a veterinarian.\n37  *\n38  * @author Ken Krebs\n39  * @author Juergen Hoeller\n40
+          \ * @author Sam Brannen\n41  * @author Arjen Poutsma\n42  */\n43  @Entity\n44
+          \ @Table(name = \"vets\")\n45  public class Vet extends Person {\n46  \n47
+          \ @ManyToMany(fetch = FetchType.EAGER)\n48  @JoinTable(name = \"vet_specialties\",
+          joinColumns = @JoinColumn(name = \"vet_id\"),\n49  inverseJoinColumns =
+          @JoinColumn(name = \"specialty_id\"))\n50  private Set<Specialty> specialties;\n51
+          \ \n52  protected Set<Specialty> getSpecialtiesInternal() {\n53  if (this.specialties
+          == null) {\n54  this.specialties = new HashSet<>();"
         lineNumber: 44
         variables:
           file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Vet.java
@@ -1165,14 +975,13 @@
           package: org.springframework.samples.petclinic.model
       - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Visit.java
         message: ""
-        codeSnip: "23  import javax.persistence.ManyToOne;\n24  import javax.persistence.Table;\n25
+        codeSnip: "\n23  import javax.persistence.ManyToOne;\n24  import javax.persistence.Table;\n25
           \ import javax.validation.constraints.NotEmpty;\n26  import java.time.LocalDate;\n27
-          \ \n28  /**\n29   * Simple JavaBean domain object representing a visit.\n30
-          \  *\n31   * @author Ken Krebs\n32   */\n33  @Entity\n34  @Table(name =
-          \"visits\")\n35  public class Visit extends BaseEntity {\n36  \n37      /**\n38
-          \      * Holds value of property date.\n39       */\n40      @Column(name
-          = \"visit_date\")\n41      @DateTimeFormat(pattern = \"yyyy/MM/dd\")\n42
-          \     private LocalDate date;\n43  "
+          \ \n28  /**\n29  * Simple JavaBean domain object representing a visit.\n30
+          \ *\n31  * @author Ken Krebs\n32  */\n33  @Entity\n34  @Table(name = \"visits\")\n35
+          \ public class Visit extends BaseEntity {\n36  \n37  /**\n38  * Holds value
+          of property date.\n39  */\n40  @Column(name = \"visit_date\")\n41  @DateTimeFormat(pattern
+          = \"yyyy/MM/dd\")\n42  private LocalDate date;\n43  "
         lineNumber: 33
         variables:
           file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Visit.java
@@ -1181,13 +990,13 @@
           package: org.springframework.samples.petclinic.model
       - uri: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Visit.java
         message: ""
-        codeSnip: "24  import javax.persistence.Table;\n25  import javax.validation.constraints.NotEmpty;\n26
-          \ import java.time.LocalDate;\n27  \n28  /**\n29   * Simple JavaBean domain
-          object representing a visit.\n30   *\n31   * @author Ken Krebs\n32   */\n33
+        codeSnip: "\n24  import javax.persistence.Table;\n25  import javax.validation.constraints.NotEmpty;\n26
+          \ import java.time.LocalDate;\n27  \n28  /**\n29  * Simple JavaBean domain
+          object representing a visit.\n30  *\n31  * @author Ken Krebs\n32  */\n33
           \ @Entity\n34  @Table(name = \"visits\")\n35  public class Visit extends
-          BaseEntity {\n36  \n37      /**\n38       * Holds value of property date.\n39
-          \      */\n40      @Column(name = \"visit_date\")\n41      @DateTimeFormat(pattern
-          = \"yyyy/MM/dd\")\n42      private LocalDate date;\n43  \n44      /**"
+          BaseEntity {\n36  \n37  /**\n38  * Holds value of property date.\n39  */\n40
+          \ @Column(name = \"visit_date\")\n41  @DateTimeFormat(pattern = \"yyyy/MM/dd\")\n42
+          \ private LocalDate date;\n43  \n44  /**"
         lineNumber: 34
         variables:
           file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Visit.java

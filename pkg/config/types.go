@@ -1,6 +1,7 @@
 package config
 
 import (
+	"path/filepath"
 	"time"
 
 	konveyor "github.com/konveyor/analyzer-lsp/output/v1/konveyor"
@@ -16,19 +17,42 @@ type TestDefinition struct {
 	Analysis AnalysisConfig `yaml:"analysis" validate:"required"`
 
 	// Optional execution settings
-	Timeout *Duration `yaml:"timeout,omitempty"`
-	WorkDir string    `yaml:"workDir,omitempty"`
+	Timeout              *Duration `yaml:"timeout,omitempty"`
+	WorkDir              string    `yaml:"workDir,omitempty"`
+	RequireMavenSettings bool      `yaml:"requireMavenSettings,omitempty"`
 
 	// Validation configuration
 	Expect ExpectConfig `yaml:"expect" validate:"required"`
+
+	// Internal field - path to the test file (not in YAML)
+	testFilePath string `yaml:"-"`
+}
+
+// SetTestFilePath sets the test file path
+func (t *TestDefinition) SetTestFilePath(path string) {
+	t.testFilePath = path
+}
+
+// GetTestDir returns the directory containing the test file
+func (t *TestDefinition) GetTestDir() string {
+	if t.testFilePath == "" {
+		return ""
+	}
+	return filepath.Dir(t.testFilePath)
 }
 
 // AnalysisConfig defines what to analyze
 type AnalysisConfig struct {
 	// Application is either a file path or git repository URL
-	Application   string                `yaml:"application" validate:"required"`
-	LabelSelector string                `yaml:"labelSelector,omitempty"`
-	AnalysisMode  provider.AnalysisMode `yaml:"analysisMode" validate:"required"`
+	Application      string                `json:"application" yaml:"application" validate:"required" `
+	LabelSelector    string                `json:"label_selector" yaml:"labelSelector,omitempty" `
+	KnownLibs        bool                  `json:"known_libs" yaml:"knownLibs,omitempty"`
+	ContextLines     int                   `json:"context_lines" yaml:"context_lines"`
+	IncidentSelector string                `json:"incident_selector" yaml:"incident_selector"`
+	Source           []string              `json:"source" yaml:"source"`
+	Target           []string              `json:"target" yaml:"target"`
+	Rules            []string              `json:"rules" yaml:"rules"`
+	AnalysisMode     provider.AnalysisMode `json:"analysis_mode" yaml:"analysisMode" validate:"required" `
 }
 
 // ExpectConfig defines expected outcomes
@@ -43,8 +67,11 @@ type ExpectedOutput struct {
 	// Result contains inline expected RuleSets
 	Result []konveyor.RuleSet `yaml:"result,omitempty"`
 
-	// File path to YAML file containing expected RuleSets
+	// File path to YAML file containing expected RuleSets (as specified in YAML)
 	File string `yaml:"file,omitempty"`
+
+	// ResolvedFilePath is the absolute path to the expected output file (not in YAML)
+	ResolvedFilePath string `yaml:"-"`
 }
 
 // Duration is a wrapper around time.Duration that supports YAML unmarshaling

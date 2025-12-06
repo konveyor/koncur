@@ -1,3 +1,4 @@
 type: kantra
 kantra:
   binaryPath: /usr/local/bin/kantra  # Optional, will use PATH if not specified
+  mavenSettings: /path/to/settings.xml  # Optional, only needed for Maven projects requiring custom settings

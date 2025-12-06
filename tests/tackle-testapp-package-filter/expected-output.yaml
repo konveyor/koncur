@@ -13,16 +13,10 @@
       - konveyor.io/target=cloud-readiness
       - konveyor.io/target=discovery
       incidents:
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Tackle-Testapp-public-with-package-filter-20251204-010826/source/src/main/resources/persistence.properties
+      - uri: file:///source/src/main/resources/persistence.properties
         message: When migrating environments, hard-coded IP addresses may need to
           be modified or eliminated.
-        codeSnip: "  1   jdbc.driverClassName=oracle.jdbc.driver.OracleDriver\n  2
-          \  jdbc.url=jdbc:oracle:thin:@10.19.2.93:1521:xe\n  3   jdbc.user=customers\n
-          \ 4   jdbc.password=customers\n  5   hibernate.hbm2ddl.auto=create-drop\n
-          \ 6   hibernate.dialect=org.hibernate.dialect.OracleDialect\n  7  \n  8
-          \ # PostgreSQL\n  9  #jdbc.driverClassName=org.postgresql.Driver \n 10  #jdbc.url=jdbc:postgresql://customers-postgresql:5432/customers\n
-          11  #jdbc.user=customers\n 12  #jdbc.password=customers\n 13  #hibernate.hbm2ddl.auto=create-drop\n
-          14  #hibernate.dialect=org.hibernate.dialect.PostgreSQL9Dialect\n"
+        codeSnip: 3   jdbc.user=customers
         lineNumber: 2
         variables:
           matchingText: "2."
@@ -36,25 +30,25 @@
       - konveyor.io/target=discovery
       - tag=Java Source
       incidents:
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Tackle-Testapp-public-with-package-filter-20251204-010826/source/configuration-utils/src/main/java/io/konveyor/demo/config/ApplicationConfiguration.java
+      - uri: file:///source/configuration-utils/src/main/java/io/konveyor/demo/config/ApplicationConfiguration.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Tackle-Testapp-public-with-package-filter-20251204-010826/source/src/main/java/io/konveyor/demo/ordermanagement/OrderManagementAppInitializer.java
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/OrderManagementAppInitializer.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Tackle-Testapp-public-with-package-filter-20251204-010826/source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Tackle-Testapp-public-with-package-filter-20251204-010826/source/src/main/java/io/konveyor/demo/ordermanagement/config/WebConfig.java
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/config/WebConfig.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Tackle-Testapp-public-with-package-filter-20251204-010826/source/src/main/java/io/konveyor/demo/ordermanagement/controller/CustomerController.java
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/controller/CustomerController.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Tackle-Testapp-public-with-package-filter-20251204-010826/source/src/main/java/io/konveyor/demo/ordermanagement/exception/ResourceNotFoundException.java
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/exception/ResourceNotFoundException.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Tackle-Testapp-public-with-package-filter-20251204-010826/source/src/main/java/io/konveyor/demo/ordermanagement/exception/handler/ExceptionHandlingController.java
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/exception/handler/ExceptionHandlingController.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Tackle-Testapp-public-with-package-filter-20251204-010826/source/src/main/java/io/konveyor/demo/ordermanagement/model/Customer.java
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/model/Customer.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Tackle-Testapp-public-with-package-filter-20251204-010826/source/src/main/java/io/konveyor/demo/ordermanagement/repository/CustomerRepository.java
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/repository/CustomerRepository.java
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Tackle-Testapp-public-with-package-filter-20251204-010826/source/src/main/java/io/konveyor/demo/ordermanagement/service/CustomerService.java
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/service/CustomerService.java
         message: ""
     discover-maven-xml:
       description: Maven XML file
@@ -64,9 +58,9 @@
       - konveyor.io/target=discovery
       - tag=Maven XML
       incidents:
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Tackle-Testapp-public-with-package-filter-20251204-010826/source/configuration-utils/pom.xml
+      - uri: file:///source/configuration-utils/pom.xml
         message: ""
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Tackle-Testapp-public-with-package-filter-20251204-010826/source/pom.xml
+      - uri: file:///source/pom.xml
         message: ""
     discover-properties-file:
       description: Properties file
@@ -76,7 +70,7 @@
       - konveyor.io/target=discovery
       - tag=Properties
       incidents:
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Tackle-Testapp-public-with-package-filter-20251204-010826/source/src/main/resources/persistence.properties
+      - uri: file:///source/src/main/resources/persistence.properties
         message: ""
     windup-discover-ejb-configuration:
       description: EJB XML Configuration
@@ -86,34 +80,9 @@
       - konveyor.io/target=discovery
       - tag=EJB XML
       incidents:
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Tackle-Testapp-public-with-package-filter-20251204-010826/source/configuration-utils/pom.xml
+      - uri: file:///source/configuration-utils/pom.xml
         message: ""
-        codeSnip: "  1  <?xml version=\"1.0\" encoding=\"UTF-8\"?>\n  2  \n  3  <project
-          xmlns=\"http://maven.apache.org/POM/4.0.0\"\n  4  \txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n
-          \ 5  \txsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n
-          \ 6  \t<modelVersion>4.0.0</modelVersion>\n  7  \t<groupId>io.konveyor.demo</groupId>\n
-          \ 8  \t<artifactId>configuration-utils</artifactId>\n  9  \t<version>1.0.0</version>\n
-          10  \n 11  \t<name>configuration-utils</name>\n 12  \n 13  \t<properties>\n
-          14  \t\t<java.version>1.8</java.version>\n 15  \t\t<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n
-          16  \t\t<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>\n
-          17  \t\t<maven.compiler.source>${java.version}</maven.compiler.source>\n
-          18  \t\t<maven.compiler.target>${java.version}</maven.compiler.target>\n
-          19  \n 20  \t\t<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>\n
-          21  \t\t<maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>\n
-          22  \t</properties>\n 23  \n 24  \t<dependencies>\n 25  \t\t<dependency>\n
-          26  \t\t\t<groupId>junit</groupId>\n 27  \t\t\t<artifactId>junit</artifactId>\n
-          28  \t\t\t<version>4.11</version>\n 29  \t\t\t<scope>test</scope>\n 30  \t\t</dependency>\n
-          31  \t</dependencies>\n 32  \n 33  \t<build>\n 34  \t\t<plugins>\n 35  \t\t\t<plugin>\n
-          36  \t\t\t\t<groupId>org.apache.maven.plugins</groupId>\n 37  \t\t\t\t<artifactId>maven-compiler-plugin</artifactId>\n
-          38  \t\t\t\t<version>${maven-compiler-plugin.version}</version>\n 39  \t\t\t</plugin>\n
-          40  \t\t\t<plugin>\n 41  \t\t\t\t<groupId>org.apache.maven.plugins</groupId>\n
-          42  \t\t\t\t<artifactId>maven-resources-plugin</artifactId>\n 43  \t\t\t\t<version>${maven-resources-plugin.version}</version>\n
-          44  \t\t\t\t<configuration>\n 45  \t\t\t\t\t<encoding>UTF-8</encoding>\n
-          46  \t\t\t\t</configuration>\n 47  \t\t\t</plugin>\n 48  \t\t</plugins>\n
-          49  \t</build>\n 50  \t<distributionManagement>\n 51  \t <repository>\n
-          52  \t\t <id>tackle-testapp-public</id>\n 53  \t\t <name>GitHub tackle-testapp-public
-          Apache Maven Packages</name>\n 54  \t\t <url>https://maven.pkg.github.com/konveyor/tackle-testapp-public</url>\n
-          55  \t </repository>\n 56  \t</distributionManagement>\n 57  </project>\n"
+        codeSnip: "7  \t<groupId>io.konveyor.demo</groupId>"
         lineNumber: 6
         variables:
           data: ""
@@ -125,57 +94,9 @@
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
             http://maven.apache.org/xsd/maven-4.0.0.xsd"><modelVersion>4.0.0</modelVersion><groupId>io.konveyor.demo</groupId><artifactId>configuration-utils</artifactId><version>1.0.0</version><name>configuration-utils</name><properties><java.version>1.8</java.version><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding><maven.compiler.source>${java.version}</maven.compiler.source><maven.compiler.target>${java.version}</maven.compiler.target><maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version><maven-resources-plugin.version>3.2.0</maven-resources-plugin.version></properties><dependencies><dependency><groupId>junit</groupId><artifactId>junit</artifactId><version>4.11</version><scope>test</scope></dependency></dependencies><build><plugins><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>${maven-compiler-plugin.version}</version></plugin><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-resources-plugin</artifactId><version>${maven-resources-plugin.version}</version><configuration><encoding>UTF-8</encoding></configuration></plugin></plugins></build><distributionManagement><repository><id>tackle-testapp-public</id><name>GitHub
             tackle-testapp-public Apache Maven Packages</name><url>https://maven.pkg.github.com/konveyor/tackle-testapp-public</url></repository></distributionManagement></project>
-      - uri: file:///Users/shurley/repos/personal/koncur/.koncur/output/Tackle-Testapp-public-with-package-filter-20251204-010826/source/pom.xml
+      - uri: file:///source/pom.xml
         message: ""
-        codeSnip: "  1  <project xmlns=\"http://maven.apache.org/POM/4.0.0\"\n  2
-          \ \txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n  3  \txsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0
-          https://maven.apache.org/xsd/maven-4.0.0.xsd\">\n  4  \t<modelVersion>4.0.0</modelVersion>\n
-          \ 5  \t<groupId>io.konveyor.demo</groupId>\n  6  \t<artifactId>customers-tomcat</artifactId>\n
-          \ 7  \t<version>0.0.1-SNAPSHOT</version>\n  8  \n  9  \t<name>Order Management</name>\n
-          10  \t<packaging>war</packaging>\n 11  \t<description>Remaining services
-          for the legacy Order Management application</description>\n 12  \n 13  \t<properties>\n
-          14  \t\t<java.version>1.8</java.version>\n 15  \t\t<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n
-          16  \t\t<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>\n
-          17  \t\t<maven.compiler.source>${java.version}</maven.compiler.source>\n
-          18  \t\t<maven.compiler.target>${java.version}</maven.compiler.target>\n
-          19  \t\t<spring-framework.version>5.3.7</spring-framework.version>\n 20
-          \ \t\t<tomcat.version>9.0.46</tomcat.version>\n 21  \t\t<spring-data.version>2021.0.1</spring-data.version>\n
-          22  \t\t<hibernate.version>5.4.32.Final</hibernate.version>\n 23  \t\t<hibernate-validator.version>6.2.0.Final</hibernate-validator.version>\n
-          24  \n 25  \t\t<postgresql-driver.version>42.2.20</postgresql-driver.version>\n
-          26  \t\t<jackson.version>2.12.3</jackson.version>\n 27  \n 28  \t\t<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>\n
-          29  \t\t<maven-war-plugin.version>3.3.1</maven-war-plugin.version>\n 30
-          \ \t\t<maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>\n
-          31  \n 32  \t</properties>\n 33  \n 34  \t<dependencyManagement>\n 35  \t\t<dependencies>\n
-          36  \t\t\t<dependency>\n 37  \t\t\t\t<groupId>com.fasterxml.jackson</groupId>\n
-          38  \t\t\t\t<artifactId>jackson-bom</artifactId>\n 39  \t\t\t\t<version>${jackson.version}</version>\n
-          40  \t\t\t\t<scope>import</scope>\n 41  \t\t\t\t<type>pom</type>\n 42  \t\t\t</dependency>\n
-          43  \t\t\t<dependency>\n 44  \t\t\t\t<groupId>org.springframework.data</groupId>\n
-          45  \t\t\t\t<artifactId>spring-data-bom</artifactId>\n 46  \t\t\t\t<version>${spring-data.version}</version>\n
-          47  \t\t\t\t<scope>import</scope>\n 48  \t\t\t\t<type>pom</type>\n 49  \t\t\t</dependency>\n
-          50  \t\t</dependencies>\n 51  \t</dependencyManagement>\n 52  \t<dependencies>\n
-          53  \t\t<dependency>\n 54  \t\t\t<groupId>org.apache.tomcat</groupId>\n
-          55  \t\t\t<artifactId>tomcat-servlet-api</artifactId>\n 56  \t\t\t<version>${tomcat.version}</version>\n
-          57  \t\t\t<scope>provided</scope>\n 58  \t\t</dependency>\n 59  \t\t<dependency>\n
-          60  \t\t\t<groupId>com.fasterxml.jackson.core</groupId>\n 61  \t\t\t<artifactId>jackson-core</artifactId>\n
-          62  \t\t</dependency>\n 63  \t\t<dependency>\n 64  \t\t\t<groupId>com.fasterxml.jackson.core</groupId>\n
-          65  \t\t\t<artifactId>jackson-databind</artifactId>\n 66  \t\t</dependency>\n
-          67  \t\t<dependency>\n 68  \t\t\t<groupId>org.springframework.data</groupId>\n
-          69  \t\t\t<artifactId>spring-data-jpa</artifactId>\n 70  \t\t</dependency>\n
-          71  \n 72  \t\t<dependency>\n 73  \t\t\t<groupId>org.springframework</groupId>\n
-          74  \t\t\t<artifactId>spring-jdbc</artifactId>\n 75  \t\t\t<version>${spring-framework.version}</version>\n
-          76  \t\t</dependency>\n 77  \t\t<dependency>\n 78  \t\t\t<groupId>org.springframework</groupId>\n
-          79  \t\t\t<artifactId>spring-webmvc</artifactId>\n 80  \t\t\t<version>${spring-framework.version}</version>\n
-          81  \t\t</dependency>\n 82  \t\t<dependency>\n 83  \t\t\t<groupId>org.springframework</groupId>\n
-          84  \t\t\t<artifactId>spring-web</artifactId>\n 85  \t\t\t<version>${spring-framework.version}</version>\n
-          86  \t\t</dependency>\n 87  \t\t<dependency>\n 88  \t\t\t<groupId>org.springframework.boot</groupId>\n
-          89  \t\t\t<artifactId>spring-boot-starter-actuator</artifactId>\n 90  \t\t\t<version>2.5.0</version>\n
-          91  \t\t</dependency>\n 92  \t\t<dependency>\n 93  \t\t\t<groupId>org.apache.tomcat</groupId>\n
-          94  \t\t\t<artifactId>tomcat-jdbc</artifactId>\n 95  \t\t\t<version>${tomcat.version}</version>\n
-          96  \t\t\t<scope>runtime</scope>\n 97  \t\t</dependency>\n 98  \t\t<dependency>\n
-          99  \t\t\t<groupId>org.hibernate</groupId>\n100  \t\t\t<artifactId>hibernate-entitymanager</artifactId>\n101
-          \ \t\t\t<version>${hibernate.version}</version>\n102  \t\t</dependency>\n103
-          \ \t\t<dependency>\n104  \t\t\t<groupId>org.hibernate.validator</groupId>\n105
-          \ \t\t\t<artifactId>hibernate-validator</artifactId>"
+        codeSnip: "5  \t<groupId>io.konveyor.demo</groupId>"
         lineNumber: 4
         variables:
           data: ""
@@ -229,7 +150,7 @@
       incidents:
       - uri: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/OrderManagementAppInitializer.java
         message: ""
-        codeSnip: " 1  package io.konveyor.demo.ordermanagement;\n 2  \n 3  import
+        codeSnip: "\n 1  package io.konveyor.demo.ordermanagement;\n 2  \n 3  import
           javax.servlet.ServletContext;\n 4  import javax.servlet.ServletException;\n
           5  import javax.servlet.ServletRegistration;\n 6  \n 7  import org.springframework.web.WebApplicationInitializer;\n
           8  import org.springframework.web.context.ContextLoaderListener;\n 9  import
@@ -245,14 +166,14 @@
           package: io.konveyor.demo.ordermanagement
       - uri: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/OrderManagementAppInitializer.java
         message: ""
-        codeSnip: " 1  package io.konveyor.demo.ordermanagement;\n 2  \n 3  import
+        codeSnip: "\n 1  package io.konveyor.demo.ordermanagement;\n 2  \n 3  import
           javax.servlet.ServletContext;\n 4  import javax.servlet.ServletException;\n
           5  import javax.servlet.ServletRegistration;\n 6  \n 7  import org.springframework.web.WebApplicationInitializer;\n
           8  import org.springframework.web.context.ContextLoaderListener;\n 9  import
           org.springframework.web.context.support.AnnotationConfigWebApplicationContext;\n10
           \ import org.springframework.web.servlet.DispatcherServlet;\n11  \n12  public
           class OrderManagementAppInitializer implements WebApplicationInitializer
-          \ {\n13  \n14  \t@Override"
+          \ {\n13  \n14  @Override"
         lineNumber: 4
         variables:
           file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/OrderManagementAppInitializer.java
@@ -261,14 +182,14 @@
           package: io.konveyor.demo.ordermanagement
       - uri: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/OrderManagementAppInitializer.java
         message: ""
-        codeSnip: " 1  package io.konveyor.demo.ordermanagement;\n 2  \n 3  import
+        codeSnip: "\n 1  package io.konveyor.demo.ordermanagement;\n 2  \n 3  import
           javax.servlet.ServletContext;\n 4  import javax.servlet.ServletException;\n
           5  import javax.servlet.ServletRegistration;\n 6  \n 7  import org.springframework.web.WebApplicationInitializer;\n
           8  import org.springframework.web.context.ContextLoaderListener;\n 9  import
           org.springframework.web.context.support.AnnotationConfigWebApplicationContext;\n10
           \ import org.springframework.web.servlet.DispatcherServlet;\n11  \n12  public
           class OrderManagementAppInitializer implements WebApplicationInitializer
-          \ {\n13  \n14  \t@Override\n15  \tpublic void onStartup(ServletContext container)
+          \ {\n13  \n14  @Override\n15  public void onStartup(ServletContext container)
           throws ServletException {"
         lineNumber: 5
         variables:
@@ -329,16 +250,16 @@
       incidents:
       - uri: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/model/Customer.java
         message: ""
-        codeSnip: " 1  package io.konveyor.demo.ordermanagement.model;\n 2  \n 3  import
-          javax.persistence.Column;\n 4  import javax.persistence.Entity;\n 5  import
-          javax.persistence.GeneratedValue;\n 6  import javax.persistence.GenerationType;\n
+        codeSnip: "\n 1  package io.konveyor.demo.ordermanagement.model;\n 2  \n 3
+          \ import javax.persistence.Column;\n 4  import javax.persistence.Entity;\n
+          5  import javax.persistence.GeneratedValue;\n 6  import javax.persistence.GenerationType;\n
           7  import javax.persistence.Id;\n 8  import javax.persistence.SequenceGenerator;\n
           9  import javax.persistence.Table;\n10  \n11  @Entity\n12  @Table(name =
-          \"customers\")\n13  public class Customer {\n14  \t@Id\n15      @SequenceGenerator(\n16
-          \             name = \"customersSequence\",\n17              sequenceName
-          = \"customers_id_seq\",\n18              allocationSize = 1,\n19              initialValue
-          = 6)\n20      @GeneratedValue(strategy = GenerationType.SEQUENCE, generator
-          = \"customersSequence\")\n21  \tprivate Long id;"
+          \"customers\")\n13  public class Customer {\n14  @Id\n15  @SequenceGenerator(\n16
+          \ name = \"customersSequence\",\n17  sequenceName = \"customers_id_seq\",\n18
+          \ allocationSize = 1,\n19  initialValue = 6)\n20  @GeneratedValue(strategy
+          = GenerationType.SEQUENCE, generator = \"customersSequence\")\n21  private
+          Long id;"
         lineNumber: 11
         variables:
           file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/model/Customer.java
@@ -347,15 +268,15 @@
           package: io.konveyor.demo.ordermanagement.model
       - uri: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/model/Customer.java
         message: ""
-        codeSnip: " 2  \n 3  import javax.persistence.Column;\n 4  import javax.persistence.Entity;\n
+        codeSnip: "\n 2  \n 3  import javax.persistence.Column;\n 4  import javax.persistence.Entity;\n
           5  import javax.persistence.GeneratedValue;\n 6  import javax.persistence.GenerationType;\n
           7  import javax.persistence.Id;\n 8  import javax.persistence.SequenceGenerator;\n
           9  import javax.persistence.Table;\n10  \n11  @Entity\n12  @Table(name =
-          \"customers\")\n13  public class Customer {\n14  \t@Id\n15      @SequenceGenerator(\n16
-          \             name = \"customersSequence\",\n17              sequenceName
-          = \"customers_id_seq\",\n18              allocationSize = 1,\n19              initialValue
-          = 6)\n20      @GeneratedValue(strategy = GenerationType.SEQUENCE, generator
-          = \"customersSequence\")\n21  \tprivate Long id;\n22  \t"
+          \"customers\")\n13  public class Customer {\n14  @Id\n15  @SequenceGenerator(\n16
+          \ name = \"customersSequence\",\n17  sequenceName = \"customers_id_seq\",\n18
+          \ allocationSize = 1,\n19  initialValue = 6)\n20  @GeneratedValue(strategy
+          = GenerationType.SEQUENCE, generator = \"customersSequence\")\n21  private
+          Long id;\n22  "
         lineNumber: 12
         variables:
           file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/model/Customer.java
@@ -380,7 +301,7 @@
       default, releases)]\n[INFO] Downloading from tackle-testapp-public: https://maven.pkg.github.com/konveyor/tackle-testapp-public/io/konveyor/demo/configuration-utils/1.0.0/configuration-utils-1.0.0.pom\n[INFO]
       ------------------------------------------------------------------------\n[INFO]
       BUILD FAILURE\n[INFO] ------------------------------------------------------------------------\n[INFO]
-      Total time:  0.764 s\n[INFO] Finished at: 2025-12-04T06:08:35Z\n[INFO] ------------------------------------------------------------------------\n[ERROR]
+      Total time:  0.640 s\n[INFO] Finished at: 2025-12-06T04:28:17Z\n[INFO] ------------------------------------------------------------------------\n[ERROR]
       Failed to execute goal on project customers-tomcat: Could not collect dependencies
       for project io.konveyor.demo:customers-tomcat:war:0.0.1-SNAPSHOT\n[ERROR] Failed
       to read artifact descriptor for io.konveyor.demo:configuration-utils:jar:1.0.0\n[ERROR]

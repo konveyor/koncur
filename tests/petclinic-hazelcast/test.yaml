@@ -3,6 +3,11 @@ description: Spring framework app
 analysis:
     application: https://github.com/konveyor/spring-framework-petclinic.git#ci-2023-legacy
     labelSelector: konveyor.io/target=cloud-readiness
+    context_lines: 0
+    incident_selector: ""
+    source: []
+    target: []
+    rules: []
     analysisMode: source-only
 timeout: 10m0s
 expect:

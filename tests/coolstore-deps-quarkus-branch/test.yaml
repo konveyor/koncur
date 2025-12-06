@@ -2,6 +2,11 @@ name: Coolstore Source and Deps analysis using Quarkus branch
 analysis:
     application: https://github.com/konveyor-ecosystem/coolstore#ci-2024-quarkus
     labelSelector: konveyor.io/target=cloud-readiness || konveyor.io/target=jakarta-ee
+    context_lines: 0
+    incident_selector: ""
+    source: []
+    target: []
+    rules: []
     analysisMode: source-only
 timeout: 10m0s
 expect:

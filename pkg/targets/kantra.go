@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strconv"
 	"strings"
 
 	"github.com/konveyor/analyzer-lsp/provider"
@@ -15,12 +16,14 @@ import (
 
 // KantraTarget implements Target for Kantra
 type KantraTarget struct {
-	binaryPath string
+	binaryPath    string
+	mavenSettings string
 }
 
 // NewKantraTarget creates a new Kantra target
 func NewKantraTarget(cfg *config.KantraConfig) (*KantraTarget, error) {
 	var binaryPath string
+	var mavenSettings string
 
 	// Use configured path if provided
 	if cfg != nil && cfg.BinaryPath != "" {
@@ -34,8 +37,14 @@ func NewKantraTarget(cfg *config.KantraConfig) (*KantraTarget, error) {
 		}
 	}
 
+	// Get maven settings from config
+	if cfg != nil {
+		mavenSettings = cfg.MavenSettings
+	}
+
 	return &KantraTarget{
-		binaryPath: binaryPath,
+		binaryPath:    binaryPath,
+		mavenSettings: mavenSettings,
 	}, nil
 }
 
@@ -49,14 +58,25 @@ func (k *KantraTarget) Execute(ctx context.Context, test *config.TestDefinition)
 	log := util.GetLogger()
 	log.Info("Executing Kantra analysis", "test", test.Name)
 
-	// Prepare work directory
+	// Validate maven settings requirement
+	if test.RequireMavenSettings && k.mavenSettings == "" {
+		return nil, fmt.Errorf("test requires maven settings but none configured in target config")
+	}
+
+	// Get test directory (where test.yaml is located)
+	testDir := test.GetTestDir()
+	if testDir == "" {
+		return nil, fmt.Errorf("test directory not available")
+	}
+
+	// Prepare work directory for execution logs/metadata
 	workDir, err := PrepareWorkDir(test.GetWorkDir(), test.Name)
 	if err != nil {
 		return nil, err
 	}
 
-	// Handle application input (clone git repo if needed)
-	inputPath, err := k.prepareInput(ctx, test.Analysis.Application, test.Name, workDir)
+	// Handle application input (clone git repo to test-dir/source if needed)
+	inputPath, err := k.prepareInput(ctx, test.Analysis.Application, test.Name, testDir)
 	if err != nil {
 		return nil, fmt.Errorf("failed to prepare input: %w", err)
 	}
@@ -72,7 +92,7 @@ func (k *KantraTarget) Execute(ctx context.Context, test *config.TestDefinition)
 	}
 
 	// Build kantra command arguments
-	args := k.buildArgs(test.Analysis, inputPath, absOutputDir)
+	args := k.buildArgs(test.Analysis, inputPath, absOutputDir, k.mavenSettings)
 
 	// Execute kantra
 	result, err := ExecuteCommand(ctx, k.binaryPath, args, workDir, test.GetTimeout())
@@ -89,8 +109,8 @@ func (k *KantraTarget) Execute(ctx context.Context, test *config.TestDefinition)
 }
 
 // buildArgs constructs the kantra analyze command arguments
-func (k *KantraTarget) buildArgs(analysis config.AnalysisConfig, inputPath, outputDir string) []string {
-	args := []string{"analyze"}
+func (k *KantraTarget) buildArgs(analysis config.AnalysisConfig, inputPath, outputDir, mavenSettings string) []string {
+	args := []string{"analyze", "--context-lines", strconv.Itoa(analysis.ContextLines)}
 
 	// Input application (now using the prepared input path)
 	args = append(args, "--input", inputPath)
@@ -101,6 +121,31 @@ func (k *KantraTarget) buildArgs(analysis config.AnalysisConfig, inputPath, outp
 	// Label selector (if specified)
 	if analysis.LabelSelector != "" {
 		args = append(args, "--label-selector", analysis.LabelSelector)
+	}
+
+	if analysis.IncidentSelector != "" {
+		args = append(args, "--incident-selector", analysis.IncidentSelector)
+	}
+
+	// Maven settings (from test-level configuration)
+	if mavenSettings != "" {
+		args = append(args, "--maven-settings", mavenSettings)
+	}
+
+	if len(analysis.Target) > 0 {
+		for _, target := range analysis.Target {
+			args = append(args, "-t", target)
+		}
+	}
+	if len(analysis.Source) > 0 {
+		for _, source := range analysis.Source {
+			args = append(args, "-s", source)
+		}
+	}
+	if len(analysis.Rules) > 0 {
+		for _, rule := range analysis.Rules {
+			args = append(args, "--rules", rule)
+		}
 	}
 
 	// Analysis mode
