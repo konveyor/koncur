@@ -34,6 +34,7 @@ Koncur concurs with your expected results!`,
 	rootCmd.AddCommand(NewValidateCmd())
 	rootCmd.AddCommand(NewGenerateCmd())
 	rootCmd.AddCommand(NewCleanCmd())
+	rootCmd.AddCommand(NewConfigCmd())
 
 	return rootCmd
 }

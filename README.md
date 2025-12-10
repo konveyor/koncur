@@ -122,7 +122,7 @@ tackleHub:
 ```
 
 ### Tackle UI (Browser Automation)
-** Not Implemented **
+**Not Implemented**
 
 ```yaml
 type: tackle-ui
@@ -135,6 +135,8 @@ tackleUI:
 ```
 
 ### Kai RPC
+
+**Not Implemented**
 
 ```yaml
 type: kai-rpc

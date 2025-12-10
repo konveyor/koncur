@@ -15,7 +15,7 @@ help: ## Show this help message
 
 kind-create: ## Create a Kind cluster for testing with ingress support
 	@echo "Creating Kind cluster: $(KIND_CLUSTER_NAME)..."
-	@mkdir -p .koncur/config
+	@mkdir -p cache .koncur/config
 	@printf 'kind: Cluster\n' > .koncur/config/kind-config.yaml
 	@printf 'apiVersion: kind.x-k8s.io/v1alpha4\n' >> .koncur/config/kind-config.yaml
 	@printf 'nodes:\n' >> .koncur/config/kind-config.yaml
@@ -33,7 +33,15 @@ kind-create: ## Create a Kind cluster for testing with ingress support
 	@printf '  - containerPort: 443\n' >> .koncur/config/kind-config.yaml
 	@printf '    hostPort: 8443\n' >> .koncur/config/kind-config.yaml
 	@printf '    protocol: TCP\n' >> .koncur/config/kind-config.yaml
+	@printf '  extraMounts:\n' >> .koncur/config/kind-config.yaml
+	@printf '  - hostPath: ./cache\n' >> .koncur/config/kind-config.yaml
+	@printf '    containerPath: /cache\n' >> .koncur/config/kind-config.yaml
 	@kind create cluster --name $(KIND_CLUSTER_NAME) --config .koncur/config/kind-config.yaml
+	@echo "Configuring local-path-storage to use /cache directory with RWX support..."
+	@$(KUBECTL) patch configmap local-path-config -n local-path-storage --type merge -p '{"data":{"config.json":"{\n        \"nodePathMap\":[],\n        \"sharedFileSystemPath\":\"/cache\"\n}"}}'
+	@echo "Restarting local-path-provisioner to apply configuration..."
+	@$(KUBECTL) rollout restart deployment local-path-provisioner -n local-path-storage
+	@$(KUBECTL) rollout status deployment local-path-provisioner -n local-path-storage --timeout=60s
 	@echo "Installing ingress-nginx controller..."
 	@$(KUBECTL) apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
 	@echo "Waiting for ingress-nginx namespace to be created..."
@@ -82,6 +90,26 @@ hub-install: ## Install Tackle Hub on the Kind cluster (from main branch)
 		if [ $$i -eq 120 ]; then echo "Timeout waiting for operator to be ready"; exit 1; fi; \
 		sleep 3; \
 	done
+	@echo "Pre-creating cache PV with fixed path..."
+	@mkdir -p cache/hub-cache
+	@mkdir -p .koncur/config
+	@printf 'apiVersion: v1\n' > .koncur/config/cache-pv.yaml
+	@printf 'kind: PersistentVolume\n' >> .koncur/config/cache-pv.yaml
+	@printf 'metadata:\n' >> .koncur/config/cache-pv.yaml
+	@printf '  name: tackle-cache-pv\n' >> .koncur/config/cache-pv.yaml
+	@printf '  labels:\n' >> .koncur/config/cache-pv.yaml
+	@printf '    type: tackle-cache\n' >> .koncur/config/cache-pv.yaml
+	@printf 'spec:\n' >> .koncur/config/cache-pv.yaml
+	@printf '  capacity:\n' >> .koncur/config/cache-pv.yaml
+	@printf '    storage: 10Gi\n' >> .koncur/config/cache-pv.yaml
+	@printf '  accessModes:\n' >> .koncur/config/cache-pv.yaml
+	@printf '  - ReadWriteMany\n' >> .koncur/config/cache-pv.yaml
+	@printf '  persistentVolumeReclaimPolicy: Retain\n' >> .koncur/config/cache-pv.yaml
+	@printf '  storageClassName: manual\n' >> .koncur/config/cache-pv.yaml
+	@printf '  hostPath:\n' >> .koncur/config/cache-pv.yaml
+	@printf '    path: /cache/hub-cache\n' >> .koncur/config/cache-pv.yaml
+	@printf '    type: DirectoryOrCreate\n' >> .koncur/config/cache-pv.yaml
+	@$(KUBECTL) apply -f .koncur/config/cache-pv.yaml
 	@echo "Creating Tackle CR with auth disabled..."
 	@mkdir -p .koncur/config
 	@printf 'kind: Tackle\n' > .koncur/config/tackle-cr.yaml
@@ -91,6 +119,9 @@ hub-install: ## Install Tackle Hub on the Kind cluster (from main branch)
 	@printf '  namespace: konveyor-tackle\n' >> .koncur/config/tackle-cr.yaml
 	@printf 'spec:\n' >> .koncur/config/tackle-cr.yaml
 	@printf '  feature_auth_required: "false"\n' >> .koncur/config/tackle-cr.yaml
+	@printf '  cache_storage_class: "manual"\n' >> .koncur/config/tackle-cr.yaml
+	@printf '  cache_data_volume_size: "10Gi"\n' >> .koncur/config/tackle-cr.yaml
+	@printf '  rwx_supported: "true"\n' >> .koncur/config/tackle-cr.yaml
 	@$(KUBECTL) apply -f .koncur/config/tackle-cr.yaml
 	@echo "Waiting for Tackle Hub to be ready (this may take a few minutes)..."
 	@sleep 30

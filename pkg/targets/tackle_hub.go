@@ -3,15 +3,20 @@ package targets
 import (
 	"context"
 	"fmt"
+	"maps"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 	"time"
 
+	konveyor "github.com/konveyor/analyzer-lsp/output/v1/konveyor"
 	"github.com/konveyor/tackle2-hub/api"
 	"github.com/konveyor/tackle2-hub/binding"
 	"github.com/konveyor/test-harness/pkg/config"
 	"github.com/konveyor/test-harness/pkg/util"
+	"go.lsp.dev/uri"
+	"gopkg.in/yaml.v2"
 )
 
 const (
@@ -166,12 +171,111 @@ func (t *TackleHubTarget) Execute(ctx context.Context, test *config.TestDefiniti
 	}
 	log.Info("Analysis task completed successfully", "taskID", task.ID)
 
-	// Step 4: Download results from task
-	log.Info("Downloading analysis results", "taskID", task.ID)
-	outputFile, err := t.downloadTaskResults(task.ID, workDir)
-	if err != nil {
-		return nil, fmt.Errorf("failed to download results: %w", err)
+	var insights []api.Insight
+	err = t.client.Client.Get(
+		api.AnalysesInsightsRoot,
+		&insights,
+		binding.Param{
+			Key:   "application",
+			Value: fmt.Sprintf("%v", app.ID),
+		},
+	)
+
+	rulesetToInsightConverted := map[string]konveyor.RuleSet{}
+	for _, insight := range insights {
+		rs := rulesetToInsightConverted[insight.RuleSet]
+		rs.Name = insight.RuleSet
+		if rs.Insights == nil {
+			rs.Insights = map[string]konveyor.Violation{}
+		}
+		if rs.Violations == nil {
+			rs.Violations = map[string]konveyor.Violation{}
+		}
+		incidents := []konveyor.Incident{}
+		for _, i := range insight.Incidents {
+			incidents = append(incidents, konveyor.Incident{
+				URI:        uri.File(i.File),
+				Message:    i.Message,
+				CodeSnip:   i.CodeSnip,
+				LineNumber: &i.Line,
+			})
+		}
+		links := []konveyor.Link{}
+		for _, l := range insight.Links {
+			links = append(links, konveyor.Link{
+				URL:   l.URL,
+				Title: l.Title,
+			})
+		}
+
+		v := konveyor.Violation{
+			Description: insight.Description,
+			Category:    (*konveyor.Category)(&insight.Category),
+			Labels:      insight.Labels,
+			Incidents:   incidents,
+			Links:       links,
+			Effort:      &insight.Effort,
+		}
+
+		if insight.Effort == 0 {
+			rs.Insights[insight.Rule] = v
+		} else {
+			rs.Violations[insight.Rule] = v
+		}
+		rulesetToInsightConverted[insight.RuleSet] = rs
 	}
+	// Get tags from application
+	appTag := t.client.Application.Tags(app.ID)
+	tags, err := appTag.List()
+	if err != nil {
+		return nil, err
+	}
+
+	// Ensure discovery-rules and technology-usage rulesets exist
+	if _, exists := rulesetToInsightConverted["discovery-rules"]; !exists {
+		rulesetToInsightConverted["discovery-rules"] = konveyor.RuleSet{
+			Name: "discovery-rules",
+			Tags: []string{},
+		}
+	}
+	if _, exists := rulesetToInsightConverted["technology-usage"]; !exists {
+		rulesetToInsightConverted["technology-usage"] = konveyor.RuleSet{
+			Name: "technology-usage",
+			Tags: []string{},
+		}
+	}
+
+	// Add tags to appropriate rulesets based on source
+	for _, tag := range tags {
+		switch tag.Source {
+		case "language-discovery":
+			rs := rulesetToInsightConverted["discovery-rules"]
+			rs.Tags = append(rs.Tags, tag.Name)
+			rulesetToInsightConverted["discovery-rules"] = rs
+		case "tech-discovery":
+			rs := rulesetToInsightConverted["technology-usage"]
+			rs.Tags = append(rs.Tags, tag.Name)
+			rulesetToInsightConverted["technology-usage"] = rs
+		}
+	}
+	output, err := yaml.Marshal(slices.Collect(maps.Values(rulesetToInsightConverted)))
+	if err != nil {
+		return nil, err
+	}
+
+	// Create output directory
+	outputDir := filepath.Join(workDir, "output")
+	if err := os.MkdirAll(outputDir, 0755); err != nil {
+		return nil, fmt.Errorf("failed to create output directory: %w", err)
+	}
+
+	// Write output to file
+	outputFile := filepath.Join(outputDir, "output.yaml")
+	if err := os.WriteFile(outputFile, output, 0644); err != nil {
+		return nil, fmt.Errorf("failed to write output file: %w", err)
+	}
+
+	log.Info("Successfully wrote analysis results", "file", outputFile)
 
 	duration := time.Since(start)
 	result := &ExecutionResult{
@@ -449,7 +553,7 @@ func (t *TackleHubTarget) attachMavenIdentity(app *api.Application) error {
 	}
 
 	// Attach identity to application by adding it to identities list
-	identityRef := api.IdentityRef{ID: identity.ID}
+	identityRef := api.IdentityRef{ID: identity.ID, Role: "maven"}
 
 	// Check if identity is already attached
 	alreadyAttached := false
@@ -483,4 +587,51 @@ func parseGitURL(gitURL string) (url, branch string) {
 		branch = parts[1]
 	}
 	return url, branch
+}
+
+// appendInsights appends insights from the discovery file to the analysis file
+func (t *TackleHubTarget) appendInsights(analysisFile, discoveryFile string) error {
+	log := util.GetLogger()
+
+	// Read analysis file
+	analysisData, err := os.ReadFile(analysisFile)
+	if err != nil {
+		return fmt.Errorf("failed to read analysis file: %w", err)
+	}
+
+	// Read discovery file
+	discoveryData, err := os.ReadFile(discoveryFile)
+	if err != nil {
+		return fmt.Errorf("failed to read discovery file: %w", err)
+	}
+
+	// Unmarshal both files
+	var analysisRuleSets []konveyor.RuleSet
+	if err := yaml.Unmarshal(analysisData, &analysisRuleSets); err != nil {
+		return fmt.Errorf("failed to unmarshal analysis file: %w", err)
+	}
+
+	var discoveryRuleSets []konveyor.RuleSet
+	if err := yaml.Unmarshal(discoveryData, &discoveryRuleSets); err != nil {
+		return fmt.Errorf("failed to unmarshal discovery file: %w", err)
+	}
+
+	log.Info("Merging rulesets", "analysisRuleSets", len(analysisRuleSets), "discoveryRuleSets", len(discoveryRuleSets))
+
+	// Append discovery rulesets to analysis rulesets
+	merged := append(analysisRuleSets, discoveryRuleSets...)
+
+	// Marshal back to YAML
+	mergedData, err := yaml.Marshal(merged)
+	if err != nil {
+		return fmt.Errorf("failed to marshal merged data: %w", err)
+	}
+
+	// Write back to analysis file
+	if err := os.WriteFile(analysisFile, mergedData, 0644); err != nil {
+		return fmt.Errorf("failed to write merged file: %w", err)
+	}
+
+	log.Info("Successfully merged insights", "totalRuleSets", len(merged))
+	return nil
 }

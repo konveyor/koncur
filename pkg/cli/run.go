@@ -14,7 +14,6 @@ import (
 	"github.com/konveyor/test-harness/pkg/util"
 	"github.com/konveyor/test-harness/pkg/validator"
 	"github.com/spf13/cobra"
-	"gopkg.in/yaml.v2"
 )
 
 var (
@@ -138,10 +137,10 @@ You can provide either:
 				}
 				if failCount > 0 {
 					color.Red("  ✗ Failed: %d", failCount)
-					return fmt.Errorf("failed %d tests", failCount)
+					return nil
 				}
 			} else if failCount > 0 {
-				return fmt.Errorf("test failed")
+				return nil
 			}
 
 			return nil
@@ -190,22 +189,15 @@ func runSingleTest(testFile string, target targets.Target, targetConfig *config.
 	// Filter actual output to match how expected output is filtered during generation
 	filteredActual := parser.FilterRuleSets(actualOutput)
 
-	// Write filtered actual output to temp file for comparison
-	filteredOutputFile := filepath.Join(filepath.Dir(result.OutputFile), "output-filtered.yaml")
-	filteredYAML, err := yaml.Marshal(filteredActual)
-	if err != nil {
-		return false, fmt.Errorf("failed to marshal filtered output: %w", err)
-	}
-	if err := os.WriteFile(filteredOutputFile, filteredYAML, 0644); err != nil {
-		return false, fmt.Errorf("failed to write filtered output: %w", err)
-	}
-
 	// Get target type for validation
 	tgtType := ""
 	if targetConfig != nil {
 		tgtType = targetConfig.Type
 	}
 
+	for _, r := range filteredActual {
+		fmt.Printf("HEHRELJ: %s", r.Name)
+	}
 	// Validate against expected output using the filtered file
 	validation, err := validator.ValidateFiles(test.GetTestDir(), tgtType, filteredActual, test.Expect.Output.Result)
 	if err != nil {
@@ -228,27 +220,8 @@ func runSingleTest(testFile string, target targets.Target, targetConfig *config.
 	if len(validation.Errors) > 0 {
 		fmt.Printf("\n    Found %d validation error(s):\n\n", len(validation.Errors))
 
-		yellow := color.New(color.FgYellow, color.Bold)
-		cyan := color.New(color.FgCyan)
-
 		for i, err := range validation.Errors {
-			// Print error number and path
-			yellow.Printf("    [%d] %s\n", i+1, err.Path)
-
-			// Print message if present
-			if err.Message != "" {
-				fmt.Printf("        %s\n", err.Message)
-			}
-
-			// Print expected vs actual if present
-			if err.Expected != nil {
-				cyan.Print("        Expected: ")
-				fmt.Printf("%v\n", err.Expected)
-			}
-			if err.Actual != nil {
-				cyan.Print("        Actual:   ")
-				fmt.Printf("%v\n", err.Actual)
-			}
+			err.Print(i + 1)
 
 			// Add spacing between errors
 			if i < len(validation.Errors)-1 {

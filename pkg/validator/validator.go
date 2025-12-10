@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"maps"
 	"reflect"
-	"regexp"
-	"strings"
 
+	"github.com/fatih/color"
 	konveyor "github.com/konveyor/analyzer-lsp/output/v1/konveyor"
+	"github.com/konveyor/test-harness/pkg/util"
 )
 
 type tagCompare interface {
@@ -44,18 +44,18 @@ type comparer interface {
 }
 
 func getComparer(targetType, testDir string) comparer {
-	k := &kantra{testDir: testDir}
+	base := &baseValidator{testDir: testDir}
 	switch targetType {
 	case "kantra":
-		return k
+		return &kantraValidator{baseValidator: *base}
 	case "tackle-hub":
-		return &tackle2Hub{kantra: *k}
+		return &tackleHubValidator{baseValidator: *base}
 	case "tackle-ui":
-		return k
+		return &kantraValidator{baseValidator: *base}
 	case "kai-rpc":
-		return k
+		return &kantraValidator{baseValidator: *base}
 	case "vscode":
-		return k
+		return &kantraValidator{baseValidator: *base}
 	}
 	return nil
 }
@@ -74,6 +74,29 @@ type ValidationError struct {
 	Actual   any
 }
 
+// Print formats and prints the validation error with colors
+func (v ValidationError) Print(index int) {
+	// Print error         number and path
+	yellow := color.New(color.FgYellow, color.Bold)
+	//cyan := color.New(color.FgCyan)
+	yellow.Printf("[%d] %s\n", index, v.Path)
+
+	// Print message if present
+	if v.Message != "" {
+		fmt.Printf("%s\n", v.Message)
+	}
+
+	// Print expected vs actual if present
+	//	if v.Expected != nil {
+	//		cyan.Print("Expected: ")
+	//		fmt.Printf("%v\n", v.Expected)
+	//	}
+	//	if v.Actual != nil {
+	//		cyan.Print("Actual:   ")
+	//		fmt.Printf("%v\n", v.Actual)
+	//	}
+}
+
 // Validate performs exact match validation between actual and expected rulesets
 // This function now takes file paths and compares the raw YAML content
 func Validate(actual, expected []konveyor.RuleSet) (*ValidationResult, error) {
@@ -87,18 +110,24 @@ func ValidateFiles(testDir, targetType string, actual, expected []konveyor.RuleS
 		Errors: []ValidationError{},
 	}
 
+	log := util.GetLogger()
 	errors := []ValidationError{}
 	comparer := getComparer(targetType, testDir)
 
 	for _, ers := range expected {
+		found := false
 		for _, rs := range actual {
 			if rs.Name != ers.Name {
+				log.Info("not_found", "rs_name", rs.Name, "ers_name", ers.Name)
 				continue
 			}
+			found = true
+			log.Info("found", "rs_name", rs.Name, "ers_name", ers.Name)
 
 			if !maps.Equal(ers.Errors, rs.Errors) {
 				for k, eerr := range ers.Errors {
 					if err, ok := comparer.compareErrors(eerr, rs.Errors[k]); ok {
+						err.Path = fmt.Sprintf("%s/error/%s", rs.Name, k)
 						errors = append(errors, *err)
 					}
 				}
@@ -107,6 +136,7 @@ func ValidateFiles(testDir, targetType string, actual, expected []konveyor.RuleS
 			if !reflect.DeepEqual(rs.Tags, ers.Tags) {
 				for _, erstags := range ers.Tags {
 					if err, ok := comparer.compareTag(erstags, rs.Tags); ok {
+						err.Path = fmt.Sprintf("%s/tags/%s", rs.Name, erstags)
 						errors = append(errors, *err)
 					}
 				}
@@ -121,7 +151,7 @@ func ValidateFiles(testDir, targetType string, actual, expected []konveyor.RuleS
 						}
 
 						errors = append(errors, ValidationError{
-							Path:     "",
+							Path:     fmt.Sprintf("%s/insights/%s", rs.Name, k),
 							Message:  newMessage,
 							Expected: ersinsights,
 						})
@@ -139,7 +169,7 @@ func ValidateFiles(testDir, targetType string, actual, expected []konveyor.RuleS
 						}
 
 						errors = append(errors, ValidationError{
-							Path:     "",
+							Path:     fmt.Sprintf("%s/violation/%s", rs.Name, k),
 							Message:  newMessage,
 							Expected: ersinsights,
 						})
@@ -149,6 +179,7 @@ func ValidateFiles(testDir, targetType string, actual, expected []konveyor.RuleS
 			if !reflect.DeepEqual(rs.Unmatched, ers.Unmatched) {
 				for _, ersunmatched := range ers.Unmatched {
 					if err, ok := comparer.compareUnmatched(ersunmatched, rs.Unmatched); ok {
+						err.Path = fmt.Sprintf("%s/unmatched/%s", rs.Name, ersunmatched)
 						errors = append(errors, *err)
 					}
 				}
@@ -156,12 +187,17 @@ func ValidateFiles(testDir, targetType string, actual, expected []konveyor.RuleS
 			if !reflect.DeepEqual(rs.Skipped, ers.Skipped) {
 				for _, ersskipped := range ers.Skipped {
 					if err, ok := comparer.compareSkipped(ersskipped, rs.Skipped); ok {
+						err.Path = fmt.Sprintf("%s/skipped/%s", rs.Name, ersskipped)
 						errors = append(errors, *err)
 					}
 				}
 			}
+			break
 		}
-		errors = append(errors, ValidationError{Path: fmt.Sprintf("ruleset/%s", ers.Name)})
+		if !found {
+			log.Info("not_found_error", "ers_name", ers.Name)
+			errors = append(errors, ValidationError{Path: fmt.Sprintf("ruleset/%s", ers.Name), Message: "Did not find a matching ruleset"})
+		}
 	}
 
 	// If not equal, generate detailed diff
@@ -169,65 +205,4 @@ func ValidateFiles(testDir, targetType string, actual, expected []konveyor.RuleS
 	result.Errors = errors
 
 	return result, nil
-}
-
-// normalizeYAMLPaths normalizes paths in YAML by removing test directory paths
-// and normalizing file:// URIs to use consistent base paths
-func normalizeYAMLPaths(yamlStr, testDir, targetType string) string {
-	// Replace the test directory path with empty string
-	if testDir != "" {
-		yamlStr = strings.ReplaceAll(yamlStr, testDir, "")
-	}
-
-	// Normalize file:// URIs by removing variable base paths
-	// Common patterns:
-	// - file:///opt/input/source/ (kantra)
-	// - file:///shared/source/{repo-name}/ (tackle-hub)
-	// - file:///root/.m2/repository/ (maven cache)
-
-	// Replace kantra source path
-	yamlStr = strings.ReplaceAll(yamlStr, "file:///opt/input/source/", "file:///source/")
-
-	// Replace tackle-hub source paths using regex to match any repo name
-	// Pattern: file:///shared/source/{anything}/ -> file:///source/
-	re := regexp.MustCompile(`file:///shared/source/[^/]+/`)
-	yamlStr = re.ReplaceAllString(yamlStr, "file:///source/")
-
-	// Normalize maven repository paths
-	yamlStr = strings.ReplaceAll(yamlStr, "file:///root/.m2/repository/", "file:///m2/")
-	yamlStr = strings.ReplaceAll(yamlStr, "file:///cache/m2/repository/", "file:///m2/")
-
-	// Apply tackle-hub specific filtering
-	if targetType == "tackle-hub" {
-		// Remove codeSnip fields to reduce noise in diffs
-		// This removes lines starting with "codeSnip:" and continuation lines
-		lines := strings.Split(yamlStr, "\n")
-		var filtered []string
-		skipNext := false
-		for _, line := range lines {
-			trimmed := strings.TrimSpace(line)
-
-			// Check if this is a codeSnip line
-			if strings.HasPrefix(trimmed, "codeSnip:") {
-				// Skip this line and check if next lines are part of multiline value
-				skipNext = true
-				continue
-			}
-
-			// If we're in skip mode, check if this line is part of the multiline content
-			if skipNext {
-				// If line starts with spaces and doesn't look like a new field, skip it
-				if len(line) > 0 && (line[0] == ' ' || line[0] == '\t') && !strings.Contains(trimmed, ":") {
-					continue
-				}
-				// Otherwise, we've reached the next field
-				skipNext = false
-			}
-
-			filtered = append(filtered, line)
-		}
-		yamlStr = strings.Join(filtered, "\n")
-	}
-
-	return yamlStr
 }
