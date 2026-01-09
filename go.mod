@@ -10,6 +10,7 @@ require (
 	github.com/konveyor/tackle2-hub v0.9.0-alpha.1.0.20251208230742-29b7e93d6986
 	github.com/manifoldco/promptui v0.9.0
 	github.com/spf13/cobra v1.9.1
+	go.lsp.dev/uri v0.3.0
 	gopkg.in/yaml.v2 v2.4.0
 	gopkg.in/yaml.v3 v3.0.1
 )
@@ -96,7 +97,6 @@ require (
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.11 // indirect
 	github.com/yuin/gopher-lua v1.1.1 // indirect
-	go.lsp.dev/uri v0.3.0 // indirect
 	go.opentelemetry.io/auto/sdk v1.1.0 // indirect
 	go.opentelemetry.io/otel v1.35.0 // indirect
 	go.opentelemetry.io/otel/exporters/jaeger v1.17.0 // indirect
