@@ -81,6 +81,12 @@ func (k *KantraTarget) Execute(ctx context.Context, test *config.TestDefinition)
 		return nil, fmt.Errorf("failed to prepare input: %w", err)
 	}
 
+	// Handle rules that may be Git URLs
+	preparedRules, err := k.prepareRules(ctx, test.Analysis.Rules, workDir)
+	if err != nil {
+		return nil, fmt.Errorf("failed to prepare rules: %w", err)
+	}
+
 	// Create output directory with absolute path
 	outputDir := filepath.Join(workDir, "output")
 	absOutputDir, err := filepath.Abs(outputDir)
@@ -91,8 +97,8 @@ func (k *KantraTarget) Execute(ctx context.Context, test *config.TestDefinition)
 		return nil, fmt.Errorf("failed to create output directory: %w", err)
 	}
 
-	// Build kantra command arguments
-	args := k.buildArgs(test.Analysis, inputPath, absOutputDir, k.mavenSettings)
+	// Build kantra command arguments with prepared rules
+	args := k.buildArgsWithPreparedRules(test.Analysis, inputPath, absOutputDir, k.mavenSettings, preparedRules)
 
 	// Execute kantra
 	result, err := ExecuteCommand(ctx, k.binaryPath, args, workDir, test.GetTimeout())
@@ -166,6 +172,65 @@ func (k *KantraTarget) buildArgs(analysis config.AnalysisConfig, inputPath, outp
 	return args
 }
 
+// buildArgsWithPreparedRules constructs the kantra analyze command arguments with prepared rules
+func (k *KantraTarget) buildArgsWithPreparedRules(analysis config.AnalysisConfig, inputPath, outputDir, mavenSettings string, preparedRules []string) []string {
+	args := []string{"analyze", "--context-lines", strconv.Itoa(analysis.ContextLines)}
+
+	// Input application (now using the prepared input path)
+	args = append(args, "--input", inputPath)
+
+	// Output directory (now passed as parameter, already absolute)
+	args = append(args, "--output", outputDir)
+
+	// Label selector (if specified)
+	if analysis.LabelSelector != "" {
+		args = append(args, "--label-selector", analysis.LabelSelector)
+	}
+
+	if analysis.IncidentSelector != "" {
+		args = append(args, "--incident-selector", analysis.IncidentSelector)
+	}
+
+	// Maven settings (from test-level configuration)
+	if mavenSettings != "" {
+		args = append(args, "--maven-settings", mavenSettings)
+	}
+
+	if len(analysis.Target) > 0 {
+		for _, target := range analysis.Target {
+			args = append(args, "-t", target)
+		}
+	}
+	if len(analysis.Source) > 0 {
+		for _, source := range analysis.Source {
+			args = append(args, "-s", source)
+		}
+	}
+	// Use prepared rules that have been cloned/resolved
+	if len(preparedRules) > 0 {
+		for _, rule := range preparedRules {
+			args = append(args, "--rules", rule)
+		}
+	}
+
+	// Analysis mode
+	switch analysis.AnalysisMode {
+	case provider.SourceOnlyAnalysisMode:
+		args = append(args, "--mode", "source-only")
+	case provider.FullAnalysisMode:
+		// Full is the default, but we can be explicit
+		args = append(args, "--mode", "full")
+	}
+
+	// Use container mode instead of run-local to avoid dependency issues
+	args = append(args, "--run-local=false")
+
+	// Allow overwriting existing output
+	args = append(args, "--overwrite")
+
+	return args
+}
+
 // prepareInput handles git URLs, local paths, and binary files
 // Returns the local path to use as input for kantra
 func (k *KantraTarget) prepareInput(ctx context.Context, application, testName, workDir string) (string, error) {
@@ -177,104 +242,57 @@ func (k *KantraTarget) prepareInput(ctx context.Context, application, testName, 
 		return k.prepareBinary(application, workDir)
 	}
 
-	// Check if it's a git URL (starts with http://, https://, or git@)
-	// or contains a git reference (has #branch)
-	isGitURL := strings.HasPrefix(application, "http://") ||
-		strings.HasPrefix(application, "https://") ||
-		strings.HasPrefix(application, "git@")
-
-	if !isGitURL {
-		// It's a local path or binary reference
-		// Handle binary: prefix (legacy support)
-		if strings.HasPrefix(application, "binary:") {
-			// Extract the binary file name
-			binaryFile := application[7:] // Remove "binary:" prefix
-			// For now, just return the binary file as-is
-			// In the future, we might need to look for it in a specific directory
-			return binaryFile, nil
-		}
-		// Return as-is for local paths
-		return application, nil
+	// Check if it's a git URL
+	if IsGitURL(application) {
+		// Parse the Git URL
+		components := ParseGitURLWithPath(application)
+		// Clone the repository
+		return CloneGitRepository(ctx, components, workDir, "source")
 	}
 
-	// Parse git URL, reference, and path
-	// Format: git_url#branch/path/to/subdir
-	var gitURL, gitRef, gitPath string
-	if strings.Contains(application, "#") {
-		parts := strings.SplitN(application, "#", 2)
-		gitURL = parts[0]
-		if len(parts) > 1 {
-			// Split the reference on "/" to separate branch from path
-			refParts := strings.SplitN(parts[1], "/", 2)
-			gitRef = refParts[0]
-			if len(refParts) > 1 {
-				gitPath = refParts[1]
+	// It's a local path or binary reference
+	// Handle binary: prefix (legacy support)
+	if strings.HasPrefix(application, "binary:") {
+		// Extract the binary file name
+		binaryFile := application[7:] // Remove "binary:" prefix
+		// For now, just return the binary file as-is
+		// In the future, we might need to look for it in a specific directory
+		return binaryFile, nil
+	}
+	// Return as-is for local paths
+	return application, nil
+}
+
+// prepareRules handles rules that may be Git URLs or local paths
+// Returns a list of prepared rule paths
+func (k *KantraTarget) prepareRules(ctx context.Context, rules []string, workDir string) ([]string, error) {
+	if len(rules) == 0 {
+		return nil, nil
+	}
+
+	log := util.GetLogger()
+	preparedRules := make([]string, 0, len(rules))
+
+	for i, rule := range rules {
+		// Check if it's a Git URL
+		if IsGitURL(rule) {
+			log.Info("Detected Git URL for rule", "rule", rule)
+			// Parse the Git URL
+			components := ParseGitURLWithPath(rule)
+			// Clone the repository to a unique directory for this rule
+			cloneName := fmt.Sprintf("rules-%d", i)
+			clonedPath, err := CloneGitRepository(ctx, components, workDir, cloneName)
+			if err != nil {
+				return nil, fmt.Errorf("failed to clone rules repository %s: %w", rule, err)
 			}
+			preparedRules = append(preparedRules, clonedPath)
+		} else {
+			// Local path - use as-is
+			preparedRules = append(preparedRules, rule)
 		}
-	} else {
-		gitURL = application
 	}
 
-	// Clone the git repository into workDir/source folder
-	cloneDir := filepath.Join(workDir, "source")
-
-	// Get absolute path for clone directory
-	absCloneDir, err := filepath.Abs(cloneDir)
-	if err != nil {
-		return "", fmt.Errorf("failed to get absolute path: %w", err)
-	}
-
-	// Determine the final input directory (may be a subdirectory if path is specified)
-	var absInputDir string
-	if gitPath != "" {
-		absInputDir = filepath.Join(absCloneDir, gitPath)
-	} else {
-		absInputDir = absCloneDir
-	}
-
-	// Check if directory already exists
-	if _, err := os.Stat(absInputDir); err == nil {
-		log.Info("Repository already exists, skipping clone", "dest", absInputDir)
-		return absInputDir, nil
-	}
-
-	log.Info("Cloning git repository", "url", gitURL, "ref", gitRef, "path", gitPath, "dest", absCloneDir)
-
-	// Build git clone command
-	var gitArgs []string
-	if gitRef != "" {
-		gitArgs = []string{"clone", "--depth", "1", "--branch", gitRef, gitURL, absCloneDir}
-	} else {
-		gitArgs = []string{"clone", "--depth", "1", gitURL, absCloneDir}
-	}
-
-	// Execute git clone
-	result, err := ExecuteCommand(ctx, "git", gitArgs, ".", 5*60*1000000000) // 5 minute timeout for clone
-	if err != nil {
-		log.Info("Git clone failed", "error", err.Error(), "exitCode", result.ExitCode, "stderr", result.Stderr)
-		return "", fmt.Errorf("git clone failed: %w", err)
-	}
-
-	log.Info("Git clone completed successfully")
-
-	// Remove .git directory to save space and avoid git-related issues
-	gitDir := filepath.Join(absCloneDir, ".git")
-	if err := os.RemoveAll(gitDir); err != nil {
-		log.Info("Warning: failed to remove .git directory", "error", err.Error())
-		// Don't fail the entire operation if we can't remove .git
-	} else {
-		log.Info("Removed .git directory", "path", gitDir)
-	}
-
-	// Verify the target path exists if specified
-	if gitPath != "" {
-		if _, err := os.Stat(absInputDir); err != nil {
-			return "", fmt.Errorf("specified path does not exist in repository: %s: %w", gitPath, err)
-		}
-		log.Info("Using subdirectory from repository", "path", gitPath, "fullPath", absInputDir)
-	}
-
-	return absInputDir, nil
+	return preparedRules, nil
 }
 
 // prepareBinary validates and resolves the path to a binary file (.jar, .war, .ear)
