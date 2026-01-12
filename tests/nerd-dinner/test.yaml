@@ -1,0 +1,15 @@
+name: c-sharp
+analysis:
+    application: https://github.com/konveyor/c-sharp-analyzer-provider#main/testdata/nerd-dinner
+    context_lines: 0
+    incident_selector: ""
+    source: []
+    target: []
+    rules:
+        - https://github.com/konveyor/c-sharp-analyzer-provider#main/rulesets/dotnet-core-migration
+    analysisMode: source-only
+timeout: 10m0s
+expect:
+    exitCode: 0
+    output:
+        file: expected-output.yaml
