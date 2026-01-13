@@ -334,12 +334,22 @@ func (t *TackleHubTarget) createApplication(test *config.TestDefinition) (*api.A
 
 	// Only set repository for source code analysis
 	if !isBinary {
-		// Parse the repository URL and branch
-		repoURL, branch := parseGitURL(test.Analysis.Application)
-		app.Repository = &api.Repository{
-			Kind:   "git",
-			URL:    repoURL,
-			Branch: branch,
+		// Use parsed Git components if available, otherwise parse the URL
+		if test.Analysis.ApplicationGitComponents != nil {
+			app.Repository = &api.Repository{
+				Kind:   "git",
+				URL:    test.Analysis.ApplicationGitComponents.URL,
+				Branch: test.Analysis.ApplicationGitComponents.Ref,
+				Path:   test.Analysis.ApplicationGitComponents.Path,
+			}
+		} else {
+			// Fallback to simple parsing (for backward compatibility)
+			repoURL, branch := parseGitURL(test.Analysis.Application)
+			app.Repository = &api.Repository{
+				Kind:   "git",
+				URL:    repoURL,
+				Branch: branch,
+			}
 		}
 	}
 
@@ -396,7 +406,7 @@ func (t *TackleHubTarget) uploadBinary(task *api.Task, binaryPath string, testDi
 }
 
 // createAnalysisTask creates an analysis task for the application
-func (t *TackleHubTarget) createAnalysisTask(_ context.Context, test *config.TestDefinition, app *api.Application) (*api.Task, error) {
+func (t *TackleHubTarget) createAnalysisTask(ctx context.Context, test *config.TestDefinition, app *api.Application) (*api.Task, error) {
 	log := util.GetLogger()
 	// Build task data with analysis configuration
 	taskData := Data{}
@@ -425,6 +435,13 @@ func (t *TackleHubTarget) createAnalysisTask(_ context.Context, test *config.Tes
 		taskData.Rules.Labels = ParseLabelSelector(test.Analysis.LabelSelector)
 	}
 
+	// Handle rules that may be Git URLs
+	// Tackle Hub uses repositories for rules, so we'll prepare them differently
+	err := t.prepareRulesForHub(ctx, test, &taskData)
+	if err != nil {
+		return nil, fmt.Errorf("failed to prepare rules: %w", err)
+	}
+
 	taskData.Verbosity = 1
 	log.V(1).Info("Using task data", "data", taskData)
 
@@ -440,7 +457,7 @@ func (t *TackleHubTarget) createAnalysisTask(_ context.Context, test *config.Tes
 	// Debug: log the task before creating
 	log.V(1).Info("Creating task", "name", task.Name, "kind", task.Kind, "addon", task.Addon, "appID", app.ID)
 
-	err := t.client.Task.Create(task)
+	err = t.client.Task.Create(task)
 	if err != nil {
 		return nil, err
 	}
@@ -457,6 +474,40 @@ func (t *TackleHubTarget) createAnalysisTask(_ context.Context, test *config.Tes
 	}
 
 	return task, nil
+}
+
+// prepareRulesForHub handles rules that may be Git URLs for Tackle Hub
+// Tackle Hub handles rules differently - it uses repositories rather than file paths
+func (t *TackleHubTarget) prepareRulesForHub(ctx context.Context, test *config.TestDefinition, taskData *Data) error {
+	if len(test.Analysis.Rules) == 0 {
+		return nil
+	}
+
+	log := util.GetLogger()
+	taskData.Rules.repositories = make([]string, 0)
+	taskData.Rules.rules = make([]string, 0)
+
+	for i, rule := range test.Analysis.Rules {
+		// Check if we have parsed Git components for this rule
+		if i < len(test.Analysis.RulesGitComponents) && test.Analysis.RulesGitComponents[i] != nil {
+			log.Info("Detected Git URL for rule in Hub", "rule", rule)
+			// For Tackle Hub, we add Git repositories to the repositories list
+			// The format is URL#ref/path for consistency
+			repoString := test.Analysis.RulesGitComponents[i].URL
+			if test.Analysis.RulesGitComponents[i].Ref != "" {
+				repoString += "#" + test.Analysis.RulesGitComponents[i].Ref
+				if test.Analysis.RulesGitComponents[i].Path != "" {
+					repoString += "/" + test.Analysis.RulesGitComponents[i].Path
+				}
+			}
+			taskData.Rules.repositories = append(taskData.Rules.repositories, repoString)
+		} else {
+			// Local path rules - add to rules list
+			taskData.Rules.rules = append(taskData.Rules.rules, rule)
+		}
+	}
+
+	return nil
 }
 
 // pollTaskCompletion polls the task until it completes or times out
@@ -654,11 +705,15 @@ func (t *TackleHubTarget) attachMavenIdentity(app *api.Application) error {
 
 // parseGitURL parses a git URL that may contain a branch reference (e.g., URL#branch)
 // and returns the base URL and branch separately.
+// This is kept for backward compatibility, but prefer using config.ParseGitURLWithPath
 func parseGitURL(gitURL string) (url, branch string) {
-	parts := strings.Split(gitURL, "#")
-	url = parts[0]
-	if len(parts) > 1 {
-		branch = parts[1]
+	components := config.ParseGitURLWithPath(gitURL)
+	url = components.URL
+	// For backward compatibility, combine ref and path with /
+	if components.Path != "" {
+		branch = components.Ref + "/" + components.Path
+	} else {
+		branch = components.Ref
 	}
 	return url, branch
 }

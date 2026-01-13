@@ -76,13 +76,13 @@ func (k *KantraTarget) Execute(ctx context.Context, test *config.TestDefinition)
 	}
 
 	// Handle application input (clone git repo to test-dir/source if needed)
-	inputPath, err := k.prepareInput(ctx, test.Analysis.Application, test.Name, testDir)
+	inputPath, err := k.prepareInput(ctx, &test.Analysis, testDir)
 	if err != nil {
 		return nil, fmt.Errorf("failed to prepare input: %w", err)
 	}
 
 	// Handle rules that may be Git URLs
-	preparedRules, err := k.prepareRules(ctx, test.Analysis.Rules, workDir)
+	preparedRules, err := k.prepareRules(ctx, &test.Analysis, workDir)
 	if err != nil {
 		return nil, fmt.Errorf("failed to prepare rules: %w", err)
 	}
@@ -233,8 +233,9 @@ func (k *KantraTarget) buildArgsWithPreparedRules(analysis config.AnalysisConfig
 
 // prepareInput handles git URLs, local paths, and binary files
 // Returns the local path to use as input for kantra
-func (k *KantraTarget) prepareInput(ctx context.Context, application, testName, workDir string) (string, error) {
+func (k *KantraTarget) prepareInput(ctx context.Context, analysis *config.AnalysisConfig, workDir string) (string, error) {
 	log := util.GetLogger()
+	application := analysis.Application
 
 	// Check if it's a binary file (.jar, .war, .ear)
 	if IsBinaryFile(application) {
@@ -242,12 +243,10 @@ func (k *KantraTarget) prepareInput(ctx context.Context, application, testName, 
 		return k.prepareBinary(application, workDir)
 	}
 
-	// Check if it's a git URL
-	if IsGitURL(application) {
-		// Parse the Git URL
-		components := ParseGitURLWithPath(application)
-		// Clone the repository
-		return CloneGitRepository(ctx, components, workDir, "source")
+	// Check if we have parsed Git components
+	if analysis.ApplicationGitComponents != nil {
+		// Clone the repository using parsed components
+		return CloneGitRepository(ctx, analysis.ApplicationGitComponents, workDir, "source")
 	}
 
 	// It's a local path or binary reference
@@ -265,23 +264,21 @@ func (k *KantraTarget) prepareInput(ctx context.Context, application, testName, 
 
 // prepareRules handles rules that may be Git URLs or local paths
 // Returns a list of prepared rule paths
-func (k *KantraTarget) prepareRules(ctx context.Context, rules []string, workDir string) ([]string, error) {
-	if len(rules) == 0 {
+func (k *KantraTarget) prepareRules(ctx context.Context, analysis *config.AnalysisConfig, workDir string) ([]string, error) {
+	if len(analysis.Rules) == 0 {
 		return nil, nil
 	}
 
 	log := util.GetLogger()
-	preparedRules := make([]string, 0, len(rules))
+	preparedRules := make([]string, 0, len(analysis.Rules))
 
-	for i, rule := range rules {
-		// Check if it's a Git URL
-		if IsGitURL(rule) {
+	for i, rule := range analysis.Rules {
+		// Check if we have parsed Git components for this rule
+		if i < len(analysis.RulesGitComponents) && analysis.RulesGitComponents[i] != nil {
 			log.Info("Detected Git URL for rule", "rule", rule)
-			// Parse the Git URL
-			components := ParseGitURLWithPath(rule)
 			// Clone the repository to a unique directory for this rule
 			cloneName := fmt.Sprintf("rules-%d", i)
-			clonedPath, err := CloneGitRepository(ctx, components, workDir, cloneName)
+			clonedPath, err := CloneGitRepository(ctx, analysis.RulesGitComponents[i], workDir, cloneName)
 			if err != nil {
 				return nil, fmt.Errorf("failed to clone rules repository %s: %w", rule, err)
 			}

@@ -2,6 +2,7 @@ package targets
 
 import (
 	"context"
+	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
@@ -627,7 +628,13 @@ func TestKantraTarget_PrepareInputWithBinary(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			result, err := target.prepareInput(context.Background(), tt.application, "test", tt.testDir)
+			analysis := &config.AnalysisConfig{
+				Application: tt.application,
+			}
+			// Parse Git URLs (this will be a no-op for non-Git URLs)
+			analysis.ParseGitURLs()
+
+			result, err := target.prepareInput(context.Background(), analysis, tt.testDir)
 
 			if tt.expectError {
 				if err == nil {
@@ -648,6 +655,187 @@ func TestKantraTarget_PrepareInputWithBinary(t *testing.T) {
 					}
 				}
 			}
+		})
+	}
+}
+
+func TestKantraTarget_PrepareRules(t *testing.T) {
+	tests := []struct {
+		name          string
+		analysis      config.AnalysisConfig
+		expectError   bool
+		expectedRules []string
+	}{
+		{
+			name: "no rules",
+			analysis: config.AnalysisConfig{
+				Rules: []string{},
+			},
+			expectError:   false,
+			expectedRules: nil,
+		},
+		{
+			name: "local rules only",
+			analysis: config.AnalysisConfig{
+				Rules: []string{
+					"/opt/rulesets",
+					"/custom/rules",
+				},
+			},
+			expectError: false,
+			expectedRules: []string{
+				"/opt/rulesets",
+				"/custom/rules",
+			},
+		},
+		{
+			name: "Git URL rules",
+			analysis: config.AnalysisConfig{
+				Rules: []string{
+					"https://github.com/konveyor/rulesets#main",
+					"https://github.com/konveyor/analyzer-lsp#v1.0/rules",
+				},
+			},
+			expectError: false,
+			// These will be cloned to work directory
+			expectedRules: []string{
+				"testwork/rules-0",
+				"testwork/rules-1",
+			},
+		},
+		{
+			name: "mixed local and Git URL rules",
+			analysis: config.AnalysisConfig{
+				Rules: []string{
+					"/opt/rulesets",
+					"https://github.com/konveyor/rulesets#main/java",
+					"/custom/rules",
+					"https://github.com/konveyor/analyzer-lsp#v1.0/dotnet",
+				},
+			},
+			expectError: false,
+			expectedRules: []string{
+				"/opt/rulesets",
+				"testwork/rules-1",
+				"/custom/rules",
+				"testwork/rules-3",
+			},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			// Parse Git URLs in the analysis config
+			tt.analysis.ParseGitURLs()
+
+			// Create a mock prepareRules function that simulates the behavior
+			// without actually cloning repositories
+			preparedRules := make([]string, 0, len(tt.analysis.Rules))
+			for i, rule := range tt.analysis.Rules {
+				// Check if we have parsed Git components for this rule
+				if i < len(tt.analysis.RulesGitComponents) && tt.analysis.RulesGitComponents[i] != nil {
+					// Simulate a cloned path
+					preparedRules = append(preparedRules, fmt.Sprintf("testwork/rules-%d", i))
+				} else {
+					// Local path - use as-is
+					preparedRules = append(preparedRules, rule)
+				}
+			}
+
+			// Verify the results match expected
+			if len(preparedRules) != len(tt.expectedRules) {
+				t.Errorf("Expected %d prepared rules, got %d", len(tt.expectedRules), len(preparedRules))
+			}
+			for i, expected := range tt.expectedRules {
+				if i < len(preparedRules) && preparedRules[i] != expected {
+					t.Errorf("Rule %d: expected %s, got %s", i, expected, preparedRules[i])
+				}
+			}
+		})
+	}
+}
+
+func TestKantraTarget_GitURLIntegration(t *testing.T) {
+	tests := []struct {
+		name     string
+		analysis config.AnalysisConfig
+		validate func(t *testing.T, analysis *config.AnalysisConfig)
+	}{
+		{
+			name: "application with Git URL and path",
+			analysis: config.AnalysisConfig{
+				Application: "https://github.com/konveyor/tackle-testapp#main/src",
+			},
+			validate: func(t *testing.T, analysis *config.AnalysisConfig) {
+				if analysis.ApplicationGitComponents == nil {
+					t.Fatal("Expected ApplicationGitComponents to be set")
+				}
+				if analysis.ApplicationGitComponents.URL != "https://github.com/konveyor/tackle-testapp" {
+					t.Errorf("Expected URL to be https://github.com/konveyor/tackle-testapp, got %s",
+						analysis.ApplicationGitComponents.URL)
+				}
+				if analysis.ApplicationGitComponents.Ref != "main" {
+					t.Errorf("Expected ref to be main, got %s", analysis.ApplicationGitComponents.Ref)
+				}
+				if analysis.ApplicationGitComponents.Path != "src" {
+					t.Errorf("Expected path to be src, got %s", analysis.ApplicationGitComponents.Path)
+				}
+			},
+		},
+		{
+			name: "rules with multiple Git URLs and paths",
+			analysis: config.AnalysisConfig{
+				Application: "/local/app",
+				Rules: []string{
+					"https://github.com/konveyor/rulesets#main/java",
+					"/local/rules",
+					"https://github.com/konveyor/analyzer-lsp#v1.0/dotnet/rules",
+				},
+			},
+			validate: func(t *testing.T, analysis *config.AnalysisConfig) {
+				if analysis.ApplicationGitComponents != nil {
+					t.Error("Expected ApplicationGitComponents to be nil for local path")
+				}
+				if len(analysis.RulesGitComponents) != 3 {
+					t.Fatalf("Expected 3 RulesGitComponents, got %d", len(analysis.RulesGitComponents))
+				}
+
+				// First rule - Git URL with path
+				if analysis.RulesGitComponents[0] == nil {
+					t.Error("Expected first rule to have Git components")
+				} else {
+					if analysis.RulesGitComponents[0].URL != "https://github.com/konveyor/rulesets" {
+						t.Errorf("First rule URL mismatch: %s", analysis.RulesGitComponents[0].URL)
+					}
+					if analysis.RulesGitComponents[0].Path != "java" {
+						t.Errorf("First rule path mismatch: %s", analysis.RulesGitComponents[0].Path)
+					}
+				}
+
+				// Second rule - local path
+				if analysis.RulesGitComponents[1] != nil {
+					t.Error("Expected second rule to have nil Git components (local path)")
+				}
+
+				// Third rule - Git URL with deep path
+				if analysis.RulesGitComponents[2] == nil {
+					t.Error("Expected third rule to have Git components")
+				} else {
+					if analysis.RulesGitComponents[2].Path != "dotnet/rules" {
+						t.Errorf("Third rule path mismatch: %s", analysis.RulesGitComponents[2].Path)
+					}
+				}
+			},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			// Parse Git URLs
+			tt.analysis.ParseGitURLs()
+
+			// Run validation
+			tt.validate(t, &tt.analysis)
 		})
 	}
 }

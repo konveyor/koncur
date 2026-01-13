@@ -34,6 +34,9 @@ func LoadWithOptions(path string, skipExpectedOutput bool) (*TestDefinition, err
 	}
 	test.SetTestFilePath(absPath)
 
+	// Parse Git URLs in the analysis configuration
+	test.Analysis.ParseGitURLs()
+
 	// If the expected output specifies a file, load it (unless skipped)
 	if test.Expect.Output.File != "" && !skipExpectedOutput {
 		// Resolve the expected output file path relative to the test file's directory
