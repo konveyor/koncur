@@ -1,6 +1,8 @@
 package targets
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestIsBinaryFile(t *testing.T) {
 	tests := []struct {
