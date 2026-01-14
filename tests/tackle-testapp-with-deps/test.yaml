@@ -3,6 +3,9 @@ analysis:
     application: https://github.com/konveyor/tackle-testapp-public#ci-2024
     labelSelector: konveyor.io/target
     context_lines: 0
+    incident_selector: ""
+    source: []
+    target: []
     rules: []
     analysisMode: full
 timeout: 10m0s

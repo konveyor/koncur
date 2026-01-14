@@ -238,9 +238,9 @@ func (k *KantraTarget) prepareInput(ctx context.Context, analysis *config.Analys
 	application := analysis.Application
 
 	// Check if it's a binary file (.jar, .war, .ear)
-	if IsBinaryFile(application) {
-		log.Info("Detected binary input", "file", application)
-		return k.prepareBinary(application, workDir)
+	if IsBinaryFile(analysis.Application) {
+		log.Info("Detected binary input", "file", analysis.Application)
+		return k.prepareBinary(analysis.Application, workDir)
 	}
 
 	// Check if we have parsed Git components

@@ -2,6 +2,7 @@ package config
 
 import (
 	"path/filepath"
+	"strings"
 	"time"
 
 	konveyor "github.com/konveyor/analyzer-lsp/output/v1/konveyor"
@@ -57,6 +58,36 @@ type AnalysisConfig struct {
 	// Parsed Git components (not in YAML)
 	ApplicationGitComponents *GitURLComponents   `yaml:"-" json:"-"`
 	RulesGitComponents       []*GitURLComponents `yaml:"-" json:"-"`
+}
+
+type ApplicationGitRef struct {
+	Repo   string
+	Branch string
+	Path   string
+}
+
+func (a *AnalysisConfig) GetApplication() (ApplicationGitRef, error) {
+	var gitURL, gitRef, gitPath string
+	if strings.Contains(a.Application, "#") {
+		parts := strings.SplitN(a.Application, "#", 2)
+		gitURL = parts[0]
+		if len(parts) > 1 {
+			// Split the reference on "/" to separate branch from path
+			refParts := strings.SplitN(parts[1], "/", 2)
+			gitRef = refParts[0]
+			if len(refParts) > 1 {
+				gitPath = refParts[1]
+			}
+		}
+	} else {
+		gitURL = a.Application
+	}
+
+	return ApplicationGitRef{
+		Repo:   gitURL,
+		Branch: gitRef,
+		Path:   gitPath,
+	}, nil
 }
 
 // ExpectConfig defines expected outcomes
