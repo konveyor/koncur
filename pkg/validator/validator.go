@@ -10,19 +10,19 @@ import (
 )
 
 type tagCompare interface {
-	compareTag(expected string, actual []string) (*ValidationError, bool)
+	compareTags(expected, actual []string) []ValidationError
 }
 type violationCompare interface {
-	compareViolation(expected, actual konveyor.Violation) ([]ValidationError, bool)
+	compareViolations(expected, actual map[string]konveyor.Violation) []ValidationError
 }
 type errorsCompare interface {
-	compareErrors(expected, actual string) (*ValidationError, bool)
+	compareErrors(expected, actual map[string]string) []ValidationError
 }
 type unmatchedCompare interface {
-	compareUnmatched(expected string, actual []string) (*ValidationError, bool)
+	compareUnmatched(expected, actual []string) []ValidationError
 }
 type skippedCompare interface {
-	compareSkipped(expected string, actual []string) (*ValidationError, bool)
+	compareSkipped(expected, actual []string) []ValidationError
 }
 
 func findExpectedString(expected string, actual []string) bool {
@@ -112,11 +112,6 @@ func ValidateFiles(testDir, targetType string, actual, expected []konveyor.RuleS
 	errors := []ValidationError{}
 	comparer := getComparer(targetType, testDir)
 
-	expectedRulesetNames := make(map[string]bool)
-	for _, ers := range expected {
-		expectedRulesetNames[ers.Name] = true
-	}
-
 	for _, ers := range expected {
 		found := false
 		for _, rs := range actual {
@@ -126,126 +121,47 @@ func ValidateFiles(testDir, targetType string, actual, expected []konveyor.RuleS
 			found = true
 
 			if !maps.Equal(ers.Errors, rs.Errors) {
-				for k, eerr := range ers.Errors {
-					if err, ok := comparer.compareErrors(eerr, rs.Errors[k]); ok {
-						err.Path = fmt.Sprintf("%s/error/%s", rs.Name, k)
-						errors = append(errors, *err)
-					}
+				errs := comparer.compareErrors(ers.Errors, rs.Errors)
+				for i := range errs {
+					errs[i].Path = fmt.Sprintf("%s/error%s", rs.Name, errs[i].Path)
 				}
-				for k := range rs.Errors {
-					if _, exists := ers.Errors[k]; !exists {
-						errors = append(errors, ValidationError{
-							Path:    fmt.Sprintf("%s/error/%s", rs.Name, k),
-							Message: fmt.Sprintf("Unexpected error found: %s", k),
-							Actual:  rs.Errors[k],
-						})
-					}
-				}
+				errors = append(errors, errs...)
 			}
 
 			if !reflect.DeepEqual(rs.Tags, ers.Tags) {
-				for _, erstags := range ers.Tags {
-					if err, ok := comparer.compareTag(erstags, rs.Tags); ok {
-						err.Path = fmt.Sprintf("%s/tags/%s", rs.Name, erstags)
-						errors = append(errors, *err)
-					}
+				errs := comparer.compareTags(ers.Tags, rs.Tags)
+				for i := range errs {
+					errs[i].Path = fmt.Sprintf("%s/tags%s", rs.Name, errs[i].Path)
 				}
-				for _, atag := range rs.Tags {
-					if !findExpectedString(atag, ers.Tags) {
-						errors = append(errors, ValidationError{
-							Path:    fmt.Sprintf("%s/tags/%s", rs.Name, atag),
-							Message: fmt.Sprintf("Unexpected tag found: %s", atag),
-							Actual:  atag,
-						})
-					}
-				}
+				errors = append(errors, errs...)
 			}
 			if !reflect.DeepEqual(rs.Insights, ers.Insights) {
-				for k, ersinsights := range ers.Insights {
-					if err, ok := comparer.compareViolation(ersinsights, rs.Insights[k]); ok {
-
-						newMessage := "Did not find Insights\n\t"
-						for _, e := range err {
-							newMessage = fmt.Sprintf("%s\n\t%s", newMessage, e.Message)
-						}
-
-						errors = append(errors, ValidationError{
-							Path:     fmt.Sprintf("%s/insights/%s", rs.Name, k),
-							Message:  newMessage,
-							Expected: ersinsights,
-						})
-					}
+				errs := comparer.compareViolations(ers.Insights, rs.Insights)
+				for i := range errs {
+					errs[i].Path = fmt.Sprintf("%s/insights%s", rs.Name, errs[i].Path)
 				}
-				for k := range rs.Insights {
-					if _, exists := ers.Insights[k]; !exists {
-						errors = append(errors, ValidationError{
-							Path:    fmt.Sprintf("%s/insights/%s", rs.Name, k),
-							Message: fmt.Sprintf("Unexpected insight found: %s", k),
-							Actual:  rs.Insights[k],
-						})
-					}
-				}
-
+				errors = append(errors, errs...)
 			}
 			if !reflect.DeepEqual(rs.Violations, ers.Violations) {
-				for k, ersinsights := range ers.Violations {
-					if err, ok := comparer.compareViolation(ersinsights, rs.Violations[k]); ok {
-
-						newMessage := "Did not find violations\n\t"
-						for _, e := range err {
-							newMessage = fmt.Sprintf("%s\n\t%s", newMessage, e.Message)
-						}
-
-						errors = append(errors, ValidationError{
-							Path:     fmt.Sprintf("%s/violation/%s", rs.Name, k),
-							Message:  newMessage,
-							Expected: ersinsights,
-						})
-					}
+				errs := comparer.compareViolations(ers.Violations, rs.Violations)
+				for i := range errs {
+					errs[i].Path = fmt.Sprintf("%s/violations%s", rs.Name, errs[i].Path)
 				}
-				for k := range rs.Violations {
-					if _, exists := ers.Violations[k]; !exists {
-						errors = append(errors, ValidationError{
-							Path:    fmt.Sprintf("%s/violation/%s", rs.Name, k),
-							Message: fmt.Sprintf("Unexpected violation found: %s", k),
-							Actual:  rs.Violations[k],
-						})
-					}
-				}
+				errors = append(errors, errs...)
 			}
 			if !reflect.DeepEqual(rs.Unmatched, ers.Unmatched) {
-				for _, ersunmatched := range ers.Unmatched {
-					if err, ok := comparer.compareUnmatched(ersunmatched, rs.Unmatched); ok {
-						err.Path = fmt.Sprintf("%s/unmatched/%s", rs.Name, ersunmatched)
-						errors = append(errors, *err)
-					}
+				errs := comparer.compareUnmatched(ers.Unmatched, rs.Unmatched)
+				for i := range errs {
+					errs[i].Path = fmt.Sprintf("%s/unmatched%s", rs.Name, errs[i].Path)
 				}
-				for _, aunmatched := range rs.Unmatched {
-					if !findExpectedString(aunmatched, ers.Unmatched) {
-						errors = append(errors, ValidationError{
-							Path:    fmt.Sprintf("%s/unmatched/%s", rs.Name, aunmatched),
-							Message: fmt.Sprintf("Unexpected unmatched rule found: %s", aunmatched),
-							Actual:  aunmatched,
-						})
-					}
-				}
+				errors = append(errors, errs...)
 			}
 			if !reflect.DeepEqual(rs.Skipped, ers.Skipped) {
-				for _, ersskipped := range ers.Skipped {
-					if err, ok := comparer.compareSkipped(ersskipped, rs.Skipped); ok {
-						err.Path = fmt.Sprintf("%s/skipped/%s", rs.Name, ersskipped)
-						errors = append(errors, *err)
-					}
+				errs := comparer.compareSkipped(ers.Skipped, rs.Skipped)
+				for i := range errs {
+					errs[i].Path = fmt.Sprintf("%s/skipped%s", rs.Name, errs[i].Path)
 				}
-				for _, askipped := range rs.Skipped {
-					if !findExpectedString(askipped, ers.Skipped) {
-						errors = append(errors, ValidationError{
-							Path:    fmt.Sprintf("%s/skipped/%s", rs.Name, askipped),
-							Message: fmt.Sprintf("Unexpected skipped rule found: %s", askipped),
-							Actual:  askipped,
-						})
-					}
-				}
+				errors = append(errors, errs...)
 			}
 			break
 		}
@@ -254,6 +170,10 @@ func ValidateFiles(testDir, targetType string, actual, expected []konveyor.RuleS
 		}
 	}
 
+	expectedRulesetNames := make(map[string]bool)
+	for _, ers := range expected {
+		expectedRulesetNames[ers.Name] = true
+	}
 	for _, rs := range actual {
 		if !expectedRulesetNames[rs.Name] {
 			errors = append(errors, ValidationError{

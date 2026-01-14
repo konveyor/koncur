@@ -2,7 +2,6 @@ package validator
 
 import (
 	"fmt"
-	"path/filepath"
 	"reflect"
 	"strings"
 
@@ -13,38 +12,72 @@ type baseValidator struct {
 	testDir string
 }
 
-func (b *baseValidator) compareTag(expected string, actual []string) (*ValidationError, bool) {
-	if findExpectedString(expected, actual) {
-		return nil, false
+func (b *baseValidator) compareTags(expected, actual []string) []ValidationError {
+	var errors []ValidationError
+	for _, exp := range expected {
+		if !findExpectedString(exp, actual) {
+			errors = append(errors, ValidationError{
+				Path:     fmt.Sprintf("/%s", exp),
+				Message:  fmt.Sprintf("Did not find expected tag: %s", exp),
+				Expected: exp,
+			})
+		}
 	}
-	// Didn't find expected tag
-	return &ValidationError{
-		Path:     "",
-		Message:  fmt.Sprintf("Did not find expected tag: %s", expected),
-		Expected: expected,
-		Actual:   nil,
-	}, true
+	for _, act := range actual {
+		if !findExpectedString(act, expected) {
+			errors = append(errors, ValidationError{
+				Path:    fmt.Sprintf("/%s", act),
+				Message: fmt.Sprintf("Unexpected tag found: %s", act),
+				Actual:  act,
+			})
+		}
+	}
+
+	return errors
 }
 
-func (b *baseValidator) compareViolation(expected, actual konveyor.Violation) ([]ValidationError, bool) {
-	validationError := []ValidationError{}
-	if reflect.DeepEqual(actual, konveyor.Violation{}) {
-		return []ValidationError{
-			{
-				Message: "Unable to find violation",
-			},
-		}, true
+func (b *baseValidator) compareViolations(expected, actual map[string]konveyor.Violation) []ValidationError {
+	var errors []ValidationError
+	for k, exp := range expected {
+		act, exists := actual[k]
+		if !exists {
+			errors = append(errors, ValidationError{
+				Path:     fmt.Sprintf("/%s", k),
+				Message:  fmt.Sprintf("Did not find expected violation: %s", k),
+				Expected: exp,
+			})
+			continue
+		}
+
+		detailErrors := b.compareViolationDetails(exp, act)
+		for i := range detailErrors {
+			detailErrors[i].Path = fmt.Sprintf("/%s%s", k, detailErrors[i].Path)
+		}
+		errors = append(errors, detailErrors...)
+	}
+	for k := range actual {
+		if _, exists := expected[k]; !exists {
+			errors = append(errors, ValidationError{
+				Path:    fmt.Sprintf("/%s", k),
+				Message: fmt.Sprintf("Unexpected violation found: %s", k),
+				Actual:  actual[k],
+			})
+		}
 	}
 
-	if actual.Category != nil && *expected.Category != *actual.Category {
-		validationError = append(validationError, ValidationError{
-			Path:    "",
+	return errors
+}
+
+func (b *baseValidator) compareViolationDetails(expected, actual konveyor.Violation) []ValidationError {
+	var errors []ValidationError
+
+	if actual.Category != nil && expected.Category != nil && *expected.Category != *actual.Category {
+		errors = append(errors, ValidationError{
 			Message: fmt.Sprintf("Did not find expected category: %v", expected.Category),
 		})
 	}
 	if (expected.Effort != nil && actual.Effort != nil) && (*expected.Effort != *actual.Effort) {
-		validationError = append(validationError, ValidationError{
-			Path:    "",
+		errors = append(errors, ValidationError{
 			Message: fmt.Sprintf("Did not find expected effort: %v", expected.Effort),
 		})
 	}
@@ -52,113 +85,158 @@ func (b *baseValidator) compareViolation(expected, actual konveyor.Violation) ([
 	for _, l := range expected.Links {
 		found := false
 		for _, al := range actual.Links {
-			if l.Title == al.Title && l.URL == al.Title {
+			if l.Title == al.Title && l.URL == al.URL {
 				found = true
 				break
 			}
 		}
 		if !found {
-			validationError = append(validationError, ValidationError{
-				Path:    "",
-				Message: fmt.Sprintf("Did not find expected links: %v", l),
+			errors = append(errors, ValidationError{
+				Message: fmt.Sprintf("Did not find expected link: %v", l),
 			})
 		}
 	}
 	// Handle Labels
 	for _, l := range expected.Labels {
-		if findExpectedString(l, actual.Labels) {
-			continue
+		if !findExpectedString(l, actual.Labels) {
+			errors = append(errors, ValidationError{
+				Message: fmt.Sprintf("Did not find expected label: %v", l),
+			})
 		}
-		validationError = append(validationError, ValidationError{
-			Path:    "",
-			Message: fmt.Sprintf("Did not find expected label: %v", l),
-		})
 	}
 	// Handle Incidents - collect all missing incidents and report as one error
 	for _, i := range expected.Incidents {
 		found := false
 		for _, ai := range actual.Incidents {
-			if strings.TrimSpace(i.CodeSnip) != strings.TrimSpace(ai.CodeSnip) {
-				continue
+			if b.incidentsMatch(i, ai) {
+				found = true
+				break
 			}
-			// Skip URI comparison if either URI is empty
-			if string(i.URI) == "" || string(ai.URI) == "" {
-				if string(i.URI) != string(ai.URI) {
-					continue
-				}
-			} else {
-				pathToTest, err := filepath.Rel(filepath.Join(b.testDir, "source"), i.URI.Filename())
-				if err != nil {
-					break
-				}
-				if !strings.Contains(ai.URI.Filename(), pathToTest) {
-					continue
-				}
-			}
-			if i.Message != ai.Message {
-				continue
-			}
-			expectedLN := 0
-			if i.LineNumber != nil {
-				expectedLN = *i.LineNumber
-			}
-			actualLN := 0
-			if ai.LineNumber != nil {
-				actualLN = *ai.LineNumber
-			}
-			if expectedLN != actualLN {
-				continue
-			}
-			if !reflect.DeepEqual(i.Variables, ai.Variables) {
-				continue
-			}
-			found = true
 		}
 		if !found {
-			validationError = append(validationError, ValidationError{
-				Path:    "",
+			errors = append(errors, ValidationError{
 				Message: fmt.Sprintf("Did not find expected incident: %s:%d", i.URI, i.LineNumber),
 			})
 		}
 	}
 
-	return validationError, len(validationError) != 0
+	for _, ai := range actual.Incidents {
+		found := false
+		for _, i := range expected.Incidents {
+			if b.incidentsMatch(i, ai) {
+				found = true
+				break
+			}
+		}
+		if !found {
+			errors = append(errors, ValidationError{
+				Message: fmt.Sprintf("Unexpected incident found: %s:%d", ai.URI, ai.LineNumber),
+			})
+		}
+	}
+
+	return errors
 }
 
-func (b *baseValidator) compareErrors(expected, actual string) (*ValidationError, bool) {
-	if expected != actual {
-		return &ValidationError{
-			Path:     "",
-			Message:  fmt.Sprintf("Did not find expected error: %s", expected),
-			Expected: expected,
-			Actual:   nil,
-		}, true
+func lineNumberOrZero(ln *int) int {
+	if ln != nil {
+		return *ln
 	}
-	return nil, false
+	return 0
 }
 
-func (b *baseValidator) compareUnmatched(expected string, actual []string) (*ValidationError, bool) {
-	if findExpectedString(expected, actual) {
-		return nil, false
+func (b *baseValidator) incidentsMatch(expected, actual konveyor.Incident) bool {
+	if strings.TrimSpace(expected.CodeSnip) != "" && strings.TrimSpace(expected.CodeSnip) != strings.TrimSpace(actual.CodeSnip) {
+		return false
 	}
-	// Didn't find expected tag
-	return &ValidationError{
-		Path:     "",
-		Message:  fmt.Sprintf("Did not find expected unmatched rule: %s", expected),
-		Expected: expected,
-		Actual:   nil,
-	}, true
+	if string(expected.URI) != string(actual.URI) {
+		return false
+	}
+	if expected.Message != actual.Message {
+		return false
+	}
+	expectedLN := lineNumberOrZero(expected.LineNumber)
+	actualLN := lineNumberOrZero(actual.LineNumber)
+	if expectedLN != actualLN {
+		return false
+	}
+
+	if len(expected.Variables) > 0 && !reflect.DeepEqual(expected.Variables, actual.Variables) {
+		return false
+	}
+
+	return true
 }
 
-func (b *baseValidator) compareSkipped(expected string, actual []string) (*ValidationError, bool) {
-	if findExpectedString(expected, actual) {
-		return nil, false
+func (b *baseValidator) compareErrors(expected, actual map[string]string) []ValidationError {
+	var errors []ValidationError
+	for k, exp := range expected {
+		act, exists := actual[k]
+		if !exists || exp != act {
+			errors = append(errors, ValidationError{
+				Path:     fmt.Sprintf("/%s", k),
+				Message:  fmt.Sprintf("Did not find expected error: %s", exp),
+				Expected: exp,
+			})
+		}
 	}
-	// Didn't find expected tag
-	return &ValidationError{
-		Path:     "",
-		Message:  fmt.Sprintf("Did not find expected skipped rule: %s", expected),
-		Expected: expected,
-		Actual:   nil,
-	}, true
+	for k := range actual {
+		if _, exists := expected[k]; !exists {
+			errors = append(errors, ValidationError{
+				Path:    fmt.Sprintf("/%s", k),
+				Message: fmt.Sprintf("Unexpected error found: %s", k),
+				Actual:  actual[k],
+			})
+		}
+	}
+
+	return errors
+}
+
+func (b *baseValidator) compareUnmatched(expected, actual []string) []ValidationError {
+	var errors []ValidationError
+	for _, exp := range expected {
+		if !findExpectedString(exp, actual) {
+			errors = append(errors, ValidationError{
+				Path:     fmt.Sprintf("/%s", exp),
+				Message:  fmt.Sprintf("Did not find expected unmatched rule: %s", exp),
+				Expected: exp,
+			})
+		}
+	}
+	for _, act := range actual {
+		if !findExpectedString(act, expected) {
+			errors = append(errors, ValidationError{
+				Path:    fmt.Sprintf("/%s", act),
+				Message: fmt.Sprintf("Unexpected unmatched rule found: %s", act),
+				Actual:  act,
+			})
+		}
+	}
+
+	return errors
+}
+
+func (b *baseValidator) compareSkipped(expected, actual []string) []ValidationError {
+	var errors []ValidationError
+	for _, exp := range expected {
+		if !findExpectedString(exp, actual) {
+			errors = append(errors, ValidationError{
+				Path:     fmt.Sprintf("/%s", exp),
+				Message:  fmt.Sprintf("Did not find expected skipped rule: %s", exp),
+				Expected: exp,
+			})
+		}
+	}
+	for _, act := range actual {
+		if !findExpectedString(act, expected) {
+			errors = append(errors, ValidationError{
+				Path:    fmt.Sprintf("/%s", act),
+				Message: fmt.Sprintf("Unexpected skipped rule found: %s", act),
+				Actual:  act,
+			})
+		}
+	}
+
+	return errors
 }
