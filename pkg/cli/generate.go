@@ -153,9 +153,20 @@ This is useful when:
 					hasSettings := false
 					if targetConfig.Kantra != nil && targetConfig.Kantra.MavenSettings != "" {
 						hasSettings = true
+						if _, err := os.Stat(targetConfig.Kantra.MavenSettings); err != nil {
+							color.Red("  ✗ Failed to stat maven settings: %v", err)
+							failCount++
+							continue
+						}
 					} else if targetConfig.TackleHub != nil && targetConfig.TackleHub.MavenSettings != "" {
 						hasSettings = true
+						if _, err := os.Stat(targetConfig.TackleHub.MavenSettings); err != nil {
+							color.Red("  ✗ Failed to stat maven settings: %v", err)
+							failCount++
+							continue
+						}
 					}
+
 					if !hasSettings {
 						color.Red("  ✗ Test requires maven settings but none configured in target config")
 						failCount++

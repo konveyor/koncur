@@ -58,6 +58,10 @@ func ExecuteCommand(ctx context.Context, binary string, args []string, workDir s
 
 	log.Info("Command completed", "exitCode", exitCode, "duration", duration)
 
+	if exitCode != 0 {
+		return nil, fmt.Errorf("command failed with exit code: %d: %s", exitCode, stderr.String())
+	}
+
 	return result, nil
 }
 
