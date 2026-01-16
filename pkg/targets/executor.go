@@ -1,7 +1,6 @@
 package targets
 
 import (
-	"bytes"
 	"context"
 	"fmt"
 	"os"
@@ -26,10 +25,8 @@ func ExecuteCommand(ctx context.Context, binary string, args []string, workDir s
 	cmd := exec.CommandContext(execCtx, binary, args...)
 	cmd.Dir = workDir
 
-	// Capture stdout and stderr
-	var stdout, stderr bytes.Buffer
-	cmd.Stdout = &stdout
-	cmd.Stderr = &stderr
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
 
 	// Execute
 	start := time.Now()
@@ -51,15 +48,13 @@ func ExecuteCommand(ctx context.Context, binary string, args []string, workDir s
 		ExitCode: exitCode,
 		Duration: duration,
 		WorkDir:  workDir,
-		Stdout:   stdout.String(),
-		Stderr:   stderr.String(),
 		Error:    err,
 	}
 
 	log.Info("Command completed", "exitCode", exitCode, "duration", duration)
 
 	if exitCode != 0 {
-		return nil, fmt.Errorf("command failed with exit code: %d: %s", exitCode, stderr.String())
+		return nil, fmt.Errorf("command failed with exit code: %d", exitCode)
 	}
 
 	return result, nil
