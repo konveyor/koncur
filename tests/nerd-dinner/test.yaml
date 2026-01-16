@@ -7,6 +7,7 @@ analysis:
     target: []
     rules:
         - https://github.com/konveyor/c-sharp-analyzer-provider#main/rulesets/dotnet-core-migration
+    disableDefaultRules: true
     analysisMode: source-only
 timeout: 10m0s
 expect:

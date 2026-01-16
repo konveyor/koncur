@@ -89,12 +89,12 @@ func TestKantraTarget_Name(t *testing.T) {
 
 func TestKantraTarget_BuildArgs(t *testing.T) {
 	tests := []struct {
-		name          string
-		analysis      config.AnalysisConfig
-		inputPath     string
-		outputDir     string
-		mavenSettings string
-		expectContain []string
+		name             string
+		analysis         config.AnalysisConfig
+		inputPath        string
+		outputDir        string
+		mavenSettings    string
+		expectContain    []string
 		expectNotContain []string
 	}{
 		{
@@ -137,9 +137,9 @@ func TestKantraTarget_BuildArgs(t *testing.T) {
 		{
 			name: "analysis with label selector",
 			analysis: config.AnalysisConfig{
-				AnalysisMode:   provider.SourceOnlyAnalysisMode,
-				ContextLines:   10,
-				LabelSelector:  "konveyor.io/target=cloud-readiness",
+				AnalysisMode:  provider.SourceOnlyAnalysisMode,
+				ContextLines:  10,
+				LabelSelector: "konveyor.io/target=cloud-readiness",
 			},
 			inputPath: "/path/to/app",
 			outputDir: "/path/to/output",
