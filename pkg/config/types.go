@@ -45,15 +45,16 @@ func (t *TestDefinition) GetTestDir() string {
 // AnalysisConfig defines what to analyze
 type AnalysisConfig struct {
 	// Application is either a file path or git repository URL
-	Application      string                `json:"application" yaml:"application" validate:"required" `
-	LabelSelector    string                `json:"label_selector" yaml:"labelSelector,omitempty" `
-	KnownLibs        bool                  `json:"known_libs" yaml:"knownLibs,omitempty"`
-	ContextLines     int                   `json:"context_lines" yaml:"context_lines"`
-	IncidentSelector string                `json:"incident_selector" yaml:"incident_selector"`
-	Source           []string              `json:"source" yaml:"source"`
-	Target           []string              `json:"target" yaml:"target"`
-	Rules            []string              `json:"rules" yaml:"rules"`
-	AnalysisMode     provider.AnalysisMode `json:"analysis_mode" yaml:"analysisMode" validate:"required" `
+	Application         string                `json:"application" yaml:"application" validate:"required" `
+	LabelSelector       string                `json:"label_selector" yaml:"labelSelector,omitempty" `
+	KnownLibs           bool                  `json:"known_libs" yaml:"knownLibs,omitempty"`
+	ContextLines        int                   `json:"context_lines" yaml:"context_lines"`
+	IncidentSelector    string                `json:"incident_selector" yaml:"incident_selector"`
+	Source              []string              `json:"source" yaml:"source"`
+	Target              []string              `json:"target" yaml:"target"`
+	Rules               []string              `json:"rules" yaml:"rules"`
+	DisableDefaultRules bool                  `json:"disableDefaultRules" yaml:"disableDefaultRules"`
+	AnalysisMode        provider.AnalysisMode `json:"analysis_mode" yaml:"analysisMode" validate:"required" `
 
 	// Parsed Git components (not in YAML)
 	ApplicationGitComponents *GitURLComponents   `yaml:"-" json:"-"`

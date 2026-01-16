@@ -173,12 +173,8 @@ func (t *TackleHubTarget) Execute(ctx context.Context, test *config.TestDefiniti
 
 	var insights []api.Insight
 	err = t.client.Client.Get(
-		api.AnalysesInsightsRoot,
+		fmt.Sprintf("applications/%v/analysis/insights", app.ID),
 		&insights,
-		binding.Param{
-			Key:   "application",
-			Value: fmt.Sprintf("%v", app.ID),
-		},
 	)
 
 	rulesetToInsightConverted := map[string]konveyor.RuleSet{}
@@ -410,6 +406,9 @@ func (t *TackleHubTarget) createAnalysisTask(ctx context.Context, test *config.T
 	log := util.GetLogger()
 	// Build task data with analysis configuration
 	taskData := Data{}
+	// For testing purpose's we want discovery and tags to be applied
+	// from this task
+	taskData.Tagger.Enabled = true
 
 	// Check if this is a binary analysis
 	isBinary := IsBinaryFile(test.Analysis.Application)
@@ -478,34 +477,25 @@ func (t *TackleHubTarget) createAnalysisTask(ctx context.Context, test *config.T
 
 // prepareRulesForHub handles rules that may be Git URLs for Tackle Hub
 // Tackle Hub handles rules differently - it uses repositories rather than file paths
-func (t *TackleHubTarget) prepareRulesForHub(ctx context.Context, test *config.TestDefinition, taskData *Data) error {
-	if len(test.Analysis.Rules) == 0 {
+func (t *TackleHubTarget) prepareRulesForHub(_ context.Context, test *config.TestDefinition, taskData *Data) error {
+	if len(test.Analysis.Rules) == 0 || len(test.Analysis.RulesGitComponents) == 0 {
 		return nil
 	}
 
 	log := util.GetLogger()
-	taskData.Rules.repositories = make([]string, 0)
-	taskData.Rules.rules = make([]string, 0)
 
-	for i, rule := range test.Analysis.Rules {
-		// Check if we have parsed Git components for this rule
-		if i < len(test.Analysis.RulesGitComponents) && test.Analysis.RulesGitComponents[i] != nil {
-			log.Info("Detected Git URL for rule in Hub", "rule", rule)
-			// For Tackle Hub, we add Git repositories to the repositories list
-			// The format is URL#ref/path for consistency
-			repoString := test.Analysis.RulesGitComponents[i].URL
-			if test.Analysis.RulesGitComponents[i].Ref != "" {
-				repoString += "#" + test.Analysis.RulesGitComponents[i].Ref
-				if test.Analysis.RulesGitComponents[i].Path != "" {
-					repoString += "/" + test.Analysis.RulesGitComponents[i].Path
-				}
-			}
-			taskData.Rules.repositories = append(taskData.Rules.repositories, repoString)
-		} else {
-			// Local path rules - add to rules list
-			taskData.Rules.rules = append(taskData.Rules.rules, rule)
-		}
+	if len(test.Analysis.RulesGitComponents) != 1 {
+		return fmt.Errorf("tackle hub can only handle a single repository for custom rules")
 	}
+
+	taskData.Rules.Repository = &api.Repository{
+		Kind:   "git",
+		URL:    test.Analysis.RulesGitComponents[0].URL,
+		Branch: test.Analysis.RulesGitComponents[0].Ref,
+		Path:   test.Analysis.RulesGitComponents[0].Path,
+	}
+
+	log.Info("Using rules", "rules", taskData.Rules)
 
 	return nil
 }

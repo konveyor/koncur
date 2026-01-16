@@ -15,7 +15,7 @@ help: ## Show this help message
 
 kind-create: ## Create a Kind cluster for testing with ingress support
 	@echo "Creating Kind cluster: $(KIND_CLUSTER_NAME)..."
-	@mkdir -p cache .koncur/config
+	@mkdir -p -m 777 cache .koncur/config
 	@printf 'kind: Cluster\n' > .koncur/config/kind-config.yaml
 	@printf 'apiVersion: kind.x-k8s.io/v1alpha4\n' >> .koncur/config/kind-config.yaml
 	@printf 'nodes:\n' >> .koncur/config/kind-config.yaml
@@ -91,7 +91,7 @@ hub-install: ## Install Tackle Hub on the Kind cluster (from main branch)
 		sleep 3; \
 	done
 	@echo "Pre-creating cache PV with fixed path..."
-	@mkdir -p cache/hub-cache
+	@mkdir -m 777 -p cache/hub-cache
 	@mkdir -p .koncur/config
 	@printf 'apiVersion: v1\n' > .koncur/config/cache-pv.yaml
 	@printf 'kind: PersistentVolume\n' >> .koncur/config/cache-pv.yaml
@@ -122,6 +122,9 @@ hub-install: ## Install Tackle Hub on the Kind cluster (from main branch)
 	@printf '  cache_storage_class: "manual"\n' >> .koncur/config/tackle-cr.yaml
 	@printf '  cache_data_volume_size: "10Gi"\n' >> .koncur/config/tackle-cr.yaml
 	@printf '  rwx_supported: "true"\n' >> .koncur/config/tackle-cr.yaml
+	@printf '  provider_java_container_requests_cpu: "100m"\n' >> .koncur/config/tackle-cr.yaml
+	@printf '  analyzer_container_requests_cpu: "100m"\n' >> .koncur/config/tackle-cr.yaml
+	@printf '  provider_python_container_requests_cpu: "100m"\n' >> .koncur/config/tackle-cr.yaml
 	@$(KUBECTL) apply -f .koncur/config/tackle-cr.yaml
 	@echo "Waiting for Tackle Hub to be ready (this may take a few minutes)..."
 	@sleep 30

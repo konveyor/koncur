@@ -295,8 +295,8 @@ func normalizeRuleSetPaths(rulesets []konveyor.RuleSet, testDir string) ([]konve
 	}
 
 	// Normalize Tackle Hub container paths
-	if strings.Contains(yamlStr, "/opt/input/source/") {
-		yamlStr = strings.ReplaceAll(yamlStr, "/opt/input/source", "/source")
+	if strings.Contains(yamlStr, "/shared/source/") {
+		yamlStr = strings.ReplaceAll(yamlStr, "/shared/source", "/source")
 	}
 
 	// Unmarshal back to get normalized rulesets

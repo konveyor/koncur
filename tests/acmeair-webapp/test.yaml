@@ -8,6 +8,7 @@ analysis:
     source: []
     target: []
     rules: []
+    disableDefaultRules: false
     analysisMode: full
 timeout: 10m0s
 expect:

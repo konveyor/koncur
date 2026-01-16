@@ -57,6 +57,7 @@ func (k *KantraTarget) Name() string {
 func (k *KantraTarget) Execute(ctx context.Context, test *config.TestDefinition) (*ExecutionResult, error) {
 	log := util.GetLogger()
 	log.Info("Executing Kantra analysis", "test", test.Name)
+	log.V(2).Info("Test config", "config", test.Analysis)
 
 	// Validate maven settings requirement
 	if test.RequireMavenSettings && k.mavenSettings == "" {
@@ -98,7 +99,7 @@ func (k *KantraTarget) Execute(ctx context.Context, test *config.TestDefinition)
 	}
 
 	// Build kantra command arguments with prepared rules
-	args := k.buildArgsWithPreparedRules(test.Analysis, inputPath, absOutputDir, k.mavenSettings, preparedRules)
+	args := k.buildArgs(test.Analysis, inputPath, absOutputDir, k.mavenSettings, preparedRules)
 
 	// Execute kantra
 	result, err := ExecuteCommand(ctx, k.binaryPath, args, workDir, test.GetTimeout())
@@ -114,66 +115,8 @@ func (k *KantraTarget) Execute(ctx context.Context, test *config.TestDefinition)
 	return result, nil
 }
 
-// buildArgs constructs the kantra analyze command arguments
-func (k *KantraTarget) buildArgs(analysis config.AnalysisConfig, inputPath, outputDir, mavenSettings string) []string {
-	args := []string{"analyze", "--context-lines", strconv.Itoa(analysis.ContextLines)}
-
-	// Input application (now using the prepared input path)
-	args = append(args, "--input", inputPath)
-
-	// Output directory (now passed as parameter, already absolute)
-	args = append(args, "--output", outputDir)
-
-	// Label selector (if specified)
-	if analysis.LabelSelector != "" {
-		args = append(args, "--label-selector", analysis.LabelSelector)
-	}
-
-	if analysis.IncidentSelector != "" {
-		args = append(args, "--incident-selector", analysis.IncidentSelector)
-	}
-
-	// Maven settings (from test-level configuration)
-	if mavenSettings != "" {
-		args = append(args, "--maven-settings", mavenSettings)
-	}
-
-	if len(analysis.Target) > 0 {
-		for _, target := range analysis.Target {
-			args = append(args, "-t", target)
-		}
-	}
-	if len(analysis.Source) > 0 {
-		for _, source := range analysis.Source {
-			args = append(args, "-s", source)
-		}
-	}
-	if len(analysis.Rules) > 0 {
-		for _, rule := range analysis.Rules {
-			args = append(args, "--rules", rule)
-		}
-	}
-
-	// Analysis mode
-	switch analysis.AnalysisMode {
-	case provider.SourceOnlyAnalysisMode:
-		args = append(args, "--mode", "source-only")
-	case provider.FullAnalysisMode:
-		// Full is the default, but we can be explicit
-		args = append(args, "--mode", "full")
-	}
-
-	// Use container mode instead of run-local to avoid dependency issues
-	args = append(args, "--run-local=false")
-
-	// Allow overwriting existing output
-	args = append(args, "--overwrite")
-
-	return args
-}
-
 // buildArgsWithPreparedRules constructs the kantra analyze command arguments with prepared rules
-func (k *KantraTarget) buildArgsWithPreparedRules(analysis config.AnalysisConfig, inputPath, outputDir, mavenSettings string, preparedRules []string) []string {
+func (k *KantraTarget) buildArgs(analysis config.AnalysisConfig, inputPath, outputDir, mavenSettings string, preparedRules []string) []string {
 	args := []string{"analyze", "--context-lines", strconv.Itoa(analysis.ContextLines)}
 
 	// Input application (now using the prepared input path)
@@ -211,6 +154,11 @@ func (k *KantraTarget) buildArgsWithPreparedRules(analysis config.AnalysisConfig
 		for _, rule := range preparedRules {
 			args = append(args, "--rules", rule)
 		}
+	}
+
+	if analysis.DisableDefaultRules {
+		fmt.Printf("disableDefaultRules")
+		args = append(args, "--enable-default-rulesets=false")
 	}
 
 	// Analysis mode
