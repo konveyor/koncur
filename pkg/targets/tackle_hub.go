@@ -11,8 +11,8 @@ import (
 	"time"
 
 	konveyor "github.com/konveyor/analyzer-lsp/output/v1/konveyor"
-	"github.com/konveyor/tackle2-hub/api"
-	"github.com/konveyor/tackle2-hub/binding"
+	"github.com/konveyor/tackle2-hub/shared/api"
+	"github.com/konveyor/tackle2-hub/shared/binding"
 	"github.com/konveyor/test-harness/pkg/config"
 	"github.com/konveyor/test-harness/pkg/util"
 	"go.lsp.dev/uri"

@@ -298,6 +298,9 @@ func normalizeRuleSetPaths(rulesets []konveyor.RuleSet, testDir string) ([]konve
 	if strings.Contains(yamlStr, "/shared/source/") {
 		yamlStr = strings.ReplaceAll(yamlStr, "/shared/source", "/source")
 	}
+	if strings.Contains(yamlStr, "/opt/input/source") {
+		yamlStr = strings.ReplaceAll(yamlStr, "/opt/input/source", "/source")
+	}
 
 	// Unmarshal back to get normalized rulesets
 	var normalized []konveyor.RuleSet

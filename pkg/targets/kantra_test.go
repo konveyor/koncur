@@ -93,6 +93,7 @@ func TestKantraTarget_BuildArgs(t *testing.T) {
 		analysis         config.AnalysisConfig
 		inputPath        string
 		outputDir        string
+		preparedRules    []string
 		mavenSettings    string
 		expectContain    []string
 		expectNotContain []string
@@ -209,7 +210,7 @@ func TestKantraTarget_BuildArgs(t *testing.T) {
 				mavenSettings: tt.mavenSettings,
 			}
 
-			args := k.buildArgs(tt.analysis, tt.inputPath, tt.outputDir, tt.mavenSettings)
+			args := k.buildArgs(tt.analysis, tt.inputPath, tt.outputDir, tt.mavenSettings, tt.preparedRules)
 			argsStr := strings.Join(args, " ")
 
 			// Check for expected arguments
@@ -429,7 +430,7 @@ func TestKantraTarget_AnalysisMode(t *testing.T) {
 			}
 
 			k := &KantraTarget{binaryPath: "/usr/local/bin/kantra"}
-			args := k.buildArgs(analysis, "/input", "/output", "")
+			args := k.buildArgs(analysis, "/input", "/output", "", nil)
 
 			// Find the --mode flag
 			foundMode := false
@@ -481,7 +482,7 @@ func TestKantraTarget_ContextLines(t *testing.T) {
 			}
 
 			k := &KantraTarget{binaryPath: "/usr/local/bin/kantra"}
-			args := k.buildArgs(analysis, "/input", "/output", "")
+			args := k.buildArgs(analysis, "/input", "/output", "", nil)
 
 			// Find the --context-lines flag
 			foundContextLines := false
