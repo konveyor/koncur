@@ -137,645 +137,74 @@
       - url: https://12factor.net/logs
         title: 'Twelve-Factor App: Logs'
       effort: 1
+  errors:
+    embedded-cache-libraries-01000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-02000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-03000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-04000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-05000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-06000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-07000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-08000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-09000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-10000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-11000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-12000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-13000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-14000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-16000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    jca-00000: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    local-storage-00003: 'failed to perform search - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    local-storage-00004: 'failed to perform search - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    localhost-http-00001: 'failed to perform search - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    localhost-jdbc-00002: 'failed to perform search - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    localhost-ws-00003: 'failed to perform search - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-0000: 'failed to perform search - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    session-00000: 'unable to find XML files: failed to walk all dirs - lstat /source:
+      no such file or directory'
   unmatched:
-  - embedded-cache-libraries-01000
-  - embedded-cache-libraries-02000
-  - embedded-cache-libraries-03000
-  - embedded-cache-libraries-04000
-  - embedded-cache-libraries-05000
-  - embedded-cache-libraries-06000
-  - embedded-cache-libraries-07000
-  - embedded-cache-libraries-08000
-  - embedded-cache-libraries-09000
-  - embedded-cache-libraries-10000
-  - embedded-cache-libraries-11000
-  - embedded-cache-libraries-12000
-  - embedded-cache-libraries-13000
-  - embedded-cache-libraries-14000
   - embedded-cache-libraries-15000
-  - embedded-cache-libraries-16000
   - java-corba-00000
   - java-rmi-00000
   - java-rmi-00000
   - java-rmi-00001
   - java-rpc-00000
-  - jca-00000
   - jni-native-code-00000
   - jni-native-code-00001
   - local-storage-00002
-  - local-storage-00003
-  - local-storage-00004
   - local-storage-00005
   - local-storage-00006
-  - localhost-http-00001
-  - localhost-jdbc-00002
-  - localhost-ws-00003
-  - logging-0000
-  - logging-0000
   - logging-0001
   - logging-0001
   - mail-00000
-  - session-00000
   - session-00001
   - socket-communication-00000
   - socket-communication-00001
-- name: discovery-rules
-  tags:
-  - EJB XML
-  - Java Source
-  - Maven XML
-  insights:
-    discover-java-files:
-      description: Java source files
-      labels:
-      - discovery
-      - konveyor.io/include=always
-      - konveyor.io/target=discovery
-      - tag=Java Source
-      incidents:
-      - uri: file:///source/src/main/java/com/telran/application/BookServerApp.java
-        message: ""
-      - uri: file:///source/src/main/java/com/telran/application/controller/BookQuerriesController.java
-        message: ""
-      - uri: file:///source/src/main/java/com/telran/application/controller/BookStartEndController.java
-        message: ""
-      - uri: file:///source/src/main/java/com/telran/application/model/BookModel.java
-        message: ""
-      - uri: file:///source/src/main/java/com/telran/application/model/dto/Book.java
-        message: ""
-    discover-maven-xml:
-      description: Maven XML file
-      labels:
-      - discovery
-      - konveyor.io/include=always
-      - konveyor.io/target=discovery
-      - tag=Maven XML
-      incidents:
-      - uri: file:///source/pom.xml
-        message: ""
-    windup-discover-ejb-configuration:
-      description: EJB XML Configuration
-      labels:
-      - discovery
-      - konveyor.io/include=always
-      - konveyor.io/target=discovery
-      - tag=EJB XML
-      incidents:
-      - uri: file:///source/custom-rules/JBoss1-web-class-loading.windup.xml
-        message: ""
-        codeSnip: 6      <metadata>
-        lineNumber: 5
-        variables:
-          data: ""
-          innerText: "\n\n    \n        \n            This ruleset looks for the class-loading
-            element in a jboss-web.xml file, which is no longer valid in JBoss EAP
-            6\n        \n         \n            \n            \n                \n
-            \       \n        \n    \n    \n        \n            \n                \n
-            \           \n            \n                \n                    \n                    \n
-            \                     \n                        Fist message: The class-loading
-            element is no longer valid in the jboss-web.xml file.\n                      \n
-            \                     \n                    \n                \n            \n
-            \       \n\t\n            \n                \n            \n            \n
-            \               \n                    \n                    \n                      \n\t\t\t
-            Second message: The class-loading element is no longer valid in the jboss-web.xml
-            file.\n                      \n                      \n                    \n
-            \               \n            \n        \n     \n\n"
-          matchingXML: '<?xml version="1.0"?><ruleset id="JBoss5-web-class-loading-1"
-            xmlns="http://windup.jboss.org/schema/jboss-ruleset" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://windup.jboss.org/schema/jboss-ruleset http://windup.jboss.org/schema/jboss-ruleset/windup-jboss-ruleset.xsd"><metadata><description>This
-            ruleset looks for the class-loading element in a jboss-web.xml file, which
-            is no longer valid in JBoss EAP 6</description><dependencies><addon id="org.jboss.windup.rules,windup-rules-javaee,3.0.0.Final"></addon><addon
-            id="org.jboss.windup.rules,windup-rules-java,3.0.0.Final"></addon></dependencies><sourceTechnology
-            id="customSource"></sourceTechnology><targetTechnology id="azureAppservice"></targetTechnology></metadata><rules><rule
-            id="JBoss5-web-class-loading_001"><when><xmlfile matches="jboss-web/class-loading"></xmlfile></when><perform><iteration><classification
-            title="JBoss Web Application Descriptor" effort="1"></classification><hint
-            title="JBoss Web XML class-loading element is no longer valid"><message>Fist
-            message: The class-loading element is no longer valid in the jboss-web.xml
-            file.</message><link href="https://access.redhat.com/documentation/en-US/JBoss_Enterprise_Application_Platform/6.4/html-single/Migration_Guide/index.html#Create_or_Modify_Files_That_Control_Class_Loading_in_JBoss_Enterprise_Application_Platform_6"
-            title="Create or Modify Files That Control Class Loading in JBoss EAP
-            6"></link></hint></iteration></perform></rule><rule id="JBoss5-web-class-loading_002"><when><xmlfile
-            matches="jboss-web/class-loading"></xmlfile></when><perform><iteration><classification
-            title="JBoss Web Application Descriptor" effort="1"></classification><hint
-            title="JBoss Web XML class-loading element is no longer valid"><message>Second
-            message: The class-loading element is no longer valid in the jboss-web.xml
-            file.</message><link href="https://access.redhat.com/documentation/en-US/JBoss_Enterprise_Application_Platform/6.4/html-single/Migration_Guide/index.html#Create_or_Modify_Files_That_Control_Class_Loading_in_JBoss_Enterprise_Application_Platform_6"
-            title="Create or Modify Files That Control Class Loading in JBoss EAP
-            6"></link></hint></iteration></perform></rule></rules></ruleset>'
-      - uri: file:///source/custom-rules/custom-rule-example.windup.xml
-        message: ""
-        codeSnip: 4      <metadata>
-        lineNumber: 3
-        variables:
-          data: ""
-          innerText: "\n\n    \n        \n            This is an example custom rule\n
-            \       \n        \n            \n            \n            \n        \n
-            \   \n\t\n\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\tTest-002
-            Custom rule\n\t\t\t\t\ttag\n\t\t\t\t\tlink\n\t\t\t\t\n\n\t\t\t\n\t\t\n\t\n\n"
-          matchingXML: <?xml version="1.0"?><ruleset xmlns="http://windup.jboss.org/schema/jboss-ruleset"
-            id="custom-rule-example" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://windup.jboss.org/schema/jboss-ruleset http://windup.jboss.org/schema/jboss-ruleset/windup-jboss-ruleset.xsd"><metadata><description>This
-            is an example custom rule</description><dependencies><addon id="org.jboss.windup.rules,windup-rules-javaee,3.0.0.Final"></addon><addon
-            id="org.jboss.windup.rules,windup-rules-java,3.0.0.Final"></addon><addon
-            id="org.jboss.windup.rules,windup-rules-xml,3.0.0.Final"></addon></dependencies></metadata><rules><rule
-            id="Test-002-00001" xmlns="http://windup.jboss.org/schema/jboss-ruleset"><!--
-            rule condition, when it could be fired --><when><project><artifact groupId="com.fasterxml.jackson.core"
-            artifactId="jackson-databind"></artifact></project></when><!-- rule operation,
-            what to do if it is fired --><perform><hint category-id="potential" effort="0"
-            title="jackson-databind identified in the pom.xml"><message><![CDATA[Test-002
-            Custom rule]]></message><tag>tag</tag><link href="http://nufc.com" title="Test-002
-            Test link">link</link></hint></perform></rule></rules></ruleset>
-      - uri: file:///source/custom-rules/custom.Test1rules.windup.xml
-        message: ""
-        codeSnip: "5  \t<metadata>"
-        lineNumber: 4
-        variables:
-          data: ""
-          innerText: "\n\n\t\n\t\t\n            This is a description of rules. This
-            is a template for new rulesets. Change this.\n        \n\t\t\n\t\t\n\t\t\n\t\n\t\n\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\tTest-002
-            Message markdown\n\t\t\t\t\ttag\n\t\t\t\t\tlink\n\t\t\t\t\n\n\t\t\t\n\t\t\n\t\n\n"
-          matchingXML: <?xml version="1.0"?><ruleset id="Test-002" xmlns="http://windup.jboss.org/schema/jboss-ruleset"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://windup.jboss.org/schema/jboss-ruleset
-            http://windup.jboss.org/schema/jboss-ruleset/windup-jboss-ruleset.xsd"><metadata><description>This
-            is a description of rules. This is a template for new rulesets. Change
-            this.</description><!-- version ranges applied to from and to technologies
-            --><dependencies></dependencies></metadata><rules><rule id="Test1-002-00001"><!--
-            rule condition, when it could be fired --><when><file filename="AdministracionEfectivo-jpa{*}.jar"></file></when><!--
-            rule operation, what to do if it is fired --><perform><hint title="Test-002
-            Remote Exception" effort="0" category-id="potential"><message><![CDATA[Test-002
-            Message markdown]]></message><tag>tag</tag><link href="http://nufc.com"
-            title="Test-002 Test link">link</link></hint></perform></rule></rules></ruleset>
-      - uri: file:///source/custom-rules/customWebLogic.windup.label.xml
-        message: ""
-        codeSnip: 10              <description>Custom WebLogic</description>
-        lineNumber: 9
-        variables:
-          data: ""
-          innerText: "\n\n    \n        \n            Weblogic\n            Custom
-            WebLogic\n            \n                Bean Validation\n                CDI\n
-            \               Clustering EJB\n                Clustering Web Session\n
-            \               Common Annotations\n                EAR\n                EJB\n
-            \               EJB XML*\n                Enterprise Web Services\n                JACC\n
-            \               Java EE\n                Java EE Batch\n                Java
-            EE Batch API\n                Java EE JSON-P\n                Java EE
-            Security\n                JavaMail\n                JAX-RS\n                JAX-WS\n
-            \               JAXB\n                JAXR\n                JBoss EJB
-            XML\n                JBoss Web XML\n                JCA\n                JMS\n
-            \               JMS Connection Factory\n                JMS Queue\n                JMS
-            Topic\n                JPA\n                JPA entities\n                JPA
-            named queries\n                JPA XML*\n                JSF Page\n                JSON-B\n
-            \               JSP Page\n                JTA\n                MEJB\n
-            \               Message (MDB)\n                Persistence units\n                Servlet\n
-            \               SOAP (SAAJ)\n                Stateful (SFSB)\n                Stateless
-            (SLSB)\n                WebLogic Web XML\n                WS Metadata\n
-            \           \n            \n                JAX-RPC\n                RMI\n
-            \               WebSphere EJB\n                WebSphere EJB Ext\n                WebSphere
-            Web XML\n                WebSphere WS Binding\n                WebSphere
-            WS Extension\n            \n            \n                Bouncy Castle
-            (embedded)\n                Java Source\n                JDBC datasources\n
-            \               JDBC XA datasources\n                Manifest\n                Maven
-            XML\n                Properties\n                Spring (embedded)          \n
-            \               Spring MVC (embedded)      \n                Spring Security
-            (embedded) \n                Swagger (embedded)\n                Web XML*\n
-            \               WSDL (embedded)\n            \n        \n    \n\n"
-          matchingXML: <?xml version="1.0" encoding="UTF-8"?><labelset id="custom_labels"
-            priority="1" xmlns="http://windup.jboss.org/schema/jboss-labelset" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://windup.jboss.org/schema/jboss-labelset http://windup.jboss.org/schema/jboss-labelset/windup-jboss-labelset.xsd"><labels><label
-            id="customweblogic"><name>Weblogic</name><description>Custom WebLogic</description><supported><tag>Bean
-            Validation</tag><tag>CDI</tag><tag>Clustering EJB</tag><tag>Clustering
-            Web Session</tag><tag>Common Annotations</tag><tag>EAR</tag><tag>EJB</tag><tag>EJB
-            XML*</tag><tag>Enterprise Web Services</tag><tag>JACC</tag><tag>Java EE</tag><tag>Java
-            EE Batch</tag><tag>Java EE Batch API</tag><tag>Java EE JSON-P</tag><tag>Java
-            EE Security</tag><tag>JavaMail</tag><tag>JAX-RS</tag><tag>JAX-WS</tag><tag>JAXB</tag><tag>JAXR</tag><tag>JBoss
-            EJB XML</tag><tag>JBoss Web XML</tag><tag>JCA</tag><tag>JMS</tag><tag>JMS
-            Connection Factory</tag><tag>JMS Queue</tag><tag>JMS Topic</tag><tag>JPA</tag><tag>JPA
-            entities</tag><tag>JPA named queries</tag><tag>JPA XML*</tag><tag>JSF
-            Page</tag><tag>JSON-B</tag><tag>JSP Page</tag><tag>JTA</tag><tag>MEJB</tag><tag>Message
-            (MDB)</tag><tag>Persistence units</tag><tag>Servlet</tag><tag>SOAP (SAAJ)</tag><tag>Stateful
-            (SFSB)</tag><tag>Stateless (SLSB)</tag><tag>WebLogic Web XML</tag><tag>WS
-            Metadata</tag></supported><unsuitable><tag>JAX-RPC</tag><tag>RMI</tag><tag>WebSphere
-            EJB</tag><tag>WebSphere EJB Ext</tag><tag>WebSphere Web XML</tag><tag>WebSphere
-            WS Binding</tag><tag>WebSphere WS Extension</tag></unsuitable><neutral><tag>Bouncy
-            Castle (embedded)</tag><tag>Java Source</tag><tag>JDBC datasources</tag><tag>JDBC
-            XA datasources</tag><tag>Manifest</tag><tag>Maven XML</tag><tag>Properties</tag><tag>Spring
-            (embedded)</tag><!-- Spring Core is supported, but Spring XML part of
-            Spring Data Access is not supported--><tag>Spring MVC (embedded)</tag><!--
-            Spring MVC is supported --><tag>Spring Security (embedded)</tag><!-- Spring
-            Security is supported --><tag>Swagger (embedded)</tag><tag>Web XML*</tag><tag>WSDL
-            (embedded)</tag></neutral></label></labels></labelset>
-      - uri: file:///source/custom-rules/java-internals-custom.windup.xml
-        message: ""
-        codeSnip: 4      <metadata>
-        lineNumber: 3
-        variables:
-          data: ""
-          innerText: "\n\n    \n        \n            Custom rule to investigate some
-            issues pertaining to the migraton path OpenJDK 8 and 11.\n        \n        \n
-            \           \n        \n    \n    \n        \n            \n                  \n
-            \           \n            \n                \n                    \n                        `java.awt.Font.getFont()`
-            referened in this class\n                    \n                \n            \n
-            \       \n        \n            \n                \n            \n            \n
-            \               \n                    \n                        `java.awt.Font.getPeer()`
-            referenced in this class\n                    \n                \n            \n
-            \       \n    \n\n"
-          matchingXML: <?xml version="1.0"?><ruleset xmlns="http://windup.jboss.org/schema/jboss-ruleset"
-            id="java-internals-custom" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://windup.jboss.org/schema/jboss-ruleset http://windup.jboss.org/schema/jboss-ruleset/windup-jboss-ruleset.xsd"><metadata><description>Custom
-            rule to investigate some issues pertaining to the migraton path OpenJDK
-            8 and 11.</description><dependencies><addon id="org.jboss.windup.rules,windup-rules-java,3.0.0.Final"></addon></dependencies></metadata><rules><rule
-            id="java-internals-custom-getFont"><when><javaclass references="java.awt.Font.getFont({*})"></javaclass></when><perform><hint
-            title="custom rule identified java.awt.Font.getFont()" effort="3" category-id="mandatory"><message>`java.awt.Font.getFont()`
-            referened in this class</message></hint></perform></rule><rule id="java-internals-custom-getPeer"><when><javaclass
-            references="java.awt.Font.getPeer({*})"></javaclass></when><perform><hint
-            title="custom rule identified java.awt.Font.getPeer()" effort="3" category-id="mandatory"><message>`java.awt.Font.getPeer()`
-            referenced in this class</message></hint></perform></rule></rules></ruleset>
-      - uri: file:///source/custom-rules/javax-package-custom-target.windup.xml
-        message: ""
-        codeSnip: 5      <metadata>
-        lineNumber: 4
-        variables:
-          data: ""
-          innerText: "\n\n    \n        \n            This ruleset evaluates whether
-            a custom target can be used within a custom rule\n        \n        \n
-            \           \n            \n        \n        \n    \n    \n        \n
-            \           \n                \n                    IMPORT\n                \n
-            \           \n            \n                \n                    `javax.*`
-            packages must be renamed to `jakarta.*` for Jakarta EE9 compatibility.\n
-            \                   \n                \n            \n        \n    \n\n"
-          matchingXML: <?xml version="1.0"?><ruleset xmlns="http://windup.jboss.org/schema/jboss-ruleset"
-            id="javax-package-custom-target" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://windup.jboss.org/schema/jboss-ruleset http://windup.jboss.org/schema/jboss-ruleset/windup-jboss-ruleset.xsd"><metadata><description>This
-            ruleset evaluates whether a custom target can be used within a custom
-            rule</description><dependencies><addon id="org.jboss.windup.rules,windup-rules-javaee,3.0.0.Final"></addon><addon
-            id="org.jboss.windup.rules,windup-rules-java,3.0.0.Final"></addon></dependencies><targetTechnology
-            id="phil" versionRange="[7,8)"></targetTechnology></metadata><rules><rule
-            id="javax-package-custom-target-00001"><when><javaclass references="javax.{*}"><location>IMPORT</location></javaclass></when><perform><hint
-            title="CUSTOM RULE for javax.* package import" effort="1" category-id="potential"><message>`javax.*`
-            packages must be renamed to `jakarta.*` for Jakarta EE9 compatibility.</message><link
-            title="Renamed Packages" href="https://github.com/wildfly-extras/batavia/blob/master/impl/ecl/src/main/resources/org/wildfly/extras/transformer/eclipse/jakarta-renames.properties"></link></hint></perform></rule></rules></ruleset>
-      - uri: file:///source/custom-rules/javax-package-custom.windup.xml
-        message: ""
-        codeSnip: 6          <description>
-        lineNumber: 5
-        variables:
-          data: ""
-          innerText: "\n\n    \n        \n            This ruleset provides analysis
-            of applications that use RESTEasy 3.0 and may require\n            individual
-            attention when migrating to RESTEasy 3.6.\n        \n        \n            \n
-            \           \n        \n    \n    \n        \n            \n                \n
-            \                   IMPORT\n                \n            \n            \n
-            \               \n                    `javax.*` packages must be renamed
-            to `jakarta.*` for Jakarta EE9 compatibility.\n                    \n
-            \               \n            \n        \n    \n\n"
-          matchingXML: |-
-            <?xml version="1.0"?><ruleset xmlns="http://windup.jboss.org/schema/jboss-ruleset" id="javax-package-custom" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://windup.jboss.org/schema/jboss-ruleset http://windup.jboss.org/schema/jboss-ruleset/windup-jboss-ruleset.xsd"><metadata><description>This ruleset provides analysis of applications that use RESTEasy 3.0 and may require
-                        individual attention when migrating to RESTEasy 3.6.</description><dependencies><addon id="org.jboss.windup.rules,windup-rules-javaee,3.0.0.Final"></addon><addon id="org.jboss.windup.rules,windup-rules-java,3.0.0.Final"></addon></dependencies></metadata><rules><rule id="javax-package-00001"><when><javaclass references="javax.{*}"><location>IMPORT</location></javaclass></when><perform><hint title="CUSTOM RULE for javax.* package import" effort="1" category-id="potential"><message>`javax.*` packages must be renamed to `jakarta.*` for Jakarta EE9 compatibility.</message><link title="Renamed Packages" href="https://github.com/wildfly-extras/batavia/blob/master/impl/ecl/src/main/resources/org/wildfly/extras/transformer/eclipse/jakarta-renames.properties"></link></hint></perform></rule></rules></ruleset>
-      - uri: file:///source/custom-rules/log4shell.custom.windup.xml
-        message: ""
-        codeSnip: 5      <metadata>
-        lineNumber: 4
-        variables:
-          data: ""
-          innerText: "\n\n    \n        \n            Discover dependencies to log4j
-            versions with security vulnerability CVE-2021-44228\n        \n        \n
-            \       \n            \n            \n            \n        \n    \n    \n
-            \       \n            \n            \n                \n                    \n
-            \               \n            \n            \n            \n                \n
-            \               You must upgrade to Log4j 2.15.0 to remove the log4shell
-            vulnerability identified in CVE-2021-44228.\n                \n                \n
-            \               \n            \n        \n        \n            \n            \n
-            \               \n            \n            \n            \n                \n
-            \                   You must upgrade to Log4j 2.15.0 to remove the log4shell
-            vulnerability identified in CVE-2021-44228.\n                    \n                    \n
-            \               \n            \n        \n    \n\n"
-          matchingXML: <?xml version="1.0"?><ruleset id="log4shell" xmlns="http://windup.jboss.org/schema/jboss-ruleset"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://windup.jboss.org/schema/jboss-ruleset
-            http://windup.jboss.org/schema/jboss-ruleset/windup-jboss-ruleset.xsd"><metadata><description>Discover
-            dependencies to log4j versions with security vulnerability CVE-2021-44228</description><!--
-            version ranges applied to from and to technologies --><dependencies><addon
-            id="org.jboss.windup.rules,windup-rules-javaee,3.0.0.Final"></addon><addon
-            id="org.jboss.windup.rules,windup-rules-java,3.0.0.Final"></addon><addon
-            id="org.jboss.windup.rules,windup-rules-xml,3.0.0.Final"></addon></dependencies></metadata><rules><rule
-            id="log4shell-identifier-00001"><!-- rule condition, when it could be
-            fired --><when><project><artifact groupId="org.apache.logging.log4j" artifactId="log4j-core"
-            fromVersion="2.0-beta9" toVersion="2.14.1"></artifact></project></when><!--
-            rule operation, what to do if it is fired --><perform><hint title="Log4j
-            import with log4shell vulnerability identified" effort="1" category-id="mandatory"><message>You
-            must upgrade to Log4j 2.15.0 to remove the log4shell vulnerability identified
-            in CVE-2021-44228.</message><link href="https://logging.apache.org/log4j/2.x/security.html"
-            title="Apache Log4J Security Vulnerabilities"></link><link href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-44228"
-            title="CVE-2021-44228"></link></hint></perform></rule><rule id="log4shell-identifier-00002"><!--
-            rule condition, when it could be fired --><when><dependency groupId="org.apache.logging.log4j"
-            artifactId="log4j-core" fromVersion="2.0-beta9" toVersion="2.14.1"></dependency></when><!--
-            rule operation, what to do if it is fired --><perform><hint title="Log4j
-            binary with log4shell vulnerability identified" effort="5" category-id="mandatory"><message>You
-            must upgrade to Log4j 2.15.0 to remove the log4shell vulnerability identified
-            in CVE-2021-44228.</message><link href="https://logging.apache.org/log4j/2.x/security.html"
-            title="Apache Log4J Security Vulnerabilities"></link><link href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-44228"
-            title="CVE-2021-44228"></link></hint></perform></rule></rules></ruleset>
-      - uri: file:///source/pom.xml
-        message: ""
-        codeSnip: '6  '
-        lineNumber: 5
-        variables:
-          data: ""
-          innerText: "\n\n    4.0.0\n\n    com.telran\n    BookServer\n    1.0-SNAPSHOT\n\n
-            \   \n        \n            \n                org.springframework.boot\n
-            \               spring-boot-maven-plugin\n                2.1.0.RELEASE
-            \ \t\t\t\n            \n        \n    \n\n    \n        \n        \n            org.springframework.boot\n
-            \           spring-boot-starter-web\n            2.1.0.RELEASE                \n
-            \       \n\n        \n        \n            org.projectlombok\n            lombok\n
-            \           1.18.2\n        \n\n        \n        \n            com.fasterxml.jackson.core\n
-            \           jackson-databind\n            2.9.5\n        \n\n        \n
-            \           com.fasterxml.jackson.datatype\n            jackson-datatype-jsr310\n
-            \           2.9.5\n        \n\n        \n            com.fasterxml.jackson.dataformat\n
-            \           jackson-dataformat-xml\n            2.9.5\n        \n\n        \n
-            \       \n            \n            \n            \n            \n        \n\n
-            \   \n\n"
-          matchingXML: <?xml version="1.0" encoding="UTF-8"?><project xmlns="http://maven.apache.org/POM/4.0.0"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-            http://maven.apache.org/xsd/maven-4.0.0.xsd"><modelVersion>4.0.0</modelVersion><groupId>com.telran</groupId><artifactId>BookServer</artifactId><version>1.0-SNAPSHOT</version><build><plugins><plugin><groupId>org.springframework.boot</groupId><artifactId>spring-boot-maven-plugin</artifactId><version>2.1.0.RELEASE</version><!--  09.11.2018
-            --></plugin></plugins></build><dependencies><!-- spring boot --><dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-web</artifactId><version>2.1.0.RELEASE</version><!--  09.11.2018
-            --></dependency><!--  lombok --><dependency><groupId>org.projectlombok</groupId><artifactId>lombok</artifactId><version>1.18.2</version></dependency><!--
-            jackson --><dependency><groupId>com.fasterxml.jackson.core</groupId><artifactId>jackson-databind</artifactId><version>2.9.5</version></dependency><dependency><groupId>com.fasterxml.jackson.datatype</groupId><artifactId>jackson-datatype-jsr310</artifactId><version>2.9.5</version></dependency><dependency><groupId>com.fasterxml.jackson.dataformat</groupId><artifactId>jackson-dataformat-xml</artifactId><version>2.9.5</version></dependency><!--&lt;!&ndash;
-            jdbc connector &ndash;&gt;--><!--<dependency>--><!--<groupId>mysql</groupId>--><!--<artifactId>mysql-connector-java</artifactId>--><!--&lt;!&ndash;
-            <version>8.0.12</version> &ndash;&gt;               &lt;!&ndash; TimeZone
-            bug not fixed since 5.1.39 &ndash;&gt;--><!--<version>5.1.39</version>--><!--</dependency>--></dependencies></project>
-  unmatched:
-  - discover-license
-  - discover-manifest-file
-  - discover-properties-file
-  - hardcoded-ip-address
-  - windup-discover-jpa-configuration
-  - windup-discover-spring-configuration
-  - windup-discover-web-configuration
 - name: quarkus/springboot
   description: This ruleset gives hints to migrate from SpringBoot devtools to Quarkus
   violations:
-    javaee-pom-to-quarkus-00010:
-      description: Adopt Quarkus BOM
-      category: mandatory
-      labels:
-      - konveyor.io/source=java-ee
-      - konveyor.io/target=quarkus
-      incidents:
-      - uri: file:///source/pom.xml
-        message: "Use the Quarkus BOM to omit the version of the different Quarkus
-          dependencies. \n Add the following sections to the `pom.xml` file: \n\n
-          ```xml\n <properties> \n <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
-          \n <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-          \n <quarkus.platform.version>3.1.0.Final</quarkus.platform.version>\n </properties>
-          \n <dependencyManagement> \n <dependencies> \n <dependency> \n <groupId>${quarkus.platform.group-id}</groupId>
-          \n <artifactId>${quarkus.platform.artifact-id}</artifactId> \n <version>${quarkus.platform.version}</version>
-          \n <type>pom</type> \n <scope>import</scope> \n </dependency> \n </dependencies>
-          \n </dependencyManagement> \n ```\n Check the latest Quarkus version available
-          from the `Quarkus - Releases` link below."
-        codeSnip: '6  '
-        lineNumber: 5
-        variables:
-          data: project
-          innerText: "\n    4.0.0\n\n    com.telran\n    BookServer\n    1.0-SNAPSHOT\n\n
-            \   \n        \n            \n                org.springframework.boot\n
-            \               spring-boot-maven-plugin\n                2.1.0.RELEASE
-            \ \t\t\t\n            \n        \n    \n\n    \n        \n        \n            org.springframework.boot\n
-            \           spring-boot-starter-web\n            2.1.0.RELEASE                \n
-            \       \n\n        \n        \n            org.projectlombok\n            lombok\n
-            \           1.18.2\n        \n\n        \n        \n            com.fasterxml.jackson.core\n
-            \           jackson-databind\n            2.9.5\n        \n\n        \n
-            \           com.fasterxml.jackson.datatype\n            jackson-datatype-jsr310\n
-            \           2.9.5\n        \n\n        \n            com.fasterxml.jackson.dataformat\n
-            \           jackson-dataformat-xml\n            2.9.5\n        \n\n        \n
-            \       \n            \n            \n            \n            \n        \n\n
-            \   \n\n"
-          matchingXML: <modelVersion>4.0.0</modelVersion><groupId>com.telran</groupId><artifactId>BookServer</artifactId><version>1.0-SNAPSHOT</version><build><plugins><plugin><groupId>org.springframework.boot</groupId><artifactId>spring-boot-maven-plugin</artifactId><version>2.1.0.RELEASE</version><!--  09.11.2018
-            --></plugin></plugins></build><dependencies><!-- spring boot --><dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-web</artifactId><version>2.1.0.RELEASE</version><!--  09.11.2018
-            --></dependency><!--  lombok --><dependency><groupId>org.projectlombok</groupId><artifactId>lombok</artifactId><version>1.18.2</version></dependency><!--
-            jackson --><dependency><groupId>com.fasterxml.jackson.core</groupId><artifactId>jackson-databind</artifactId><version>2.9.5</version></dependency><dependency><groupId>com.fasterxml.jackson.datatype</groupId><artifactId>jackson-datatype-jsr310</artifactId><version>2.9.5</version></dependency><dependency><groupId>com.fasterxml.jackson.dataformat</groupId><artifactId>jackson-dataformat-xml</artifactId><version>2.9.5</version></dependency><!--&lt;!&ndash;
-            jdbc connector &ndash;&gt;--><!--<dependency>--><!--<groupId>mysql</groupId>--><!--<artifactId>mysql-connector-java</artifactId>--><!--&lt;!&ndash;
-            <version>8.0.12</version> &ndash;&gt;               &lt;!&ndash; TimeZone
-            bug not fixed since 5.1.39 &ndash;&gt;--><!--<version>5.1.39</version>--><!--</dependency>--></dependencies>
-      links:
-      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven;
-        title: Quarkus - Guide;
-      - url: https://quarkus.io/blog/tag/release/
-        title: Quarkus - Releases
-      effort: 1
-    javaee-pom-to-quarkus-00020:
-      description: Adopt Quarkus Maven plugin
-      category: mandatory
-      labels:
-      - konveyor.io/source=java-ee
-      - konveyor.io/target=quarkus
-      incidents:
-      - uri: file:///source/pom.xml
-        message: "Use the Quarkus Maven plugin adding the following sections to the
-          `pom.xml` file: \n\n ```xml\n <properties> \n <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-          \n <quarkus.platform.version>3.1.0.Final</quarkus.platform.version>\n </properties>
-          \n <build>\n <plugins>\n <plugin>\n <groupId>${quarkus.platform.group-id}</groupId>\n
-          <artifactId>quarkus-maven-plugin</artifactId>\n <version>${quarkus.platform.version}</version>\n
-          <extensions>true</extensions>\n <executions>\n <execution>\n <goals>\n <goal>build</goal>\n
-          <goal>generate-code</goal>\n <goal>generate-code-tests</goal>\n </goals>\n
-          </execution>\n </executions>\n </plugin>\n </plugins>\n </build>\n ```"
-        codeSnip: '6  '
-        lineNumber: 5
-        variables:
-          data: project
-          innerText: "\n    4.0.0\n\n    com.telran\n    BookServer\n    1.0-SNAPSHOT\n\n
-            \   \n        \n            \n                org.springframework.boot\n
-            \               spring-boot-maven-plugin\n                2.1.0.RELEASE
-            \ \t\t\t\n            \n        \n    \n\n    \n        \n        \n            org.springframework.boot\n
-            \           spring-boot-starter-web\n            2.1.0.RELEASE                \n
-            \       \n\n        \n        \n            org.projectlombok\n            lombok\n
-            \           1.18.2\n        \n\n        \n        \n            com.fasterxml.jackson.core\n
-            \           jackson-databind\n            2.9.5\n        \n\n        \n
-            \           com.fasterxml.jackson.datatype\n            jackson-datatype-jsr310\n
-            \           2.9.5\n        \n\n        \n            com.fasterxml.jackson.dataformat\n
-            \           jackson-dataformat-xml\n            2.9.5\n        \n\n        \n
-            \       \n            \n            \n            \n            \n        \n\n
-            \   \n\n"
-          matchingXML: <modelVersion>4.0.0</modelVersion><groupId>com.telran</groupId><artifactId>BookServer</artifactId><version>1.0-SNAPSHOT</version><build><plugins><plugin><groupId>org.springframework.boot</groupId><artifactId>spring-boot-maven-plugin</artifactId><version>2.1.0.RELEASE</version><!--  09.11.2018
-            --></plugin></plugins></build><dependencies><!-- spring boot --><dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-web</artifactId><version>2.1.0.RELEASE</version><!--  09.11.2018
-            --></dependency><!--  lombok --><dependency><groupId>org.projectlombok</groupId><artifactId>lombok</artifactId><version>1.18.2</version></dependency><!--
-            jackson --><dependency><groupId>com.fasterxml.jackson.core</groupId><artifactId>jackson-databind</artifactId><version>2.9.5</version></dependency><dependency><groupId>com.fasterxml.jackson.datatype</groupId><artifactId>jackson-datatype-jsr310</artifactId><version>2.9.5</version></dependency><dependency><groupId>com.fasterxml.jackson.dataformat</groupId><artifactId>jackson-dataformat-xml</artifactId><version>2.9.5</version></dependency><!--&lt;!&ndash;
-            jdbc connector &ndash;&gt;--><!--<dependency>--><!--<groupId>mysql</groupId>--><!--<artifactId>mysql-connector-java</artifactId>--><!--&lt;!&ndash;
-            <version>8.0.12</version> &ndash;&gt;               &lt;!&ndash; TimeZone
-            bug not fixed since 5.1.39 &ndash;&gt;--><!--<version>5.1.39</version>--><!--</dependency>--></dependencies>
-      links:
-      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven;
-        title: Quarkus - Guide;
-      effort: 1
-    javaee-pom-to-quarkus-00030:
-      description: Adopt Maven Compiler plugin
-      category: mandatory
-      labels:
-      - konveyor.io/source=java-ee
-      - konveyor.io/target=quarkus
-      incidents:
-      - uri: file:///source/pom.xml
-        message: "Use the Maven Compiler plugin adding the following sections to the
-          `pom.xml` file: \n\n ```xml\n <properties> \n <compiler-plugin.version>3.10.1</compiler-plugin.version>\n
-          <maven.compiler.release>11</maven.compiler.release>\n </properties> \n <build>\n
-          <plugins>\n <plugin>\n <artifactId>maven-compiler-plugin</artifactId>\n
-          <version>${compiler-plugin.version}</version>\n <configuration>\n <compilerArgs>\n
-          <arg>-parameters</arg>\n </compilerArgs>\n </configuration>\n </plugin>\n
-          </plugins>\n </build>\n ```"
-        codeSnip: '6  '
-        lineNumber: 5
-        variables:
-          data: project
-          innerText: "\n    4.0.0\n\n    com.telran\n    BookServer\n    1.0-SNAPSHOT\n\n
-            \   \n        \n            \n                org.springframework.boot\n
-            \               spring-boot-maven-plugin\n                2.1.0.RELEASE
-            \ \t\t\t\n            \n        \n    \n\n    \n        \n        \n            org.springframework.boot\n
-            \           spring-boot-starter-web\n            2.1.0.RELEASE                \n
-            \       \n\n        \n        \n            org.projectlombok\n            lombok\n
-            \           1.18.2\n        \n\n        \n        \n            com.fasterxml.jackson.core\n
-            \           jackson-databind\n            2.9.5\n        \n\n        \n
-            \           com.fasterxml.jackson.datatype\n            jackson-datatype-jsr310\n
-            \           2.9.5\n        \n\n        \n            com.fasterxml.jackson.dataformat\n
-            \           jackson-dataformat-xml\n            2.9.5\n        \n\n        \n
-            \       \n            \n            \n            \n            \n        \n\n
-            \   \n\n"
-          matchingXML: <modelVersion>4.0.0</modelVersion><groupId>com.telran</groupId><artifactId>BookServer</artifactId><version>1.0-SNAPSHOT</version><build><plugins><plugin><groupId>org.springframework.boot</groupId><artifactId>spring-boot-maven-plugin</artifactId><version>2.1.0.RELEASE</version><!--  09.11.2018
-            --></plugin></plugins></build><dependencies><!-- spring boot --><dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-web</artifactId><version>2.1.0.RELEASE</version><!--  09.11.2018
-            --></dependency><!--  lombok --><dependency><groupId>org.projectlombok</groupId><artifactId>lombok</artifactId><version>1.18.2</version></dependency><!--
-            jackson --><dependency><groupId>com.fasterxml.jackson.core</groupId><artifactId>jackson-databind</artifactId><version>2.9.5</version></dependency><dependency><groupId>com.fasterxml.jackson.datatype</groupId><artifactId>jackson-datatype-jsr310</artifactId><version>2.9.5</version></dependency><dependency><groupId>com.fasterxml.jackson.dataformat</groupId><artifactId>jackson-dataformat-xml</artifactId><version>2.9.5</version></dependency><!--&lt;!&ndash;
-            jdbc connector &ndash;&gt;--><!--<dependency>--><!--<groupId>mysql</groupId>--><!--<artifactId>mysql-connector-java</artifactId>--><!--&lt;!&ndash;
-            <version>8.0.12</version> &ndash;&gt;               &lt;!&ndash; TimeZone
-            bug not fixed since 5.1.39 &ndash;&gt;--><!--<version>5.1.39</version>--><!--</dependency>--></dependencies>
-      links:
-      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven;
-        title: Quarkus - Guide;
-      effort: 1
-    javaee-pom-to-quarkus-00040:
-      description: Adopt Maven Surefire plugin
-      category: mandatory
-      labels:
-      - konveyor.io/source=java-ee
-      - konveyor.io/target=quarkus
-      incidents:
-      - uri: file:///source/pom.xml
-        message: "Use the Maven Surefire plugin adding the following sections to the
-          `pom.xml` file: \n\n ```xml\n <properties> \n <surefire-plugin.version>3.0.0</compiler-plugin.version>\n
-          </properties> \n <build>\n <plugins>\n <plugin>\n <artifactId>maven-surefire-plugin</artifactId>\n
-          <version>${surefire-plugin.version}</version>\n <configuration>\n <systemPropertyVariables>\n
-          <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>\n
-          <maven.home>${maven.home}</maven.home>\n </systemPropertyVariables>\n </configuration>\n
-          </plugin>\n </plugins>\n </build>\n ```"
-        codeSnip: '6  '
-        lineNumber: 5
-        variables:
-          data: project
-          innerText: "\n    4.0.0\n\n    com.telran\n    BookServer\n    1.0-SNAPSHOT\n\n
-            \   \n        \n            \n                org.springframework.boot\n
-            \               spring-boot-maven-plugin\n                2.1.0.RELEASE
-            \ \t\t\t\n            \n        \n    \n\n    \n        \n        \n            org.springframework.boot\n
-            \           spring-boot-starter-web\n            2.1.0.RELEASE                \n
-            \       \n\n        \n        \n            org.projectlombok\n            lombok\n
-            \           1.18.2\n        \n\n        \n        \n            com.fasterxml.jackson.core\n
-            \           jackson-databind\n            2.9.5\n        \n\n        \n
-            \           com.fasterxml.jackson.datatype\n            jackson-datatype-jsr310\n
-            \           2.9.5\n        \n\n        \n            com.fasterxml.jackson.dataformat\n
-            \           jackson-dataformat-xml\n            2.9.5\n        \n\n        \n
-            \       \n            \n            \n            \n            \n        \n\n
-            \   \n\n"
-          matchingXML: <modelVersion>4.0.0</modelVersion><groupId>com.telran</groupId><artifactId>BookServer</artifactId><version>1.0-SNAPSHOT</version><build><plugins><plugin><groupId>org.springframework.boot</groupId><artifactId>spring-boot-maven-plugin</artifactId><version>2.1.0.RELEASE</version><!--  09.11.2018
-            --></plugin></plugins></build><dependencies><!-- spring boot --><dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-web</artifactId><version>2.1.0.RELEASE</version><!--  09.11.2018
-            --></dependency><!--  lombok --><dependency><groupId>org.projectlombok</groupId><artifactId>lombok</artifactId><version>1.18.2</version></dependency><!--
-            jackson --><dependency><groupId>com.fasterxml.jackson.core</groupId><artifactId>jackson-databind</artifactId><version>2.9.5</version></dependency><dependency><groupId>com.fasterxml.jackson.datatype</groupId><artifactId>jackson-datatype-jsr310</artifactId><version>2.9.5</version></dependency><dependency><groupId>com.fasterxml.jackson.dataformat</groupId><artifactId>jackson-dataformat-xml</artifactId><version>2.9.5</version></dependency><!--&lt;!&ndash;
-            jdbc connector &ndash;&gt;--><!--<dependency>--><!--<groupId>mysql</groupId>--><!--<artifactId>mysql-connector-java</artifactId>--><!--&lt;!&ndash;
-            <version>8.0.12</version> &ndash;&gt;               &lt;!&ndash; TimeZone
-            bug not fixed since 5.1.39 &ndash;&gt;--><!--<version>5.1.39</version>--><!--</dependency>--></dependencies>
-      links:
-      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven;
-        title: Quarkus - Guide;
-      effort: 1
-    javaee-pom-to-quarkus-00050:
-      description: Adopt Maven Failsafe plugin
-      category: mandatory
-      labels:
-      - konveyor.io/source=java-ee
-      - konveyor.io/target=quarkus
-      incidents:
-      - uri: file:///source/pom.xml
-        message: "Use the Maven Failsafe plugin adding the following sections to the
-          `pom.xml` file: \n\n ```xml\n <properties> \n <surefire-plugin.version>3.0.0</compiler-plugin.version>\n
-          </properties> \n <build>\n <plugins>\n <plugin>\n <artifactId>maven-failsafe-plugin</artifactId>\n
-          <version>${surefire-plugin.version}</version>\n <executions>\n <execution>\n
-          <goals>\n <goals>integration-test</goal>\n <goals>verify</goal>\n </goals>\n
-          <configuration>\n <systemPropertyVariables>\n <native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>\n
-          <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>\n
-          <maven.home>${maven.home}</maven.home>\n </systemPropertyVariables>\n </configuration>\n
-          </execution>\n </executions>\n </plugin>\n </plugins>\n </build>\n ```"
-        codeSnip: '6  '
-        lineNumber: 5
-        variables:
-          data: project
-          innerText: "\n    4.0.0\n\n    com.telran\n    BookServer\n    1.0-SNAPSHOT\n\n
-            \   \n        \n            \n                org.springframework.boot\n
-            \               spring-boot-maven-plugin\n                2.1.0.RELEASE
-            \ \t\t\t\n            \n        \n    \n\n    \n        \n        \n            org.springframework.boot\n
-            \           spring-boot-starter-web\n            2.1.0.RELEASE                \n
-            \       \n\n        \n        \n            org.projectlombok\n            lombok\n
-            \           1.18.2\n        \n\n        \n        \n            com.fasterxml.jackson.core\n
-            \           jackson-databind\n            2.9.5\n        \n\n        \n
-            \           com.fasterxml.jackson.datatype\n            jackson-datatype-jsr310\n
-            \           2.9.5\n        \n\n        \n            com.fasterxml.jackson.dataformat\n
-            \           jackson-dataformat-xml\n            2.9.5\n        \n\n        \n
-            \       \n            \n            \n            \n            \n        \n\n
-            \   \n\n"
-          matchingXML: <modelVersion>4.0.0</modelVersion><groupId>com.telran</groupId><artifactId>BookServer</artifactId><version>1.0-SNAPSHOT</version><build><plugins><plugin><groupId>org.springframework.boot</groupId><artifactId>spring-boot-maven-plugin</artifactId><version>2.1.0.RELEASE</version><!--  09.11.2018
-            --></plugin></plugins></build><dependencies><!-- spring boot --><dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-web</artifactId><version>2.1.0.RELEASE</version><!--  09.11.2018
-            --></dependency><!--  lombok --><dependency><groupId>org.projectlombok</groupId><artifactId>lombok</artifactId><version>1.18.2</version></dependency><!--
-            jackson --><dependency><groupId>com.fasterxml.jackson.core</groupId><artifactId>jackson-databind</artifactId><version>2.9.5</version></dependency><dependency><groupId>com.fasterxml.jackson.datatype</groupId><artifactId>jackson-datatype-jsr310</artifactId><version>2.9.5</version></dependency><dependency><groupId>com.fasterxml.jackson.dataformat</groupId><artifactId>jackson-dataformat-xml</artifactId><version>2.9.5</version></dependency><!--&lt;!&ndash;
-            jdbc connector &ndash;&gt;--><!--<dependency>--><!--<groupId>mysql</groupId>--><!--<artifactId>mysql-connector-java</artifactId>--><!--&lt;!&ndash;
-            <version>8.0.12</version> &ndash;&gt;               &lt;!&ndash; TimeZone
-            bug not fixed since 5.1.39 &ndash;&gt;--><!--<version>5.1.39</version>--><!--</dependency>--></dependencies>
-      links:
-      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven;
-        title: Quarkus - Guide;
-      effort: 1
-    javaee-pom-to-quarkus-00060:
-      description: Add Maven profile to run the Quarkus native build
-      category: mandatory
-      labels:
-      - konveyor.io/source=java-ee
-      - konveyor.io/target=quarkus
-      incidents:
-      - uri: file:///source/pom.xml
-        message: "Leverage a Maven profile to run the Quarkus native build adding
-          the following section to the `pom.xml` file: \n\n ```xml\n <profiles>\n
-          <profile>\n <id>native</id>\n <activation>\n <property>\n <name>native</name>\n
-          </property>\n </activation>\n <properties>\n <skipITs>false</skipITs>\n
-          <quarkus.package.type>native</quarkus.package.type>\n </properties>\n </profile>\n
-          </profiles>\n ```"
-        codeSnip: '6  '
-        lineNumber: 5
-        variables:
-          data: project
-          innerText: "\n    4.0.0\n\n    com.telran\n    BookServer\n    1.0-SNAPSHOT\n\n
-            \   \n        \n            \n                org.springframework.boot\n
-            \               spring-boot-maven-plugin\n                2.1.0.RELEASE
-            \ \t\t\t\n            \n        \n    \n\n    \n        \n        \n            org.springframework.boot\n
-            \           spring-boot-starter-web\n            2.1.0.RELEASE                \n
-            \       \n\n        \n        \n            org.projectlombok\n            lombok\n
-            \           1.18.2\n        \n\n        \n        \n            com.fasterxml.jackson.core\n
-            \           jackson-databind\n            2.9.5\n        \n\n        \n
-            \           com.fasterxml.jackson.datatype\n            jackson-datatype-jsr310\n
-            \           2.9.5\n        \n\n        \n            com.fasterxml.jackson.dataformat\n
-            \           jackson-dataformat-xml\n            2.9.5\n        \n\n        \n
-            \       \n            \n            \n            \n            \n        \n\n
-            \   \n\n"
-          matchingXML: <modelVersion>4.0.0</modelVersion><groupId>com.telran</groupId><artifactId>BookServer</artifactId><version>1.0-SNAPSHOT</version><build><plugins><plugin><groupId>org.springframework.boot</groupId><artifactId>spring-boot-maven-plugin</artifactId><version>2.1.0.RELEASE</version><!--  09.11.2018
-            --></plugin></plugins></build><dependencies><!-- spring boot --><dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-web</artifactId><version>2.1.0.RELEASE</version><!--  09.11.2018
-            --></dependency><!--  lombok --><dependency><groupId>org.projectlombok</groupId><artifactId>lombok</artifactId><version>1.18.2</version></dependency><!--
-            jackson --><dependency><groupId>com.fasterxml.jackson.core</groupId><artifactId>jackson-databind</artifactId><version>2.9.5</version></dependency><dependency><groupId>com.fasterxml.jackson.datatype</groupId><artifactId>jackson-datatype-jsr310</artifactId><version>2.9.5</version></dependency><dependency><groupId>com.fasterxml.jackson.dataformat</groupId><artifactId>jackson-dataformat-xml</artifactId><version>2.9.5</version></dependency><!--&lt;!&ndash;
-            jdbc connector &ndash;&gt;--><!--<dependency>--><!--<groupId>mysql</groupId>--><!--<artifactId>mysql-connector-java</artifactId>--><!--&lt;!&ndash;
-            <version>8.0.12</version> &ndash;&gt;               &lt;!&ndash; TimeZone
-            bug not fixed since 5.1.39 &ndash;&gt;--><!--<version>5.1.39</version>--><!--</dependency>--></dependencies>
-      links:
-      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven;
-        title: Quarkus - Guide;
-      effort: 1
     springboot-annotations-to-quarkus-00000:
       description: Remove the SpringBoot @SpringBootApplication annotation
       category: mandatory
@@ -835,29 +264,6 @@
       links:
       - url: https://quarkus.io/guides/spring-di
         title: Quarkus DI Guide
-      effort: 1
-    springboot-plugins-to-quarkus-0000:
-      description: Replace the spring-boot-maven-plugin dependency
-      category: mandatory
-      labels:
-      - konveyor.io/source=springboot
-      - konveyor.io/target=quarkus
-      incidents:
-      - uri: file:///source/pom.xml
-        message: |-
-          Replace the `spring-boot-maven-plugin` dependency.
-           The `spring-boot-maven-plugin` dependency needs to be replaced with `quarkus-maven-plugin`, so that the application is built with Quarkus, both for running on the JVM and in native mode.
-        codeSnip: 15                  <artifactId>spring-boot-maven-plugin</artifactId>
-        lineNumber: 14
-        variables:
-          data: plugin
-          innerText: "\n                org.springframework.boot\n                spring-boot-maven-plugin\n
-            \               2.1.0.RELEASE  \t\t\t\n            "
-          matchingXML: <groupId>org.springframework.boot</groupId><artifactId>spring-boot-maven-plugin</artifactId><version>2.1.0.RELEASE</version><!--  09.11.2018
-            -->
-      links:
-      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven
-        title: Building Quarkus with maven
       effort: 1
     springboot-properties-to-quarkus-00000:
       description: Replace the SpringBoot artifact with Quarkus 'spring-boot-properties'
@@ -921,27 +327,81 @@
       - url: https://quarkus.io/guides/spring-web
         title: Quarkus Spring Web Guide
       effort: 1
+  errors:
+    cdi-to-quarkus-00000: 'unable to find XML files: failed to walk dirs - lstat /source:
+      no such file or directory'
+    cdi-to-quarkus-00020: 'unable to find XML files: failed to walk dirs - lstat /source:
+      no such file or directory'
+    cdi-to-quarkus-00030: 'unable to find XML files: failed to walk dirs - lstat /source:
+      no such file or directory'
+    jakarta-cdi-to-quarkus-00000: 'unable to find XML files: failed to walk dirs -
+      lstat /source: no such file or directory'
+    jakarta-cdi-to-quarkus-00020: 'unable to find XML files: failed to walk dirs -
+      lstat /source: no such file or directory'
+    jakarta-cdi-to-quarkus-00030: 'unable to find XML files: failed to walk dirs -
+      lstat /source: no such file or directory'
+    jakarta-faces-to-quarkus-00000: 'unable to find XML files: failed to walk dirs
+      - lstat /source: no such file or directory'
+    jakarta-faces-to-quarkus-00010: 'failed to perform search - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    javaee-faces-to-quarkus-00000: 'unable to find XML files: failed to walk dirs
+      - lstat /source: no such file or directory'
+    javaee-pom-to-quarkus-00000: 'unable to find XML files: failed to walk dirs -
+      lstat /source: no such file or directory'
+    javaee-pom-to-quarkus-00010: 'unable to find XML files: failed to walk dirs -
+      lstat /source: no such file or directory'
+    javaee-pom-to-quarkus-00020: 'unable to find XML files: failed to walk dirs -
+      lstat /source: no such file or directory'
+    javaee-pom-to-quarkus-00030: 'unable to find XML files: failed to walk dirs -
+      lstat /source: no such file or directory'
+    javaee-pom-to-quarkus-00040: 'unable to find XML files: failed to walk dirs -
+      lstat /source: no such file or directory'
+    javaee-pom-to-quarkus-00050: 'unable to find XML files: failed to walk dirs -
+      lstat /source: no such file or directory'
+    javaee-pom-to-quarkus-00060: 'unable to find XML files: failed to walk dirs -
+      lstat /source: no such file or directory'
+    javaee-pom-to-quarkus-00070: 'unable to find XML files: failed to walk dirs -
+      lstat /source: no such file or directory'
+    persistence-to-quarkus-00000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    springboot-actuator-to-quarkus-0200: 'failed to perform search - failed to walk
+      all dirs - lstat /source: no such file or directory'
+    springboot-devtools-to-quarkus-0000: 'unable to find XML files: failed to walk
+      dirs - lstat /source: no such file or directory'
+    springboot-di-to-quarkus-00001: 'unable to find XML files: failed to walk all
+      dirs - lstat /source: no such file or directory'
+    springboot-integration-to-quarkus-00010: 'unable to find XML files: failed to
+      walk all dirs - lstat /source: no such file or directory'
+    springboot-jmx-to-quarkus-00000: 'unable to find XML files: failed to walk all
+      dirs - lstat /source: no such file or directory'
+    springboot-metrics-to-quarkus-0300: 'failed to perform search - failed to walk
+      all dirs - lstat /source: no such file or directory'
+    springboot-parent-pom-to-quarkus-00000: 'unable to find XML files: failed to walk
+      dirs - lstat /source: no such file or directory'
+    springboot-plugins-to-quarkus-0000: 'unable to find XML files: failed to walk
+      dirs - lstat /source: no such file or directory'
+    springboot-properties-to-quarkus-00001: 'failed to search for files - failed to
+      walk all dirs - lstat /source: no such file or directory'
+    springboot-properties-to-quarkus-00002: 'failed to perform search - failed to
+      walk all dirs - lstat /source: no such file or directory'
+    springboot-properties-to-quarkus-00003: 'failed to perform search - failed to
+      walk all dirs - lstat /source: no such file or directory'
+    springboot-properties-to-quarkus-00004: 'failed to perform search - failed to
+      walk all dirs - lstat /source: no such file or directory'
+    springboot-properties-to-quarkus-00005: 'failed to perform search - failed to
+      walk all dirs - lstat /source: no such file or directory'
+    springboot-properties-to-quarkus-00006: 'failed to perform search - failed to
+      walk all dirs - lstat /source: no such file or directory'
   unmatched:
-  - cdi-to-quarkus-00000
-  - cdi-to-quarkus-00020
-  - cdi-to-quarkus-00030
   - cdi-to-quarkus-00040
   - dependency-removal-for-quarkus-00000
   - ee-to-quarkus-00000
   - ee-to-quarkus-00010
   - ee-to-quarkus-00020
-  - jakarta-cdi-to-quarkus-00000
-  - jakarta-cdi-to-quarkus-00020
-  - jakarta-cdi-to-quarkus-00030
   - jakarta-cdi-to-quarkus-00040
   - jakarta-cdi-to-quarkus-00050
-  - jakarta-faces-to-quarkus-00000
-  - jakarta-faces-to-quarkus-00010
   - jakarta-jaxrs-to-quarkus-00010
   - jakarta-jaxrs-to-quarkus-00020
-  - javaee-faces-to-quarkus-00000
-  - javaee-pom-to-quarkus-00000
-  - javaee-pom-to-quarkus-00070
   - javaee-pom-to-quarkus-00080
   - jaxrs-to-quarkus-00000
   - jaxrs-to-quarkus-00010
@@ -957,33 +417,19 @@
   - jms-to-reactive-quarkus-00050
   - jndi-to-quarkus-00001
   - jndi-to-quarkus-00002
-  - persistence-to-quarkus-00000
   - persistence-to-quarkus-00010
   - persistence-to-quarkus-00011
   - remote-ejb-to-quarkus-00000
   - springboot-actuator-to-quarkus-0100
-  - springboot-actuator-to-quarkus-0200
   - springboot-cache-to-quarkus-00000
   - springboot-cloud-config-client-to-quarkus-00000
-  - springboot-devtools-to-quarkus-0000
-  - springboot-di-to-quarkus-00001
   - springboot-di-to-quarkus-00002
   - springboot-generic-catchall-00100
-  - springboot-integration-to-quarkus-00010
   - springboot-integration-to-quarkus-00020
-  - springboot-jmx-to-quarkus-00000
   - springboot-jmx-to-quarkus-00001
   - springboot-jpa-to-quarkus-00000
   - springboot-metrics-to-quarkus-0100
   - springboot-metrics-to-quarkus-0200
-  - springboot-metrics-to-quarkus-0300
-  - springboot-parent-pom-to-quarkus-00000
-  - springboot-properties-to-quarkus-00001
-  - springboot-properties-to-quarkus-00002
-  - springboot-properties-to-quarkus-00003
-  - springboot-properties-to-quarkus-00004
-  - springboot-properties-to-quarkus-00005
-  - springboot-properties-to-quarkus-00006
   - springboot-scheduled-to-quarkus-00000
   - springboot-security-to-quarkus-00000
   - springboot-shell-to-quarkus-00000
@@ -996,11 +442,9 @@
 - name: technology-usage
   description: This ruleset provides analysis of logging libraries.
   tags:
-  - Bean=EJB XML
   - Configuration Management=Spring Boot Auto-configuration
   - Configuration Management=Spring Boot Component Scan
   - Configuration Management=Spring Boot Configuration
-  - Connect=EJB XML
   - Embedded framework - Spring DI
   - Embedded framework - Spring MVC
   - Embedded framework - Spring Web
@@ -1012,7 +456,6 @@
   - Embedded=Spring Web
   - Execute=Spring DI
   - Inversion of Control=Spring DI
-  - Java EE=EJB XML
   - MVC=Spring MVC
   - Spring Boot Auto-configuration
   - Spring Boot Component Scan
@@ -1115,20 +558,6 @@
         variables:
           name: org.springframework.spring-webmvc
           version: 5.1.2.RELEASE
-    non-xml-technology-usage-02000:
-      description: Non-XML EJB
-      labels:
-      - discovery
-      - konveyor.io/include=always
-      - tag=Bean=EJB XML
-      - tag=Connect=EJB XML
-      - tag=Java EE=EJB XML
-      incidents:
-      - uri: ""
-        message: ""
-        variables:
-          tags:
-          - EJB XML
     technology-usage-3rd-party-spring-03001-0:
       description: Spring Boot Configuration
       labels:
@@ -1213,153 +642,720 @@
         variables:
           tags:
           - Spring MVC
+  errors:
+    3rd-party-01000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    3rd-party-02000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    3rd-party-03000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    3rd-party-04000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    3rd-party-05000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    3rd-party-06000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    3rd-party-07000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    3rd-party-08000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    3rd-party-09000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    3rd-party-10000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    3rd-party-11000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    3rd-party-12000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    3rd-party-13000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    3rd-party-14000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    3rd-party-15000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    3rd-party-16000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    3rd-party-17000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    3rd-party-18000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    3rd-party-19000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    3rd-party-spring-03002: 'unable to find XML files: failed to walk all dirs - lstat
+      /source: no such file or directory'
+    apm-00000: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    apm-00001: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    apm-00002: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    apm-00003: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    clustering-00000: 'unable to find XML files: failed to walk all dirs - lstat /source:
+      no such file or directory'
+    clustering-00001: 'unable to find XML files: failed to walk all dirs - lstat /source:
+      no such file or directory'
+    configuration-management-0200: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    configuration-management-0300: 'failed to perform search - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    configuration-management-0400: 'failed to perform search - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    connect-01400: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    connect-01500: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    connect-01600: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    connect-01700: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    connect-01800: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    connect-01900: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    connect-02000: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    connect-02100: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    connect-02200: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    connect-02300: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    connect-02400: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    connect-02500: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    connect-02600: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    connect-02700: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    connect-02800: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    connect-02900: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    database-01400: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    database-01500: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    database-01600: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    database-01700: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    database-01800: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    database-01805: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    database-01900: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    database-02000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    database-02100: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    database-02200: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    database-02300: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    database-02400: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    database-02500: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    database-02600: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    database-02700: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    database-02800: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    database-02900: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    database-03100: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    embedded-cache-libraries-01000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-02000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-03000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-04000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-05000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-06000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-07000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-08000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-09000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-10000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-11000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-12000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-13000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-14000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-16000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-framework-01000: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-01010: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-01100: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-01200: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-01300: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-01400: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-01500: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-01600: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-01700: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-02000: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-02200: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-02300: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-02400: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-03000: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-03100: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-03200: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-03300: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-03400: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-04700: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-05000: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-05100: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-05300: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-05400: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-05500: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-05600: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-05700: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-05800: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-05900: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-06000: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-06100: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-06200: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-06300: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-06400: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-06500: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-06600: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-06700: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-06800: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-06900: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-07000: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-07100: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-07200: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-07300: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-07400: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-07500: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-07600: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-07700: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-07800: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-07900: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-08000: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-08100: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-08600: 'failed to perform search - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-08900: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-09000: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-09100: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-09300: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    integration-00001: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    integration-00002: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    integration-00003: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    integration-00004: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    integration-00005: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    integration-00006: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    integration-00007: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    integration-00008: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    integration-00009: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    integration-00010: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    integration-00011: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    integration-00012: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    integration-00013: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    integration-00014: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    integration-00015: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    integration-00016: 'unable to find XML files: failed to walk all dirs - lstat
+      /source: no such file or directory'
+    javaee-technology-usage-00010: 'unable to find XML files: failed to walk dirs
+      - lstat /source: no such file or directory'
+    javaee-technology-usage-00011: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    javaee-technology-usage-00060: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    javaee-technology-usage-00902: 'unable to find XML files: failed to walk all dirs
+      - lstat /source: no such file or directory'
+    javaee-technology-usage-00903: 'unable to find XML files: failed to walk all dirs
+      - lstat /source: no such file or directory'
+    javaee-technology-usage-00905: 'unable to find XML files: failed to walk all dirs
+      - lstat /source: no such file or directory'
+    javaee-technology-usage-00906: 'unable to find XML files: failed to walk all dirs
+      - lstat /source: no such file or directory'
+    javaee-technology-usage-00910: 'unable to find XML files: failed to walk all dirs
+      - lstat /source: no such file or directory'
+    javaee-technology-usage-00911: 'unable to find XML files: failed to walk all dirs
+      - lstat /source: no such file or directory'
+    javaee-technology-usage-00912: 'unable to find XML files: failed to walk all dirs
+      - lstat /source: no such file or directory'
+    javaee-technology-usage-00913: 'unable to find XML files: failed to walk all dirs
+      - lstat /source: no such file or directory'
+    javaee-technology-usage-00914: 'unable to find XML files: failed to walk all dirs
+      - lstat /source: no such file or directory'
+    javaee-technology-usage-00915: 'unable to find XML files: failed to walk all dirs
+      - lstat /source: no such file or directory'
+    javaee-technology-usage-00916: 'unable to find XML files: failed to walk all dirs
+      - lstat /source: no such file or directory'
+    javaee-technology-usage-00917: 'unable to find XML files: failed to walk all dirs
+      - lstat /source: no such file or directory'
+    javaee-technology-usage-00918: 'unable to find XML files: failed to walk all dirs
+      - lstat /source: no such file or directory'
+    javaee-technology-usage-00926: 'unable to find XML files: failed to walk all dirs
+      - lstat /source: no such file or directory'
+    javaee-technology-usage-00927: 'unable to find XML files: failed to walk all dirs
+      - lstat /source: no such file or directory'
+    javaee-technology-usage-00928: 'unable to find XML files: failed to walk all dirs
+      - lstat /source: no such file or directory'
+    javaee-technology-usage-00930: 'unable to find XML files: failed to walk all dirs
+      - lstat /source: no such file or directory'
+    javaee-technology-usage-00931: 'unable to find XML files: failed to walk all dirs
+      - lstat /source: no such file or directory'
+    javaee-technology-usage-00932: 'unable to find XML files: failed to walk all dirs
+      - lstat /source: no such file or directory'
+    jta-00020: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    jta-00030: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    jta-00040: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    jta-00050: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    jta-00060: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    jta-00070: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    jta-00080: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    jta-00090: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    jta-00100: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    jta-00110: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    jta-00120: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    jta-00130: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    jta-00140: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    jta-00150: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    jta-00160: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    jta-00170: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    jta-00180: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    jta-00190: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    jta-00200: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    jta-00210: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    logging-usage-00010: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00020: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00030: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00040: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00050: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00080: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00090: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00100: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00110: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00120: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00130: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00140: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00150: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00160: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00170: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00180: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00190: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00200: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00210: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00220: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00230: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00240: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00250: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00260: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00270: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00280: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00290: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    mvc-01000: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-01100: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-01200: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-01300: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-01400: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-01500: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-01600: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-01700: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-01800: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-01900: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-02000: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-02100: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-02200: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-02300: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-02400: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-02500: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-02600: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-02700: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-02800: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-02900: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-03000: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-03100: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-03200: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-03300: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-03400: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-03500: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-03600: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-03700: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-03800: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-03900: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-04000: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-04100: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-04200: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-04300: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-04400: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-04500: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-04600: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-04700: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-04800: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-04900: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-05000: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-05100: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-05200: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-05300: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-05400: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-05500: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-05600: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-05700: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-05800: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-05900: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-06000: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    observability-0200: 'unable to find XML files: failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-01100: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-01200: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-01300: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-01400: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-01500: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-01600: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-01700: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-01800: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-01900: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-02000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-02100: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-02200: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-02300: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-02400: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-02500: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-02600: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-02700: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-02800: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-02900: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-03000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-03100: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-03200: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-03300: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-03400: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-03500: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    spring-catchall-00001: 'failed to search for files - failed to walk all dirs -
+      lstat /source: no such file or directory'
+    technology-usage-connect-01300: 'unable to find XML files: failed to walk all
+      dirs - lstat /source: no such file or directory'
+    technology-usage-database-01100: 'failed to perform search - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    technology-usage-database-01300: 'failed to search for files - failed to walk
+      all dirs - lstat /source: no such file or directory'
+    technology-usage-security-01000: 'failed to search for files - failed to walk
+      all dirs - lstat /source: no such file or directory'
+    technology-usage-web-01100: 'failed to perform search - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    technology-usage-web-01400: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    technology-usage-web-01500: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    technology-usage-web-01600: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    technology-usage-web-01700: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    technology-usage-web-01800: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    technology-usage-web-01900: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    technology-usage-web-02000: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    technology-usage-web-02100: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    technology-usage-web-02200: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    technology-usage-web-02300: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    technology-usage-web-02400: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    test-frameworks-sauge-00010: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00020: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00030: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00040: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00050: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00060: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00070: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00080: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00090: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00100: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00110: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00120: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00130: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00140: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00150: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00160: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00170: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00180: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00190: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00200: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00210: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00220: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00230: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00240: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00260: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00270: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00280: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00290: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00300: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00310: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00320: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00330: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00340: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00350: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00360: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00370: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00560: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    web-01000: 'failed to perform search - failed to walk all dirs - lstat /source:
+      no such file or directory'
   unmatched:
-  - 3rd-party-01000
-  - 3rd-party-02000
-  - 3rd-party-03000
-  - 3rd-party-04000
-  - 3rd-party-05000
-  - 3rd-party-06000
-  - 3rd-party-07000
-  - 3rd-party-08000
-  - 3rd-party-09000
-  - 3rd-party-10000
-  - 3rd-party-11000
-  - 3rd-party-12000
-  - 3rd-party-13000
-  - 3rd-party-14000
-  - 3rd-party-15000
-  - 3rd-party-16000
-  - 3rd-party-17000
-  - 3rd-party-18000
-  - 3rd-party-19000
-  - 3rd-party-spring-03002
-  - apm-00000
-  - apm-00001
-  - apm-00002
-  - apm-00003
-  - clustering-00000
-  - clustering-00001
   - configuration-management-0100
-  - configuration-management-0200
-  - configuration-management-0300
-  - configuration-management-0400
   - configuration-management-0500
   - configuration-management-technology-usage-0100
   - configuration-management-technology-usage-0200
   - configuration-management-technology-usage-0300
-  - connect-01400
-  - connect-01500
-  - connect-01600
-  - connect-01700
-  - connect-01800
-  - connect-01900
-  - connect-02000
-  - connect-02100
-  - connect-02200
-  - connect-02300
-  - connect-02400
-  - connect-02500
-  - connect-02600
-  - connect-02700
-  - connect-02800
-  - connect-02900
-  - database-01400
-  - database-01400
-  - database-01500
-  - database-01600
-  - database-01700
-  - database-01800
-  - database-01805
-  - database-01900
-  - database-02000
-  - database-02100
-  - database-02200
-  - database-02300
-  - database-02400
-  - database-02500
-  - database-02600
-  - database-02700
-  - database-02800
-  - database-02900
   - database-03000
-  - database-03100
   - ejb-01000
-  - embedded-cache-libraries-01000
-  - embedded-cache-libraries-02000
-  - embedded-cache-libraries-03000
-  - embedded-cache-libraries-04000
-  - embedded-cache-libraries-05000
-  - embedded-cache-libraries-06000
-  - embedded-cache-libraries-07000
-  - embedded-cache-libraries-08000
-  - embedded-cache-libraries-09000
-  - embedded-cache-libraries-10000
-  - embedded-cache-libraries-11000
-  - embedded-cache-libraries-12000
-  - embedded-cache-libraries-13000
-  - embedded-cache-libraries-14000
   - embedded-cache-libraries-15000
-  - embedded-cache-libraries-16000
-  - embedded-framework-01000
-  - embedded-framework-01010
-  - embedded-framework-01100
-  - embedded-framework-01200
-  - embedded-framework-01300
-  - embedded-framework-01400
-  - embedded-framework-01500
-  - embedded-framework-01600
-  - embedded-framework-01700
-  - embedded-framework-02000
-  - embedded-framework-02200
-  - embedded-framework-02300
-  - embedded-framework-02400
-  - embedded-framework-03000
-  - embedded-framework-03100
-  - embedded-framework-03200
-  - embedded-framework-03300
-  - embedded-framework-03400
-  - embedded-framework-04700
-  - embedded-framework-05000
-  - embedded-framework-05100
-  - embedded-framework-05300
-  - embedded-framework-05400
-  - embedded-framework-05500
-  - embedded-framework-05600
-  - embedded-framework-05700
-  - embedded-framework-05800
-  - embedded-framework-05900
-  - embedded-framework-06000
-  - embedded-framework-06100
-  - embedded-framework-06200
-  - embedded-framework-06300
-  - embedded-framework-06400
-  - embedded-framework-06500
-  - embedded-framework-06600
-  - embedded-framework-06700
-  - embedded-framework-06800
-  - embedded-framework-06900
-  - embedded-framework-07000
-  - embedded-framework-07100
-  - embedded-framework-07200
-  - embedded-framework-07300
-  - embedded-framework-07400
-  - embedded-framework-07500
-  - embedded-framework-07600
-  - embedded-framework-07700
-  - embedded-framework-07800
-  - embedded-framework-07900
-  - embedded-framework-08000
-  - embedded-framework-08100
   - embedded-framework-08300
   - embedded-framework-08500
-  - embedded-framework-08600
   - embedded-framework-08700
   - embedded-framework-08800
-  - embedded-framework-08900
-  - embedded-framework-09000
-  - embedded-framework-09100
-  - embedded-framework-09300
   - embedded-framework-embedded-framework-02700
   - embedded-framework-embedded-framework-02800
   - embedded-framework-embedded-framework-02900
@@ -1382,25 +1378,7 @@
   - embedded-framework-embedded-framework-04600
   - embedded-framework-embedded-framework-09200
   - embedded-framework-embedded-framework-09300
-  - integration-00001
-  - integration-00002
-  - integration-00003
-  - integration-00004
-  - integration-00005
-  - integration-00006
-  - integration-00007
-  - integration-00008
-  - integration-00009
-  - integration-00010
-  - integration-00011
-  - integration-00012
-  - integration-00013
-  - integration-00014
-  - integration-00015
-  - integration-00016
   - integration-00017
-  - javaee-technology-usage-00010
-  - javaee-technology-usage-00011
   - javaee-technology-usage-00012
   - javaee-technology-usage-00013
   - javaee-technology-usage-00020-jakarta
@@ -1410,7 +1388,6 @@
   - javaee-technology-usage-00031
   - javaee-technology-usage-00040
   - javaee-technology-usage-00050
-  - javaee-technology-usage-00060
   - javaee-technology-usage-00070
   - javaee-technology-usage-00080
   - javaee-technology-usage-00090
@@ -1428,25 +1405,6 @@
   - javaee-technology-usage-00210
   - javaee-technology-usage-00220
   - javaee-technology-usage-00230
-  - javaee-technology-usage-00902
-  - javaee-technology-usage-00903
-  - javaee-technology-usage-00905
-  - javaee-technology-usage-00906
-  - javaee-technology-usage-00910
-  - javaee-technology-usage-00911
-  - javaee-technology-usage-00912
-  - javaee-technology-usage-00913
-  - javaee-technology-usage-00914
-  - javaee-technology-usage-00915
-  - javaee-technology-usage-00916
-  - javaee-technology-usage-00917
-  - javaee-technology-usage-00918
-  - javaee-technology-usage-00926
-  - javaee-technology-usage-00927
-  - javaee-technology-usage-00928
-  - javaee-technology-usage-00930
-  - javaee-technology-usage-00931
-  - javaee-technology-usage-00932
   - javaee-technology-usage-00950
   - javaee-technology-usage-00951
   - javaee-technology-usage-00952
@@ -1459,105 +1417,8 @@
   - javase-01000
   - javase-01100
   - javase-technology-usage-01000
-  - jta-00020
-  - jta-00030
-  - jta-00040
-  - jta-00050
-  - jta-00060
-  - jta-00070
-  - jta-00080
-  - jta-00090
-  - jta-00100
-  - jta-00110
-  - jta-00120
-  - jta-00130
-  - jta-00140
-  - jta-00150
-  - jta-00160
-  - jta-00170
-  - jta-00180
-  - jta-00190
-  - jta-00200
-  - jta-00210
-  - logging-usage-00010
-  - logging-usage-00020
-  - logging-usage-00030
-  - logging-usage-00040
-  - logging-usage-00050
-  - logging-usage-00080
-  - logging-usage-00090
-  - logging-usage-00100
-  - logging-usage-00110
-  - logging-usage-00120
-  - logging-usage-00130
-  - logging-usage-00140
-  - logging-usage-00150
-  - logging-usage-00160
-  - logging-usage-00170
-  - logging-usage-00180
-  - logging-usage-00190
-  - logging-usage-00200
-  - logging-usage-00210
-  - logging-usage-00220
-  - logging-usage-00230
-  - logging-usage-00240
-  - logging-usage-00250
-  - logging-usage-00260
-  - logging-usage-00270
-  - logging-usage-00280
-  - logging-usage-00290
-  - mvc-01000
-  - mvc-01100
-  - mvc-01200
   - mvc-01210
-  - mvc-01300
-  - mvc-01400
-  - mvc-01500
-  - mvc-01600
-  - mvc-01700
-  - mvc-01800
-  - mvc-01900
-  - mvc-02000
-  - mvc-02100
-  - mvc-02200
-  - mvc-02300
-  - mvc-02400
-  - mvc-02500
-  - mvc-02600
-  - mvc-02700
-  - mvc-02800
-  - mvc-02900
-  - mvc-03000
-  - mvc-03100
-  - mvc-03200
-  - mvc-03300
-  - mvc-03400
-  - mvc-03500
-  - mvc-03600
-  - mvc-03700
-  - mvc-03800
-  - mvc-03900
-  - mvc-04000
-  - mvc-04100
-  - mvc-04200
-  - mvc-04300
-  - mvc-04400
-  - mvc-04500
-  - mvc-04600
-  - mvc-04700
-  - mvc-04800
-  - mvc-04900
-  - mvc-05000
-  - mvc-05100
-  - mvc-05200
-  - mvc-05300
-  - mvc-05400
-  - mvc-05500
-  - mvc-05600
-  - mvc-05700
-  - mvc-05800
-  - mvc-05900
-  - mvc-06000
+  - non-xml-technology-usage-02000
   - non-xml-technology-usage-05000
   - non-xml-technology-usage-06000
   - non-xml-technology-usage-12000
@@ -1575,36 +1436,9 @@
   - non-xml-technology-usage-26000
   - non-xml-technology-usage-27000
   - observability-0100
-  - observability-0200
   - observability-technology-usage-0100
   - observability-technology-usage-0200
-  - security-01100
-  - security-01200
-  - security-01300
-  - security-01400
-  - security-01500
-  - security-01600
-  - security-01700
-  - security-01800
-  - security-01900
-  - security-02000
-  - security-02100
-  - security-02200
-  - security-02300
-  - security-02400
-  - security-02500
-  - security-02600
-  - security-02700
-  - security-02800
-  - security-02900
-  - security-03000
-  - security-03100
-  - security-03200
-  - security-03300
-  - security-03400
-  - security-03500
   - security-03600
-  - spring-catchall-00001
   - technology-usage-3rd-party-01000
   - technology-usage-3rd-party-02000
   - technology-usage-3rd-party-03000
@@ -1635,7 +1469,6 @@
   - technology-usage-connect-01100
   - technology-usage-connect-01101
   - technology-usage-connect-01200
-  - technology-usage-connect-01300
   - technology-usage-connect-01400
   - technology-usage-connect-01500
   - technology-usage-connect-01600
@@ -1654,9 +1487,7 @@
   - technology-usage-connect-02900
   - technology-usage-database-01000
   - technology-usage-database-01001
-  - technology-usage-database-01100
   - technology-usage-database-01200
-  - technology-usage-database-01300
   - technology-usage-database-01400
   - technology-usage-database-01500
   - technology-usage-database-01600
@@ -1845,7 +1676,6 @@
   - technology-usage-mvc-05900
   - technology-usage-mvc-06000
   - technology-usage-mvc-0x4200
-  - technology-usage-security-01000
   - technology-usage-security-01100
   - technology-usage-security-01200
   - technology-usage-security-01300
@@ -1910,67 +1740,17 @@
   - technology-usage-test-frameworks-00370
   - technology-usage-web-01000
   - technology-usage-web-01100
-  - technology-usage-web-01100
   - technology-usage-web-01200
   - technology-usage-web-01300
   - technology-usage-web-01300
   - technology-usage-web-01400
-  - technology-usage-web-01400
-  - technology-usage-web-01500
   - technology-usage-web-01500
   - technology-usage-web-01600
-  - technology-usage-web-01600
-  - technology-usage-web-01700
   - technology-usage-web-01700
   - technology-usage-web-01800
-  - technology-usage-web-01800
-  - technology-usage-web-01900
   - technology-usage-web-01900
   - technology-usage-web-02000
-  - technology-usage-web-02000
-  - technology-usage-web-02100
   - technology-usage-web-02100
   - technology-usage-web-02200
-  - technology-usage-web-02200
-  - technology-usage-web-02300
   - technology-usage-web-02300
   - technology-usage-web-02400
-  - technology-usage-web-02400
-  - test-frameworks-sauge-00010
-  - test-frameworks-sauge-00020
-  - test-frameworks-sauge-00030
-  - test-frameworks-sauge-00040
-  - test-frameworks-sauge-00050
-  - test-frameworks-sauge-00060
-  - test-frameworks-sauge-00070
-  - test-frameworks-sauge-00080
-  - test-frameworks-sauge-00090
-  - test-frameworks-sauge-00100
-  - test-frameworks-sauge-00110
-  - test-frameworks-sauge-00120
-  - test-frameworks-sauge-00130
-  - test-frameworks-sauge-00140
-  - test-frameworks-sauge-00150
-  - test-frameworks-sauge-00160
-  - test-frameworks-sauge-00170
-  - test-frameworks-sauge-00180
-  - test-frameworks-sauge-00190
-  - test-frameworks-sauge-00200
-  - test-frameworks-sauge-00210
-  - test-frameworks-sauge-00220
-  - test-frameworks-sauge-00230
-  - test-frameworks-sauge-00240
-  - test-frameworks-sauge-00260
-  - test-frameworks-sauge-00270
-  - test-frameworks-sauge-00280
-  - test-frameworks-sauge-00290
-  - test-frameworks-sauge-00300
-  - test-frameworks-sauge-00310
-  - test-frameworks-sauge-00320
-  - test-frameworks-sauge-00330
-  - test-frameworks-sauge-00340
-  - test-frameworks-sauge-00350
-  - test-frameworks-sauge-00360
-  - test-frameworks-sauge-00370
-  - test-frameworks-sauge-00560
-  - web-01000

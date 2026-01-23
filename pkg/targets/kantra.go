@@ -125,6 +125,8 @@ func (k *KantraTarget) buildArgs(analysis config.AnalysisConfig, inputPath, outp
 	// Output directory (now passed as parameter, already absolute)
 	args = append(args, "--output", outputDir)
 
+	args = append(args, "--skip-static-report")
+
 	// Label selector (if specified)
 	if analysis.LabelSelector != "" {
 		args = append(args, "--label-selector", analysis.LabelSelector)

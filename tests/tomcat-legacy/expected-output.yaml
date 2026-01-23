@@ -1,111 +1,6 @@
-- name: discovery-rules
-  tags:
-  - EJB XML
-  - Java Source
-  - Maven XML
-  - Properties
-  violations:
-    hardcoded-ip-address:
-      description: Hardcoded IP Address
-      category: mandatory
-      labels:
-      - discovery
-      - konveyor.io/target=cloud-readiness
-      - konveyor.io/target=discovery
-      incidents:
-      - uri: file:///source/example-1/src/main/resources/persistence.properties
-        message: When migrating environments, hard-coded IP addresses may need to
-          be modified or eliminated.
-        codeSnip: 3  jdbc.user=customers
-        lineNumber: 2
-        variables:
-          matchingText: "225."
-      effort: 1
-  insights:
-    discover-java-files:
-      description: Java source files
-      labels:
-      - discovery
-      - konveyor.io/include=always
-      - konveyor.io/target=discovery
-      - tag=Java Source
-      incidents:
-      - uri: file:///source/example-1/src/main/java/io/konveyor/demo/ordermanagement/OrderManagementAppInitializer.java
-        message: ""
-      - uri: file:///source/example-1/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
-        message: ""
-      - uri: file:///source/example-1/src/main/java/io/konveyor/demo/ordermanagement/config/WebConfig.java
-        message: ""
-      - uri: file:///source/example-1/src/main/java/io/konveyor/demo/ordermanagement/controller/CustomerController.java
-        message: ""
-      - uri: file:///source/example-1/src/main/java/io/konveyor/demo/ordermanagement/exception/ResourceNotFoundException.java
-        message: ""
-      - uri: file:///source/example-1/src/main/java/io/konveyor/demo/ordermanagement/exception/handler/ExceptionHandlingController.java
-        message: ""
-      - uri: file:///source/example-1/src/main/java/io/konveyor/demo/ordermanagement/model/Customer.java
-        message: ""
-      - uri: file:///source/example-1/src/main/java/io/konveyor/demo/ordermanagement/repository/CustomerRepository.java
-        message: ""
-      - uri: file:///source/example-1/src/main/java/io/konveyor/demo/ordermanagement/service/CustomerService.java
-        message: ""
-      - uri: file:///source/example-1/src/main/java/io/konveyor/demo/ordermanagement/service/ICustomerService.java
-        message: ""
-    discover-maven-xml:
-      description: Maven XML file
-      labels:
-      - discovery
-      - konveyor.io/include=always
-      - konveyor.io/target=discovery
-      - tag=Maven XML
-      incidents:
-      - uri: file:///source/example-1/pom.xml
-        message: ""
-    discover-properties-file:
-      description: Properties file
-      labels:
-      - discovery
-      - konveyor.io/include=always
-      - konveyor.io/target=discovery
-      - tag=Properties
-      incidents:
-      - uri: file:///source/example-1/src/main/resources/persistence.properties
-        message: ""
-    windup-discover-ejb-configuration:
-      description: EJB XML Configuration
-      labels:
-      - discovery
-      - konveyor.io/include=always
-      - konveyor.io/target=discovery
-      - tag=EJB XML
-      incidents:
-      - uri: file:///source/example-1/pom.xml
-        message: ""
-        codeSnip: "5  \t<groupId>io.konveyor.demo</groupId>"
-        lineNumber: 4
-        variables:
-          data: ""
-          innerText: "\n\t4.0.0\n\tio.konveyor.demo\n\tcustomers-tomcat\n\t0.0.1-SNAPSHOT\n\n\tOrder
-            Management\n\twar\n\tRemaining services for the legacy Order Management
-            application\n\n\t\n\t\t1.8\n\t\tUTF-8\n\t\tUTF-8\n\t\t${java.version}\n\t\t${java.version}\n\t\t5.3.7\n\t\t9.0.46\n\t\t2021.0.1\n\t\t5.4.32.Final\n\t\t6.2.0.Final\n\n\t\t42.2.20\n\t\t2.12.3\n\n\t\t3.8.1\n\t\t3.3.1\n\t\t3.2.0\n\n\t\n\n\t\n\t\t\n\t\t\tdemo-config\n\t\t\tAzure
-            DevOps\n\t\t\thttps://pkgs.dev.azure.com/ShawnHurley21/demo-config-utils/_packaging/demo-config/maven/v1\n\t\t\n\t\n\n\t\n\t\t\n\t\t\t\n\t\t\t\tcom.fasterxml.jackson\n\t\t\t\tjackson-bom\n\t\t\t\t${jackson.version}\n\t\t\t\timport\n\t\t\t\tpom\n\t\t\t\n\t\t\t\n\t\t\t\torg.springframework.data\n\t\t\t\tspring-data-bom\n\t\t\t\t${spring-data.version}\n\t\t\t\timport\n\t\t\t\tpom\n\t\t\t\n\t\t\n\t\n\t\n\t\t\n\t\t\torg.apache.tomcat\n\t\t\ttomcat-servlet-api\n\t\t\t${tomcat.version}\n\t\t\tprovided\n\t\t\n\t\t\n\t\t\tcom.fasterxml.jackson.core\n\t\t\tjackson-core\n\t\t\n\t\t\n\t\t\tcom.fasterxml.jackson.core\n\t\t\tjackson-databind\n\t\t\n\t\t\n\t\t\torg.springframework.data\n\t\t\tspring-data-jpa\n\t\t\n\n\t\t\n\t\t\torg.springframework\n\t\t\tspring-jdbc\n\t\t\t${spring-framework.version}\n\t\t\n\t\t\n\t\t\torg.springframework\n\t\t\tspring-webmvc\n\t\t\t${spring-framework.version}\n\t\t\n\t\t\n\t\t\torg.springframework\n\t\t\tspring-web\n\t\t\t${spring-framework.version}\n\t\t\n\t\t\n\t\t\torg.springframework.boot\n\t\t\tspring-boot-starter-actuator\n\t\t\t2.5.0\n\t\t\n\t\t\n\t\t\torg.apache.tomcat\n\t\t\ttomcat-jdbc\n\t\t\t${tomcat.version}\n\t\t\truntime\n\t\t\n\t\t\n\t\t\torg.hibernate\n\t\t\thibernate-entitymanager\n\t\t\t${hibernate.version}\n\t\t\n\t\t\n\t\t\torg.hibernate.validator\n\t\t\thibernate-validator\n\t\t\t${hibernate-validator.version}\n\t\t\n\t\t\n\t\t\tch.qos.logback\n\t\t\tlogback-classic\n\t\t\t1.1.7\n\t\t\n\t\t\n\t\t\tcom.oracle.database.jdbc\n\t\t\tojdbc8\n\t\t\t21.1.0.0\n\t\t\n\t\t\n\t\t\torg.postgresql\n\t\t\tpostgresql\n\t\t\t42.2.23\n\t\t\n\t\t\n\t\t\n\t\t\tio.konveyor.demo\n\t\t\tconfig-utils\n\t\t\t1.0.0\n\t\t\n\n\t\n\t\n\t\t\n\t\t\t\n\t\t\t\torg.apache.maven.plugins\n\t\t\t\tmaven-compiler-plugin\n\t\t\t\t${maven-compiler-plugin.version}\n\t\t\t\n\t\t\t\n\t\t\t\torg.apache.maven.plugins\n\t\t\t\tmaven-war-plugin\n\t\t\t\t${maven-war-plugin.version}\n\t\t\t\t\n\t\t\t\t\tfalse\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\torg.apache.maven.plugins\n\t\t\t\tmaven-resources-plugin\n\t\t\t\t${maven-resources-plugin.version}\n\t\t\t\t\n\t\t\t\t\tUTF-8\n\t\t\t\t\n\t\t\t\n\t\t\n\t\n\n\n"
-          matchingXML: <?xml version="1.0"?><project xmlns="http://maven.apache.org/POM/4.0.0"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-            https://maven.apache.org/xsd/maven-4.0.0.xsd"><modelVersion>4.0.0</modelVersion><groupId>io.konveyor.demo</groupId><artifactId>customers-tomcat</artifactId><version>0.0.1-SNAPSHOT</version><name>Order
-            Management</name><packaging>war</packaging><description>Remaining services
-            for the legacy Order Management application</description><properties><java.version>1.8</java.version><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding><maven.compiler.source>${java.version}</maven.compiler.source><maven.compiler.target>${java.version}</maven.compiler.target><spring-framework.version>5.3.7</spring-framework.version><tomcat.version>9.0.46</tomcat.version><spring-data.version>2021.0.1</spring-data.version><hibernate.version>5.4.32.Final</hibernate.version><hibernate-validator.version>6.2.0.Final</hibernate-validator.version><postgresql-driver.version>42.2.20</postgresql-driver.version><jackson.version>2.12.3</jackson.version><maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version><maven-war-plugin.version>3.3.1</maven-war-plugin.version><maven-resources-plugin.version>3.2.0</maven-resources-plugin.version></properties><repositories><repository><id>demo-config</id><name>Azure
-            DevOps</name><url>https://pkgs.dev.azure.com/ShawnHurley21/demo-config-utils/_packaging/demo-config/maven/v1</url></repository></repositories><dependencyManagement><dependencies><dependency><groupId>com.fasterxml.jackson</groupId><artifactId>jackson-bom</artifactId><version>${jackson.version}</version><scope>import</scope><type>pom</type></dependency><dependency><groupId>org.springframework.data</groupId><artifactId>spring-data-bom</artifactId><version>${spring-data.version}</version><scope>import</scope><type>pom</type></dependency></dependencies></dependencyManagement><dependencies><dependency><groupId>org.apache.tomcat</groupId><artifactId>tomcat-servlet-api</artifactId><version>${tomcat.version}</version><scope>provided</scope></dependency><dependency><groupId>com.fasterxml.jackson.core</groupId><artifactId>jackson-core</artifactId></dependency><dependency><groupId>com.fasterxml.jackson.core</groupId><artifactId>jackson-databind</artifactId></dependency><dependency><groupId>org.springframework.data</groupId><artifactId>spring-data-jpa</artifactId></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-jdbc</artifactId><version>${spring-framework.version}</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-webmvc</artifactId><version>${spring-framework.version}</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-web</artifactId><version>${spring-framework.version}</version></dependency><dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-actuator</artifactId><version>2.5.0</version></dependency><dependency><groupId>org.apache.tomcat</groupId><artifactId>tomcat-jdbc</artifactId><version>${tomcat.version}</version><scope>runtime</scope></dependency><dependency><groupId>org.hibernate</groupId><artifactId>hibernate-entitymanager</artifactId><version>${hibernate.version}</version></dependency><dependency><groupId>org.hibernate.validator</groupId><artifactId>hibernate-validator</artifactId><version>${hibernate-validator.version}</version></dependency><dependency><groupId>ch.qos.logback</groupId><artifactId>logback-classic</artifactId><version>1.1.7</version></dependency><dependency><groupId>com.oracle.database.jdbc</groupId><artifactId>ojdbc8</artifactId><version>21.1.0.0</version></dependency><dependency><groupId>org.postgresql</groupId><artifactId>postgresql</artifactId><version>42.2.23</version></dependency><!--
-            Corporate libraries --><dependency><groupId>io.konveyor.demo</groupId><artifactId>config-utils</artifactId><version>1.0.0</version></dependency></dependencies><build><plugins><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>${maven-compiler-plugin.version}</version></plugin><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-war-plugin</artifactId><version>${maven-war-plugin.version}</version><configuration><failOnMissingWebXml>false</failOnMissingWebXml></configuration></plugin><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-resources-plugin</artifactId><version>${maven-resources-plugin.version}</version><configuration><encoding>UTF-8</encoding></configuration></plugin></plugins></build></project>
-  unmatched:
-  - discover-license
-  - discover-manifest-file
-  - windup-discover-jpa-configuration
-  - windup-discover-spring-configuration
-  - windup-discover-web-configuration
 - name: technology-usage
   description: This ruleset provides analysis of logging libraries.
   tags:
-  - Bean=EJB XML
-  - Connect=EJB XML
   - Connect=Servlet
   - Embedded Spring Data JPA
   - Embedded framework - Micrometer
@@ -114,7 +9,6 @@
   - Embedded framework - Spring Web
   - Embedded library - Spring Boot Actuator
   - Embedded=Micrometer
-  - Embedded=Properties
   - Embedded=Spring Boot Actuator
   - Embedded=Spring DI
   - Embedded=Spring Data JPA
@@ -125,14 +19,12 @@
   - HTTP=Servlet
   - Integration=Micrometer
   - Inversion of Control=Spring DI
-  - Java EE=EJB XML
   - Java EE=JPA named queries
   - Java EE=Servlet
   - Java Servlet
   - MVC=Spring MVC
   - Micrometer
   - Observability=Spring Boot Actuator
-  - Other=Properties
   - Persistence=JPA named queries
   - Persistence=Spring Data JPA
   - Servlet
@@ -143,7 +35,6 @@
   - Spring Web
   - Store=JPA named queries
   - Store=Spring Data JPA
-  - Sustain=Properties
   - Sustain=Spring Boot Actuator
   - View=Spring MVC
   - View=Spring Web
@@ -359,34 +250,6 @@
         variables:
           name: org.springframework.spring-webmvc
           version: 5.3.7
-    non-xml-technology-usage-02000:
-      description: Non-XML EJB
-      labels:
-      - discovery
-      - konveyor.io/include=always
-      - tag=Bean=EJB XML
-      - tag=Connect=EJB XML
-      - tag=Java EE=EJB XML
-      incidents:
-      - uri: ""
-        message: ""
-        variables:
-          tags:
-          - EJB XML
-    non-xml-technology-usage-20000:
-      description: Properties
-      labels:
-      - discovery
-      - konveyor.io/include=always
-      - tag=Embedded=Properties
-      - tag=Other=Properties
-      - tag=Sustain=Properties
-      incidents:
-      - uri: ""
-        message: ""
-        variables:
-          tags:
-          - Properties
     observability-0100:
       description: Embedded library - Spring Boot Actuator
       labels:
@@ -552,152 +415,719 @@
         variables:
           tags:
           - Spring MVC
+  errors:
+    3rd-party-01000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    3rd-party-02000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    3rd-party-03000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    3rd-party-04000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    3rd-party-05000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    3rd-party-06000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    3rd-party-07000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    3rd-party-08000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    3rd-party-09000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    3rd-party-10000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    3rd-party-11000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    3rd-party-12000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    3rd-party-13000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    3rd-party-14000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    3rd-party-15000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    3rd-party-16000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    3rd-party-17000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    3rd-party-18000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    3rd-party-19000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    3rd-party-spring-03002: 'unable to find XML files: failed to walk all dirs - lstat
+      /source: no such file or directory'
+    apm-00000: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    apm-00001: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    apm-00002: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    apm-00003: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    clustering-00000: 'unable to find XML files: failed to walk all dirs - lstat /source:
+      no such file or directory'
+    clustering-00001: 'unable to find XML files: failed to walk all dirs - lstat /source:
+      no such file or directory'
+    configuration-management-0200: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    configuration-management-0300: 'failed to perform search - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    configuration-management-0400: 'failed to perform search - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    connect-01400: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    connect-01500: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    connect-01600: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    connect-01700: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    connect-01800: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    connect-01900: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    connect-02000: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    connect-02100: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    connect-02200: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    connect-02300: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    connect-02400: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    connect-02500: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    connect-02600: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    connect-02700: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    connect-02800: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    connect-02900: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    database-01400: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    database-01500: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    database-01600: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    database-01700: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    database-01800: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    database-01805: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    database-01900: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    database-02000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    database-02100: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    database-02200: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    database-02300: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    database-02400: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    database-02500: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    database-02600: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    database-02700: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    database-02800: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    database-02900: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    database-03100: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    embedded-cache-libraries-01000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-02000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-03000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-04000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-05000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-06000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-07000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-08000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-09000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-10000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-11000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-12000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-13000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-14000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-cache-libraries-16000: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    embedded-framework-01000: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-01010: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-01100: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-01200: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-01300: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-01400: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-01500: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-01600: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-01700: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-02000: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-02200: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-02300: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-02400: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-03000: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-03100: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-03200: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-03300: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-03400: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-04700: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-05000: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-05100: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-05300: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-05400: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-05500: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-05600: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-05700: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-05800: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-05900: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-06000: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-06100: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-06200: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-06300: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-06400: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-06500: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-06600: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-06700: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-06800: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-06900: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-07000: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-07100: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-07200: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-07300: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-07400: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-07500: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-07600: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-07700: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-07800: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-07900: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-08000: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-08100: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-08600: 'failed to perform search - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-08900: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-09000: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-09100: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    embedded-framework-09300: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    integration-00001: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    integration-00002: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    integration-00003: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    integration-00004: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    integration-00005: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    integration-00006: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    integration-00007: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    integration-00008: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    integration-00009: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    integration-00010: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    integration-00011: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    integration-00012: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    integration-00013: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    integration-00014: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    integration-00015: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    integration-00016: 'unable to find XML files: failed to walk all dirs - lstat
+      /source: no such file or directory'
+    javaee-technology-usage-00010: 'unable to find XML files: failed to walk dirs
+      - lstat /source: no such file or directory'
+    javaee-technology-usage-00011: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    javaee-technology-usage-00060: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    javaee-technology-usage-00902: 'unable to find XML files: failed to walk all dirs
+      - lstat /source: no such file or directory'
+    javaee-technology-usage-00903: 'unable to find XML files: failed to walk all dirs
+      - lstat /source: no such file or directory'
+    javaee-technology-usage-00905: 'unable to find XML files: failed to walk all dirs
+      - lstat /source: no such file or directory'
+    javaee-technology-usage-00906: 'unable to find XML files: failed to walk all dirs
+      - lstat /source: no such file or directory'
+    javaee-technology-usage-00910: 'unable to find XML files: failed to walk all dirs
+      - lstat /source: no such file or directory'
+    javaee-technology-usage-00911: 'unable to find XML files: failed to walk all dirs
+      - lstat /source: no such file or directory'
+    javaee-technology-usage-00912: 'unable to find XML files: failed to walk all dirs
+      - lstat /source: no such file or directory'
+    javaee-technology-usage-00913: 'unable to find XML files: failed to walk all dirs
+      - lstat /source: no such file or directory'
+    javaee-technology-usage-00914: 'unable to find XML files: failed to walk all dirs
+      - lstat /source: no such file or directory'
+    javaee-technology-usage-00915: 'unable to find XML files: failed to walk all dirs
+      - lstat /source: no such file or directory'
+    javaee-technology-usage-00916: 'unable to find XML files: failed to walk all dirs
+      - lstat /source: no such file or directory'
+    javaee-technology-usage-00917: 'unable to find XML files: failed to walk all dirs
+      - lstat /source: no such file or directory'
+    javaee-technology-usage-00918: 'unable to find XML files: failed to walk all dirs
+      - lstat /source: no such file or directory'
+    javaee-technology-usage-00926: 'unable to find XML files: failed to walk all dirs
+      - lstat /source: no such file or directory'
+    javaee-technology-usage-00927: 'unable to find XML files: failed to walk all dirs
+      - lstat /source: no such file or directory'
+    javaee-technology-usage-00928: 'unable to find XML files: failed to walk all dirs
+      - lstat /source: no such file or directory'
+    javaee-technology-usage-00930: 'unable to find XML files: failed to walk all dirs
+      - lstat /source: no such file or directory'
+    javaee-technology-usage-00931: 'unable to find XML files: failed to walk all dirs
+      - lstat /source: no such file or directory'
+    javaee-technology-usage-00932: 'unable to find XML files: failed to walk all dirs
+      - lstat /source: no such file or directory'
+    jta-00020: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    jta-00030: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    jta-00040: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    jta-00050: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    jta-00060: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    jta-00070: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    jta-00080: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    jta-00090: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    jta-00100: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    jta-00110: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    jta-00120: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    jta-00130: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    jta-00140: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    jta-00150: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    jta-00160: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    jta-00170: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    jta-00180: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    jta-00190: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    jta-00200: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    jta-00210: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    logging-usage-00010: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00020: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00030: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00040: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00050: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00080: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00090: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00100: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00110: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00120: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00130: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00140: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00150: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00160: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00170: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00180: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00190: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00200: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00210: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00220: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00230: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00240: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00250: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00260: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00270: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00280: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    logging-usage-00290: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    mvc-01000: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-01100: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-01200: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-01300: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-01400: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-01500: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-01600: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-01700: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-01800: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-01900: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-02000: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-02100: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-02200: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-02300: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-02400: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-02500: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-02600: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-02700: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-02800: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-02900: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-03000: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-03100: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-03200: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-03300: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-03400: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-03500: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-03600: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-03700: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-03800: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-03900: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-04000: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-04100: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-04200: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-04300: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-04400: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-04500: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-04600: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-04700: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-04800: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-04900: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-05000: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-05100: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-05200: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-05300: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-05400: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-05500: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-05600: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-05700: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-05800: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-05900: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    mvc-06000: 'failed to search for files - failed to walk all dirs - lstat /source:
+      no such file or directory'
+    observability-0200: 'unable to find XML files: failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-01100: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-01200: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-01300: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-01400: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-01500: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-01600: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-01700: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-01800: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-01900: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-02000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-02100: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-02200: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-02300: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-02400: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-02500: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-02600: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-02700: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-02800: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-02900: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-03000: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-03100: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-03200: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-03300: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-03400: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    security-03500: 'failed to search for files - failed to walk all dirs - lstat
+      /source: no such file or directory'
+    spring-catchall-00001: 'failed to search for files - failed to walk all dirs -
+      lstat /source: no such file or directory'
+    technology-usage-connect-01300: 'unable to find XML files: failed to walk all
+      dirs - lstat /source: no such file or directory'
+    technology-usage-database-01100: 'failed to perform search - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    technology-usage-database-01300: 'failed to search for files - failed to walk
+      all dirs - lstat /source: no such file or directory'
+    technology-usage-security-01000: 'failed to search for files - failed to walk
+      all dirs - lstat /source: no such file or directory'
+    technology-usage-web-01100: 'failed to perform search - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    technology-usage-web-01400: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    technology-usage-web-01500: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    technology-usage-web-01600: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    technology-usage-web-01700: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    technology-usage-web-01800: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    technology-usage-web-01900: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    technology-usage-web-02000: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    technology-usage-web-02100: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    technology-usage-web-02200: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    technology-usage-web-02300: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    technology-usage-web-02400: 'failed to search for files - failed to walk all dirs
+      - lstat /source: no such file or directory'
+    test-frameworks-sauge-00010: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00020: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00030: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00040: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00050: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00060: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00070: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00080: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00090: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00100: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00110: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00120: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00130: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00140: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00150: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00160: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00170: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00180: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00190: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00200: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00210: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00220: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00230: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00240: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00260: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00270: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00280: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00290: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00300: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00310: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00320: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00330: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00340: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00350: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00360: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00370: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    test-frameworks-sauge-00560: 'failed to search for files - failed to walk all
+      dirs - lstat /source: no such file or directory'
+    web-01000: 'failed to perform search - failed to walk all dirs - lstat /source:
+      no such file or directory'
   unmatched:
-  - 3rd-party-01000
-  - 3rd-party-02000
-  - 3rd-party-03000
-  - 3rd-party-04000
-  - 3rd-party-05000
-  - 3rd-party-06000
-  - 3rd-party-07000
-  - 3rd-party-08000
-  - 3rd-party-09000
-  - 3rd-party-10000
-  - 3rd-party-11000
-  - 3rd-party-12000
-  - 3rd-party-13000
-  - 3rd-party-14000
-  - 3rd-party-15000
-  - 3rd-party-16000
-  - 3rd-party-17000
-  - 3rd-party-18000
-  - 3rd-party-19000
   - 3rd-party-spring-03001
-  - 3rd-party-spring-03002
-  - apm-00000
-  - apm-00001
-  - apm-00002
-  - apm-00003
-  - clustering-00000
-  - clustering-00001
   - configuration-management-0100
-  - configuration-management-0200
-  - configuration-management-0300
-  - configuration-management-0400
   - configuration-management-0500
   - configuration-management-technology-usage-0100
   - configuration-management-technology-usage-0200
   - configuration-management-technology-usage-0300
-  - connect-01400
-  - connect-01500
-  - connect-01600
-  - connect-01700
-  - connect-01800
-  - connect-01900
-  - connect-02000
-  - connect-02100
-  - connect-02200
-  - connect-02300
-  - connect-02400
-  - connect-02500
-  - connect-02600
-  - connect-02700
-  - connect-02800
-  - connect-02900
-  - database-01400
-  - database-01400
-  - database-01500
-  - database-01600
-  - database-01700
-  - database-01800
-  - database-01805
-  - database-01900
-  - database-02000
-  - database-02100
-  - database-02200
-  - database-02300
-  - database-02400
-  - database-02500
-  - database-02600
-  - database-02700
-  - database-02800
-  - database-02900
-  - database-03100
   - ejb-01000
-  - embedded-cache-libraries-01000
-  - embedded-cache-libraries-02000
-  - embedded-cache-libraries-03000
-  - embedded-cache-libraries-04000
-  - embedded-cache-libraries-05000
-  - embedded-cache-libraries-06000
-  - embedded-cache-libraries-07000
-  - embedded-cache-libraries-08000
-  - embedded-cache-libraries-09000
-  - embedded-cache-libraries-10000
-  - embedded-cache-libraries-11000
-  - embedded-cache-libraries-12000
-  - embedded-cache-libraries-13000
-  - embedded-cache-libraries-14000
   - embedded-cache-libraries-15000
-  - embedded-cache-libraries-16000
-  - embedded-framework-01000
-  - embedded-framework-01010
-  - embedded-framework-01100
-  - embedded-framework-01200
-  - embedded-framework-01300
-  - embedded-framework-01400
-  - embedded-framework-01500
-  - embedded-framework-01600
-  - embedded-framework-01700
-  - embedded-framework-02000
-  - embedded-framework-02200
-  - embedded-framework-02300
-  - embedded-framework-02400
-  - embedded-framework-03000
-  - embedded-framework-03100
-  - embedded-framework-03200
-  - embedded-framework-03300
-  - embedded-framework-03400
-  - embedded-framework-04700
-  - embedded-framework-05000
-  - embedded-framework-05100
-  - embedded-framework-05300
-  - embedded-framework-05400
-  - embedded-framework-05500
-  - embedded-framework-05600
-  - embedded-framework-05700
-  - embedded-framework-05800
-  - embedded-framework-05900
-  - embedded-framework-06000
-  - embedded-framework-06100
-  - embedded-framework-06200
-  - embedded-framework-06300
-  - embedded-framework-06400
-  - embedded-framework-06500
-  - embedded-framework-06600
-  - embedded-framework-06700
-  - embedded-framework-06800
-  - embedded-framework-06900
-  - embedded-framework-07000
-  - embedded-framework-07100
-  - embedded-framework-07200
-  - embedded-framework-07300
-  - embedded-framework-07400
-  - embedded-framework-07500
-  - embedded-framework-07600
-  - embedded-framework-07700
-  - embedded-framework-07800
-  - embedded-framework-07900
-  - embedded-framework-08000
-  - embedded-framework-08100
   - embedded-framework-08500
-  - embedded-framework-08600
   - embedded-framework-08700
   - embedded-framework-08800
-  - embedded-framework-08900
-  - embedded-framework-09000
-  - embedded-framework-09100
-  - embedded-framework-09300
   - embedded-framework-embedded-framework-02700
   - embedded-framework-embedded-framework-02800
   - embedded-framework-embedded-framework-02900
@@ -720,25 +1150,7 @@
   - embedded-framework-embedded-framework-04600
   - embedded-framework-embedded-framework-09200
   - embedded-framework-embedded-framework-09300
-  - integration-00001
-  - integration-00002
-  - integration-00003
-  - integration-00004
-  - integration-00005
-  - integration-00006
-  - integration-00007
-  - integration-00008
-  - integration-00009
-  - integration-00010
-  - integration-00011
-  - integration-00012
-  - integration-00013
-  - integration-00014
-  - integration-00015
-  - integration-00016
   - integration-00017
-  - javaee-technology-usage-00010
-  - javaee-technology-usage-00011
   - javaee-technology-usage-00012
   - javaee-technology-usage-00013
   - javaee-technology-usage-00020-jakarta
@@ -748,7 +1160,6 @@
   - javaee-technology-usage-00031
   - javaee-technology-usage-00040
   - javaee-technology-usage-00050
-  - javaee-technology-usage-00060
   - javaee-technology-usage-00070
   - javaee-technology-usage-00080
   - javaee-technology-usage-00090
@@ -764,25 +1175,6 @@
   - javaee-technology-usage-00200
   - javaee-technology-usage-00210
   - javaee-technology-usage-00220
-  - javaee-technology-usage-00902
-  - javaee-technology-usage-00903
-  - javaee-technology-usage-00905
-  - javaee-technology-usage-00906
-  - javaee-technology-usage-00910
-  - javaee-technology-usage-00911
-  - javaee-technology-usage-00912
-  - javaee-technology-usage-00913
-  - javaee-technology-usage-00914
-  - javaee-technology-usage-00915
-  - javaee-technology-usage-00916
-  - javaee-technology-usage-00917
-  - javaee-technology-usage-00918
-  - javaee-technology-usage-00926
-  - javaee-technology-usage-00927
-  - javaee-technology-usage-00928
-  - javaee-technology-usage-00930
-  - javaee-technology-usage-00931
-  - javaee-technology-usage-00932
   - javaee-technology-usage-00950
   - javaee-technology-usage-00951
   - javaee-technology-usage-00952
@@ -795,105 +1187,8 @@
   - javase-01000
   - javase-01100
   - javase-technology-usage-01000
-  - jta-00020
-  - jta-00030
-  - jta-00040
-  - jta-00050
-  - jta-00060
-  - jta-00070
-  - jta-00080
-  - jta-00090
-  - jta-00100
-  - jta-00110
-  - jta-00120
-  - jta-00130
-  - jta-00140
-  - jta-00150
-  - jta-00160
-  - jta-00170
-  - jta-00180
-  - jta-00190
-  - jta-00200
-  - jta-00210
-  - logging-usage-00010
-  - logging-usage-00020
-  - logging-usage-00030
-  - logging-usage-00040
-  - logging-usage-00050
-  - logging-usage-00080
-  - logging-usage-00090
-  - logging-usage-00100
-  - logging-usage-00110
-  - logging-usage-00120
-  - logging-usage-00130
-  - logging-usage-00140
-  - logging-usage-00150
-  - logging-usage-00160
-  - logging-usage-00170
-  - logging-usage-00180
-  - logging-usage-00190
-  - logging-usage-00200
-  - logging-usage-00210
-  - logging-usage-00220
-  - logging-usage-00230
-  - logging-usage-00240
-  - logging-usage-00250
-  - logging-usage-00260
-  - logging-usage-00270
-  - logging-usage-00280
-  - logging-usage-00290
-  - mvc-01000
-  - mvc-01100
-  - mvc-01200
   - mvc-01210
-  - mvc-01300
-  - mvc-01400
-  - mvc-01500
-  - mvc-01600
-  - mvc-01700
-  - mvc-01800
-  - mvc-01900
-  - mvc-02000
-  - mvc-02100
-  - mvc-02200
-  - mvc-02300
-  - mvc-02400
-  - mvc-02500
-  - mvc-02600
-  - mvc-02700
-  - mvc-02800
-  - mvc-02900
-  - mvc-03000
-  - mvc-03100
-  - mvc-03200
-  - mvc-03300
-  - mvc-03400
-  - mvc-03500
-  - mvc-03600
-  - mvc-03700
-  - mvc-03800
-  - mvc-03900
-  - mvc-04000
-  - mvc-04100
-  - mvc-04200
-  - mvc-04300
-  - mvc-04400
-  - mvc-04500
-  - mvc-04600
-  - mvc-04700
-  - mvc-04800
-  - mvc-04900
-  - mvc-05000
-  - mvc-05100
-  - mvc-05200
-  - mvc-05300
-  - mvc-05400
-  - mvc-05500
-  - mvc-05600
-  - mvc-05700
-  - mvc-05800
-  - mvc-05900
-  - mvc-06000
+  - non-xml-technology-usage-02000
   - non-xml-technology-usage-05000
   - non-xml-technology-usage-06000
   - non-xml-technology-usage-12000
@@ -902,6 +1197,7 @@
   - non-xml-technology-usage-17000
   - non-xml-technology-usage-18000
   - non-xml-technology-usage-19000
+  - non-xml-technology-usage-20000
   - non-xml-technology-usage-21000
   - non-xml-technology-usage-22000
   - non-xml-technology-usage-23000
@@ -909,35 +1205,8 @@
   - non-xml-technology-usage-25000
   - non-xml-technology-usage-26000
   - non-xml-technology-usage-27000
-  - observability-0200
   - observability-technology-usage-0200
-  - security-01100
-  - security-01200
-  - security-01300
-  - security-01400
-  - security-01500
-  - security-01600
-  - security-01700
-  - security-01800
-  - security-01900
-  - security-02000
-  - security-02100
-  - security-02200
-  - security-02300
-  - security-02400
-  - security-02500
-  - security-02600
-  - security-02700
-  - security-02800
-  - security-02900
-  - security-03000
-  - security-03100
-  - security-03200
-  - security-03300
-  - security-03400
-  - security-03500
   - security-03600
-  - spring-catchall-00001
   - technology-usage-3rd-party-01000
   - technology-usage-3rd-party-02000
   - technology-usage-3rd-party-03000
@@ -971,7 +1240,6 @@
   - technology-usage-connect-01100
   - technology-usage-connect-01101
   - technology-usage-connect-01200
-  - technology-usage-connect-01300
   - technology-usage-connect-01400
   - technology-usage-connect-01500
   - technology-usage-connect-01600
@@ -990,8 +1258,6 @@
   - technology-usage-connect-02900
   - technology-usage-database-01000
   - technology-usage-database-01001
-  - technology-usage-database-01100
-  - technology-usage-database-01300
   - technology-usage-database-01400
   - technology-usage-database-01500
   - technology-usage-database-01600
@@ -1178,7 +1444,6 @@
   - technology-usage-mvc-05900
   - technology-usage-mvc-06000
   - technology-usage-mvc-0x4200
-  - technology-usage-security-01000
   - technology-usage-security-01100
   - technology-usage-security-01200
   - technology-usage-security-01300
@@ -1243,67 +1508,17 @@
   - technology-usage-test-frameworks-00370
   - technology-usage-web-01000
   - technology-usage-web-01100
-  - technology-usage-web-01100
   - technology-usage-web-01200
   - technology-usage-web-01300
   - technology-usage-web-01300
   - technology-usage-web-01400
-  - technology-usage-web-01400
-  - technology-usage-web-01500
   - technology-usage-web-01500
   - technology-usage-web-01600
-  - technology-usage-web-01600
-  - technology-usage-web-01700
   - technology-usage-web-01700
   - technology-usage-web-01800
-  - technology-usage-web-01800
-  - technology-usage-web-01900
   - technology-usage-web-01900
   - technology-usage-web-02000
-  - technology-usage-web-02000
-  - technology-usage-web-02100
   - technology-usage-web-02100
   - technology-usage-web-02200
-  - technology-usage-web-02200
-  - technology-usage-web-02300
   - technology-usage-web-02300
   - technology-usage-web-02400
-  - technology-usage-web-02400
-  - test-frameworks-sauge-00010
-  - test-frameworks-sauge-00020
-  - test-frameworks-sauge-00030
-  - test-frameworks-sauge-00040
-  - test-frameworks-sauge-00050
-  - test-frameworks-sauge-00060
-  - test-frameworks-sauge-00070
-  - test-frameworks-sauge-00080
-  - test-frameworks-sauge-00090
-  - test-frameworks-sauge-00100
-  - test-frameworks-sauge-00110
-  - test-frameworks-sauge-00120
-  - test-frameworks-sauge-00130
-  - test-frameworks-sauge-00140
-  - test-frameworks-sauge-00150
-  - test-frameworks-sauge-00160
-  - test-frameworks-sauge-00170
-  - test-frameworks-sauge-00180
-  - test-frameworks-sauge-00190
-  - test-frameworks-sauge-00200
-  - test-frameworks-sauge-00210
-  - test-frameworks-sauge-00220
-  - test-frameworks-sauge-00230
-  - test-frameworks-sauge-00240
-  - test-frameworks-sauge-00260
-  - test-frameworks-sauge-00270
-  - test-frameworks-sauge-00280
-  - test-frameworks-sauge-00290
-  - test-frameworks-sauge-00300
-  - test-frameworks-sauge-00310
-  - test-frameworks-sauge-00320
-  - test-frameworks-sauge-00330
-  - test-frameworks-sauge-00340
-  - test-frameworks-sauge-00350
-  - test-frameworks-sauge-00360
-  - test-frameworks-sauge-00370
-  - test-frameworks-sauge-00560
-  - web-01000
