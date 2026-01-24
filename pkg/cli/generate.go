@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 
 	"github.com/fatih/color"
@@ -400,6 +401,11 @@ func saveFilteredOutput(rulesets []konveyor.RuleSet, path string, testDir string
 	if testDir != "" {
 		yamlStr = strings.ReplaceAll(yamlStr, testDir, "")
 	}
+
+	// Normalize ephemeral java-bin paths (containers, temp dirs) to /source/
+	// This handles macOS (/var/folders/.../T/), Linux (/tmp/), and container storage
+	javaBinPattern := regexp.MustCompile(`file.*/java-bin-\d+/`)
+	yamlStr = javaBinPattern.ReplaceAllString(yamlStr, "file:///source/")
 
 	// TODO: Handle make it so that target exposes the paths to normalize
 	if strings.Contains(yamlStr, "/root/.m2/repository") {

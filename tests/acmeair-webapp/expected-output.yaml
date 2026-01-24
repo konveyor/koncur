@@ -14,27 +14,27 @@
       - konveyor.io/target=discovery
       - tag=Java Source
       incidents:
-      - uri: file:///var/folders/gv/smd39_d91hb5dz167y54jlh40000gn/T/java-bin-1852127048/java-project/src/main/java/com/acmeair/web/BookingInfo.java
+      - uri: file:///source/java-project/src/main/java/com/acmeair/web/BookingInfo.java
         message: ""
-      - uri: file:///var/folders/gv/smd39_d91hb5dz167y54jlh40000gn/T/java-bin-1852127048/java-project/src/main/java/com/acmeair/web/BookingsREST.java
+      - uri: file:///source/java-project/src/main/java/com/acmeair/web/BookingsREST.java
         message: ""
-      - uri: file:///var/folders/gv/smd39_d91hb5dz167y54jlh40000gn/T/java-bin-1852127048/java-project/src/main/java/com/acmeair/web/CustomerREST.java
+      - uri: file:///source/java-project/src/main/java/com/acmeair/web/CustomerREST.java
         message: ""
-      - uri: file:///var/folders/gv/smd39_d91hb5dz167y54jlh40000gn/T/java-bin-1852127048/java-project/src/main/java/com/acmeair/web/FlightsREST.java
+      - uri: file:///source/java-project/src/main/java/com/acmeair/web/FlightsREST.java
         message: ""
-      - uri: file:///var/folders/gv/smd39_d91hb5dz167y54jlh40000gn/T/java-bin-1852127048/java-project/src/main/java/com/acmeair/web/LoaderREST.java
+      - uri: file:///source/java-project/src/main/java/com/acmeair/web/LoaderREST.java
         message: ""
-      - uri: file:///var/folders/gv/smd39_d91hb5dz167y54jlh40000gn/T/java-bin-1852127048/java-project/src/main/java/com/acmeair/web/LoginREST.java
+      - uri: file:///source/java-project/src/main/java/com/acmeair/web/LoginREST.java
         message: ""
-      - uri: file:///var/folders/gv/smd39_d91hb5dz167y54jlh40000gn/T/java-bin-1852127048/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
+      - uri: file:///source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
         message: ""
-      - uri: file:///var/folders/gv/smd39_d91hb5dz167y54jlh40000gn/T/java-bin-1852127048/java-project/src/main/java/com/acmeair/web/ServiceLocator.java
+      - uri: file:///source/java-project/src/main/java/com/acmeair/web/ServiceLocator.java
         message: ""
-      - uri: file:///var/folders/gv/smd39_d91hb5dz167y54jlh40000gn/T/java-bin-1852127048/java-project/src/main/java/com/acmeair/web/TripFlightOptions.java
+      - uri: file:///source/java-project/src/main/java/com/acmeair/web/TripFlightOptions.java
         message: ""
-      - uri: file:///var/folders/gv/smd39_d91hb5dz167y54jlh40000gn/T/java-bin-1852127048/java-project/src/main/java/com/acmeair/web/TripLegInfo.java
+      - uri: file:///source/java-project/src/main/java/com/acmeair/web/TripLegInfo.java
         message: ""
-      - uri: file:///var/folders/gv/smd39_d91hb5dz167y54jlh40000gn/T/java-bin-1852127048/java-project/src/main/java/com/acmeair/web/config/WXSDirectAppConfig.java
+      - uri: file:///source/java-project/src/main/java/com/acmeair/web/config/WXSDirectAppConfig.java
         message: ""
     discover-maven-xml:
       description: Maven XML file
@@ -44,7 +44,7 @@
       - konveyor.io/target=discovery
       - tag=Maven XML
       incidents:
-      - uri: file:///var/folders/gv/smd39_d91hb5dz167y54jlh40000gn/T/java-bin-1852127048/java-project/pom.xml
+      - uri: file:///source/java-project/pom.xml
         message: ""
     windup-discover-ejb-configuration:
       description: EJB XML Configuration
@@ -54,7 +54,7 @@
       - konveyor.io/target=discovery
       - tag=EJB XML
       incidents:
-      - uri: file:///var/folders/gv/smd39_d91hb5dz167y54jlh40000gn/T/java-bin-1852127048/java-project/pom.xml
+      - uri: file:///source/java-project/pom.xml
         message: ""
         codeSnip: '5  '
         lineNumber: 4
@@ -62,27 +62,27 @@
           data: ""
           innerText: "\n\n  4.0.0\n\n  io.konveyor\n  java-project\n  1.0-SNAPSHOT\n\n
             \ java-project\n  http://www.konveyor.io\n\n  \n    UTF-8\n  \n\n  \n\n
-            \   \n      net.wasdev.wlp.sample\n      acmeair-services\n      1.0-SNAPSHOT\n
-            \   \n\n    \n      net.wasdev.wlp.sample\n      acmeair-services-jpa\n
-            \     1.0-SNAPSHOT\n    \n\n    \n      net.wasdev.wlp.sample\n      acmeair-common\n
-            \     1.0-SNAPSHOT\n    \n\n    \n      asm\n      asm\n      3.3.1\n
+            \   \n      net.wasdev.wlp.sample\n      acmeair-services-jpa\n      1.0-SNAPSHOT\n
+            \   \n\n    \n      net.wasdev.wlp.sample\n      acmeair-services\n      1.0-SNAPSHOT\n
             \   \n\n    \n      aopalliance\n      aopalliance\n      1.0\n    \n\n
-            \   \n      commons-logging\n      commons-logging\n      1.1.1\n    \n\n
-            \   \n      org.aspectj\n      aspectjrt\n      1.6.8\n    \n\n    \n
-            \     org.springframework\n      spring-asm\n      3.1.2.RELEASE\n    \n\n
-            \   \n      org.springframework\n      spring-beans\n      3.1.2.RELEASE\n
-            \   \n\n    \n      cglib\n      cglib\n      2.2.2\n    \n\n    \n      org.springframework\n
-            \     spring-core\n      3.1.2.RELEASE\n    \n\n    \n      org.springframework\n
-            \     spring-web\n      3.1.2.RELEASE\n    \n\n    \n      org.springframework\n
-            \     spring-expression\n      3.1.2.RELEASE\n    \n\n    \n      org.springframework\n
-            \     spring-aop\n      3.1.2.RELEASE\n    \n\n    \n      org.springframework\n
-            \     spring-tx\n      3.1.2.RELEASE\n    \n\n    \n      org.springframework\n
-            \     spring-context\n      3.1.2.RELEASE\n    \n\n    \n      org.aspectj\n
-            \     aspectjweaver\n      1.6.8\n    \n\n  \n\n  \n  \n\n"
+            \   \n      net.wasdev.wlp.sample\n      acmeair-common\n      1.0-SNAPSHOT\n
+            \   \n\n    \n      commons-logging\n      commons-logging\n      1.1.1\n
+            \   \n\n    \n      asm\n      asm\n      3.3.1\n    \n\n    \n      org.aspectj\n
+            \     aspectjrt\n      1.6.8\n    \n\n    \n      org.springframework\n
+            \     spring-asm\n      3.1.2.RELEASE\n    \n\n    \n      cglib\n      cglib\n
+            \     2.2.2\n    \n\n    \n      org.springframework\n      spring-aop\n
+            \     3.1.2.RELEASE\n    \n\n    \n      org.springframework\n      spring-expression\n
+            \     3.1.2.RELEASE\n    \n\n    \n      org.springframework\n      spring-tx\n
+            \     3.1.2.RELEASE\n    \n\n    \n      org.springframework\n      spring-core\n
+            \     3.1.2.RELEASE\n    \n\n    \n      org.springframework\n      spring-beans\n
+            \     3.1.2.RELEASE\n    \n\n    \n      org.springframework\n      spring-web\n
+            \     3.1.2.RELEASE\n    \n\n    \n      org.springframework\n      spring-context\n
+            \     3.1.2.RELEASE\n    \n\n    \n      org.aspectj\n      aspectjweaver\n
+            \     1.6.8\n    \n\n  \n\n  \n  \n\n"
           matchingXML: <?xml version="1.0" encoding="UTF-8"?><project xmlns="http://maven.apache.org/POM/4.0.0"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-            http://maven.apache.org/xsd/maven-4.0.0.xsd"><modelVersion>4.0.0</modelVersion><groupId>io.konveyor</groupId><artifactId>java-project</artifactId><version>1.0-SNAPSHOT</version><name>java-project</name><url>http://www.konveyor.io</url><properties><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding></properties><dependencies><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>acmeair-services</artifactId><version>1.0-SNAPSHOT</version></dependency><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>acmeair-services-jpa</artifactId><version>1.0-SNAPSHOT</version></dependency><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>acmeair-common</artifactId><version>1.0-SNAPSHOT</version></dependency><dependency><groupId>asm</groupId><artifactId>asm</artifactId><version>3.3.1</version></dependency><dependency><groupId>aopalliance</groupId><artifactId>aopalliance</artifactId><version>1.0</version></dependency><dependency><groupId>commons-logging</groupId><artifactId>commons-logging</artifactId><version>1.1.1</version></dependency><dependency><groupId>org.aspectj</groupId><artifactId>aspectjrt</artifactId><version>1.6.8</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-asm</artifactId><version>3.1.2.RELEASE</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-beans</artifactId><version>3.1.2.RELEASE</version></dependency><dependency><groupId>cglib</groupId><artifactId>cglib</artifactId><version>2.2.2</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-core</artifactId><version>3.1.2.RELEASE</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-web</artifactId><version>3.1.2.RELEASE</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-expression</artifactId><version>3.1.2.RELEASE</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-aop</artifactId><version>3.1.2.RELEASE</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-tx</artifactId><version>3.1.2.RELEASE</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-context</artifactId><version>3.1.2.RELEASE</version></dependency><dependency><groupId>org.aspectj</groupId><artifactId>aspectjweaver</artifactId><version>1.6.8</version></dependency></dependencies><build></build></project>
-      - uri: file:///var/folders/gv/smd39_d91hb5dz167y54jlh40000gn/T/java-bin-1852127048/java-project/src/main/java/META-INF/persistence.xml
+            http://maven.apache.org/xsd/maven-4.0.0.xsd"><modelVersion>4.0.0</modelVersion><groupId>io.konveyor</groupId><artifactId>java-project</artifactId><version>1.0-SNAPSHOT</version><name>java-project</name><url>http://www.konveyor.io</url><properties><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding></properties><dependencies><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>acmeair-services-jpa</artifactId><version>1.0-SNAPSHOT</version></dependency><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>acmeair-services</artifactId><version>1.0-SNAPSHOT</version></dependency><dependency><groupId>aopalliance</groupId><artifactId>aopalliance</artifactId><version>1.0</version></dependency><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>acmeair-common</artifactId><version>1.0-SNAPSHOT</version></dependency><dependency><groupId>commons-logging</groupId><artifactId>commons-logging</artifactId><version>1.1.1</version></dependency><dependency><groupId>asm</groupId><artifactId>asm</artifactId><version>3.3.1</version></dependency><dependency><groupId>org.aspectj</groupId><artifactId>aspectjrt</artifactId><version>1.6.8</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-asm</artifactId><version>3.1.2.RELEASE</version></dependency><dependency><groupId>cglib</groupId><artifactId>cglib</artifactId><version>2.2.2</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-aop</artifactId><version>3.1.2.RELEASE</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-expression</artifactId><version>3.1.2.RELEASE</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-tx</artifactId><version>3.1.2.RELEASE</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-core</artifactId><version>3.1.2.RELEASE</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-beans</artifactId><version>3.1.2.RELEASE</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-web</artifactId><version>3.1.2.RELEASE</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-context</artifactId><version>3.1.2.RELEASE</version></dependency><dependency><groupId>org.aspectj</groupId><artifactId>aspectjweaver</artifactId><version>1.6.8</version></dependency></dependencies><build></build></project>
+      - uri: file:///source/java-project/src/main/java/META-INF/persistence.xml
         message: ""
         codeSnip: '10  '
         lineNumber: 9
@@ -102,7 +102,7 @@
             to avoid users having\n          to create a database to run the sample.
             \n          See also the create=true line in the datasource meta data.
             --><property name=\"openjpa.jdbc.SynchronizeMappings\" value=\"buildSchema(ForeignKeys=true)\"></property></properties></persistence-unit></persistence>"
-      - uri: file:///var/folders/gv/smd39_d91hb5dz167y54jlh40000gn/T/java-bin-1852127048/java-project/src/main/webapp/WEB-INF/web.xml
+      - uri: file:///source/java-project/src/main/webapp/WEB-INF/web.xml
         message: ""
         codeSnip: "7  \t<welcome-file-list>"
         lineNumber: 6
@@ -134,7 +134,7 @@
       - konveyor.io/target=discovery
       - tag=JPA XML
       incidents:
-      - uri: file:///var/folders/gv/smd39_d91hb5dz167y54jlh40000gn/T/java-bin-1852127048/java-project/src/main/java/META-INF/persistence.xml
+      - uri: file:///source/java-project/src/main/java/META-INF/persistence.xml
         message: ""
         codeSnip: '10  '
         lineNumber: 9
@@ -159,7 +159,7 @@
       - konveyor.io/target=discovery
       - tag=Web XML
       incidents:
-      - uri: file:///var/folders/gv/smd39_d91hb5dz167y54jlh40000gn/T/java-bin-1852127048/java-project/src/main/webapp/WEB-INF/web.xml
+      - uri: file:///source/java-project/src/main/webapp/WEB-INF/web.xml
         message: ""
         codeSnip: "7  \t<welcome-file-list>"
         lineNumber: 6
@@ -1093,7 +1093,7 @@
       - konveyor.io/target=jws
       - konveyor.io/target=jws6+
       incidents:
-      - uri: file:///var/folders/gv/smd39_d91hb5dz167y54jlh40000gn/T/java-bin-1852127048/java-project/src/main/webapp/WEB-INF/web.xml
+      - uri: file:///source/java-project/src/main/webapp/WEB-INF/web.xml
         message: web.xml element references a javax-prefixed class name
         codeSnip: "48  \t</servlet>"
         lineNumber: 47
@@ -1464,8 +1464,8 @@
           \ <artifactId>aspectjrt</artifactId>\n58  <version>1.6.8</version>\n59  </dependency>\n60
           \ \n61  <dependency>\n62  <groupId>org.springframework</groupId>\n63  <artifactId>spring-asm</artifactId>\n64
           \ <version>3.1.2.RELEASE</version>\n65  </dependency>\n66  \n67  <dependency>\n68
-          \ <groupId>org.springframework</groupId>\n69  <artifactId>spring-beans</artifactId>\n70
-          \ <version>3.1.2.RELEASE</version>\n71  </dependency>\n72  \n73  <dependency>"
+          \ <groupId>cglib</groupId>\n69  <artifactId>cglib</artifactId>\n70  <version>2.2.2</version>\n71
+          \ </dependency>\n72  \n73  <dependency>"
         lineNumber: 62
         variables:
           name: org.springframework.spring-asm
@@ -1473,91 +1473,91 @@
       - uri: file:///source/java-project/pom.xml
         message: Version 6.0.0 is the minimum version of Spring that is Jakarta EE
           9+ compatible
-        codeSnip: "\n59  </dependency>\n60  \n61  <dependency>\n62  <groupId>org.springframework</groupId>\n63
-          \ <artifactId>spring-asm</artifactId>\n64  <version>3.1.2.RELEASE</version>\n65
-          \ </dependency>\n66  \n67  <dependency>\n68  <groupId>org.springframework</groupId>\n69
-          \ <artifactId>spring-beans</artifactId>\n70  <version>3.1.2.RELEASE</version>\n71
-          \ </dependency>\n72  \n73  <dependency>\n74  <groupId>cglib</groupId>\n75
-          \ <artifactId>cglib</artifactId>\n76  <version>2.2.2</version>\n77  </dependency>\n78
-          \ \n79  <dependency>"
-        lineNumber: 68
-        variables:
-          name: org.springframework.spring-beans
-          version: 3.1.2.RELEASE
-      - uri: file:///source/java-project/pom.xml
-        message: Version 6.0.0 is the minimum version of Spring that is Jakarta EE
-          9+ compatible
-        codeSnip: "\n71  </dependency>\n72  \n73  <dependency>\n74  <groupId>cglib</groupId>\n75
-          \ <artifactId>cglib</artifactId>\n76  <version>2.2.2</version>\n77  </dependency>\n78
-          \ \n79  <dependency>\n80  <groupId>org.springframework</groupId>\n81  <artifactId>spring-core</artifactId>\n82
-          \ <version>3.1.2.RELEASE</version>\n83  </dependency>\n84  \n85  <dependency>\n86
-          \ <groupId>org.springframework</groupId>\n87  <artifactId>spring-web</artifactId>\n88
-          \ <version>3.1.2.RELEASE</version>\n89  </dependency>\n90  \n91  <dependency>"
-        lineNumber: 80
-        variables:
-          name: org.springframework.spring-core
-          version: 3.1.2.RELEASE
-      - uri: file:///source/java-project/pom.xml
-        message: Version 6.0.0 is the minimum version of Spring that is Jakarta EE
-          9+ compatible
-        codeSnip: "\n77  </dependency>\n78  \n79  <dependency>\n80  <groupId>org.springframework</groupId>\n81
-          \ <artifactId>spring-core</artifactId>\n82  <version>3.1.2.RELEASE</version>\n83
-          \ </dependency>\n84  \n85  <dependency>\n86  <groupId>org.springframework</groupId>\n87
-          \ <artifactId>spring-web</artifactId>\n88  <version>3.1.2.RELEASE</version>\n89
-          \ </dependency>\n90  \n91  <dependency>\n92  <groupId>org.springframework</groupId>\n93
-          \ <artifactId>spring-expression</artifactId>\n94  <version>3.1.2.RELEASE</version>\n95
-          \ </dependency>\n96  \n97  <dependency>"
-        lineNumber: 86
-        variables:
-          name: org.springframework.spring-web
-          version: 3.1.2.RELEASE
-      - uri: file:///source/java-project/pom.xml
-        message: Version 6.0.0 is the minimum version of Spring that is Jakarta EE
-          9+ compatible
-        codeSnip: "\n 83  </dependency>\n 84  \n 85  <dependency>\n 86  <groupId>org.springframework</groupId>\n
-          87  <artifactId>spring-web</artifactId>\n 88  <version>3.1.2.RELEASE</version>\n
-          89  </dependency>\n 90  \n 91  <dependency>\n 92  <groupId>org.springframework</groupId>\n
-          93  <artifactId>spring-expression</artifactId>\n 94  <version>3.1.2.RELEASE</version>\n
-          95  </dependency>\n 96  \n 97  <dependency>\n 98  <groupId>org.springframework</groupId>\n
-          99  <artifactId>spring-aop</artifactId>\n100  <version>3.1.2.RELEASE</version>\n101
-          \ </dependency>\n102  \n103  <dependency>"
-        lineNumber: 92
-        variables:
-          name: org.springframework.spring-expression
-          version: 3.1.2.RELEASE
-      - uri: file:///source/java-project/pom.xml
-        message: Version 6.0.0 is the minimum version of Spring that is Jakarta EE
-          9+ compatible
-        codeSnip: "\n 89  </dependency>\n 90  \n 91  <dependency>\n 92  <groupId>org.springframework</groupId>\n
-          93  <artifactId>spring-expression</artifactId>\n 94  <version>3.1.2.RELEASE</version>\n
-          95  </dependency>\n 96  \n 97  <dependency>\n 98  <groupId>org.springframework</groupId>\n
-          99  <artifactId>spring-aop</artifactId>\n100  <version>3.1.2.RELEASE</version>\n101
-          \ </dependency>\n102  \n103  <dependency>\n104  <groupId>org.springframework</groupId>\n105
-          \ <artifactId>spring-tx</artifactId>\n106  <version>3.1.2.RELEASE</version>\n107
-          \ </dependency>\n108  \n109  <dependency>"
-        lineNumber: 98
+        codeSnip: "\n65  </dependency>\n66  \n67  <dependency>\n68  <groupId>cglib</groupId>\n69
+          \ <artifactId>cglib</artifactId>\n70  <version>2.2.2</version>\n71  </dependency>\n72
+          \ \n73  <dependency>\n74  <groupId>org.springframework</groupId>\n75  <artifactId>spring-aop</artifactId>\n76
+          \ <version>3.1.2.RELEASE</version>\n77  </dependency>\n78  \n79  <dependency>\n80
+          \ <groupId>org.springframework</groupId>\n81  <artifactId>spring-expression</artifactId>\n82
+          \ <version>3.1.2.RELEASE</version>\n83  </dependency>\n84  \n85  <dependency>"
+        lineNumber: 74
         variables:
           name: org.springframework.spring-aop
           version: 3.1.2.RELEASE
       - uri: file:///source/java-project/pom.xml
         message: Version 6.0.0 is the minimum version of Spring that is Jakarta EE
           9+ compatible
-        codeSnip: "\n 95  </dependency>\n 96  \n 97  <dependency>\n 98  <groupId>org.springframework</groupId>\n
-          99  <artifactId>spring-aop</artifactId>\n100  <version>3.1.2.RELEASE</version>\n101
-          \ </dependency>\n102  \n103  <dependency>\n104  <groupId>org.springframework</groupId>\n105
-          \ <artifactId>spring-tx</artifactId>\n106  <version>3.1.2.RELEASE</version>\n107
-          \ </dependency>\n108  \n109  <dependency>\n110  <groupId>org.springframework</groupId>\n111
-          \ <artifactId>spring-context</artifactId>\n112  <version>3.1.2.RELEASE</version>\n113
-          \ </dependency>\n114  \n115  <dependency>"
-        lineNumber: 104
+        codeSnip: "\n71  </dependency>\n72  \n73  <dependency>\n74  <groupId>org.springframework</groupId>\n75
+          \ <artifactId>spring-aop</artifactId>\n76  <version>3.1.2.RELEASE</version>\n77
+          \ </dependency>\n78  \n79  <dependency>\n80  <groupId>org.springframework</groupId>\n81
+          \ <artifactId>spring-expression</artifactId>\n82  <version>3.1.2.RELEASE</version>\n83
+          \ </dependency>\n84  \n85  <dependency>\n86  <groupId>org.springframework</groupId>\n87
+          \ <artifactId>spring-tx</artifactId>\n88  <version>3.1.2.RELEASE</version>\n89
+          \ </dependency>\n90  \n91  <dependency>"
+        lineNumber: 80
+        variables:
+          name: org.springframework.spring-expression
+          version: 3.1.2.RELEASE
+      - uri: file:///source/java-project/pom.xml
+        message: Version 6.0.0 is the minimum version of Spring that is Jakarta EE
+          9+ compatible
+        codeSnip: "\n77  </dependency>\n78  \n79  <dependency>\n80  <groupId>org.springframework</groupId>\n81
+          \ <artifactId>spring-expression</artifactId>\n82  <version>3.1.2.RELEASE</version>\n83
+          \ </dependency>\n84  \n85  <dependency>\n86  <groupId>org.springframework</groupId>\n87
+          \ <artifactId>spring-tx</artifactId>\n88  <version>3.1.2.RELEASE</version>\n89
+          \ </dependency>\n90  \n91  <dependency>\n92  <groupId>org.springframework</groupId>\n93
+          \ <artifactId>spring-core</artifactId>\n94  <version>3.1.2.RELEASE</version>\n95
+          \ </dependency>\n96  \n97  <dependency>"
+        lineNumber: 86
         variables:
           name: org.springframework.spring-tx
           version: 3.1.2.RELEASE
       - uri: file:///source/java-project/pom.xml
         message: Version 6.0.0 is the minimum version of Spring that is Jakarta EE
           9+ compatible
+        codeSnip: "\n 83  </dependency>\n 84  \n 85  <dependency>\n 86  <groupId>org.springframework</groupId>\n
+          87  <artifactId>spring-tx</artifactId>\n 88  <version>3.1.2.RELEASE</version>\n
+          89  </dependency>\n 90  \n 91  <dependency>\n 92  <groupId>org.springframework</groupId>\n
+          93  <artifactId>spring-core</artifactId>\n 94  <version>3.1.2.RELEASE</version>\n
+          95  </dependency>\n 96  \n 97  <dependency>\n 98  <groupId>org.springframework</groupId>\n
+          99  <artifactId>spring-beans</artifactId>\n100  <version>3.1.2.RELEASE</version>\n101
+          \ </dependency>\n102  \n103  <dependency>"
+        lineNumber: 92
+        variables:
+          name: org.springframework.spring-core
+          version: 3.1.2.RELEASE
+      - uri: file:///source/java-project/pom.xml
+        message: Version 6.0.0 is the minimum version of Spring that is Jakarta EE
+          9+ compatible
+        codeSnip: "\n 89  </dependency>\n 90  \n 91  <dependency>\n 92  <groupId>org.springframework</groupId>\n
+          93  <artifactId>spring-core</artifactId>\n 94  <version>3.1.2.RELEASE</version>\n
+          95  </dependency>\n 96  \n 97  <dependency>\n 98  <groupId>org.springframework</groupId>\n
+          99  <artifactId>spring-beans</artifactId>\n100  <version>3.1.2.RELEASE</version>\n101
+          \ </dependency>\n102  \n103  <dependency>\n104  <groupId>org.springframework</groupId>\n105
+          \ <artifactId>spring-web</artifactId>\n106  <version>3.1.2.RELEASE</version>\n107
+          \ </dependency>\n108  \n109  <dependency>"
+        lineNumber: 98
+        variables:
+          name: org.springframework.spring-beans
+          version: 3.1.2.RELEASE
+      - uri: file:///source/java-project/pom.xml
+        message: Version 6.0.0 is the minimum version of Spring that is Jakarta EE
+          9+ compatible
+        codeSnip: "\n 95  </dependency>\n 96  \n 97  <dependency>\n 98  <groupId>org.springframework</groupId>\n
+          99  <artifactId>spring-beans</artifactId>\n100  <version>3.1.2.RELEASE</version>\n101
+          \ </dependency>\n102  \n103  <dependency>\n104  <groupId>org.springframework</groupId>\n105
+          \ <artifactId>spring-web</artifactId>\n106  <version>3.1.2.RELEASE</version>\n107
+          \ </dependency>\n108  \n109  <dependency>\n110  <groupId>org.springframework</groupId>\n111
+          \ <artifactId>spring-context</artifactId>\n112  <version>3.1.2.RELEASE</version>\n113
+          \ </dependency>\n114  \n115  <dependency>"
+        lineNumber: 104
+        variables:
+          name: org.springframework.spring-web
+          version: 3.1.2.RELEASE
+      - uri: file:///source/java-project/pom.xml
+        message: Version 6.0.0 is the minimum version of Spring that is Jakarta EE
+          9+ compatible
         codeSnip: "\n101  </dependency>\n102  \n103  <dependency>\n104  <groupId>org.springframework</groupId>\n105
-          \ <artifactId>spring-tx</artifactId>\n106  <version>3.1.2.RELEASE</version>\n107
+          \ <artifactId>spring-web</artifactId>\n106  <version>3.1.2.RELEASE</version>\n107
           \ </dependency>\n108  \n109  <dependency>\n110  <groupId>org.springframework</groupId>\n111
           \ <artifactId>spring-context</artifactId>\n112  <version>3.1.2.RELEASE</version>\n113
           \ </dependency>\n114  \n115  <dependency>\n116  <groupId>org.aspectj</groupId>\n117
@@ -1621,14 +1621,14 @@
       incidents:
       - uri: file:///source/java-project/pom.xml
         message: ""
-        codeSnip: "\n59  </dependency>\n60  \n61  <dependency>\n62  <groupId>org.springframework</groupId>\n63
-          \ <artifactId>spring-asm</artifactId>\n64  <version>3.1.2.RELEASE</version>\n65
-          \ </dependency>\n66  \n67  <dependency>\n68  <groupId>org.springframework</groupId>\n69
-          \ <artifactId>spring-beans</artifactId>\n70  <version>3.1.2.RELEASE</version>\n71
-          \ </dependency>\n72  \n73  <dependency>\n74  <groupId>cglib</groupId>\n75
-          \ <artifactId>cglib</artifactId>\n76  <version>2.2.2</version>\n77  </dependency>\n78
-          \ \n79  <dependency>"
-        lineNumber: 68
+        codeSnip: "\n 89  </dependency>\n 90  \n 91  <dependency>\n 92  <groupId>org.springframework</groupId>\n
+          93  <artifactId>spring-core</artifactId>\n 94  <version>3.1.2.RELEASE</version>\n
+          95  </dependency>\n 96  \n 97  <dependency>\n 98  <groupId>org.springframework</groupId>\n
+          99  <artifactId>spring-beans</artifactId>\n100  <version>3.1.2.RELEASE</version>\n101
+          \ </dependency>\n102  \n103  <dependency>\n104  <groupId>org.springframework</groupId>\n105
+          \ <artifactId>spring-web</artifactId>\n106  <version>3.1.2.RELEASE</version>\n107
+          \ </dependency>\n108  \n109  <dependency>"
+        lineNumber: 98
         variables:
           name: org.springframework.spring-beans
           version: 3.1.2.RELEASE
@@ -1642,14 +1642,14 @@
       incidents:
       - uri: file:///source/java-project/pom.xml
         message: ""
-        codeSnip: "\n77  </dependency>\n78  \n79  <dependency>\n80  <groupId>org.springframework</groupId>\n81
-          \ <artifactId>spring-core</artifactId>\n82  <version>3.1.2.RELEASE</version>\n83
-          \ </dependency>\n84  \n85  <dependency>\n86  <groupId>org.springframework</groupId>\n87
-          \ <artifactId>spring-web</artifactId>\n88  <version>3.1.2.RELEASE</version>\n89
-          \ </dependency>\n90  \n91  <dependency>\n92  <groupId>org.springframework</groupId>\n93
-          \ <artifactId>spring-expression</artifactId>\n94  <version>3.1.2.RELEASE</version>\n95
-          \ </dependency>\n96  \n97  <dependency>"
-        lineNumber: 86
+        codeSnip: "\n 95  </dependency>\n 96  \n 97  <dependency>\n 98  <groupId>org.springframework</groupId>\n
+          99  <artifactId>spring-beans</artifactId>\n100  <version>3.1.2.RELEASE</version>\n101
+          \ </dependency>\n102  \n103  <dependency>\n104  <groupId>org.springframework</groupId>\n105
+          \ <artifactId>spring-web</artifactId>\n106  <version>3.1.2.RELEASE</version>\n107
+          \ </dependency>\n108  \n109  <dependency>\n110  <groupId>org.springframework</groupId>\n111
+          \ <artifactId>spring-context</artifactId>\n112  <version>3.1.2.RELEASE</version>\n113
+          \ </dependency>\n114  \n115  <dependency>"
+        lineNumber: 104
         variables:
           name: org.springframework.spring-web
           version: 3.1.2.RELEASE
@@ -2243,13 +2243,13 @@
       - tag=Persistence=JPA entities
       - tag=Store=JPA entities
       incidents:
-      - uri: file:///var/folders/gv/smd39_d91hb5dz167y54jlh40000gn/T/java-bin-1852127048/java-project/src/main/java/META-INF/persistence.xml
+      - uri: file:///source/java-project/src/main/java/META-INF/persistence.xml
         message: ""
         codeSnip: 4               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         lineNumber: 3
         variables:
           matchingText: ""
-      - uri: file:///var/folders/gv/smd39_d91hb5dz167y54jlh40000gn/T/java-bin-1852127048/java-project/src/main/java/META-INF/persistence.xml
+      - uri: file:///source/java-project/src/main/java/META-INF/persistence.xml
         message: ""
         codeSnip: '6  '
         lineNumber: 5
@@ -2264,7 +2264,7 @@
       - tag=Persistence=Persistence units
       - tag=Store=Persistence units
       incidents:
-      - uri: file:///var/folders/gv/smd39_d91hb5dz167y54jlh40000gn/T/java-bin-1852127048/java-project/src/main/java/META-INF/persistence.xml
+      - uri: file:///source/java-project/src/main/java/META-INF/persistence.xml
         message: ""
     technology-usage-embedded-framework-08200:
       description: Spring DI

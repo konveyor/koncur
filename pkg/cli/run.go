@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"time"
 
@@ -411,6 +412,11 @@ func normalizeRuleSetPaths(rulesets []konveyor.RuleSet, testDir string) ([]konve
 	if strings.Contains(yamlStr, "/opt/input/source") {
 		yamlStr = strings.ReplaceAll(yamlStr, "/opt/input/source", "/source")
 	}
+
+	// Normalize ephemeral java-bin paths (containers, temp dirs) to /source/
+	// This handles macOS (/var/folders/.../T/), Linux (/tmp/), and container storage
+	javaBinPattern := regexp.MustCompile(`file.*/java-bin-\d+/`)
+	yamlStr = javaBinPattern.ReplaceAllString(yamlStr, "file:///source/")
 
 	// Unmarshal back to get normalized rulesets
 	var normalized []konveyor.RuleSet
