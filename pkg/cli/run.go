@@ -5,19 +5,16 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"regexp"
 	"strings"
 	"time"
 
 	"github.com/fatih/color"
-	konveyor "github.com/konveyor/analyzer-lsp/output/v1/konveyor"
 	"github.com/konveyor/test-harness/pkg/config"
 	"github.com/konveyor/test-harness/pkg/parser"
 	"github.com/konveyor/test-harness/pkg/targets"
 	"github.com/konveyor/test-harness/pkg/util"
 	"github.com/konveyor/test-harness/pkg/validator"
 	"github.com/spf13/cobra"
-	yaml "gopkg.in/yaml.v2"
 )
 
 var (
@@ -321,7 +318,7 @@ func runSingleTest(testFile string, target targets.Target, targetConfig *config.
 	testResult.FilteredFrom = len(actualOutput)
 
 	// Normalize paths in actual output to match expected output format
-	normalizedActual, err := normalizeRuleSetPaths(filteredActual, test.GetTestDir())
+	normalizedActual, err := parser.NormalizeRuleSets(filteredActual, test.GetTestDir())
 	if err != nil {
 		testResult.Status = "failed"
 		testResult.ErrorMessage = fmt.Sprintf("failed to normalize paths: %v", err)
@@ -379,50 +376,4 @@ func runSingleTest(testFile string, target targets.Target, targetConfig *config.
 	}
 
 	return testResult, nil
-}
-
-// normalizeRuleSetPaths normalizes file paths in rulesets to match the expected output format
-// This applies the same normalization that saveFilteredOutput does when generating expected output
-func normalizeRuleSetPaths(rulesets []konveyor.RuleSet, testDir string) ([]konveyor.RuleSet, error) {
-	// Marshal to YAML to normalize paths using string replacement (same approach as generate)
-	data, err := yaml.Marshal(rulesets)
-	if err != nil {
-		return nil, fmt.Errorf("failed to marshal rulesets: %w", err)
-	}
-
-	yamlStr := string(data)
-
-	// Normalize paths by removing the test directory path
-	if testDir != "" {
-		yamlStr = strings.ReplaceAll(yamlStr, testDir, "")
-	}
-
-	// Normalize Maven repository paths
-	if strings.Contains(yamlStr, "/root/.m2/repository") {
-		yamlStr = strings.ReplaceAll(yamlStr, "/root/.m2/repository/", "/m2/")
-	}
-	if strings.Contains(yamlStr, "/cache/m2/") {
-		yamlStr = strings.ReplaceAll(yamlStr, "/cache/m2/", "/m2/")
-	}
-
-	// Normalize Tackle Hub container paths
-	if strings.Contains(yamlStr, "/shared/source/") {
-		yamlStr = strings.ReplaceAll(yamlStr, "/shared/source", "/source")
-	}
-	if strings.Contains(yamlStr, "/opt/input/source") {
-		yamlStr = strings.ReplaceAll(yamlStr, "/opt/input/source", "/source")
-	}
-
-	// Normalize ephemeral java-bin paths (containers, temp dirs) to /source/
-	// This handles macOS (/var/folders/.../T/), Linux (/tmp/), and container storage
-	javaBinPattern := regexp.MustCompile(`file.*/java-bin-\d+/`)
-	yamlStr = javaBinPattern.ReplaceAllString(yamlStr, "file:///source/")
-
-	// Unmarshal back to get normalized rulesets
-	var normalized []konveyor.RuleSet
-	if err := yaml.Unmarshal([]byte(yamlStr), &normalized); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal normalized rulesets: %w", err)
-	}
-
-	return normalized, nil
 }

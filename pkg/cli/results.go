@@ -37,13 +37,13 @@ type TestSummary struct {
 
 // JUnitTestSuite represents a JUnit XML test suite
 type JUnitTestSuite struct {
-	XMLName   xml.Name         `xml:"testsuite"`
-	Name      string           `xml:"name,attr"`
-	Tests     int              `xml:"tests,attr"`
-	Failures  int              `xml:"failures,attr"`
-	Skipped   int              `xml:"skipped,attr"`
-	Time      string           `xml:"time,attr"`
-	TestCases []JUnitTestCase  `xml:"testcase"`
+	XMLName   xml.Name        `xml:"testsuite"`
+	Name      string          `xml:"name,attr"`
+	Tests     int             `xml:"tests,attr"`
+	Failures  int             `xml:"failures,attr"`
+	Skipped   int             `xml:"skipped,attr"`
+	Time      string          `xml:"time,attr"`
+	TestCases []JUnitTestCase `xml:"testcase"`
 }
 
 // JUnitTestCase represents a single test case in JUnit XML format
@@ -111,12 +111,16 @@ func formatYAML(summary *TestSummary) (string, error) {
 
 // formatJUnit formats the test results as JUnit XML
 func formatJUnit(summary *TestSummary) (string, error) {
+	junitTime, err := time.ParseDuration(summary.Duration)
+	if err != nil {
+		return "", err
+	}
 	suite := JUnitTestSuite{
 		Name:      "koncur-tests",
 		Tests:     summary.Total,
 		Failures:  summary.Failed,
 		Skipped:   summary.Skipped,
-		Time:      summary.Duration,
+		Time:      parseDuration(junitTime),
 		TestCases: make([]JUnitTestCase, 0, len(summary.Tests)),
 	}
 
@@ -127,7 +131,8 @@ func formatJUnit(summary *TestSummary) (string, error) {
 			Time:      result.Duration,
 		}
 
-		if result.Status == "failed" {
+		switch result.Status {
+		case "failed":
 			failureMessage := result.ErrorMessage
 			if failureMessage == "" && len(result.ValidationErrors) > 0 {
 				failureMessage = fmt.Sprintf("%d validation error(s)", len(result.ValidationErrors))
@@ -150,7 +155,7 @@ func formatJUnit(summary *TestSummary) (string, error) {
 				Type:    "ValidationError",
 				Content: content,
 			}
-		} else if result.Status == "skipped" {
+		case "skipped":
 			testCase.Skipped = &JUnitSkipped{
 				Message: "Test marked as skipped",
 			}

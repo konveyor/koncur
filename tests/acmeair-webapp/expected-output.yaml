@@ -62,26 +62,26 @@
           data: ""
           innerText: "\n\n  4.0.0\n\n  io.konveyor\n  java-project\n  1.0-SNAPSHOT\n\n
             \ java-project\n  http://www.konveyor.io\n\n  \n    UTF-8\n  \n\n  \n\n
-            \   \n      net.wasdev.wlp.sample\n      acmeair-services-jpa\n      1.0-SNAPSHOT\n
-            \   \n\n    \n      net.wasdev.wlp.sample\n      acmeair-services\n      1.0-SNAPSHOT\n
-            \   \n\n    \n      aopalliance\n      aopalliance\n      1.0\n    \n\n
-            \   \n      net.wasdev.wlp.sample\n      acmeair-common\n      1.0-SNAPSHOT\n
-            \   \n\n    \n      commons-logging\n      commons-logging\n      1.1.1\n
-            \   \n\n    \n      asm\n      asm\n      3.3.1\n    \n\n    \n      org.aspectj\n
-            \     aspectjrt\n      1.6.8\n    \n\n    \n      org.springframework\n
-            \     spring-asm\n      3.1.2.RELEASE\n    \n\n    \n      cglib\n      cglib\n
-            \     2.2.2\n    \n\n    \n      org.springframework\n      spring-aop\n
-            \     3.1.2.RELEASE\n    \n\n    \n      org.springframework\n      spring-expression\n
-            \     3.1.2.RELEASE\n    \n\n    \n      org.springframework\n      spring-tx\n
-            \     3.1.2.RELEASE\n    \n\n    \n      org.springframework\n      spring-core\n
-            \     3.1.2.RELEASE\n    \n\n    \n      org.springframework\n      spring-beans\n
-            \     3.1.2.RELEASE\n    \n\n    \n      org.springframework\n      spring-web\n
-            \     3.1.2.RELEASE\n    \n\n    \n      org.springframework\n      spring-context\n
-            \     3.1.2.RELEASE\n    \n\n    \n      org.aspectj\n      aspectjweaver\n
-            \     1.6.8\n    \n\n  \n\n  \n  \n\n"
+            \   \n      aopalliance\n      aopalliance\n      1.0\n    \n\n    \n
+            \     asm\n      asm\n      3.3.1\n    \n\n    \n      cglib\n      cglib\n
+            \     2.2.2\n    \n\n    \n      commons-logging\n      commons-logging\n
+            \     1.1.1\n    \n\n    \n      net.wasdev.wlp.sample\n      acmeair-common\n
+            \     1.0-SNAPSHOT\n    \n\n    \n      net.wasdev.wlp.sample\n      acmeair-services\n
+            \     1.0-SNAPSHOT\n    \n\n    \n      net.wasdev.wlp.sample\n      acmeair-services-jpa\n
+            \     1.0-SNAPSHOT\n    \n\n    \n      org.aspectj\n      aspectjrt\n
+            \     1.6.8\n    \n\n    \n      org.aspectj\n      aspectjweaver\n      1.6.8\n
+            \   \n\n    \n      org.springframework\n      spring-aop\n      3.1.2.RELEASE\n
+            \   \n\n    \n      org.springframework\n      spring-asm\n      3.1.2.RELEASE\n
+            \   \n\n    \n      org.springframework\n      spring-beans\n      3.1.2.RELEASE\n
+            \   \n\n    \n      org.springframework\n      spring-context\n      3.1.2.RELEASE\n
+            \   \n\n    \n      org.springframework\n      spring-core\n      3.1.2.RELEASE\n
+            \   \n\n    \n      org.springframework\n      spring-expression\n      3.1.2.RELEASE\n
+            \   \n\n    \n      org.springframework\n      spring-tx\n      3.1.2.RELEASE\n
+            \   \n\n    \n      org.springframework\n      spring-web\n      3.1.2.RELEASE\n
+            \   \n\n  \n\n  \n  \n\n"
           matchingXML: <?xml version="1.0" encoding="UTF-8"?><project xmlns="http://maven.apache.org/POM/4.0.0"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-            http://maven.apache.org/xsd/maven-4.0.0.xsd"><modelVersion>4.0.0</modelVersion><groupId>io.konveyor</groupId><artifactId>java-project</artifactId><version>1.0-SNAPSHOT</version><name>java-project</name><url>http://www.konveyor.io</url><properties><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding></properties><dependencies><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>acmeair-services-jpa</artifactId><version>1.0-SNAPSHOT</version></dependency><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>acmeair-services</artifactId><version>1.0-SNAPSHOT</version></dependency><dependency><groupId>aopalliance</groupId><artifactId>aopalliance</artifactId><version>1.0</version></dependency><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>acmeair-common</artifactId><version>1.0-SNAPSHOT</version></dependency><dependency><groupId>commons-logging</groupId><artifactId>commons-logging</artifactId><version>1.1.1</version></dependency><dependency><groupId>asm</groupId><artifactId>asm</artifactId><version>3.3.1</version></dependency><dependency><groupId>org.aspectj</groupId><artifactId>aspectjrt</artifactId><version>1.6.8</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-asm</artifactId><version>3.1.2.RELEASE</version></dependency><dependency><groupId>cglib</groupId><artifactId>cglib</artifactId><version>2.2.2</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-aop</artifactId><version>3.1.2.RELEASE</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-expression</artifactId><version>3.1.2.RELEASE</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-tx</artifactId><version>3.1.2.RELEASE</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-core</artifactId><version>3.1.2.RELEASE</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-beans</artifactId><version>3.1.2.RELEASE</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-web</artifactId><version>3.1.2.RELEASE</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-context</artifactId><version>3.1.2.RELEASE</version></dependency><dependency><groupId>org.aspectj</groupId><artifactId>aspectjweaver</artifactId><version>1.6.8</version></dependency></dependencies><build></build></project>
+            http://maven.apache.org/xsd/maven-4.0.0.xsd"><modelVersion>4.0.0</modelVersion><groupId>io.konveyor</groupId><artifactId>java-project</artifactId><version>1.0-SNAPSHOT</version><name>java-project</name><url>http://www.konveyor.io</url><properties><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding></properties><dependencies><dependency><groupId>aopalliance</groupId><artifactId>aopalliance</artifactId><version>1.0</version></dependency><dependency><groupId>asm</groupId><artifactId>asm</artifactId><version>3.3.1</version></dependency><dependency><groupId>cglib</groupId><artifactId>cglib</artifactId><version>2.2.2</version></dependency><dependency><groupId>commons-logging</groupId><artifactId>commons-logging</artifactId><version>1.1.1</version></dependency><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>acmeair-common</artifactId><version>1.0-SNAPSHOT</version></dependency><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>acmeair-services</artifactId><version>1.0-SNAPSHOT</version></dependency><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>acmeair-services-jpa</artifactId><version>1.0-SNAPSHOT</version></dependency><dependency><groupId>org.aspectj</groupId><artifactId>aspectjrt</artifactId><version>1.6.8</version></dependency><dependency><groupId>org.aspectj</groupId><artifactId>aspectjweaver</artifactId><version>1.6.8</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-aop</artifactId><version>3.1.2.RELEASE</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-asm</artifactId><version>3.1.2.RELEASE</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-beans</artifactId><version>3.1.2.RELEASE</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-context</artifactId><version>3.1.2.RELEASE</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-core</artifactId><version>3.1.2.RELEASE</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-expression</artifactId><version>3.1.2.RELEASE</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-tx</artifactId><version>3.1.2.RELEASE</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-web</artifactId><version>3.1.2.RELEASE</version></dependency></dependencies><build></build></project>
       - uri: file:///source/java-project/src/main/java/META-INF/persistence.xml
         message: ""
         codeSnip: '10  '
@@ -216,7 +216,7 @@
           \ \n18  @Path(\"/bookings\")"
         lineNumber: 8
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/BookingsREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/BookingsREST.java
           kind: Module
           name: javax.ws.rs.Consumes
           package: com.acmeair.web
@@ -233,7 +233,7 @@
           \ \n18  @Path(\"/bookings\")\n19  public class BookingsREST {"
         lineNumber: 9
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/BookingsREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/BookingsREST.java
           kind: Module
           name: javax.ws.rs.FormParam
           package: com.acmeair.web
@@ -251,7 +251,7 @@
           BookingService bs = (BookingService)ServiceLocator.getService(BookingService.class);"
         lineNumber: 10
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/BookingsREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/BookingsREST.java
           kind: Module
           name: javax.ws.rs.GET
           package: com.acmeair.web
@@ -270,7 +270,7 @@
           \ "
         lineNumber: 11
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/BookingsREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/BookingsREST.java
           kind: Module
           name: javax.ws.rs.POST
           package: com.acmeair.web
@@ -288,7 +288,7 @@
           \ \n22  @POST"
         lineNumber: 12
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/BookingsREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/BookingsREST.java
           kind: Module
           name: javax.ws.rs.Path
           package: com.acmeair.web
@@ -306,7 +306,7 @@
           \ \n22  @POST\n23  @Consumes({\"application/x-www-form-urlencoded\"})"
         lineNumber: 13
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/BookingsREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/BookingsREST.java
           kind: Module
           name: javax.ws.rs.PathParam
           package: com.acmeair.web
@@ -325,7 +325,7 @@
           \ @Path(\"/bookflights\")"
         lineNumber: 14
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/BookingsREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/BookingsREST.java
           kind: Module
           name: javax.ws.rs.Produces
           package: com.acmeair.web
@@ -343,7 +343,7 @@
           \ @Path(\"/bookflights\")\n25  @Produces({\"application/json\"})"
         lineNumber: 15
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/BookingsREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/BookingsREST.java
           kind: Module
           name: javax.ws.rs.core.Response
           package: com.acmeair.web
@@ -365,7 +365,7 @@
           @FormParam(\"oneWayFlight\") boolean oneWay) {"
         lineNumber: 16
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/BookingsREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/BookingsREST.java
           kind: Module
           name: javax.ws.rs.core.Response.Status
           package: com.acmeair.web
@@ -381,7 +381,7 @@
           javax.ws.rs.core.Response.Status;\n16  import org.springframework.stereotype.Component;"
         lineNumber: 6
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/CustomerREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/CustomerREST.java
           kind: Module
           name: javax.servlet.http.HttpServletRequest
           package: com.acmeair.web
@@ -398,7 +398,7 @@
           \ "
         lineNumber: 7
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/CustomerREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/CustomerREST.java
           kind: Module
           name: javax.ws.rs.CookieParam
           package: com.acmeair.web
@@ -415,7 +415,7 @@
           \ \n18  @Path(\"/customer\")"
         lineNumber: 8
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/CustomerREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/CustomerREST.java
           kind: Module
           name: javax.ws.rs.GET
           package: com.acmeair.web
@@ -432,7 +432,7 @@
           \ \n18  @Path(\"/customer\")\n19  @Component"
         lineNumber: 9
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/CustomerREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/CustomerREST.java
           kind: Module
           name: javax.ws.rs.POST
           package: com.acmeair.web
@@ -450,7 +450,7 @@
           {"
         lineNumber: 10
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/CustomerREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/CustomerREST.java
           kind: Module
           name: javax.ws.rs.Path
           package: com.acmeair.web
@@ -468,7 +468,7 @@
           {\n21  private CustomerService customerService = (CustomerService)ServiceLocator.getService(CustomerService.class);"
         lineNumber: 11
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/CustomerREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/CustomerREST.java
           kind: Module
           name: javax.ws.rs.PathParam
           package: com.acmeair.web
@@ -487,7 +487,7 @@
           \ @Context"
         lineNumber: 12
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/CustomerREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/CustomerREST.java
           kind: Module
           name: javax.ws.rs.Produces
           package: com.acmeair.web
@@ -506,7 +506,7 @@
           \ @Context\n23  private HttpServletRequest request;"
         lineNumber: 13
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/CustomerREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/CustomerREST.java
           kind: Module
           name: javax.ws.rs.core.Context
           package: com.acmeair.web
@@ -525,7 +525,7 @@
           \ @Context\n23  private HttpServletRequest request;\n24  "
         lineNumber: 14
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/CustomerREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/CustomerREST.java
           kind: Module
           name: javax.ws.rs.core.Response
           package: com.acmeair.web
@@ -544,7 +544,7 @@
           validate(String customerid) {"
         lineNumber: 15
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/CustomerREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/CustomerREST.java
           kind: Module
           name: javax.ws.rs.core.Response.Status
           package: com.acmeair.web
@@ -560,7 +560,7 @@
           \ \n17  @POST"
         lineNumber: 7
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/FlightsREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/FlightsREST.java
           kind: Module
           name: javax.ws.rs.Consumes
           package: com.acmeair.web
@@ -576,7 +576,7 @@
           \ \n17  @POST\n18  @Path(\"/queryflights\")"
         lineNumber: 8
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/FlightsREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/FlightsREST.java
           kind: Module
           name: javax.ws.rs.FormParam
           package: com.acmeair.web
@@ -592,7 +592,7 @@
           \ \n17  @POST\n18  @Path(\"/queryflights\")\n19  @Consumes({\"application/x-www-form-urlencoded\"})"
         lineNumber: 9
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/FlightsREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/FlightsREST.java
           kind: Module
           name: javax.ws.rs.POST
           package: com.acmeair.web
@@ -609,7 +609,7 @@
           \ @Produces({\"application/json\"})"
         lineNumber: 10
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/FlightsREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/FlightsREST.java
           kind: Module
           name: javax.ws.rs.Path
           package: com.acmeair.web
@@ -629,7 +629,7 @@
           boolean oneWay) {"
         lineNumber: 11
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/FlightsREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/FlightsREST.java
           kind: Module
           name: javax.ws.rs.Produces
           package: com.acmeair.web
@@ -649,7 +649,7 @@
           \ private static Object lock = new Object();"
         lineNumber: 19
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/LoaderREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/LoaderREST.java
           kind: Module
           name: javax.ws.rs.GET
           package: com.acmeair.web
@@ -668,7 +668,7 @@
           \ private static Object lock = new Object();\n30  "
         lineNumber: 20
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/LoaderREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/LoaderREST.java
           kind: Module
           name: javax.ws.rs.Path
           package: com.acmeair.web
@@ -687,7 +687,7 @@
           \ private static Object lock = new Object();\n30  \n31  @GET"
         lineNumber: 21
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/LoaderREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/LoaderREST.java
           kind: Module
           name: javax.ws.rs.Produces
           package: com.acmeair.web
@@ -703,7 +703,7 @@
           javax.ws.rs.core.Response.Status;"
         lineNumber: 5
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/LoginREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/LoginREST.java
           kind: Module
           name: javax.ws.rs.Consumes
           package: com.acmeair.web
@@ -719,7 +719,7 @@
           javax.ws.rs.core.Response.Status;\n16  import org.springframework.stereotype.Component;"
         lineNumber: 6
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/LoginREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/LoginREST.java
           kind: Module
           name: javax.ws.rs.CookieParam
           package: com.acmeair.web
@@ -736,7 +736,7 @@
           \ "
         lineNumber: 7
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/LoginREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/LoginREST.java
           kind: Module
           name: javax.ws.rs.FormParam
           package: com.acmeair.web
@@ -753,7 +753,7 @@
           \ \n18  @Path(\"/login\")"
         lineNumber: 8
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/LoginREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/LoginREST.java
           kind: Module
           name: javax.ws.rs.GET
           package: com.acmeair.web
@@ -770,7 +770,7 @@
           \ \n18  @Path(\"/login\")\n19  @Component"
         lineNumber: 9
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/LoginREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/LoginREST.java
           kind: Module
           name: javax.ws.rs.POST
           package: com.acmeair.web
@@ -787,7 +787,7 @@
           \ \n18  @Path(\"/login\")\n19  @Component\n20  public class LoginREST {"
         lineNumber: 10
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/LoginREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/LoginREST.java
           kind: Module
           name: javax.ws.rs.Path
           package: com.acmeair.web
@@ -805,7 +805,7 @@
           \ public static String SESSIONID_COOKIE_NAME = \"sessionid\";"
         lineNumber: 11
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/LoginREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/LoginREST.java
           kind: Module
           name: javax.ws.rs.Produces
           package: com.acmeair.web
@@ -824,7 +824,7 @@
           CustomerService customerService = (CustomerService)ServiceLocator.getService(CustomerService.class);"
         lineNumber: 12
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/LoginREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/LoginREST.java
           kind: Module
           name: javax.ws.rs.QueryParam
           package: com.acmeair.web
@@ -844,7 +844,7 @@
           \ "
         lineNumber: 13
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/LoginREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/LoginREST.java
           kind: Module
           name: javax.ws.rs.core.NewCookie
           package: com.acmeair.web
@@ -863,7 +863,7 @@
           \ \n24  @POST"
         lineNumber: 14
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/LoginREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/LoginREST.java
           kind: Module
           name: javax.ws.rs.core.Response
           package: com.acmeair.web
@@ -881,7 +881,7 @@
           \ \n24  @POST\n25  @Consumes({\"application/x-www-form-urlencoded\"})"
         lineNumber: 15
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/LoginREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/LoginREST.java
           kind: Module
           name: javax.ws.rs.core.Response.Status
           package: com.acmeair.web
@@ -898,7 +898,7 @@
           \ import javax.sql.DataSource;"
         lineNumber: 6
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
           kind: Module
           name: javax.annotation.Resource
           package: com.acmeair.web
@@ -915,7 +915,7 @@
           \ import javax.sql.DataSource;\n17  "
         lineNumber: 7
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
           kind: Module
           name: javax.servlet.Filter
           package: com.acmeair.web
@@ -933,7 +933,7 @@
           implements Filter {"
         lineNumber: 8
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
           kind: Module
           name: javax.servlet.FilterChain
           package: com.acmeair.web
@@ -951,7 +951,7 @@
           implements Filter {\n19  static final String LOGIN_USER = \"acmeair.login_user\";"
         lineNumber: 9
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
           kind: Module
           name: javax.servlet.FilterConfig
           package: com.acmeair.web
@@ -970,7 +970,7 @@
           \ private static final String LOGIN_PATH = \"/rest/api/login\";"
         lineNumber: 10
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
           kind: Module
           name: javax.servlet.ServletException
           package: com.acmeair.web
@@ -990,7 +990,7 @@
           static final String LOGOUT_PATH = \"/rest/api/login/logout\";"
         lineNumber: 11
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
           kind: Module
           name: javax.servlet.ServletRequest
           package: com.acmeair.web
@@ -1011,7 +1011,7 @@
           CustomerService customerService = (CustomerService)ServiceLocator.getService(CustomerService.class);"
         lineNumber: 12
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
           kind: Module
           name: javax.servlet.ServletResponse
           package: com.acmeair.web
@@ -1033,7 +1033,7 @@
           \ @Resource("
         lineNumber: 13
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
           kind: Module
           name: javax.servlet.http.Cookie
           package: com.acmeair.web
@@ -1054,7 +1054,7 @@
           \ @Resource(\n24  name = \"jdbc/acmeairdatasource\""
         lineNumber: 14
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
           kind: Module
           name: javax.servlet.http.HttpServletRequest
           package: com.acmeair.web
@@ -1075,7 +1075,7 @@
           \ @Resource(\n24  name = \"jdbc/acmeairdatasource\"\n25  )"
         lineNumber: 15
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
           kind: Module
           name: javax.servlet.http.HttpServletResponse
           package: com.acmeair.web
@@ -1460,25 +1460,13 @@
       - uri: file:///source/java-project/pom.xml
         message: Version 6.0.0 is the minimum version of Spring that is Jakarta EE
           9+ compatible
-        codeSnip: "\n53  </dependency>\n54  \n55  <dependency>\n56  <groupId>org.aspectj</groupId>\n57
-          \ <artifactId>aspectjrt</artifactId>\n58  <version>1.6.8</version>\n59  </dependency>\n60
-          \ \n61  <dependency>\n62  <groupId>org.springframework</groupId>\n63  <artifactId>spring-asm</artifactId>\n64
-          \ <version>3.1.2.RELEASE</version>\n65  </dependency>\n66  \n67  <dependency>\n68
-          \ <groupId>cglib</groupId>\n69  <artifactId>cglib</artifactId>\n70  <version>2.2.2</version>\n71
-          \ </dependency>\n72  \n73  <dependency>"
-        lineNumber: 62
-        variables:
-          name: org.springframework.spring-asm
-          version: 3.1.2.RELEASE
-      - uri: file:///source/java-project/pom.xml
-        message: Version 6.0.0 is the minimum version of Spring that is Jakarta EE
-          9+ compatible
-        codeSnip: "\n65  </dependency>\n66  \n67  <dependency>\n68  <groupId>cglib</groupId>\n69
-          \ <artifactId>cglib</artifactId>\n70  <version>2.2.2</version>\n71  </dependency>\n72
-          \ \n73  <dependency>\n74  <groupId>org.springframework</groupId>\n75  <artifactId>spring-aop</artifactId>\n76
-          \ <version>3.1.2.RELEASE</version>\n77  </dependency>\n78  \n79  <dependency>\n80
-          \ <groupId>org.springframework</groupId>\n81  <artifactId>spring-expression</artifactId>\n82
-          \ <version>3.1.2.RELEASE</version>\n83  </dependency>\n84  \n85  <dependency>"
+        codeSnip: "\n65  </dependency>\n66  \n67  <dependency>\n68  <groupId>org.aspectj</groupId>\n69
+          \ <artifactId>aspectjweaver</artifactId>\n70  <version>1.6.8</version>\n71
+          \ </dependency>\n72  \n73  <dependency>\n74  <groupId>org.springframework</groupId>\n75
+          \ <artifactId>spring-aop</artifactId>\n76  <version>3.1.2.RELEASE</version>\n77
+          \ </dependency>\n78  \n79  <dependency>\n80  <groupId>org.springframework</groupId>\n81
+          \ <artifactId>spring-asm</artifactId>\n82  <version>3.1.2.RELEASE</version>\n83
+          \ </dependency>\n84  \n85  <dependency>"
         lineNumber: 74
         variables:
           name: org.springframework.spring-aop
@@ -1489,83 +1477,96 @@
         codeSnip: "\n71  </dependency>\n72  \n73  <dependency>\n74  <groupId>org.springframework</groupId>\n75
           \ <artifactId>spring-aop</artifactId>\n76  <version>3.1.2.RELEASE</version>\n77
           \ </dependency>\n78  \n79  <dependency>\n80  <groupId>org.springframework</groupId>\n81
-          \ <artifactId>spring-expression</artifactId>\n82  <version>3.1.2.RELEASE</version>\n83
+          \ <artifactId>spring-asm</artifactId>\n82  <version>3.1.2.RELEASE</version>\n83
           \ </dependency>\n84  \n85  <dependency>\n86  <groupId>org.springframework</groupId>\n87
-          \ <artifactId>spring-tx</artifactId>\n88  <version>3.1.2.RELEASE</version>\n89
+          \ <artifactId>spring-beans</artifactId>\n88  <version>3.1.2.RELEASE</version>\n89
           \ </dependency>\n90  \n91  <dependency>"
         lineNumber: 80
         variables:
-          name: org.springframework.spring-expression
+          name: org.springframework.spring-asm
           version: 3.1.2.RELEASE
       - uri: file:///source/java-project/pom.xml
         message: Version 6.0.0 is the minimum version of Spring that is Jakarta EE
           9+ compatible
         codeSnip: "\n77  </dependency>\n78  \n79  <dependency>\n80  <groupId>org.springframework</groupId>\n81
-          \ <artifactId>spring-expression</artifactId>\n82  <version>3.1.2.RELEASE</version>\n83
+          \ <artifactId>spring-asm</artifactId>\n82  <version>3.1.2.RELEASE</version>\n83
           \ </dependency>\n84  \n85  <dependency>\n86  <groupId>org.springframework</groupId>\n87
-          \ <artifactId>spring-tx</artifactId>\n88  <version>3.1.2.RELEASE</version>\n89
+          \ <artifactId>spring-beans</artifactId>\n88  <version>3.1.2.RELEASE</version>\n89
           \ </dependency>\n90  \n91  <dependency>\n92  <groupId>org.springframework</groupId>\n93
-          \ <artifactId>spring-core</artifactId>\n94  <version>3.1.2.RELEASE</version>\n95
+          \ <artifactId>spring-context</artifactId>\n94  <version>3.1.2.RELEASE</version>\n95
           \ </dependency>\n96  \n97  <dependency>"
         lineNumber: 86
-        variables:
-          name: org.springframework.spring-tx
-          version: 3.1.2.RELEASE
-      - uri: file:///source/java-project/pom.xml
-        message: Version 6.0.0 is the minimum version of Spring that is Jakarta EE
-          9+ compatible
-        codeSnip: "\n 83  </dependency>\n 84  \n 85  <dependency>\n 86  <groupId>org.springframework</groupId>\n
-          87  <artifactId>spring-tx</artifactId>\n 88  <version>3.1.2.RELEASE</version>\n
-          89  </dependency>\n 90  \n 91  <dependency>\n 92  <groupId>org.springframework</groupId>\n
-          93  <artifactId>spring-core</artifactId>\n 94  <version>3.1.2.RELEASE</version>\n
-          95  </dependency>\n 96  \n 97  <dependency>\n 98  <groupId>org.springframework</groupId>\n
-          99  <artifactId>spring-beans</artifactId>\n100  <version>3.1.2.RELEASE</version>\n101
-          \ </dependency>\n102  \n103  <dependency>"
-        lineNumber: 92
-        variables:
-          name: org.springframework.spring-core
-          version: 3.1.2.RELEASE
-      - uri: file:///source/java-project/pom.xml
-        message: Version 6.0.0 is the minimum version of Spring that is Jakarta EE
-          9+ compatible
-        codeSnip: "\n 89  </dependency>\n 90  \n 91  <dependency>\n 92  <groupId>org.springframework</groupId>\n
-          93  <artifactId>spring-core</artifactId>\n 94  <version>3.1.2.RELEASE</version>\n
-          95  </dependency>\n 96  \n 97  <dependency>\n 98  <groupId>org.springframework</groupId>\n
-          99  <artifactId>spring-beans</artifactId>\n100  <version>3.1.2.RELEASE</version>\n101
-          \ </dependency>\n102  \n103  <dependency>\n104  <groupId>org.springframework</groupId>\n105
-          \ <artifactId>spring-web</artifactId>\n106  <version>3.1.2.RELEASE</version>\n107
-          \ </dependency>\n108  \n109  <dependency>"
-        lineNumber: 98
         variables:
           name: org.springframework.spring-beans
           version: 3.1.2.RELEASE
       - uri: file:///source/java-project/pom.xml
         message: Version 6.0.0 is the minimum version of Spring that is Jakarta EE
           9+ compatible
-        codeSnip: "\n 95  </dependency>\n 96  \n 97  <dependency>\n 98  <groupId>org.springframework</groupId>\n
-          99  <artifactId>spring-beans</artifactId>\n100  <version>3.1.2.RELEASE</version>\n101
+        codeSnip: "\n 83  </dependency>\n 84  \n 85  <dependency>\n 86  <groupId>org.springframework</groupId>\n
+          87  <artifactId>spring-beans</artifactId>\n 88  <version>3.1.2.RELEASE</version>\n
+          89  </dependency>\n 90  \n 91  <dependency>\n 92  <groupId>org.springframework</groupId>\n
+          93  <artifactId>spring-context</artifactId>\n 94  <version>3.1.2.RELEASE</version>\n
+          95  </dependency>\n 96  \n 97  <dependency>\n 98  <groupId>org.springframework</groupId>\n
+          99  <artifactId>spring-core</artifactId>\n100  <version>3.1.2.RELEASE</version>\n101
+          \ </dependency>\n102  \n103  <dependency>"
+        lineNumber: 92
+        variables:
+          name: org.springframework.spring-context
+          version: 3.1.2.RELEASE
+      - uri: file:///source/java-project/pom.xml
+        message: Version 6.0.0 is the minimum version of Spring that is Jakarta EE
+          9+ compatible
+        codeSnip: "\n 89  </dependency>\n 90  \n 91  <dependency>\n 92  <groupId>org.springframework</groupId>\n
+          93  <artifactId>spring-context</artifactId>\n 94  <version>3.1.2.RELEASE</version>\n
+          95  </dependency>\n 96  \n 97  <dependency>\n 98  <groupId>org.springframework</groupId>\n
+          99  <artifactId>spring-core</artifactId>\n100  <version>3.1.2.RELEASE</version>\n101
           \ </dependency>\n102  \n103  <dependency>\n104  <groupId>org.springframework</groupId>\n105
-          \ <artifactId>spring-web</artifactId>\n106  <version>3.1.2.RELEASE</version>\n107
+          \ <artifactId>spring-expression</artifactId>\n106  <version>3.1.2.RELEASE</version>\n107
+          \ </dependency>\n108  \n109  <dependency>"
+        lineNumber: 98
+        variables:
+          name: org.springframework.spring-core
+          version: 3.1.2.RELEASE
+      - uri: file:///source/java-project/pom.xml
+        message: Version 6.0.0 is the minimum version of Spring that is Jakarta EE
+          9+ compatible
+        codeSnip: "\n 95  </dependency>\n 96  \n 97  <dependency>\n 98  <groupId>org.springframework</groupId>\n
+          99  <artifactId>spring-core</artifactId>\n100  <version>3.1.2.RELEASE</version>\n101
+          \ </dependency>\n102  \n103  <dependency>\n104  <groupId>org.springframework</groupId>\n105
+          \ <artifactId>spring-expression</artifactId>\n106  <version>3.1.2.RELEASE</version>\n107
           \ </dependency>\n108  \n109  <dependency>\n110  <groupId>org.springframework</groupId>\n111
-          \ <artifactId>spring-context</artifactId>\n112  <version>3.1.2.RELEASE</version>\n113
+          \ <artifactId>spring-tx</artifactId>\n112  <version>3.1.2.RELEASE</version>\n113
           \ </dependency>\n114  \n115  <dependency>"
         lineNumber: 104
         variables:
-          name: org.springframework.spring-web
+          name: org.springframework.spring-expression
           version: 3.1.2.RELEASE
       - uri: file:///source/java-project/pom.xml
         message: Version 6.0.0 is the minimum version of Spring that is Jakarta EE
           9+ compatible
         codeSnip: "\n101  </dependency>\n102  \n103  <dependency>\n104  <groupId>org.springframework</groupId>\n105
-          \ <artifactId>spring-web</artifactId>\n106  <version>3.1.2.RELEASE</version>\n107
+          \ <artifactId>spring-expression</artifactId>\n106  <version>3.1.2.RELEASE</version>\n107
           \ </dependency>\n108  \n109  <dependency>\n110  <groupId>org.springframework</groupId>\n111
-          \ <artifactId>spring-context</artifactId>\n112  <version>3.1.2.RELEASE</version>\n113
-          \ </dependency>\n114  \n115  <dependency>\n116  <groupId>org.aspectj</groupId>\n117
-          \ <artifactId>aspectjweaver</artifactId>\n118  <version>1.6.8</version>\n119
+          \ <artifactId>spring-tx</artifactId>\n112  <version>3.1.2.RELEASE</version>\n113
+          \ </dependency>\n114  \n115  <dependency>\n116  <groupId>org.springframework</groupId>\n117
+          \ <artifactId>spring-web</artifactId>\n118  <version>3.1.2.RELEASE</version>\n119
           \ </dependency>\n120  \n121  </dependencies>"
         lineNumber: 110
         variables:
-          name: org.springframework.spring-context
+          name: org.springframework.spring-tx
+          version: 3.1.2.RELEASE
+      - uri: file:///source/java-project/pom.xml
+        message: Version 6.0.0 is the minimum version of Spring that is Jakarta EE
+          9+ compatible
+        codeSnip: "\n107  </dependency>\n108  \n109  <dependency>\n110  <groupId>org.springframework</groupId>\n111
+          \ <artifactId>spring-tx</artifactId>\n112  <version>3.1.2.RELEASE</version>\n113
+          \ </dependency>\n114  \n115  <dependency>\n116  <groupId>org.springframework</groupId>\n117
+          \ <artifactId>spring-web</artifactId>\n118  <version>3.1.2.RELEASE</version>\n119
+          \ </dependency>\n120  \n121  </dependencies>\n122  \n123  <build>\n124  </build>\n125
+          \ </project>"
+        lineNumber: 116
+        variables:
+          name: org.springframework.spring-web
           version: 3.1.2.RELEASE
       links:
       - url: https://spring.io/blog/2021/09/02/a-java-17-and-jakarta-ee-9-baseline-for-spring-framework-6/
@@ -1621,14 +1622,14 @@
       incidents:
       - uri: file:///source/java-project/pom.xml
         message: ""
-        codeSnip: "\n 89  </dependency>\n 90  \n 91  <dependency>\n 92  <groupId>org.springframework</groupId>\n
-          93  <artifactId>spring-core</artifactId>\n 94  <version>3.1.2.RELEASE</version>\n
-          95  </dependency>\n 96  \n 97  <dependency>\n 98  <groupId>org.springframework</groupId>\n
-          99  <artifactId>spring-beans</artifactId>\n100  <version>3.1.2.RELEASE</version>\n101
-          \ </dependency>\n102  \n103  <dependency>\n104  <groupId>org.springframework</groupId>\n105
-          \ <artifactId>spring-web</artifactId>\n106  <version>3.1.2.RELEASE</version>\n107
-          \ </dependency>\n108  \n109  <dependency>"
-        lineNumber: 98
+        codeSnip: "\n77  </dependency>\n78  \n79  <dependency>\n80  <groupId>org.springframework</groupId>\n81
+          \ <artifactId>spring-asm</artifactId>\n82  <version>3.1.2.RELEASE</version>\n83
+          \ </dependency>\n84  \n85  <dependency>\n86  <groupId>org.springframework</groupId>\n87
+          \ <artifactId>spring-beans</artifactId>\n88  <version>3.1.2.RELEASE</version>\n89
+          \ </dependency>\n90  \n91  <dependency>\n92  <groupId>org.springframework</groupId>\n93
+          \ <artifactId>spring-context</artifactId>\n94  <version>3.1.2.RELEASE</version>\n95
+          \ </dependency>\n96  \n97  <dependency>"
+        lineNumber: 86
         variables:
           name: org.springframework.spring-beans
           version: 3.1.2.RELEASE
@@ -1642,14 +1643,13 @@
       incidents:
       - uri: file:///source/java-project/pom.xml
         message: ""
-        codeSnip: "\n 95  </dependency>\n 96  \n 97  <dependency>\n 98  <groupId>org.springframework</groupId>\n
-          99  <artifactId>spring-beans</artifactId>\n100  <version>3.1.2.RELEASE</version>\n101
-          \ </dependency>\n102  \n103  <dependency>\n104  <groupId>org.springframework</groupId>\n105
-          \ <artifactId>spring-web</artifactId>\n106  <version>3.1.2.RELEASE</version>\n107
-          \ </dependency>\n108  \n109  <dependency>\n110  <groupId>org.springframework</groupId>\n111
-          \ <artifactId>spring-context</artifactId>\n112  <version>3.1.2.RELEASE</version>\n113
-          \ </dependency>\n114  \n115  <dependency>"
-        lineNumber: 104
+        codeSnip: "\n107  </dependency>\n108  \n109  <dependency>\n110  <groupId>org.springframework</groupId>\n111
+          \ <artifactId>spring-tx</artifactId>\n112  <version>3.1.2.RELEASE</version>\n113
+          \ </dependency>\n114  \n115  <dependency>\n116  <groupId>org.springframework</groupId>\n117
+          \ <artifactId>spring-web</artifactId>\n118  <version>3.1.2.RELEASE</version>\n119
+          \ </dependency>\n120  \n121  </dependencies>\n122  \n123  <build>\n124  </build>\n125
+          \ </project>"
+        lineNumber: 116
         variables:
           name: org.springframework.spring-web
           version: 3.1.2.RELEASE
@@ -1673,7 +1673,7 @@
         lineNumber: 6
         variables:
           annotation: Resource
-          file: file:///source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
           kind: Module
           name: javax.annotation.Resource
           package: com.acmeair.web
@@ -1696,7 +1696,7 @@
           javax.ws.rs.core.Response.Status;\n16  import org.springframework.stereotype.Component;"
         lineNumber: 6
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/CustomerREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/CustomerREST.java
           kind: Module
           name: javax.servlet.http.HttpServletRequest
           package: com.acmeair.web
@@ -1712,7 +1712,7 @@
           \ import javax.sql.DataSource;\n17  "
         lineNumber: 7
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
           kind: Module
           name: javax.servlet.Filter
           package: com.acmeair.web
@@ -1729,7 +1729,7 @@
           implements Filter {"
         lineNumber: 8
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
           kind: Module
           name: javax.servlet.FilterChain
           package: com.acmeair.web
@@ -1746,7 +1746,7 @@
           implements Filter {\n19  static final String LOGIN_USER = \"acmeair.login_user\";"
         lineNumber: 9
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
           kind: Module
           name: javax.servlet.FilterConfig
           package: com.acmeair.web
@@ -1764,7 +1764,7 @@
           \ private static final String LOGIN_PATH = \"/rest/api/login\";"
         lineNumber: 10
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
           kind: Module
           name: javax.servlet.ServletException
           package: com.acmeair.web
@@ -1783,7 +1783,7 @@
           static final String LOGOUT_PATH = \"/rest/api/login/logout\";"
         lineNumber: 11
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
           kind: Module
           name: javax.servlet.ServletRequest
           package: com.acmeair.web
@@ -1803,7 +1803,7 @@
           CustomerService customerService = (CustomerService)ServiceLocator.getService(CustomerService.class);"
         lineNumber: 12
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
           kind: Module
           name: javax.servlet.ServletResponse
           package: com.acmeair.web
@@ -1824,7 +1824,7 @@
           \ @Resource("
         lineNumber: 13
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
           kind: Module
           name: javax.servlet.http.Cookie
           package: com.acmeair.web
@@ -1844,7 +1844,7 @@
           \ @Resource(\n24  name = \"jdbc/acmeairdatasource\""
         lineNumber: 14
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
           kind: Module
           name: javax.servlet.http.HttpServletRequest
           package: com.acmeair.web
@@ -1864,7 +1864,7 @@
           \ @Resource(\n24  name = \"jdbc/acmeairdatasource\"\n25  )"
         lineNumber: 15
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/RESTCookieSessionFilter.java
           kind: Module
           name: javax.servlet.http.HttpServletResponse
           package: com.acmeair.web
@@ -1950,7 +1950,7 @@
           bookingIdTo = this.bs.bookFlight(userid, new FlightPK(toFlightSegId, toFlightId));"
         lineNumber: 18
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/BookingsREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/BookingsREST.java
           kind: Property
           name: Path
           package: com.acmeair.web
@@ -1971,7 +1971,7 @@
           \ }\n33  \n34  BookingInfo bi;"
         lineNumber: 24
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/BookingsREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/BookingsREST.java
           kind: Property
           name: POST
           package: com.acmeair.web
@@ -1986,7 +1986,7 @@
           var4) {\n56  var4.printStackTrace();\n57  return null;\n58  }\n59  }"
         lineNumber: 49
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/BookingsREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/BookingsREST.java
           kind: Property
           name: GET
           package: com.acmeair.web
@@ -2001,7 +2001,7 @@
           \ }\n71  }\n72  "
         lineNumber: 62
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/BookingsREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/BookingsREST.java
           kind: Property
           name: GET
           package: com.acmeair.web
@@ -2018,7 +2018,7 @@
           \ }\n85  }"
         lineNumber: 75
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/BookingsREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/BookingsREST.java
           kind: Property
           name: POST
           package: com.acmeair.web
@@ -2036,7 +2036,7 @@
           \ return customerid.equals(loginUser);\n28  }"
         lineNumber: 18
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/CustomerREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/CustomerREST.java
           kind: Property
           name: Path
           package: com.acmeair.web
@@ -2054,7 +2054,7 @@
           {"
         lineNumber: 31
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/CustomerREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/CustomerREST.java
           kind: Property
           name: GET
           package: com.acmeair.web
@@ -2073,7 +2073,7 @@
           addressFromDB = customerFromDB.getAddress();"
         lineNumber: 48
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/CustomerREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/CustomerREST.java
           kind: Property
           name: POST
           package: com.acmeair.web
@@ -2093,7 +2093,7 @@
           \ ArrayList legs = new ArrayList();"
         lineNumber: 13
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/FlightsREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/FlightsREST.java
           kind: Property
           name: Path
           package: com.acmeair.web
@@ -2114,7 +2114,7 @@
           \ toInfo.setCurrentPage(0);"
         lineNumber: 18
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/FlightsREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/FlightsREST.java
           kind: Property
           name: POST
           package: com.acmeair.web
@@ -2131,7 +2131,7 @@
           \ toInfo.setFlightsOptions(toFlights);\n60  legs.add(toInfo);\n61  toInfo.setCurrentPage(0);"
         lineNumber: 51
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/FlightsREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/FlightsREST.java
           kind: Property
           name: POST
           package: com.acmeair.web
@@ -2148,7 +2148,7 @@
           \ @Produces({\"text/plain\"})\n34  public String load() {"
         lineNumber: 24
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/LoaderREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/LoaderREST.java
           kind: Property
           name: Path
           package: com.acmeair.web
@@ -2164,7 +2164,7 @@
           \ public String loadSmall() {\n42  return this.loadData(5L, 5);"
         lineNumber: 32
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/LoaderREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/LoaderREST.java
           kind: Property
           name: GET
           package: com.acmeair.web
@@ -2179,7 +2179,7 @@
           this.loadData(2L, 2);"
         lineNumber: 39
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/LoaderREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/LoaderREST.java
           kind: Property
           name: GET
           package: com.acmeair.web
@@ -2194,7 +2194,7 @@
           var8) {"
         lineNumber: 46
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/LoaderREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/LoaderREST.java
           kind: Property
           name: GET
           package: com.acmeair.web
@@ -2212,7 +2212,7 @@
           String login, @FormParam(\"password\") String password) {\n28  try {"
         lineNumber: 18
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/LoginREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/LoginREST.java
           kind: Property
           name: Path
           package: com.acmeair.web
@@ -2230,7 +2230,7 @@
           \ }"
         lineNumber: 44
         variables:
-          file: file:///source/java-project/src/main/java/com/acmeair/web/LoginREST.java
+          file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/LoginREST.java
           kind: Property
           name: GET
           package: com.acmeair.web

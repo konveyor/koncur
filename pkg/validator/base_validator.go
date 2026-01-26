@@ -37,23 +37,6 @@ type baseValidator struct {
 	testDir string
 }
 
-// normalizeURI removes ephemeral storage paths (containers, temp dirs)
-// and normalizes to a consistent format for comparison
-func (b *baseValidator) normalizeURI(uri string) string {
-	return uri
-	// Match any path up to and including java-bin-NUMBERS, replace with normalized path
-	//	javaBinPattern := regexp.MustCompile(`file.*/java-bin-\d+/`)
-	//	normalized := javaBinPattern.ReplaceAllString(uri, "file:///source/")
-	//
-	//	// Additional normalizations for other container/cache paths
-	//	normalized = strings.ReplaceAll(normalized, "/root/.m2/repository/", "/m2/")
-	//	normalized = strings.ReplaceAll(normalized, "/cache/m2/", "/m2/")
-	//	normalized = strings.ReplaceAll(normalized, "/shared/source/", "/source/")
-	//	normalized = strings.ReplaceAll(normalized, "/opt/input/source/", "/source/")
-	//
-	//	return normalized
-}
-
 func (b *baseValidator) compareTags(expected, actual []string) []ValidationError {
 	var errors []ValidationError
 	for _, exp := range expected {
@@ -149,39 +132,38 @@ func (b *baseValidator) compareViolationDetails(expected, actual konveyor.Violat
 	// Handle Incidents - collect all missing incidents and report as one error
 	for _, i := range expected.Incidents {
 		found := false
-		faild_fields := map[incidentField]*struct{}{}
+		faildFields := map[incidentField]*struct{}{}
 		for _, ai := range actual.Incidents {
-			if ok, field_faild := b.incidentsMatch(i, ai); ok {
+			if ok, fieldFaild := b.incidentsMatch(i, ai); ok {
 				found = true
 				break
 			} else {
-				faild_fields[field_faild] = nil
+				faildFields[fieldFaild] = nil
 			}
 		}
 		if !found {
-			field_error := slices.Sorted(maps.Keys(faild_fields))[len(faild_fields)-1]
-			normalizedURI := b.normalizeURI(string(i.URI))
+			fieldError := slices.Sorted(maps.Keys(faildFields))[len(faildFields)-1]
 			errors = append(errors, ValidationError{
-				Message: fmt.Sprintf("Did not find expected incident:  %s:%d failed to match on: %s", normalizedURI, lineNumberOrZero(i.LineNumber), field_error.String()),
+				Message: fmt.Sprintf("Did not find expected incident:  %s:%d failed to match on: %s", i.URI, lineNumberOrZero(i.LineNumber), fieldError.String()),
 			})
 		}
 	}
 
 	for _, ai := range actual.Incidents {
 		found := false
-		faild_fields := map[incidentField]*struct{}{}
+		faildFields := map[incidentField]*struct{}{}
 		for _, i := range expected.Incidents {
-			if ok, field_faild := b.incidentsMatch(i, ai); ok {
+			if ok, fieldFaild := b.incidentsMatch(i, ai); ok {
 				found = true
 				break
 			} else {
-				faild_fields[field_faild] = nil
+				faildFields[fieldFaild] = nil
 			}
 		}
 		if !found {
-			normalizedURI := b.normalizeURI(string(ai.URI))
+			fieldError := slices.Sorted(maps.Keys(faildFields))[len(faildFields)-1]
 			errors = append(errors, ValidationError{
-				Message: fmt.Sprintf("Unexpected incident found: %s:%d", normalizedURI, lineNumberOrZero(ai.LineNumber)),
+				Message: fmt.Sprintf("Unexpected incident found: %s:%d failed to match on: %s", ai.URI, lineNumberOrZero(ai.LineNumber), fieldError),
 			})
 		}
 	}
@@ -223,6 +205,7 @@ func (b *baseValidator) incidentsMatch(expected, actual konveyor.Incident) (bool
 	//	if len(expected.Variables) > 0 && !reflect.DeepEqual(expected.Variables, actual.Variables) {
 	//		log.Info("here", "vars", actual.Variables)
 	//		return false
+	//		return false,
 	//	}
 
 	return true, NONE

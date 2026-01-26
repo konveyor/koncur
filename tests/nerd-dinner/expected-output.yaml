@@ -40,7 +40,7 @@
           \            public SimpleMembershipInitializer()\n26             {\n"
         lineNumber: 27
         variables:
-          file: file:///source/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
           fqdn_class: DbContext
           fqdn_field: Database
           fqdn_namespace: System.Data.Entity
@@ -75,7 +75,7 @@
           PagedList;\n9 \n"
         lineNumber: 3
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/DinnersController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/DinnersController.cs
           symbol: System.Data.Entity
           syntax_type: import
       - uri: file:///source/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
@@ -93,7 +93,7 @@
           using NerdDinner.Models;\n7 \n8 namespace NerdDinner.Filters\n9 {\n"
         lineNumber: 1
         variables:
-          file: file:///source/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
           symbol: System.Data.Entity
           syntax_type: import
       - uri: file:///source/mvc4/NerdDinner/Models/AccountModels.cs
@@ -112,7 +112,7 @@
           \n8 namespace NerdDinner.Models\n9 {\n"
         lineNumber: 4
         variables:
-          file: file:///source/mvc4/NerdDinner/Models/AccountModels.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Models/AccountModels.cs
           symbol: System.Data.Entity
           syntax_type: import
       - uri: file:///source/mvc4/NerdDinner/Models/NerdDinnerContext.cs
@@ -133,7 +133,7 @@
           schema, add the following\n"
         lineNumber: 0
         variables:
-          file: file:///source/mvc4/NerdDinner/Models/NerdDinnerContext.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Models/NerdDinnerContext.cs
           symbol: System.Data.Entity
           syntax_type: import
       links:
@@ -171,7 +171,7 @@
           \            {\n"
         lineNumber: 21
         variables:
-          file: file:///source/mvc4/NerdDinner/App_Start/AuthConfig.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/App_Start/AuthConfig.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: RegisterMicrosoftClient
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
@@ -199,7 +199,7 @@
           \            {\n"
         lineNumber: 30
         variables:
-          file: file:///source/mvc4/NerdDinner/App_Start/AuthConfig.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/App_Start/AuthConfig.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: RegisterTwitterClient
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
@@ -227,7 +227,7 @@
           \            {\n"
         lineNumber: 39
         variables:
-          file: file:///source/mvc4/NerdDinner/App_Start/AuthConfig.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/App_Start/AuthConfig.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: RegisterFacebookClient
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
@@ -254,7 +254,7 @@
           facebookAppSecret);\n42             }\n43 \n"
         lineNumber: 44
         variables:
-          file: file:///source/mvc4/NerdDinner/App_Start/AuthConfig.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/App_Start/AuthConfig.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: RegisterGoogleClient
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
@@ -279,7 +279,7 @@
           provider, string providerUserId)\n101         {\n"
         lineNumber: 102
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: GetUserName
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
@@ -308,7 +308,7 @@
           { IsolationLevel = IsolationLevel.Serializable }))\n110                 {\n"
         lineNumber: 111
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: HasLocalAccount
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
@@ -338,7 +338,7 @@
           \                    bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n"
         lineNumber: 112
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: GetAccountsFromUserName
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
@@ -368,7 +368,7 @@
           > 1)\n113                     {\n"
         lineNumber: 114
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: DeleteAccount
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
@@ -396,7 +396,7 @@
           external login was removed.\"\n133                 : \"\";\n"
         lineNumber: 134
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: HasLocalAccount
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
@@ -420,7 +420,7 @@
           \        public ActionResult Manage(LocalPasswordModel model)\n145         {\n"
         lineNumber: 146
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: HasLocalAccount
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
@@ -446,7 +446,7 @@
           returnUrl)\n218         {\n"
         lineNumber: 219
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: VerifyAuthentication
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
@@ -473,7 +473,7 @@
           \            }\n224 \n"
         lineNumber: 225
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: Login
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
@@ -499,7 +499,7 @@
           \                // If the current user is logged in add the new account\n"
         lineNumber: 233
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: CreateOrUpdateAccount
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
@@ -527,7 +527,7 @@
           membership name\n"
         lineNumber: 239
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: SerializeProviderUserId
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
@@ -559,7 +559,7 @@
           239                 string loginData = OAuthWebSecurity.SerializeProviderUserId(result.Provider, result.ProviderUserId);
         lineNumber: 240
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: GetOAuthClientData
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
@@ -585,7 +585,7 @@
           = null;\n255             string providerUserId = null;\n256 \n"
         lineNumber: 257
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: TryDeserializeProviderUserId
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
@@ -614,7 +614,7 @@
           \n"
         lineNumber: 275
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: CreateOrUpdateAccount
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
@@ -643,7 +643,7 @@
           providerUserId, model.UserName);\n"
         lineNumber: 276
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: Login
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
@@ -669,7 +669,7 @@
           \                }\n285             }\n286 \n"
         lineNumber: 287
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: GetOAuthClientData
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
@@ -694,7 +694,7 @@
           returnUrl)\n304         {\n305             ViewBag.ReturnUrl = returnUrl;\n"
         lineNumber: 306
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_field: RegisteredClientData
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
@@ -720,7 +720,7 @@
           \        public ActionResult RemoveExternalLogins()\n311         {\n"
         lineNumber: 312
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: GetAccountsFromUserName
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
@@ -747,7 +747,7 @@
           \            foreach (OAuthAccount account in accounts)\n315             {\n"
         lineNumber: 316
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: GetOAuthClientData
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
@@ -773,7 +773,7 @@
           \                });\n324             }\n325 \n"
         lineNumber: 326
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: HasLocalAccount
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
@@ -799,7 +799,7 @@
           context)\n362             {\n"
         lineNumber: 363
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: RequestAuthentication
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
@@ -839,7 +839,7 @@
           \        {\n"
         lineNumber: 37
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: WebSecurity
           fqdn_method: Login
           fqdn_namespace: WebMatrix.WebData
@@ -863,7 +863,7 @@
           \        public ActionResult LogOff()\n53         {\n"
         lineNumber: 54
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: WebSecurity
           fqdn_method: Logout
           fqdn_namespace: WebMatrix.WebData
@@ -895,7 +895,7 @@
           80                 {
         lineNumber: 81
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: WebSecurity
           fqdn_method: CreateUserAndAccount
           fqdn_namespace: WebMatrix.WebData
@@ -927,7 +927,7 @@
           81                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
         lineNumber: 82
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: WebSecurity
           fqdn_method: Login
           fqdn_namespace: WebMatrix.WebData
@@ -956,7 +956,7 @@
           { IsolationLevel = IsolationLevel.Serializable }))\n110                 {\n"
         lineNumber: 111
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: WebSecurity
           fqdn_method: GetUserId
           fqdn_namespace: WebMatrix.WebData
@@ -984,7 +984,7 @@
           external login was removed.\"\n133                 : \"\";\n"
         lineNumber: 134
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: WebSecurity
           fqdn_method: GetUserId
           fqdn_namespace: WebMatrix.WebData
@@ -1008,7 +1008,7 @@
           \        public ActionResult Manage(LocalPasswordModel model)\n145         {\n"
         lineNumber: 146
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: WebSecurity
           fqdn_method: GetUserId
           fqdn_namespace: WebMatrix.WebData
@@ -1040,7 +1040,7 @@
           156                     {
         lineNumber: 157
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: WebSecurity
           fqdn_method: ChangePassword
           fqdn_namespace: WebMatrix.WebData
@@ -1065,7 +1065,7 @@
           \                {\n186                     try\n187                     {\n"
         lineNumber: 188
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: WebSecurity
           fqdn_method: CreateAccount
           fqdn_namespace: WebMatrix.WebData
@@ -1091,7 +1091,7 @@
           \                });\n324             }\n325 \n"
         lineNumber: 326
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: WebSecurity
           fqdn_method: GetUserId
           fqdn_namespace: WebMatrix.WebData
@@ -1118,7 +1118,7 @@
           \                        }\n38                     }\n39 \n"
         lineNumber: 40
         variables:
-          file: file:///source/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
           fqdn_class: WebSecurity
           fqdn_method: InitializeDatabaseConnection
           fqdn_namespace: WebMatrix.WebData
@@ -1154,7 +1154,7 @@
           \            filters.Add(new HandleErrorAttribute());\n"
         lineNumber: 1
         variables:
-          file: file:///source/mvc4/NerdDinner/App_Start/FilterConfig.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/App_Start/FilterConfig.cs
           symbol: System.Web.Mvc
           syntax_type: import
       - uri: file:///source/mvc4/NerdDinner/App_Start/RouteConfig.cs
@@ -1172,7 +1172,7 @@
           \n7 namespace NerdDinner\n8 {\n9     public class RouteConfig\n"
         lineNumber: 4
         variables:
-          file: file:///source/mvc4/NerdDinner/App_Start/RouteConfig.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/App_Start/RouteConfig.cs
           symbol: System.Web.Mvc
           syntax_type: import
       - uri: file:///source/mvc4/NerdDinner/App_Start/RouteConfig.cs
@@ -1192,7 +1192,7 @@
           \                name: \"Default\",\n24                 url: \"{controller}/{action}/{id}\",\n"
         lineNumber: 25
         variables:
-          file: file:///source/mvc4/NerdDinner/App_Start/RouteConfig.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/App_Start/RouteConfig.cs
           fqdn_class: UrlParameter
           fqdn_field: Optional
           fqdn_namespace: System.Web.Mvc
@@ -1214,7 +1214,7 @@
           using Microsoft.Web.WebPages.OAuth;\n9 using WebMatrix.WebData;\n"
         lineNumber: 5
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           symbol: System.Web.Mvc
           syntax_type: import
       - uri: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -1233,7 +1233,7 @@
           ActionResult Login(string returnUrl)\n24         {\n"
         lineNumber: 25
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: AjaxHelper
           fqdn_field: ViewBag
           fqdn_namespace: System.Web.Mvc
@@ -1255,7 +1255,7 @@
           \        {\n"
         lineNumber: 37
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: ModelState
           fqdn_namespace: System.Web.Mvc
@@ -1279,7 +1279,7 @@
           \n42             // If we got this far, something failed, redisplay form\n"
         lineNumber: 43
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: ModelState
           fqdn_namespace: System.Web.Mvc
@@ -1300,7 +1300,7 @@
           \        public ActionResult Register(RegisterModel model)\n75         {\n"
         lineNumber: 76
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: ModelState
           fqdn_namespace: System.Web.Mvc
@@ -1329,7 +1329,7 @@
           86                 {
         lineNumber: 87
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: ModelState
           fqdn_namespace: System.Web.Mvc
@@ -1353,7 +1353,7 @@
           Only disassociate the account if the currently logged in user is the owner\n"
         lineNumber: 106
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: User
           fqdn_namespace: System.Web.Mvc
@@ -1379,7 +1379,7 @@
           { IsolationLevel = IsolationLevel.Serializable }))\n110                 {\n"
         lineNumber: 111
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: User
           fqdn_namespace: System.Web.Mvc
@@ -1406,7 +1406,7 @@
           \                    bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n"
         lineNumber: 112
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: User
           fqdn_namespace: System.Web.Mvc
@@ -1428,7 +1428,7 @@
           message)\n128         {\n"
         lineNumber: 129
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: AjaxHelper
           fqdn_field: ViewBag
           fqdn_namespace: System.Web.Mvc
@@ -1453,7 +1453,7 @@
           external login was removed.\"\n133                 : \"\";\n"
         lineNumber: 134
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: AjaxHelper
           fqdn_field: ViewBag
           fqdn_namespace: System.Web.Mvc
@@ -1479,7 +1479,7 @@
           = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n"
         lineNumber: 135
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: AjaxHelper
           fqdn_field: ViewBag
           fqdn_namespace: System.Web.Mvc
@@ -1500,7 +1500,7 @@
           \        public ActionResult Manage(LocalPasswordModel model)\n145         {\n"
         lineNumber: 146
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: User
           fqdn_namespace: System.Web.Mvc
@@ -1522,7 +1522,7 @@
           hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n"
         lineNumber: 147
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: AjaxHelper
           fqdn_field: ViewBag
           fqdn_namespace: System.Web.Mvc
@@ -1545,7 +1545,7 @@
           \            ViewBag.HasLocalPassword = hasLocalAccount;\n"
         lineNumber: 148
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: AjaxHelper
           fqdn_field: ViewBag
           fqdn_namespace: System.Web.Mvc
@@ -1568,7 +1568,7 @@
           = Url.Action(\"Manage\");\n149             if (hasLocalAccount)\n150             {\n"
         lineNumber: 151
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: ModelState
           fqdn_namespace: System.Web.Mvc
@@ -1597,7 +1597,7 @@
           156                     {
         lineNumber: 157
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: User
           fqdn_namespace: System.Web.Mvc
@@ -1620,7 +1620,7 @@
           \                    else\n169                     {\n"
         lineNumber: 170
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: ModelState
           fqdn_namespace: System.Web.Mvc
@@ -1649,7 +1649,7 @@
           180                 {
         lineNumber: 181
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: ModelState
           fqdn_field: Errors
           fqdn_namespace: System.Web.Mvc
@@ -1673,7 +1673,7 @@
           \n"
         lineNumber: 184
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: ModelState
           fqdn_namespace: System.Web.Mvc
@@ -1695,7 +1695,7 @@
           \                {\n186                     try\n187                     {\n"
         lineNumber: 188
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: User
           fqdn_namespace: System.Web.Mvc
@@ -1718,7 +1718,7 @@
           \                    catch (Exception)\n192                     {\n"
         lineNumber: 193
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: ModelState
           fqdn_namespace: System.Web.Mvc
@@ -1740,7 +1740,7 @@
           \        {\n"
         lineNumber: 210
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: Url
           fqdn_namespace: System.Web.Mvc
@@ -1763,7 +1763,7 @@
           returnUrl)\n218         {\n"
         lineNumber: 219
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: Url
           fqdn_namespace: System.Web.Mvc
@@ -1787,7 +1787,7 @@
           \n"
         lineNumber: 230
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: User
           fqdn_namespace: System.Web.Mvc
@@ -1810,7 +1810,7 @@
           \                // If the current user is logged in add the new account\n"
         lineNumber: 233
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: User
           fqdn_namespace: System.Web.Mvc
@@ -1839,7 +1839,7 @@
           239                 string loginData = OAuthWebSecurity.SerializeProviderUserId(result.Provider, result.ProviderUserId);
         lineNumber: 240
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: AjaxHelper
           fqdn_field: ViewBag
           fqdn_namespace: System.Web.Mvc
@@ -1868,7 +1868,7 @@
           240                 ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(result.Provider).DisplayName;
         lineNumber: 241
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: AjaxHelper
           fqdn_field: ViewBag
           fqdn_namespace: System.Web.Mvc
@@ -1891,7 +1891,7 @@
           = null;\n255             string providerUserId = null;\n256 \n"
         lineNumber: 257
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: User
           fqdn_namespace: System.Web.Mvc
@@ -1915,7 +1915,7 @@
           RedirectToAction(\"Manage\");\n260             }\n261 \n"
         lineNumber: 262
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: ModelState
           fqdn_namespace: System.Web.Mvc
@@ -1940,7 +1940,7 @@
           \                    {\n"
         lineNumber: 282
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: ModelState
           fqdn_namespace: System.Web.Mvc
@@ -1963,7 +1963,7 @@
           \                }\n285             }\n286 \n"
         lineNumber: 287
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: AjaxHelper
           fqdn_field: ViewBag
           fqdn_namespace: System.Web.Mvc
@@ -1987,7 +1987,7 @@
           = OAuthWebSecurity.GetOAuthClientData(provider).DisplayName;\n"
         lineNumber: 288
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: AjaxHelper
           fqdn_field: ViewBag
           fqdn_namespace: System.Web.Mvc
@@ -2009,7 +2009,7 @@
           returnUrl)\n304         {\n"
         lineNumber: 305
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: AjaxHelper
           fqdn_field: ViewBag
           fqdn_namespace: System.Web.Mvc
@@ -2032,7 +2032,7 @@
           \        public ActionResult RemoveExternalLogins()\n311         {\n"
         lineNumber: 312
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: User
           fqdn_namespace: System.Web.Mvc
@@ -2055,7 +2055,7 @@
           \                });\n324             }\n325 \n"
         lineNumber: 326
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: AjaxHelper
           fqdn_field: ViewBag
           fqdn_namespace: System.Web.Mvc
@@ -2078,7 +2078,7 @@
           RedirectToLocal(string returnUrl)\n332         {\n"
         lineNumber: 333
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: Url
           fqdn_namespace: System.Web.Mvc
@@ -2100,7 +2100,7 @@
           PagedList;\n9 \n"
         lineNumber: 6
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/DinnersController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/DinnersController.cs
           symbol: System.Web.Mvc
           syntax_type: import
       - uri: file:///source/mvc4/NerdDinner/Controllers/DinnersController.cs
@@ -2119,7 +2119,7 @@
           = DateTime.Now.AddDays(7),\n"
         lineNumber: 49
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/DinnersController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/DinnersController.cs
           fqdn_class: Controller
           fqdn_field: User
           fqdn_namespace: System.Web.Mvc
@@ -2141,7 +2141,7 @@
           dinner)\n60         {\n"
         lineNumber: 61
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/DinnersController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/DinnersController.cs
           fqdn_class: Controller
           fqdn_field: ModelState
           fqdn_namespace: System.Web.Mvc
@@ -2163,7 +2163,7 @@
           \            {\n"
         lineNumber: 63
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/DinnersController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/DinnersController.cs
           fqdn_class: Controller
           fqdn_field: User
           fqdn_namespace: System.Web.Mvc
@@ -2186,7 +2186,7 @@
           rsvp = new RSVP();\n"
         lineNumber: 66
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/DinnersController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/DinnersController.cs
           fqdn_class: Controller
           fqdn_field: User
           fqdn_namespace: System.Web.Mvc
@@ -2208,7 +2208,7 @@
           \                return HttpNotFound();\n89             }\n"
         lineNumber: 90
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/DinnersController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/DinnersController.cs
           fqdn_class: Controller
           fqdn_field: User
           fqdn_namespace: System.Web.Mvc
@@ -2230,7 +2230,7 @@
           dinner)\n102         {\n"
         lineNumber: 103
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/DinnersController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/DinnersController.cs
           fqdn_class: Controller
           fqdn_field: User
           fqdn_namespace: System.Web.Mvc
@@ -2253,7 +2253,7 @@
           \            }\n107 \n"
         lineNumber: 108
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/DinnersController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/DinnersController.cs
           fqdn_class: Controller
           fqdn_field: ModelState
           fqdn_namespace: System.Web.Mvc
@@ -2275,7 +2275,7 @@
           \            {\n126                 return HttpNotFound();\n127             }\n"
         lineNumber: 128
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/DinnersController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/DinnersController.cs
           fqdn_class: Controller
           fqdn_field: User
           fqdn_namespace: System.Web.Mvc
@@ -2297,7 +2297,7 @@
           \            Dinner dinner = db.Dinners.Find(id);\n142 \n"
         lineNumber: 143
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/DinnersController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/DinnersController.cs
           fqdn_class: Controller
           fqdn_field: User
           fqdn_namespace: System.Web.Mvc
@@ -2319,7 +2319,7 @@
           \    {\n"
         lineNumber: 4
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/HomeController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/HomeController.cs
           symbol: System.Web.Mvc
           syntax_type: import
       - uri: file:///source/mvc4/NerdDinner/Controllers/HomeController.cs
@@ -2337,7 +2337,7 @@
           : Controller\n9     {\n10         public ActionResult Index()\n11         {\n"
         lineNumber: 12
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/HomeController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/HomeController.cs
           fqdn_class: AjaxHelper
           fqdn_field: ViewBag
           fqdn_namespace: System.Web.Mvc
@@ -2359,7 +2359,7 @@
           : Controller\n"
         lineNumber: 3
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/RSVPController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/RSVPController.cs
           symbol: System.Web.Mvc
           syntax_type: import
       - uri: file:///source/mvc4/NerdDinner/Controllers/RSVPController.cs
@@ -2379,7 +2379,7 @@
           \n"
         lineNumber: 35
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/RSVPController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/RSVPController.cs
           fqdn_class: Controller
           fqdn_field: User
           fqdn_namespace: System.Web.Mvc
@@ -2402,7 +2402,7 @@
           rsvp = new RSVP();\n"
         lineNumber: 38
         variables:
-          file: file:///source/mvc4/NerdDinner/Controllers/RSVPController.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/RSVPController.cs
           fqdn_class: Controller
           fqdn_field: User
           fqdn_namespace: System.Web.Mvc
@@ -2423,7 +2423,7 @@
           using NerdDinner.Models;\n7 \n8 namespace NerdDinner.Filters\n9 {\n"
         lineNumber: 4
         variables:
-          file: file:///source/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
           symbol: System.Web.Mvc
           syntax_type: import
       - uri: file:///source/mvc4/NerdDinner/Global.asax.cs
@@ -2442,7 +2442,7 @@
           \n"
         lineNumber: 6
         variables:
-          file: file:///source/mvc4/NerdDinner/Global.asax.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Global.asax.cs
           symbol: System.Web.Mvc
           syntax_type: import
       - uri: file:///source/mvc4/NerdDinner/Global.asax.cs
@@ -2461,7 +2461,7 @@
           \        protected void Application_Start()\n18         {\n"
         lineNumber: 19
         variables:
-          file: file:///source/mvc4/NerdDinner/Global.asax.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Global.asax.cs
           fqdn_class: AreaRegistration
           fqdn_method: RegisterAllAreas
           fqdn_namespace: System.Web.Mvc
@@ -2484,7 +2484,7 @@
           \n21             WebApiConfig.Register(GlobalConfiguration.Configuration);\n"
         lineNumber: 22
         variables:
-          file: file:///source/mvc4/NerdDinner/Global.asax.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Global.asax.cs
           fqdn_class: GlobalFilters
           fqdn_field: Filters
           fqdn_namespace: System.Web.Mvc
@@ -2507,7 +2507,7 @@
           \            AuthConfig.RegisterAuth();\n26 \n"
         lineNumber: 27
         variables:
-          file: file:///source/mvc4/NerdDinner/Global.asax.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Global.asax.cs
           fqdn_class: ModelBinderProviders
           fqdn_field: BinderProviders
           fqdn_namespace: System.Web.Mvc
@@ -2529,7 +2529,7 @@
           : DefaultModelBinder\n"
         lineNumber: 5
         variables:
-          file: file:///source/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
           symbol: System.Web.Mvc
           syntax_type: import
       - uri: file:///source/mvc4/NerdDinner/Models/Dinner.cs
@@ -2548,7 +2548,7 @@
           using System.Web.Mvc;\n8 \n9 namespace NerdDinner.Models\n"
         lineNumber: 7
         variables:
-          file: file:///source/mvc4/NerdDinner/Models/Dinner.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Models/Dinner.cs
           symbol: System.Web.Mvc
           syntax_type: import
       - uri: file:///source/mvc4/NerdDinner/Models/Dinner.cs
@@ -2571,7 +2571,7 @@
           than 256 characters\")]\n"
         lineNumber: 26
         variables:
-          file: file:///source/mvc4/NerdDinner/Models/Dinner.cs
+          file: file:///opt/input/source/mvc4/NerdDinner/Models/Dinner.cs
           fqdn_class: CachedDataAnnotationsMetadataAttributes
           fqdn_field: DataType
           fqdn_namespace: System.Web.Mvc
