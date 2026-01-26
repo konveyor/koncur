@@ -1,5 +1,8 @@
 name: Koncur Repo CI testing
 
+permissions:
+  checks: write
+
 on:
   push:
     branches:
@@ -12,8 +15,11 @@ on:
 jobs:
   run-kantra-test:
     strategy:
+      fail-fast: false
       matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
+        # Using macos to test amd64 and ubuntu to test arm
+        # THis is because you can't use container's on mac os arm runners.
+        os: [macos-15-intel, ubuntu-24.04-arm, windows-latest]
         exclude:
           - os: windows-latest
     uses: ./.github/workflows/kantra.yaml

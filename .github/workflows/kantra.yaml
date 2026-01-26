@@ -13,10 +13,22 @@ jobs:
     runs-on: ${{ inputs.os }}
     steps:
       - name: Verify local/bin is on the path
-        run:
+        run: |
+          mkdir -p $HOME/.local/bin
           echo $HOME/.local/bin >> $GITHUB_PATH
 
+      - name: Install podman
+        if: ${{ inputs.os == 'macos-15-intel' }}
+        run: |
+          brew install podman
+          podman machine init --rootful
+          podman machine start
+          podman cp $(podman create --name kantra-download quay.io/konveyor/kantra:latest):/usr/local/bin/darwin-kantra . &&\
+          podman rm kantra-download
+          cp kantra $HOME/.local/bin/kantra
+
       - name: Download and install kantra
+        if: ${{ inputs.os != 'macos-15-intel' }}
         run: |
           podman cp $(podman create --name kantra-download quay.io/konveyor/kantra:latest):/usr/local/bin/kantra . &&\
           podman rm kantra-download
@@ -38,23 +50,17 @@ jobs:
       - name: Create maven settings file
         uses: s4u/maven-settings-action@v4.0.0
         with:
-          path: settings.xml
+          path: "${{ runner.temp }}/settings.xml"
       
       - name: Create kantra config
         run: |
           mkdir -p .koncur/config
-          cat <<EOF > target-kantra.yaml
+          cat <<-EOF > .koncur/config/target-kantra.yaml
           type: kantra
           kantra:
-          \tmavenSettings: $(pwd)/settings.xml
+            mavenSettings: ${{ runner.temp }}/settings.xml
           EOF
       
       - name: Run test
         run: |
-          koncur run tests -t kantra -o junit --output-file test-output.xml
-
-      - name: Upload junit
-        uses: mikepenz/action-junit-report@v5
-        if: success() || failure() # always run even if the previous step fails
-        with:
-          report_paths: '**/test-output.xml'
+          koncur run tests -t kantra 
