@@ -237,6 +237,9 @@ You can provide either:
 				}
 			}
 
+			if summary.Failed > 0 {
+				os.Exit(1)
+			}
 			return nil
 		},
 	}
