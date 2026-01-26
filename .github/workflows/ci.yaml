@@ -12,6 +12,11 @@ on:
     branches:
       - "main"
 
+env:
+  RUNNER_IMG: quay.io/konveyor/kantra:latest
+  JAVA_PROVIDER_IMG: quay.io/konveyor/java-external-provider
+  GENERIC_PROVIDER_IMG: quay.io/konveyor/generic_external_provider
+  CSHARP_PROVIDER_IMG: quay.io/konveyor/c-sharp-provider
 jobs:
   run-kantra-test:
     strategy:
