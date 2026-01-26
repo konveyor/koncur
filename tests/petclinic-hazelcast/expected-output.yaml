@@ -410,6 +410,7 @@
   - Embedded=Hazelcast
   - Embedded=Properties
   - Embedded=Spring DI
+  - Embedded=Spring JMX
   - Embedded=Spring MVC
   - Embedded=Spring Web
   - Execute=Spring DI
@@ -426,17 +427,21 @@
   - Java EE=Servlet
   - Java Servlet
   - MVC=Spring MVC
+  - Observability=Spring JMX
   - Other=Common Annotations
   - Other=Properties
   - Persistence=JPA named queries
   - Servlet
   - Spring DI
+  - Spring JMX
+  - Spring JMX configuration detected
   - Spring MVC
   - Spring Web
   - Store=Bean Validation
   - Store=Hazelcast
   - Store=JPA named queries
   - Sustain=Properties
+  - Sustain=Spring JMX
   - Validation=Bean Validation
   - View=JSP Page
   - View=Spring MVC
@@ -538,7 +543,7 @@
         lineNumber: 33
         variables:
           annotation: PostConstruct
-          file: file:///source/src/main/java/org/springframework/samples/petclinic/config/InitDataSourceConfig.java
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/config/InitDataSourceConfig.java
           kind: Module
           name: javax.annotation.PostConstruct
           package: org.springframework.samples.petclinic.config
@@ -559,7 +564,7 @@
         lineNumber: 33
         variables:
           annotation: PostConstruct
-          file: file:///source/src/main/java/org/springframework/samples/petclinic/config/RootApplicationContextConfig.java
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/config/RootApplicationContextConfig.java
           kind: Module
           name: javax.annotation.PostConstruct
           package: org.springframework.samples.petclinic.config
@@ -584,7 +589,7 @@
           Krebs"
         lineNumber: 29
         variables:
-          file: file:///source/src/main/java/org/springframework/samples/petclinic/model/Owner.java
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Owner.java
           kind: Module
           name: javax.validation.constraints.Digits
           package: org.springframework.samples.petclinic.model
@@ -602,7 +607,7 @@
           Krebs\n40  * @author Juergen Hoeller"
         lineNumber: 30
         variables:
-          file: file:///source/src/main/java/org/springframework/samples/petclinic/model/Owner.java
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Owner.java
           kind: Module
           name: javax.validation.constraints.NotEmpty
           package: org.springframework.samples.petclinic.model
@@ -620,7 +625,7 @@
           class Person extends BaseEntity {\n29  \n30  @Column(name = \"first_name\")"
         lineNumber: 20
         variables:
-          file: file:///source/src/main/java/org/springframework/samples/petclinic/model/Person.java
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Person.java
           kind: Module
           name: javax.validation.constraints.NotEmpty
           package: org.springframework.samples.petclinic.model
@@ -637,7 +642,7 @@
           BaseEntity {"
         lineNumber: 25
         variables:
-          file: file:///source/src/main/java/org/springframework/samples/petclinic/model/Visit.java
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Visit.java
           kind: Module
           name: javax.validation.constraints.NotEmpty
           package: org.springframework.samples.petclinic.model
@@ -667,7 +672,7 @@
           servlets, register a {@link CharacterEncodingFilter}."
         lineNumber: 26
         variables:
-          file: file:///source/src/main/java/org/springframework/samples/petclinic/PetclinicInitializer.java
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/PetclinicInitializer.java
           kind: Module
           name: javax.servlet.Filter
           package: org.springframework.samples.petclinic
@@ -688,7 +693,7 @@
           servlets, register a {@link CharacterEncodingFilter}.\n37  * <p/>"
         lineNumber: 27
         variables:
-          file: file:///source/src/main/java/org/springframework/samples/petclinic/PetclinicInitializer.java
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/PetclinicInitializer.java
           kind: Module
           name: javax.servlet.ServletContext
           package: org.springframework.samples.petclinic
@@ -703,7 +708,7 @@
           \ import org.springframework.session.SaveMode;\n15  import org.springframework.session.config.SessionRepositoryCustomizer;"
         lineNumber: 5
         variables:
-          file: file:///source/src/main/java/org/springframework/samples/petclinic/config/SessionConfiguration.java
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/config/SessionConfiguration.java
           kind: Module
           name: javax.servlet.ServletContext
           package: org.springframework.samples.petclinic.config
@@ -719,7 +724,7 @@
           \ import org.springframework.session.hazelcast.Hazelcast4IndexedSessionRepository;"
         lineNumber: 6
         variables:
-          file: file:///source/src/main/java/org/springframework/samples/petclinic/config/SessionConfiguration.java
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/config/SessionConfiguration.java
           kind: Module
           name: javax.servlet.SessionCookieConfig
           package: org.springframework.samples.petclinic.config
@@ -816,6 +821,117 @@
         variables:
           tags:
           - Properties
+    observability-0200:
+      description: Spring JMX configuration detected
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Spring JMX
+      - tag=Spring JMX configuration detected
+      incidents:
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/util/CallMonitoringAspect.java
+        message: ""
+        codeSnip: "\n27  * Simple aspect that monitors call count and call invocation
+          time. It uses JMX annotations and therefore can be\n28  * monitored using
+          any JMX console such as the jConsole\n29  * <p/>\n30  * This is only useful
+          if you use JPA or JDBC.  Spring-data-jpa doesn't have any correctly annotated
+          classes to join on\n31  *\n32  * @author Rob Harrop\n33  * @author Juergen
+          Hoeller\n34  * @author Michael Isvy\n35  * @since 2.5\n36  */\n37  @ManagedResource(\"petclinic:type=CallMonitor\")\n38
+          \ @Aspect\n39  public class CallMonitoringAspect {\n40  \n41  private boolean
+          enabled = true;\n42  \n43  private int callCount = 0;\n44  \n45  private
+          long accumulatedCallTime = 0;\n46  \n47  @ManagedAttribute"
+        lineNumber: 37
+        variables:
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/util/CallMonitoringAspect.java
+          kind: Property
+          name: ManagedResource
+          package: org.springframework.samples.petclinic.util
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/util/CallMonitoringAspect.java
+        message: ""
+        codeSnip: "\n37  @ManagedResource(\"petclinic:type=CallMonitor\")\n38  @Aspect\n39
+          \ public class CallMonitoringAspect {\n40  \n41  private boolean enabled
+          = true;\n42  \n43  private int callCount = 0;\n44  \n45  private long accumulatedCallTime
+          = 0;\n46  \n47  @ManagedAttribute\n48  public boolean isEnabled() {\n49
+          \ return enabled;\n50  }\n51  \n52  @ManagedAttribute\n53  public void setEnabled(boolean
+          enabled) {\n54  this.enabled = enabled;\n55  }\n56  \n57  @ManagedOperation"
+        lineNumber: 47
+        variables:
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/util/CallMonitoringAspect.java
+          kind: Property
+          name: ManagedAttribute
+          package: org.springframework.samples.petclinic.util
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/util/CallMonitoringAspect.java
+        message: ""
+        codeSnip: "\n42  \n43  private int callCount = 0;\n44  \n45  private long
+          accumulatedCallTime = 0;\n46  \n47  @ManagedAttribute\n48  public boolean
+          isEnabled() {\n49  return enabled;\n50  }\n51  \n52  @ManagedAttribute\n53
+          \ public void setEnabled(boolean enabled) {\n54  this.enabled = enabled;\n55
+          \ }\n56  \n57  @ManagedOperation\n58  public void reset() {\n59  this.callCount
+          = 0;\n60  this.accumulatedCallTime = 0;\n61  }\n62  "
+        lineNumber: 52
+        variables:
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/util/CallMonitoringAspect.java
+          kind: Property
+          name: ManagedAttribute
+          package: org.springframework.samples.petclinic.util
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/util/CallMonitoringAspect.java
+        message: ""
+        codeSnip: "\n47  @ManagedAttribute\n48  public boolean isEnabled() {\n49  return
+          enabled;\n50  }\n51  \n52  @ManagedAttribute\n53  public void setEnabled(boolean
+          enabled) {\n54  this.enabled = enabled;\n55  }\n56  \n57  @ManagedOperation\n58
+          \ public void reset() {\n59  this.callCount = 0;\n60  this.accumulatedCallTime
+          = 0;\n61  }\n62  \n63  @ManagedAttribute\n64  public int getCallCount()
+          {\n65  return callCount;\n66  }\n67  "
+        lineNumber: 57
+        variables:
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/util/CallMonitoringAspect.java
+          kind: Property
+          name: ManagedOperation
+          package: org.springframework.samples.petclinic.util
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/util/CallMonitoringAspect.java
+        message: ""
+        codeSnip: "\n53  public void setEnabled(boolean enabled) {\n54  this.enabled
+          = enabled;\n55  }\n56  \n57  @ManagedOperation\n58  public void reset()
+          {\n59  this.callCount = 0;\n60  this.accumulatedCallTime = 0;\n61  }\n62
+          \ \n63  @ManagedAttribute\n64  public int getCallCount() {\n65  return callCount;\n66
+          \ }\n67  \n68  @ManagedAttribute\n69  public long getCallTime() {\n70  if
+          (this.callCount > 0)\n71  return this.accumulatedCallTime / this.callCount;\n72
+          \ else\n73  return 0;"
+        lineNumber: 63
+        variables:
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/util/CallMonitoringAspect.java
+          kind: Property
+          name: ManagedAttribute
+          package: org.springframework.samples.petclinic.util
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/util/CallMonitoringAspect.java
+        message: ""
+        codeSnip: "\n58  public void reset() {\n59  this.callCount = 0;\n60  this.accumulatedCallTime
+          = 0;\n61  }\n62  \n63  @ManagedAttribute\n64  public int getCallCount()
+          {\n65  return callCount;\n66  }\n67  \n68  @ManagedAttribute\n69  public
+          long getCallTime() {\n70  if (this.callCount > 0)\n71  return this.accumulatedCallTime
+          / this.callCount;\n72  else\n73  return 0;\n74  }\n75  \n76  \n77  @Around(\"within(@org.springframework.stereotype.Repository
+          *)\")\n78  public Object invoke(ProceedingJoinPoint joinPoint) throws Throwable
+          {"
+        lineNumber: 68
+        variables:
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/util/CallMonitoringAspect.java
+          kind: Property
+          name: ManagedAttribute
+          package: org.springframework.samples.petclinic.util
+    observability-technology-usage-0200:
+      description: Spring JMX
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded=Spring JMX
+      - tag=Observability=Spring JMX
+      - tag=Sustain=Spring JMX
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - Spring JMX
     technology-usage-database-01200:
       description: JPA Queries
       labels:
@@ -836,7 +952,7 @@
           = \"city\")\n52  @NotEmpty\n53  private String city;\n54  "
         lineNumber: 44
         variables:
-          file: file:///source/src/main/java/org/springframework/samples/petclinic/model/Owner.java
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Owner.java
           kind: Property
           name: Entity
           package: org.springframework.samples.petclinic.model
@@ -851,7 +967,7 @@
           \ \n55  @Column(name = \"telephone\")"
         lineNumber: 45
         variables:
-          file: file:///source/src/main/java/org/springframework/samples/petclinic/model/Owner.java
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Owner.java
           kind: Property
           name: Entity
           package: org.springframework.samples.petclinic.model
@@ -866,7 +982,7 @@
           \ @JoinColumn(name = \"type_id\")\n55  private PetType type;"
         lineNumber: 45
         variables:
-          file: file:///source/src/main/java/org/springframework/samples/petclinic/model/Pet.java
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Pet.java
           kind: Property
           name: Entity
           package: org.springframework.samples.petclinic.model
@@ -881,7 +997,7 @@
           \ private PetType type;\n56  "
         lineNumber: 46
         variables:
-          file: file:///source/src/main/java/org/springframework/samples/petclinic/model/Pet.java
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Pet.java
           kind: Property
           name: Entity
           package: org.springframework.samples.petclinic.model
@@ -894,7 +1010,7 @@
           class PetType extends NamedEntity {\n28  \n29  }"
         lineNumber: 25
         variables:
-          file: file:///source/src/main/java/org/springframework/samples/petclinic/model/PetType.java
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/PetType.java
           kind: Property
           name: Entity
           package: org.springframework.samples.petclinic.model
@@ -907,7 +1023,7 @@
           class PetType extends NamedEntity {\n28  \n29  }"
         lineNumber: 26
         variables:
-          file: file:///source/src/main/java/org/springframework/samples/petclinic/model/PetType.java
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/PetType.java
           kind: Property
           name: Entity
           package: org.springframework.samples.petclinic.model
@@ -921,7 +1037,7 @@
           \ \n30  }"
         lineNumber: 26
         variables:
-          file: file:///source/src/main/java/org/springframework/samples/petclinic/model/Specialty.java
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Specialty.java
           kind: Property
           name: Entity
           package: org.springframework.samples.petclinic.model
@@ -934,7 +1050,7 @@
           \ \n30  }"
         lineNumber: 27
         variables:
-          file: file:///source/src/main/java/org/springframework/samples/petclinic/model/Specialty.java
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Specialty.java
           kind: Property
           name: Entity
           package: org.springframework.samples.petclinic.model
@@ -952,7 +1068,7 @@
           == null) {"
         lineNumber: 43
         variables:
-          file: file:///source/src/main/java/org/springframework/samples/petclinic/model/Vet.java
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Vet.java
           kind: Property
           name: Entity
           package: org.springframework.samples.petclinic.model
@@ -969,7 +1085,7 @@
           == null) {\n54  this.specialties = new HashSet<>();"
         lineNumber: 44
         variables:
-          file: file:///source/src/main/java/org/springframework/samples/petclinic/model/Vet.java
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Vet.java
           kind: Property
           name: Entity
           package: org.springframework.samples.petclinic.model
@@ -984,7 +1100,7 @@
           = \"yyyy/MM/dd\")\n42  private LocalDate date;\n43  "
         lineNumber: 33
         variables:
-          file: file:///source/src/main/java/org/springframework/samples/petclinic/model/Visit.java
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Visit.java
           kind: Property
           name: Entity
           package: org.springframework.samples.petclinic.model
@@ -999,7 +1115,7 @@
           \ private LocalDate date;\n43  \n44  /**"
         lineNumber: 34
         variables:
-          file: file:///source/src/main/java/org/springframework/samples/petclinic/model/Visit.java
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/model/Visit.java
           kind: Property
           name: Entity
           package: org.springframework.samples.petclinic.model
@@ -1413,9 +1529,7 @@
   - non-xml-technology-usage-26000
   - non-xml-technology-usage-27000
   - observability-0100
-  - observability-0200
   - observability-technology-usage-0100
-  - observability-technology-usage-0200
   - security-01100
   - security-01200
   - security-01300

@@ -370,24 +370,14 @@ func saveSimpleTestDefinition(testFile string, test *config.TestDefinition) erro
 	return nil
 }
 
-// copyFile copies a file from src to dst
-func copyFile(src, dst string) error {
-	input, err := os.ReadFile(src)
-	if err != nil {
-		return fmt.Errorf("failed to read source file: %w", err)
-	}
-
-	err = os.WriteFile(dst, input, 0644)
-	if err != nil {
-		return fmt.Errorf("failed to write destination file: %w", err)
-	}
-
-	return nil
-}
-
 // saveFilteredOutput saves the filtered rulesets to a YAML file with path normalization
 // Uses yaml.v2 to match analyzer-lsp's marshalling behavior and avoid circular reference issues
 func saveFilteredOutput(rulesets []konveyor.RuleSet, path string, testDir string) error {
+	rulesets, err := parser.NormalizeRuleSets(rulesets, testDir)
+	if err != nil {
+		return err
+	}
+
 	// Use yaml.v2 because konveyor types were designed for v2
 	// v3 has different MarshalYAML behavior that causes infinite recursion
 	data, err := yaml2.Marshal(rulesets)
@@ -397,21 +387,6 @@ func saveFilteredOutput(rulesets []konveyor.RuleSet, path string, testDir string
 
 	// Normalize paths by removing the test directory path
 	yamlStr := string(data)
-	if testDir != "" {
-		yamlStr = strings.ReplaceAll(yamlStr, testDir, "")
-	}
-
-	// TODO: Handle make it so that target exposes the paths to normalize
-	if strings.Contains(yamlStr, "/root/.m2/repository") {
-		yamlStr = strings.ReplaceAll(yamlStr, "/root/.m2/repository/", "/m2/")
-	}
-	if strings.Contains(yamlStr, "/cache/m2/") {
-		yamlStr = strings.ReplaceAll(yamlStr, "/cache/m2/", "/m2/")
-	}
-	// Normalize Tackle Hub container paths
-	if strings.Contains(yamlStr, "/opt/input/source/") {
-		yamlStr = strings.ReplaceAll(yamlStr, "/opt/input/source", "/source")
-	}
 
 	err = os.WriteFile(path, []byte(yamlStr), 0644)
 	if err != nil {

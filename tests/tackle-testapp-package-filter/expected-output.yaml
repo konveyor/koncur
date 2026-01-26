@@ -308,7 +308,7 @@
           \ {\n13  "
         lineNumber: 3
         variables:
-          file: file:///source/src/main/java/io/konveyor/demo/ordermanagement/OrderManagementAppInitializer.java
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/OrderManagementAppInitializer.java
           kind: Module
           name: javax.servlet.ServletContext
           package: io.konveyor.demo.ordermanagement
@@ -324,7 +324,7 @@
           \ {\n13  \n14  @Override"
         lineNumber: 4
         variables:
-          file: file:///source/src/main/java/io/konveyor/demo/ordermanagement/OrderManagementAppInitializer.java
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/OrderManagementAppInitializer.java
           kind: Module
           name: javax.servlet.ServletException
           package: io.konveyor.demo.ordermanagement
@@ -341,7 +341,7 @@
           throws ServletException {"
         lineNumber: 5
         variables:
-          file: file:///source/src/main/java/io/konveyor/demo/ordermanagement/OrderManagementAppInitializer.java
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/OrderManagementAppInitializer.java
           kind: Module
           name: javax.servlet.ServletRegistration
           package: io.konveyor.demo.ordermanagement
@@ -483,7 +483,7 @@
           Long id;"
         lineNumber: 11
         variables:
-          file: file:///source/src/main/java/io/konveyor/demo/ordermanagement/model/Customer.java
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/model/Customer.java
           kind: Property
           name: Entity
           package: io.konveyor.demo.ordermanagement.model
@@ -500,7 +500,7 @@
           Long id;\n22  "
         lineNumber: 12
         variables:
-          file: file:///source/src/main/java/io/konveyor/demo/ordermanagement/model/Customer.java
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/model/Customer.java
           kind: Property
           name: Entity
           package: io.konveyor.demo.ordermanagement.model

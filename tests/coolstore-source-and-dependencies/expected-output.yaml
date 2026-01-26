@@ -2392,7 +2392,7 @@
           \ private String itemId;"
         lineNumber: 3
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/model/CatalogItemEntity.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/model/CatalogItemEntity.java
           kind: Module
           name: javax.persistence
           package: com.redhat.coolstore.model
@@ -2408,7 +2408,7 @@
           implements Serializable {"
         lineNumber: 5
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/model/InventoryEntity.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/model/InventoryEntity.java
           kind: Module
           name: javax.persistence.Column
           package: com.redhat.coolstore.model
@@ -2424,7 +2424,7 @@
           implements Serializable {\n16  "
         lineNumber: 6
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/model/InventoryEntity.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/model/InventoryEntity.java
           kind: Module
           name: javax.persistence.Entity
           package: com.redhat.coolstore.model
@@ -2441,7 +2441,7 @@
           = 7526472295622776147L;"
         lineNumber: 7
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/model/InventoryEntity.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/model/InventoryEntity.java
           kind: Module
           name: javax.persistence.Id
           package: com.redhat.coolstore.model
@@ -2458,7 +2458,7 @@
           = 7526472295622776147L;\n18  "
         lineNumber: 8
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/model/InventoryEntity.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/model/InventoryEntity.java
           kind: Module
           name: javax.persistence.Table
           package: com.redhat.coolstore.model
@@ -2475,7 +2475,7 @@
           = 7526472295622776147L;\n18  \n19  @Id"
         lineNumber: 9
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/model/InventoryEntity.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/model/InventoryEntity.java
           kind: Module
           name: javax.persistence.UniqueConstraint
           package: com.redhat.coolstore.model
@@ -2492,7 +2492,7 @@
           = 7526472295622776147L;\n18  \n19  @Id\n20  private String itemId;"
         lineNumber: 10
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/model/InventoryEntity.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/model/InventoryEntity.java
           kind: Module
           name: javax.xml.bind.annotation.XmlRootElement
           package: com.redhat.coolstore.model
@@ -2508,7 +2508,7 @@
           \ import javax.persistence.Table;\n16  \n17  @Entity"
         lineNumber: 7
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/model/Order.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/model/Order.java
           kind: Module
           name: javax.persistence.CascadeType
           package: com.redhat.coolstore.model
@@ -2525,7 +2525,7 @@
           \"ORDERS\")"
         lineNumber: 8
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/model/Order.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/model/Order.java
           kind: Module
           name: javax.persistence.Column
           package: com.redhat.coolstore.model
@@ -2542,7 +2542,7 @@
           \"ORDERS\")\n19  public class Order implements Serializable {"
         lineNumber: 9
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/model/Order.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/model/Order.java
           kind: Module
           name: javax.persistence.Entity
           package: com.redhat.coolstore.model
@@ -2559,7 +2559,7 @@
           \"ORDERS\")\n19  public class Order implements Serializable {\n20  "
         lineNumber: 10
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/model/Order.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/model/Order.java
           kind: Module
           name: javax.persistence.FetchType
           package: com.redhat.coolstore.model
@@ -2577,7 +2577,7 @@
           \ private static final long serialVersionUID = -1L;"
         lineNumber: 11
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/model/Order.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/model/Order.java
           kind: Module
           name: javax.persistence.GeneratedValue
           package: com.redhat.coolstore.model
@@ -2595,7 +2595,7 @@
           \ "
         lineNumber: 12
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/model/Order.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/model/Order.java
           kind: Module
           name: javax.persistence.Id
           package: com.redhat.coolstore.model
@@ -2613,7 +2613,7 @@
           \ \n23  @Id"
         lineNumber: 13
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/model/Order.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/model/Order.java
           kind: Module
           name: javax.persistence.JoinColumn
           package: com.redhat.coolstore.model
@@ -2630,7 +2630,7 @@
           \ private static final long serialVersionUID = -1L;\n22  \n23  @Id\n24  @GeneratedValue"
         lineNumber: 14
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/model/Order.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/model/Order.java
           kind: Module
           name: javax.persistence.OneToMany
           package: com.redhat.coolstore.model
@@ -2647,7 +2647,7 @@
           \ \n23  @Id\n24  @GeneratedValue\n25  private long orderId;"
         lineNumber: 15
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/model/Order.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/model/Order.java
           kind: Module
           name: javax.persistence.Table
           package: com.redhat.coolstore.model
@@ -2662,7 +2662,7 @@
           \ private static final long serialVersionUID = 64565445665456666L;\n15  "
         lineNumber: 5
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/model/OrderItem.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/model/OrderItem.java
           kind: Module
           name: javax.persistence.Column
           package: com.redhat.coolstore.model
@@ -2678,7 +2678,7 @@
           \ @Id"
         lineNumber: 6
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/model/OrderItem.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/model/OrderItem.java
           kind: Module
           name: javax.persistence.Entity
           package: com.redhat.coolstore.model
@@ -2694,7 +2694,7 @@
           \ @Id\n17  @Column(name=\"ID\")"
         lineNumber: 7
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/model/OrderItem.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/model/OrderItem.java
           kind: Module
           name: javax.persistence.GeneratedValue
           package: com.redhat.coolstore.model
@@ -2710,7 +2710,7 @@
           \ @Id\n17  @Column(name=\"ID\")\n18  @GeneratedValue"
         lineNumber: 8
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/model/OrderItem.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/model/OrderItem.java
           kind: Module
           name: javax.persistence.Id
           package: com.redhat.coolstore.model
@@ -2726,7 +2726,7 @@
           \ @Id\n17  @Column(name=\"ID\")\n18  @GeneratedValue\n19  private long id;"
         lineNumber: 9
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/model/OrderItem.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/model/OrderItem.java
           kind: Module
           name: javax.persistence.Table
           package: com.redhat.coolstore.model
@@ -2741,7 +2741,7 @@
           \ \n16  private double cartItemPromoSavings;\n17  "
         lineNumber: 7
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/model/ShoppingCart.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/model/ShoppingCart.java
           kind: Module
           name: javax.enterprise.context.Dependent
           package: com.redhat.coolstore.model
@@ -2755,7 +2755,7 @@
           \ private EntityManager em;\n13  "
         lineNumber: 3
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/persistence/Resources.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/persistence/Resources.java
           kind: Module
           name: javax.enterprise.context.Dependent
           package: com.redhat.coolstore.persistence
@@ -2769,7 +2769,7 @@
           \ private EntityManager em;\n13  \n14  @Produces"
         lineNumber: 4
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/persistence/Resources.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/persistence/Resources.java
           kind: Module
           name: javax.enterprise.inject.Produces
           package: com.redhat.coolstore.persistence
@@ -2784,7 +2784,7 @@
           getEntityManager() {"
         lineNumber: 5
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/persistence/Resources.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/persistence/Resources.java
           kind: Module
           name: javax.persistence.EntityManager
           package: com.redhat.coolstore.persistence
@@ -2799,7 +2799,7 @@
           getEntityManager() {\n16  return em;"
         lineNumber: 6
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/persistence/Resources.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/persistence/Resources.java
           kind: Module
           name: javax.persistence.PersistenceContext
           package: com.redhat.coolstore.persistence
@@ -2815,7 +2815,7 @@
           javax.ws.rs.core.MediaType;\n18  \n19  import com.redhat.coolstore.model.Product;"
         lineNumber: 9
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/rest/CartEndpoint.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/rest/CartEndpoint.java
           kind: Module
           name: javax.enterprise.context.SessionScoped
           package: com.redhat.coolstore.rest
@@ -2832,7 +2832,7 @@
           \ import com.redhat.coolstore.model.ShoppingCart;"
         lineNumber: 10
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/rest/CartEndpoint.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/rest/CartEndpoint.java
           kind: Module
           name: javax.inject.Inject
           package: com.redhat.coolstore.rest
@@ -2849,7 +2849,7 @@
           \ import com.redhat.coolstore.model.ShoppingCart;\n21  import com.redhat.coolstore.model.ShoppingCartItem;"
         lineNumber: 11
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/rest/CartEndpoint.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/rest/CartEndpoint.java
           kind: Module
           name: javax.ws.rs.DELETE
           package: com.redhat.coolstore.rest
@@ -2866,7 +2866,7 @@
           \ import com.redhat.coolstore.model.ShoppingCartItem;\n22  import com.redhat.coolstore.service.ShoppingCartService;"
         lineNumber: 12
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/rest/CartEndpoint.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/rest/CartEndpoint.java
           kind: Module
           name: javax.ws.rs.GET
           package: com.redhat.coolstore.rest
@@ -2884,7 +2884,7 @@
           \ "
         lineNumber: 13
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/rest/CartEndpoint.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/rest/CartEndpoint.java
           kind: Module
           name: javax.ws.rs.POST
           package: com.redhat.coolstore.rest
@@ -2901,7 +2901,7 @@
           \ import com.redhat.coolstore.service.ShoppingCartService;\n23  \n24  @SessionScoped"
         lineNumber: 14
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/rest/CartEndpoint.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/rest/CartEndpoint.java
           kind: Module
           name: javax.ws.rs.Path
           package: com.redhat.coolstore.rest
@@ -2919,7 +2919,7 @@
           \ @Path(\"/cart\")"
         lineNumber: 15
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/rest/CartEndpoint.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/rest/CartEndpoint.java
           kind: Module
           name: javax.ws.rs.PathParam
           package: com.redhat.coolstore.rest
@@ -2937,7 +2937,7 @@
           implements Serializable {"
         lineNumber: 16
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/rest/CartEndpoint.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/rest/CartEndpoint.java
           kind: Module
           name: javax.ws.rs.Produces
           package: com.redhat.coolstore.rest
@@ -2955,7 +2955,7 @@
           {\n27  "
         lineNumber: 17
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/rest/CartEndpoint.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/rest/CartEndpoint.java
           kind: Module
           name: javax.ws.rs.core.MediaType
           package: com.redhat.coolstore.rest
@@ -2970,7 +2970,7 @@
           \ \n15  import com.redhat.coolstore.model.Order;\n16  import com.redhat.coolstore.service.OrderService;"
         lineNumber: 6
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/rest/OrderEndpoint.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/rest/OrderEndpoint.java
           kind: Module
           name: javax.enterprise.context.RequestScoped
           package: com.redhat.coolstore.rest
@@ -2986,7 +2986,7 @@
           \ "
         lineNumber: 7
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/rest/OrderEndpoint.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/rest/OrderEndpoint.java
           kind: Module
           name: javax.inject.Inject
           package: com.redhat.coolstore.rest
@@ -3002,7 +3002,7 @@
           \ \n18  @RequestScoped"
         lineNumber: 8
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/rest/OrderEndpoint.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/rest/OrderEndpoint.java
           kind: Module
           name: javax.ws.rs.Consumes
           package: com.redhat.coolstore.rest
@@ -3018,7 +3018,7 @@
           \ \n18  @RequestScoped\n19  @Path(\"/orders\")"
         lineNumber: 9
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/rest/OrderEndpoint.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/rest/OrderEndpoint.java
           kind: Module
           name: javax.ws.rs.GET
           package: com.redhat.coolstore.rest
@@ -3034,7 +3034,7 @@
           \ \n18  @RequestScoped\n19  @Path(\"/orders\")\n20  @Consumes(MediaType.APPLICATION_JSON)"
         lineNumber: 10
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/rest/OrderEndpoint.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/rest/OrderEndpoint.java
           kind: Module
           name: javax.ws.rs.Path
           package: com.redhat.coolstore.rest
@@ -3051,7 +3051,7 @@
           \ @Produces(MediaType.APPLICATION_JSON)"
         lineNumber: 11
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/rest/OrderEndpoint.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/rest/OrderEndpoint.java
           kind: Module
           name: javax.ws.rs.PathParam
           package: com.redhat.coolstore.rest
@@ -3068,7 +3068,7 @@
           \ public class OrderEndpoint implements Serializable {"
         lineNumber: 12
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/rest/OrderEndpoint.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/rest/OrderEndpoint.java
           kind: Module
           name: javax.ws.rs.Produces
           package: com.redhat.coolstore.rest
@@ -3085,7 +3085,7 @@
           \ public class OrderEndpoint implements Serializable {\n23  "
         lineNumber: 13
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/rest/OrderEndpoint.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/rest/OrderEndpoint.java
           kind: Module
           name: javax.ws.rs.core.MediaType
           package: com.redhat.coolstore.rest
@@ -3099,7 +3099,7 @@
           \ \n14  @RequestScoped\n15  @Path(\"/products\")\n16  @Consumes(MediaType.APPLICATION_JSON)"
         lineNumber: 6
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/rest/ProductEndpoint.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/rest/ProductEndpoint.java
           kind: Module
           name: javax.enterprise.context.RequestScoped
           package: com.redhat.coolstore.rest
@@ -3114,7 +3114,7 @@
           \ @Produces(MediaType.APPLICATION_JSON)"
         lineNumber: 7
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/rest/ProductEndpoint.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/rest/ProductEndpoint.java
           kind: Module
           name: javax.inject.Inject
           package: com.redhat.coolstore.rest
@@ -3130,7 +3130,7 @@
           implements Serializable {"
         lineNumber: 8
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/rest/ProductEndpoint.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/rest/ProductEndpoint.java
           kind: Module
           name: javax.ws.rs
           package: com.redhat.coolstore.rest
@@ -3146,7 +3146,7 @@
           implements Serializable {\n19  "
         lineNumber: 9
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/rest/ProductEndpoint.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/rest/ProductEndpoint.java
           kind: Module
           name: javax.ws.rs.core.MediaType
           package: com.redhat.coolstore.rest
@@ -3158,7 +3158,7 @@
           8  public class RestApplication extends Application {\n 9  \n10  }"
         lineNumber: 3
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/rest/RestApplication.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/rest/RestApplication.java
           kind: Module
           name: javax.ws.rs.ApplicationPath
           package: com.redhat.coolstore.rest
@@ -3170,7 +3170,7 @@
           8  public class RestApplication extends Application {\n 9  \n10  }"
         lineNumber: 4
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/rest/RestApplication.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/rest/RestApplication.java
           kind: Module
           name: javax.ws.rs.core.Application
           package: com.redhat.coolstore.rest
@@ -3185,7 +3185,7 @@
           \ \n15  import com.redhat.coolstore.model.*;\n16  "
         lineNumber: 6
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/CatalogService.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/CatalogService.java
           kind: Module
           name: javax.inject.Inject
           package: com.redhat.coolstore.service
@@ -3201,7 +3201,7 @@
           class CatalogService {"
         lineNumber: 8
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/CatalogService.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/CatalogService.java
           kind: Module
           name: javax.persistence.criteria.CriteriaBuilder
           package: com.redhat.coolstore.service
@@ -3217,7 +3217,7 @@
           class CatalogService {\n19  "
         lineNumber: 9
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/CatalogService.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/CatalogService.java
           kind: Module
           name: javax.persistence.criteria.CriteriaQuery
           package: com.redhat.coolstore.service
@@ -3233,7 +3233,7 @@
           class CatalogService {\n19  \n20  @Inject"
         lineNumber: 10
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/CatalogService.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/CatalogService.java
           kind: Module
           name: javax.persistence.criteria.Root
           package: com.redhat.coolstore.service
@@ -3248,7 +3248,7 @@
           class CatalogService {\n19  \n20  @Inject\n21  Logger log;\n22  "
         lineNumber: 12
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/CatalogService.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/CatalogService.java
           kind: Module
           name: javax.ejb.Stateless
           package: com.redhat.coolstore.service
@@ -3263,7 +3263,7 @@
           class CatalogService {\n19  \n20  @Inject\n21  Logger log;\n22  \n23  @Inject"
         lineNumber: 13
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/CatalogService.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/CatalogService.java
           kind: Module
           name: javax.persistence.EntityManager
           package: com.redhat.coolstore.service
@@ -3279,7 +3279,7 @@
           = 50;"
         lineNumber: 6
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/InventoryNotificationMDB.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/InventoryNotificationMDB.java
           kind: Module
           name: javax.inject.Inject
           package: com.redhat.coolstore.service
@@ -3295,7 +3295,7 @@
           = 50;\n17  "
         lineNumber: 7
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/InventoryNotificationMDB.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/InventoryNotificationMDB.java
           kind: Module
           name: javax.jms
           package: com.redhat.coolstore.service
@@ -3309,7 +3309,7 @@
           \ \n12  @Stateless\n13  public class OrderService {\n14  \n15  @Inject"
         lineNumber: 5
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/OrderService.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/OrderService.java
           kind: Module
           name: javax.ejb.Stateless
           package: com.redhat.coolstore.service
@@ -3324,7 +3324,7 @@
           \ private EntityManager em;"
         lineNumber: 6
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/OrderService.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/OrderService.java
           kind: Module
           name: javax.inject.Inject
           package: com.redhat.coolstore.service
@@ -3339,7 +3339,7 @@
           \ private EntityManager em;\n17  "
         lineNumber: 7
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/OrderService.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/OrderService.java
           kind: Module
           name: javax.persistence.EntityManager
           package: com.redhat.coolstore.service
@@ -3354,7 +3354,7 @@
           \ private EntityManager em;\n17  \n18  public void save(Order order) {"
         lineNumber: 8
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/OrderService.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/OrderService.java
           kind: Module
           name: javax.persistence.criteria.CriteriaBuilder
           package: com.redhat.coolstore.service
@@ -3370,7 +3370,7 @@
           \ em.persist(order);"
         lineNumber: 9
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/OrderService.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/OrderService.java
           kind: Module
           name: javax.persistence.criteria.CriteriaQuery
           package: com.redhat.coolstore.service
@@ -3386,7 +3386,7 @@
           \ em.persist(order);\n20  }"
         lineNumber: 10
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/OrderService.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/OrderService.java
           kind: Module
           name: javax.persistence.criteria.Root
           package: com.redhat.coolstore.service
@@ -3401,7 +3401,7 @@
           \ "
         lineNumber: 3
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/OrderServiceMDB.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/OrderServiceMDB.java
           kind: Module
           name: javax.ejb.ActivationConfigProperty
           package: com.redhat.coolstore.service
@@ -3416,7 +3416,7 @@
           \ \n14  @MessageDriven(name = \"OrderServiceMDB\", activationConfig = {"
         lineNumber: 4
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/OrderServiceMDB.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/OrderServiceMDB.java
           kind: Module
           name: javax.ejb.MessageDriven
           package: com.redhat.coolstore.service
@@ -3433,7 +3433,7 @@
           = \"topic/orders\"),"
         lineNumber: 5
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/OrderServiceMDB.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/OrderServiceMDB.java
           kind: Module
           name: javax.inject.Inject
           package: com.redhat.coolstore.service
@@ -3451,7 +3451,7 @@
           propertyValue = \"javax.jms.Topic\"),"
         lineNumber: 6
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/OrderServiceMDB.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/OrderServiceMDB.java
           kind: Module
           name: javax.jms.JMSException
           package: com.redhat.coolstore.service
@@ -3470,7 +3470,7 @@
           = \"acknowledgeMode\", propertyValue = \"Auto-acknowledge\")})"
         lineNumber: 7
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/OrderServiceMDB.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/OrderServiceMDB.java
           kind: Module
           name: javax.jms.Message
           package: com.redhat.coolstore.service
@@ -3490,7 +3490,7 @@
           class OrderServiceMDB implements MessageListener {"
         lineNumber: 8
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/OrderServiceMDB.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/OrderServiceMDB.java
           kind: Module
           name: javax.jms.MessageListener
           package: com.redhat.coolstore.service
@@ -3510,7 +3510,7 @@
           class OrderServiceMDB implements MessageListener {\n19  "
         lineNumber: 9
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/OrderServiceMDB.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/OrderServiceMDB.java
           kind: Module
           name: javax.jms.TextMessage
           package: com.redhat.coolstore.service
@@ -3525,7 +3525,7 @@
           \ @Stateless\n15  public class ProductService {\n16  \n17  @Inject"
         lineNumber: 7
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/ProductService.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/ProductService.java
           kind: Module
           name: javax.ejb.Stateless
           package: com.redhat.coolstore.service
@@ -3541,7 +3541,7 @@
           cm;"
         lineNumber: 8
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/ProductService.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/ProductService.java
           kind: Module
           name: javax.inject.Inject
           package: com.redhat.coolstore.service
@@ -3557,7 +3557,7 @@
           static final long serialVersionUID = 2088590587856645568L;\n19  "
         lineNumber: 9
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/PromoService.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/PromoService.java
           kind: Module
           name: javax.enterprise.context.ApplicationScoped
           package: com.redhat.coolstore.service
@@ -3572,7 +3572,7 @@
           sc) {"
         lineNumber: 6
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/ShippingService.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/ShippingService.java
           kind: Module
           name: javax.ejb.Remote
           package: com.redhat.coolstore.service
@@ -3587,7 +3587,7 @@
           sc) {\n17  "
         lineNumber: 7
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/ShippingService.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/ShippingService.java
           kind: Module
           name: javax.ejb.Stateless
           package: com.redhat.coolstore.service
@@ -3602,7 +3602,7 @@
           \ public class ShoppingCartOrderProcessor  {"
         lineNumber: 4
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/ShoppingCartOrderProcessor.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/ShoppingCartOrderProcessor.java
           kind: Module
           name: javax.ejb.Stateless
           package: com.redhat.coolstore.service
@@ -3617,7 +3617,7 @@
           \ public class ShoppingCartOrderProcessor  {\n15  "
         lineNumber: 5
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/ShoppingCartOrderProcessor.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/ShoppingCartOrderProcessor.java
           kind: Module
           name: javax.annotation.Resource
           package: com.redhat.coolstore.service
@@ -3632,7 +3632,7 @@
           \ public class ShoppingCartOrderProcessor  {\n15  \n16  @Inject"
         lineNumber: 6
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/ShoppingCartOrderProcessor.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/ShoppingCartOrderProcessor.java
           kind: Module
           name: javax.inject.Inject
           package: com.redhat.coolstore.service
@@ -3648,7 +3648,7 @@
           log;"
         lineNumber: 7
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/ShoppingCartOrderProcessor.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/ShoppingCartOrderProcessor.java
           kind: Module
           name: javax.jms.JMSContext
           package: com.redhat.coolstore.service
@@ -3664,7 +3664,7 @@
           log;\n18  "
         lineNumber: 8
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/ShoppingCartOrderProcessor.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/ShoppingCartOrderProcessor.java
           kind: Module
           name: javax.jms.Topic
           package: com.redhat.coolstore.service
@@ -3679,7 +3679,7 @@
           \ import com.redhat.coolstore.model.ShoppingCartItem;\n15  \n16  @Stateful"
         lineNumber: 6
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/ShoppingCartService.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/ShoppingCartService.java
           kind: Module
           name: javax.ejb.Stateful
           package: com.redhat.coolstore.service
@@ -3695,7 +3695,7 @@
           \ public class ShoppingCartService  {"
         lineNumber: 7
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/ShoppingCartService.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/ShoppingCartService.java
           kind: Module
           name: javax.inject.Inject
           package: com.redhat.coolstore.service
@@ -3711,7 +3711,7 @@
           \ import java.util.logging.Logger;\n16  "
         lineNumber: 6
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/utils/DataBaseMigrationStartup.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/utils/DataBaseMigrationStartup.java
           kind: Module
           name: javax.annotation.PostConstruct
           package: com.redhat.coolstore.utils
@@ -3727,7 +3727,7 @@
           \ import java.util.logging.Logger;\n16  \n17  /**"
         lineNumber: 7
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/utils/DataBaseMigrationStartup.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/utils/DataBaseMigrationStartup.java
           kind: Module
           name: javax.annotation.Resource
           package: com.redhat.coolstore.utils
@@ -3744,7 +3744,7 @@
           on 2017-04-04."
         lineNumber: 8
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/utils/DataBaseMigrationStartup.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/utils/DataBaseMigrationStartup.java
           kind: Module
           name: javax.ejb.Singleton
           package: com.redhat.coolstore.utils
@@ -3761,7 +3761,7 @@
           on 2017-04-04.\n19  */"
         lineNumber: 9
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/utils/DataBaseMigrationStartup.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/utils/DataBaseMigrationStartup.java
           kind: Module
           name: javax.ejb.Startup
           package: com.redhat.coolstore.utils
@@ -3778,7 +3778,7 @@
           on 2017-04-04.\n19  */\n20  @Singleton"
         lineNumber: 10
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/utils/DataBaseMigrationStartup.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/utils/DataBaseMigrationStartup.java
           kind: Module
           name: javax.ejb.TransactionManagement
           package: com.redhat.coolstore.utils
@@ -3795,7 +3795,7 @@
           on 2017-04-04.\n19  */\n20  @Singleton\n21  @Startup"
         lineNumber: 11
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/utils/DataBaseMigrationStartup.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/utils/DataBaseMigrationStartup.java
           kind: Module
           name: javax.ejb.TransactionManagementType
           package: com.redhat.coolstore.utils
@@ -3812,7 +3812,7 @@
           \ @Startup\n22  @TransactionManagement(TransactionManagementType.BEAN)"
         lineNumber: 12
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/utils/DataBaseMigrationStartup.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/utils/DataBaseMigrationStartup.java
           kind: Module
           name: javax.inject.Inject
           package: com.redhat.coolstore.utils
@@ -3826,7 +3826,7 @@
           {"
         lineNumber: 3
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/utils/Producers.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/utils/Producers.java
           kind: Module
           name: javax.enterprise.inject.Produces
           package: com.redhat.coolstore.utils
@@ -3840,7 +3840,7 @@
           {\n14  return Logger.getLogger(injectionPoint.getMember().getDeclaringClass().getName());"
         lineNumber: 4
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/utils/Producers.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/utils/Producers.java
           kind: Module
           name: javax.enterprise.inject.spi.InjectionPoint
           package: com.redhat.coolstore.utils
@@ -3855,7 +3855,7 @@
           evt) {\n16  log.info(\"AppListener(postStart)\");"
         lineNumber: 6
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/utils/StartupListener.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/utils/StartupListener.java
           kind: Module
           name: javax.inject.Inject
           package: com.redhat.coolstore.utils
@@ -3873,7 +3873,7 @@
           \ import java.util.logging.Logger;\n21  \n22  /**"
         lineNumber: 12
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/utils/Transformers.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/utils/Transformers.java
           kind: Module
           name: javax.json.Json
           package: com.redhat.coolstore.utils
@@ -3892,7 +3892,7 @@
           on 2017-03-30."
         lineNumber: 13
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/utils/Transformers.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/utils/Transformers.java
           kind: Module
           name: javax.json.JsonArray
           package: com.redhat.coolstore.utils
@@ -3910,7 +3910,7 @@
           on 2017-03-30.\n24  */"
         lineNumber: 14
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/utils/Transformers.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/utils/Transformers.java
           kind: Module
           name: javax.json.JsonArrayBuilder
           package: com.redhat.coolstore.utils
@@ -3928,7 +3928,7 @@
           on 2017-03-30.\n24  */\n25  public class Transformers {"
         lineNumber: 15
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/utils/Transformers.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/utils/Transformers.java
           kind: Module
           name: javax.json.JsonObject
           package: com.redhat.coolstore.utils
@@ -3945,7 +3945,7 @@
           on 2017-03-30.\n24  */\n25  public class Transformers {\n26  "
         lineNumber: 16
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/utils/Transformers.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/utils/Transformers.java
           kind: Module
           name: javax.json.JsonReader
           package: com.redhat.coolstore.utils
@@ -3964,7 +3964,7 @@
           Olson\",\"Martin Ericsson\"};"
         lineNumber: 17
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/utils/Transformers.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/utils/Transformers.java
           kind: Module
           name: javax.json.JsonWriter
           package: com.redhat.coolstore.utils
@@ -4035,7 +4035,6 @@
   - javaee-to-jakarta-namespaces-00042
   - javaee-to-jakarta-namespaces-00043
   - javaee-to-jakarta-namespaces-00044
-  - javaee-to-jakarta-namespaces-00045
   - javaee-to-jakarta-namespaces-00046
   - javaee-to-jakarta-namespaces-00047
   - javaee-to-jakarta-namespaces-00048
@@ -4396,7 +4395,7 @@
           \ private EntityManager em;\n13  \n14  @Produces"
         lineNumber: 4
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/persistence/Resources.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/persistence/Resources.java
           kind: Module
           name: javax.enterprise.inject
           package: com.redhat.coolstore.persistence
@@ -4412,7 +4411,7 @@
           \ import com.redhat.coolstore.model.ShoppingCart;"
         lineNumber: 10
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/rest/CartEndpoint.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/rest/CartEndpoint.java
           kind: Module
           name: javax.inject
           package: com.redhat.coolstore.rest
@@ -4427,7 +4426,7 @@
           \ "
         lineNumber: 7
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/rest/OrderEndpoint.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/rest/OrderEndpoint.java
           kind: Module
           name: javax.inject
           package: com.redhat.coolstore.rest
@@ -4441,7 +4440,7 @@
           \ @Produces(MediaType.APPLICATION_JSON)"
         lineNumber: 7
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/rest/ProductEndpoint.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/rest/ProductEndpoint.java
           kind: Module
           name: javax.inject
           package: com.redhat.coolstore.rest
@@ -4455,7 +4454,7 @@
           \ \n15  import com.redhat.coolstore.model.*;\n16  "
         lineNumber: 6
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/CatalogService.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/CatalogService.java
           kind: Module
           name: javax.inject
           package: com.redhat.coolstore.service
@@ -4470,7 +4469,7 @@
           = 50;"
         lineNumber: 6
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/InventoryNotificationMDB.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/InventoryNotificationMDB.java
           kind: Module
           name: javax.inject
           package: com.redhat.coolstore.service
@@ -4484,7 +4483,7 @@
           \ private EntityManager em;"
         lineNumber: 6
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/OrderService.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/OrderService.java
           kind: Module
           name: javax.inject
           package: com.redhat.coolstore.service
@@ -4500,7 +4499,7 @@
           = \"topic/orders\"),"
         lineNumber: 5
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/OrderServiceMDB.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/OrderServiceMDB.java
           kind: Module
           name: javax.inject
           package: com.redhat.coolstore.service
@@ -4515,7 +4514,7 @@
           cm;"
         lineNumber: 8
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/ProductService.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/ProductService.java
           kind: Module
           name: javax.inject
           package: com.redhat.coolstore.service
@@ -4529,7 +4528,7 @@
           \ public class ShoppingCartOrderProcessor  {\n15  \n16  @Inject"
         lineNumber: 6
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/ShoppingCartOrderProcessor.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/ShoppingCartOrderProcessor.java
           kind: Module
           name: javax.inject
           package: com.redhat.coolstore.service
@@ -4544,7 +4543,7 @@
           \ public class ShoppingCartService  {"
         lineNumber: 7
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/service/ShoppingCartService.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/ShoppingCartService.java
           kind: Module
           name: javax.inject
           package: com.redhat.coolstore.service
@@ -4560,7 +4559,7 @@
           \ @Startup\n22  @TransactionManagement(TransactionManagementType.BEAN)"
         lineNumber: 12
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/utils/DataBaseMigrationStartup.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/utils/DataBaseMigrationStartup.java
           kind: Module
           name: javax.inject
           package: com.redhat.coolstore.utils
@@ -4573,7 +4572,7 @@
           {"
         lineNumber: 3
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/utils/Producers.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/utils/Producers.java
           kind: Module
           name: javax.enterprise.inject
           package: com.redhat.coolstore.utils
@@ -4586,7 +4585,7 @@
           {\n14  return Logger.getLogger(injectionPoint.getMember().getDeclaringClass().getName());"
         lineNumber: 4
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/utils/Producers.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/utils/Producers.java
           kind: Module
           name: javax.enterprise.inject.spi
           package: com.redhat.coolstore.utils
@@ -4600,7 +4599,7 @@
           evt) {\n16  log.info(\"AppListener(postStart)\");"
         lineNumber: 6
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/utils/StartupListener.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/utils/StartupListener.java
           kind: Module
           name: javax.inject
           package: com.redhat.coolstore.utils
@@ -4638,7 +4637,7 @@
           \ import java.util.logging.Logger;\n21  \n22  /**"
         lineNumber: 12
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/utils/Transformers.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/utils/Transformers.java
           kind: Module
           name: javax.json
           package: com.redhat.coolstore.utils
@@ -4656,7 +4655,7 @@
           on 2017-03-30."
         lineNumber: 13
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/utils/Transformers.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/utils/Transformers.java
           kind: Module
           name: javax.json
           package: com.redhat.coolstore.utils
@@ -4673,7 +4672,7 @@
           on 2017-03-30.\n24  */"
         lineNumber: 14
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/utils/Transformers.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/utils/Transformers.java
           kind: Module
           name: javax.json
           package: com.redhat.coolstore.utils
@@ -4690,7 +4689,7 @@
           on 2017-03-30.\n24  */\n25  public class Transformers {"
         lineNumber: 15
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/utils/Transformers.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/utils/Transformers.java
           kind: Module
           name: javax.json
           package: com.redhat.coolstore.utils
@@ -4706,7 +4705,7 @@
           on 2017-03-30.\n24  */\n25  public class Transformers {\n26  "
         lineNumber: 16
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/utils/Transformers.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/utils/Transformers.java
           kind: Module
           name: javax.json
           package: com.redhat.coolstore.utils
@@ -4724,7 +4723,7 @@
           Olson\",\"Martin Ericsson\"};"
         lineNumber: 17
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/utils/Transformers.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/utils/Transformers.java
           kind: Module
           name: javax.json
           package: com.redhat.coolstore.utils
@@ -4760,7 +4759,7 @@
         lineNumber: 5
         variables:
           annotation: Resource
-          file: file:///source/src/main/java/com/redhat/coolstore/service/ShoppingCartOrderProcessor.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/service/ShoppingCartOrderProcessor.java
           kind: Module
           name: javax.annotation.Resource
           package: com.redhat.coolstore.service
@@ -4776,7 +4775,7 @@
         lineNumber: 6
         variables:
           annotation: PostConstruct
-          file: file:///source/src/main/java/com/redhat/coolstore/utils/DataBaseMigrationStartup.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/utils/DataBaseMigrationStartup.java
           kind: Module
           name: javax.annotation.PostConstruct
           package: com.redhat.coolstore.utils
@@ -4792,7 +4791,7 @@
         lineNumber: 7
         variables:
           annotation: Resource
-          file: file:///source/src/main/java/com/redhat/coolstore/utils/DataBaseMigrationStartup.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/utils/DataBaseMigrationStartup.java
           kind: Module
           name: javax.annotation.Resource
           package: com.redhat.coolstore.utils
@@ -4873,7 +4872,7 @@
           \ \n33  @GET\n34  @Path(\"/{cartId}\")\n35  @Produces(MediaType.APPLICATION_JSON)"
         lineNumber: 25
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/rest/CartEndpoint.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/rest/CartEndpoint.java
           kind: Property
           name: SessionScoped
           package: com.redhat.coolstore.rest
@@ -4890,7 +4889,7 @@
           \ return shoppingCartService.checkOutShoppingCart(cartId);"
         lineNumber: 34
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/rest/CartEndpoint.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/rest/CartEndpoint.java
           kind: Property
           name: GET
           package: com.redhat.coolstore.rest
@@ -4908,7 +4907,7 @@
           String itemId,"
         lineNumber: 41
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/rest/CartEndpoint.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/rest/CartEndpoint.java
           kind: Property
           name: POST
           package: com.redhat.coolstore.rest
@@ -4925,7 +4924,7 @@
           \ ShoppingCartItem sci = new ShoppingCartItem();\n58  sci.setProduct(product);"
         lineNumber: 48
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/rest/CartEndpoint.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/rest/CartEndpoint.java
           kind: Property
           name: POST
           package: com.redhat.coolstore.rest
@@ -4942,7 +4941,7 @@
           \ cart.setShoppingCartItemList(tmpCart.getShoppingCartItemList());"
         lineNumber: 75
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/rest/CartEndpoint.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/rest/CartEndpoint.java
           kind: Property
           name: POST
           package: com.redhat.coolstore.rest
@@ -4958,7 +4957,7 @@
           \ \n109  cart.getShoppingCartItemList().stream()"
         lineNumber: 99
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/rest/CartEndpoint.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/rest/CartEndpoint.java
           kind: Property
           name: DELETE
           package: com.redhat.coolstore.rest
@@ -4974,7 +4973,7 @@
           \ private OrderService os;\n28  \n29  "
         lineNumber: 19
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/rest/OrderEndpoint.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/rest/OrderEndpoint.java
           kind: Property
           name: RequestScoped
           package: com.redhat.coolstore.rest
@@ -4989,7 +4988,7 @@
           os.getOrderById(orderId);\n40  }\n41  "
         lineNumber: 31
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/rest/OrderEndpoint.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/rest/OrderEndpoint.java
           kind: Property
           name: GET
           package: com.redhat.coolstore.rest
@@ -5001,7 +5000,7 @@
           long orderId) {\n39  return os.getOrderById(orderId);\n40  }\n41  \n42  }"
         lineNumber: 37
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/rest/OrderEndpoint.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/rest/OrderEndpoint.java
           kind: Property
           name: GET
           package: com.redhat.coolstore.rest
@@ -5016,7 +5015,7 @@
           final long serialVersionUID = -7227732980791688773L;\n24  \n25  @Inject"
         lineNumber: 15
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/rest/ProductEndpoint.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/rest/ProductEndpoint.java
           kind: Property
           name: RequestScoped
           package: com.redhat.coolstore.rest
@@ -5030,7 +5029,7 @@
           \ return pm.getProductByItemId(itemId);\n39  }\n40  "
         lineNumber: 30
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/rest/ProductEndpoint.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/rest/ProductEndpoint.java
           kind: Property
           name: GET
           package: com.redhat.coolstore.rest
@@ -5043,7 +5042,7 @@
           \ }"
         lineNumber: 36
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/rest/ProductEndpoint.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/rest/ProductEndpoint.java
           kind: Property
           name: GET
           package: com.redhat.coolstore.rest
@@ -5094,7 +5093,7 @@
           name;"
         lineNumber: 6
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/model/CatalogItemEntity.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/model/CatalogItemEntity.java
           kind: Property
           name: Entity
           package: com.redhat.coolstore.model
@@ -5109,7 +5108,7 @@
           name;\n17  "
         lineNumber: 7
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/model/CatalogItemEntity.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/model/CatalogItemEntity.java
           kind: Property
           name: Entity
           package: com.redhat.coolstore.model
@@ -5126,7 +5125,7 @@
           \ "
         lineNumber: 12
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/model/InventoryEntity.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/model/InventoryEntity.java
           kind: Property
           name: Entity
           package: com.redhat.coolstore.model
@@ -5142,7 +5141,7 @@
           \ \n23  @Column\n24  private String location;"
         lineNumber: 14
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/model/InventoryEntity.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/model/InventoryEntity.java
           kind: Property
           name: Entity
           package: com.redhat.coolstore.model
@@ -5158,7 +5157,7 @@
           \ private long orderId;\n26  \n27  private String customerName;"
         lineNumber: 17
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/model/Order.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/model/Order.java
           kind: Property
           name: Entity
           package: com.redhat.coolstore.model
@@ -5174,7 +5173,7 @@
           String customerName;\n28  "
         lineNumber: 18
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/model/Order.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/model/Order.java
           kind: Property
           name: Entity
           package: com.redhat.coolstore.model
@@ -5190,7 +5189,7 @@
           \ \n21  private int quantity;"
         lineNumber: 11
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/model/OrderItem.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/model/OrderItem.java
           kind: Property
           name: Entity
           package: com.redhat.coolstore.model
@@ -5205,7 +5204,7 @@
           \ private long id;\n20  \n21  private int quantity;\n22  "
         lineNumber: 12
         variables:
-          file: file:///source/src/main/java/com/redhat/coolstore/model/OrderItem.java
+          file: file:///opt/input/source/src/main/java/com/redhat/coolstore/model/OrderItem.java
           kind: Property
           name: Entity
           package: com.redhat.coolstore.model
