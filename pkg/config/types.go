@@ -27,6 +27,7 @@ type TestDefinition struct {
 
 	// Internal field - path to the test file (not in YAML)
 	testFilePath string `yaml:"-"`
+	Skipped      bool   `yaml:"skipped,omitempty"`
 }
 
 // SetTestFilePath sets the test file path

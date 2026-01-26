@@ -10,6 +10,7 @@ analysis:
     disableDefaultRules: false
     analysisMode: source-only
 timeout: 10m0s
+requireMavenSettings: true
 expect:
     exitCode: 0
     output:

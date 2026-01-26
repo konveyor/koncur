@@ -18,11 +18,12 @@ import (
 )
 
 var (
-	targetConfigFile string
-	targetType       string
-	runFilter        string
-	outputFormat     string
-	outputFile       string
+	targetConfigFile       string
+	targetType             string
+	runFilter              string
+	outputFormat           string
+	outputFile             string
+	skipMavenSettingsTests bool
 )
 
 // NewRunCmd creates the run command
@@ -39,6 +40,11 @@ You can provide either:
 		RunE: func(cmd *cobra.Command, args []string) error {
 			path := args[0]
 			log := util.GetLogger()
+			if val, ok := os.LookupEnv("SKIP_MAVEN"); ok {
+				if val != "false" {
+					skipMavenSettingsTests = true
+				}
+			}
 
 			// Check if path is a file or directory
 			info, err := os.Stat(path)
@@ -80,6 +86,39 @@ You can provide either:
 			} else {
 				// Single test file
 				testFiles = []string{path}
+			}
+
+			tests := []*config.TestDefinition{}
+			skippedCount := 0
+			for _, testFile := range testFiles {
+				// Load test definition
+				test, err := config.Load(testFile)
+				if err != nil {
+					log.V(1).Info("failed to load test:", "error", err)
+					color.Red("  ✗ Failed to load test: %v because: %v", testFile, err)
+					continue
+				}
+
+				// Validate test definition
+				if err := config.Validate(test); err != nil {
+					log.V(1).Info("invalid test definition", "error", err)
+					color.Red("  ✗ invalid test definition: %v failed because: %v", testFile, err)
+					continue
+				}
+				if test.RequireMavenSettings && skipMavenSettingsTests {
+					log.V(1).Info("skipping test because has maven settings requirements")
+					color.Yellow("  ⊘ Skipped: %s (maven settings)", test.Name)
+					skippedCount += 1
+					continue
+				}
+				if test.Skipped {
+					log.V(1).Info("skipping test because marked as skipped")
+					color.Yellow("  ⊘ Skipped: %s (marked skip)", test.Name)
+					skippedCount += 1
+					continue
+				}
+
+				tests = append(tests, test)
 			}
 
 			// Load or create target config once for all tests
@@ -130,33 +169,15 @@ You can provide either:
 			startTime := time.Now()
 			successCount := 0
 			failCount := 0
-			skippedCount := 0
 			var allResults []TestResult
 
-			for i, testFile := range testFiles {
-				testName := filepath.Base(filepath.Dir(testFile))
-				if len(testFiles) > 1 && outputFormat == "console" {
-					fmt.Printf("\n[%d/%d] Running: %s\n", i+1, len(testFiles), testName)
-				}
-
-				// Check if test is marked as skipped
-				if isTestSkipped(testFile) {
-					skippedResult := TestResult{
-						Name:     testName,
-						TestFile: testFile,
-						Status:   "skipped",
-						Duration: "0s",
-					}
-					allResults = append(allResults, skippedResult)
-					if outputFormat == "console" {
-						color.Yellow("  ⊘ Skipped (marked as SKIPPED in file)")
-					}
-					skippedCount++
-					continue
+			for i, test := range tests {
+				if len(tests) > 1 {
+					fmt.Printf("\n[%d/%d] Running: %s\n", i+1, len(tests), test.Name)
 				}
 
 				// Run single test
-				testResult, err := runSingleTest(testFile, target, targetConfig)
+				testResult, err := runSingleTest(test, target, targetConfig)
 				if err != nil {
 					if outputFormat == "console" {
 						color.Red("  ✗ Error: %v", err)
@@ -201,11 +222,11 @@ You can provide either:
 						return fmt.Errorf("failed to write output file: %w", err)
 					}
 					fmt.Printf("\nTest results written to: %s\n", outputFile)
-				} else {
-					fmt.Println(formatted)
 				}
+			}
 
-				// Print summary to console even when writing to file
+			// Console format - print summary if multiple tests
+			if len(testFiles) > 1 {
 				fmt.Println("\n" + strings.Repeat("=", 60))
 				fmt.Printf("Summary: %d total\n", len(testFiles))
 				if successCount > 0 {
@@ -216,24 +237,11 @@ You can provide either:
 				}
 				if failCount > 0 {
 					color.Red("  ✗ Failed: %d", failCount)
-				}
-			} else {
-				// Console format - print summary if multiple tests
-				if len(testFiles) > 1 {
-					fmt.Println("\n" + strings.Repeat("=", 60))
-					fmt.Printf("Summary: %d total\n", len(testFiles))
-					if successCount > 0 {
-						color.Green("  ✓ Passed: %d", successCount)
+					for _, tr := range summary.Tests {
+						if tr.Status == "failed" {
+							color.Red("    ✗ : %s", tr.Name)
+						}
 					}
-					if skippedCount > 0 {
-						color.Yellow("  ⊘ Skipped: %d", skippedCount)
-					}
-					if failCount > 0 {
-						color.Red("  ✗ Failed: %d", failCount)
-						return nil
-					}
-				} else if failCount > 0 {
-					return nil
 				}
 			}
 
@@ -246,6 +254,7 @@ You can provide either:
 
 	// Flags
 	runCmd.Flags().StringVarP(&targetConfigFile, "target-config", "c", "", "Path to target configuration file")
+	runCmd.Flags().BoolVarP(&skipMavenSettingsTests, "skip-maven", "", false, "Skip the tests that need maven settings files")
 	runCmd.Flags().StringVarP(&targetType, "target", "t", "", "Target type (kantra, tackle-hub, tackle-ui, kai-rpc, vscode)")
 	runCmd.Flags().StringVarP(&runFilter, "filter", "f", "", "Filter tests by name pattern (only applies when running a directory)")
 	runCmd.Flags().StringVarP(&outputFormat, "output-format", "o", "console", "Output format: console, json, yaml, junit")
@@ -255,34 +264,15 @@ You can provide either:
 }
 
 // runSingleTest executes a single test and returns the test result
-func runSingleTest(testFile string, target targets.Target, targetConfig *config.TargetConfig) (*TestResult, error) {
-	testName := filepath.Base(filepath.Dir(testFile))
+func runSingleTest(test *config.TestDefinition, target targets.Target, targetConfig *config.TargetConfig) (*TestResult, error) {
 
 	// Initialize test result
 	testResult := &TestResult{
-		Name:     testName,
-		TestFile: testFile,
-		Status:   "unknown",
+		Name:   test.Name,
+		Status: "unknown",
 	}
 
 	startTime := time.Now()
-
-	// Load test definition
-	test, err := config.Load(testFile)
-	if err != nil {
-		testResult.Status = "failed"
-		testResult.ErrorMessage = fmt.Sprintf("failed to load test: %v", err)
-		testResult.Duration = time.Since(startTime).String()
-		return testResult, fmt.Errorf("failed to load test: %w", err)
-	}
-
-	// Validate test definition
-	if err := config.Validate(test); err != nil {
-		testResult.Status = "failed"
-		testResult.ErrorMessage = fmt.Sprintf("invalid test definition: %v", err)
-		testResult.Duration = time.Since(startTime).String()
-		return testResult, fmt.Errorf("invalid test definition: %w", err)
-	}
 
 	// Execute the test
 	result, err := target.Execute(context.Background(), test)
@@ -345,11 +335,9 @@ func runSingleTest(testFile string, target targets.Target, targetConfig *config.
 	// Report results
 	if validation.Passed {
 		testResult.Status = "passed"
-		if outputFormat == "console" {
-			green := color.New(color.FgGreen, color.Bold)
-			green.Printf("  ✓ PASSED")
-			fmt.Printf(" - Duration: %s, RuleSets: %d (filtered from %d)\n", result.Duration, len(filteredActual), len(actualOutput))
-		}
+		green := color.New(color.FgGreen, color.Bold)
+		green.Printf("  ✓ PASSED")
+		fmt.Printf(" - Duration: %s, RuleSets: %d (filtered from %d)\n", result.Duration, len(filteredActual), len(actualOutput))
 		return testResult, nil
 	}
 
@@ -357,25 +345,23 @@ func runSingleTest(testFile string, target targets.Target, targetConfig *config.
 	testResult.Status = "failed"
 	testResult.ValidationErrors = validation.Errors
 
-	if outputFormat == "console" {
-		// Test failed
-		red := color.New(color.FgRed, color.Bold)
-		red.Println("  ✗ FAILED")
+	// Test failed
+	red := color.New(color.FgRed, color.Bold)
+	red.Println("  ✗ FAILED")
 
-		// Print validation errors in a pretty format
-		if len(validation.Errors) > 0 {
-			fmt.Printf("\n    Found %d validation error(s):\n\n", len(validation.Errors))
+	// Print validation errors in a pretty format
+	if len(validation.Errors) > 0 {
+		fmt.Printf("\n    Found %d validation error(s):\n\n", len(validation.Errors))
 
-			for i, err := range validation.Errors {
-				err.Print(i + 1)
+		for i, err := range validation.Errors {
+			err.Print(i + 1)
 
-				// Add spacing between errors
-				if i < len(validation.Errors)-1 {
-					fmt.Println()
-				}
+			// Add spacing between errors
+			if i < len(validation.Errors)-1 {
+				fmt.Println()
 			}
-			fmt.Println()
 		}
+		fmt.Println()
 	}
 
 	return testResult, nil

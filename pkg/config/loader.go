@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
 	konveyor "github.com/konveyor/analyzer-lsp/output/v1/konveyor"
 	"gopkg.in/yaml.v3"
@@ -21,10 +22,18 @@ func LoadWithOptions(path string, skipExpectedOutput bool) (*TestDefinition, err
 	if err != nil {
 		return nil, fmt.Errorf("failed to read test file %s: %w", path, err)
 	}
-
 	var test TestDefinition
 	if err := yaml.Unmarshal(data, &test); err != nil {
 		return nil, fmt.Errorf("failed to parse test YAML: %w", err)
+	}
+	// Check first 500 bytes for SKIPPED marker
+	searchContent := string(data)
+	if len(searchContent) > 500 {
+		searchContent = searchContent[:500]
+	}
+
+	if strings.Contains(searchContent, "SKIPPED:") || strings.Contains(searchContent, "# SKIPPED") {
+		test.Skipped = true
 	}
 
 	// Store the absolute path to the test file

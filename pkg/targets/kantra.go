@@ -99,7 +99,7 @@ func (k *KantraTarget) Execute(ctx context.Context, test *config.TestDefinition)
 	}
 
 	// Build kantra command arguments with prepared rules
-	args := k.buildArgs(test.Analysis, inputPath, absOutputDir, k.mavenSettings, preparedRules)
+	args := k.buildArgs(test, inputPath, absOutputDir, preparedRules)
 
 	// Execute kantra
 	result, err := ExecuteCommand(ctx, k.binaryPath, args, workDir, test.GetTimeout())
@@ -116,7 +116,8 @@ func (k *KantraTarget) Execute(ctx context.Context, test *config.TestDefinition)
 }
 
 // buildArgsWithPreparedRules constructs the kantra analyze command arguments with prepared rules
-func (k *KantraTarget) buildArgs(analysis config.AnalysisConfig, inputPath, outputDir, mavenSettings string, preparedRules []string) []string {
+func (k *KantraTarget) buildArgs(test *config.TestDefinition, inputPath, outputDir string, preparedRules []string) []string {
+	analysis := test.Analysis
 	args := []string{"analyze", "--context-lines", strconv.Itoa(analysis.ContextLines)}
 
 	// Input application (now using the prepared input path)
@@ -137,8 +138,8 @@ func (k *KantraTarget) buildArgs(analysis config.AnalysisConfig, inputPath, outp
 	}
 
 	// Maven settings (from test-level configuration)
-	if mavenSettings != "" {
-		args = append(args, "--maven-settings", mavenSettings)
+	if test.RequireMavenSettings && k.mavenSettings != "" {
+		args = append(args, "--maven-settings", k.mavenSettings)
 	}
 
 	if len(analysis.Target) > 0 {

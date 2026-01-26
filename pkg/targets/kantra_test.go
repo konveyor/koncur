@@ -89,14 +89,15 @@ func TestKantraTarget_Name(t *testing.T) {
 
 func TestKantraTarget_BuildArgs(t *testing.T) {
 	tests := []struct {
-		name             string
-		analysis         config.AnalysisConfig
-		inputPath        string
-		outputDir        string
-		preparedRules    []string
-		mavenSettings    string
-		expectContain    []string
-		expectNotContain []string
+		name              string
+		analysis          config.AnalysisConfig
+		inputPath         string
+		outputDir         string
+		preparedRules     []string
+		mavenSettings     string
+		wantMavenSettings bool
+		expectContain     []string
+		expectNotContain  []string
 	}{
 		{
 			name: "basic source-only analysis",
@@ -167,9 +168,10 @@ func TestKantraTarget_BuildArgs(t *testing.T) {
 				AnalysisMode: provider.SourceOnlyAnalysisMode,
 				ContextLines: 10,
 			},
-			inputPath:     "/path/to/app",
-			outputDir:     "/path/to/output",
-			mavenSettings: "/path/to/settings.xml",
+			inputPath:         "/path/to/app",
+			outputDir:         "/path/to/output",
+			mavenSettings:     "/path/to/settings.xml",
+			wantMavenSettings: true,
 			expectContain: []string{
 				"--maven-settings", "/path/to/settings.xml",
 			},
@@ -179,10 +181,10 @@ func TestKantraTarget_BuildArgs(t *testing.T) {
 			analysis: config.AnalysisConfig{
 				AnalysisMode: provider.SourceOnlyAnalysisMode,
 				ContextLines: 10,
-				Rules:        []string{"/custom/rules1", "/custom/rules2"},
 			},
-			inputPath: "/path/to/app",
-			outputDir: "/path/to/output",
+			preparedRules: []string{"/custom/rules1", "/custom/rules2"},
+			inputPath:     "/path/to/app",
+			outputDir:     "/path/to/output",
 			expectContain: []string{
 				"--rules", "/custom/rules1",
 				"--rules", "/custom/rules2",
@@ -209,8 +211,12 @@ func TestKantraTarget_BuildArgs(t *testing.T) {
 				binaryPath:    "/usr/local/bin/kantra",
 				mavenSettings: tt.mavenSettings,
 			}
+			test := &config.TestDefinition{
+				RequireMavenSettings: true,
+				Analysis:             tt.analysis,
+			}
 
-			args := k.buildArgs(tt.analysis, tt.inputPath, tt.outputDir, tt.mavenSettings, tt.preparedRules)
+			args := k.buildArgs(test, tt.inputPath, tt.outputDir, tt.preparedRules)
 			argsStr := strings.Join(args, " ")
 
 			// Check for expected arguments
@@ -424,13 +430,15 @@ func TestKantraTarget_AnalysisMode(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			analysis := config.AnalysisConfig{
-				AnalysisMode: tt.analysisMode,
-				ContextLines: 10,
+			test := &config.TestDefinition{
+				Analysis: config.AnalysisConfig{
+					AnalysisMode: tt.analysisMode,
+					ContextLines: 10,
+				},
 			}
 
 			k := &KantraTarget{binaryPath: "/usr/local/bin/kantra"}
-			args := k.buildArgs(analysis, "/input", "/output", "", nil)
+			args := k.buildArgs(test, "/input", "/output", nil)
 
 			// Find the --mode flag
 			foundMode := false
@@ -476,13 +484,15 @@ func TestKantraTarget_ContextLines(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			analysis := config.AnalysisConfig{
-				AnalysisMode: provider.SourceOnlyAnalysisMode,
-				ContextLines: tt.contextLines,
+			test := &config.TestDefinition{
+				Analysis: config.AnalysisConfig{
+					AnalysisMode: provider.SourceOnlyAnalysisMode,
+					ContextLines: tt.contextLines,
+				},
 			}
 
 			k := &KantraTarget{binaryPath: "/usr/local/bin/kantra"}
-			args := k.buildArgs(analysis, "/input", "/output", "", nil)
+			args := k.buildArgs(test, "/input", "/output", nil)
 
 			// Find the --context-lines flag
 			foundContextLines := false

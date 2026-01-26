@@ -126,6 +126,10 @@ func normalizeIncident(incident konveyor.Incident, testDir string) (konveyor.Inc
 	if strings.Contains(fileName, "/cache/m2/") {
 		fileName = strings.ReplaceAll(fileName, "/cache/m2/", "/m2/")
 	}
+	// Providers should all be running in the addon dir now
+	if strings.Contains(fileName, "/addon/.m2/repository") {
+		fileName = strings.ReplaceAll(fileName, "/addon/.m2/repository/", "/m2/")
+	}
 
 	// Normalize Tackle Hub container paths
 	if strings.Contains(fileName, "/shared/source/") {

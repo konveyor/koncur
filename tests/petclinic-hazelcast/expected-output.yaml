@@ -19,14 +19,14 @@
         codeSnip: "561  \t\t\t\t<jdbc.username>petclinic</jdbc.username>"
         lineNumber: 560
         variables:
-          matchingText: mysql
+          matchingText: jdbc:mysql://localhost:3306
       - uri: file:///source/pom.xml
         message: The app is trying to access local resource by JDBC, please try to
           migrate the resource to cloud
         codeSnip: "580  \t\t\t\t<jdbc.username>postgres</jdbc.username>"
         lineNumber: 579
         variables:
-          matchingText: postgresql
+          matchingText: jdbc:postgresql://localhost:5432
       effort: 7
   insights:
     embedded-cache-libraries-06000:
@@ -82,7 +82,6 @@
   - socket-communication-00001
 - name: discovery-rules
   tags:
-  - EJB XML
   - Java Source
   - Maven XML
   - Properties
@@ -277,119 +276,11 @@
         message: ""
       - uri: file:///source/src/main/wro/wro.properties
         message: ""
-    windup-discover-ejb-configuration:
-      description: EJB XML Configuration
-      labels:
-      - discovery
-      - konveyor.io/include=always
-      - konveyor.io/target=discovery
-      - tag=EJB XML
-      incidents:
-      - uri: file:///source/pom.xml
-        message: ""
-        codeSnip: "6  \t<groupId>org.springframework.samples</groupId>"
-        lineNumber: 5
-        variables:
-          data: ""
-          innerText: "\n\n\t4.0.0\n\torg.springframework.samples\n\tspring-framework-petclinic\n\t5.3.13\n\n\tSpring
-            Framework Petclinic\n\twar\n\tA Spring Framework application based on
-            JSP, Spring MVC, Spring\n\t\tData JPA, Hibernate and JDBC\n\thttps://spring-petclinic.github.io/\n\n\t\n\n\t\t\n\t\t1.8\n\t\tUTF-8\n\t\tUTF-8\n\t\t${java.version}\n\t\t${java.version}\n\n\t\t\n\t\t\n\t\t\n\t\t5.3.12\n\n\t\t\n\t\t\n\t\t3.3.6\n\t\t1.12.1\n\t\t3.5.1\n\t\t1.8.0
-            \n\n\t\t\n\t\t9.0.46\n\t\t2.3.1\n\t\t2.3.4\n\t\t1.2.0\n\t\t4.0.4\n\t\t1.2.5\n\t\t1.3.2\n\n\t\t\n\t\t2021.1.0-RC1\n\t\t5.6.0.Final\n\t\t6.2.0.Final\n\t\t2.5.2\n\t\t1.4.200\n\n\t\t\n\t\t2021.0.2\n\t\t4.2.2\n\t\t\n\t\t\n\t\t1.7.32\n\t\t1.2.6\n\n\t\t\n\t\t3.21.0\n\t\t2.6.0\n\t\t4.0.0\n\t\t2.2\n\t\t5.8.1\n\n\t\t\n\t\t8.0.19\n\t\t9.4.1211.jre7\n\n\t\t\n\t\t2.12.4\n\t\t1.9.7\n\n\t\t\n\t\t9.4.43.v20210629\n\t\t3.3.0\n\t\t3.8.1\n\t\t2.10\n\t\t3.1.0\n\t\t2.22.1\n\t\t3.3.1\n\t\t0.8.6\n\n\t\t\n\t\t2.6.0\n\t\tspringcommunity\n\n\t\n\n\t\n\t\t\n\t\t\t\n\t\t\t\tcom.fasterxml.jackson\n\t\t\t\tjackson-bom\n\t\t\t\t${jackson.version}\n\t\t\t\timport\n\t\t\t\tpom\n\t\t\t\n\t\t\t\n\t\t\t\torg.springframework.data\n\t\t\t\tspring-data-bom\n\t\t\t\t${spring-data.version}\n\t\t\t\timport\n\t\t\t\tpom\n\t\t\t\n\t\t\t\n\t\t\t\torg.springframework.session\n\t\t\t\tspring-session-bom\n\t\t\t\t${spring-session.version}\n\t\t\t\tpom\n\t\t\t\timport\n\t\t\t\n\t\t\n\t\n\n\t\n\t\t\n\t\t\torg.apache.tomcat\n\t\t\ttomcat-servlet-api\n\t\t\t${tomcat.version}\n\t\t\tprovided\n\t\t\n\t\t\n\t\t\torg.apache.tomcat\n\t\t\ttomcat-jasper-el\n\t\t\t${tomcat.version}\n\t\t\tprovided\n\t\t\n\n\t\t\n\t\t\torg.apache.taglibs\n\t\t\ttaglibs-standard-jstlel\n\t\t\t${taglibs-standard.version}\n\t\t\n\t\t\n\t\t\n\t\t\tcom.fasterxml.jackson.core\n\t\t\tjackson-core\n\t\t\n\t\t\n\t\t\tcom.fasterxml.jackson.core\n\t\t\tjackson-databind\n\t\t\n\t\t\n\t\t\tcom.jayway.jsonpath\n\t\t\tjson-path\n\t\t\t${json-path.version}\n\t\t\ttest\n\t\t\n\t\t\n\t\t\n\t\t\torg.springframework.data\n\t\t\tspring-data-jpa\n\t\t\n\n\t\t\n\t\t\torg.springframework\n\t\t\tspring-jdbc\n\t\t\t${spring-framework.version}\n\t\t\n\t\t\n\t\t\torg.springframework\n\t\t\tspring-webmvc\n\t\t\t${spring-framework.version}\n\t\t\n\t\t\n\t\t\torg.springframework.session\n\t\t\tspring-session-core\n\t\t\n\t\t\n\t\t\torg.springframework.session\n\t\t\tspring-session-hazelcast\n\t\t\n\t\t\n\t\t\n\t\t\torg.springframework\n\t\t\tspring-context-support\n\t\t\t${spring-framework.version}\n\t\t\n\t\t\n\t\t\torg.springframework\n\t\t\tspring-oxm\n\t\t\t${spring-framework.version}\n\t\t\n\n\t\t\n\t\t\torg.aspectj\n\t\t\taspectjrt\n\t\t\t${aspectj.version}\n\t\t\n\t\t\n\t\t\torg.aspectj\n\t\t\taspectjweaver\n\t\t\t${aspectj.version}\n\t\t\truntime\n\t\t\n\n\t\t\n\t\t\n\t\t\torg.apache.tomcat\n\t\t\ttomcat-jdbc\n\t\t\t${tomcat.version}\n\t\t\n\n\t\t\n\t\t\n\t\t\tcom.hazelcast\n\t\t\thazelcast\n\t\t\t${hazelcast.version}\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\torg.slf4j\n\t\t\tslf4j-api\n\t\t\t${slf4j.version}\n\t\t\n\t\t\n\t\t\tch.qos.logback\n\t\t\tlogback-classic\n\t\t\t${logback.version}\n\t\t\truntime\n\t\t\n\n\t\t\n\t\t\n\t\t\torg.hibernate\n\t\t\thibernate-entitymanager\n\t\t\t${hibernate.version}\n\t\t\n\t\t\n\t\t\torg.hibernate.validator\n\t\t\thibernate-validator\n\t\t\t${hibernate-validator.version}\n\t\t\n\t\t\n\t\t\torg.hibernate\n\t\t\thibernate-ehcache\n\t\t\t${hibernate.version}\n\t\t\n\n\n\t\t\n\t\t\n\t\t\torg.webjars\n\t\t\tjquery\n\t\t\t${webjars-jquery.version}\n\t\t\n\t\t\n\t\t\torg.webjars\n\t\t\tjquery-ui\n\t\t\t${webjars-jquery-ui.version}\n\t\t\n\t\t\n\t\t\torg.webjars\n\t\t\tbootstrap\n\t\t\t${webjars-bootstrap.version}\n\t\t\n\n\t\t\n\t\t\n\t\t\torg.springframework\n\t\t\tspring-test\n\t\t\t${spring-framework.version}\n\t\t\ttest\n\t\t\n\t\t\n\t\t\torg.junit.jupiter\n\t\t\tjunit-jupiter-engine\n\t\t\t${junit-jupiter.version}\n\t\t\n\t\t\n\t\t\torg.assertj\n\t\t\tassertj-core\n\t\t\t${assertj.version}\n\t\t\ttest\n\t\t\n\t\t\n\t\t\torg.mockito\n\t\t\tmockito-core\n\t\t\t${mockito.version}\n\t\t\ttest\n\t\t\n\t\t\n\t\t\torg.mockito\n\t\t\tmockito-junit-jupiter\n\t\t\t${mockito.version}\n\t\t\n\t\t\n\t\t\torg.hamcrest\n\t\t\thamcrest\n\t\t\t${hamcrest.version}\n\t\t\ttest\n\t\t\n\n\t\t\n\t\t\n\t\t\tjavax.xml.bind\n\t\t\tjaxb-api\n\t\t\t${jaxb-api.version}\n\t\t\n\t\t\n\t\t\torg.glassfish.jaxb\n\t\t\tjaxb-runtime\n\t\t\t${jaxb-runtime.version}\n\t\t\n\t\t\n\t\t\tjavax.activation\n\t\t\tjavax.activation-api\n\t\t\t${javax-activation.version}\n\t\t\n\t\t\n\t\t\tjavax.annotation\n\t\t\tjavax.annotation-api\n\t\t\t${javax-annotation.version}\n\t\t\n\n\t\n\n\t\n\t\n\t\tinstall\n\t\tpetclinic\n\t\t\n\t\t\t\n\t\t\t\t${basedir}/src/main/resources\n\t\t\t\ttrue\n\t\t\t\n\t\t\n\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t${project.basedir}/src/test/java\n\t\t\t\n\t\t\t\n\t\t\t\t${project.basedir}/src/test/resources\n\t\t\t\n\t\t\n\t\t\n\t\t\t\n\t\t\t\torg.apache.maven.plugins\n\t\t\t\tmaven-compiler-plugin\n\t\t\t\t${maven-compiler-plugin.version}\n\t\t\t\n\n\t\t\t\n\t\t\t\torg.apache.maven.plugins\n\t\t\t\tmaven-surefire-plugin\n\t\t\t\t${maven-surefire-plugin.version}\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t**/*Tests.java\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\n\t\t\t\n\t\t\t\torg.apache.maven.plugins\n\t\t\t\tmaven-war-plugin\n\t\t\t\t${maven-war-plugin.version}\n\t\t\t\t\n\t\t\t\t\tfalse\n\t\t\t\t\n\t\t\t\n\n\t\t\t\n\t\t\t\torg.apache.maven.plugins\n\t\t\t\tmaven-eclipse-plugin\n\t\t\t\t${maven-eclipse-plugin.version}\n\t\t\t\t\n\t\t\t\t\ttrue\n\t\t\t\t\ttrue\n\t\t\t\t\t2.0\n\t\t\t\t\t\n\t\t\t\t\t\t**/*.*\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\torg.springframework.ide.eclipse.core.springbuilder\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\torg.eclipse.m2e.core.maven2Builder\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\torg.eclipse.jdt.core.javanature\n\t\t\t\t\t\t\n\t\t\t\t\t\t\torg.springframework.ide.eclipse.core.springnature\n\t\t\t\t\t\torg.eclipse.m2e.core.maven2Nature\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\n\t\t\t\n\t\t\t\torg.apache.maven.plugins\n\t\t\t\tmaven-assembly-plugin\n\t\t\t\t${maven-assembly-plugin.version}\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tjar-with-dependencies\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\n\t\t\t\n\t\t\t\torg.jacoco\n\t\t\t\tjacoco-maven-plugin\n\t\t\t\t${jacoco-maven-plugin}\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tprepare-agent\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\treport\n\t\t\t\t\t\tprepare-package\n\t\t\t\t\t\t\n\t\t\t\t\t\t\treport\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\n\t\t\t\n\t\t\t\n\t\t\t\torg.apache.maven.plugins\n\t\t\t\tmaven-resources-plugin\n\t\t\t\t${maven-resources-plugin.version}\n\t\t\t\t\n\t\t\t\t\tUTF-8\n\t\t\t\t\n\t\t\t\n\n\t\t\t\n\t\t\t\tro.isdc.wro4j\n\t\t\t\twro4j-maven-plugin\n\t\t\t\t${wro4j.version}\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tgenerate-resources\n\t\t\t\t\t\t\n\t\t\t\t\t\t\trun\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tro.isdc.wro.maven.plugin.manager.factory.ConfigurableWroManagerFactory\n\t\t\t\t\t\n\t\t\t\t\t\t${project.build.directory}/petclinic/resources/css\n\t\t\t\t\t${basedir}/src/main/wro/wro.xml\n\t\t\t\t\t${basedir}/src/main/wro/wro.properties\n\t\t\t\t\t${basedir}/src/main/webapp/resources/less\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\torg.webjars\n\t\t\t\t\t\tbootstrap\n\t\t\t\t\t\t${webjars-bootstrap.version}\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\torg.mockito\n\t\t\t\t\t\tmockito-core\n\t\t\t\t\t\t${mockito.version}\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\n\t\t\t\n\t\t\t\torg.eclipse.jetty\n\t\t\t\tjetty-maven-plugin\n\t\t\t\t${jetty-maven-plugin.version}\n\t\t\t\n\n\t\t\t\n\t\t\t\tcom.google.cloud.tools\n\t\t\t\tjib-maven-plugin\n\t\t\t\t${docker.jib-maven-plugin.version}\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tdocker.io/${docker.image.prefix}/${project.artifactId}\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t${project.version}\n\t\t\t\t\t\t\tlatest\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\n\t\t\n\t\n\n\t\n\t\t\n\t\t\tH2\n\t\t\t\n\t\t\t\ttrue\n\t\t\t\n\t\t\t\n\t\t\t\th2\n\t\t\t\tH2\n\t\t\t\torg.h2.Driver\n\t\t\t\tjdbc:h2:mem:petclinic\n\t\t\t\tsa\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\tcom.h2database\n\t\t\t\t\th2\n\t\t\t\t\t${h2database.version}\n\t\t\t\t\truntime\n\t\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\tHSQLDB\n\t\t\t\n\t\t\t\thsqldb\n\t\t\t\tHSQL\n\t\t\t\torg.hsqldb.jdbcDriver\n\t\t\t\tjdbc:hsqldb:mem:petclinic\n\t\t\t\tsa\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\torg.hsqldb\n\t\t\t\t\thsqldb\n\t\t\t\t\t${hsqldb.version}\n\t\t\t\t\truntime\n\t\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\tMySQL\n\t\t\t\n\t\t\t\tmysql\n\t\t\t\tMYSQL\n\t\t\t\tcom.mysql.cj.jdbc.Driver\n\t\t\t\tjdbc:mysql://localhost:3306/petclinic?useUnicode=true\n\t\t\t\tpetclinic\n\t\t\t\tpetclinic\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\tmysql\n\t\t\t\t\tmysql-connector-java\n\t\t\t\t\t${mysql-driver.version}\n\t\t\t\t\truntime\n\t\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\tPostgreSQL\n\t\t\t\n\t\t\t\tpostgresql\n\t\t\t\tPOSTGRESQL\n\t\t\t\torg.postgresql.Driver\n\t\t\t\tjdbc:postgresql://localhost:5432/petclinic\n\t\t\t\tpostgres\n\t\t\t\tpetclinic\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\torg.postgresql\n\t\t\t\t\tpostgresql\n\t\t\t\t\t${postgresql-driver.version}\n\t\t\t\t\truntime\n\t\t\t\t\n\t\t\t\n\t\t\n\t\n\n\t\n\t\t\n\t\t\trepository.spring.milestone\n\t\t\tSpring
-            Milestone Repository\n\t\t\thttps://repo.spring.io/milestone\n\t\t\n\t\n\n\n"
-          matchingXML: "<?xml version=\"1.0\" encoding=\"UTF-8\"?><project xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
-            xmlns=\"http://maven.apache.org/POM/4.0.0\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0
-            http://maven.apache.org/maven-v4_0_0.xsd\"><modelVersion>4.0.0</modelVersion><groupId>org.springframework.samples</groupId><artifactId>spring-framework-petclinic</artifactId><version>5.3.13</version><name>Spring
-            Framework Petclinic</name><packaging>war</packaging><description>A Spring
-            Framework application based on JSP, Spring MVC, Spring\n\t\tData JPA,
-            Hibernate and JDBC</description><url>https://spring-petclinic.github.io/</url><properties><!--
-            Generic properties --><java.version>1.8</java.version><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding><maven.compiler.source>${java.version}</maven.compiler.source><maven.compiler.target>${java.version}</maven.compiler.target><!--
-            Spring --><!-- For framework compatibility, refer to the Spring Boot Dependencies\n\t\tBOM
-            --><!--\n\t\thttps://github.com/spring-projects/spring-boot/blob/master/spring-boot-project/spring-boot-dependencies/build.gradle
-            --><spring-framework.version>5.3.12</spring-framework.version><!-- Web
-            dependencies --><!-- Version update should also be done in wro.xml, petclinic.less
-            and\n\t\tstatic resources: htmlHeader.tag and footer.tag--><webjars-bootstrap.version>3.3.6</webjars-bootstrap.version><webjars-jquery-ui.version>1.12.1</webjars-jquery-ui.version><webjars-jquery.version>3.5.1</webjars-jquery.version><wro4j.version>1.8.0</wro4j.version><!--
-            wro4j 1.0.0 requires Java 9 --><!-- Java EE / Java SE dependencies --><tomcat.version>9.0.46</tomcat.version><jaxb-api.version>2.3.1</jaxb-api.version><jaxb-runtime.version>2.3.4</jaxb-runtime.version><javax-activation.version>1.2.0</javax-activation.version><servlet-api.version>4.0.4</servlet-api.version><taglibs-standard.version>1.2.5</taglibs-standard.version><javax-annotation.version>1.3.2</javax-annotation.version><!--
-            Persistence --><spring-data.version>2021.1.0-RC1</spring-data.version><hibernate.version>5.6.0.Final</hibernate.version><hibernate-validator.version>6.2.0.Final</hibernate-validator.version><hsqldb.version>2.5.2</hsqldb.version><h2database.version>1.4.200</h2database.version><!--
-            Session Management --><spring-session.version>2021.0.2</spring-session.version><hazelcast.version>4.2.2</hazelcast.version><!--
-            Logging --><slf4j.version>1.7.32</slf4j.version><logback.version>1.2.6</logback.version><!--
-            Test --><assertj.version>3.21.0</assertj.version><json-path.version>2.6.0</json-path.version><mockito.version>4.0.0</mockito.version><hamcrest.version>2.2</hamcrest.version><junit-jupiter.version>5.8.1</junit-jupiter.version><!--
-            JDBC Drivers --><mysql-driver.version>8.0.19</mysql-driver.version><postgresql-driver.version>9.4.1211.jre7</postgresql-driver.version><!--
-            Others --><jackson.version>2.12.4</jackson.version><aspectj.version>1.9.7</aspectj.version><!--
-            Maven plugins --><jetty-maven-plugin.version>9.4.43.v20210629</jetty-maven-plugin.version><maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version><maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version><maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version><maven-resources-plugin.version>3.1.0</maven-resources-plugin.version><maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version><maven-war-plugin.version>3.3.1</maven-war-plugin.version><jacoco-maven-plugin>0.8.6</jacoco-maven-plugin><!--
-            Docker image --><docker.jib-maven-plugin.version>2.6.0</docker.jib-maven-plugin.version><docker.image.prefix>springcommunity</docker.image.prefix></properties><dependencyManagement><dependencies><dependency><groupId>com.fasterxml.jackson</groupId><artifactId>jackson-bom</artifactId><version>${jackson.version}</version><scope>import</scope><type>pom</type></dependency><dependency><groupId>org.springframework.data</groupId><artifactId>spring-data-bom</artifactId><version>${spring-data.version}</version><scope>import</scope><type>pom</type></dependency><dependency><groupId>org.springframework.session</groupId><artifactId>spring-session-bom</artifactId><version>${spring-session.version}</version><type>pom</type><scope>import</scope></dependency></dependencies></dependencyManagement><dependencies><dependency><groupId>org.apache.tomcat</groupId><artifactId>tomcat-servlet-api</artifactId><version>${tomcat.version}</version><scope>provided</scope></dependency><dependency><groupId>org.apache.tomcat</groupId><artifactId>tomcat-jasper-el</artifactId><version>${tomcat.version}</version><scope>provided</scope></dependency><dependency><groupId>org.apache.taglibs</groupId><artifactId>taglibs-standard-jstlel</artifactId><version>${taglibs-standard.version}</version></dependency><!--
-            \ JSon --><dependency><groupId>com.fasterxml.jackson.core</groupId><artifactId>jackson-core</artifactId></dependency><dependency><groupId>com.fasterxml.jackson.core</groupId><artifactId>jackson-databind</artifactId></dependency><dependency><groupId>com.jayway.jsonpath</groupId><artifactId>json-path</artifactId><version>${json-path.version}</version><scope>test</scope></dependency><!--
-            SPRING, SPRING, SPRINGITY SPRING --><dependency><groupId>org.springframework.data</groupId><artifactId>spring-data-jpa</artifactId></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-jdbc</artifactId><version>${spring-framework.version}</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-webmvc</artifactId><version>${spring-framework.version}</version></dependency><dependency><groupId>org.springframework.session</groupId><artifactId>spring-session-core</artifactId></dependency><dependency><groupId>org.springframework.session</groupId><artifactId>spring-session-hazelcast</artifactId></dependency><!--
-            used for EhCacheCacheManager --><dependency><groupId>org.springframework</groupId><artifactId>spring-context-support</artifactId><version>${spring-framework.version}</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-oxm</artifactId><version>${spring-framework.version}</version></dependency><dependency><groupId>org.aspectj</groupId><artifactId>aspectjrt</artifactId><version>${aspectj.version}</version></dependency><dependency><groupId>org.aspectj</groupId><artifactId>aspectjweaver</artifactId><version>${aspectj.version}</version><scope>runtime</scope></dependency><!--
-            Database connection pool\n        See here for more details on\n\t\tcommons-dbcp
-            versus tomcat-jdbc:\n\t\thttp://blog.ippon.fr/2013/03/13/improving-the-performance-of-the-spring-petclinic-sample-application-part-3-of-5/\n
-            \   --><dependency><groupId>org.apache.tomcat</groupId><artifactId>tomcat-jdbc</artifactId><version>${tomcat.version}</version></dependency><!--
-            Session caching --><dependency><groupId>com.hazelcast</groupId><artifactId>hazelcast</artifactId><version>${hazelcast.version}</version></dependency><!--
-            Logging with SLF4J & LogBack --><dependency><groupId>org.slf4j</groupId><artifactId>slf4j-api</artifactId><version>${slf4j.version}</version></dependency><dependency><groupId>ch.qos.logback</groupId><artifactId>logback-classic</artifactId><version>${logback.version}</version><scope>runtime</scope></dependency><!--
-            HIBERNATE --><dependency><groupId>org.hibernate</groupId><artifactId>hibernate-entitymanager</artifactId><version>${hibernate.version}</version></dependency><dependency><groupId>org.hibernate.validator</groupId><artifactId>hibernate-validator</artifactId><version>${hibernate-validator.version}</version></dependency><dependency><groupId>org.hibernate</groupId><artifactId>hibernate-ehcache</artifactId><version>${hibernate.version}</version></dependency><!--
-            Webjars --><dependency><groupId>org.webjars</groupId><artifactId>jquery</artifactId><version>${webjars-jquery.version}</version></dependency><dependency><groupId>org.webjars</groupId><artifactId>jquery-ui</artifactId><version>${webjars-jquery-ui.version}</version></dependency><dependency><groupId>org.webjars</groupId><artifactId>bootstrap</artifactId><version>${webjars-bootstrap.version}</version></dependency><!--
-            Test Artifacts --><dependency><groupId>org.springframework</groupId><artifactId>spring-test</artifactId><version>${spring-framework.version}</version><scope>test</scope></dependency><dependency><groupId>org.junit.jupiter</groupId><artifactId>junit-jupiter-engine</artifactId><version>${junit-jupiter.version}</version></dependency><dependency><groupId>org.assertj</groupId><artifactId>assertj-core</artifactId><version>${assertj.version}</version><scope>test</scope></dependency><dependency><groupId>org.mockito</groupId><artifactId>mockito-core</artifactId><version>${mockito.version}</version><scope>test</scope></dependency><dependency><groupId>org.mockito</groupId><artifactId>mockito-junit-jupiter</artifactId><version>${mockito.version}</version></dependency><dependency><groupId>org.hamcrest</groupId><artifactId>hamcrest</artifactId><version>${hamcrest.version}</version><scope>test</scope></dependency><!--
-            JAXB and Activation added for Java 9 compatibility.\n             The\n\t\tJAXB
-            API is considered to be Java EE API and therefore is\n             no\n\t\tlonger
-            contained on the default class path in Java SE 9 --><dependency><groupId>javax.xml.bind</groupId><artifactId>jaxb-api</artifactId><version>${jaxb-api.version}</version></dependency><dependency><groupId>org.glassfish.jaxb</groupId><artifactId>jaxb-runtime</artifactId><version>${jaxb-runtime.version}</version></dependency><dependency><groupId>javax.activation</groupId><artifactId>javax.activation-api</artifactId><version>${javax-activation.version}</version></dependency><dependency><groupId>javax.annotation</groupId><artifactId>javax.annotation-api</artifactId><version>${javax-annotation.version}</version></dependency></dependencies><!--
-            Maven plugin versions are mentioned in order to guarantee the build\n\treproducibility
-            in the long term --><build><defaultGoal>install</defaultGoal><finalName>petclinic</finalName><resources><resource><directory>${basedir}/src/main/resources</directory><filtering>true</filtering></resource></resources><testResources><testResource><!--
-            declared explicitly so Spring config files can be placed\n\t\t\t\tnext
-            to their corresponding JUnit test class  --><directory>${project.basedir}/src/test/java</directory></testResource><testResource><directory>${project.basedir}/src/test/resources</directory></testResource></testResources><plugins><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>${maven-compiler-plugin.version}</version></plugin><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-surefire-plugin</artifactId><version>${maven-surefire-plugin.version}</version><configuration><includes><include>**/*Tests.java</include></includes></configuration></plugin><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-war-plugin</artifactId><version>${maven-war-plugin.version}</version><configuration><failOnMissingWebXml>false</failOnMissingWebXml></configuration></plugin><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-eclipse-plugin</artifactId><version>${maven-eclipse-plugin.version}</version><configuration><downloadSources>true</downloadSources><downloadJavadocs>true</downloadJavadocs><wtpversion>2.0</wtpversion><sourceIncludes><sourceInclude>**/*.*</sourceInclude></sourceIncludes><additionalBuildcommands><buildCommand><name>org.springframework.ide.eclipse.core.springbuilder</name></buildCommand><buildCommand><name>org.eclipse.m2e.core.maven2Builder</name></buildCommand></additionalBuildcommands><additionalProjectnatures><projectnature>org.eclipse.jdt.core.javanature</projectnature><projectnature>org.springframework.ide.eclipse.core.springnature</projectnature><projectnature>org.eclipse.m2e.core.maven2Nature</projectnature></additionalProjectnatures></configuration></plugin><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-assembly-plugin</artifactId><version>${maven-assembly-plugin.version}</version><configuration><descriptorRefs><descriptorRef>jar-with-dependencies</descriptorRef></descriptorRefs></configuration></plugin><plugin><groupId>org.jacoco</groupId><artifactId>jacoco-maven-plugin</artifactId><version>${jacoco-maven-plugin}</version><executions><execution><goals><goal>prepare-agent</goal></goals></execution><execution><id>report</id><phase>prepare-package</phase><goals><goal>report</goal></goals></execution></executions></plugin><!--Specify
-            the encoding for copying resources--><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-resources-plugin</artifactId><version>${maven-resources-plugin.version}</version><configuration><encoding>UTF-8</encoding></configuration></plugin><plugin><groupId>ro.isdc.wro4j</groupId><artifactId>wro4j-maven-plugin</artifactId><version>${wro4j.version}</version><executions><execution><phase>generate-resources</phase><goals><goal>run</goal></goals></execution></executions><configuration><wroManagerFactory>ro.isdc.wro.maven.plugin.manager.factory.ConfigurableWroManagerFactory</wroManagerFactory><cssDestinationFolder>${project.build.directory}/petclinic/resources/css</cssDestinationFolder><wroFile>${basedir}/src/main/wro/wro.xml</wroFile><extraConfigFile>${basedir}/src/main/wro/wro.properties</extraConfigFile><contextFolder>${basedir}/src/main/webapp/resources/less</contextFolder></configuration><dependencies><dependency><groupId>org.webjars</groupId><artifactId>bootstrap</artifactId><version>${webjars-bootstrap.version}</version></dependency><!--
-            Required for Java 9 and above --><dependency><groupId>org.mockito</groupId><artifactId>mockito-core</artifactId><version>${mockito.version}</version></dependency></dependencies></plugin><plugin><groupId>org.eclipse.jetty</groupId><artifactId>jetty-maven-plugin</artifactId><version>${jetty-maven-plugin.version}</version></plugin><plugin><groupId>com.google.cloud.tools</groupId><artifactId>jib-maven-plugin</artifactId><version>${docker.jib-maven-plugin.version}</version><configuration><to><image>docker.io/${docker.image.prefix}/${project.artifactId}</image><tags><tag>${project.version}</tag><tag>latest</tag></tags></to></configuration></plugin></plugins></build><profiles><profile><id>H2</id><activation><activeByDefault>true</activeByDefault></activation><properties><db.script>h2</db.script><jpa.database>H2</jpa.database><jdbc.driverClassName>org.h2.Driver</jdbc.driverClassName><jdbc.url>jdbc:h2:mem:petclinic</jdbc.url><jdbc.username>sa</jdbc.username><jdbc.password></jdbc.password></properties><dependencies><dependency><groupId>com.h2database</groupId><artifactId>h2</artifactId><version>${h2database.version}</version><scope>runtime</scope></dependency></dependencies></profile><profile><id>HSQLDB</id><properties><db.script>hsqldb</db.script><jpa.database>HSQL</jpa.database><jdbc.driverClassName>org.hsqldb.jdbcDriver</jdbc.driverClassName><jdbc.url>jdbc:hsqldb:mem:petclinic</jdbc.url><jdbc.username>sa</jdbc.username><jdbc.password></jdbc.password></properties><dependencies><dependency><groupId>org.hsqldb</groupId><artifactId>hsqldb</artifactId><version>${hsqldb.version}</version><scope>runtime</scope></dependency></dependencies></profile><profile><id>MySQL</id><properties><db.script>mysql</db.script><jpa.database>MYSQL</jpa.database><jdbc.driverClassName>com.mysql.cj.jdbc.Driver</jdbc.driverClassName><jdbc.url>jdbc:mysql://localhost:3306/petclinic?useUnicode=true</jdbc.url><jdbc.username>petclinic</jdbc.username><jdbc.password>petclinic</jdbc.password></properties><dependencies><dependency><groupId>mysql</groupId><artifactId>mysql-connector-java</artifactId><version>${mysql-driver.version}</version><scope>runtime</scope></dependency></dependencies></profile><profile><id>PostgreSQL</id><properties><db.script>postgresql</db.script><jpa.database>POSTGRESQL</jpa.database><jdbc.driverClassName>org.postgresql.Driver</jdbc.driverClassName><jdbc.url>jdbc:postgresql://localhost:5432/petclinic</jdbc.url><jdbc.username>postgres</jdbc.username><jdbc.password>petclinic</jdbc.password></properties><dependencies><dependency><groupId>org.postgresql</groupId><artifactId>postgresql</artifactId><version>${postgresql-driver.version}</version><scope>runtime</scope></dependency></dependencies></profile></profiles><repositories><repository><id>repository.spring.milestone</id><name>Spring
-            Milestone Repository</name><url>https://repo.spring.io/milestone</url></repository></repositories></project>"
-      - uri: file:///source/src/main/resources/cache/ehcache.xml
-        message: ""
-        variables:
-          data: ""
-          innerText: "\n    \n\n    \n    \n\n\n"
-          matchingXML: <?xml version="1.0"?><ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:noNamespaceSchemaLocation="ehcache.xsd" updateCheck="false"><diskStore
-            path="java.io.tmpdir"></diskStore><!-- objects are evicted from the cache
-            every 60 seconds --><cache name="vets" timeToLiveSeconds="60" maxElementsInMemory="100"
-            eternal="false" overflowToDisk="false" maxElementsOnDisk="10000000" diskPersistent="false"
-            diskExpiryThreadIntervalSeconds="1" memoryStoreEvictionPolicy="LRU"></cache></ehcache>
-      - uri: file:///source/src/main/resources/logback.xml
-        message: ""
-        codeSnip: 2  <!DOCTYPE xml>
-        lineNumber: 1
-        variables:
-          data: ""
-          innerText: "\n\n\n\n\n    \n        true\n    \n    \n    \n        \n            %-5level
-            %logger{0} - %msg%n\n        \n    \n\n    \n    \n\n    \n        \n
-            \   \n\n"
-          matchingXML: <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE xml><configuration
-            scan="true" scanPeriod="30 seconds"><contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator"><resetJUL>true</resetJUL></contextListener><appender
-            name="console" class="ch.qos.logback.core.ConsoleAppender"><encoder><pattern>%-5level
-            %logger{0} - %msg%n</pattern></encoder></appender><!--<logger name="org.hibernate"
-            level="debug"/> --><logger name="org.springframework.samples.petclinic"
-            level="debug"></logger><root level="debug"><appender-ref ref="console"></appender-ref></root></configuration>
-      - uri: file:///source/src/main/webapp/WEB-INF/jetty-web.xml
-        message: ""
-        codeSnip: 7  </Configure>
-        lineNumber: 6
-        variables:
-          data: ""
-          innerText: "\n\n\n    \n    \n    true\n\n"
-          matchingXML: <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE Configure PUBLIC
-            "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure.dtd"><Configure
-            class="org.eclipse.jetty.webapp.WebAppContext"><!-- Fix Jetty 9 issue
-            --><!-- http://stackoverflow.com/questions/32643530/classpath-issue-between-jetty-maven-plugin-and-tomcat-jdbc-8-0-9-leading-to-ser
-            --><Set name="parentLoaderPriority">true</Set></Configure>
-      - uri: file:///source/src/main/wro/wro.xml
-        message: ""
-        codeSnip: 4      <css>/petclinic.less</css>
-        lineNumber: 3
-        variables:
-          data: ""
-          innerText: "\n  \n    classpath:META-INF/resources/webjars/bootstrap/3.3.6/less/bootstrap.less\n
-            \   /petclinic.less\n   \n\n"
-          matchingXML: <?xml version="1.0"?><groups xmlns="http://www.isdc.ro/wro"><group
-            name="petclinic"><css>classpath:META-INF/resources/webjars/bootstrap/3.3.6/less/bootstrap.less</css><css>/petclinic.less</css></group></groups>
   unmatched:
   - discover-license
   - discover-manifest-file
   - hardcoded-ip-address
+  - windup-discover-ejb-configuration
   - windup-discover-jpa-configuration
   - windup-discover-spring-configuration
   - windup-discover-web-configuration
@@ -397,11 +288,9 @@
   description: This ruleset provides analysis of logging libraries.
   tags:
   - Bean Validation
-  - Bean=EJB XML
   - Caching=Hazelcast
   - Common Annotations
   - Connect=Common Annotations
-  - Connect=EJB XML
   - Connect=Servlet
   - Embedded framework - Spring DI
   - Embedded framework - Spring MVC
@@ -421,7 +310,6 @@
   - JSP
   - Java EE=Bean Validation
   - Java EE=Common Annotations
-  - Java EE=EJB XML
   - Java EE=JPA named queries
   - Java EE=JSP Page
   - Java EE=Servlet
@@ -793,20 +681,6 @@
         variables:
           name: org.springframework.spring-webmvc
           version: 5.3.12
-    non-xml-technology-usage-02000:
-      description: Non-XML EJB
-      labels:
-      - discovery
-      - konveyor.io/include=always
-      - tag=Bean=EJB XML
-      - tag=Connect=EJB XML
-      - tag=Java EE=EJB XML
-      incidents:
-      - uri: ""
-        message: ""
-        variables:
-          tags:
-          - EJB XML
     non-xml-technology-usage-20000:
       description: Properties
       labels:
@@ -1513,6 +1387,7 @@
   - mvc-05800
   - mvc-05900
   - mvc-06000
+  - non-xml-technology-usage-02000
   - non-xml-technology-usage-05000
   - non-xml-technology-usage-06000
   - non-xml-technology-usage-12000

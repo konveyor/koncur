@@ -1,7 +1,12 @@
-name: Koncur Repo CI testing
+name: Koncur Repo premerge testing
 
+# This should run when we accept a PR to be mergable
+# This will allow us to safely use the maven credentials
 on:
-  pull_request:
+  push:
+  pull_request_target:
+    types:
+      - auto_merge_enabled
     branches:
       - "main"
 
@@ -13,14 +18,12 @@ jobs:
         # Using macos to test amd64 and ubuntu to test arm
         # This is because you can't use container's on mac os arm runners.
         os: [macos-15-intel, ubuntu-24.04-arm, windows-latest]
-        exclude:
-          - os: macos-15-intel
-          - os: windows-latest
     secrets: inherit
     uses: ./.github/workflows/kantra.yaml
     with:
       os: ${{ matrix.os }}
-
+      bot_id: ${{ vars.KONVEYOR_BOT_ID }}
+      skip_maven: false
 
 
 #  run-tackle2-hub-test:
