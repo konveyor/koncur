@@ -16,8 +16,10 @@
         codeSnip: '11  '
         lineNumber: 10
         variables:
-          matchingText: ""
+          matchingText: http://localhost:8080/services
       effort: 7
+  errors:
+    java-rmi-00000: unable to ask for Konveyor rule entry
   unmatched:
   - embedded-cache-libraries-01000
   - embedded-cache-libraries-02000
@@ -36,7 +38,6 @@
   - embedded-cache-libraries-15000
   - embedded-cache-libraries-16000
   - java-corba-00000
-  - java-rmi-00000
   - java-rmi-00000
   - java-rmi-00001
   - java-rpc-00000
@@ -63,7 +64,8 @@
 - name: discovery-rules
   tags:
   - Java Source
-  - License=
+  - License=Apache License 2.0
+  - License=GNU GPL
   - Maven XML
   - Properties
   insights:
@@ -131,31 +133,32 @@
       - discovery
       - konveyor.io/include=always
       - konveyor.io/target=discovery
-      - tag=License=
+      - tag=License=Apache License 2.0
+      - tag=License=GNU GPL
       incidents:
       - uri: file:///source/src/main/resources/META-INF/resources/bower_components/angular-patternfly/LICENSE.txt
         message: ""
         codeSnip: '3  '
         lineNumber: 2
         variables:
-          matchingText: ""
+          matchingText: Apache License 2.0
       - uri: file:///source/src/main/resources/META-INF/resources/bower_components/isotope/README.mdown
         message: ""
         codeSnip: '39  '
         lineNumber: 38
         variables:
-          matchingText: ""
+          matchingText: GNU GPL
       - uri: file:///source/src/main/resources/META-INF/resources/bower_components/patternfly/LICENSE.txt
         message: ""
         codeSnip: '3  '
         lineNumber: 2
         variables:
-          matchingText: ""
+          matchingText: Apache License 2.0
       - uri: file:///source/src/main/resources/META-INF/resources/bower_components/patternfly/README.md
         message: ""
         lineNumber: 204
         variables:
-          matchingText: ""
+          matchingText: Apache License 2.0
     discover-maven-xml:
       description: Maven XML file
       labels:

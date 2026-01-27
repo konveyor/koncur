@@ -245,7 +245,7 @@
         codeSnip: 86              URL url = new URL(fileURL);
         lineNumber: 85
         variables:
-          matchingText: ""
+          matchingText: http://localhost:9080/daytrader/WAS_V7_64-bit_performance.pdf";
       effort: 7
     session-00001:
       description: HTTP Session data storage
@@ -1175,7 +1175,20 @@
             All EJB 3.1 properties and attributes have been applied to the various
             \r\n        DayTrader entity, session and message driven beans using annotations.
             The \r\n        inline annotations can be overriden by modifing this file.
-            --><assembly-descriptor><security-role><role-name>grp1</role-name></security-role><security-role><role-name>grp2</role-name></security-role><security-role><role-name>grp3</role-name></security-role><security-role><role-name>grp4</role-name></security-role><security-role><role-name>grp5</role-name></security-role><method-permission><role-name>grp1</role-name><role-name>grp2</role-name><role-name>grp3</role-name><role-name>grp4</role-name><role-name>grp5</role-name><method><ejb-name>DirectSLSBBean</ejb-name><method-name>buy</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>double</method-param><method-param>int</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>cancelOrder</method-name><method-params><method-param>java.lang.Integer</method-param><method-param>boolean</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>completeOrder</method-name><method-params><method-param>java.lang.Integer</method-param><method-param>boolean</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>createQuote</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>java.math.BigDecimal</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>getAccountData</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>getAccountProfileData</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>getAllQuotes</method-name><method-params><method-param></method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>getClosedOrders</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>getHolding</method-name><method-params><method-param>java.lang.Integer</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>getHoldings</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>getMarketSummary</method-name><method-params><method-param></method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>getOrders</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>getQuote</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>login</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>logout</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>orderCompleted</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.lang.Integer</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>queueOrder</method-name><method-params><method-param>java.lang.Integer</method-param><method-param>boolean</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>register</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>java.math.BigDecimal</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>sell</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.lang.Integer</method-param><method-param>int</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>updateAccountProfile</method-name><method-params><method-param>com.ibm.websphere.samples.daytrader.AccountProfileDataBean</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>updateQuotePriceVolume</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.math.BigDecimal</method-param><method-param>double</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>buy</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>double</method-param><method-param>int</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>cancelOrder</method-name><method-params><method-param>java.lang.Integer</method-param><method-param>boolean</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>completeOrder</method-name><method-params><method-param>java.lang.Integer</method-param><method-param>boolean</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>createHolding</method-name><method-params><method-param>com.ibm.websphere.samples.daytrader.AccountDataBean</method-param><method-param>com.ibm.websphere.samples.daytrader.QuoteDataBean</method-param><method-param>double</method-param><method-param>java.math.BigDecimal</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>createOrder</method-name><method-params><method-param>com.ibm.websphere.samples.daytrader.AccountDataBean</method-param><method-param>com.ibm.websphere.samples.daytrader.QuoteDataBean</method-param><method-param>com.ibm.websphere.samples.daytrader.HoldingDataBean</method-param><method-param>java.lang.String</method-param><method-param>double</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>createQuote</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>java.math.BigDecimal</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>getAccountData</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>getAccountProfileData</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>getAllQuotes</method-name><method-params><method-param></method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>getClosedOrders</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>getHolding</method-name><method-params><method-param>java.lang.Integer</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>getHoldings</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>getMarketSummary</method-name><method-params><method-param></method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>getOrders</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>getQuote</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>investmentReturn</method-name><method-params><method-param>double</method-param><method-param>double</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>login</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>logout</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>orderCompleted</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.lang.Integer</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>pingTwoPhase</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>publishQuotePriceChange</method-name><method-params><method-param>com.ibm.websphere.samples.daytrader.QuoteDataBean</method-param><method-param>java.math.BigDecimal</method-param><method-param>java.math.BigDecimal</method-param><method-param>double</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>queueOrder</method-name><method-params><method-param>java.lang.Integer</method-param><method-param>boolean</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>register</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>java.math.BigDecimal</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>sell</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.lang.Integer</method-param><method-param>int</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>updateAccountProfile</method-name><method-params><method-param>com.ibm.websphere.samples.daytrader.AccountProfileDataBean</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>updateQuotePriceVolume</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.math.BigDecimal</method-param><method-param>double</method-param></method-params></method></method-permission></assembly-descriptor>"
+            --><assembly-descriptor><security-role><role-name>grp1</role-name></security-role><security-role><role-name>grp2</role-name></security-role><security-role><role-name>grp3</role-name></security-role><security-role><role-name>grp4</role-name></security-role><security-role><role-name>grp5</role-name></security-role><method-permission><role-name>grp1</role-name><role-name>grp2</role-name><role-name>grp3</role-name><role-name>grp4</role-name><role-name>grp5</role-name><method><ejb-name>DirectSLSBBean</ejb-name><method-name>buy</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>double</method-param><method-param>int</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>cancelOrder</method-name><method-params><method-param>java.lang.Integer</method-param><method-param>boolean</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>completeOrder</method-name><method-params><method-param>java.lang.Integer</method-param><method-param>boolean</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>createQuote</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>java.math.BigDecimal</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>getAccountData</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>getAccountProfileData</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>getAllQuotes</method-name><method-params><method-param></method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>getClosedOrders</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>getHolding</method-name><method-params><method-param>java.lang.Integer</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>getHoldings</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>getMarketSummary</method-name><method-params><method-param></method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>getOrders</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>getQuote</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>login</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>logout</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>orderCompleted</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.lang.Integer</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>queueOrder</method-name><method-params><method-param>java.lang.Integer</method-param><method-param>boolean</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>register</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>java.math.BigDecimal</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>sell</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.lang.Integer</method-param><method-param>int</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>updateAccountProfile</method-name><method-params><method-param>\n
+            \                       com.ibm.websphere.samples.daytrader.AccountProfileDataBean\n
+            \                   </method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>updateQuotePriceVolume</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.math.BigDecimal</method-param><method-param>double</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>buy</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>double</method-param><method-param>int</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>cancelOrder</method-name><method-params><method-param>java.lang.Integer</method-param><method-param>boolean</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>completeOrder</method-name><method-params><method-param>java.lang.Integer</method-param><method-param>boolean</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>createHolding</method-name><method-params><method-param>\n
+            \                       com.ibm.websphere.samples.daytrader.AccountDataBean\n
+            \                   </method-param><method-param>\n                        com.ibm.websphere.samples.daytrader.QuoteDataBean\n
+            \                   </method-param><method-param>double</method-param><method-param>java.math.BigDecimal</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>createOrder</method-name><method-params><method-param>\n
+            \                       com.ibm.websphere.samples.daytrader.AccountDataBean\n
+            \                   </method-param><method-param>\n                        com.ibm.websphere.samples.daytrader.QuoteDataBean\n
+            \                   </method-param><method-param>\n                        com.ibm.websphere.samples.daytrader.HoldingDataBean\n
+            \                   </method-param><method-param>java.lang.String</method-param><method-param>double</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>createQuote</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>java.math.BigDecimal</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>getAccountData</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>getAccountProfileData</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>getAllQuotes</method-name><method-params><method-param></method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>getClosedOrders</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>getHolding</method-name><method-params><method-param>java.lang.Integer</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>getHoldings</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>getMarketSummary</method-name><method-params><method-param></method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>getOrders</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>getQuote</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>investmentReturn</method-name><method-params><method-param>double</method-param><method-param>double</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>login</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>logout</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>orderCompleted</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.lang.Integer</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>pingTwoPhase</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>publishQuotePriceChange</method-name><method-params><method-param>\n
+            \                       com.ibm.websphere.samples.daytrader.QuoteDataBean\n
+            \                   </method-param><method-param>java.math.BigDecimal</method-param><method-param>java.math.BigDecimal</method-param><method-param>double</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>queueOrder</method-name><method-params><method-param>java.lang.Integer</method-param><method-param>boolean</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>register</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>java.math.BigDecimal</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>sell</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.lang.Integer</method-param><method-param>int</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>updateAccountProfile</method-name><method-params><method-param>\n
+            \                       com.ibm.websphere.samples.daytrader.AccountProfileDataBean\n
+            \                   </method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>updateQuotePriceVolume</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.math.BigDecimal</method-param><method-param>double</method-param></method-params></method></method-permission></assembly-descriptor>"
     windup-discover-jpa-configuration:
       description: JPA XML Configuration
       labels:
@@ -1308,36 +1321,25 @@
           matchingXML: "<display-name>DayTrader Web</display-name><context-param><param-name>javax.faces.PROJECT_STAGE</param-name><param-value>Production</param-value></context-param><context-param><param-name>javax.faces.STATE_SAVING_METHOD</param-name><param-value>server</param-value></context-param><context-param><param-name>javax.faces.DEFAULT_SUFFIX</param-name><param-value>.xhtml</param-value></context-param><servlet><servlet-name>Faces
             Servlet</servlet-name><servlet-class>javax.faces.webapp.FacesServlet</servlet-class><load-on-startup>-1</load-on-startup><enabled>true</enabled><async-supported>false</async-supported></servlet><servlet-mapping><servlet-name>Faces
             Servlet</servlet-name><url-pattern>*.faces</url-pattern></servlet-mapping><session-config><session-timeout>30</session-timeout></session-config><welcome-file-list><welcome-file>index.html</welcome-file><welcome-file>index.jsp</welcome-file><welcome-file>index.faces</welcome-file></welcome-file-list><error-page><exception-type>java.lang.Exception</exception-type><location>/error.jsp</location></error-page><error-page><error-code>500</error-code><location>/error.jsp</location></error-page><ejb-ref><ejb-ref-name>ejb/TradeSLSBBeanRemote</ejb-ref-name><ejb-ref-type>Session</ejb-ref-type><home></home><remote>com.ibm.websphere.samples.daytrader.ejb3.TradeSLSBRemote</remote><ejb-link>TradeSLSBBean</ejb-link></ejb-ref><ejb-local-ref><ejb-ref-name>ejb/TradeSLSBBean</ejb-ref-name><ejb-ref-type>Session</ejb-ref-type><local>com.ibm.websphere.samples.daytrader.ejb3.TradeSLSBLocal</local><ejb-link>TradeSLSBBean</ejb-link></ejb-local-ref><resource-ref><res-ref-name>jdbc/TradeDataSource</res-ref-name><res-type>javax.sql.DataSource</res-type><res-auth>Container</res-auth><res-sharing-scope>Shareable</res-sharing-scope><lookup-name>jdbc/TradeDataSource</lookup-name></resource-ref><resource-ref><res-ref-name>jms/QueueConnectionFactory</res-ref-name><res-type>javax.jms.QueueConnectionFactory</res-type><res-auth>Application</res-auth><res-sharing-scope>Shareable</res-sharing-scope><lookup-name>jms/QueueConnectionFactory</lookup-name></resource-ref><resource-ref><res-ref-name>jms/TopicConnectionFactory</res-ref-name><res-type>javax.jms.TopicConnectionFactory</res-type><res-auth>Application</res-auth><res-sharing-scope>Shareable</res-sharing-scope><lookup-name>jms/TopicConnectionFactory</lookup-name></resource-ref><message-destination-ref><message-destination-ref-name>jms/TradeBrokerQueue</message-destination-ref-name><message-destination-type>javax.jms.Queue</message-destination-type><message-destination-usage>Produces</message-destination-usage><message-destination-link>daytrader-ee7-ejb#TradeBrokerQueue</message-destination-link><lookup-name>jms/TradeBrokerQueue</lookup-name></message-destination-ref><message-destination-ref><message-destination-ref-name>jms/TradeStreamerTopic</message-destination-ref-name><message-destination-type>javax.jms.Topic</message-destination-type><message-destination-usage>Produces</message-destination-usage><message-destination-link>daytrader-ee7-ejb#TradeStreamerTopic</message-destination-link><lookup-name>jms/TradeStreamerTopic</lookup-name></message-destination-ref><!--
-            JBOSS  \n    <resource-ref>\n        <res-ref-name>jdbc/TradeDataSource</res-ref-name>\n
-            \       <res-type>javax.sql.DataSource</res-type>\n        <res-auth>Container</res-auth>\n
-            \       <res-sharing-scope>Shareable</res-sharing-scope>\n        <lookup-name>java:/jdbc/TradeDataSource</lookup-name>\n
-            \   </resource-ref>\n    <resource-ref>\n        <res-ref-name>jms/QueueConnectionFactory</res-ref-name>\n
-            \       <res-type>javax.jms.QueueConnectionFactory</res-type>\n        <res-auth>Application</res-auth>\n
-            \       <res-sharing-scope>Shareable</res-sharing-scope>\n        <lookup-name>java:/jms/QueueConnectionFactory</lookup-name>\n
-            \   </resource-ref>\n    <resource-ref>\n        <res-ref-name>jms/TopicConnectionFactory</res-ref-name>\n
-            \       <res-type>javax.jms.TopicConnectionFactory</res-type>\n        <res-auth>Application</res-auth>\n
-            \       <res-sharing-scope>Shareable</res-sharing-scope>\n        <lookup-name>java:/jms/TopicConnectionFactory</lookup-name>\n
-            \   </resource-ref> \n      \n    <message-destination-ref>\n        <message-destination-ref-name>jms/TradeBrokerQueue</message-destination-ref-name>\n
-            \       <message-destination-type>javax.jms.Queue</message-destination-type>\n
-            \       <message-destination-usage>Produces</message-destination-usage>\n
-            \       <message-destination-link>daytrader-ee7-ejb#TradeBrokerQueue</message-destination-link>\n
-            \       <lookup-name>java:/jms/TradeBrokerQueue</lookup-name>\n    </message-destination-ref>\n
-            \   <message-destination-ref>\n        <message-destination-ref-name>jms/TradeStreamerTopic</message-destination-ref-name>\n
-            \       <message-destination-type>javax.jms.Topic</message-destination-type>\n
-            \       <message-destination-usage>Produces</message-destination-usage>\n
-            \       <message-destination-link>daytrader-ee7-ejb#TradeStreamerTopic</message-destination-link>\n
-            \       <lookup-name>java:/jms/TradeStreamerTopic</lookup-name>\n    </message-destination-ref>\n
-            \   --><!-- BASIC SECURITY ROLES AND CONSTRAINTS --><security-role><role-name>testing</role-name></security-role><security-constraint><web-resource-collection><web-resource-name>testing</web-resource-name><url-pattern>/*</url-pattern></web-resource-collection><auth-constraint><role-name>testing</role-name></auth-constraint></security-constraint><security-constraint><display-name>Constraint1</display-name><web-resource-collection><web-resource-name>AllAuthd
-            area</web-resource-name><url-pattern>/*</url-pattern><http-method>GET</http-method><http-method>PUT</http-method><http-method>POST</http-method><http-method>DELETE</http-method></web-resource-collection><auth-constraint><description></description><role-name>AllAuthenticated</role-name></auth-constraint></security-constraint><security-constraint><display-name>Constraint2</display-name><web-resource-collection><web-resource-name>Protected
-            Area</web-resource-name><url-pattern>/daytrader/servlet/PingServlet2Session2Entity/*</url-pattern><url-pattern>/servlet/PingServlet2Session2Entity/*</url-pattern><url-pattern>/PingServlet2Session2Entity/*</url-pattern><url-pattern>/PingServlet2Session2Entity</url-pattern><http-method>GET</http-method><http-method>PUT</http-method><http-method>POST</http-method><http-method>DELETE</http-method></web-resource-collection><web-resource-collection><web-resource-name>Protected
-            Area 2</web-resource-name><url-pattern>/daytrader/servlet/TradeScenarioServlet/*</url-pattern><url-pattern>/servlet/TradeScenarioServlet/*</url-pattern><url-pattern>/TradeScenarioServlet/*</url-pattern><url-pattern>TradeScenarioServlet</url-pattern><http-method>GET</http-method><http-method>PUT</http-method><http-method>POST</http-method><http-method>DELETE</http-method></web-resource-collection><web-resource-collection><web-resource-name>Protected
-            Area 3</web-resource-name><url-pattern>/daytrader/servlet/TradeAppServlet/*</url-pattern><url-pattern>/servlet/TradeAppServlet/*</url-pattern><url-pattern>/TradeAppServlet/*</url-pattern><url-pattern>/daytrader/app/*</url-pattern><url-pattern>/daytrader/app</url-pattern><url-pattern>/daytrader/*</url-pattern><url-pattern>/app</url-pattern><url-pattern>/*</url-pattern><http-method>GET</http-method><http-method>PUT</http-method><http-method>POST</http-method><http-method>DELETE</http-method></web-resource-collection><auth-constraint><description></description><role-name>grp1</role-name><role-name>grp2</role-name><role-name>grp3</role-name><role-name>grp4</role-name><role-name>grp5</role-name><role-name>webSecOnly</role-name></auth-constraint></security-constraint><security-role><description>All
-            Authenticated Users</description><role-name>AllAuthenticated</role-name></security-role><security-role><description>Group
-            1</description><role-name>grp1</role-name></security-role><security-role><description>Group
-            2</description><role-name>grp2</role-name></security-role><security-role><description>Group
-            3</description><role-name>grp3</role-name></security-role><security-role><description>Group
-            4</description><role-name>grp4</role-name></security-role><security-role><description>Group
-            5</description><role-name>grp5</role-name></security-role><security-role><description>WebSecOnly</description><role-name>webSecOnly</role-name></security-role><login-config><auth-method>BASIC</auth-method></login-config>"
+            JBOSS  \n    <resource-ref><res-ref-name>jdbc/TradeDataSource</res-ref-name><res-type>javax.sql.DataSource</res-type><res-auth>Container</res-auth><res-sharing-scope>Shareable</res-sharing-scope><lookup-name>java:/jdbc/TradeDataSource</lookup-name></resource-ref><resource-ref><res-ref-name>jms/QueueConnectionFactory</res-ref-name><res-type>javax.jms.QueueConnectionFactory</res-type><res-auth>Application</res-auth><res-sharing-scope>Shareable</res-sharing-scope><lookup-name>java:/jms/QueueConnectionFactory</lookup-name></resource-ref><resource-ref><res-ref-name>jms/TopicConnectionFactory</res-ref-name><res-type>javax.jms.TopicConnectionFactory</res-type><res-auth>Application</res-auth><res-sharing-scope>Shareable</res-sharing-scope><lookup-name>java:/jms/TopicConnectionFactory</lookup-name></resource-ref><message-destination-ref><message-destination-ref-name>jms/TradeBrokerQueue</message-destination-ref-name><message-destination-type>javax.jms.Queue</message-destination-type><message-destination-usage>Produces</message-destination-usage><message-destination-link>daytrader-ee7-ejb#TradeBrokerQueue</message-destination-link><lookup-name>java:/jms/TradeBrokerQueue</lookup-name></message-destination-ref><message-destination-ref><message-destination-ref-name>jms/TradeStreamerTopic</message-destination-ref-name><message-destination-type>javax.jms.Topic</message-destination-type><message-destination-usage>Produces</message-destination-usage><message-destination-link>daytrader-ee7-ejb#TradeStreamerTopic</message-destination-link><lookup-name>java:/jms/TradeStreamerTopic</lookup-name></message-destination-ref>\n
+            \   --><!-- BASIC SECURITY ROLES AND CONSTRAINTS --><security-role><role-name>testing</role-name></security-role><security-constraint><web-resource-collection><web-resource-name>testing</web-resource-name><url-pattern>/*</url-pattern></web-resource-collection><auth-constraint><role-name>testing</role-name></auth-constraint></security-constraint><security-constraint><display-name>\n
+            \           Constraint1\n        </display-name><web-resource-collection><web-resource-name>AllAuthd
+            area</web-resource-name><url-pattern>/*</url-pattern><http-method>GET</http-method><http-method>PUT</http-method><http-method>POST</http-method><http-method>DELETE</http-method></web-resource-collection><auth-constraint><description></description><role-name>AllAuthenticated</role-name></auth-constraint></security-constraint><security-constraint><display-name>\n
+            \           Constraint2\n        </display-name><web-resource-collection><web-resource-name>Protected
+            Area</web-resource-name><url-pattern>/daytrader/servlet/PingServlet2Session2Entity/*\n
+            \           </url-pattern><url-pattern>/servlet/PingServlet2Session2Entity/*\n
+            \           </url-pattern><url-pattern>/PingServlet2Session2Entity/*</url-pattern><url-pattern>/PingServlet2Session2Entity</url-pattern><http-method>GET</http-method><http-method>PUT</http-method><http-method>POST</http-method><http-method>DELETE</http-method></web-resource-collection><web-resource-collection><web-resource-name>Protected
+            Area 2</web-resource-name><url-pattern>/daytrader/servlet/TradeScenarioServlet/*\n
+            \           </url-pattern><url-pattern>/servlet/TradeScenarioServlet/*</url-pattern><url-pattern>/TradeScenarioServlet/*</url-pattern><url-pattern>TradeScenarioServlet</url-pattern><http-method>GET</http-method><http-method>PUT</http-method><http-method>POST</http-method><http-method>DELETE</http-method></web-resource-collection><web-resource-collection><web-resource-name>Protected
+            Area 3</web-resource-name><url-pattern>/daytrader/servlet/TradeAppServlet/*\n
+            \           </url-pattern><url-pattern>/servlet/TradeAppServlet/*</url-pattern><url-pattern>/TradeAppServlet/*</url-pattern><url-pattern>/daytrader/app/*</url-pattern><url-pattern>/daytrader/app</url-pattern><url-pattern>/daytrader/*</url-pattern><url-pattern>/app</url-pattern><url-pattern>/*</url-pattern><http-method>GET</http-method><http-method>PUT</http-method><http-method>POST</http-method><http-method>DELETE</http-method></web-resource-collection><auth-constraint><description></description><role-name>grp1</role-name><role-name>grp2</role-name><role-name>grp3</role-name><role-name>grp4</role-name><role-name>grp5</role-name><role-name>webSecOnly</role-name></auth-constraint></security-constraint><security-role><description>\n
+            \           All Authenticated Users\n        </description><role-name>AllAuthenticated</role-name></security-role><security-role><description>\n
+            \           Group 1\n        </description><role-name>grp1</role-name></security-role><security-role><description>\n
+            \           Group 2\n        </description><role-name>grp2</role-name></security-role><security-role><description>\n
+            \           Group 3\n        </description><role-name>grp3</role-name></security-role><security-role><description>\n
+            \           Group 4\n        </description><role-name>grp4</role-name></security-role><security-role><description>\n
+            \           Group 5\n        </description><role-name>grp5</role-name></security-role><security-role><description>\n
+            \           WebSecOnly\n        </description><role-name>webSecOnly</role-name></security-role><login-config><auth-method>BASIC</auth-method></login-config>"
   unmatched:
   - discover-license
   - hardcoded-ip-address
@@ -3219,7 +3221,10 @@
             \       This is needed to run the tests --><libertyTestPort>9082</libertyTestPort><skipFVT>false</skipFVT><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding><maven.compiler.source>1.8</maven.compiler.source><maven.compiler.target>1.8</maven.compiler.target><!--
             Derby library --><version.derby>10.14.2.0</version.derby><derby.path>${user.home}/.m2/repository/org/apache/derby/derby</derby.path><!--
             Liberty configuration --><testServerHttpPort>9080</testServerHttpPort><testServerHttpsPort>9443</testServerHttpsPort></properties><packaging>ear</packaging><artifactId>daytrader-ee7</artifactId><version>1.0-SNAPSHOT</version><dependencies><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-ejb</artifactId><version>1.0-SNAPSHOT</version><type>ejb</type></dependency><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-web</artifactId><version>1.0-SNAPSHOT</version><type>war</type></dependency><!--
-            Derby from https://mvnrepository.com/artifact/org.apache.derby/derby --><dependency><groupId>org.apache.derby</groupId><artifactId>derby</artifactId><version>${version.derby}</version><scope>test</scope></dependency></dependencies><build><finalName>${project.artifactId}</finalName><plugins><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>3.11.0</version></plugin><plugin><?m2e?><groupId>org.apache.maven.plugins</groupId><artifactId>maven-ear-plugin</artifactId><version>3.0.2</version><configuration><version>7</version><modules><webModule><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-web</artifactId><uri>/daytrader-ee7-web.war</uri><contextRoot>/daytrader</contextRoot></webModule><ejbModule><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-ejb</artifactId><uri>/daytrader-ee7-ejb.jar</uri></ejbModule></modules></configuration></plugin><plugin><groupId>io.openliberty.tools</groupId><artifactId>liberty-maven-plugin</artifactId><version>3.3.4</version><configuration><bootstrapProperties><default.http.port>${testServerHttpPort}</default.http.port><default.https.port>${testServerHttpsPort}</default.https.port></bootstrapProperties></configuration></plugin><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-dependency-plugin</artifactId><version>3.1.2</version><executions><execution><id>copy-derby-dependency</id><phase>package</phase><goals><goal>copy-dependencies</goal></goals><configuration><includeArtifactIds>derby</includeArtifactIds><outputDirectory>${project.build.directory}/liberty/wlp/usr/shared/resources/DerbyLibs/</outputDirectory></configuration></execution></executions></plugin><plugin><artifactId>maven-resources-plugin</artifactId><version>2.6</version><executions><execution><id>copy-resources</id><phase>package</phase><goals><goal>copy-resources</goal></goals><configuration><outputDirectory>${project.build.directory}/liberty/wlp/usr/shared/resources/data</outputDirectory><resources><resource><directory>resources/data</directory><filtering>false</filtering></resource></resources></configuration></execution></executions></plugin></plugins></build>"
+            Derby from https://mvnrepository.com/artifact/org.apache.derby/derby --><dependency><groupId>org.apache.derby</groupId><artifactId>derby</artifactId><version>${version.derby}</version><scope>test</scope></dependency></dependencies><build><finalName>${project.artifactId}</finalName><plugins><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>3.11.0</version></plugin><plugin><?m2e
+            ignore?><groupId>org.apache.maven.plugins</groupId><artifactId>maven-ear-plugin</artifactId><version>3.0.2</version><configuration><version>7</version><modules><webModule><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-web</artifactId><uri>/daytrader-ee7-web.war</uri><contextRoot>/daytrader</contextRoot></webModule><ejbModule><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-ejb</artifactId><uri>/daytrader-ee7-ejb.jar</uri></ejbModule></modules></configuration></plugin><plugin><groupId>io.openliberty.tools</groupId><artifactId>liberty-maven-plugin</artifactId><version>3.3.4</version><configuration><bootstrapProperties><default.http.port>${testServerHttpPort}</default.http.port><default.https.port>${testServerHttpsPort}</default.https.port></bootstrapProperties></configuration></plugin><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-dependency-plugin</artifactId><version>3.1.2</version><executions><execution><id>copy-derby-dependency</id><phase>package</phase><goals><goal>copy-dependencies</goal></goals><configuration><includeArtifactIds>derby</includeArtifactIds><outputDirectory>\n
+            \                       ${project.build.directory}/liberty/wlp/usr/shared/resources/DerbyLibs/</outputDirectory></configuration></execution></executions></plugin><plugin><artifactId>maven-resources-plugin</artifactId><version>2.6</version><executions><execution><id>copy-resources</id><phase>package</phase><goals><goal>copy-resources</goal></goals><configuration><outputDirectory>\n
+            \                       ${project.build.directory}/liberty/wlp/usr/shared/resources/data</outputDirectory><resources><resource><directory>resources/data</directory><filtering>false</filtering></resource></resources></configuration></execution></executions></plugin></plugins></build>"
       - uri: file:///source/pom.xml
         message: "Use the Quarkus BOM to omit the version of the different Quarkus
           dependencies. \n Add the following sections to the `pom.xml` file: \n\n
@@ -3355,7 +3360,10 @@
             \       This is needed to run the tests --><libertyTestPort>9082</libertyTestPort><skipFVT>false</skipFVT><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding><maven.compiler.source>1.8</maven.compiler.source><maven.compiler.target>1.8</maven.compiler.target><!--
             Derby library --><version.derby>10.14.2.0</version.derby><derby.path>${user.home}/.m2/repository/org/apache/derby/derby</derby.path><!--
             Liberty configuration --><testServerHttpPort>9080</testServerHttpPort><testServerHttpsPort>9443</testServerHttpsPort></properties><packaging>ear</packaging><artifactId>daytrader-ee7</artifactId><version>1.0-SNAPSHOT</version><dependencies><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-ejb</artifactId><version>1.0-SNAPSHOT</version><type>ejb</type></dependency><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-web</artifactId><version>1.0-SNAPSHOT</version><type>war</type></dependency><!--
-            Derby from https://mvnrepository.com/artifact/org.apache.derby/derby --><dependency><groupId>org.apache.derby</groupId><artifactId>derby</artifactId><version>${version.derby}</version><scope>test</scope></dependency></dependencies><build><finalName>${project.artifactId}</finalName><plugins><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>3.11.0</version></plugin><plugin><?m2e?><groupId>org.apache.maven.plugins</groupId><artifactId>maven-ear-plugin</artifactId><version>3.0.2</version><configuration><version>7</version><modules><webModule><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-web</artifactId><uri>/daytrader-ee7-web.war</uri><contextRoot>/daytrader</contextRoot></webModule><ejbModule><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-ejb</artifactId><uri>/daytrader-ee7-ejb.jar</uri></ejbModule></modules></configuration></plugin><plugin><groupId>io.openliberty.tools</groupId><artifactId>liberty-maven-plugin</artifactId><version>3.3.4</version><configuration><bootstrapProperties><default.http.port>${testServerHttpPort}</default.http.port><default.https.port>${testServerHttpsPort}</default.https.port></bootstrapProperties></configuration></plugin><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-dependency-plugin</artifactId><version>3.1.2</version><executions><execution><id>copy-derby-dependency</id><phase>package</phase><goals><goal>copy-dependencies</goal></goals><configuration><includeArtifactIds>derby</includeArtifactIds><outputDirectory>${project.build.directory}/liberty/wlp/usr/shared/resources/DerbyLibs/</outputDirectory></configuration></execution></executions></plugin><plugin><artifactId>maven-resources-plugin</artifactId><version>2.6</version><executions><execution><id>copy-resources</id><phase>package</phase><goals><goal>copy-resources</goal></goals><configuration><outputDirectory>${project.build.directory}/liberty/wlp/usr/shared/resources/data</outputDirectory><resources><resource><directory>resources/data</directory><filtering>false</filtering></resource></resources></configuration></execution></executions></plugin></plugins></build>"
+            Derby from https://mvnrepository.com/artifact/org.apache.derby/derby --><dependency><groupId>org.apache.derby</groupId><artifactId>derby</artifactId><version>${version.derby}</version><scope>test</scope></dependency></dependencies><build><finalName>${project.artifactId}</finalName><plugins><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>3.11.0</version></plugin><plugin><?m2e
+            ignore?><groupId>org.apache.maven.plugins</groupId><artifactId>maven-ear-plugin</artifactId><version>3.0.2</version><configuration><version>7</version><modules><webModule><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-web</artifactId><uri>/daytrader-ee7-web.war</uri><contextRoot>/daytrader</contextRoot></webModule><ejbModule><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-ejb</artifactId><uri>/daytrader-ee7-ejb.jar</uri></ejbModule></modules></configuration></plugin><plugin><groupId>io.openliberty.tools</groupId><artifactId>liberty-maven-plugin</artifactId><version>3.3.4</version><configuration><bootstrapProperties><default.http.port>${testServerHttpPort}</default.http.port><default.https.port>${testServerHttpsPort}</default.https.port></bootstrapProperties></configuration></plugin><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-dependency-plugin</artifactId><version>3.1.2</version><executions><execution><id>copy-derby-dependency</id><phase>package</phase><goals><goal>copy-dependencies</goal></goals><configuration><includeArtifactIds>derby</includeArtifactIds><outputDirectory>\n
+            \                       ${project.build.directory}/liberty/wlp/usr/shared/resources/DerbyLibs/</outputDirectory></configuration></execution></executions></plugin><plugin><artifactId>maven-resources-plugin</artifactId><version>2.6</version><executions><execution><id>copy-resources</id><phase>package</phase><goals><goal>copy-resources</goal></goals><configuration><outputDirectory>\n
+            \                       ${project.build.directory}/liberty/wlp/usr/shared/resources/data</outputDirectory><resources><resource><directory>resources/data</directory><filtering>false</filtering></resource></resources></configuration></execution></executions></plugin></plugins></build>"
       - uri: file:///source/pom.xml
         message: "Use the Quarkus Maven plugin adding the following sections to the
           `pom.xml` file: \n\n ```xml\n <properties> \n <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
@@ -3484,7 +3492,10 @@
             \       This is needed to run the tests --><libertyTestPort>9082</libertyTestPort><skipFVT>false</skipFVT><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding><maven.compiler.source>1.8</maven.compiler.source><maven.compiler.target>1.8</maven.compiler.target><!--
             Derby library --><version.derby>10.14.2.0</version.derby><derby.path>${user.home}/.m2/repository/org/apache/derby/derby</derby.path><!--
             Liberty configuration --><testServerHttpPort>9080</testServerHttpPort><testServerHttpsPort>9443</testServerHttpsPort></properties><packaging>ear</packaging><artifactId>daytrader-ee7</artifactId><version>1.0-SNAPSHOT</version><dependencies><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-ejb</artifactId><version>1.0-SNAPSHOT</version><type>ejb</type></dependency><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-web</artifactId><version>1.0-SNAPSHOT</version><type>war</type></dependency><!--
-            Derby from https://mvnrepository.com/artifact/org.apache.derby/derby --><dependency><groupId>org.apache.derby</groupId><artifactId>derby</artifactId><version>${version.derby}</version><scope>test</scope></dependency></dependencies><build><finalName>${project.artifactId}</finalName><plugins><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>3.11.0</version></plugin><plugin><?m2e?><groupId>org.apache.maven.plugins</groupId><artifactId>maven-ear-plugin</artifactId><version>3.0.2</version><configuration><version>7</version><modules><webModule><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-web</artifactId><uri>/daytrader-ee7-web.war</uri><contextRoot>/daytrader</contextRoot></webModule><ejbModule><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-ejb</artifactId><uri>/daytrader-ee7-ejb.jar</uri></ejbModule></modules></configuration></plugin><plugin><groupId>io.openliberty.tools</groupId><artifactId>liberty-maven-plugin</artifactId><version>3.3.4</version><configuration><bootstrapProperties><default.http.port>${testServerHttpPort}</default.http.port><default.https.port>${testServerHttpsPort}</default.https.port></bootstrapProperties></configuration></plugin><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-dependency-plugin</artifactId><version>3.1.2</version><executions><execution><id>copy-derby-dependency</id><phase>package</phase><goals><goal>copy-dependencies</goal></goals><configuration><includeArtifactIds>derby</includeArtifactIds><outputDirectory>${project.build.directory}/liberty/wlp/usr/shared/resources/DerbyLibs/</outputDirectory></configuration></execution></executions></plugin><plugin><artifactId>maven-resources-plugin</artifactId><version>2.6</version><executions><execution><id>copy-resources</id><phase>package</phase><goals><goal>copy-resources</goal></goals><configuration><outputDirectory>${project.build.directory}/liberty/wlp/usr/shared/resources/data</outputDirectory><resources><resource><directory>resources/data</directory><filtering>false</filtering></resource></resources></configuration></execution></executions></plugin></plugins></build>"
+            Derby from https://mvnrepository.com/artifact/org.apache.derby/derby --><dependency><groupId>org.apache.derby</groupId><artifactId>derby</artifactId><version>${version.derby}</version><scope>test</scope></dependency></dependencies><build><finalName>${project.artifactId}</finalName><plugins><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>3.11.0</version></plugin><plugin><?m2e
+            ignore?><groupId>org.apache.maven.plugins</groupId><artifactId>maven-ear-plugin</artifactId><version>3.0.2</version><configuration><version>7</version><modules><webModule><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-web</artifactId><uri>/daytrader-ee7-web.war</uri><contextRoot>/daytrader</contextRoot></webModule><ejbModule><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-ejb</artifactId><uri>/daytrader-ee7-ejb.jar</uri></ejbModule></modules></configuration></plugin><plugin><groupId>io.openliberty.tools</groupId><artifactId>liberty-maven-plugin</artifactId><version>3.3.4</version><configuration><bootstrapProperties><default.http.port>${testServerHttpPort}</default.http.port><default.https.port>${testServerHttpsPort}</default.https.port></bootstrapProperties></configuration></plugin><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-dependency-plugin</artifactId><version>3.1.2</version><executions><execution><id>copy-derby-dependency</id><phase>package</phase><goals><goal>copy-dependencies</goal></goals><configuration><includeArtifactIds>derby</includeArtifactIds><outputDirectory>\n
+            \                       ${project.build.directory}/liberty/wlp/usr/shared/resources/DerbyLibs/</outputDirectory></configuration></execution></executions></plugin><plugin><artifactId>maven-resources-plugin</artifactId><version>2.6</version><executions><execution><id>copy-resources</id><phase>package</phase><goals><goal>copy-resources</goal></goals><configuration><outputDirectory>\n
+            \                       ${project.build.directory}/liberty/wlp/usr/shared/resources/data</outputDirectory><resources><resource><directory>resources/data</directory><filtering>false</filtering></resource></resources></configuration></execution></executions></plugin></plugins></build>"
       - uri: file:///source/pom.xml
         message: "Use the Maven Compiler plugin adding the following sections to the
           `pom.xml` file: \n\n ```xml\n <properties> \n <compiler-plugin.version>3.10.1</compiler-plugin.version>\n
@@ -3612,7 +3623,10 @@
             \       This is needed to run the tests --><libertyTestPort>9082</libertyTestPort><skipFVT>false</skipFVT><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding><maven.compiler.source>1.8</maven.compiler.source><maven.compiler.target>1.8</maven.compiler.target><!--
             Derby library --><version.derby>10.14.2.0</version.derby><derby.path>${user.home}/.m2/repository/org/apache/derby/derby</derby.path><!--
             Liberty configuration --><testServerHttpPort>9080</testServerHttpPort><testServerHttpsPort>9443</testServerHttpsPort></properties><packaging>ear</packaging><artifactId>daytrader-ee7</artifactId><version>1.0-SNAPSHOT</version><dependencies><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-ejb</artifactId><version>1.0-SNAPSHOT</version><type>ejb</type></dependency><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-web</artifactId><version>1.0-SNAPSHOT</version><type>war</type></dependency><!--
-            Derby from https://mvnrepository.com/artifact/org.apache.derby/derby --><dependency><groupId>org.apache.derby</groupId><artifactId>derby</artifactId><version>${version.derby}</version><scope>test</scope></dependency></dependencies><build><finalName>${project.artifactId}</finalName><plugins><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>3.11.0</version></plugin><plugin><?m2e?><groupId>org.apache.maven.plugins</groupId><artifactId>maven-ear-plugin</artifactId><version>3.0.2</version><configuration><version>7</version><modules><webModule><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-web</artifactId><uri>/daytrader-ee7-web.war</uri><contextRoot>/daytrader</contextRoot></webModule><ejbModule><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-ejb</artifactId><uri>/daytrader-ee7-ejb.jar</uri></ejbModule></modules></configuration></plugin><plugin><groupId>io.openliberty.tools</groupId><artifactId>liberty-maven-plugin</artifactId><version>3.3.4</version><configuration><bootstrapProperties><default.http.port>${testServerHttpPort}</default.http.port><default.https.port>${testServerHttpsPort}</default.https.port></bootstrapProperties></configuration></plugin><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-dependency-plugin</artifactId><version>3.1.2</version><executions><execution><id>copy-derby-dependency</id><phase>package</phase><goals><goal>copy-dependencies</goal></goals><configuration><includeArtifactIds>derby</includeArtifactIds><outputDirectory>${project.build.directory}/liberty/wlp/usr/shared/resources/DerbyLibs/</outputDirectory></configuration></execution></executions></plugin><plugin><artifactId>maven-resources-plugin</artifactId><version>2.6</version><executions><execution><id>copy-resources</id><phase>package</phase><goals><goal>copy-resources</goal></goals><configuration><outputDirectory>${project.build.directory}/liberty/wlp/usr/shared/resources/data</outputDirectory><resources><resource><directory>resources/data</directory><filtering>false</filtering></resource></resources></configuration></execution></executions></plugin></plugins></build>"
+            Derby from https://mvnrepository.com/artifact/org.apache.derby/derby --><dependency><groupId>org.apache.derby</groupId><artifactId>derby</artifactId><version>${version.derby}</version><scope>test</scope></dependency></dependencies><build><finalName>${project.artifactId}</finalName><plugins><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>3.11.0</version></plugin><plugin><?m2e
+            ignore?><groupId>org.apache.maven.plugins</groupId><artifactId>maven-ear-plugin</artifactId><version>3.0.2</version><configuration><version>7</version><modules><webModule><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-web</artifactId><uri>/daytrader-ee7-web.war</uri><contextRoot>/daytrader</contextRoot></webModule><ejbModule><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-ejb</artifactId><uri>/daytrader-ee7-ejb.jar</uri></ejbModule></modules></configuration></plugin><plugin><groupId>io.openliberty.tools</groupId><artifactId>liberty-maven-plugin</artifactId><version>3.3.4</version><configuration><bootstrapProperties><default.http.port>${testServerHttpPort}</default.http.port><default.https.port>${testServerHttpsPort}</default.https.port></bootstrapProperties></configuration></plugin><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-dependency-plugin</artifactId><version>3.1.2</version><executions><execution><id>copy-derby-dependency</id><phase>package</phase><goals><goal>copy-dependencies</goal></goals><configuration><includeArtifactIds>derby</includeArtifactIds><outputDirectory>\n
+            \                       ${project.build.directory}/liberty/wlp/usr/shared/resources/DerbyLibs/</outputDirectory></configuration></execution></executions></plugin><plugin><artifactId>maven-resources-plugin</artifactId><version>2.6</version><executions><execution><id>copy-resources</id><phase>package</phase><goals><goal>copy-resources</goal></goals><configuration><outputDirectory>\n
+            \                       ${project.build.directory}/liberty/wlp/usr/shared/resources/data</outputDirectory><resources><resource><directory>resources/data</directory><filtering>false</filtering></resource></resources></configuration></execution></executions></plugin></plugins></build>"
       - uri: file:///source/pom.xml
         message: "Use the Maven Surefire plugin adding the following sections to the
           `pom.xml` file: \n\n ```xml\n <properties> \n <surefire-plugin.version>3.0.0</compiler-plugin.version>\n
@@ -3746,7 +3760,10 @@
             \       This is needed to run the tests --><libertyTestPort>9082</libertyTestPort><skipFVT>false</skipFVT><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding><maven.compiler.source>1.8</maven.compiler.source><maven.compiler.target>1.8</maven.compiler.target><!--
             Derby library --><version.derby>10.14.2.0</version.derby><derby.path>${user.home}/.m2/repository/org/apache/derby/derby</derby.path><!--
             Liberty configuration --><testServerHttpPort>9080</testServerHttpPort><testServerHttpsPort>9443</testServerHttpsPort></properties><packaging>ear</packaging><artifactId>daytrader-ee7</artifactId><version>1.0-SNAPSHOT</version><dependencies><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-ejb</artifactId><version>1.0-SNAPSHOT</version><type>ejb</type></dependency><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-web</artifactId><version>1.0-SNAPSHOT</version><type>war</type></dependency><!--
-            Derby from https://mvnrepository.com/artifact/org.apache.derby/derby --><dependency><groupId>org.apache.derby</groupId><artifactId>derby</artifactId><version>${version.derby}</version><scope>test</scope></dependency></dependencies><build><finalName>${project.artifactId}</finalName><plugins><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>3.11.0</version></plugin><plugin><?m2e?><groupId>org.apache.maven.plugins</groupId><artifactId>maven-ear-plugin</artifactId><version>3.0.2</version><configuration><version>7</version><modules><webModule><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-web</artifactId><uri>/daytrader-ee7-web.war</uri><contextRoot>/daytrader</contextRoot></webModule><ejbModule><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-ejb</artifactId><uri>/daytrader-ee7-ejb.jar</uri></ejbModule></modules></configuration></plugin><plugin><groupId>io.openliberty.tools</groupId><artifactId>liberty-maven-plugin</artifactId><version>3.3.4</version><configuration><bootstrapProperties><default.http.port>${testServerHttpPort}</default.http.port><default.https.port>${testServerHttpsPort}</default.https.port></bootstrapProperties></configuration></plugin><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-dependency-plugin</artifactId><version>3.1.2</version><executions><execution><id>copy-derby-dependency</id><phase>package</phase><goals><goal>copy-dependencies</goal></goals><configuration><includeArtifactIds>derby</includeArtifactIds><outputDirectory>${project.build.directory}/liberty/wlp/usr/shared/resources/DerbyLibs/</outputDirectory></configuration></execution></executions></plugin><plugin><artifactId>maven-resources-plugin</artifactId><version>2.6</version><executions><execution><id>copy-resources</id><phase>package</phase><goals><goal>copy-resources</goal></goals><configuration><outputDirectory>${project.build.directory}/liberty/wlp/usr/shared/resources/data</outputDirectory><resources><resource><directory>resources/data</directory><filtering>false</filtering></resource></resources></configuration></execution></executions></plugin></plugins></build>"
+            Derby from https://mvnrepository.com/artifact/org.apache.derby/derby --><dependency><groupId>org.apache.derby</groupId><artifactId>derby</artifactId><version>${version.derby}</version><scope>test</scope></dependency></dependencies><build><finalName>${project.artifactId}</finalName><plugins><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>3.11.0</version></plugin><plugin><?m2e
+            ignore?><groupId>org.apache.maven.plugins</groupId><artifactId>maven-ear-plugin</artifactId><version>3.0.2</version><configuration><version>7</version><modules><webModule><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-web</artifactId><uri>/daytrader-ee7-web.war</uri><contextRoot>/daytrader</contextRoot></webModule><ejbModule><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-ejb</artifactId><uri>/daytrader-ee7-ejb.jar</uri></ejbModule></modules></configuration></plugin><plugin><groupId>io.openliberty.tools</groupId><artifactId>liberty-maven-plugin</artifactId><version>3.3.4</version><configuration><bootstrapProperties><default.http.port>${testServerHttpPort}</default.http.port><default.https.port>${testServerHttpsPort}</default.https.port></bootstrapProperties></configuration></plugin><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-dependency-plugin</artifactId><version>3.1.2</version><executions><execution><id>copy-derby-dependency</id><phase>package</phase><goals><goal>copy-dependencies</goal></goals><configuration><includeArtifactIds>derby</includeArtifactIds><outputDirectory>\n
+            \                       ${project.build.directory}/liberty/wlp/usr/shared/resources/DerbyLibs/</outputDirectory></configuration></execution></executions></plugin><plugin><artifactId>maven-resources-plugin</artifactId><version>2.6</version><executions><execution><id>copy-resources</id><phase>package</phase><goals><goal>copy-resources</goal></goals><configuration><outputDirectory>\n
+            \                       ${project.build.directory}/liberty/wlp/usr/shared/resources/data</outputDirectory><resources><resource><directory>resources/data</directory><filtering>false</filtering></resource></resources></configuration></execution></executions></plugin></plugins></build>"
       - uri: file:///source/pom.xml
         message: "Use the Maven Failsafe plugin adding the following sections to the
           `pom.xml` file: \n\n ```xml\n <properties> \n <surefire-plugin.version>3.0.0</compiler-plugin.version>\n
@@ -3873,7 +3890,10 @@
             \       This is needed to run the tests --><libertyTestPort>9082</libertyTestPort><skipFVT>false</skipFVT><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding><maven.compiler.source>1.8</maven.compiler.source><maven.compiler.target>1.8</maven.compiler.target><!--
             Derby library --><version.derby>10.14.2.0</version.derby><derby.path>${user.home}/.m2/repository/org/apache/derby/derby</derby.path><!--
             Liberty configuration --><testServerHttpPort>9080</testServerHttpPort><testServerHttpsPort>9443</testServerHttpsPort></properties><packaging>ear</packaging><artifactId>daytrader-ee7</artifactId><version>1.0-SNAPSHOT</version><dependencies><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-ejb</artifactId><version>1.0-SNAPSHOT</version><type>ejb</type></dependency><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-web</artifactId><version>1.0-SNAPSHOT</version><type>war</type></dependency><!--
-            Derby from https://mvnrepository.com/artifact/org.apache.derby/derby --><dependency><groupId>org.apache.derby</groupId><artifactId>derby</artifactId><version>${version.derby}</version><scope>test</scope></dependency></dependencies><build><finalName>${project.artifactId}</finalName><plugins><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>3.11.0</version></plugin><plugin><?m2e?><groupId>org.apache.maven.plugins</groupId><artifactId>maven-ear-plugin</artifactId><version>3.0.2</version><configuration><version>7</version><modules><webModule><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-web</artifactId><uri>/daytrader-ee7-web.war</uri><contextRoot>/daytrader</contextRoot></webModule><ejbModule><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-ejb</artifactId><uri>/daytrader-ee7-ejb.jar</uri></ejbModule></modules></configuration></plugin><plugin><groupId>io.openliberty.tools</groupId><artifactId>liberty-maven-plugin</artifactId><version>3.3.4</version><configuration><bootstrapProperties><default.http.port>${testServerHttpPort}</default.http.port><default.https.port>${testServerHttpsPort}</default.https.port></bootstrapProperties></configuration></plugin><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-dependency-plugin</artifactId><version>3.1.2</version><executions><execution><id>copy-derby-dependency</id><phase>package</phase><goals><goal>copy-dependencies</goal></goals><configuration><includeArtifactIds>derby</includeArtifactIds><outputDirectory>${project.build.directory}/liberty/wlp/usr/shared/resources/DerbyLibs/</outputDirectory></configuration></execution></executions></plugin><plugin><artifactId>maven-resources-plugin</artifactId><version>2.6</version><executions><execution><id>copy-resources</id><phase>package</phase><goals><goal>copy-resources</goal></goals><configuration><outputDirectory>${project.build.directory}/liberty/wlp/usr/shared/resources/data</outputDirectory><resources><resource><directory>resources/data</directory><filtering>false</filtering></resource></resources></configuration></execution></executions></plugin></plugins></build>"
+            Derby from https://mvnrepository.com/artifact/org.apache.derby/derby --><dependency><groupId>org.apache.derby</groupId><artifactId>derby</artifactId><version>${version.derby}</version><scope>test</scope></dependency></dependencies><build><finalName>${project.artifactId}</finalName><plugins><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>3.11.0</version></plugin><plugin><?m2e
+            ignore?><groupId>org.apache.maven.plugins</groupId><artifactId>maven-ear-plugin</artifactId><version>3.0.2</version><configuration><version>7</version><modules><webModule><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-web</artifactId><uri>/daytrader-ee7-web.war</uri><contextRoot>/daytrader</contextRoot></webModule><ejbModule><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-ejb</artifactId><uri>/daytrader-ee7-ejb.jar</uri></ejbModule></modules></configuration></plugin><plugin><groupId>io.openliberty.tools</groupId><artifactId>liberty-maven-plugin</artifactId><version>3.3.4</version><configuration><bootstrapProperties><default.http.port>${testServerHttpPort}</default.http.port><default.https.port>${testServerHttpsPort}</default.https.port></bootstrapProperties></configuration></plugin><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-dependency-plugin</artifactId><version>3.1.2</version><executions><execution><id>copy-derby-dependency</id><phase>package</phase><goals><goal>copy-dependencies</goal></goals><configuration><includeArtifactIds>derby</includeArtifactIds><outputDirectory>\n
+            \                       ${project.build.directory}/liberty/wlp/usr/shared/resources/DerbyLibs/</outputDirectory></configuration></execution></executions></plugin><plugin><artifactId>maven-resources-plugin</artifactId><version>2.6</version><executions><execution><id>copy-resources</id><phase>package</phase><goals><goal>copy-resources</goal></goals><configuration><outputDirectory>\n
+            \                       ${project.build.directory}/liberty/wlp/usr/shared/resources/data</outputDirectory><resources><resource><directory>resources/data</directory><filtering>false</filtering></resource></resources></configuration></execution></executions></plugin></plugins></build>"
       - uri: file:///source/pom.xml
         message: "Leverage a Maven profile to run the Quarkus native build adding
           the following section to the `pom.xml` file: \n\n ```xml\n <profiles>\n
@@ -13706,37 +13726,37 @@
         codeSnip: 18               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         lineNumber: 17
         variables:
-          matchingText: ""
+          matchingText: http://xmlns.jcp.org/xml/ns/persistence
       - uri: file:///source/daytrader-ee7-ejb/src/main/resources/META-INF/persistence.xml
         message: ""
         codeSnip: 20               version="2.1">
         lineNumber: 19
         variables:
-          matchingText: ""
+          matchingText: http://xmlns.jcp.org/xml/ns/persistence
       - uri: file:///source/daytrader-ee7-web/src/main/java/META-INF/persistence.xml
         message: ""
         codeSnip: 18               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         lineNumber: 17
         variables:
-          matchingText: ""
+          matchingText: http://xmlns.jcp.org/xml/ns/persistence
       - uri: file:///source/daytrader-ee7-web/src/main/java/META-INF/persistence.xml
         message: ""
         codeSnip: 20               version="2.1">
         lineNumber: 19
         variables:
-          matchingText: ""
+          matchingText: http://xmlns.jcp.org/xml/ns/persistence
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/WEB-INF/classes/META-INF/persistence.xml
         message: ""
         codeSnip: 19               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         lineNumber: 18
         variables:
-          matchingText: ""
+          matchingText: http://xmlns.jcp.org/xml/ns/persistence
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/WEB-INF/classes/META-INF/persistence.xml
         message: ""
         codeSnip: 21               version="2.1">
         lineNumber: 20
         variables:
-          matchingText: ""
+          matchingText: http://xmlns.jcp.org/xml/ns/persistence
     technology-usage-database-01200:
       description: JPA Queries
       labels:
@@ -14569,271 +14589,271 @@
         codeSnip: 20         xmlns:f="http://xmlns.jcp.org/jsf/core"
         lineNumber: 19
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/PingCDIJSF.xhtml
         message: ""
         codeSnip: '21         xmlns:ui="http://xmlns.jcp.org/jsf/facelets" '
         lineNumber: 20
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/PingCDIJSF.xhtml
         message: ""
         codeSnip: 22         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
         lineNumber: 21
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/PingJsf.xhtml
         message: ""
         codeSnip: 20         xmlns:f="http://xmlns.jcp.org/jsf/core"
         lineNumber: 19
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/PingJsf.xhtml
         message: ""
         codeSnip: '21         xmlns:ui="http://xmlns.jcp.org/jsf/facelets" '
         lineNumber: 20
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/PingJsf.xhtml
         message: ""
         codeSnip: 22         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
         lineNumber: 21
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/account.xhtml
         message: ""
         codeSnip: 21         xmlns:f="http://xmlns.jcp.org/jsf/core"
         lineNumber: 20
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/account.xhtml
         message: ""
         codeSnip: "22  \t   xmlns:ui=\"http://xmlns.jcp.org/jsf/facelets\" "
         lineNumber: 21
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/account.xhtml
         message: ""
         codeSnip: 23         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
         lineNumber: 22
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/config.xhtml
         message: ""
         codeSnip: 20         xmlns:f="http://xmlns.jcp.org/jsf/core"
         lineNumber: 19
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/config.xhtml
         message: ""
         codeSnip: '21         xmlns:ui="http://xmlns.jcp.org/jsf/facelets" '
         lineNumber: 20
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/config.xhtml
         message: ""
         codeSnip: 22         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
         lineNumber: 21
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/configure.xhtml
         message: ""
         codeSnip: 20         xmlns:f="http://xmlns.jcp.org/jsf/core"
         lineNumber: 19
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/configure.xhtml
         message: ""
         codeSnip: '21         xmlns:ui="http://xmlns.jcp.org/jsf/facelets" '
         lineNumber: 20
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/configure.xhtml
         message: ""
         codeSnip: 22         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
         lineNumber: 21
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/docs/tradeFAQ.xhtml
         message: ""
         codeSnip: 20         xmlns:f="http://xmlns.jcp.org/jsf/core"
         lineNumber: 19
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/docs/tradeFAQ.xhtml
         message: ""
         codeSnip: '21         xmlns:ui="http://xmlns.jcp.org/jsf/facelets" '
         lineNumber: 20
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/docs/tradeFAQ.xhtml
         message: ""
         codeSnip: 22         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
         lineNumber: 21
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/index.xhtml
         message: ""
         codeSnip: 20         xmlns:f="http://xmlns.jcp.org/jsf/core"
         lineNumber: 19
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/index.xhtml
         message: ""
         codeSnip: '21         xmlns:ui="http://xmlns.jcp.org/jsf/facelets" '
         lineNumber: 20
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/index.xhtml
         message: ""
         codeSnip: 22         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
         lineNumber: 21
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/marketSummary.xhtml
         message: ""
         codeSnip: 20         xmlns:f="http://xmlns.jcp.org/jsf/core"
         lineNumber: 19
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/marketSummary.xhtml
         message: ""
         codeSnip: '21         xmlns:ui="http://xmlns.jcp.org/jsf/facelets" '
         lineNumber: 20
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/marketSummary.xhtml
         message: ""
         codeSnip: 22         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
         lineNumber: 21
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/order.xhtml
         message: ""
         codeSnip: 20         xmlns:f="http://xmlns.jcp.org/jsf/core"
         lineNumber: 19
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/order.xhtml
         message: ""
         codeSnip: '21         xmlns:ui="http://xmlns.jcp.org/jsf/facelets" '
         lineNumber: 20
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/order.xhtml
         message: ""
         codeSnip: 22         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
         lineNumber: 21
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/portfolio.xhtml
         message: ""
         codeSnip: 20         xmlns:f="http://xmlns.jcp.org/jsf/core"
         lineNumber: 19
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/portfolio.xhtml
         message: ""
         codeSnip: '21         xmlns:ui="http://xmlns.jcp.org/jsf/facelets" '
         lineNumber: 20
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/portfolio.xhtml
         message: ""
         codeSnip: 22         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
         lineNumber: 21
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/quote.xhtml
         message: ""
         codeSnip: 20         xmlns:f="http://xmlns.jcp.org/jsf/core"
         lineNumber: 19
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/quote.xhtml
         message: ""
         codeSnip: '21         xmlns:ui="http://xmlns.jcp.org/jsf/facelets" '
         lineNumber: 20
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/quote.xhtml
         message: ""
         codeSnip: 22         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
         lineNumber: 21
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/register.xhtml
         message: ""
         codeSnip: 20         xmlns:f="http://xmlns.jcp.org/jsf/core"
         lineNumber: 19
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/register.xhtml
         message: ""
         codeSnip: '21         xmlns:ui="http://xmlns.jcp.org/jsf/facelets" '
         lineNumber: 20
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/register.xhtml
         message: ""
         codeSnip: 22         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
         lineNumber: 21
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/tradehome.xhtml
         message: ""
         codeSnip: 20         xmlns:f="http://xmlns.jcp.org/jsf/core"
         lineNumber: 19
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/tradehome.xhtml
         message: ""
         codeSnip: '21         xmlns:ui="http://xmlns.jcp.org/jsf/facelets" '
         lineNumber: 20
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/tradehome.xhtml
         message: ""
         codeSnip: 22         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
         lineNumber: 21
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/web_prmtv.xhtml
         message: ""
         codeSnip: 20         xmlns:f="http://xmlns.jcp.org/jsf/core"
         lineNumber: 19
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/web_prmtv.xhtml
         message: ""
         codeSnip: '21         xmlns:ui="http://xmlns.jcp.org/jsf/facelets" '
         lineNumber: 20
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/web_prmtv.xhtml
         message: ""
         codeSnip: 22         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
         lineNumber: 21
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/welcome.xhtml
         message: ""
         codeSnip: 20         xmlns:f="http://xmlns.jcp.org/jsf/core"
         lineNumber: 19
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/welcome.xhtml
         message: ""
         codeSnip: '21         xmlns:ui="http://xmlns.jcp.org/jsf/facelets" '
         lineNumber: 20
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
       - uri: file:///source/daytrader-ee7-web/src/main/webapp/welcome.xhtml
         message: ""
         codeSnip: 22         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
         lineNumber: 21
         variables:
-          matchingText: ""
+          matchingText: xmlns.jcp.org/jsf
   unmatched:
   - 3rd-party-01000
   - 3rd-party-02000

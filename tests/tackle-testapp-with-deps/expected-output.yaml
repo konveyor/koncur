@@ -25,7 +25,7 @@
           {\n11  Properties properties = new Properties();\n12  \n13  try {"
         lineNumber: 3
         variables:
-          file: file:///root/.m2/repository/io/konveyor/demo/configuration-utils/1.0.0/io/konveyor/demo/config/ApplicationConfiguration.java
+          file: file:///addon/.m2/repository/io/konveyor/demo/configuration-utils/1.0.0/io/konveyor/demo/config/ApplicationConfiguration.java
           kind: Class
           name: ApplicationConfiguration
           package: io.konveyor.demo.config
@@ -43,7 +43,7 @@
           {\n22  var6.addSuppressed(var5);\n23  }\n24  "
         lineNumber: 14
         variables:
-          file: file:///root/.m2/repository/io/konveyor/demo/configuration-utils/1.0.0/io/konveyor/demo/config/ApplicationConfiguration.java
+          file: file:///addon/.m2/repository/io/konveyor/demo/configuration-utils/1.0.0/io/konveyor/demo/config/ApplicationConfiguration.java
           kind: Method
           name: loadProperties
           package: io.konveyor.demo.config
@@ -657,7 +657,7 @@
           {\n22  var6.addSuppressed(var5);\n23  }\n24  "
         lineNumber: 14
         variables:
-          file: file:///root/.m2/repository/io/konveyor/demo/configuration-utils/1.0.0/io/konveyor/demo/config/ApplicationConfiguration.java
+          file: file:///addon/.m2/repository/io/konveyor/demo/configuration-utils/1.0.0/io/konveyor/demo/config/ApplicationConfiguration.java
           kind: Constructor
           name: loadProperties
           package: io.konveyor.demo.config
@@ -737,7 +737,7 @@
         codeSnip: 3   jdbc.user=customers
         lineNumber: 2
         variables:
-          matchingText: "2."
+          matchingText: 10.19.2.93
       effort: 1
   insights:
     discover-java-files:

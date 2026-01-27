@@ -19,14 +19,14 @@
         codeSnip: "561  \t\t\t\t<jdbc.username>petclinic</jdbc.username>"
         lineNumber: 560
         variables:
-          matchingText: mysql
+          matchingText: jdbc:mysql://localhost:3306
       - uri: file:///source/pom.xml
         message: The app is trying to access local resource by JDBC, please try to
           migrate the resource to cloud
         codeSnip: "580  \t\t\t\t<jdbc.username>postgres</jdbc.username>"
         lineNumber: 579
         variables:
-          matchingText: postgresql
+          matchingText: jdbc:postgresql://localhost:5432
       effort: 7
   insights:
     embedded-cache-libraries-06000:

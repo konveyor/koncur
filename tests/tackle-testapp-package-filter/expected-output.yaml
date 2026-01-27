@@ -18,7 +18,7 @@
         codeSnip: 3   jdbc.user=customers
         lineNumber: 2
         variables:
-          matchingText: "2."
+          matchingText: 10.19.2.93
       effort: 1
   insights:
     discover-java-files:

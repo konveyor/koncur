@@ -92,7 +92,8 @@
   tags:
   - JPA XML
   - Java Source
-  - License=
+  - License=Apache License 2.0
+  - License=GNU GPL
   - Maven XML
   - Spring XML
   - Web XML
@@ -171,31 +172,32 @@
       - discovery
       - konveyor.io/include=always
       - konveyor.io/target=discovery
-      - tag=License=
+      - tag=License=Apache License 2.0
+      - tag=License=GNU GPL
       incidents:
       - uri: file:///source/src/main/webapp/bower_components/angular-patternfly/LICENSE.txt
         message: ""
         codeSnip: '3  '
         lineNumber: 2
         variables:
-          matchingText: ""
+          matchingText: Apache License 2.0
       - uri: file:///source/src/main/webapp/bower_components/isotope/README.mdown
         message: ""
         codeSnip: '39  '
         lineNumber: 38
         variables:
-          matchingText: ""
+          matchingText: GNU GPL
       - uri: file:///source/src/main/webapp/bower_components/patternfly/LICENSE.txt
         message: ""
         codeSnip: '3  '
         lineNumber: 2
         variables:
-          matchingText: ""
+          matchingText: Apache License 2.0
       - uri: file:///source/src/main/webapp/bower_components/patternfly/README.md
         message: ""
         lineNumber: 204
         variables:
-          matchingText: ""
+          matchingText: Apache License 2.0
     discover-maven-xml:
       description: Maven XML file
       labels:
@@ -726,21 +728,21 @@
         codeSnip: "19  \t   xsi:schemaLocation=\""
         lineNumber: 18
         variables:
-          matchingText: ""
+          matchingText: http://xmlns.jcp.org/xml/ns/javaee
       - uri: file:///source/src/main/webapp/WEB-INF/beans.xml
         message: Replace `http://xmlns.jcp.org/xml/ns/javaee` with `https://jakarta.ee/xml/ns/jakartaee`
           and change the schema version number
         codeSnip: 21        http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd"
         lineNumber: 20
         variables:
-          matchingText: ""
+          matchingText: http://xmlns.jcp.org/xml/ns/javaee
       - uri: file:///source/src/main/webapp/WEB-INF/beans.xml
         message: Replace `http://xmlns.jcp.org/xml/ns/javaee` with `https://jakarta.ee/xml/ns/jakartaee`
           and change the schema version number
         codeSnip: "22  \t   bean-discovery-mode=\"all\">"
         lineNumber: 21
         variables:
-          matchingText: ""
+          matchingText: http://xmlns.jcp.org/xml/ns/javaee
       links:
       - url: https://jakarta.ee/xml/ns/jakartaee/#10
         title: Jakarta EE XML Schemas
@@ -764,21 +766,21 @@
         codeSnip: 4               xsi:schemaLocation="
         lineNumber: 3
         variables:
-          matchingText: ""
+          matchingText: http://xmlns.jcp.org/xml/ns/persistence
       - uri: file:///source/src/main/resources/META-INF/persistence.xml
         message: Replace `http://xmlns.jcp.org/xml/ns/persistence` with `https://jakarta.ee/xml/ns/persistence`
           and change the schema version number
         codeSnip: 6          http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
         lineNumber: 5
         variables:
-          matchingText: ""
+          matchingText: http://xmlns.jcp.org/xml/ns/persistence
       - uri: file:///source/src/main/resources/META-INF/persistence.xml
         message: Replace `http://xmlns.jcp.org/xml/ns/persistence` with `https://jakarta.ee/xml/ns/persistence`
           and change the schema version number
         codeSnip: 7      <persistence-unit name="primary">
         lineNumber: 6
         variables:
-          matchingText: ""
+          matchingText: http://xmlns.jcp.org/xml/ns/persistence
       links:
       - url: https://jakarta.ee/xml/ns/persistence/#3
         title: Jakarta Persistence XML Schemas
@@ -801,7 +803,7 @@
         codeSnip: "22  \t   bean-discovery-mode=\"all\">"
         lineNumber: 21
         variables:
-          matchingText: ""
+          matchingText: beans_1_1.xsd
       links:
       - url: https://jakarta.ee/xml/ns/jakartaee/#9
         title: Jakarta XML Schemas
@@ -824,7 +826,7 @@
         codeSnip: 7      <persistence-unit name="primary">
         lineNumber: 6
         variables:
-          matchingText: ""
+          matchingText: persistence_2_1.xsd
       links:
       - url: https://jakarta.ee/xml/ns/jakartaee/#9
         title: Jakarta XML Schemas
@@ -848,7 +850,7 @@
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         lineNumber: 2
         variables:
-          matchingText: '"'
+          matchingText: version="2.1"
       effort: 1
     javax-to-jakarta-dependencies-00006:
       description: javax groupId has been replaced by jakarta.platform
@@ -869,13 +871,13 @@
         codeSnip: 20              <artifactId>javaee-web-api</artifactId>
         lineNumber: 19
         variables:
-          matchingText: ""
+          matchingText: groupId>javax<
       - uri: file:///source/pom.xml
         message: Update group dependency by replacing the `javax` groupId with `jakarta.platform`
         codeSnip: 26              <artifactId>javaee-api</artifactId>
         lineNumber: 25
         variables:
-          matchingText: ""
+          matchingText: groupId>javax<
       links:
       - url: https://jakarta.ee/
         title: Jakarta EE
@@ -901,7 +903,7 @@
         codeSnip: 27              <version>7.0</version>
         lineNumber: 26
         variables:
-          matchingText: ""
+          matchingText: artifactId>javaee-api<
       links:
       - url: https://jakarta.ee/
         title: Jakarta EE
@@ -927,7 +929,7 @@
         codeSnip: 21              <version>7.0</version>
         lineNumber: 20
         variables:
-          matchingText: ""
+          matchingText: artifactId>javaee-web-api<
       links:
       - url: https://jakarta.ee/
         title: Jakarta EE
@@ -2554,7 +2556,7 @@
           />
         lineNumber: 10
         variables:
-          matchingText: ""
+          matchingText: <property name="javax.
       links:
       - url: https://jakarta.ee/
         title: Jakarta EE
@@ -3607,19 +3609,19 @@
         codeSnip: 4               xsi:schemaLocation="
         lineNumber: 3
         variables:
-          matchingText: ""
+          matchingText: http://xmlns.jcp.org/xml/ns/persistence
       - uri: file:///source/src/main/resources/META-INF/persistence.xml
         message: ""
         codeSnip: 6          http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
         lineNumber: 5
         variables:
-          matchingText: ""
+          matchingText: http://xmlns.jcp.org/xml/ns/persistence
       - uri: file:///source/src/main/resources/META-INF/persistence.xml
         message: ""
         codeSnip: 7      <persistence-unit name="primary">
         lineNumber: 6
         variables:
-          matchingText: ""
+          matchingText: http://xmlns.jcp.org/xml/ns/persistence
     technology-usage-database-01200:
       description: JPA Queries
       labels:
