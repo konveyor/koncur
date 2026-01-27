@@ -25,7 +25,7 @@ jobs:
           podman machine start
           podman cp $(podman create --name kantra-download quay.io/konveyor/kantra:latest):/usr/local/bin/darwin-kantra . &&\
           podman rm kantra-download
-          cp kantra $HOME/.local/bin/kantra
+          cp darwin-kantra $HOME/.local/bin/kantra
 
       - name: Download and install kantra
         if: ${{ inputs.os != 'macos-15-intel' }}
