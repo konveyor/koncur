@@ -1,4 +1,4 @@
-.PHONY: help kind-create kind-delete hub-install hub-uninstall hub-forward hub-status test-hub clean build
+.PHONY: help kind-create kind-delete hub-install hub-install-auth _hub-install hub-uninstall hub-forward hub-status hub-logs test-hub clean build setup setup-auth teardown
 
 # Configuration
 KIND_CLUSTER_NAME ?= koncur-test
@@ -67,18 +67,32 @@ kind-delete: ## Delete the Kind cluster
 
 ##@ Tackle Hub Installation
 
-hub-install: ## Install Tackle Hub on the Kind cluster (from main branch)
+AUTH_ENABLED ?= false
+TACKLE_ADMIN_USER ?= admin
+TACKLE_ADMIN_PASS ?= Passw0rd!
+
+hub-install: ## Install Tackle Hub on the Kind cluster (auth disabled)
+	@$(MAKE) _hub-install AUTH_ENABLED=false
+
+hub-install-auth: ## Install Tackle Hub with authentication enabled
+	@$(MAKE) _hub-install AUTH_ENABLED=true
+
+_hub-install: ## Internal target for hub installation
 	@echo "Installing OLM..."
 	@curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v0.38.0/install.sh | bash -s v0.38.0 || true
 	@echo "Waiting for OLM to be ready..."
 	@$(KUBECTL) wait --for=condition=ready pod -l app=olm-operator -n olm --timeout=300s
 	@$(KUBECTL) wait --for=condition=ready pod -l app=catalog-operator -n olm --timeout=300s
+	@echo "Restarting operatorhubio-catalog to ensure gRPC connectivity..."
+	@$(KUBECTL) delete pod -n olm -l olm.catalogSource=operatorhubio-catalog --ignore-not-found=true || true
+	@sleep 5
+	@$(KUBECTL) wait --for=condition=ready pod -l olm.catalogSource=operatorhubio-catalog -n olm --timeout=120s || true
 	@echo "Installing Tackle operator from main branch..."
 	@$(KUBECTL) apply -f https://raw.githubusercontent.com/konveyor/tackle2-operator/main/tackle-k8s.yaml
 	@echo "Waiting for Tackle CRD to be available..."
-	@for i in $$(seq 1 60); do \
+	@for i in $$(seq 1 120); do \
 		$(KUBECTL) get crd tackles.tackle.konveyor.io >/dev/null 2>&1 && break || sleep 5; \
-		if [ $$i -eq 60 ]; then echo "Timeout waiting for CRD to be created"; exit 1; fi; \
+		if [ $$i -eq 120 ]; then echo "Timeout waiting for CRD to be created"; exit 1; fi; \
 	done
 	@$(KUBECTL) wait --for condition=established --timeout=300s crd/tackles.tackle.konveyor.io
 	@echo "Waiting for operator to be ready..."
@@ -110,7 +124,7 @@ hub-install: ## Install Tackle Hub on the Kind cluster (from main branch)
 	@printf '    path: /cache/hub-cache\n' >> .koncur/config/cache-pv.yaml
 	@printf '    type: DirectoryOrCreate\n' >> .koncur/config/cache-pv.yaml
 	@$(KUBECTL) apply -f .koncur/config/cache-pv.yaml
-	@echo "Creating Tackle CR with auth disabled..."
+	@echo "Creating Tackle CR with auth=$(AUTH_ENABLED)..."
 	@mkdir -p .koncur/config
 	@printf 'kind: Tackle\n' > .koncur/config/tackle-cr.yaml
 	@printf 'apiVersion: tackle.konveyor.io/v1alpha1\n' >> .koncur/config/tackle-cr.yaml
@@ -118,17 +132,54 @@ hub-install: ## Install Tackle Hub on the Kind cluster (from main branch)
 	@printf '  name: tackle\n' >> .koncur/config/tackle-cr.yaml
 	@printf '  namespace: konveyor-tackle\n' >> .koncur/config/tackle-cr.yaml
 	@printf 'spec:\n' >> .koncur/config/tackle-cr.yaml
-	@printf '  feature_auth_required: "false"\n' >> .koncur/config/tackle-cr.yaml
 	@printf '  cache_storage_class: "manual"\n' >> .koncur/config/tackle-cr.yaml
 	@printf '  cache_data_volume_size: "10Gi"\n' >> .koncur/config/tackle-cr.yaml
 	@printf '  rwx_supported: "true"\n' >> .koncur/config/tackle-cr.yaml
 	@printf '  provider_java_container_requests_cpu: "100m"\n' >> .koncur/config/tackle-cr.yaml
 	@printf '  analyzer_container_requests_cpu: "100m"\n' >> .koncur/config/tackle-cr.yaml
 	@printf '  provider_python_container_requests_cpu: "100m"\n' >> .koncur/config/tackle-cr.yaml
+	@printf '  feature_auth_required: "$(AUTH_ENABLED)"\n' >> .koncur/config/tackle-cr.yaml
 	@$(KUBECTL) apply -f .koncur/config/tackle-cr.yaml
 	@echo "Waiting for Tackle Hub to be ready (this may take a few minutes)..."
 	@sleep 30
 	@$(KUBECTL) wait --for=condition=ready pod -l app.kubernetes.io/name=tackle-hub -n konveyor-tackle --timeout=600s || true
+	@if [ "$(AUTH_ENABLED)" = "true" ]; then \
+		echo "Waiting for Keycloak to be ready..."; \
+		$(KUBECTL) wait --for=condition=ready pod -l app.kubernetes.io/name=keycloak -n konveyor-tackle --timeout=600s || true; \
+		echo "Waiting for tackle ingress to be created..."; \
+		for i in $$(seq 1 60); do \
+			$(KUBECTL) get ingress tackle -n konveyor-tackle >/dev/null 2>&1 && break || sleep 5; \
+			if [ $$i -eq 60 ]; then echo "Timeout waiting for tackle ingress"; exit 1; fi; \
+		done; \
+		echo "Configuring Keycloak hostname for port 8080..."; \
+		$(KUBECTL) set env deployment/tackle-keycloak-sso -n konveyor-tackle \
+			KC_HOSTNAME=http://localhost:8080/auth \
+			KC_HOSTNAME_BACKCHANNEL_DYNAMIC=true; \
+		$(KUBECTL) patch deployment tackle-keycloak-sso -n konveyor-tackle --type='json' -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/args", "value": ["-Djgroups.dns.query=mta-kc-discovery.openshift-mta", "--verbose", "start", "--hostname=http://localhost:8080/auth", "--hostname-backchannel-dynamic=true"]}]'; \
+		echo "Waiting for Keycloak to restart with new configuration..."; \
+		$(KUBECTL) rollout status deployment/tackle-keycloak-sso -n konveyor-tackle --timeout=180s; \
+		$(KUBECTL) patch ingress tackle -n konveyor-tackle --type='json' -p='[{"op": "add", "path": "/spec/rules/0/http/paths/0", "value": {"backend": {"service": {"name": "tackle-keycloak-sso", "port": {"number": 8080}}}, "path": "/auth", "pathType": "Prefix"}}]'; \
+		$(KUBECTL) set env deployment/tackle-hub -n konveyor-tackle KEYCLOAK_REQ_PASS_UPDATE=false; \
+		$(KUBECTL) rollout status deployment/tackle-hub -n konveyor-tackle --timeout=120s; \
+		KC_POD=$$($(KUBECTL) get pods -n konveyor-tackle -l app.kubernetes.io/name=tackle-keycloak-sso -o jsonpath='{.items[0].metadata.name}'); \
+		KC_PASS=$$($(KUBECTL) get secret tackle-keycloak-sso -n konveyor-tackle -o jsonpath='{.data.password}' | base64 -d); \
+		$(KUBECTL) exec -n konveyor-tackle $$KC_POD -- /opt/keycloak/bin/kcadm.sh config credentials --server http://localhost:8080/auth --realm master --user admin --password "$$KC_PASS"; \
+		echo "Waiting for admin user to be created in Keycloak..."; \
+		ADMIN_USER_ID=""; \
+		for i in $$(seq 1 30); do \
+			ADMIN_USER_ID=$$($(KUBECTL) exec -n konveyor-tackle $$KC_POD -- /opt/keycloak/bin/kcadm.sh get users -r tackle -q username=admin --fields id 2>/dev/null | grep -o '"id" *: *"[^"]*"' | cut -d'"' -f4); \
+			if [ -n "$$ADMIN_USER_ID" ]; then \
+				break; \
+			fi; \
+			echo "  Admin user not yet created, waiting 5s..."; \
+			sleep 5; \
+		done; \
+		if [ -n "$$ADMIN_USER_ID" ]; then \
+			$(KUBECTL) exec -n konveyor-tackle $$KC_POD -- /opt/keycloak/bin/kcadm.sh update users/$$ADMIN_USER_ID -r tackle -s 'requiredActions=[]'; \
+		else \
+			echo "Warning: Admin user was not created after 150s."; \
+		fi; \
+	fi
 	@echo ""
 	@echo "Tackle Hub installation complete!"
 	@echo ""
@@ -212,6 +263,12 @@ setup: kind-create hub-install build ## Complete setup: create cluster, install 
 	@echo "Next steps:"
 	@echo "1. In one terminal, run: make hub-forward"
 	@echo "2. In another terminal, run: make test-hub"
+	@echo ""
+
+setup-auth: kind-create hub-install-auth build 
+	@echo "Tackle Hub Credentials:"
+	@echo "  User: $(TACKLE_ADMIN_USER)"
+	@echo "  Pass: $(TACKLE_ADMIN_PASS)"
 	@echo ""
 
 teardown: hub-uninstall kind-delete ## Complete teardown: uninstall hub, delete cluster
