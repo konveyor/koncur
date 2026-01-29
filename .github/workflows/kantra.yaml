@@ -60,6 +60,8 @@ jobs:
 
       - name: Checkout repo
         uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
 
       - name: Setup go
         uses: actions/setup-go@v6
