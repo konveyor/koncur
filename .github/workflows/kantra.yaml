@@ -12,6 +12,22 @@ jobs:
   kantra-test:
     runs-on: ${{ inputs.os }}
     steps:
+      # This should create a maven settings file with the github server's set up and the user/pass set to the github token.
+      # NOTE: this because of restrictions specifically for maven packages in github, we can't access a different repos package.
+      # Still need to find a scalable solution here. 
+      - name: Setup Java for maven Cache
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'maven'
+          settings-path: "${{ runner.temp }}/settings.xml"
+
+      - name: Setup go
+        uses: actions/setup-go@v6
+        with:
+          go-version: '1.25'
+
       - name: Verify local/bin is on the path
         shell: bash
         run: |
@@ -23,7 +39,7 @@ jobs:
         shell: bash
         run: |
           brew install podman
-          podman machine init --rootful --memory 10240 --cpus 3
+          podman machine init --rootful --memory 8192 --cpus 2
           podman machine start 
           podman cp $(podman create --name kantra-download quay.io/konveyor/kantra:latest):/usr/local/bin/darwin-kantra . &&\
           podman rm kantra-download
@@ -51,24 +67,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v6
 
-      - name: Setup go
-        uses: actions/setup-go@v6
-        with:
-          go-version: '1.25'
-
       - name: Build Koncur
         shell: bash
         run: |
           go build -o $HOME/.local/bin/koncur ./cmd/koncur/main.go
 
-      # This should create a maven settings file with the github server's set up and the user/pass set to the github token.
-      # NOTE: this because of restrictions specifically for maven packages in github, we can't access a different repos package.
-      # Still need to find a scalable solution here. 
-      - name: Create maven settings file
-        uses: s4u/maven-settings-action@v4.0.0
-        with:
-          path: "${{ runner.temp }}/settings.xml"
-      
       - name: Create kantra config
         shell: bash
         run: |
