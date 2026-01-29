@@ -18,19 +18,30 @@ jobs:
           mkdir -p $HOME/.local/bin
           echo $HOME/.local/bin >> $GITHUB_PATH
 
-      - name: Install podman
+      - name: Install podman and Kantra (macos)
         if: ${{ inputs.os == 'macos-15-intel' }}
         shell: bash
         run: |
           brew install podman
-          podman machine init --rootful
-          podman machine start
+          podman machine init --rootful --memory 10240 --cpus 3
+          podman machine start 
           podman cp $(podman create --name kantra-download quay.io/konveyor/kantra:latest):/usr/local/bin/darwin-kantra . &&\
           podman rm kantra-download
           cp darwin-kantra $HOME/.local/bin/kantra
 
-      - name: Download and install kantra
-        if: ${{ inputs.os != 'macos-15-intel' }}
+      - name: Download and install kantra (windows)
+        if: ${{ inputs.os == 'windows-latest' }}
+        shell: bash
+        run: |
+          choco install podman-cli
+          podman machine init --rootful --memory 10240 --cpus 3
+          podman machine start 
+          podman cp $(podman create --name kantra-download quay.io/konveyor/kantra:latest):/usr/local/bin/windows-kantra . &&\
+          podman rm kantra-download
+          cp windows-kantra $HOME/.local/bin/kantra.exe
+
+      - name: Download and install kantra (linux)
+        if: ${{ inputs.os == 'ubuntu-24.04-arm' }}
         shell: bash
         run: |
           podman cp $(podman create --name kantra-download quay.io/konveyor/kantra:latest):/usr/local/bin/kantra . &&\
@@ -51,6 +62,8 @@ jobs:
           go build -o $HOME/.local/bin/koncur ./cmd/koncur/main.go
 
       # This should create a maven settings file with the github server's set up and the user/pass set to the github token.
+      # NOTE: this because of restrictions specifically for maven packages in github, we can't access a different repos package.
+      # Still need to find a scalable solution here. 
       - name: Create maven settings file
         uses: s4u/maven-settings-action@v4.0.0
         with:
@@ -78,8 +91,10 @@ jobs:
           name: koncur-kantra-${{ inputs.os }}-failures
           path: .koncur/output 
           retention-days: 5
+
       - name: Upload result yaml
         uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: koncur-kantra-${{ inputs.os }}-summary
           path: test.yaml

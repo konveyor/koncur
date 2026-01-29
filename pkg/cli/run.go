@@ -201,7 +201,6 @@ You can provide either:
 				}
 				fmt.Printf("\nTest results written to: %s\n", outputFile)
 			}
-			fmt.Println(formatted)
 
 			// Console format - print summary if multiple tests
 			if len(testFiles) > 1 {
@@ -215,7 +214,11 @@ You can provide either:
 				}
 				if failCount > 0 {
 					color.Red("  ✗ Failed: %d", failCount)
-					return nil
+					for _, tr := range summary.Tests {
+						if tr.Status == "failed" {
+							color.Red("    ✗ : %s", tr.Name)
+						}
+					}
 				}
 			}
 

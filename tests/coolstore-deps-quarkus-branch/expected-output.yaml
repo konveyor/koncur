@@ -18,8 +18,6 @@
         variables:
           matchingText: http://localhost:8080/services
       effort: 7
-  errors:
-    java-rmi-00000: unable to ask for Konveyor rule entry
   unmatched:
   - embedded-cache-libraries-01000
   - embedded-cache-libraries-02000
@@ -38,6 +36,7 @@
   - embedded-cache-libraries-15000
   - embedded-cache-libraries-16000
   - java-corba-00000
+  - java-rmi-00000
   - java-rmi-00000
   - java-rmi-00001
   - java-rpc-00000
