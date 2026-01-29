@@ -78,7 +78,7 @@ jobs:
         with:
           application_id: ${{ inputs.bot_id }}
           application_private_key: ${{ secrets.KONVEYOR_BOT_KEY }}
-          permissions: "read:packages"
+          permissions: "packages:read"
 
       - name: Create maven settings file
         if: ${{ !inputs.skip_maven }}
