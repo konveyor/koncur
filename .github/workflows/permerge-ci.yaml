@@ -18,6 +18,8 @@ jobs:
         # Using macos to test amd64 and ubuntu to test arm
         # This is because you can't use container's on mac os arm runners.
         os: [macos-15-intel, ubuntu-24.04-arm, windows-latest]
+        exclude:
+          - os: macos-15-intel
     secrets: inherit
     uses: ./.github/workflows/kantra.yaml
     with:

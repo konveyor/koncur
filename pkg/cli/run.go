@@ -179,9 +179,7 @@ You can provide either:
 				// Run single test
 				testResult, err := runSingleTest(test, target, targetConfig)
 				if err != nil {
-					if outputFormat == "console" {
-						color.Red("  ✗ Error: %v", err)
-					}
+					color.Red("  ✗ Error: %v", err)
 					failCount++
 					if testResult != nil {
 						allResults = append(allResults, *testResult)

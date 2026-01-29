@@ -16,8 +16,8 @@ import (
 
 // KantraTarget implements Target for Kantra
 type KantraTarget struct {
-	binaryPath    string
-	mavenSettings string
+	binaryPath    string `yaml:"binaryPath"`
+	mavenSettings string `yaml:"mavenSettings"`
 }
 
 // NewKantraTarget creates a new Kantra target
@@ -119,6 +119,8 @@ func (k *KantraTarget) Execute(ctx context.Context, test *config.TestDefinition)
 func (k *KantraTarget) buildArgs(test *config.TestDefinition, inputPath, outputDir string, preparedRules []string) []string {
 	analysis := test.Analysis
 	args := []string{"analyze", "--context-lines", strconv.Itoa(analysis.ContextLines)}
+
+	args = append(args, "--log-level", "30")
 
 	// Input application (now using the prepared input path)
 	args = append(args, "--input", inputPath)

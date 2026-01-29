@@ -38,6 +38,7 @@ jobs:
           podman cp $(podman create --name kantra-download quay.io/konveyor/kantra:latest):/usr/local/bin/darwin-kantra . &&\
           podman rm kantra-download
           cp darwin-kantra $HOME/.local/bin/kantra
+          echo "NETWORK_GATEWAY=host.containers.internal" >> $GITHUB_ENV
 
       - name: Download and install kantra (windows)
         if: ${{ inputs.os == 'windows-latest' }}
@@ -49,6 +50,41 @@ jobs:
           podman cp $(podman create --name kantra-download quay.io/konveyor/kantra:latest):/usr/local/bin/windows-kantra . &&\
           podman rm kantra-download
           cp windows-kantra $HOME/.local/bin/kantra.exe
+          ls -la $HOME/.local/bin/kantra.exe
+          HOST_IP=$(Get-NetIpAddress | where { $_.InterfaceAlias -Like '*WSL*' -and $_.AddressFamily -EQ "IPv4" } | select -ExpandProperty IPAddress)
+          echo $HOST_IP
+          echo "NETWORK_GATEWAY=$HOST_IP:8085" >> $GITHUB_ENV
+
+
+      - name: Also add local/bin to windows path
+        if: ${{ inputs.os == 'windows-latest' }}
+        shell: powershell
+        run: |
+          $newPath = "$HOME\.local\bin"
+          Write-Output "$newPath" >> $env:GITHUB_PATH
+      
+
+      - name: Create containers config for host networking
+        if: ${{ inputs.os == 'windows-latest' }}
+        shell: bash
+        run: |
+          mkdir -p $HOME/.config/containers
+          cat <<-EOF > /$HOME/.config/containers//containers.conf
+          [containers]
+          netns="host"
+          EOF
+
+      - name: Create containers config for host networking
+        if: ${{ inputs.os == 'ubuntu-24.04-arm' }}
+        shell: bash
+        run: |
+          mkdir -p $HOME/.config/containers
+          cat <<-EOF > /$HOME/.config/containers//containers.conf
+          # [containers]
+          # netns="host"
+          [network]
+          network_cmd_options = ["allow_host_loopback=true"]
+          EOF
 
       - name: Download and install kantra (linux)
         if: ${{ inputs.os == 'ubuntu-24.04-arm' }}
@@ -57,9 +93,13 @@ jobs:
           podman cp $(podman create --name kantra-download quay.io/konveyor/kantra:latest):/usr/local/bin/kantra . &&\
           podman rm kantra-download
           cp kantra $HOME/.local/bin/kantra
+          podman network inspect podman
+          echo "NETWORK_GATEWAY=host.containers.internal" >> $GITHUB_ENV
 
       - name: Checkout repo
         uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Setup go
         uses: actions/setup-go@v6
@@ -70,32 +110,57 @@ jobs:
         shell: bash
         run: |
           go build -o $HOME/.local/bin/koncur ./cmd/koncur/main.go
-
-      - name: Get Token
-        id: get_workflow_token
+      
+      - name: Run server for maven-local-resources
         if: ${{ !inputs.skip_maven }}
-        uses: peter-murray/workflow-application-token-action@v4
+        uses: Eun/http-server-action@v1
         with:
-          application_id: ${{ inputs.bot_id }}
-          application_private_key: ${{ secrets.KONVEYOR_BOT_KEY }}
-          permissions: "read:packages"
+          directory: local-maven-resources
+          port: 8085
+
+
+      - name: Set maven settings path (Windows)
+        if: ${{ !inputs.skip_maven && inputs.os == 'windows-latest' }}
+        shell: bash
+        run: |
+          # Create directory using bash
+          mkdir -p "$HOME/.koncur/temp"
+          # Convert Unix path to Windows path for the env variable
+          WINDOWS_PATH=$(cygpath -w "$HOME/.koncur/temp/settings.xml")
+          echo "MAVEN_SETTINGS_PATH=$WINDOWS_PATH" >> $GITHUB_ENV
+
+      - name: Set maven settings path (Unix)
+        if: ${{ !inputs.skip_maven && inputs.os != 'windows-latest' }}
+        shell: bash
+        run: |
+          mkdir -p "$HOME/.koncur/temp"
+          echo "MAVEN_SETTINGS_PATH=$HOME/.koncur/temp/settings.xml" >> $GITHUB_ENV
 
       - name: Create maven settings file
         if: ${{ !inputs.skip_maven }}
         uses: s4u/maven-settings-action@v4.0.0
         with:
-          servers: '[{"id": "tackle-testapp-public", "username": "${{ vars.KONVEYOR_BOT_ID }}", "password": "${{ steps.get_workflow_token.outputs.token }}"]'
-          path: "${{ runner.temp }}/settings.xml"
+          githubServer: false
+          repositories: '[{"id": "tackle-testapp-public", "name": "Local tackle-testapp repo", "url": "http://${{ env.NETWORK_GATEWAY }}:8085"}]'
+          mirrors: '[{"id": "maven-default-http-blocker", "name": "disable http block", "mirrorOf": "tackle-testapp-public", "url": "http://${{ env.NETWORK_GATEWAY }}:8085", "blocked": false}]'
+          path: "${{ env.MAVEN_SETTINGS_PATH }}"
 
+      - name: Test pulling artifact from mvn repo
+        if: ${{ !inputs.skip_maven }}
+        run: |
+          mvn -X -s ${{ runner.temp }}/settings.xml dependency:get -Dartifact=io.konveyor.demo:config-utils:1.0.0:jar
+
+      # Saving for if I need later:
+      # binaryPath: "$HOME/.local/bin/kantra"
       - name: Create kantra config
         if: ${{ !inputs.skip_maven }}
         shell: bash
         run: |
           mkdir -p .koncur/config
-          cat <<-EOF > .koncur/config/target-kantra.yaml
+          cat << 'EOF' > .koncur/config/target-kantra.yaml
           type: kantra
           kantra:
-          \tmavenSettings: "${{ runner.temp }}/settings.xml"
+            mavenSettings: '${{ env.MAVEN_SETTINGS_PATH }}'
           EOF
       
       - name: Run test
@@ -103,6 +168,7 @@ jobs:
         env:
           SKIP_MAVEN: ${{ fromJSON(inputs.skip_maven) }}
         run: |
+          echo "$PATH"
           koncur run tests -t kantra -o yaml --output-file test.yaml
 
 
