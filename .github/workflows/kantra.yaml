@@ -13,12 +13,14 @@ jobs:
     runs-on: ${{ inputs.os }}
     steps:
       - name: Verify local/bin is on the path
+        shell: bash
         run: |
           mkdir -p $HOME/.local/bin
           echo $HOME/.local/bin >> $GITHUB_PATH
 
       - name: Install podman
         if: ${{ inputs.os == 'macos-15-intel' }}
+        shell: bash
         run: |
           brew install podman
           podman machine init --rootful
@@ -29,6 +31,7 @@ jobs:
 
       - name: Download and install kantra
         if: ${{ inputs.os != 'macos-15-intel' }}
+        shell: bash
         run: |
           podman cp $(podman create --name kantra-download quay.io/konveyor/kantra:latest):/usr/local/bin/kantra . &&\
           podman rm kantra-download
@@ -43,6 +46,7 @@ jobs:
           go-version: '1.25'
 
       - name: Build Koncur
+        shell: bash
         run: |
           go build -o $HOME/.local/bin/koncur ./cmd/koncur/main.go
 
@@ -53,6 +57,7 @@ jobs:
           path: "${{ runner.temp }}/settings.xml"
       
       - name: Create kantra config
+        shell: bash
         run: |
           mkdir -p .koncur/config
           cat <<-EOF > .koncur/config/target-kantra.yaml
@@ -62,5 +67,20 @@ jobs:
           EOF
       
       - name: Run test
+        shell: bash
         run: |
-          koncur run tests -t kantra 
+          koncur run tests -t kantra -o yaml --output-file test.yaml
+
+      - name: Upload output on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: koncur-kantra-${{ inputs.os }}-failures
+          path: .koncur/output 
+          retention-days: 5
+      - name: Upload result yaml
+        uses: actions/upload-artifact@v4
+        with:
+          name: koncur-kantra-${{ inputs.os }}-summary
+          path: test.yaml
+          retention-days: 3
