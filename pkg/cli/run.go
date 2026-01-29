@@ -189,23 +189,21 @@ You can provide either:
 			}
 
 			// Output based on format
-			if outputFormat != "console" {
-				formatted, err := FormatResults(summary, OutputFormat(outputFormat))
-				if err != nil {
-					return fmt.Errorf("failed to format results: %w", err)
-				}
+			formatted, err := FormatResults(summary, OutputFormat(outputFormat))
+			if err != nil {
+				return fmt.Errorf("failed to format results: %w", err)
+			}
 
-				// Write to file if specified, otherwise to stdout
-				if outputFile != "" {
-					if err := os.WriteFile(outputFile, []byte(formatted), 0644); err != nil {
-						return fmt.Errorf("failed to write output file: %w", err)
-					}
-					fmt.Printf("\nTest results written to: %s\n", outputFile)
-				} else {
-					fmt.Println(formatted)
+			// Write to file if specified, otherwise to stdout
+			if outputFile != "" {
+				if err := os.WriteFile(outputFile, []byte(formatted), 0644); err != nil {
+					return fmt.Errorf("failed to write output file: %w", err)
 				}
+				fmt.Printf("\nTest results written to: %s\n", outputFile)
+			}
 
-				// Print summary to console even when writing to file
+			// Console format - print summary if multiple tests
+			if len(testFiles) > 1 {
 				fmt.Println("\n" + strings.Repeat("=", 60))
 				fmt.Printf("Summary: %d total\n", len(testFiles))
 				if successCount > 0 {
@@ -216,27 +214,17 @@ You can provide either:
 				}
 				if failCount > 0 {
 					color.Red("  ✗ Failed: %d", failCount)
-				}
-			} else {
-				// Console format - print summary if multiple tests
-				if len(testFiles) > 1 {
-					fmt.Println("\n" + strings.Repeat("=", 60))
-					fmt.Printf("Summary: %d total\n", len(testFiles))
-					if successCount > 0 {
-						color.Green("  ✓ Passed: %d", successCount)
+					for _, tr := range summary.Tests {
+						if tr.Status == "failed" {
+							color.Red("    ✗ : %s", tr.Name)
+						}
 					}
-					if skippedCount > 0 {
-						color.Yellow("  ⊘ Skipped: %d", skippedCount)
-					}
-					if failCount > 0 {
-						color.Red("  ✗ Failed: %d", failCount)
-						return nil
-					}
-				} else if failCount > 0 {
-					return nil
 				}
 			}
 
+			if summary.Failed > 0 {
+				os.Exit(1)
+			}
 			return nil
 		},
 	}
@@ -342,11 +330,9 @@ func runSingleTest(testFile string, target targets.Target, targetConfig *config.
 	// Report results
 	if validation.Passed {
 		testResult.Status = "passed"
-		if outputFormat == "console" {
-			green := color.New(color.FgGreen, color.Bold)
-			green.Printf("  ✓ PASSED")
-			fmt.Printf(" - Duration: %s, RuleSets: %d (filtered from %d)\n", result.Duration, len(filteredActual), len(actualOutput))
-		}
+		green := color.New(color.FgGreen, color.Bold)
+		green.Printf("  ✓ PASSED")
+		fmt.Printf(" - Duration: %s, RuleSets: %d (filtered from %d)\n", result.Duration, len(filteredActual), len(actualOutput))
 		return testResult, nil
 	}
 
@@ -354,25 +340,23 @@ func runSingleTest(testFile string, target targets.Target, targetConfig *config.
 	testResult.Status = "failed"
 	testResult.ValidationErrors = validation.Errors
 
-	if outputFormat == "console" {
-		// Test failed
-		red := color.New(color.FgRed, color.Bold)
-		red.Println("  ✗ FAILED")
+	// Test failed
+	red := color.New(color.FgRed, color.Bold)
+	red.Println("  ✗ FAILED")
 
-		// Print validation errors in a pretty format
-		if len(validation.Errors) > 0 {
-			fmt.Printf("\n    Found %d validation error(s):\n\n", len(validation.Errors))
+	// Print validation errors in a pretty format
+	if len(validation.Errors) > 0 {
+		fmt.Printf("\n    Found %d validation error(s):\n\n", len(validation.Errors))
 
-			for i, err := range validation.Errors {
-				err.Print(i + 1)
+		for i, err := range validation.Errors {
+			err.Print(i + 1)
 
-				// Add spacing between errors
-				if i < len(validation.Errors)-1 {
-					fmt.Println()
-				}
+			// Add spacing between errors
+			if i < len(validation.Errors)-1 {
+				fmt.Println()
 			}
-			fmt.Println()
 		}
+		fmt.Println()
 	}
 
 	return testResult, nil

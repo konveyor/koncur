@@ -1,6 +1,5 @@
 - name: discovery-rules
   tags:
-  - EJB XML
   - JPA XML
   - Java Source
   - Maven XML
@@ -46,86 +45,6 @@
       incidents:
       - uri: file:///source/java-project/pom.xml
         message: ""
-    windup-discover-ejb-configuration:
-      description: EJB XML Configuration
-      labels:
-      - discovery
-      - konveyor.io/include=always
-      - konveyor.io/target=discovery
-      - tag=EJB XML
-      incidents:
-      - uri: file:///source/java-project/pom.xml
-        message: ""
-        codeSnip: '5  '
-        lineNumber: 4
-        variables:
-          data: ""
-          innerText: "\n\n  4.0.0\n\n  io.konveyor\n  java-project\n  1.0-SNAPSHOT\n\n
-            \ java-project\n  http://www.konveyor.io\n\n  \n    UTF-8\n  \n\n  \n\n
-            \   \n      aopalliance\n      aopalliance\n      1.0\n    \n\n    \n
-            \     asm\n      asm\n      3.3.1\n    \n\n    \n      cglib\n      cglib\n
-            \     2.2.2\n    \n\n    \n      commons-logging\n      commons-logging\n
-            \     1.1.1\n    \n\n    \n      net.wasdev.wlp.sample\n      acmeair-common\n
-            \     1.0-SNAPSHOT\n    \n\n    \n      net.wasdev.wlp.sample\n      acmeair-services\n
-            \     1.0-SNAPSHOT\n    \n\n    \n      net.wasdev.wlp.sample\n      acmeair-services-jpa\n
-            \     1.0-SNAPSHOT\n    \n\n    \n      org.aspectj\n      aspectjrt\n
-            \     1.6.8\n    \n\n    \n      org.aspectj\n      aspectjweaver\n      1.6.8\n
-            \   \n\n    \n      org.springframework\n      spring-aop\n      3.1.2.RELEASE\n
-            \   \n\n    \n      org.springframework\n      spring-asm\n      3.1.2.RELEASE\n
-            \   \n\n    \n      org.springframework\n      spring-beans\n      3.1.2.RELEASE\n
-            \   \n\n    \n      org.springframework\n      spring-context\n      3.1.2.RELEASE\n
-            \   \n\n    \n      org.springframework\n      spring-core\n      3.1.2.RELEASE\n
-            \   \n\n    \n      org.springframework\n      spring-expression\n      3.1.2.RELEASE\n
-            \   \n\n    \n      org.springframework\n      spring-tx\n      3.1.2.RELEASE\n
-            \   \n\n    \n      org.springframework\n      spring-web\n      3.1.2.RELEASE\n
-            \   \n\n  \n\n  \n  \n\n"
-          matchingXML: <?xml version="1.0" encoding="UTF-8"?><project xmlns="http://maven.apache.org/POM/4.0.0"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-            http://maven.apache.org/xsd/maven-4.0.0.xsd"><modelVersion>4.0.0</modelVersion><groupId>io.konveyor</groupId><artifactId>java-project</artifactId><version>1.0-SNAPSHOT</version><name>java-project</name><url>http://www.konveyor.io</url><properties><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding></properties><dependencies><dependency><groupId>aopalliance</groupId><artifactId>aopalliance</artifactId><version>1.0</version></dependency><dependency><groupId>asm</groupId><artifactId>asm</artifactId><version>3.3.1</version></dependency><dependency><groupId>cglib</groupId><artifactId>cglib</artifactId><version>2.2.2</version></dependency><dependency><groupId>commons-logging</groupId><artifactId>commons-logging</artifactId><version>1.1.1</version></dependency><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>acmeair-common</artifactId><version>1.0-SNAPSHOT</version></dependency><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>acmeair-services</artifactId><version>1.0-SNAPSHOT</version></dependency><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>acmeair-services-jpa</artifactId><version>1.0-SNAPSHOT</version></dependency><dependency><groupId>org.aspectj</groupId><artifactId>aspectjrt</artifactId><version>1.6.8</version></dependency><dependency><groupId>org.aspectj</groupId><artifactId>aspectjweaver</artifactId><version>1.6.8</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-aop</artifactId><version>3.1.2.RELEASE</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-asm</artifactId><version>3.1.2.RELEASE</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-beans</artifactId><version>3.1.2.RELEASE</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-context</artifactId><version>3.1.2.RELEASE</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-core</artifactId><version>3.1.2.RELEASE</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-expression</artifactId><version>3.1.2.RELEASE</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-tx</artifactId><version>3.1.2.RELEASE</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-web</artifactId><version>3.1.2.RELEASE</version></dependency></dependencies><build></build></project>
-      - uri: file:///source/java-project/src/main/java/META-INF/persistence.xml
-        message: ""
-        codeSnip: '10  '
-        lineNumber: 9
-        variables:
-          data: ""
-          innerText: "\n\n\n  \n\n    java:comp/env/jdbc/acmeairdatasource\n\n    com.acmeair.entities.Customer\n
-            \   com.acmeair.entities.CustomerSession\n    com.acmeair.entities.CustomerAddress\n
-            \   com.acmeair.entities.Flight\n    com.acmeair.entities.FlightPK\n    com.acmeair.entities.FlightSegment\n
-            \   com.acmeair.entities.AirportCodeMapping\n    com.acmeair.entities.Booking\n
-            \   com.acmeair.entities.BookingPK\n\n    true\n    \n      \n      \n
-            \   \n  \n\n\n"
-          matchingXML: "<?xml version=\"1.0\" encoding=\"UTF-8\"?><persistence version=\"2.0\"
-            xmlns=\"http://java.sun.com/xml/ns/persistence\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
-            xsi:schemaLocation=\"http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd\"><persistence-unit
-            name=\"acmeairunit\"><jta-data-source>java:comp/env/jdbc/acmeairdatasource</jta-data-source><class>com.acmeair.entities.Customer</class><class>com.acmeair.entities.CustomerSession</class><class>com.acmeair.entities.CustomerAddress</class><class>com.acmeair.entities.Flight</class><class>com.acmeair.entities.FlightPK</class><class>com.acmeair.entities.FlightSegment</class><class>com.acmeair.entities.AirportCodeMapping</class><class>com.acmeair.entities.Booking</class><class>com.acmeair.entities.BookingPK</class><exclude-unlisted-classes>true</exclude-unlisted-classes><properties><!--
-            These properties are creating the database on the fly. We are using them
-            to avoid users having\n          to create a database to run the sample.
-            \n          See also the create=true line in the datasource meta data.
-            --><property name=\"openjpa.jdbc.SynchronizeMappings\" value=\"buildSchema(ForeignKeys=true)\"></property></properties></persistence-unit></persistence>"
-      - uri: file:///source/java-project/src/main/webapp/WEB-INF/web.xml
-        message: ""
-        codeSnip: "7  \t<welcome-file-list>"
-        lineNumber: 6
-        variables:
-          data: ""
-          innerText: "\n\n\tscale-webapp\n\t\n\t\tindex.html\n\t\tindex.htm\n\t\tindex.jsp\n\t\tdefault.html\n\t\tdefault.htm\n\t\tdefault.jsp\n\t\n\n\t\n\t\n\t\tcontextClass\n\t\t\n
-            \         org.springframework.web.context.support.AnnotationConfigWebApplicationContext\n
-            \     \n\t\n\n\t\n\t\n\t\tcontextConfigLocation\n\t\tcom.acmeair.web.config.WXSDirectAppConfig\n\t\n\n\t\n
-            \   \tCookieFilter\n    \tcom.acmeair.web.RESTCookieSessionFilter\n\t\n\t\n
-            \   \tCookieFilter\n    \t/rest/api/*\n\t\n\n\t\n\t\n\t\torg.springframework.web.context.ContextLoaderListener\n\t\n\t\n\t\tjavax.ws.rs.core.Application\n\t\n\t\n\t\tjavax.ws.rs.core.Application\n\t\t/rest/api/*\n\t\n\t\n
-            \   \n        acmeair/emf\n        acmeairunit\n    \n    \n    \n        acmeair/em\n
-            \       acmeairunit\n    \n"
-          matchingXML: "<?xml version=\"1.0\" encoding=\"UTF-8\"?><web-app xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
-            xmlns=\"http://java.sun.com/xml/ns/javaee\" xmlns:web=\"http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd\"
-            xsi:schemaLocation=\"http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd\"
-            version=\"3.0\"><display-name>scale-webapp</display-name><welcome-file-list><welcome-file>index.html</welcome-file><welcome-file>index.htm</welcome-file><welcome-file>index.jsp</welcome-file><welcome-file>default.html</welcome-file><welcome-file>default.htm</welcome-file><welcome-file>default.jsp</welcome-file></welcome-file-list><!--
-            Configure ContextLoaderListener to use AnnotationConfigWebApplicationContext
-            \n\t\tinstead of the default XmlWebApplicationContext --><context-param><param-name>contextClass</param-name><param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value></context-param><!--
-            Configuration locations must consist of one or more comma- or space-delimited
-            \n\t\tfully-qualified @Configuration classes. Fully-qualified packages
-            may also \n\t\tbe specified for component-scanning --><context-param><param-name>contextConfigLocation</param-name><param-value>com.acmeair.web.config.WXSDirectAppConfig</param-value></context-param><filter><filter-name>CookieFilter</filter-name><filter-class>com.acmeair.web.RESTCookieSessionFilter</filter-class></filter><filter-mapping><filter-name>CookieFilter</filter-name><url-pattern>/rest/api/*</url-pattern></filter-mapping><!--
-            Bootstrap the root application context as usual using ContextLoaderListener
-            --><listener><listener-class>org.springframework.web.context.ContextLoaderListener</listener-class></listener><servlet><servlet-name>javax.ws.rs.core.Application</servlet-name></servlet><servlet-mapping><servlet-name>javax.ws.rs.core.Application</servlet-name><url-pattern>/rest/api/*</url-pattern></servlet-mapping><persistence-unit-ref><persistence-unit-ref-name>acmeair/emf</persistence-unit-ref-name><persistence-unit-name>acmeairunit</persistence-unit-name></persistence-unit-ref><persistence-context-ref><persistence-context-ref-name>acmeair/em</persistence-context-ref-name><persistence-unit-name>acmeairunit</persistence-unit-name></persistence-context-ref></web-app>"
     windup-discover-jpa-configuration:
       description: JPA XML Configuration
       labels:
@@ -174,10 +93,12 @@
             \       acmeairunit\n    \n"
           matchingXML: "<display-name>scale-webapp</display-name><welcome-file-list><welcome-file>index.html</welcome-file><welcome-file>index.htm</welcome-file><welcome-file>index.jsp</welcome-file><welcome-file>default.html</welcome-file><welcome-file>default.htm</welcome-file><welcome-file>default.jsp</welcome-file></welcome-file-list><!--
             Configure ContextLoaderListener to use AnnotationConfigWebApplicationContext
-            \n\t\tinstead of the default XmlWebApplicationContext --><context-param><param-name>contextClass</param-name><param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value></context-param><!--
-            Configuration locations must consist of one or more comma- or space-delimited
-            \n\t\tfully-qualified @Configuration classes. Fully-qualified packages
-            may also \n\t\tbe specified for component-scanning --><context-param><param-name>contextConfigLocation</param-name><param-value>com.acmeair.web.config.WXSDirectAppConfig</param-value></context-param><filter><filter-name>CookieFilter</filter-name><filter-class>com.acmeair.web.RESTCookieSessionFilter</filter-class></filter><filter-mapping><filter-name>CookieFilter</filter-name><url-pattern>/rest/api/*</url-pattern></filter-mapping><!--
+            \n\t\tinstead of the default XmlWebApplicationContext --><context-param><param-name>contextClass</param-name><param-value>\n
+            \         org.springframework.web.context.support.AnnotationConfigWebApplicationContext\n
+            \     </param-value></context-param><!-- Configuration locations must
+            consist of one or more comma- or space-delimited \n\t\tfully-qualified
+            @Configuration classes. Fully-qualified packages may also \n\t\tbe specified
+            for component-scanning --><context-param><param-name>contextConfigLocation</param-name><param-value>com.acmeair.web.config.WXSDirectAppConfig</param-value></context-param><filter><filter-name>CookieFilter</filter-name><filter-class>com.acmeair.web.RESTCookieSessionFilter</filter-class></filter><filter-mapping><filter-name>CookieFilter</filter-name><url-pattern>/rest/api/*</url-pattern></filter-mapping><!--
             Bootstrap the root application context as usual using ContextLoaderListener
             --><listener><listener-class>org.springframework.web.context.ContextLoaderListener</listener-class></listener><servlet><servlet-name>javax.ws.rs.core.Application</servlet-name></servlet><servlet-mapping><servlet-name>javax.ws.rs.core.Application</servlet-name><url-pattern>/rest/api/*</url-pattern></servlet-mapping><persistence-unit-ref><persistence-unit-ref-name>acmeair/emf</persistence-unit-ref-name><persistence-unit-name>acmeairunit</persistence-unit-name></persistence-unit-ref><persistence-context-ref><persistence-context-ref-name>acmeair/em</persistence-context-ref-name><persistence-unit-name>acmeairunit</persistence-unit-name></persistence-context-ref>"
   unmatched:
@@ -185,6 +106,7 @@
   - discover-manifest-file
   - discover-properties-file
   - hardcoded-ip-address
+  - windup-discover-ejb-configuration
   - windup-discover-spring-configuration
 - name: eap8/eap7
   description: This ruleset provides analysis of Java EE applications that need to
@@ -1577,10 +1499,8 @@
 - name: technology-usage
   description: This ruleset provides analysis of logging libraries.
   tags:
-  - Bean=EJB XML
   - Common Annotations
   - Connect=Common Annotations
-  - Connect=EJB XML
   - Connect=RMI
   - Connect=Servlet
   - Embedded framework - Spring DI
@@ -1591,7 +1511,6 @@
   - HTTP=Servlet
   - Inversion of Control=Spring DI
   - Java EE=Common Annotations
-  - Java EE=EJB XML
   - Java EE=JPA XML
   - Java EE=JPA entities
   - Java EE=Persistence units
@@ -1896,20 +1815,6 @@
         variables:
           tags:
           - Servlet
-    non-xml-technology-usage-02000:
-      description: Non-XML EJB
-      labels:
-      - discovery
-      - konveyor.io/include=always
-      - tag=Bean=EJB XML
-      - tag=Connect=EJB XML
-      - tag=Java EE=EJB XML
-      incidents:
-      - uri: ""
-        message: ""
-        variables:
-          tags:
-          - EJB XML
     non-xml-technology-usage-17000:
       description: Non-XML JPA
       labels:
@@ -2248,13 +2153,13 @@
         codeSnip: 4               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         lineNumber: 3
         variables:
-          matchingText: ""
+          matchingText: http://java.sun.com/xml/ns/persistence
       - uri: file:///source/java-project/src/main/java/META-INF/persistence.xml
         message: ""
         codeSnip: '6  '
         lineNumber: 5
         variables:
-          matchingText: ""
+          matchingText: http://java.sun.com/xml/ns/persistence
     technology-usage-database-01300:
       description: Persistence Units
       labels:
@@ -2637,6 +2542,7 @@
   - mvc-05800
   - mvc-05900
   - mvc-06000
+  - non-xml-technology-usage-02000
   - non-xml-technology-usage-05000
   - non-xml-technology-usage-06000
   - non-xml-technology-usage-12000
