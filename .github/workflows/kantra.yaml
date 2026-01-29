@@ -15,13 +15,14 @@ jobs:
       # This should create a maven settings file with the github server's set up and the user/pass set to the github token.
       # NOTE: this because of restrictions specifically for maven packages in github, we can't access a different repos package.
       # Still need to find a scalable solution here. 
-      - name: Setup Java for maven Cache
-        uses: actions/setup-java@v5
-        with:
-          distribution: 'temurin'
-          java-version: '21'
-          cache: 'maven'
-          settings-path: "${{ runner.temp }}/settings.xml"
+#      - name: Setup Java for maven Cache
+#        uses: actions/setup-java@v5
+#        with:
+#          distribution: 'temurin'
+#          java-version: '21'
+#          cache: 'maven'
+#          cache-dependency-path:
+#          settings-path: "${{ runner.temp }}/settings.xml"
 
       - name: Setup go
         uses: actions/setup-go@v6
