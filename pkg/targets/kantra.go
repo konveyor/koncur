@@ -121,6 +121,8 @@ func (k *KantraTarget) buildArgs(test *config.TestDefinition, inputPath, outputD
 	args := []string{"analyze", "--context-lines", strconv.Itoa(analysis.ContextLines)}
 
 	args = append(args, "--log-level", "30")
+	// TODO: REMOVE THIS OR SET BEHIND DEBUG ON OR SOMETHING
+	args = append(args, "--no-progress")
 
 	// Input application (now using the prepared input path)
 	args = append(args, "--input", inputPath)
