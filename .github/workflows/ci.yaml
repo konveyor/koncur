@@ -16,7 +16,6 @@ jobs:
         exclude:
           - os: macos-15-intel
           - os: windows-latest
-    secrets: inherit
     uses: ./.github/workflows/kantra.yaml
     with:
       os: ${{ matrix.os }}

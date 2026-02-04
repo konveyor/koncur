@@ -24,7 +24,6 @@ jobs:
     uses: ./.github/workflows/kantra.yaml
     with:
       os: ${{ matrix.os }}
-      bot_id: ${{ vars.KONVEYOR_BOT_ID }}
       skip_maven: false
 
 
