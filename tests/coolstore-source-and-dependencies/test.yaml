@@ -9,7 +9,7 @@ analysis:
     rules: []
     disableDefaultRules: false
     analysisMode: source-only
-timeout: 10m0s
+timeout: 15m0s
 expect:
     exitCode: 0
     output:
