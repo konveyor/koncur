@@ -98,23 +98,19 @@ jobs:
         shell: bash
         run: |
           mkdir -p .koncur/config
-          cat <<-EOF > .koncur/config/target-tackle-hub.yaml
-          type: tackle-hub
-          tackleHub:
-          	url: http://localhost:8081
-          	mavenSettings: "${{ runner.temp }}/settings.xml"
-          EOF
+          printf 'type: tackle-hub\n' > .koncur/config/target-tackle-hub.yaml
+          printf 'tackleHub:\n' >> .koncur/config/target-tackle-hub.yaml
+          printf '  url: http://localhost:8081\n' >> .koncur/config/target-tackle-hub.yaml
+          printf '  mavenSettings: "%s"\n' "${{ runner.temp }}/settings.xml" >> .koncur/config/target-tackle-hub.yaml
 
       - name: Create Hub target config (no maven)
         if: ${{ inputs.skip_maven }}
         shell: bash
         run: |
           mkdir -p .koncur/config
-          cat <<-EOF > .koncur/config/target-tackle-hub.yaml
-          type: tackle-hub
-          tackleHub:
-          	url: http://localhost:8081
-          EOF
+          printf 'type: tackle-hub\n' > .koncur/config/target-tackle-hub.yaml
+          printf 'tackleHub:\n' >> .koncur/config/target-tackle-hub.yaml
+          printf '  url: http://localhost:8081\n' >> .koncur/config/target-tackle-hub.yaml
 
       - name: Run test
         shell: bash

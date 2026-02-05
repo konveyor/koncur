@@ -27,4 +27,9 @@ jobs:
       skip_maven: false
 
 
-#  run-tackle2-hub-test:
+  run-hub-test:
+    secrets: inherit
+    uses: ./.github/workflows/hub.yaml
+    with:
+      bot_id: ${{ vars.KONVEYOR_BOT_ID }}
+      skip_maven: false
