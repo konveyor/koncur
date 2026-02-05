@@ -1,0 +1,156 @@
+name: Koncur Test with Tackle Hub
+
+on:
+  workflow_call:
+    inputs:
+      skip_maven:
+        description: "Whether to setup access to the testing maven packages"
+        default: true
+        type: boolean
+      bot_id:
+        description: "bot id"
+        type: string
+
+jobs:
+  hub-test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Setup Go
+        uses: actions/setup-go@v6
+        with:
+          go-version: '1.25'
+
+      - name: Install Kind
+        run: |
+          curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.25.0/kind-linux-amd64
+          chmod +x ./kind
+          sudo mv ./kind /usr/local/bin/kind
+          kind version
+
+      - name: Install kubectl
+        run: |
+          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+          chmod +x kubectl
+          sudo mv kubectl /usr/local/bin/kubectl
+          kubectl version --client
+
+      - name: Create Kind cluster
+        run: make kind-create
+        timeout-minutes: 10
+
+      - name: Install Tackle Hub
+        run: make hub-install
+        timeout-minutes: 20
+
+      - name: Wait for Hub readiness
+        run: |
+          echo "Waiting for all Tackle Hub pods to be ready..."
+          kubectl wait --for=condition=ready pod -l app.kubernetes.io/name=tackle-hub \
+            -n konveyor-tackle --timeout=300s
+
+      - name: Start port-forward
+        run: |
+          echo "Starting port-forward to Tackle Hub..."
+          kubectl port-forward -n konveyor-tackle svc/tackle-hub 8081:8080 &
+          sleep 5
+
+          echo "Checking Hub API availability..."
+          for i in $(seq 1 30); do
+            if curl -sf http://localhost:8081/applications > /dev/null 2>&1; then
+              echo "Hub API is ready"
+              break
+            fi
+            echo "Waiting for Hub API... attempt $i"
+            sleep 5
+          done
+
+      - name: Build Koncur
+        shell: bash
+        run: |
+          go build -o $HOME/.local/bin/koncur ./cmd/koncur/main.go
+          mkdir -p $HOME/.local/bin
+          echo $HOME/.local/bin >> $GITHUB_PATH
+
+      # Maven setup - mirrors kantra.yaml exactly
+      - name: Get Token
+        id: get_workflow_token
+        if: ${{ !inputs.skip_maven }}
+        uses: peter-murray/workflow-application-token-action@v4
+        with:
+          application_id: ${{ inputs.bot_id }}
+          application_private_key: ${{ secrets.KONVEYOR_BOT_KEY }}
+          permissions: "read:packages"
+
+      - name: Create maven settings file
+        if: ${{ !inputs.skip_maven }}
+        uses: s4u/maven-settings-action@v4.0.0
+        with:
+          servers: '[{"id": "tackle-testapp-public", "username": "${{ vars.KONVEYOR_BOT_ID }}", "password": "${{ steps.get_workflow_token.outputs.token }}"}]'
+          path: "${{ runner.temp }}/settings.xml"
+
+      - name: Create Hub target config
+        if: ${{ !inputs.skip_maven }}
+        shell: bash
+        run: |
+          mkdir -p .koncur/config
+          cat <<-EOF > .koncur/config/target-tackle-hub.yaml
+          type: tackle-hub
+          tackleHub:
+          	url: http://localhost:8081
+          	mavenSettings: "${{ runner.temp }}/settings.xml"
+          EOF
+
+      - name: Create Hub target config (no maven)
+        if: ${{ inputs.skip_maven }}
+        shell: bash
+        run: |
+          mkdir -p .koncur/config
+          cat <<-EOF > .koncur/config/target-tackle-hub.yaml
+          type: tackle-hub
+          tackleHub:
+          	url: http://localhost:8081
+          EOF
+
+      - name: Run test
+        shell: bash
+        env:
+          SKIP_MAVEN: ${{ fromJSON(inputs.skip_maven) }}
+        run: |
+          koncur run tests -t tackle-hub --target-config .koncur/config/target-tackle-hub.yaml -o yaml --output-file test-hub.yaml
+
+      - name: Show Hub status on failure
+        if: failure()
+        run: |
+          echo "=== Pod Status ==="
+          kubectl get pods -n konveyor-tackle
+          echo ""
+          echo "=== Pod Logs (tackle-hub) ==="
+          kubectl logs -n konveyor-tackle -l app.kubernetes.io/name=tackle-hub --tail=100 || true
+          echo ""
+          echo "=== Tackle CR Status ==="
+          kubectl get tackle -n konveyor-tackle -o yaml || true
+
+      - name: Upload output on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: koncur-hub-failures
+          path: .koncur/output
+          retention-days: 5
+
+      - name: Upload result yaml
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: koncur-hub-summary
+          path: test-hub.yaml
+          retention-days: 3
+
+      - name: Cleanup Kind cluster
+        if: always()
+        run: kind delete cluster --name koncur-test || true

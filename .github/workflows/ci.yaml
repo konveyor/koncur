@@ -22,4 +22,8 @@ jobs:
 
 
 
-#  run-tackle2-hub-test:
+  run-hub-test:
+    secrets: inherit
+    uses: ./.github/workflows/hub.yaml
+    with:
+      skip_maven: true
