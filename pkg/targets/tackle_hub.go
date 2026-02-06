@@ -102,10 +102,12 @@ func NewTackleHubTarget(cfg *config.TackleHubConfig) (*TackleHubTarget, error) {
 
 	// Set authentication if provided (optional for instances with auth disabled)
 	if cfg.Token != "" {
-		client.Client.Login.Token = cfg.Token
+		client.Client.Use(api.Login{Token: cfg.Token})
 	} else if cfg.Username != "" && cfg.Password != "" {
-		client.Client.Login.User = cfg.Username
-		client.Client.Login.Password = cfg.Password
+		err := client.Login(cfg.Username, cfg.Password)
+		if err != nil {
+			return nil, fmt.Errorf("failed to login: %w", err)
+		}
 	}
 	// If no credentials provided, assume auth is disabled on the Tackle instance
 
@@ -171,11 +173,12 @@ func (t *TackleHubTarget) Execute(ctx context.Context, test *config.TestDefiniti
 	}
 	log.Info("Analysis task completed successfully", "taskID", task.ID)
 
-	var insights []api.Insight
-	err = t.client.Client.Get(
-		fmt.Sprintf("applications/%v/analysis/insights", app.ID),
-		&insights,
-	)
+	// Use the binding's Analysis methods to fetch insights
+	insights, err := t.client.Application.Select(app.ID).Analysis.ListInsights()
+	if err != nil {
+		return nil, fmt.Errorf("failed to get analysis insights: %w", err)
+	}
+	log.Info("Retrieved analysis insights", "count", len(insights))
 
 	rulesetToInsightConverted := map[string]konveyor.RuleSet{}
 	for _, insight := range insights {

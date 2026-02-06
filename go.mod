@@ -7,7 +7,7 @@ require (
 	github.com/go-logr/logr v1.4.3
 	github.com/go-playground/validator/v10 v10.19.0
 	github.com/konveyor/analyzer-lsp v0.9.0-alpha.4.0.20260114161359-66c14bb2dcc7
-	github.com/konveyor/tackle2-hub/shared v0.0.0-20260116161922-e4888eeed274
+	github.com/konveyor/tackle2-hub/shared v0.0.0-20260204150237-77c448c3926f
 	github.com/manifoldco/promptui v0.9.0
 	github.com/spf13/cobra v1.9.1
 	go.lsp.dev/uri v0.3.0

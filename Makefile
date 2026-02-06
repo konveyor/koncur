@@ -175,18 +175,16 @@ hub-logs: ## Show Tackle Hub logs
 
 ##@ Testing
 
-test-hub: ## Test the Tackle Hub integration with koncur
+test-hub: build ## Test the Tackle Hub integration with koncur (matches CI)
 	@echo "Testing Tackle Hub integration..."
-	@echo "Using target config: testdata/examples/target-tackle-hub.yaml"
 	@echo ""
 	@echo "Creating target configuration..."
 	@mkdir -p .koncur/config
 	@printf 'type: tackle-hub\n' > .koncur/config/target-tackle-hub.yaml
 	@printf 'tackleHub:\n' >> .koncur/config/target-tackle-hub.yaml
 	@printf '  url: http://localhost:8081\n' >> .koncur/config/target-tackle-hub.yaml
-	@printf '  token: ""\n' >> .koncur/config/target-tackle-hub.yaml
-	@echo "Running test with Tackle Hub target..."
-	@./koncur run tests/tackle-testapp-with-deps/test.yaml --target-config .koncur/config/target-tackle-hub.yaml
+	@echo "Running all tests with Tackle Hub target..."
+	./koncur run tests -t tackle-hub --target-config .koncur/config/target-tackle-hub.yaml -o yaml --output-file test-hub.yaml
 
 ##@ Build
 
