@@ -1,9 +1,6 @@
 - name: cloud-readiness
   description: This ruleset detects logging configurations that may be problematic
     when migrating an application to a cloud environment.
-  tags:
-  - Caching - Hazelcast embedded library
-  - Hazelcast
   violations:
     localhost-jdbc-00002:
       description: Local JDBC Calls
@@ -28,23 +25,13 @@
         variables:
           matchingText: jdbc:postgresql://localhost:5432
       effort: 7
-  insights:
-    embedded-cache-libraries-06000:
-      description: Caching - Hazelcast embedded library
-      labels:
-      - konveyor.io/source
-      - konveyor.io/target=cloud-readiness
-      - tag=Caching - Hazelcast embedded library
-      - tag=Hazelcast
-      incidents:
-      - uri: file:///source/.mvn/wrapper/maven-wrapper.jar
-        message: ""
   unmatched:
   - embedded-cache-libraries-01000
   - embedded-cache-libraries-02000
   - embedded-cache-libraries-03000
   - embedded-cache-libraries-04000
   - embedded-cache-libraries-05000
+  - embedded-cache-libraries-06000
   - embedded-cache-libraries-07000
   - embedded-cache-libraries-08000
   - embedded-cache-libraries-09000
@@ -288,7 +275,6 @@
   description: This ruleset provides analysis of logging libraries.
   tags:
   - Bean Validation
-  - Caching=Hazelcast
   - Common Annotations
   - Connect=Common Annotations
   - Connect=Servlet
@@ -296,7 +282,6 @@
   - Embedded framework - Spring MVC
   - Embedded framework - Spring Web
   - Embedded technology - Java Server Pages
-  - Embedded=Hazelcast
   - Embedded=Properties
   - Embedded=Spring DI
   - Embedded=Spring JMX
@@ -304,8 +289,6 @@
   - Embedded=Spring Web
   - Execute=Spring DI
   - HTTP=Servlet
-  - Hazelcast
-  - Hazelcast embedded library
   - Inversion of Control=Spring DI
   - JSP
   - Java EE=Bean Validation
@@ -326,7 +309,6 @@
   - Spring MVC
   - Spring Web
   - Store=Bean Validation
-  - Store=Hazelcast
   - Store=JPA named queries
   - Sustain=Properties
   - Sustain=Spring JMX
@@ -337,16 +319,6 @@
   - Web=JSP Page
   - Web=Spring Web
   insights:
-    embedded-cache-libraries-06000:
-      description: Hazelcast embedded library
-      labels:
-      - discovery
-      - konveyor.io/include=always
-      - tag=Hazelcast
-      - tag=Hazelcast embedded library
-      incidents:
-      - uri: file:///source/.mvn/wrapper/maven-wrapper.jar
-        message: ""
     embedded-framework-08200:
       description: Embedded framework - Spring DI
       labels:
@@ -392,20 +364,6 @@
         variables:
           name: org.springframework.spring-web
           version: 5.3.12
-    embedded-framework-embedded-framework-03900:
-      description: Hazelcast
-      labels:
-      - discovery
-      - konveyor.io/include=always
-      - tag=Caching=Hazelcast
-      - tag=Embedded=Hazelcast
-      - tag=Store=Hazelcast
-      incidents:
-      - uri: ""
-        message: ""
-        variables:
-          tags:
-          - Hazelcast
     javaee-technology-usage-00080:
       description: Common Annotations
       labels:
@@ -1127,6 +1085,7 @@
   - embedded-cache-libraries-03000
   - embedded-cache-libraries-04000
   - embedded-cache-libraries-05000
+  - embedded-cache-libraries-06000
   - embedded-cache-libraries-07000
   - embedded-cache-libraries-08000
   - embedded-cache-libraries-09000
@@ -1208,6 +1167,7 @@
   - embedded-framework-embedded-framework-03600
   - embedded-framework-embedded-framework-03700
   - embedded-framework-embedded-framework-03800
+  - embedded-framework-embedded-framework-03900
   - embedded-framework-embedded-framework-04000
   - embedded-framework-embedded-framework-04100
   - embedded-framework-embedded-framework-04200
