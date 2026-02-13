@@ -452,6 +452,7 @@ func (t *TackleHubTarget) createAnalysisTask(ctx context.Context, test *config.T
 		Name:        fmt.Sprintf("Analysis: %s", test.Name),
 		Kind:        "analyzer", // analyzer task kind
 		Addon:       "analyzer",
+		Extensions:  test.Analysis.Extensions,
 		Application: &api.Ref{ID: app.ID},
 		Data:        taskData,
 		State:       "Created",
