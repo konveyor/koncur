@@ -31,5 +31,4 @@ jobs:
     secrets: inherit
     uses: ./.github/workflows/hub.yaml
     with:
-      bot_id: ${{ vars.KONVEYOR_BOT_ID }}
       skip_maven: false

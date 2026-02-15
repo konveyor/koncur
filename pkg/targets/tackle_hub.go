@@ -239,32 +239,39 @@ func (t *TackleHubTarget) Execute(ctx context.Context, test *config.TestDefiniti
 		return nil, err
 	}
 
-	// Ensure discovery-rules and technology-usage rulesets exist
-	if _, exists := rulesetToInsightConverted["discovery-rules"]; !exists {
-		rulesetToInsightConverted["discovery-rules"] = konveyor.RuleSet{
-			Name: "discovery-rules",
-			Tags: []string{},
+	// Only include discovery/technology-usage rulesets if default rules are enabled
+	if !test.Analysis.DisableDefaultRules {
+		// Ensure discovery-rules and technology-usage rulesets exist
+		if _, exists := rulesetToInsightConverted["discovery-rules"]; !exists {
+			rulesetToInsightConverted["discovery-rules"] = konveyor.RuleSet{
+				Name: "discovery-rules",
+				Tags: []string{},
+			}
 		}
-	}
-	if _, exists := rulesetToInsightConverted["technology-usage"]; !exists {
-		rulesetToInsightConverted["technology-usage"] = konveyor.RuleSet{
-			Name: "technology-usage",
-			Tags: []string{},
+		if _, exists := rulesetToInsightConverted["technology-usage"]; !exists {
+			rulesetToInsightConverted["technology-usage"] = konveyor.RuleSet{
+				Name: "technology-usage",
+				Tags: []string{},
+			}
 		}
-	}
 
-	// Add tags to appropriate rulesets based on source
-	for _, tag := range tags {
-		switch tag.Source {
-		case "language-discovery":
-			rs := rulesetToInsightConverted["discovery-rules"]
-			rs.Tags = append(rs.Tags, tag.Name)
-			rulesetToInsightConverted["discovery-rules"] = rs
-		case "tech-discovery":
-			rs := rulesetToInsightConverted["technology-usage"]
-			rs.Tags = append(rs.Tags, tag.Name)
-			rulesetToInsightConverted["technology-usage"] = rs
+		// Add tags to appropriate rulesets based on source
+		for _, tag := range tags {
+			switch tag.Source {
+			case "language-discovery":
+				rs := rulesetToInsightConverted["discovery-rules"]
+				rs.Tags = append(rs.Tags, tag.Name)
+				rulesetToInsightConverted["discovery-rules"] = rs
+			case "tech-discovery":
+				rs := rulesetToInsightConverted["technology-usage"]
+				rs.Tags = append(rs.Tags, tag.Name)
+				rulesetToInsightConverted["technology-usage"] = rs
+			}
 		}
+	} else {
+		// When default rules are disabled, remove discovery/technology-usage rulesets
+		delete(rulesetToInsightConverted, "discovery-rules")
+		delete(rulesetToInsightConverted, "technology-usage")
 	}
 	output, err := yaml.Marshal(slices.Collect(maps.Values(rulesetToInsightConverted)))
 	if err != nil {
