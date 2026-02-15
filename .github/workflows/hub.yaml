@@ -84,8 +84,9 @@ jobs:
       - name: Get Kind network gateway
         if: ${{ !inputs.skip_maven }}
         run: |
-          # Get only the first (IPv4) gateway - Kind typically puts IPv4 first
-          GATEWAY=$(docker network inspect kind -f '{{(index .IPAM.Config 0).Gateway}}')
+          # Get the gateway IP from inside the Kind container's routing table
+          # This is the most reliable way - it's what the container actually uses to reach the host
+          GATEWAY=$(docker exec koncur-test-control-plane ip route | grep default | awk '{print $3}')
           echo "KIND_GATEWAY=$GATEWAY" >> $GITHUB_ENV
           echo "Kind gateway: $GATEWAY"
 
