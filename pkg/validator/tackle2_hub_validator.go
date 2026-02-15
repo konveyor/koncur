@@ -25,6 +25,12 @@ func (t *tackleHubValidator) compareTags(expected, actual []string) []Validation
 	return nil
 }
 
+// Don't compare errors - hub doesn't return rule execution errors from the API
+// TODO: https://github.com/konveyor/koncur/issues/28
+func (t *tackleHubValidator) compareErrors(expected, actual map[string]string) []ValidationError {
+	return nil
+}
+
 func (t *tackleHubValidator) compareViolations(expected, actual map[string]konveyor.Violation) []ValidationError {
 	var errors []ValidationError
 	for k, exp := range expected {
@@ -61,6 +67,7 @@ func (t *tackleHubValidator) compareViolationDetails(expected, actual konveyor.V
 	var errors []ValidationError
 	// Skip strict validation for insights (effort=0 or nil)
 	// Hub API doesn't return category correctly for insights
+	// TODO: https://github.com/konveyor/koncur/issues/29
 	skipForInsight := expected.Effort == nil || (expected.Effort != nil && *expected.Effort == 0)
 	if !skipForInsight && (expected.Effort != nil && actual.Effort != nil) && (*expected.Effort != *actual.Effort) {
 		errors = append(errors, ValidationError{
