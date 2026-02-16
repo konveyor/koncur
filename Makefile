@@ -30,9 +30,11 @@ kind-create: ## Create a Kind cluster for testing with ingress support
 	@printf '  - containerPort: 80\n' >> .koncur/config/kind-config.yaml
 	@printf '    hostPort: 8080\n' >> .koncur/config/kind-config.yaml
 	@printf '    protocol: TCP\n' >> .koncur/config/kind-config.yaml
+	@printf '    listenAddress: "0.0.0.0"\n' >> .koncur/config/kind-config.yaml
 	@printf '  - containerPort: 443\n' >> .koncur/config/kind-config.yaml
 	@printf '    hostPort: 8443\n' >> .koncur/config/kind-config.yaml
 	@printf '    protocol: TCP\n' >> .koncur/config/kind-config.yaml
+	@printf '    listenAddress: "0.0.0.0"\n' >> .koncur/config/kind-config.yaml
 	@printf '  extraMounts:\n' >> .koncur/config/kind-config.yaml
 	@printf '  - hostPath: ./cache\n' >> .koncur/config/kind-config.yaml
 	@printf '    containerPath: /cache\n' >> .koncur/config/kind-config.yaml
@@ -175,18 +177,16 @@ hub-logs: ## Show Tackle Hub logs
 
 ##@ Testing
 
-test-hub: ## Test the Tackle Hub integration with koncur
+test-hub: build ## Test the Tackle Hub integration with koncur (matches CI)
 	@echo "Testing Tackle Hub integration..."
-	@echo "Using target config: testdata/examples/target-tackle-hub.yaml"
 	@echo ""
 	@echo "Creating target configuration..."
 	@mkdir -p .koncur/config
 	@printf 'type: tackle-hub\n' > .koncur/config/target-tackle-hub.yaml
 	@printf 'tackleHub:\n' >> .koncur/config/target-tackle-hub.yaml
 	@printf '  url: http://localhost:8081\n' >> .koncur/config/target-tackle-hub.yaml
-	@printf '  token: ""\n' >> .koncur/config/target-tackle-hub.yaml
-	@echo "Running test with Tackle Hub target..."
-	@./koncur run tests/tackle-testapp-with-deps/test.yaml --target-config .koncur/config/target-tackle-hub.yaml
+	@echo "Running all tests with Tackle Hub target..."
+	./koncur run tests -t tackle-hub --target-config .koncur/config/target-tackle-hub.yaml -o yaml --output-file test-hub.yaml
 
 ##@ Build
 

@@ -56,6 +56,9 @@ type AnalysisConfig struct {
 	Rules               []string              `json:"rules" yaml:"rules"`
 	DisableDefaultRules bool                  `json:"disableDefaultRules" yaml:"disableDefaultRules"`
 	AnalysisMode        provider.AnalysisMode `json:"analysis_mode" yaml:"analysisMode" validate:"required" `
+	// Extensions specifies which hub extensions to use (e.g., ["csharp", "java"])
+	// If empty, the hub will auto-select extensions based on selectors
+	Extensions []string `json:"extensions" yaml:"extensions,omitempty"`
 
 	// Parsed Git components (not in YAML)
 	ApplicationGitComponents *GitURLComponents   `yaml:"-" json:"-"`

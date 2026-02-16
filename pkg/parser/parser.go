@@ -100,7 +100,41 @@ func normalizeViolation(violation konveyor.Violation, testDir string) (konveyor.
 	return newViolation, returnErr
 }
 
-// normalizeRuleSetPaths normalizes file paths in rulesets to match the expected output format
+// NormalizePath converts container-specific paths to canonical format for comparison.
+// This handles:
+//   - Maven repository paths: /root/.m2/repository/, /cache/m2/, /addon/.m2/repository/ -> /m2/
+//   - Tackle Hub paths: /shared/source/{reponame}/ -> /source/, /opt/input/source -> /source
+func NormalizePath(path string) string {
+	// Normalize Maven repository paths
+	if strings.Contains(path, "/root/.m2/repository") {
+		path = strings.ReplaceAll(path, "/root/.m2/repository/", "/m2/")
+	}
+	if strings.Contains(path, "/cache/m2/") {
+		path = strings.ReplaceAll(path, "/cache/m2/", "/m2/")
+	}
+	// Providers should all be running in the addon dir now
+	if strings.Contains(path, "/addon/.m2/repository") {
+		path = strings.ReplaceAll(path, "/addon/.m2/repository/", "/m2/")
+	}
+
+	// Normalize Tackle Hub container paths
+	// /shared/source/{reponame}/path -> /source/path (strip repo name)
+	if strings.Contains(path, "/shared/source/") {
+		parts := strings.SplitN(path, "/shared/source/", 2)
+		if len(parts) == 2 {
+			if slashIdx := strings.Index(parts[1], "/"); slashIdx != -1 {
+				path = parts[0] + "/source" + parts[1][slashIdx:]
+			}
+		}
+	}
+	if strings.Contains(path, "/opt/input/source") {
+		path = strings.ReplaceAll(path, "/opt/input/source", "/source")
+	}
+
+	return path
+}
+
+// normalizeIncident normalizes file paths in incidents to match the expected output format
 // This applies the same normalization that saveFilteredOutput does when generating expected output
 func normalizeIncident(incident konveyor.Incident, testDir string) (konveyor.Incident, error) {
 	// Marshal to YAML to normalize paths using string replacement (same approach as generate)
@@ -135,25 +169,8 @@ func normalizeIncident(incident konveyor.Incident, testDir string) (konveyor.Inc
 
 	fileName = fmt.Sprintf("file://%s", fileName)
 
-	// Normalize Maven repository paths
-	if strings.Contains(fileName, "/root/.m2/repository") {
-		fileName = strings.ReplaceAll(fileName, "/root/.m2/repository/", "/m2/")
-	}
-	if strings.Contains(fileName, "/cache/m2/") {
-		fileName = strings.ReplaceAll(fileName, "/cache/m2/", "/m2/")
-	}
-	// Providers should all be running in the addon dir now
-	if strings.Contains(fileName, "/addon/.m2/repository") {
-		fileName = strings.ReplaceAll(fileName, "/addon/.m2/repository/", "/m2/")
-	}
-
-	// Normalize Tackle Hub container paths
-	if strings.Contains(fileName, "/shared/source/") {
-		fileName = strings.ReplaceAll(fileName, "/shared/source", "/source")
-	}
-	if strings.Contains(fileName, "/opt/input/source") {
-		fileName = strings.ReplaceAll(fileName, "/opt/input/source", "/source")
-	}
+	// Apply shared path normalization (maven, tackle hub paths)
+	fileName = NormalizePath(fileName)
 
 	// Normalize ephemeral java-bin paths (containers, temp dirs) to /source/
 	// This handles macOS (/var/folders/.../T/), Linux (/tmp/), and container storage
