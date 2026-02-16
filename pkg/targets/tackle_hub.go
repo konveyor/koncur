@@ -14,6 +14,7 @@ import (
 	"github.com/konveyor/tackle2-hub/shared/api"
 	"github.com/konveyor/tackle2-hub/shared/binding"
 	"github.com/konveyor/test-harness/pkg/config"
+	"github.com/konveyor/test-harness/pkg/parser"
 	"github.com/konveyor/test-harness/pkg/util"
 	"go.lsp.dev/uri"
 	"gopkg.in/yaml.v2"
@@ -193,7 +194,7 @@ func (t *TackleHubTarget) Execute(ctx context.Context, test *config.TestDefiniti
 		incidents := []konveyor.Incident{}
 		for _, i := range insight.Incidents {
 			// Normalize paths to match expected output format
-			i.File = normalizePath(i.File)
+			i.File = parser.NormalizePath(i.File)
 			// Handle empty file paths (summary insights without specific file)
 			var fileURI uri.URI
 			if i.File == "" {
@@ -658,25 +659,6 @@ func (t *TackleHubTarget) attachMavenIdentity(app *api.Application) error {
 	}
 
 	return nil
-}
-
-// normalizePath converts container-specific paths to canonical format for comparison
-func normalizePath(path string) string {
-	// Simple prefix replacements
-	path = strings.Replace(path, "/opt/input/source/", "/source/", 1)
-	path = strings.Replace(path, "/cache/m2/", "/m2/", 1)
-
-	// /shared/source/{reponame}/path -> /source/path (need to strip repo name)
-	if strings.Contains(path, "/shared/source/") {
-		parts := strings.SplitN(path, "/shared/source/", 2)
-		if len(parts) == 2 {
-			if slashIdx := strings.Index(parts[1], "/"); slashIdx != -1 {
-				path = "/source/" + parts[1][slashIdx+1:]
-			}
-		}
-	}
-
-	return path
 }
 
 // parseGitURL parses a git URL that may contain a branch reference (e.g., URL#branch)

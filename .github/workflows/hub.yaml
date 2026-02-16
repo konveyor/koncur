@@ -60,17 +60,18 @@ jobs:
           for i in $(seq 1 30); do
             if curl -sf http://localhost:8081/applications > /dev/null 2>&1; then
               echo "Hub API is ready"
-              break
+              exit 0
             fi
             echo "Waiting for Hub API... attempt $i"
             sleep 5
           done
+          echo "Hub API never became ready"
+          exit 1
 
       - name: Build Koncur
         shell: bash
         run: |
           go build -o $HOME/.local/bin/koncur ./cmd/koncur/main.go
-          mkdir -p $HOME/.local/bin
           echo $HOME/.local/bin >> $GITHUB_PATH
 
       # Maven setup - mirrors kantra.yaml approach using local HTTP server
@@ -121,7 +122,7 @@ jobs:
       - name: Run test
         shell: bash
         env:
-          SKIP_MAVEN: ${{ fromJSON(inputs.skip_maven) }}
+          SKIP_MAVEN: ${{ inputs.skip_maven }}
         run: |
           koncur run tests -t tackle-hub --target-config .koncur/config/target-tackle-hub.yaml -o yaml --output-file test-hub.yaml
 
