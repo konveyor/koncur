@@ -25,11 +25,6 @@ func (t *tackleHubValidator) compareTags(expected, actual []string) []Validation
 	return nil
 }
 
-// Don't compare errors - hub doesn't return rule execution errors from the API
-func (t *tackleHubValidator) compareErrors(expected, actual map[string]string) []ValidationError {
-	return nil
-}
-
 func (t *tackleHubValidator) compareViolations(expected, actual map[string]konveyor.Violation) []ValidationError {
 	var errors []ValidationError
 	for k, exp := range expected {
@@ -72,9 +67,18 @@ func (t *tackleHubValidator) compareViolationDetails(expected, actual konveyor.V
 			Message: fmt.Sprintf("Did not find expected effort: %v", expected.Effort),
 		})
 	}
-	if !skipForInsight && actual.Category != nil && expected.Category != nil && *expected.Category != *actual.Category {
+
+	var actualCat konveyor.Category
+	if actual.Category != nil {
+		actualCat = *actual.Category
+	}
+	var expectedCat konveyor.Category
+	if expected.Category != nil {
+		expectedCat = *expected.Category
+	}
+	if !skipForInsight && expectedCat != actualCat {
 		errors = append(errors, ValidationError{
-			Message: fmt.Sprintf("Did not find expected category: %v", expected.Category),
+			Message: fmt.Sprintf("Did not find expected category: %v got %v", expectedCat, actualCat),
 		})
 	}
 
