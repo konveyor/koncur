@@ -254,7 +254,6 @@ func (t *TackleHubTarget) Execute(ctx context.Context, test *config.TestDefiniti
 				Tags: []string{},
 			}
 		}
-
 		// Add tags to appropriate rulesets based on source
 		for _, tag := range tags {
 			switch tag.Source {
@@ -273,6 +272,37 @@ func (t *TackleHubTarget) Execute(ctx context.Context, test *config.TestDefiniti
 		delete(rulesetToInsightConverted, "discovery-rules")
 		delete(rulesetToInsightConverted, "technology-usage")
 	}
+	a, err := t.client.Task.Get(task.ID)
+	if err != nil {
+		return nil, err
+	}
+	for _, e := range a.Errors {
+		if strings.Contains(e.Description, "[Analyzer]") {
+			analysisError := strings.TrimPrefix(e.Description, "[Analyzer]")
+			parts := strings.Split(analysisError, ":")
+			if len(parts) < 2 {
+				continue
+			}
+			log.Info("got error parts", "error part1", parts[0], "error part 2", parts[1])
+			ruleParts := strings.Split(strings.TrimSpace(parts[0]), ".")
+			log.Info("got rule parts", "rule part", ruleParts)
+			if len(ruleParts) != 2 {
+				continue
+			}
+			r, ok := rulesetToInsightConverted[ruleParts[0]]
+			log.Info("searching rulesetToInsightConverted for ruleset", "ok", ok, "r", r, "name", ruleParts[0], "keys", slices.Sorted(maps.Keys(rulesetToInsightConverted)))
+			if r, ok := rulesetToInsightConverted[ruleParts[0]]; ok {
+				log.Info("got ruleset", "error part1", parts[0], "error part 2", parts[1])
+				if r.Errors == nil {
+					r.Errors = map[string]string{}
+				}
+				r.Errors[ruleParts[1]] = strings.TrimSpace(strings.Join(parts[1:], ":"))
+				rulesetToInsightConverted[ruleParts[0]] = r
+			}
+		}
+	}
+
+	// Get errors associated with rulesets
 	output, err := yaml.Marshal(slices.Collect(maps.Values(rulesetToInsightConverted)))
 	if err != nil {
 		return nil, err
@@ -549,81 +579,6 @@ func (t *TackleHubTarget) pollTaskCompletion(ctx context.Context, taskID uint, t
 	}
 }
 
-// downloadTaskResults downloads the analysis results from the task attachments
-func (t *TackleHubTarget) downloadTaskResults(taskID uint, workDir string) (string, error) {
-	log := util.GetLogger()
-
-	// Create output directory
-	outputDir := filepath.Join(workDir, "output")
-	if err := os.MkdirAll(outputDir, 0755); err != nil {
-		return "", fmt.Errorf("failed to create output directory: %w", err)
-	}
-
-	// Get task to find the insights.yaml attachment
-	task, err := t.client.Task.Get(taskID)
-	if err != nil {
-		return "", fmt.Errorf("failed to get task: %w", err)
-	}
-
-	// Find the insights.yaml attachment
-	var insightsAttachmentID uint
-	for _, attachment := range task.Attached {
-		if attachment.Name == "insights.yaml" {
-			insightsAttachmentID = attachment.ID
-			break
-		}
-	}
-
-	if insightsAttachmentID == 0 {
-		return "", fmt.Errorf("insights.yaml attachment not found in task")
-	}
-
-	// Download the attachment
-	outputFile := filepath.Join(outputDir, "output.yaml")
-	log.Info("Downloading insights.yaml attachment", "taskID", taskID, "attachmentID", insightsAttachmentID, "to", outputFile)
-
-	// Use the File API to download the attachment by file ID
-	path := fmt.Sprintf("/files/%d", insightsAttachmentID)
-	err = t.client.Client.FileGet(path, outputFile)
-	if err != nil {
-		return "", fmt.Errorf("failed to download insights.yaml attachment: %w", err)
-	}
-
-	log.Info("Successfully downloaded analysis results", "file", outputFile, "attachmentID", insightsAttachmentID)
-	return outputFile, nil
-}
-
-// downloadResults downloads the analysis results from the application bucket (deprecated)
-func (t *TackleHubTarget) downloadResults(appID uint, workDir string) (string, error) {
-	log := util.GetLogger()
-
-	// Create output directory
-	outputDir := filepath.Join(workDir, "output")
-	if err := os.MkdirAll(outputDir, 0755); err != nil {
-		return "", fmt.Errorf("failed to create output directory: %w", err)
-	}
-
-	// Get application bucket
-	bucket := t.client.Application.Bucket(appID)
-
-	// Download output.yaml from the bucket
-	outputFile := filepath.Join(outputDir, "output.yaml")
-	log.Info("Downloading output.yaml", "from", "bucket", "to", outputFile)
-
-	// Get the output.yaml from the analysis results
-	// The path in the bucket is typically: /windup/report/output.yaml or similar
-	err := bucket.Get("/windup/report/output.yaml", outputFile)
-	if err != nil {
-		// Try alternate path
-		err = bucket.Get("/analyzer/output.yaml", outputFile)
-		if err != nil {
-			return "", fmt.Errorf("failed to download output.yaml: %w", err)
-		}
-	}
-
-	return outputFile, nil
-}
-
 // submitTask submits a task to the task manager for processing
 func (t *TackleHubTarget) submitTask(taskID uint) error {
 	path := fmt.Sprintf("/tasks/%d/submit", taskID)
@@ -737,51 +692,4 @@ func parseGitURL(gitURL string) (url, branch string) {
 		branch = components.Ref
 	}
 	return url, branch
-}
-
-// appendInsights appends insights from the discovery file to the analysis file
-func (t *TackleHubTarget) appendInsights(analysisFile, discoveryFile string) error {
-	log := util.GetLogger()
-
-	// Read analysis file
-	analysisData, err := os.ReadFile(analysisFile)
-	if err != nil {
-		return fmt.Errorf("failed to read analysis file: %w", err)
-	}
-
-	// Read discovery file
-	discoveryData, err := os.ReadFile(discoveryFile)
-	if err != nil {
-		return fmt.Errorf("failed to read discovery file: %w", err)
-	}
-
-	// Unmarshal both files
-	var analysisRuleSets []konveyor.RuleSet
-	if err := yaml.Unmarshal(analysisData, &analysisRuleSets); err != nil {
-		return fmt.Errorf("failed to unmarshal analysis file: %w", err)
-	}
-
-	var discoveryRuleSets []konveyor.RuleSet
-	if err := yaml.Unmarshal(discoveryData, &discoveryRuleSets); err != nil {
-		return fmt.Errorf("failed to unmarshal discovery file: %w", err)
-	}
-
-	log.Info("Merging rulesets", "analysisRuleSets", len(analysisRuleSets), "discoveryRuleSets", len(discoveryRuleSets))
-
-	// Append discovery rulesets to analysis rulesets
-	merged := append(analysisRuleSets, discoveryRuleSets...)
-
-	// Marshal back to YAML
-	mergedData, err := yaml.Marshal(merged)
-	if err != nil {
-		return fmt.Errorf("failed to marshal merged data: %w", err)
-	}
-
-	// Write back to analysis file
-	if err := os.WriteFile(analysisFile, mergedData, 0644); err != nil {
-		return fmt.Errorf("failed to write merged file: %w", err)
-	}
-
-	log.Info("Successfully merged insights", "totalRuleSets", len(merged))
-	return nil
 }

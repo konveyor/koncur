@@ -30,9 +30,11 @@ kind-create: ## Create a Kind cluster for testing with ingress support
 	@printf '  - containerPort: 80\n' >> .koncur/config/kind-config.yaml
 	@printf '    hostPort: 8080\n' >> .koncur/config/kind-config.yaml
 	@printf '    protocol: TCP\n' >> .koncur/config/kind-config.yaml
+	@printf '    listenAddress: "0.0.0.0"\n' >> .koncur/config/kind-config.yaml
 	@printf '  - containerPort: 443\n' >> .koncur/config/kind-config.yaml
 	@printf '    hostPort: 8443\n' >> .koncur/config/kind-config.yaml
 	@printf '    protocol: TCP\n' >> .koncur/config/kind-config.yaml
+	@printf '    listenAddress: "0.0.0.0"\n' >> .koncur/config/kind-config.yaml
 	@printf '  extraMounts:\n' >> .koncur/config/kind-config.yaml
 	@printf '  - hostPath: ./cache\n' >> .koncur/config/kind-config.yaml
 	@printf '    containerPath: /cache\n' >> .koncur/config/kind-config.yaml
