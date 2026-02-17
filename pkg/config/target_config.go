@@ -113,10 +113,20 @@ type TackleUIConfig struct {
 	Headless bool   `yaml:"headless,omitempty"`
 }
 
-// KaiRPCConfig for Kai analyzer RPC
+// KaiRPCConfig for Kai analyzer RPC (Unix socket based)
 type KaiRPCConfig struct {
-	Host string `yaml:"host" validate:"required"`
-	Port int    `yaml:"port" validate:"required"`
+	// BinaryPath to kai-analyzer binary (looks in PATH if empty)
+	BinaryPath string `yaml:"binaryPath,omitempty"`
+
+	// ProviderConfigPath is the path to the provider configuration file
+	// This tells kai-analyzer where to find running providers
+	ProviderConfigPath string `yaml:"providerConfigPath" validate:"required"`
+
+	// LogFile path for kai-analyzer server logs (optional)
+	LogFile string `yaml:"logFile,omitempty"`
+
+	// Verbosity level for kai-analyzer logs (optional, default: 0)
+	Verbosity *int `yaml:"verbosity,omitempty"`
 }
 
 // VSCodeConfig for VSCode extension execution

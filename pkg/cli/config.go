@@ -363,31 +363,36 @@ func createTackleUIConfig() (*config.TargetConfig, error) {
 
 // createKaiRPCConfig creates a Kai RPC target configuration interactively
 func createKaiRPCConfig() (*config.TargetConfig, error) {
-	fmt.Println("⚠ Warning: Kai RPC target is not yet implemented")
-
 	kaiRPCConfig := &config.KaiRPCConfig{}
 
 	prompt := promptui.Prompt{
-		Label:   "Kai RPC Host",
-		Default: "localhost",
+		Label:   "kai-analyzer binary path (optional, press Enter to use PATH)",
+		Default: "",
 	}
-	host, err := prompt.Run()
+	binaryPath, err := prompt.Run()
 	if err != nil {
 		return nil, err
 	}
-	kaiRPCConfig.Host = host
+	kaiRPCConfig.BinaryPath = binaryPath
 
 	prompt = promptui.Prompt{
-		Label:   "Kai RPC Port",
-		Default: "8080",
+		Label: "Provider config path (required)",
 	}
-	portStr, err := prompt.Run()
+	providerConfigPath, err := prompt.Run()
 	if err != nil {
 		return nil, err
 	}
-	var port int
-	fmt.Sscanf(portStr, "%d", &port)
-	kaiRPCConfig.Port = port
+	kaiRPCConfig.ProviderConfigPath = providerConfigPath
+
+	prompt = promptui.Prompt{
+		Label:   "Log file path (optional)",
+		Default: "",
+	}
+	logFile, err := prompt.Run()
+	if err != nil {
+		return nil, err
+	}
+	kaiRPCConfig.LogFile = logFile
 
 	return &config.TargetConfig{
 		Type:   "kai-rpc",
