@@ -327,9 +327,38 @@ make test-hub
 The Makefile uses these configurable variables:
 
 ```bash
+# Cluster Configuration
 KIND_CLUSTER_NAME ?= koncur-test
 KONVEYOR_NAMESPACE ?= konveyor-tackle
 KUBECTL ?= kubectl
+
+# Image Overrides (optional)
+# Override any image by setting environment variables:
+HUB ?= quay.io/konveyor/tackle2-hub:latest
+ANALYZER_ADDON ?= quay.io/konveyor/tackle2-addon-analyzer:latest
+CSHARP_PROVIDER_IMG ?= quay.io/konveyor/c-sharp-provider:latest
+GENERIC_PROVIDER_IMG ?= quay.io/konveyor/generic-external-provider:latest
+JAVA_PROVIDER_IMG ?= quay.io/konveyor/java-external-provider:latest
+RUNNER_IMG ?= quay.io/konveyor/kantra:latest
+DISCOVERY_ADDON ?= quay.io/konveyor/tackle2-addon-discovery:latest
+PLATFORM_ADDON ?= quay.io/konveyor/tackle2-addon-platform:latest
+```
+
+#### Customizing Images
+
+To use custom or locally-built images, set environment variables:
+
+```bash
+# Use a custom Hub image
+HUB=localhost:5000/tackle2-hub:dev make hub-install
+
+# Use multiple custom images
+HUB=quay.io/myorg/tackle2-hub:v1.2.3 \
+ANALYZER_ADDON=quay.io/myorg/analyzer:latest \
+make hub-install
+
+# Use latest from a different registry
+HUB=ghcr.io/konveyor/tackle2-hub:main make hub-install
 ```
 
 ### Target Configuration
@@ -344,7 +373,25 @@ tackleHub:
   mavenSettings: settings.xml
 ```
 
+### What Gets Installed
+
+The `make hub-install` target automatically:
+
+1. **Installs OLM** (Operator Lifecycle Manager)
+2. **Installs Tackle Operator** from main branch
+3. **Creates Tackle CR** with:
+   - Authentication disabled (`feature_auth_required: "false"`)
+   - Cache storage configured (10Gi RWX PV)
+   - Resource limits optimized for testing (100m CPU for providers)
+   - All component images configurable via environment variables
+4. **Patches ingress** to disable SSL redirect (allows HTTP access at `http://localhost:8080`)
+5. **Waits for readiness** with automatic health checks
+
 ### Troubleshooting
+
+**Ingress redirecting to HTTPS:**
+- The Makefile automatically patches the ingress to disable SSL redirect
+- If you see 308 redirects, run: `kubectl annotate ingress tackle -n konveyor-tackle nginx.ingress.kubernetes.io/ssl-redirect="false" --overwrite`
 
 **Ingress not working:**
 - Ensure Kind cluster was created with ingress support: `kubectl get pods -n ingress-nginx`
