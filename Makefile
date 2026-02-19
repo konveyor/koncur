@@ -5,6 +5,16 @@ KIND_CLUSTER_NAME ?= koncur-test
 KONVEYOR_NAMESPACE ?= konveyor-tackle
 KUBECTL ?= kubectl
 
+# Image FQINs with defaults
+HUB ?= quay.io/konveyor/tackle2-hub:latest
+ANALYZER_ADDON ?= quay.io/konveyor/tackle2-addon-analyzer:latest
+CSHARP_PROVIDER_IMG ?= quay.io/konveyor/c-sharp-provider:latest
+GENERIC_PROVIDER_IMG ?= quay.io/konveyor/generic-external-provider:latest
+JAVA_PROVIDER_IMG ?= quay.io/konveyor/java-external-provider:latest
+RUNNER_IMG ?= quay.io/konveyor/kantra:latest
+DISCOVERY_ADDON ?= quay.io/konveyor/tackle2-addon-discovery:latest
+PLATFORM_ADDON ?= quay.io/konveyor/tackle2-addon-platform:latest
+
 help: ## Show this help message
 	@echo 'Usage: make [target]'
 	@echo ''
@@ -45,7 +55,7 @@ kind-create: ## Create a Kind cluster for testing with ingress support
 	@$(KUBECTL) rollout restart deployment local-path-provisioner -n local-path-storage
 	@$(KUBECTL) rollout status deployment local-path-provisioner -n local-path-storage --timeout=60s
 	@echo "Installing ingress-nginx controller..."
-	@$(KUBECTL) apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
+	@$(KUBECTL) apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/refs/tags/controller-v1.13.7/deploy/static/provider/kind/deploy.yaml 
 	@echo "Waiting for ingress-nginx namespace to be created..."
 	@for i in $$(seq 1 30); do \
 		$(KUBECTL) get namespace ingress-nginx >/dev/null 2>&1 && break || sleep 2; \
@@ -85,7 +95,7 @@ hub-install: ## Install Tackle Hub on the Kind cluster (from main branch)
 	@$(KUBECTL) wait --for condition=established --timeout=300s crd/tackles.tackle.konveyor.io
 	@echo "Waiting for operator to be ready..."
 	@for i in $$(seq 1 120); do \
-		if $(KUBECTL) wait --namespace konveyor-tackle --for=condition=ready pod --selector=name=tackle-operator --timeout=5s >/dev/null 2>&1; then \
+		if $(KUBECTL) wait --namespace ${KONVEYOR_NAMESPACE} --for=condition=ready pod --selector=name=tackle-operator --timeout=5s >/dev/null 2>&1; then \
 			echo "Tackle operator is ready"; \
 			break; \
 		fi; \
@@ -118,7 +128,7 @@ hub-install: ## Install Tackle Hub on the Kind cluster (from main branch)
 	@printf 'apiVersion: tackle.konveyor.io/v1alpha1\n' >> .koncur/config/tackle-cr.yaml
 	@printf 'metadata:\n' >> .koncur/config/tackle-cr.yaml
 	@printf '  name: tackle\n' >> .koncur/config/tackle-cr.yaml
-	@printf '  namespace: konveyor-tackle\n' >> .koncur/config/tackle-cr.yaml
+	@printf '  namespace: ${KONVEYOR_NAMESPACE}\n' >> .koncur/config/tackle-cr.yaml
 	@printf 'spec:\n' >> .koncur/config/tackle-cr.yaml
 	@printf '  feature_auth_required: "false"\n' >> .koncur/config/tackle-cr.yaml
 	@printf '  cache_storage_class: "manual"\n' >> .koncur/config/tackle-cr.yaml
@@ -127,10 +137,29 @@ hub-install: ## Install Tackle Hub on the Kind cluster (from main branch)
 	@printf '  provider_java_container_requests_cpu: "100m"\n' >> .koncur/config/tackle-cr.yaml
 	@printf '  analyzer_container_requests_cpu: "100m"\n' >> .koncur/config/tackle-cr.yaml
 	@printf '  provider_python_container_requests_cpu: "100m"\n' >> .koncur/config/tackle-cr.yaml
+	@printf '  hub_image_fqin: $(HUB)\n' >> .koncur/config/tackle-cr.yaml
+	@printf '  analyzer_fqin: $(ANALYZER_ADDON)\n' >> .koncur/config/tackle-cr.yaml
+	@printf '  provider_c_sharp_image_fqin: $(CSHARP_PROVIDER_IMG)\n' >> .koncur/config/tackle-cr.yaml
+	@printf '  provider_python_image_fqin: $(GENERIC_PROVIDER_IMG)\n' >> .koncur/config/tackle-cr.yaml
+	@printf '  provider_nodejs_image_fqin: $(GENERIC_PROVIDER_IMG)\n' >> .koncur/config/tackle-cr.yaml
+	@printf '  provider_java_image_fqin: $(JAVA_PROVIDER_IMG)\n' >> .koncur/config/tackle-cr.yaml
+	@printf '  kantra_fqin: $(RUNNER_IMG)\n' >> .koncur/config/tackle-cr.yaml
+	@printf '  language_discovery_fqin: $(DISCOVERY_ADDON)\n' >> .koncur/config/tackle-cr.yaml
+	@printf '  platform_fqin: $(PLATFORM_ADDON)\n' >> .koncur/config/tackle-cr.yaml
 	@$(KUBECTL) apply -f .koncur/config/tackle-cr.yaml
 	@echo "Waiting for Tackle Hub to be ready (this may take a few minutes)..."
 	@sleep 30
-	@$(KUBECTL) wait --for=condition=ready pod -l app.kubernetes.io/name=tackle-hub -n konveyor-tackle --timeout=600s || true
+	@$(KUBECTL) wait --for=condition=ready pod -l app.kubernetes.io/name=tackle-hub -n ${KONVEYOR_NAMESPACE} --timeout=600s || true
+	@echo "Patching ingress to disable SSL redirect..."
+	@for i in $$(seq 1 30); do \
+		if $(KUBECTL) get ingress tackle -n ${KONVEYOR_NAMESPACE} >/dev/null 2>&1; then \
+			$(KUBECTL) annotate ingress tackle -n ${KONVEYOR_NAMESPACE} nginx.ingress.kubernetes.io/ssl-redirect="false" --overwrite; \
+			echo "Ingress patched successfully"; \
+			break; \
+		fi; \
+		if [ $$i -eq 30 ]; then echo "Warning: Ingress not found, skipping patch"; fi; \
+		sleep 2; \
+	done
 	@echo ""
 	@echo "Tackle Hub installation complete!"
 	@echo ""
