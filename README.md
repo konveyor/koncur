@@ -122,16 +122,16 @@ tackleHub:
 ```
 
 ### Tackle UI (Browser Automation)
-**Not Implemented**
 
 ```yaml
 type: tackle-ui
 tackleUI:
-  url: https://tackle.example.com
-  username: admin
-  password: secret
+  url: http://localhost:8080
+  username: ""  # Optional - for auth-enabled instances
+  password: ""  # Optional - for auth-enabled instances
   browser: chrome  # chrome or firefox
-  headless: true
+  headless: false  # true for CI/CD
+  mavenSettings: /path/to/settings.xml  # Optional
 ```
 
 ### Kai RPC

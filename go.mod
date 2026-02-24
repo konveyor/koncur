@@ -9,6 +9,7 @@ require (
 	github.com/konveyor/analyzer-lsp v0.9.0-alpha.4.0.20260114161359-66c14bb2dcc7
 	github.com/konveyor/tackle2-hub/shared v0.0.0-20260204150237-77c448c3926f
 	github.com/manifoldco/promptui v0.9.0
+	github.com/playwright-community/playwright-go v0.5200.1
 	github.com/spf13/cobra v1.9.1
 	go.lsp.dev/uri v0.3.0
 	gopkg.in/yaml.v2 v2.4.0
@@ -21,10 +22,13 @@ require (
 	github.com/cbroglie/mustache v1.4.0 // indirect
 	github.com/chzyer/readline v0.0.0-20180603132655-2972be24d48e // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
+	github.com/deckarep/golang-set/v2 v2.7.0 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.3 // indirect
+	github.com/go-jose/go-jose/v3 v3.0.4 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
+	github.com/go-stack/stack v1.8.1 // indirect
 	github.com/golang-jwt/jwt/v5 v5.2.2 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/hashicorp/go-version v1.6.0 // indirect
