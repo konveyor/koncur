@@ -16,8 +16,9 @@ import (
 
 // KantraTarget implements Target for Kantra
 type KantraTarget struct {
-	binaryPath    string `yaml:"binaryPath"`
-	mavenSettings string `yaml:"mavenSettings"`
+	binaryPath    string
+	mavenSettings string
+	imageEnv      []string // Environment variable overrides for provider images
 }
 
 // NewKantraTarget creates a new Kantra target
@@ -42,9 +43,27 @@ func NewKantraTarget(cfg *config.KantraConfig) (*KantraTarget, error) {
 		mavenSettings = cfg.MavenSettings
 	}
 
+	// Build image environment overrides from config
+	var imageEnv []string
+	if cfg != nil {
+		if cfg.RunnerImage != "" {
+			imageEnv = append(imageEnv, "RUNNER_IMG="+cfg.RunnerImage)
+		}
+		if cfg.JavaProviderImage != "" {
+			imageEnv = append(imageEnv, "JAVA_PROVIDER_IMG="+cfg.JavaProviderImage)
+		}
+		if cfg.GenericProviderImage != "" {
+			imageEnv = append(imageEnv, "GENERIC_PROVIDER_IMG="+cfg.GenericProviderImage)
+		}
+		if cfg.CsharpProviderImage != "" {
+			imageEnv = append(imageEnv, "CSHARP_PROVIDER_IMG="+cfg.CsharpProviderImage)
+		}
+	}
+
 	return &KantraTarget{
 		binaryPath:    binaryPath,
 		mavenSettings: mavenSettings,
+		imageEnv:      imageEnv,
 	}, nil
 }
 
@@ -101,8 +120,8 @@ func (k *KantraTarget) Execute(ctx context.Context, test *config.TestDefinition)
 	// Build kantra command arguments with prepared rules
 	args := k.buildArgs(test, inputPath, absOutputDir, preparedRules)
 
-	// Execute kantra
-	result, err := ExecuteCommand(ctx, k.binaryPath, args, workDir, test.GetTimeout())
+	// Execute kantra with image environment overrides
+	result, err := ExecuteCommandWithEnv(ctx, k.binaryPath, args, workDir, test.GetTimeout(), k.imageEnv)
 	if err != nil {
 		return nil, err
 	}

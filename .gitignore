@@ -13,3 +13,6 @@ settings.xml
 cache
 .metadata
 
+testing-images/
+
+koncur-tests.tar.gz

@@ -1,4 +1,4 @@
-.PHONY: help kind-create kind-delete hub-install hub-uninstall hub-forward hub-status test-hub clean build
+.PHONY: help kind-create kind-delete hub-install hub-uninstall hub-forward hub-status test-hub clean build test-archive
 
 # Configuration
 KIND_CLUSTER_NAME ?= koncur-test
@@ -224,9 +224,21 @@ build: ## Build the koncur binary
 	@go build -o koncur ./cmd/koncur
 	@echo "Build complete: ./koncur"
 
+test-archive: ## Build a portable test archive (koncur-tests.tar.gz)
+	@echo "Building test archive..."
+	@tar czf koncur-tests.tar.gz -C tests \
+		$$(cd tests && find . -name 'test.yaml' -o -name 'expected-output.yaml' | sed 's|^\./||' | sort)
+	@echo "Archive created: koncur-tests.tar.gz"
+	@echo "Contents:"
+	@tar tzf koncur-tests.tar.gz | head -30
+	@echo "..."
+	@echo "Total files: $$(tar tzf koncur-tests.tar.gz | wc -l | tr -d ' ')"
+	@ls -lh koncur-tests.tar.gz | awk '{print "Size: " $$5}'
+
 clean: ## Clean build artifacts and test outputs
 	@echo "Cleaning build artifacts..."
 	@rm -f koncur
+	@rm -f koncur-tests.tar.gz
 	@rm -rf .koncur/output/*
 	@echo "Clean complete"
 

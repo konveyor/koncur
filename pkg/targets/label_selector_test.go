@@ -106,10 +106,10 @@ func TestParseLabelSelector(t *testing.T) {
 // TestParseLabelSelectorIncludedCount tests that the correct number of included labels are parsed
 func TestParseLabelSelectorIncludedCount(t *testing.T) {
 	tests := []struct {
-		name          string
-		selector      string
-		wantIncluded  int
-		wantExcluded  int
+		name         string
+		selector     string
+		wantIncluded int
+		wantExcluded int
 	}{
 		{"no labels", "", 0, 0},
 		{"one included", "label=value", 1, 0},

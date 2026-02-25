@@ -15,8 +15,8 @@ import (
 )
 
 var (
-	configOutputFile string
-	configType       string
+	configOutputFile     string
+	configType           string
 	configNonInteractive bool
 )
 
