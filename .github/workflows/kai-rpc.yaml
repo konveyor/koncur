@@ -3,6 +3,11 @@ name: Koncur Test with kai-analyzer-rpc
 on:
   workflow_call:
 
+# TODO: switch to podman for consistency with kantra workflow
+# TODO: add skip_maven input and maven settings support (needed for
+#   tackle-testapp-with-deps and tackle-testapp-package-filter tests;
+#   maven settings.xml needs to end up in ~/.m2/ so it's mounted into
+#   the java-external-provider container)
 jobs:
   kai-rpc-test:
     runs-on: ubuntu-24.04
@@ -29,11 +34,14 @@ jobs:
           go build -o $HOME/.local/bin/kai-analyzer .
           echo "$HOME/.local/bin" >> $GITHUB_PATH
 
+      - name: Download rulesets
+        run: make download-rulesets
+
       - name: Start java-external-provider container
         run: make start-kai-providers CONTAINER_RUNTIME=docker
 
-      - name: Run tests
-        run: make test-kai-rpc
+      - name: Build and run tests
+        run: make test-kai-rpc CONTAINER_RUNTIME=docker
 
       - name: Show logs on failure
         if: failure()
