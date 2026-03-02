@@ -205,18 +205,14 @@ func (k *KaiRPCTarget) startServer(ctx context.Context, pipePath, rules, provide
 		"--rules", rules,
 		"--provider-config", providerConfig,
 	}
-	// Make log file path absolute since cmd.Dir changes working directory
 	var logFilePath string
 	if k.logFile != "" {
 		logFilePath = k.logFile
+		if !filepath.IsAbs(logFilePath) {
+			logFilePath, _ = filepath.Abs(logFilePath)
+		}
 	} else {
 		logFilePath = filepath.Join(workDir, "kai-analyzer.log")
-	}
-	if !filepath.IsAbs(logFilePath) {
-		absPath, err := filepath.Abs(logFilePath)
-		if err == nil {
-			logFilePath = absPath
-		}
 	}
 	args = append(args, "--log-file", logFilePath)
 	args = append(args, "--verbosity", strconv.Itoa(k.verbosity))
@@ -360,13 +356,8 @@ func (k *KaiRPCTarget) generateProviderConfig(sourcePath, workDir, analysisMode 
 		}
 	}
 
-	// Write updated config (use absolute path since kai-analyzer runs in different workdir)
+	// Write updated config
 	outputPath := filepath.Join(workDir, "provider-config.yaml")
-	if !filepath.IsAbs(outputPath) {
-		if absPath, err := filepath.Abs(outputPath); err == nil {
-			outputPath = absPath
-		}
-	}
 	output, err := yaml.Marshal(configs)
 	if err != nil {
 		return "", fmt.Errorf("failed to marshal provider config: %w", err)

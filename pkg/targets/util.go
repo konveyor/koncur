@@ -64,20 +64,13 @@ func CloneGitRepository(ctx context.Context, components *config.GitURLComponents
 
 	log.Info("Git clone completed successfully")
 
-	// Clean .git directory contents to save space, but keep the empty directory.
-	// The builtin provider's file search uses ".git" as an excluded directory pattern.
-	// If the directory exists, it's matched via stat (correct behavior: exclude files inside .git/).
-	// If removed entirely, the pattern falls through to regexp.Compile(".git") where "."
-	// matches any character, causing ".git" to match "github" in absolute paths and
-	// incorrectly excluding ALL files from analysis.
+	// Keep .git as an empty directory. The builtin provider uses ".git" as an
+	// exclusion pattern; if the directory is missing, it falls back to a regex
+	// where "." is a wildcard, matching "github" in paths and excluding all files.
 	gitDir := filepath.Join(absCloneDir, ".git")
-	entries, err := os.ReadDir(gitDir)
-	if err == nil {
-		for _, entry := range entries {
-			os.RemoveAll(filepath.Join(gitDir, entry.Name()))
-		}
-		log.Info("Cleaned .git directory contents", "path", gitDir)
-	}
+	os.RemoveAll(gitDir)
+	os.MkdirAll(gitDir, 0755)
+	log.Info("Cleaned .git directory contents", "path", gitDir)
 
 	// Verify the target path exists if specified
 	if components.Path != "" {

@@ -26,8 +26,7 @@ type skippedCompare interface {
 }
 
 // compareViolationsUsing iterates expected/actual violations and delegates detail
-// comparison to detailsFn. This eliminates the need for each validator to copy
-// the same iteration boilerplate (needed because Go embedded methods don't dispatch virtually).
+// comparison to detailsFn.
 func compareViolationsUsing(
 	expected, actual map[string]konveyor.Violation,
 	detailsFn func(exp, act konveyor.Violation) []ValidationError,
