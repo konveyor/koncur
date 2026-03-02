@@ -333,7 +333,7 @@ func runSingleTest(test *config.TestDefinition, target targets.Target, targetCon
 	testResult.FilteredFrom = len(actualOutput)
 
 	// Normalize paths in actual output to match expected output format
-	normalizedActual, err := parser.NormalizeRuleSets(filteredActual, test.GetTestDir())
+	normalizedActual, err := parser.NormalizeRuleSets(filteredActual, test.GetTestDir(), result.WorkDir)
 	if err != nil {
 		testResult.Status = "failed"
 		testResult.ErrorMessage = fmt.Sprintf("failed to normalize paths: %v", err)

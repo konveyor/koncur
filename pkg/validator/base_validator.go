@@ -62,35 +62,7 @@ func (b *baseValidator) compareTags(expected, actual []string) []ValidationError
 }
 
 func (b *baseValidator) compareViolations(expected, actual map[string]konveyor.Violation) []ValidationError {
-	var errors []ValidationError
-	for k, exp := range expected {
-		act, exists := actual[k]
-		if !exists {
-			errors = append(errors, ValidationError{
-				Path:     fmt.Sprintf("/%s", k),
-				Message:  fmt.Sprintf("Did not find expected violation: %s", k),
-				Expected: exp,
-			})
-			continue
-		}
-
-		detailErrors := b.compareViolationDetails(exp, act)
-		for i := range detailErrors {
-			detailErrors[i].Path = fmt.Sprintf("/%s%s", k, detailErrors[i].Path)
-		}
-		errors = append(errors, detailErrors...)
-	}
-	for k := range actual {
-		if _, exists := expected[k]; !exists {
-			errors = append(errors, ValidationError{
-				Path:    fmt.Sprintf("/%s", k),
-				Message: fmt.Sprintf("Unexpected violation found: %s", k),
-				Actual:  actual[k],
-			})
-		}
-	}
-
-	return errors
+	return compareViolationsUsing(expected, actual, b.compareViolationDetails)
 }
 
 func (b *baseValidator) compareViolationDetails(expected, actual konveyor.Violation) []ValidationError {

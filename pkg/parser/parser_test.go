@@ -464,7 +464,7 @@ func TestNormalizeIncident(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			result, err := normalizeIncident(tt.incident, tt.testDir)
+			result, err := normalizeIncident(tt.incident, tt.testDir, "")
 
 			if tt.expectError && err == nil {
 				t.Error("Expected error but got nil")

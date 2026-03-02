@@ -26,35 +26,7 @@ func (t *tackleHubValidator) compareTags(expected, actual []string) []Validation
 }
 
 func (t *tackleHubValidator) compareViolations(expected, actual map[string]konveyor.Violation) []ValidationError {
-	var errors []ValidationError
-	for k, exp := range expected {
-		act, exists := actual[k]
-		if !exists {
-			errors = append(errors, ValidationError{
-				Path:     fmt.Sprintf("/%s", k),
-				Message:  fmt.Sprintf("Did not find expected violation: %s", k),
-				Expected: exp,
-			})
-			continue
-		}
-
-		detailErrors := t.compareViolationDetails(exp, act)
-		for i := range detailErrors {
-			detailErrors[i].Path = fmt.Sprintf("/%s%s", k, detailErrors[i].Path)
-		}
-		errors = append(errors, detailErrors...)
-	}
-	for k := range actual {
-		if _, exists := expected[k]; !exists {
-			errors = append(errors, ValidationError{
-				Path:    fmt.Sprintf("/%s", k),
-				Message: fmt.Sprintf("Unexpected violation found: %s", k),
-				Actual:  actual[k],
-			})
-		}
-	}
-
-	return errors
+	return compareViolationsUsing(expected, actual, t.compareViolationDetails)
 }
 
 func (t *tackleHubValidator) compareViolationDetails(expected, actual konveyor.Violation) []ValidationError {

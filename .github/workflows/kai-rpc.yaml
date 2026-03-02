@@ -1,0 +1,65 @@
+name: Koncur Test with kai-analyzer-rpc
+
+on:
+  workflow_call:
+
+jobs:
+  kai-rpc-test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout koncur
+        uses: actions/checkout@v6
+
+      - name: Setup Go
+        uses: actions/setup-go@v6
+        with:
+          go-version: '1.25'
+
+      - name: Checkout kai repo
+        uses: actions/checkout@v6
+        with:
+          repository: konveyor/kai
+          path: kai
+
+      - name: Build kai-analyzer
+        run: |
+          cd kai/kai_analyzer_rpc
+          go build -o $HOME/.local/bin/kai-analyzer .
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: Start java-external-provider container
+        run: make start-kai-providers CONTAINER_RUNTIME=docker
+
+      - name: Run tests
+        run: make test-kai-rpc
+
+      - name: Show logs on failure
+        if: failure()
+        run: |
+          echo "=== java-external-provider container logs ==="
+          docker logs java-external-provider || true
+          echo ""
+          echo "=== kai-analyzer logs ==="
+          find .koncur/output -name "kai-analyzer*.log" -exec cat {} \; || true
+
+      - name: Upload output on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: koncur-kai-rpc-failures
+          path: .koncur/output
+          retention-days: 5
+
+      - name: Upload result yaml
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: koncur-kai-rpc-summary
+          path: test-kai-rpc.yaml
+          retention-days: 3
+
+      - name: Stop providers
+        if: always()
+        run: make stop-kai-providers CONTAINER_RUNTIME=docker
