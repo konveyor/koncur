@@ -118,9 +118,12 @@ type KaiRPCConfig struct {
 	// BinaryPath to kai-analyzer binary (looks in PATH if empty)
 	BinaryPath string `yaml:"binaryPath,omitempty"`
 
-	// ProviderConfigPath is the path to the provider configuration file
-	// This tells kai-analyzer where to find running providers
+	// ProviderConfigPath for kai-analyzer (required) - path to provider settings YAML
 	ProviderConfigPath string `yaml:"providerConfigPath" validate:"required"`
+
+	// DefaultRulesDir is the path to default rulesets to use when tests don't specify rules
+	// Download with: make download-rulesets
+	DefaultRulesDir string `yaml:"defaultRulesDir,omitempty"`
 
 	// LogFile path for kai-analyzer server logs (optional)
 	LogFile string `yaml:"logFile,omitempty"`

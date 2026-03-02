@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net"
 	"os"
 	"os/exec"
@@ -26,6 +27,7 @@ import (
 type KaiRPCTarget struct {
 	binaryPath         string
 	providerConfigPath string
+	defaultRulesDir    string
 	logFile            string
 	verbosity          int
 }
@@ -76,6 +78,7 @@ func NewKaiRPCTarget(cfg *config.KaiRPCConfig) (*KaiRPCTarget, error) {
 	return &KaiRPCTarget{
 		binaryPath:         binaryPath,
 		providerConfigPath: cfg.ProviderConfigPath,
+		defaultRulesDir:    cfg.DefaultRulesDir,
 		logFile:            cfg.LogFile,
 		verbosity:          verbosity,
 	}, nil
@@ -120,17 +123,24 @@ func (k *KaiRPCTarget) Execute(ctx context.Context, test *config.TestDefinition)
 		return nil, fmt.Errorf("failed to create output directory: %w", err)
 	}
 
-	// Generate provider config with correct source location
-	providerConfigPath, err := k.generateProviderConfig(inputPath, workDir)
+	// Generate provider config with correct source location and analysis mode
+	providerConfigPath, err := k.generateProviderConfig(inputPath, workDir, string(test.Analysis.AnalysisMode))
 	if err != nil {
 		return nil, fmt.Errorf("failed to generate provider config: %w", err)
 	}
 
 	// Build rules argument (comma-separated)
+	// If no rules specified, use default rulesets if configured
 	rulesArg := strings.Join(preparedRules, ",")
-	if rulesArg == "" {
-		// Use default rules if none specified
-		rulesArg = "/dev/null" // kai-analyzer needs something, empty will fail
+	if rulesArg == "" && k.defaultRulesDir != "" {
+		if absPath, err := filepath.Abs(k.defaultRulesDir); err == nil {
+			rulesArg = absPath
+		} else {
+			rulesArg = k.defaultRulesDir
+		}
+		log.Info("Using default rulesets", "path", rulesArg)
+	} else if rulesArg == "" {
+		return nil, fmt.Errorf("no rules specified and no defaultRulesDir configured; run 'make download-rulesets' and configure defaultRulesDir in target config")
 	}
 
 	// Start kai-analyzer server
@@ -195,12 +205,20 @@ func (k *KaiRPCTarget) startServer(ctx context.Context, pipePath, rules, provide
 		"--rules", rules,
 		"--provider-config", providerConfig,
 	}
+	// Make log file path absolute since cmd.Dir changes working directory
+	var logFilePath string
 	if k.logFile != "" {
-		args = append(args, "--log-file", k.logFile)
+		logFilePath = k.logFile
 	} else {
-		// Default log file in work directory
-		args = append(args, "--log-file", filepath.Join(workDir, "kai-analyzer.log"))
+		logFilePath = filepath.Join(workDir, "kai-analyzer.log")
 	}
+	if !filepath.IsAbs(logFilePath) {
+		absPath, err := filepath.Abs(logFilePath)
+		if err == nil {
+			logFilePath = absPath
+		}
+	}
+	args = append(args, "--log-file", logFilePath)
 	args = append(args, "--verbosity", strconv.Itoa(k.verbosity))
 
 	cmd := exec.CommandContext(ctx, k.binaryPath, args...)
@@ -279,12 +297,12 @@ func (k *KaiRPCTarget) connectToServer(ctx context.Context, pipePath string, tim
 	// Start client in background
 	go client.Run()
 
-	// Wait for started notification
+	// Wait for started notification (use the test's configured timeout)
 	select {
 	case <-startedCh:
 		log.Info("kai-analyzer server is ready")
-	case <-time.After(30 * time.Second):
-		return nil, nil, fmt.Errorf("timeout waiting for server 'started' notification")
+	case <-time.After(timeout):
+		return nil, nil, fmt.Errorf("timeout waiting for server 'started' notification after %v", timeout)
 	case <-ctx.Done():
 		return nil, nil, ctx.Err()
 	}
@@ -314,33 +332,41 @@ func (k *KaiRPCTarget) cleanup(cmd *exec.Cmd, pipePath string) {
 	}
 }
 
-// generateProviderConfig creates a provider config with the correct source location
-func (k *KaiRPCTarget) generateProviderConfig(sourcePath, workDir string) (string, error) {
+// generateProviderConfig creates a provider config with the correct source location and analysis mode
+func (k *KaiRPCTarget) generateProviderConfig(sourcePath, workDir, analysisMode string) (string, error) {
 	// Read the template provider config
 	data, err := os.ReadFile(k.providerConfigPath)
 	if err != nil {
 		return "", fmt.Errorf("failed to read provider config: %w", err)
 	}
 
-	// Parse and update with source location
+	// Parse and update with source location and analysis mode
 	var configs []map[string]interface{}
 	if err := yaml.Unmarshal(data, &configs); err != nil {
 		return "", fmt.Errorf("failed to parse provider config: %w", err)
 	}
 
-	// Update initConfig locations
+	// Update initConfig locations and analysis mode
 	for i := range configs {
 		if initConfigs, ok := configs[i]["initConfig"].([]interface{}); ok {
 			for j := range initConfigs {
 				if initConfig, ok := initConfigs[j].(map[interface{}]interface{}); ok {
 					initConfig["location"] = sourcePath
+					if analysisMode != "" {
+						initConfig["analysisMode"] = analysisMode
+					}
 				}
 			}
 		}
 	}
 
-	// Write updated config
+	// Write updated config (use absolute path since kai-analyzer runs in different workdir)
 	outputPath := filepath.Join(workDir, "provider-config.yaml")
+	if !filepath.IsAbs(outputPath) {
+		if absPath, err := filepath.Abs(outputPath); err == nil {
+			outputPath = absPath
+		}
+	}
 	output, err := yaml.Marshal(configs)
 	if err != nil {
 		return "", fmt.Errorf("failed to marshal provider config: %w", err)
@@ -460,9 +486,9 @@ func (c *LSPCodec) ReadHeader(req *rpc.Request, resp *rpc.Response) error {
 		return err
 	}
 
-	// Read body
+	// Read body - must use io.ReadFull to ensure all bytes are read
 	body := make([]byte, contentLength)
-	if _, err := c.reader.Read(body); err != nil {
+	if _, err := io.ReadFull(c.reader, body); err != nil {
 		return err
 	}
 

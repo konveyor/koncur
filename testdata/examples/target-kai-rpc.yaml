@@ -1,4 +1,17 @@
 type: kai-rpc
 kaiRPC:
-  host: localhost
-  port: 8080
+  # Path to kai-analyzer binary (optional, uses PATH if empty)
+  # binaryPath: /path/to/kai-analyzer
+
+  # Path to provider config file (required)
+  providerConfigPath: testdata/examples/provider-settings-kai-rpc.yaml
+
+  # Default rulesets directory (used when tests don't specify rules)
+  # Download with: make download-rulesets
+  defaultRulesDir: .koncur/rulesets/stable
+
+  # Log file for kai-analyzer (optional)
+  # logFile: /tmp/kai-analyzer.log
+
+  # Verbosity level: -4=debug, 0=info, 4=warn, 8=error (optional)
+  verbosity: -4
