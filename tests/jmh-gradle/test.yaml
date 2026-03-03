@@ -1,0 +1,17 @@
+name: JMH Gradle Analysis
+description: Analysis for Gradle JMH application with custom rules (TC 532)
+analysis:
+    application: https://github.com/melix/jmh-gradle-example
+    context_lines: 0
+    incident_selector: ""
+    source: []
+    target: []
+    rules:
+        - https://github.com/konveyor/koncur#main/rules/jmh-gradle-annotation-state-test-rule.yaml
+    disableDefaultRules: false
+    analysisMode: full
+timeout: 10m0s
+expect:
+    exitCode: 0
+    output:
+        file: expected-output.yaml

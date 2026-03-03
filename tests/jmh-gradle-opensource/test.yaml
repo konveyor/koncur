@@ -1,0 +1,18 @@
+name: JMH Gradle Analysis with Open Source Libraries
+description: Analysis for Gradle JMH application with custom rules and open source libraries (TC 546)
+analysis:
+    application: https://github.com/melix/jmh-gradle-example
+    knownLibs: true
+    context_lines: 0
+    incident_selector: ""
+    source: []
+    target: []
+    rules:
+        - https://github.com/konveyor/koncur#main/rules/jmh-gradle-serializable-test-rule.yaml
+    disableDefaultRules: false
+    analysisMode: full
+timeout: 10m0s
+expect:
+    exitCode: 0
+    output:
+        file: expected-output.yaml

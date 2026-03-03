@@ -1,0 +1,1714 @@
+- name: azure/springboot
+  description: Recommend OpenFeign instead of Feign.
+  violations:
+    azure-file-system-02000:
+      description: Relative path found
+      category: optional
+      labels:
+      - file-system
+      - konveyor.io/source=eap
+      - konveyor.io/source=eap7
+      - konveyor.io/source=springboot
+      - konveyor.io/target=azure-aks
+      - konveyor.io/target=azure-appservice
+      - konveyor.io/target=azure-container-apps
+      - konveyor.io/target=azure-spring-apps
+      incidents:
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_02_BenchmarkModes.java
+        message: "Relative path found.\n \n Any usage of the file system on the application
+          will require reconfiguration or, in rare cases, architectural changes."
+        codeSnip: 55       */
+        lineNumber: 54
+        variables:
+          matchingText: ./J
+      links:
+      - url: https://learn.microsoft.com/azure/developer/java/migration/migrate-spring-cloud-to-azure-spring-apps?pivots=sc-standard-tier#determine-whether-and-how-the-file-system-is-used
+        title: Relative path found in the application
+      effort: 5
+  unmatched:
+  - azure-aws-config-credential-01000
+  - azure-aws-config-region-02000
+  - azure-aws-config-s3-03000
+  - azure-aws-config-secret-manager-05000
+  - azure-aws-config-sqs-04000
+  - azure-file-system-01000
+  - azure-file-system-03000
+  - azure-java-version-01000
+  - azure-java-version-02000
+  - azure-logging-0000
+  - azure-logging-0000
+  - azure-os-specific-00001
+  - azure-os-specific-00002
+  - azure-password-01000
+  - eap-to-azure-appservice-certificates-001
+  - eap-to-azure-appservice-certificates-001
+  - eap-to-azure-appservice-datasource-driver-01000
+  - eap-to-azure-appservice-environment-variables-001
+  - eap-to-azure-appservice-pom-001
+  - spring-boot-to-azure-cache-redis-01000
+  - spring-boot-to-azure-cache-redis-02000
+  - spring-boot-to-azure-config-server-01000
+  - spring-boot-to-azure-database-jdbc-01000
+  - spring-boot-to-azure-database-mongodb-02000
+  - spring-boot-to-azure-database-r2dbc-03000
+  - spring-boot-to-azure-eureka-01000
+  - spring-boot-to-azure-eureka-02000
+  - spring-boot-to-azure-feign-01000
+  - spring-boot-to-azure-identity-provider-01000
+  - spring-boot-to-azure-java-fx-01000
+  - spring-boot-to-azure-jks-01000
+  - spring-boot-to-azure-jms-broker-01000
+  - spring-boot-to-azure-mq-config-artemis-01000
+  - spring-boot-to-azure-mq-config-kafka-01000
+  - spring-boot-to-azure-mq-config-rabbitmq-01000
+  - spring-boot-to-azure-port-01000
+  - spring-boot-to-azure-schedule-job-01000
+  - spring-boot-to-azure-static-content-01000
+  - spring-boot-to-azure-swing-01000
+  - spring-boot-to-azure-system-config-01000
+  - spring-boot-to-azure-version-01000
+  - spring-boot-to-azure-version-02000
+  - spring-boot-to-azure-version-03000
+  - spring-boot-to-azure-zipkin-01000
+  - spring-cloud-to-azure-version-01000
+  - spring-cloud-to-azure-version-02000
+  - spring-cloud-to-azure-version-03000
+  - tomcat-to-azure-external-resources-01000
+- name: custom-ruleset
+  description: temp ruleset
+  violations:
+    jmh-gradle-annotation-state-test-rule:
+      description: State reference test rule for https://github.com/melix/jmh-gradle-example
+      category: mandatory
+      incidents:
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_03_States.java
+        message: State reference test rule for https://github.com/melix/jmh-gradle-example
+        codeSnip: "43       * Below are two state objects. Their class names are not
+          essential,\n44       * it matters they are marked with @State. These objects
+          will be\n45       * instantiated on demand, and reused during the entire
+          benchmark trial.\n46       *\n47       * The important property is that
+          state is always instantiated by\n48       * one of those benchmark threads
+          which will then have the access\n49       * to that state. That means you
+          can initialize the fields as if you do\n50       * that in worker threads
+          (ThreadLocals are yours, etc).\n51       */\n52  \n53      @State(Scope.Benchmark)\n54
+          \     public static class BenchmarkState {\n55          double x = Math.PI;\n56
+          \     }\n57  \n58      @State(Scope.Thread)\n59      public static class
+          ThreadState {\n60          double x = Math.PI;\n61      }\n62  \n63      /*"
+        lineNumber: 53
+        variables:
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_03_States.java
+          kind: Class
+          name: State
+          package: org.openjdk.jmh.samples
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_03_States.java
+        message: State reference test rule for https://github.com/melix/jmh-gradle-example
+        codeSnip: "48       * one of those benchmark threads which will then have
+          the access\n49       * to that state. That means you can initialize the
+          fields as if you do\n50       * that in worker threads (ThreadLocals are
+          yours, etc).\n51       */\n52  \n53      @State(Scope.Benchmark)\n54      public
+          static class BenchmarkState {\n55          double x = Math.PI;\n56      }\n57
+          \ \n58      @State(Scope.Thread)\n59      public static class ThreadState
+          {\n60          double x = Math.PI;\n61      }\n62  \n63      /*\n64       *
+          Benchmark methods can reference the states, and JMH will inject\n65       *
+          the appropriate states while calling these methods. You can have\n66       *
+          no states at all, or have only one state, or have multiple states\n67       *
+          referenced. This makes building multi-threaded benchmark a breeze.\n68       *"
+        lineNumber: 58
+        variables:
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_03_States.java
+          kind: Class
+          name: State
+          package: org.openjdk.jmh.samples
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_04_DefaultState.java
+        message: State reference test rule for https://github.com/melix/jmh-gradle-example
+        codeSnip: "32  import org.openjdk.jmh.runner.options.Options;\n33  import
+          org.openjdk.jmh.runner.options.OptionsBuilder;\n34  \n35  /*\n36   * Fortunately,
+          in many cases you just need a single state object.\n37   * In that case,
+          we can mark the benchmark instance itself to be\n38   * the @State. Then,
+          we can reference it's own fields as will any\n39   * Java program do.\n40
+          \  */\n41  \n42  @State(Scope.Thread)\n43  public class JMHSample_04_DefaultState
+          {\n44  \n45      double x = Math.PI;\n46  \n47      @Benchmark\n48      public
+          void measure() {\n49          x++;\n50      }\n51  \n52      /*"
+        lineNumber: 42
+        variables:
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_04_DefaultState.java
+          kind: Class
+          name: State
+          package: org.openjdk.jmh.samples
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_05_StateFixtures.java
+        message: State reference test rule for https://github.com/melix/jmh-gradle-example
+        codeSnip: "27  import org.openjdk.jmh.annotations.Benchmark;\n28  import org.openjdk.jmh.annotations.Scope;\n29
+          \ import org.openjdk.jmh.annotations.Setup;\n30  import org.openjdk.jmh.annotations.State;\n31
+          \ import org.openjdk.jmh.annotations.TearDown;\n32  import org.openjdk.jmh.runner.Runner;\n33
+          \ import org.openjdk.jmh.runner.RunnerException;\n34  import org.openjdk.jmh.runner.options.Options;\n35
+          \ import org.openjdk.jmh.runner.options.OptionsBuilder;\n36  \n37  @State(Scope.Thread)\n38
+          \ public class JMHSample_05_StateFixtures {\n39  \n40      double x;\n41
+          \ \n42      /*\n43       * Since @State objects are kept around during the
+          lifetime of the benchmark,\n44       * it helps to have the methods which
+          do state housekeeping. These are usual\n45       * fixture methods, you
+          are probably familiar with them from JUnit and TestNG.\n46       *\n47       *
+          Fixture methods make sense only on @State objects, and JMH will fail to
+          compile"
+        lineNumber: 37
+        variables:
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_05_StateFixtures.java
+          kind: Class
+          name: State
+          package: org.openjdk.jmh.samples
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_06_FixtureLevel.java
+        message: State reference test rule for https://github.com/melix/jmh-gradle-example
+        codeSnip: "27  import org.openjdk.jmh.annotations.Benchmark;\n28  import org.openjdk.jmh.annotations.Level;\n29
+          \ import org.openjdk.jmh.annotations.Scope;\n30  import org.openjdk.jmh.annotations.State;\n31
+          \ import org.openjdk.jmh.annotations.TearDown;\n32  import org.openjdk.jmh.runner.Runner;\n33
+          \ import org.openjdk.jmh.runner.RunnerException;\n34  import org.openjdk.jmh.runner.options.Options;\n35
+          \ import org.openjdk.jmh.runner.options.OptionsBuilder;\n36  \n37  @State(Scope.Thread)\n38
+          \ public class JMHSample_06_FixtureLevel {\n39  \n40      double x;\n41
+          \ \n42      /*\n43       * Fixture methods have different levels to control
+          when they are about to run.\n44       * There are at least three Levels
+          available at user expense. These are, from\n45       * the top to bottom:\n46
+          \      *\n47       * Level.Trial:      before or after the entire benchmark
+          run (the sequence of iterations)"
+        lineNumber: 37
+        variables:
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_06_FixtureLevel.java
+          kind: Class
+          name: State
+          package: org.openjdk.jmh.samples
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_07_FixtureLevelInvocation.java
+        message: State reference test rule for https://github.com/melix/jmh-gradle-example
+        codeSnip: "63       *\n64       * Consider this sample:\n65       */\n66  \n67
+          \     /*\n68       * This state handles the executor.\n69       * Note we
+          create and shutdown executor with Level.Trial, so\n70       * it is kept
+          around the same across all iterations.\n71       */\n72  \n73      @State(Scope.Benchmark)\n74
+          \     public static class NormalState {\n75          ExecutorService service;\n76
+          \ \n77          @Setup(Level.Trial)\n78          public void up() {\n79
+          \             service = Executors.newCachedThreadPool();\n80          }\n81
+          \ \n82          @TearDown(Level.Trial)\n83          public void down() {"
+        lineNumber: 73
+        variables:
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_07_FixtureLevelInvocation.java
+          kind: Class
+          name: State
+          package: org.openjdk.jmh.samples
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_07_FixtureLevelInvocation.java
+        message: State reference test rule for https://github.com/melix/jmh-gradle-example
+        codeSnip: "115      @Benchmark\n116      @BenchmarkMode(Mode.AverageTime)\n117
+          \     public double measureCold(LaggingState e, final Scratch s) throws
+          ExecutionException, InterruptedException {\n118          return e.service.submit(new
+          Task(s)).get();\n119      }\n120  \n121      /*\n122       * This is our
+          scratch state which will handle the work.\n123       */\n124  \n125      @State(Scope.Thread)\n126
+          \     public static class Scratch {\n127          private double p;\n128
+          \         public double doWork() {\n129              p = Math.log(p);\n130
+          \             return p;\n131          }\n132      }\n133  \n134      public
+          static class Task implements Callable<Double> {\n135          private Scratch
+          s;"
+        lineNumber: 125
+        variables:
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_07_FixtureLevelInvocation.java
+          kind: Class
+          name: State
+          package: org.openjdk.jmh.samples
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_08_DeadCode.java
+        message: State reference test rule for https://github.com/melix/jmh-gradle-example
+        codeSnip: "30  import org.openjdk.jmh.annotations.OutputTimeUnit;\n31  import
+          org.openjdk.jmh.annotations.Scope;\n32  import org.openjdk.jmh.annotations.State;\n33
+          \ import org.openjdk.jmh.runner.Runner;\n34  import org.openjdk.jmh.runner.RunnerException;\n35
+          \ import org.openjdk.jmh.runner.options.Options;\n36  import org.openjdk.jmh.runner.options.OptionsBuilder;\n37
+          \ \n38  import java.util.concurrent.TimeUnit;\n39  \n40  @State(Scope.Thread)\n41
+          \ @BenchmarkMode(Mode.AverageTime)\n42  @OutputTimeUnit(TimeUnit.NANOSECONDS)\n43
+          \ public class JMHSample_08_DeadCode {\n44  \n45      /*\n46       * The
+          culprit of many benchmarks is the dead-code elimination: compilers are smart\n47
+          \      * enough to deduce some computations are redundant, and eliminate
+          them completely.\n48       * If that eliminated part was our benchmarked
+          code, we are in trouble.\n49       *\n50       * Fortunately, JMH provides
+          the essential infrastructure to fight this where appropriate:"
+        lineNumber: 40
+        variables:
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_08_DeadCode.java
+          kind: Class
+          name: State
+          package: org.openjdk.jmh.samples
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_09_Blackholes.java
+        message: State reference test rule for https://github.com/melix/jmh-gradle-example
+        codeSnip: "33  import org.openjdk.jmh.infra.Blackhole;\n34  import org.openjdk.jmh.runner.Runner;\n35
+          \ import org.openjdk.jmh.runner.RunnerException;\n36  import org.openjdk.jmh.runner.options.Options;\n37
+          \ import org.openjdk.jmh.runner.options.OptionsBuilder;\n38  \n39  import
+          java.util.concurrent.TimeUnit;\n40  \n41  @BenchmarkMode(Mode.AverageTime)\n42
+          \ @OutputTimeUnit(TimeUnit.NANOSECONDS)\n43  @State(Scope.Thread)\n44  public
+          class JMHSample_09_Blackholes {\n45  \n46      /*\n47       * Should you
+          need returning multiple results, you have to consider two options.\n48       *\n49
+          \      * NOTE: If you are only producing a single result, it is more readable
+          to use\n50       * the implicit return, as in org.openjdk.jmh.samples.JMHSample_08_DeadCode.\n51
+          \      * Do not make your benchmark code less readable with explicit Blackholes!\n52
+          \      */\n53  "
+        lineNumber: 43
+        variables:
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_09_Blackholes.java
+          kind: Class
+          name: BenchmarkMode
+          package: org.openjdk.jmh.samples
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_10_ConstantFold.java
+        message: State reference test rule for https://github.com/melix/jmh-gradle-example
+        codeSnip: "30  import org.openjdk.jmh.annotations.OutputTimeUnit;\n31  import
+          org.openjdk.jmh.annotations.Scope;\n32  import org.openjdk.jmh.annotations.State;\n33
+          \ import org.openjdk.jmh.runner.Runner;\n34  import org.openjdk.jmh.runner.RunnerException;\n35
+          \ import org.openjdk.jmh.runner.options.Options;\n36  import org.openjdk.jmh.runner.options.OptionsBuilder;\n37
+          \ \n38  import java.util.concurrent.TimeUnit;\n39  \n40  @State(Scope.Thread)\n41
+          \ @BenchmarkMode(Mode.AverageTime)\n42  @OutputTimeUnit(TimeUnit.NANOSECONDS)\n43
+          \ public class JMHSample_10_ConstantFold {\n44  \n45      /*\n46       *
+          The flip side of dead-code elimination is constant-folding.\n47       *\n48
+          \      * If JVM realizes the result of the computation is the same no matter
+          what, it\n49       * can cleverly optimize it. In our case, that means we
+          can move the computation\n50       * outside of the internal JMH loop."
+        lineNumber: 40
+        variables:
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_10_ConstantFold.java
+          kind: Class
+          name: State
+          package: org.openjdk.jmh.samples
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_11_Loops.java
+        message: State reference test rule for https://github.com/melix/jmh-gradle-example
+        codeSnip: "31  import org.openjdk.jmh.annotations.OutputTimeUnit;\n32  import
+          org.openjdk.jmh.annotations.Scope;\n33  import org.openjdk.jmh.annotations.State;\n34
+          \ import org.openjdk.jmh.runner.Runner;\n35  import org.openjdk.jmh.runner.RunnerException;\n36
+          \ import org.openjdk.jmh.runner.options.Options;\n37  import org.openjdk.jmh.runner.options.OptionsBuilder;\n38
+          \ \n39  import java.util.concurrent.TimeUnit;\n40  \n41  @State(Scope.Thread)\n42
+          \ @BenchmarkMode(Mode.AverageTime)\n43  @OutputTimeUnit(TimeUnit.NANOSECONDS)\n44
+          \ public class JMHSample_11_Loops {\n45  \n46      /*\n47       * It would
+          be tempting for users to do loops within the benchmarked method.\n48       *
+          (This is the bad thing Caliper taught everyone). This tests explains why\n49
+          \      * this is a bad idea.\n50       *\n51       * Looping uses the idea
+          of minimize the overhead for calling the test method,"
+        lineNumber: 41
+        variables:
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_11_Loops.java
+          kind: Class
+          name: State
+          package: org.openjdk.jmh.samples
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_12_Forking.java
+        message: State reference test rule for https://github.com/melix/jmh-gradle-example
+        codeSnip: "31  import org.openjdk.jmh.annotations.OutputTimeUnit;\n32  import
+          org.openjdk.jmh.annotations.Scope;\n33  import org.openjdk.jmh.annotations.State;\n34
+          \ import org.openjdk.jmh.runner.Runner;\n35  import org.openjdk.jmh.runner.RunnerException;\n36
+          \ import org.openjdk.jmh.runner.options.Options;\n37  import org.openjdk.jmh.runner.options.OptionsBuilder;\n38
+          \ \n39  import java.util.concurrent.TimeUnit;\n40  \n41  @State(Scope.Thread)\n42
+          \ @BenchmarkMode(Mode.AverageTime)\n43  @OutputTimeUnit(TimeUnit.NANOSECONDS)\n44
+          \ public class JMHSample_12_Forking {\n45  \n46      /*\n47       * JVMs
+          are notoriously good at profile-guided optimizations. This is bad for benchmarks,\n48
+          \      * because different tests can mix their profiles together, and then
+          render the \"uniformly bad\"\n49       * code for every test. Forking each
+          test can help to evade this issue.\n50       *\n51       * JMH will fork
+          the tests by default."
+        lineNumber: 41
+        variables:
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_12_Forking.java
+          kind: Class
+          name: State
+          package: org.openjdk.jmh.samples
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_13_RunToRun.java
+        message: State reference test rule for https://github.com/melix/jmh-gradle-example
+        codeSnip: "32  import org.openjdk.jmh.annotations.Scope;\n33  import org.openjdk.jmh.annotations.Setup;\n34
+          \ import org.openjdk.jmh.annotations.State;\n35  import org.openjdk.jmh.runner.Runner;\n36
+          \ import org.openjdk.jmh.runner.RunnerException;\n37  import org.openjdk.jmh.runner.options.Options;\n38
+          \ import org.openjdk.jmh.runner.options.OptionsBuilder;\n39  \n40  import
+          java.util.concurrent.TimeUnit;\n41  \n42  @State(Scope.Thread)\n43  @BenchmarkMode(Mode.AverageTime)\n44
+          \ @OutputTimeUnit(TimeUnit.MILLISECONDS)\n45  public class JMHSample_13_RunToRun
+          {\n46  \n47      /*\n48       * Forking also allows to estimate run-to-run
+          variance.\n49       *\n50       * JVMs are complex systems, and the non-determinism
+          is inherent for them.\n51       * This requires us to always account the
+          run-to-run variance as the one\n52       * of the effects in our experiments."
+        lineNumber: 42
+        variables:
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_13_RunToRun.java
+          kind: Class
+          name: State
+          package: org.openjdk.jmh.samples
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_13_RunToRun.java
+        message: State reference test rule for https://github.com/melix/jmh-gradle-example
+        codeSnip: "53       *\n54       * Luckily, forking aggregates the results
+          across several JVM launches.\n55       */\n56  \n57      /*\n58       *
+          In order to introduce readily measurable run-to-run variance, we build\n59
+          \      * the workload which performance differs from run to run. Note that
+          many workloads\n60       * will have the similar behavior, but we do that
+          artificially to make a point.\n61       */\n62  \n63      @State(Scope.Thread)\n64
+          \     public static class SleepyState {\n65          public long sleepTime;\n66
+          \ \n67          @Setup\n68          public void setup() {\n69              sleepTime
+          = (long) (Math.random() * 1000);\n70          }\n71      }\n72  \n73      /*"
+        lineNumber: 63
+        variables:
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_13_RunToRun.java
+          kind: Class
+          name: State
+          package: org.openjdk.jmh.samples
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_15_Asymmetric.java
+        message: State reference test rule for https://github.com/melix/jmh-gradle-example
+        codeSnip: "34  import org.openjdk.jmh.annotations.Setup;\n35  import org.openjdk.jmh.annotations.State;\n36
+          \ import org.openjdk.jmh.runner.Runner;\n37  import org.openjdk.jmh.runner.RunnerException;\n38
+          \ import org.openjdk.jmh.runner.options.Options;\n39  import org.openjdk.jmh.runner.options.OptionsBuilder;\n40
+          \ \n41  import java.util.concurrent.TimeUnit;\n42  import java.util.concurrent.atomic.AtomicInteger;\n43
+          \ \n44  @State(Scope.Group)\n45  @BenchmarkMode(Mode.AverageTime)\n46  @OutputTimeUnit(TimeUnit.NANOSECONDS)\n47
+          \ public class JMHSample_15_Asymmetric {\n48  \n49      /*\n50       * So
+          far all the tests were symmetric: the same code was executed in all the
+          threads.\n51       * At times, you need the asymmetric test. JMH provides
+          this with the notion of @Group,\n52       * which can bind several methods
+          together, and all the threads are distributed among\n53       * the test
+          methods.\n54       *"
+        lineNumber: 44
+        variables:
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_15_Asymmetric.java
+          kind: Class
+          name: State
+          package: org.openjdk.jmh.samples
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_16_CompilerControl.java
+        message: State reference test rule for https://github.com/melix/jmh-gradle-example
+        codeSnip: "31  import org.openjdk.jmh.annotations.OutputTimeUnit;\n32  import
+          org.openjdk.jmh.annotations.Scope;\n33  import org.openjdk.jmh.annotations.State;\n34
+          \ import org.openjdk.jmh.runner.Runner;\n35  import org.openjdk.jmh.runner.RunnerException;\n36
+          \ import org.openjdk.jmh.runner.options.Options;\n37  import org.openjdk.jmh.runner.options.OptionsBuilder;\n38
+          \ \n39  import java.util.concurrent.TimeUnit;\n40  \n41  @State(Scope.Thread)\n42
+          \ @BenchmarkMode(Mode.AverageTime)\n43  @OutputTimeUnit(TimeUnit.NANOSECONDS)\n44
+          \ public class JMHSample_16_CompilerControl {\n45  \n46      /*\n47       *
+          We can use HotSpot-specific functionality to tell the compiler what\n48
+          \      * do we want to do with particular methods. To demonstrate the effects,\n49
+          \      * we end up with 3 methods in this sample.\n50       */\n51  "
+        lineNumber: 41
+        variables:
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_16_CompilerControl.java
+          kind: Class
+          name: State
+          package: org.openjdk.jmh.samples
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_17_SyncIterations.java
+        message: State reference test rule for https://github.com/melix/jmh-gradle-example
+        codeSnip: "28  import org.openjdk.jmh.annotations.OutputTimeUnit;\n29  import
+          org.openjdk.jmh.annotations.Scope;\n30  import org.openjdk.jmh.annotations.State;\n31
+          \ import org.openjdk.jmh.runner.Runner;\n32  import org.openjdk.jmh.runner.RunnerException;\n33
+          \ import org.openjdk.jmh.runner.options.Options;\n34  import org.openjdk.jmh.runner.options.OptionsBuilder;\n35
+          \ \n36  import java.util.concurrent.TimeUnit;\n37  \n38  @State(Scope.Thread)\n39
+          \ @OutputTimeUnit(TimeUnit.MILLISECONDS)\n40  public class JMHSample_17_SyncIterations
+          {\n41  \n42      /*\n43       * This is the another thing that is enabled
+          in JMH by default.\n44       *\n45       * Suppose we have this simple benchmark.\n46
+          \      */\n47  \n48      private double src;"
+        lineNumber: 38
+        variables:
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_17_SyncIterations.java
+          kind: Class
+          name: State
+          package: org.openjdk.jmh.samples
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_18_Control.java
+        message: State reference test rule for https://github.com/melix/jmh-gradle-example
+        codeSnip: "29  import org.openjdk.jmh.annotations.Scope;\n30  import org.openjdk.jmh.annotations.State;\n31
+          \ import org.openjdk.jmh.infra.Control;\n32  import org.openjdk.jmh.runner.Runner;\n33
+          \ import org.openjdk.jmh.runner.RunnerException;\n34  import org.openjdk.jmh.runner.options.Options;\n35
+          \ import org.openjdk.jmh.runner.options.OptionsBuilder;\n36  \n37  import
+          java.util.concurrent.atomic.AtomicBoolean;\n38  \n39  @State(Scope.Group)\n40
+          \ public class JMHSample_18_Control {\n41  \n42      /*\n43       * Sometimes
+          you need the tap into the harness mind to get the info\n44       * on the
+          transition change. For this, we have the experimental state object,\n45
+          \      * Control, which is updated by JMH as we go.\n46       */\n47  \n48
+          \     /*\n49       * In this example, we want to estimate the ping-pong
+          speed for the simple"
+        lineNumber: 39
+        variables:
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_18_Control.java
+          kind: Class
+          name: State
+          package: org.openjdk.jmh.samples
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_20_Annotations.java
+        message: State reference test rule for https://github.com/melix/jmh-gradle-example
+        codeSnip: "31  import org.openjdk.jmh.annotations.Scope;\n32  import org.openjdk.jmh.annotations.State;\n33
+          \ import org.openjdk.jmh.annotations.Warmup;\n34  import org.openjdk.jmh.runner.Runner;\n35
+          \ import org.openjdk.jmh.runner.RunnerException;\n36  import org.openjdk.jmh.runner.options.Options;\n37
+          \ import org.openjdk.jmh.runner.options.OptionsBuilder;\n38  \n39  import
+          java.util.concurrent.TimeUnit;\n40  \n41  @State(Scope.Thread)\n42  @OutputTimeUnit(TimeUnit.MICROSECONDS)\n43
+          \ @Fork(1)\n44  public class JMHSample_20_Annotations {\n45  \n46      double
+          x1 = Math.PI;\n47  \n48      /*\n49       * In addition to all the command
+          line options usable at run time,\n50       * we have the annotations which
+          can provide the reasonable defaults\n51       * for the some of the benchmarks.
+          This is very useful when you are"
+        lineNumber: 41
+        variables:
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_20_Annotations.java
+          kind: Class
+          name: State
+          package: org.openjdk.jmh.samples
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_22_FalseSharing.java
+        message: State reference test rule for https://github.com/melix/jmh-gradle-example
+        codeSnip: "65       *   a) innocuous reader which blindly reads its own field\n66
+          \      *   b) furious writer which updates its own field\n67       */\n68
+          \ \n69      /*\n70       * BASELINE EXPERIMENT:\n71       * Because of the
+          false sharing, both reader and writer will experience\n72       * penalties.\n73
+          \      */\n74  \n75      @State(Scope.Group)\n76      public static class
+          StateBaseline {\n77          int readOnly;\n78          int writeOnly;\n79
+          \     }\n80  \n81      @Benchmark\n82      @Group(\"baseline\")\n83      public
+          int reader(StateBaseline s) {\n84          return s.readOnly;\n85      }"
+        lineNumber: 75
+        variables:
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_22_FalseSharing.java
+          kind: Class
+          name: State
+          package: org.openjdk.jmh.samples
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_22_FalseSharing.java
+        message: State reference test rule for https://github.com/melix/jmh-gradle-example
+        codeSnip: " 91      }\n 92  \n 93      /*\n 94       * APPROACH 1: PADDING\n
+          95       *\n 96       * We can try to alleviate some of the effects with
+          padding.\n 97       * This is not versatile because JVMs can freely rearrange
+          the\n 98       * field order.\n 99       */\n100  \n101      @State(Scope.Group)\n102
+          \     public static class StatePadded {\n103          int readOnly;\n104
+          \         int p01, p02, p03, p04, p05, p06, p07, p08;\n105          int
+          p11, p12, p13, p14, p15, p16, p17, p18;\n106          int writeOnly;\n107
+          \         int q01, q02, q03, q04, q05, q06, q07, q08;\n108          int
+          q11, q12, q13, q14, q15, q16, q17, q18;\n109      }\n110  \n111      @Benchmark"
+        lineNumber: 101
+        variables:
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_22_FalseSharing.java
+          kind: Class
+          name: State
+          package: org.openjdk.jmh.samples
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_22_FalseSharing.java
+        message: State reference test rule for https://github.com/melix/jmh-gradle-example
+        codeSnip: "140  \n141      public static class StateHierarchy_3 extends StateHierarchy_2
+          {\n142          int writeOnly;\n143      }\n144  \n145      public static
+          class StateHierarchy_4 extends StateHierarchy_3 {\n146          int q01,
+          q02, q03, q04, q05, q06, q07, q08;\n147          int q11, q12, q13, q14,
+          q15, q16, q17, q18;\n148      }\n149  \n150      @State(Scope.Group)\n151
+          \     public static class StateHierarchy extends StateHierarchy_4 {\n152
+          \     }\n153  \n154      @Benchmark\n155      @Group(\"hierarchy\")\n156
+          \     public int reader(StateHierarchy s) {\n157          return s.readOnly;\n158
+          \     }\n159  \n160      @Benchmark"
+        lineNumber: 150
+        variables:
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_22_FalseSharing.java
+          kind: Class
+          name: State
+          package: org.openjdk.jmh.samples
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_22_FalseSharing.java
+        message: State reference test rule for https://github.com/melix/jmh-gradle-example
+        codeSnip: "164      }\n165  \n166      /*\n167       * APPROACH 3: ARRAY TRICK\n168
+          \      *\n169       * This trick relies on the contiguous allocation of
+          an array.\n170       * Instead of placing the fields in the class, we mangle
+          them\n171       * into the array at very sparse offsets.\n172       */\n173
+          \ \n174      @State(Scope.Group)\n175      public static class StateArray
+          {\n176          int[] arr = new int[128];\n177      }\n178  \n179      @Benchmark\n180
+          \     @Group(\"sparse\")\n181      public int reader(StateArray s) {\n182
+          \         return s.arr[0];\n183      }\n184  "
+        lineNumber: 174
+        variables:
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_22_FalseSharing.java
+          kind: Class
+          name: State
+          package: org.openjdk.jmh.samples
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_22_FalseSharing.java
+        message: State reference test rule for https://github.com/melix/jmh-gradle-example
+        codeSnip: "189      }\n190  \n191      /*\n192       * APPROACH 4:\n193       *\n194
+          \      * @Contended (since JDK 8):\n195       *  Uncomment the annotation
+          if building with JDK 8.\n196       *  Remember to flip -XX:-RestrictContended
+          to enable.\n197       */\n198  \n199      @State(Scope.Group)\n200      public
+          static class StateContended {\n201          int readOnly;\n202  \n203  //
+          \       @sun.misc.Contended\n204          int writeOnly;\n205      }\n206
+          \ \n207      @Benchmark\n208      @Group(\"contended\")\n209      public
+          int reader(StateContended s) {"
+        lineNumber: 199
+        variables:
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_22_FalseSharing.java
+          kind: Class
+          name: State
+          package: org.openjdk.jmh.samples
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_23_AuxCounters.java
+        message: State reference test rule for https://github.com/melix/jmh-gradle-example
+        codeSnip: "50      /*\n51       * In some weird cases you need to get the
+          separate throughput/time\n52       * metrics for the benchmarked code depending
+          on the outcome of the\n53       * current code. Trying to accommodate the
+          cases like this, JMH optionally\n54       * provides the special annotation
+          which treats @State objects\n55       * as the object bearing user counters.
+          See @AuxCounters javadoc for\n56       * the limitations.\n57       */\n58
+          \ \n59      @AuxCounters\n60      @State(Scope.Thread)\n61      public static
+          class AdditionalCounters {\n62          public int case1, case2;\n63  \n64
+          \         @Setup(Level.Iteration)\n65          public void clean() {\n66
+          \             case1 = case2 = 0;\n67          }\n68  \n69          public
+          int total() {\n70              return case1 + case2;"
+        lineNumber: 60
+        variables:
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_23_AuxCounters.java
+          kind: Class
+          name: AuxCounters
+          package: org.openjdk.jmh.samples
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_24_Inheritance.java
+        message: State reference test rule for https://github.com/melix/jmh-gradle-example
+        codeSnip: "56       * during the compilation, it is only possible during the
+          same compilation\n57       * session. That is, mixing in the subclass extending
+          your benchmark class\n58       * *after* the JMH compilation would have
+          no effect.\n59       *\n60       * Note how annotations now have two possible
+          places. The closest annotation\n61       * in the hierarchy wins.\n62       */\n63
+          \ \n64      @BenchmarkMode(Mode.AverageTime)\n65      @Fork(1)\n66      @State(Scope.Thread)\n67
+          \     @OutputTimeUnit(TimeUnit.NANOSECONDS)\n68      public static abstract
+          class AbstractBenchmark {\n69          public int x = 42;\n70  \n71          @Benchmark\n72
+          \         @Warmup(iterations = 5, time = 100, timeUnit = TimeUnit.MILLISECONDS)\n73
+          \         @Measurement(iterations = 5, time = 100, timeUnit = TimeUnit.MILLISECONDS)\n74
+          \         public double bench() {\n75              return doWork() * doWork();\n76
+          \         }"
+        lineNumber: 66
+        variables:
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_24_Inheritance.java
+          kind: Class
+          name: BenchmarkMode
+          package: org.openjdk.jmh.samples
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_25_API_GA.java
+        message: State reference test rule for https://github.com/melix/jmh-gradle-example
+        codeSnip: "33  import org.openjdk.jmh.runner.RunnerException;\n34  import
+          org.openjdk.jmh.runner.options.Options;\n35  import org.openjdk.jmh.runner.options.OptionsBuilder;\n36
+          \ import org.openjdk.jmh.runner.options.TimeValue;\n37  import org.openjdk.jmh.runner.options.VerboseMode;\n38
+          \ \n39  import java.util.ArrayList;\n40  import java.util.Collections;\n41
+          \ import java.util.List;\n42  \n43  @State(Scope.Thread)\n44  public class
+          JMHSample_25_API_GA {\n45  \n46      /**\n47       * This example shows
+          the rather convoluted, but fun way to exploit\n48       * JMH API in complex
+          scenarios. Up to this point, we haven't consumed\n49       * the results
+          programmatically, and hence we are missing all the fun.\n50       *\n51
+          \      * Let's consider this naive code, which obviously suffers from the\n52
+          \      * performance anomalies, since current HotSpot is resistant to make\n53
+          \      * the tail-call optimizations."
+        lineNumber: 43
+        variables:
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_25_API_GA.java
+          kind: Class
+          name: State
+          package: org.openjdk.jmh.samples
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_26_BatchSize.java
+        message: State reference test rule for https://github.com/melix/jmh-gradle-example
+        codeSnip: "34  import org.openjdk.jmh.annotations.State;\n35  import org.openjdk.jmh.annotations.Warmup;\n36
+          \ import org.openjdk.jmh.runner.Runner;\n37  import org.openjdk.jmh.runner.RunnerException;\n38
+          \ import org.openjdk.jmh.runner.options.Options;\n39  import org.openjdk.jmh.runner.options.OptionsBuilder;\n40
+          \ \n41  import java.util.LinkedList;\n42  import java.util.List;\n43  \n44
+          \ @State(Scope.Thread)\n45  public class JMHSample_26_BatchSize {\n46  \n47
+          \     /*\n48       * Sometimes you need to evaluate operation which doesn't
+          have\n49       * the steady state. The cost of a benchmarked operation may\n50
+          \      * significantly vary from invocation to invocation.\n51       *\n52
+          \      * In this case, using the timed measurements is not a good idea,\n53
+          \      * and the only acceptable benchmark mode is a single shot. On the\n54
+          \      * other hand, the operation may be too small for reliable single"
+        lineNumber: 44
+        variables:
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_26_BatchSize.java
+          kind: Class
+          name: State
+          package: org.openjdk.jmh.samples
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_27_Params.java
+        message: State reference test rule for https://github.com/melix/jmh-gradle-example
+        codeSnip: "40  import org.openjdk.jmh.runner.options.OptionsBuilder;\n41  \n42
+          \ import java.math.BigInteger;\n43  import java.util.concurrent.TimeUnit;\n44
+          \ \n45  @BenchmarkMode(Mode.AverageTime)\n46  @OutputTimeUnit(TimeUnit.NANOSECONDS)\n47
+          \ @Warmup(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)\n48  @Measurement(iterations
+          = 5, time = 1, timeUnit = TimeUnit.SECONDS)\n49  @Fork(1)\n50  @State(Scope.Benchmark)\n51
+          \ public class JMHSample_27_Params {\n52  \n53      /**\n54       * In many
+          cases, the experiments require walking the configuration space\n55       *
+          for a benchmark. This is needed for additional control, or investigating\n56
+          \      * how the workload performance changes with different settings.\n57
+          \      */\n58  \n59      @Param({\"1\", \"31\", \"65\", \"101\", \"103\"})\n60
+          \     public int arg;"
+        lineNumber: 50
+        variables:
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_27_Params.java
+          kind: Class
+          name: BenchmarkMode
+          package: org.openjdk.jmh.samples
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_28_BlackholeHelpers.java
+        message: State reference test rule for https://github.com/melix/jmh-gradle-example
+        codeSnip: "40  import org.openjdk.jmh.runner.options.Options;\n41  import
+          org.openjdk.jmh.runner.options.OptionsBuilder;\n42  \n43  import java.util.concurrent.TimeUnit;\n44
+          \ \n45  @BenchmarkMode(Mode.AverageTime)\n46  @OutputTimeUnit(TimeUnit.NANOSECONDS)\n47
+          \ @Warmup(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)\n48  @Measurement(iterations
+          = 5, time = 1, timeUnit = TimeUnit.SECONDS)\n49  @Fork(1)\n50  @State(Scope.Thread)\n51
+          \ public class JMHSample_28_BlackholeHelpers {\n52  \n53      /**\n54       *
+          Sometimes you need the black hole not in @GMB method, but in\n55       *
+          helper methods, because you want to pass it through to the concrete\n56
+          \      * implementation which is instantiated in helper methods. In this
+          case,\n57       * you can request the black hole straight in the helper
+          method signature.\n58       * This applies to both @Setup and @TearDown
+          methods, and also to other\n59       * JMH infrastructure objects, like
+          Control.\n60       *"
+        lineNumber: 50
+        variables:
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_28_BlackholeHelpers.java
+          kind: Class
+          name: BenchmarkMode
+          package: org.openjdk.jmh.samples
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_29_StatesDAG.java
+        message: State reference test rule for https://github.com/melix/jmh-gradle-example
+        codeSnip: "44  import java.util.LinkedList;\n45  import java.util.List;\n46
+          \ import java.util.Queue;\n47  import java.util.concurrent.TimeUnit;\n48
+          \ \n49  @BenchmarkMode(Mode.AverageTime)\n50  @OutputTimeUnit(TimeUnit.NANOSECONDS)\n51
+          \ @Warmup(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)\n52  @Measurement(iterations
+          = 5, time = 1, timeUnit = TimeUnit.SECONDS)\n53  @Fork(1)\n54  @State(Scope.Thread)\n55
+          \ public class JMHSample_29_StatesDAG {\n56  \n57      /**\n58       * WARNING:\n59
+          \      * THIS IS AN EXPERIMENTAL FEATURE, BE READY FOR IT BECOME REMOVED
+          WITHOUT NOTICE!\n60       */\n61  \n62      /**\n63       * There are weird
+          cases when the benchmark state is more cleanly described\n64       * by
+          the set of @States, and those @States reference each other. JMH allows"
+        lineNumber: 54
+        variables:
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_29_StatesDAG.java
+          kind: Class
+          name: BenchmarkMode
+          package: org.openjdk.jmh.samples
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_29_StatesDAG.java
+        message: State reference test rule for https://github.com/melix/jmh-gradle-example
+        codeSnip: " 89          }\n 90      }\n 91  \n 92      /*\n 93       * Shared
+          state maintains the set of Counters, and worker threads should\n 94       *
+          poll their own instances of Counter to work with. However, it should only\n
+          95       * be done once, and therefore, Local state caches it after requesting
+          the\n 96       * counter from Shared state.\n 97       */\n 98  \n 99      @State(Scope.Benchmark)\n100
+          \     public static class Shared {\n101          List<Counter> all;\n102
+          \         Queue<Counter> available;\n103  \n104          @Setup\n105          public
+          synchronized void setup() {\n106              all = new ArrayList<Counter>();\n107
+          \             for (int c = 0; c < 10; c++) {\n108                  all.add(new
+          Counter());\n109              }"
+        lineNumber: 99
+        variables:
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_29_StatesDAG.java
+          kind: Class
+          name: State
+          package: org.openjdk.jmh.samples
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_29_StatesDAG.java
+        message: State reference test rule for https://github.com/melix/jmh-gradle-example
+        codeSnip: "117              for (Counter c : all) {\n118                  c.dispose();\n119
+          \             }\n120          }\n121  \n122          public synchronized
+          Counter getMine() {\n123              return available.poll();\n124          }\n125
+          \     }\n126  \n127      @State(Scope.Thread)\n128      public static class
+          Local {\n129          Counter cnt;\n130  \n131          @Setup\n132          public
+          void setup(Shared shared) {\n133              cnt = shared.getMine();\n134
+          \         }\n135      }\n136  \n137      @Benchmark"
+        lineNumber: 127
+        variables:
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_29_StatesDAG.java
+          kind: Class
+          name: State
+          package: org.openjdk.jmh.samples
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_30_Interrupts.java
+        message: State reference test rule for https://github.com/melix/jmh-gradle-example
+        codeSnip: "33  import org.openjdk.jmh.annotations.State;\n34  import org.openjdk.jmh.runner.Runner;\n35
+          \ import org.openjdk.jmh.runner.RunnerException;\n36  import org.openjdk.jmh.runner.options.Options;\n37
+          \ import org.openjdk.jmh.runner.options.OptionsBuilder;\n38  \n39  import
+          java.util.concurrent.ArrayBlockingQueue;\n40  import java.util.concurrent.BlockingQueue;\n41
+          \ \n42  @BenchmarkMode(Mode.AverageTime)\n43  @State(Scope.Group)\n44  public
+          class JMHSample_30_Interrupts {\n45  \n46      /*\n47       * JMH can also
+          detect when threads are stuck in the benchmarks, and try\n48       * to
+          forcefully interrupt the benchmark thread. JMH tries to do that\n49       *
+          when it is arguably sure it would not affect the measurement.\n50       */\n51
+          \ \n52      /*\n53       * In this example, we want to measure the simple
+          performance characteristics"
+        lineNumber: 43
+        variables:
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_30_Interrupts.java
+          kind: Class
+          name: BenchmarkMode
+          package: org.openjdk.jmh.samples
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_31_InfraParams.java
+        message: State reference test rule for https://github.com/melix/jmh-gradle-example
+        codeSnip: "38  import org.openjdk.jmh.runner.options.Options;\n39  import
+          org.openjdk.jmh.runner.options.OptionsBuilder;\n40  \n41  import java.util.ArrayList;\n42
+          \ import java.util.List;\n43  import java.util.concurrent.ConcurrentHashMap;\n44
+          \ import java.util.concurrent.TimeUnit;\n45  \n46  @BenchmarkMode(Mode.Throughput)\n47
+          \ @OutputTimeUnit(TimeUnit.SECONDS)\n48  @State(Scope.Benchmark)\n49  public
+          class JMHSample_31_InfraParams {\n50  \n51      /*\n52       * There is
+          a way to query JMH about the current running mode. This is\n53       * possible
+          with three infrastructure objects we can request to be injected:\n54       *
+          \  - BenchmarkParams: covers the benchmark-global configuration\n55       *
+          \  - IterationParams: covers the current iteration configuration\n56       *
+          \  - ThreadParams: covers the specifics about threading\n57       *\n58
+          \      * Suppose we want to check how the ConcurrentHashMap scales under
+          different"
+        lineNumber: 48
+        variables:
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_31_InfraParams.java
+          kind: Class
+          name: BenchmarkMode
+          package: org.openjdk.jmh.samples
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_31_InfraParams.java
+        message: State reference test rule for https://github.com/melix/jmh-gradle-example
+        codeSnip: "71      public void setup(BenchmarkParams params) {\n72          int
+          capacity = 16 * THREAD_SLICE * params.getThreads();\n73          mapSingle
+          \       = new ConcurrentHashMap<String, String>(capacity, 0.75f, 1);\n74
+          \         mapFollowThreads = new ConcurrentHashMap<String, String>(capacity,
+          0.75f, params.getThreads());\n75      }\n76  \n77      /*\n78       * Here
+          is another neat trick. Generate the distinct set of keys for all threads:\n79
+          \      */\n80  \n81      @State(Scope.Thread)\n82      public static class
+          Ids {\n83          private List<String> ids;\n84  \n85          @Setup\n86
+          \         public void setup(ThreadParams threads) {\n87              ids
+          = new ArrayList<String>();\n88              for (int c = 0; c < THREAD_SLICE;
+          c++) {\n89                  ids.add(\"ID\" + (THREAD_SLICE * threads.getThreadIndex()
+          + c));\n90              }\n91          }"
+        lineNumber: 81
+        variables:
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_31_InfraParams.java
+          kind: Class
+          name: State
+          package: org.openjdk.jmh.samples
+      effort: 1
+- name: discovery-rules
+  tags:
+  - Java Source
+  - Properties
+  insights:
+    discover-java-files:
+      description: Java source files
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - konveyor.io/target=discovery
+      - tag=Java Source
+      incidents:
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_01_HelloWorld.java
+        message: ""
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_02_BenchmarkModes.java
+        message: ""
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_03_States.java
+        message: ""
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_04_DefaultState.java
+        message: ""
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_05_StateFixtures.java
+        message: ""
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_06_FixtureLevel.java
+        message: ""
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_07_FixtureLevelInvocation.java
+        message: ""
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_08_DeadCode.java
+        message: ""
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_09_Blackholes.java
+        message: ""
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_10_ConstantFold.java
+        message: ""
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_11_Loops.java
+        message: ""
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_12_Forking.java
+        message: ""
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_13_RunToRun.java
+        message: ""
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_15_Asymmetric.java
+        message: ""
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_16_CompilerControl.java
+        message: ""
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_17_SyncIterations.java
+        message: ""
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_18_Control.java
+        message: ""
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_20_Annotations.java
+        message: ""
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_21_ConsumeCPU.java
+        message: ""
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_22_FalseSharing.java
+        message: ""
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_23_AuxCounters.java
+        message: ""
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_24_Inheritance.java
+        message: ""
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_25_API_GA.java
+        message: ""
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_26_BatchSize.java
+        message: ""
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_27_Params.java
+        message: ""
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_28_BlackholeHelpers.java
+        message: ""
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_29_StatesDAG.java
+        message: ""
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_30_Interrupts.java
+        message: ""
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_31_InfraParams.java
+        message: ""
+    discover-properties-file:
+      description: Properties file
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - konveyor.io/target=discovery
+      - tag=Properties
+      incidents:
+      - uri: file:///source/.gradle/buildOutputCleanup/cache.properties
+        message: ""
+      - uri: file:///source/.gradle/vcsWorkingDirs/gc.properties
+        message: ""
+      - uri: file:///source/gradle/wrapper/gradle-wrapper.properties
+        message: ""
+  unmatched:
+  - discover-license
+  - discover-manifest-file
+  - discover-maven-xml
+  - hardcoded-ip-address
+  - windup-discover-ejb-configuration
+  - windup-discover-jpa-configuration
+  - windup-discover-spring-configuration
+  - windup-discover-web-configuration
+- name: technology-usage
+  description: This ruleset provides analysis of logging libraries.
+  tags:
+  - Embedded=Properties
+  - Java Threads
+  - Other=Properties
+  - Sustain=Properties
+  - Threads
+  insights:
+    javase-01100:
+      description: Threads
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Java Threads
+      - tag=Threads
+      incidents:
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_07_FixtureLevelInvocation.java
+        message: ""
+        codeSnip: "33  import org.openjdk.jmh.annotations.Setup;\n34  import org.openjdk.jmh.annotations.State;\n35
+          \ import org.openjdk.jmh.annotations.TearDown;\n36  import org.openjdk.jmh.runner.Runner;\n37
+          \ import org.openjdk.jmh.runner.RunnerException;\n38  import org.openjdk.jmh.runner.options.Options;\n39
+          \ import org.openjdk.jmh.runner.options.OptionsBuilder;\n40  \n41  import
+          java.util.concurrent.Callable;\n42  import java.util.concurrent.ExecutionException;\n43
+          \ import java.util.concurrent.ExecutorService;\n44  import java.util.concurrent.Executors;\n45
+          \ import java.util.concurrent.TimeUnit;\n46  \n47  /**\n48   * Fixtures
+          have different Levels to control when they are about to run.\n49   * Level.Invocation
+          is useful sometimes to do some per-invocation work\n50   * which should
+          not count as payload (e.g. sleep for some time to emulate\n51   * think
+          time)\n52   */\n53  @OutputTimeUnit(TimeUnit.MICROSECONDS)"
+        lineNumber: 43
+        variables:
+          classes: ExecutorService
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_07_FixtureLevelInvocation.java
+          kind: Module
+          name: java.util.concurrent.ExecutorService
+          package: org.openjdk.jmh.samples
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_07_FixtureLevelInvocation.java
+        message: ""
+        codeSnip: "34  import org.openjdk.jmh.annotations.State;\n35  import org.openjdk.jmh.annotations.TearDown;\n36
+          \ import org.openjdk.jmh.runner.Runner;\n37  import org.openjdk.jmh.runner.RunnerException;\n38
+          \ import org.openjdk.jmh.runner.options.Options;\n39  import org.openjdk.jmh.runner.options.OptionsBuilder;\n40
+          \ \n41  import java.util.concurrent.Callable;\n42  import java.util.concurrent.ExecutionException;\n43
+          \ import java.util.concurrent.ExecutorService;\n44  import java.util.concurrent.Executors;\n45
+          \ import java.util.concurrent.TimeUnit;\n46  \n47  /**\n48   * Fixtures
+          have different Levels to control when they are about to run.\n49   * Level.Invocation
+          is useful sometimes to do some per-invocation work\n50   * which should
+          not count as payload (e.g. sleep for some time to emulate\n51   * think
+          time)\n52   */\n53  @OutputTimeUnit(TimeUnit.MICROSECONDS)\n54  public class
+          JMHSample_07_FixtureLevelInvocation {"
+        lineNumber: 44
+        variables:
+          classes: Executors
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_07_FixtureLevelInvocation.java
+          kind: Module
+          name: java.util.concurrent.Executors
+          package: org.openjdk.jmh.samples
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_07_FixtureLevelInvocation.java
+        message: ""
+        codeSnip: "65       */\n66  \n67      /*\n68       * This state handles the
+          executor.\n69       * Note we create and shutdown executor with Level.Trial,
+          so\n70       * it is kept around the same across all iterations.\n71       */\n72
+          \ \n73      @State(Scope.Benchmark)\n74      public static class NormalState
+          {\n75          ExecutorService service;\n76  \n77          @Setup(Level.Trial)\n78
+          \         public void up() {\n79              service = Executors.newCachedThreadPool();\n80
+          \         }\n81  \n82          @TearDown(Level.Trial)\n83          public
+          void down() {\n84              service.shutdown();\n85          }"
+        lineNumber: 75
+        variables:
+          classes: ""
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_07_FixtureLevelInvocation.java
+          kind: Field
+          name: service
+          package: org.openjdk.jmh.samples
+      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_07_FixtureLevelInvocation.java
+        message: ""
+        codeSnip: "69       * Note we create and shutdown executor with Level.Trial,
+          so\n70       * it is kept around the same across all iterations.\n71       */\n72
+          \ \n73      @State(Scope.Benchmark)\n74      public static class NormalState
+          {\n75          ExecutorService service;\n76  \n77          @Setup(Level.Trial)\n78
+          \         public void up() {\n79              service = Executors.newCachedThreadPool();\n80
+          \         }\n81  \n82          @TearDown(Level.Trial)\n83          public
+          void down() {\n84              service.shutdown();\n85          }\n86  \n87
+          \     }\n88  \n89      /*"
+        lineNumber: 79
+        variables:
+          classes: ""
+          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_07_FixtureLevelInvocation.java
+          kind: Method
+          name: up
+          package: org.openjdk.jmh.samples
+    non-xml-technology-usage-20000:
+      description: ""
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded=Properties
+      - tag=Other=Properties
+      - tag=Sustain=Properties
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - Properties
+  unmatched:
+  - 3rd-party-01000
+  - 3rd-party-02000
+  - 3rd-party-03000
+  - 3rd-party-04000
+  - 3rd-party-05000
+  - 3rd-party-06000
+  - 3rd-party-07000
+  - 3rd-party-08000
+  - 3rd-party-09000
+  - 3rd-party-10000
+  - 3rd-party-11000
+  - 3rd-party-12000
+  - 3rd-party-13000
+  - 3rd-party-14000
+  - 3rd-party-15000
+  - 3rd-party-16000
+  - 3rd-party-17000
+  - 3rd-party-18000
+  - 3rd-party-19000
+  - 3rd-party-spring-03001
+  - 3rd-party-spring-03002
+  - apm-00000
+  - apm-00001
+  - apm-00002
+  - apm-00003
+  - clustering-00000
+  - clustering-00001
+  - configuration-management-0100
+  - configuration-management-0200
+  - configuration-management-0300
+  - configuration-management-0400
+  - configuration-management-0500
+  - configuration-management-technology-usage-0100
+  - configuration-management-technology-usage-0200
+  - configuration-management-technology-usage-0300
+  - connect-01400
+  - connect-01500
+  - connect-01600
+  - connect-01700
+  - connect-01800
+  - connect-01900
+  - connect-02000
+  - connect-02100
+  - connect-02200
+  - connect-02300
+  - connect-02400
+  - connect-02500
+  - connect-02600
+  - connect-02700
+  - connect-02800
+  - connect-02900
+  - database-01400
+  - database-01400
+  - database-01500
+  - database-01600
+  - database-01700
+  - database-01800
+  - database-01805
+  - database-01900
+  - database-02000
+  - database-02100
+  - database-02200
+  - database-02300
+  - database-02400
+  - database-02500
+  - database-02600
+  - database-02700
+  - database-02800
+  - database-02900
+  - database-03000
+  - database-03100
+  - ejb-01000
+  - embedded-cache-libraries-01000
+  - embedded-cache-libraries-02000
+  - embedded-cache-libraries-03000
+  - embedded-cache-libraries-04000
+  - embedded-cache-libraries-05000
+  - embedded-cache-libraries-06000
+  - embedded-cache-libraries-07000
+  - embedded-cache-libraries-08000
+  - embedded-cache-libraries-09000
+  - embedded-cache-libraries-10000
+  - embedded-cache-libraries-11000
+  - embedded-cache-libraries-12000
+  - embedded-cache-libraries-13000
+  - embedded-cache-libraries-14000
+  - embedded-cache-libraries-15000
+  - embedded-cache-libraries-16000
+  - embedded-framework-01000
+  - embedded-framework-01010
+  - embedded-framework-01100
+  - embedded-framework-01200
+  - embedded-framework-01300
+  - embedded-framework-01400
+  - embedded-framework-01500
+  - embedded-framework-01600
+  - embedded-framework-01700
+  - embedded-framework-02000
+  - embedded-framework-02200
+  - embedded-framework-02300
+  - embedded-framework-02400
+  - embedded-framework-03000
+  - embedded-framework-03100
+  - embedded-framework-03200
+  - embedded-framework-03300
+  - embedded-framework-03400
+  - embedded-framework-04700
+  - embedded-framework-05000
+  - embedded-framework-05100
+  - embedded-framework-05300
+  - embedded-framework-05400
+  - embedded-framework-05500
+  - embedded-framework-05600
+  - embedded-framework-05700
+  - embedded-framework-05800
+  - embedded-framework-05900
+  - embedded-framework-06000
+  - embedded-framework-06100
+  - embedded-framework-06200
+  - embedded-framework-06300
+  - embedded-framework-06400
+  - embedded-framework-06500
+  - embedded-framework-06600
+  - embedded-framework-06700
+  - embedded-framework-06800
+  - embedded-framework-06900
+  - embedded-framework-07000
+  - embedded-framework-07100
+  - embedded-framework-07200
+  - embedded-framework-07300
+  - embedded-framework-07400
+  - embedded-framework-07500
+  - embedded-framework-07600
+  - embedded-framework-07700
+  - embedded-framework-07800
+  - embedded-framework-07900
+  - embedded-framework-08000
+  - embedded-framework-08100
+  - embedded-framework-08200
+  - embedded-framework-08300
+  - embedded-framework-08400
+  - embedded-framework-08500
+  - embedded-framework-08600
+  - embedded-framework-08700
+  - embedded-framework-08800
+  - embedded-framework-08900
+  - embedded-framework-09000
+  - embedded-framework-09100
+  - embedded-framework-09300
+  - embedded-framework-embedded-framework-02700
+  - embedded-framework-embedded-framework-02800
+  - embedded-framework-embedded-framework-02900
+  - embedded-framework-embedded-framework-03000
+  - embedded-framework-embedded-framework-03100
+  - embedded-framework-embedded-framework-03200
+  - embedded-framework-embedded-framework-03300
+  - embedded-framework-embedded-framework-03400
+  - embedded-framework-embedded-framework-03500
+  - embedded-framework-embedded-framework-03600
+  - embedded-framework-embedded-framework-03700
+  - embedded-framework-embedded-framework-03800
+  - embedded-framework-embedded-framework-03900
+  - embedded-framework-embedded-framework-04000
+  - embedded-framework-embedded-framework-04100
+  - embedded-framework-embedded-framework-04200
+  - embedded-framework-embedded-framework-04300
+  - embedded-framework-embedded-framework-04400
+  - embedded-framework-embedded-framework-04500
+  - embedded-framework-embedded-framework-04600
+  - embedded-framework-embedded-framework-09200
+  - embedded-framework-embedded-framework-09300
+  - integration-00001
+  - integration-00002
+  - integration-00003
+  - integration-00004
+  - integration-00005
+  - integration-00006
+  - integration-00007
+  - integration-00008
+  - integration-00009
+  - integration-00010
+  - integration-00011
+  - integration-00012
+  - integration-00013
+  - integration-00014
+  - integration-00015
+  - integration-00016
+  - integration-00017
+  - javaee-technology-usage-00010
+  - javaee-technology-usage-00011
+  - javaee-technology-usage-00012
+  - javaee-technology-usage-00013
+  - javaee-technology-usage-00020-jakarta
+  - javaee-technology-usage-00020-javax
+  - javaee-technology-usage-00021
+  - javaee-technology-usage-00030
+  - javaee-technology-usage-00031
+  - javaee-technology-usage-00040
+  - javaee-technology-usage-00050
+  - javaee-technology-usage-00060
+  - javaee-technology-usage-00070
+  - javaee-technology-usage-00080
+  - javaee-technology-usage-00090
+  - javaee-technology-usage-00100
+  - javaee-technology-usage-00110
+  - javaee-technology-usage-00120
+  - javaee-technology-usage-00130
+  - javaee-technology-usage-00140
+  - javaee-technology-usage-00150
+  - javaee-technology-usage-00160
+  - javaee-technology-usage-00170
+  - javaee-technology-usage-00180
+  - javaee-technology-usage-00190
+  - javaee-technology-usage-00200
+  - javaee-technology-usage-00210
+  - javaee-technology-usage-00220
+  - javaee-technology-usage-00230
+  - javaee-technology-usage-00902
+  - javaee-technology-usage-00903
+  - javaee-technology-usage-00905
+  - javaee-technology-usage-00906
+  - javaee-technology-usage-00910
+  - javaee-technology-usage-00911
+  - javaee-technology-usage-00912
+  - javaee-technology-usage-00913
+  - javaee-technology-usage-00914
+  - javaee-technology-usage-00915
+  - javaee-technology-usage-00916
+  - javaee-technology-usage-00917
+  - javaee-technology-usage-00918
+  - javaee-technology-usage-00926
+  - javaee-technology-usage-00927
+  - javaee-technology-usage-00928
+  - javaee-technology-usage-00930
+  - javaee-technology-usage-00931
+  - javaee-technology-usage-00932
+  - javaee-technology-usage-00950
+  - javaee-technology-usage-00951
+  - javaee-technology-usage-00952
+  - javaee-technology-usage-00953
+  - javaee-technology-usage-00954
+  - javaee-technology-usage-00955
+  - javaee-technology-usage-00956
+  - javaee-technology-usage-00957
+  - javaee-technology-usage-00958
+  - javase-01000
+  - javase-technology-usage-01000
+  - jta-00020
+  - jta-00030
+  - jta-00040
+  - jta-00050
+  - jta-00060
+  - jta-00070
+  - jta-00080
+  - jta-00090
+  - jta-00100
+  - jta-00110
+  - jta-00120
+  - jta-00130
+  - jta-00140
+  - jta-00150
+  - jta-00160
+  - jta-00170
+  - jta-00180
+  - jta-00190
+  - jta-00200
+  - jta-00210
+  - logging-usage-00010
+  - logging-usage-00020
+  - logging-usage-00030
+  - logging-usage-00040
+  - logging-usage-00050
+  - logging-usage-00080
+  - logging-usage-00090
+  - logging-usage-00100
+  - logging-usage-00110
+  - logging-usage-00120
+  - logging-usage-00130
+  - logging-usage-00140
+  - logging-usage-00150
+  - logging-usage-00160
+  - logging-usage-00170
+  - logging-usage-00180
+  - logging-usage-00190
+  - logging-usage-00200
+  - logging-usage-00210
+  - logging-usage-00220
+  - logging-usage-00230
+  - logging-usage-00240
+  - logging-usage-00250
+  - logging-usage-00260
+  - logging-usage-00270
+  - logging-usage-00280
+  - logging-usage-00290
+  - mvc-01000
+  - mvc-01100
+  - mvc-01200
+  - mvc-01210
+  - mvc-01220
+  - mvc-01300
+  - mvc-01400
+  - mvc-01500
+  - mvc-01600
+  - mvc-01700
+  - mvc-01800
+  - mvc-01900
+  - mvc-02000
+  - mvc-02100
+  - mvc-02200
+  - mvc-02300
+  - mvc-02400
+  - mvc-02500
+  - mvc-02600
+  - mvc-02700
+  - mvc-02800
+  - mvc-02900
+  - mvc-03000
+  - mvc-03100
+  - mvc-03200
+  - mvc-03300
+  - mvc-03400
+  - mvc-03500
+  - mvc-03600
+  - mvc-03700
+  - mvc-03800
+  - mvc-03900
+  - mvc-04000
+  - mvc-04100
+  - mvc-04200
+  - mvc-04300
+  - mvc-04400
+  - mvc-04500
+  - mvc-04600
+  - mvc-04700
+  - mvc-04800
+  - mvc-04900
+  - mvc-05000
+  - mvc-05100
+  - mvc-05200
+  - mvc-05300
+  - mvc-05400
+  - mvc-05500
+  - mvc-05600
+  - mvc-05700
+  - mvc-05800
+  - mvc-05900
+  - mvc-06000
+  - non-xml-technology-usage-02000
+  - non-xml-technology-usage-05000
+  - non-xml-technology-usage-06000
+  - non-xml-technology-usage-12000
+  - non-xml-technology-usage-13000
+  - non-xml-technology-usage-14000
+  - non-xml-technology-usage-17000
+  - non-xml-technology-usage-18000
+  - non-xml-technology-usage-19000
+  - non-xml-technology-usage-21000
+  - non-xml-technology-usage-22000
+  - non-xml-technology-usage-23000
+  - non-xml-technology-usage-24000
+  - non-xml-technology-usage-25000
+  - non-xml-technology-usage-26000
+  - non-xml-technology-usage-27000
+  - observability-0100
+  - observability-0200
+  - observability-technology-usage-0100
+  - observability-technology-usage-0200
+  - security-01100
+  - security-01200
+  - security-01300
+  - security-01400
+  - security-01500
+  - security-01600
+  - security-01700
+  - security-01800
+  - security-01900
+  - security-02000
+  - security-02100
+  - security-02200
+  - security-02300
+  - security-02400
+  - security-02500
+  - security-02600
+  - security-02700
+  - security-02800
+  - security-02900
+  - security-03000
+  - security-03100
+  - security-03200
+  - security-03300
+  - security-03400
+  - security-03500
+  - security-03600
+  - spring-catchall-00001
+  - technology-usage-3rd-party-01000
+  - technology-usage-3rd-party-02000
+  - technology-usage-3rd-party-03000
+  - technology-usage-3rd-party-04000
+  - technology-usage-3rd-party-05000
+  - technology-usage-3rd-party-06000
+  - technology-usage-3rd-party-08000
+  - technology-usage-3rd-party-09000
+  - technology-usage-3rd-party-10000
+  - technology-usage-3rd-party-11000
+  - technology-usage-3rd-party-12000
+  - technology-usage-3rd-party-13000
+  - technology-usage-3rd-party-14000
+  - technology-usage-3rd-party-15000
+  - technology-usage-3rd-party-16000
+  - technology-usage-3rd-party-17000
+  - technology-usage-3rd-party-18000
+  - technology-usage-3rd-party-19000
+  - technology-usage-3rd-party-20000
+  - technology-usage-3rd-party-spring-03001-0
+  - technology-usage-3rd-party-spring-03001-1
+  - technology-usage-3rd-party-spring-03001-2
+  - technology-usage-3rd-party-spring-03002
+  - technology-usage-apm-00010
+  - technology-usage-apm-00020
+  - technology-usage-apm-00030
+  - technology-usage-apm-00040
+  - technology-usage-clustering-01000
+  - technology-usage-clustering-02000
+  - technology-usage-connect-01000
+  - technology-usage-connect-01100
+  - technology-usage-connect-01101
+  - technology-usage-connect-01200
+  - technology-usage-connect-01300
+  - technology-usage-connect-01400
+  - technology-usage-connect-01500
+  - technology-usage-connect-01600
+  - technology-usage-connect-01700
+  - technology-usage-connect-01800
+  - technology-usage-connect-01900
+  - technology-usage-connect-02000
+  - technology-usage-connect-02100
+  - technology-usage-connect-02200
+  - technology-usage-connect-02300
+  - technology-usage-connect-02400
+  - technology-usage-connect-02500
+  - technology-usage-connect-02600
+  - technology-usage-connect-02700
+  - technology-usage-connect-02800
+  - technology-usage-connect-02900
+  - technology-usage-database-01000
+  - technology-usage-database-01001
+  - technology-usage-database-01100
+  - technology-usage-database-01200
+  - technology-usage-database-01300
+  - technology-usage-database-01400
+  - technology-usage-database-01500
+  - technology-usage-database-01600
+  - technology-usage-database-01700
+  - technology-usage-database-01800
+  - technology-usage-database-01900
+  - technology-usage-database-02000
+  - technology-usage-database-02100
+  - technology-usage-database-02200
+  - technology-usage-database-02300
+  - technology-usage-database-02400
+  - technology-usage-database-02500
+  - technology-usage-database-02600
+  - technology-usage-database-02700
+  - technology-usage-database-02800
+  - technology-usage-database-02900
+  - technology-usage-database-03000
+  - technology-usage-database-03100
+  - technology-usage-database-03200
+  - technology-usage-ejb-01400
+  - technology-usage-embedded-framework-01000
+  - technology-usage-embedded-framework-01010
+  - technology-usage-embedded-framework-01100
+  - technology-usage-embedded-framework-01200
+  - technology-usage-embedded-framework-01300
+  - technology-usage-embedded-framework-01400
+  - technology-usage-embedded-framework-01500
+  - technology-usage-embedded-framework-01600
+  - technology-usage-embedded-framework-01700
+  - technology-usage-embedded-framework-02000
+  - technology-usage-embedded-framework-02100
+  - technology-usage-embedded-framework-02200
+  - technology-usage-embedded-framework-02300
+  - technology-usage-embedded-framework-02400
+  - technology-usage-embedded-framework-04700
+  - technology-usage-embedded-framework-05000
+  - technology-usage-embedded-framework-05100
+  - technology-usage-embedded-framework-05300
+  - technology-usage-embedded-framework-05400
+  - technology-usage-embedded-framework-05600
+  - technology-usage-embedded-framework-05700
+  - technology-usage-embedded-framework-05800
+  - technology-usage-embedded-framework-05900
+  - technology-usage-embedded-framework-06000
+  - technology-usage-embedded-framework-06100
+  - technology-usage-embedded-framework-06200
+  - technology-usage-embedded-framework-06300
+  - technology-usage-embedded-framework-06400
+  - technology-usage-embedded-framework-06500
+  - technology-usage-embedded-framework-06600
+  - technology-usage-embedded-framework-06700
+  - technology-usage-embedded-framework-06800
+  - technology-usage-embedded-framework-06900
+  - technology-usage-embedded-framework-07000
+  - technology-usage-embedded-framework-07100
+  - technology-usage-embedded-framework-07200
+  - technology-usage-embedded-framework-07300
+  - technology-usage-embedded-framework-07400
+  - technology-usage-embedded-framework-07500
+  - technology-usage-embedded-framework-07600
+  - technology-usage-embedded-framework-07700
+  - technology-usage-embedded-framework-07800
+  - technology-usage-embedded-framework-07900
+  - technology-usage-embedded-framework-08000
+  - technology-usage-embedded-framework-08100
+  - technology-usage-embedded-framework-08200
+  - technology-usage-embedded-framework-08300
+  - technology-usage-embedded-framework-08400
+  - technology-usage-embedded-framework-08500
+  - technology-usage-embedded-framework-08600
+  - technology-usage-embedded-framework-08700
+  - technology-usage-embedded-framework-08800
+  - technology-usage-embedded-framework-08900
+  - technology-usage-embedded-framework-09000
+  - technology-usage-embedded-framework-09100
+  - technology-usage-integration-00001
+  - technology-usage-integration-00002
+  - technology-usage-integration-00003
+  - technology-usage-integration-00004
+  - technology-usage-integration-00005
+  - technology-usage-integration-00006
+  - technology-usage-integration-00007
+  - technology-usage-integration-00008
+  - technology-usage-integration-00009
+  - technology-usage-integration-00010
+  - technology-usage-integration-00011
+  - technology-usage-integration-00012
+  - technology-usage-integration-00013
+  - technology-usage-integration-00014
+  - technology-usage-integration-00015
+  - technology-usage-jta-00020
+  - technology-usage-jta-00030
+  - technology-usage-jta-00040
+  - technology-usage-jta-00050
+  - technology-usage-jta-00060
+  - technology-usage-jta-00070
+  - technology-usage-jta-00080
+  - technology-usage-jta-00090
+  - technology-usage-jta-00100
+  - technology-usage-jta-00110
+  - technology-usage-jta-00120
+  - technology-usage-jta-00130
+  - technology-usage-jta-00140
+  - technology-usage-jta-00150
+  - technology-usage-jta-00160
+  - technology-usage-jta-00170
+  - technology-usage-jta-00180
+  - technology-usage-jta-00190
+  - technology-usage-jta-00200
+  - technology-usage-jta-00210
+  - technology-usage-logging-00010
+  - technology-usage-logging-000100
+  - technology-usage-logging-000110
+  - technology-usage-logging-000120
+  - technology-usage-logging-000130
+  - technology-usage-logging-000140
+  - technology-usage-logging-000150
+  - technology-usage-logging-000160
+  - technology-usage-logging-000170
+  - technology-usage-logging-000180
+  - technology-usage-logging-000190
+  - technology-usage-logging-00020
+  - technology-usage-logging-000200
+  - technology-usage-logging-000210
+  - technology-usage-logging-000220
+  - technology-usage-logging-000230
+  - technology-usage-logging-000240
+  - technology-usage-logging-000250
+  - technology-usage-logging-000260
+  - technology-usage-logging-000270
+  - technology-usage-logging-000280
+  - technology-usage-logging-000290
+  - technology-usage-logging-00030
+  - technology-usage-logging-00040
+  - technology-usage-logging-00050
+  - technology-usage-logging-00060
+  - technology-usage-logging-00070
+  - technology-usage-logging-00080
+  - technology-usage-logging-00090
+  - technology-usage-markup-01300
+  - technology-usage-mvc-01000
+  - technology-usage-mvc-01100
+  - technology-usage-mvc-01200
+  - technology-usage-mvc-01300
+  - technology-usage-mvc-01400
+  - technology-usage-mvc-01500
+  - technology-usage-mvc-01600
+  - technology-usage-mvc-01700
+  - technology-usage-mvc-01800
+  - technology-usage-mvc-01900
+  - technology-usage-mvc-02000
+  - technology-usage-mvc-02100
+  - technology-usage-mvc-02200
+  - technology-usage-mvc-02300
+  - technology-usage-mvc-02400
+  - technology-usage-mvc-02500
+  - technology-usage-mvc-02600
+  - technology-usage-mvc-02700
+  - technology-usage-mvc-02800
+  - technology-usage-mvc-02900
+  - technology-usage-mvc-03000
+  - technology-usage-mvc-03100
+  - technology-usage-mvc-03200
+  - technology-usage-mvc-03300
+  - technology-usage-mvc-03400
+  - technology-usage-mvc-03500
+  - technology-usage-mvc-03600
+  - technology-usage-mvc-03700
+  - technology-usage-mvc-03800
+  - technology-usage-mvc-03900
+  - technology-usage-mvc-04000
+  - technology-usage-mvc-04100
+  - technology-usage-mvc-04300
+  - technology-usage-mvc-04400
+  - technology-usage-mvc-04500
+  - technology-usage-mvc-04600
+  - technology-usage-mvc-04700
+  - technology-usage-mvc-04800
+  - technology-usage-mvc-04900
+  - technology-usage-mvc-05000
+  - technology-usage-mvc-05100
+  - technology-usage-mvc-05200
+  - technology-usage-mvc-05300
+  - technology-usage-mvc-05400
+  - technology-usage-mvc-05500
+  - technology-usage-mvc-05600
+  - technology-usage-mvc-05700
+  - technology-usage-mvc-05800
+  - technology-usage-mvc-05900
+  - technology-usage-mvc-06000
+  - technology-usage-mvc-0x4200
+  - technology-usage-security-01000
+  - technology-usage-security-01100
+  - technology-usage-security-01200
+  - technology-usage-security-01300
+  - technology-usage-security-01400
+  - technology-usage-security-01500
+  - technology-usage-security-01600
+  - technology-usage-security-01700
+  - technology-usage-security-01800
+  - technology-usage-security-01900
+  - technology-usage-security-02000
+  - technology-usage-security-02100
+  - technology-usage-security-02200
+  - technology-usage-security-02300
+  - technology-usage-security-02400
+  - technology-usage-security-02500
+  - technology-usage-security-02600
+  - technology-usage-security-02700
+  - technology-usage-security-02800
+  - technology-usage-security-02900
+  - technology-usage-security-03000
+  - technology-usage-security-03100
+  - technology-usage-security-03200
+  - technology-usage-security-03300
+  - technology-usage-security-03400
+  - technology-usage-security-03500
+  - technology-usage-test-frameworks-00010
+  - technology-usage-test-frameworks-00020
+  - technology-usage-test-frameworks-00030
+  - technology-usage-test-frameworks-00040
+  - technology-usage-test-frameworks-00050
+  - technology-usage-test-frameworks-00060
+  - technology-usage-test-frameworks-00070
+  - technology-usage-test-frameworks-00080
+  - technology-usage-test-frameworks-00090
+  - technology-usage-test-frameworks-00100
+  - technology-usage-test-frameworks-00110
+  - technology-usage-test-frameworks-00120
+  - technology-usage-test-frameworks-00130
+  - technology-usage-test-frameworks-00140
+  - technology-usage-test-frameworks-00150
+  - technology-usage-test-frameworks-00160
+  - technology-usage-test-frameworks-00170
+  - technology-usage-test-frameworks-00180
+  - technology-usage-test-frameworks-00190
+  - technology-usage-test-frameworks-00200
+  - technology-usage-test-frameworks-00210
+  - technology-usage-test-frameworks-00220
+  - technology-usage-test-frameworks-00230
+  - technology-usage-test-frameworks-00240
+  - technology-usage-test-frameworks-00250
+  - technology-usage-test-frameworks-00260
+  - technology-usage-test-frameworks-00270
+  - technology-usage-test-frameworks-00280
+  - technology-usage-test-frameworks-00290
+  - technology-usage-test-frameworks-00300
+  - technology-usage-test-frameworks-00310
+  - technology-usage-test-frameworks-00320
+  - technology-usage-test-frameworks-00330
+  - technology-usage-test-frameworks-00340
+  - technology-usage-test-frameworks-00350
+  - technology-usage-test-frameworks-00360
+  - technology-usage-test-frameworks-00370
+  - technology-usage-web-01000
+  - technology-usage-web-01100
+  - technology-usage-web-01100
+  - technology-usage-web-01200
+  - technology-usage-web-01300
+  - technology-usage-web-01300
+  - technology-usage-web-01400
+  - technology-usage-web-01400
+  - technology-usage-web-01500
+  - technology-usage-web-01500
+  - technology-usage-web-01600
+  - technology-usage-web-01600
+  - technology-usage-web-01700
+  - technology-usage-web-01700
+  - technology-usage-web-01800
+  - technology-usage-web-01800
+  - technology-usage-web-01900
+  - technology-usage-web-01900
+  - technology-usage-web-02000
+  - technology-usage-web-02000
+  - technology-usage-web-02100
+  - technology-usage-web-02100
+  - technology-usage-web-02200
+  - technology-usage-web-02200
+  - technology-usage-web-02300
+  - technology-usage-web-02300
+  - technology-usage-web-02400
+  - technology-usage-web-02400
+  - test-frameworks-sauge-00010
+  - test-frameworks-sauge-00020
+  - test-frameworks-sauge-00030
+  - test-frameworks-sauge-00040
+  - test-frameworks-sauge-00050
+  - test-frameworks-sauge-00060
+  - test-frameworks-sauge-00070
+  - test-frameworks-sauge-00080
+  - test-frameworks-sauge-00090
+  - test-frameworks-sauge-00100
+  - test-frameworks-sauge-00110
+  - test-frameworks-sauge-00120
+  - test-frameworks-sauge-00130
+  - test-frameworks-sauge-00140
+  - test-frameworks-sauge-00150
+  - test-frameworks-sauge-00160
+  - test-frameworks-sauge-00170
+  - test-frameworks-sauge-00180
+  - test-frameworks-sauge-00190
+  - test-frameworks-sauge-00200
+  - test-frameworks-sauge-00210
+  - test-frameworks-sauge-00220
+  - test-frameworks-sauge-00230
+  - test-frameworks-sauge-00240
+  - test-frameworks-sauge-00260
+  - test-frameworks-sauge-00270
+  - test-frameworks-sauge-00280
+  - test-frameworks-sauge-00290
+  - test-frameworks-sauge-00300
+  - test-frameworks-sauge-00310
+  - test-frameworks-sauge-00320
+  - test-frameworks-sauge-00330
+  - test-frameworks-sauge-00340
+  - test-frameworks-sauge-00350
+  - test-frameworks-sauge-00360
+  - test-frameworks-sauge-00370
+  - test-frameworks-sauge-00560
+  - web-01000
