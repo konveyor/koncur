@@ -65,6 +65,10 @@ func (b *baseValidator) compareViolations(expected, actual map[string]konveyor.V
 	return compareViolationsUsing(expected, actual, b.compareViolationDetails)
 }
 
+func (b *baseValidator) compareInsights(expected, actual map[string]konveyor.Violation) []ValidationError {
+	return b.compareViolations(expected, actual)
+}
+
 func (b *baseValidator) compareViolationDetails(expected, actual konveyor.Violation) []ValidationError {
 	var errors []ValidationError
 

@@ -24,6 +24,9 @@ type unmatchedCompare interface {
 type skippedCompare interface {
 	compareSkipped(expected, actual []string) []ValidationError
 }
+type insightCompare interface {
+	compareInsights(expected, actual map[string]konveyor.Violation) []ValidationError
+}
 
 // compareViolationsUsing iterates expected/actual violations and delegates detail
 // comparison to detailsFn.
@@ -78,6 +81,7 @@ type rulesetFilter interface {
 type comparer interface {
 	tagCompare
 	violationCompare
+	insightCompare
 	errorsCompare
 	unmatchedCompare
 	skippedCompare
@@ -182,7 +186,7 @@ func ValidateFiles(testDir, targetType string, actual, expected []konveyor.RuleS
 				errors = append(errors, errs...)
 			}
 			if !reflect.DeepEqual(rs.Insights, ers.Insights) {
-				errs := comparer.compareViolations(ers.Insights, rs.Insights)
+				errs := comparer.compareInsights(ers.Insights, rs.Insights)
 				for i := range errs {
 					errs[i].Path = fmt.Sprintf("%s/insights%s", rs.Name, errs[i].Path)
 				}

@@ -55,9 +55,33 @@ func compareStringsSubset(expected, actual []string, label string) []ValidationE
 	return errors
 }
 
-// compareViolations delegates to kaiRpcValidator.compareViolationDetails.
+// compareViolations is strict — delegates to compareViolationsUsing with effort/link relaxation.
 func (k *kaiRpcValidator) compareViolations(expected, actual map[string]konveyor.Violation) []ValidationError {
 	return compareViolationsUsing(expected, actual, k.compareViolationDetails)
+}
+
+// compareInsights validates actual ⊆ expected: returned insights are checked strictly,
+// but missing expected insights are tolerated (discovery insights live in the discovery
+// cache which is never included in the RPC response).
+func (k *kaiRpcValidator) compareInsights(expected, actual map[string]konveyor.Violation) []ValidationError {
+	var errors []ValidationError
+	for key, act := range actual {
+		exp, exists := expected[key]
+		if !exists {
+			errors = append(errors, ValidationError{
+				Path:    fmt.Sprintf("/%s", key),
+				Message: fmt.Sprintf("Unexpected insight found: %s", key),
+				Actual:  act,
+			})
+			continue
+		}
+		detailErrors := k.compareViolationDetails(exp, act)
+		for i := range detailErrors {
+			detailErrors[i].Path = fmt.Sprintf("/%s%s", key, detailErrors[i].Path)
+		}
+		errors = append(errors, detailErrors...)
+	}
+	return errors
 }
 
 // compareViolationDetails delegates to baseValidator for all checks, then filters out
