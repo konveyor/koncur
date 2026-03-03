@@ -94,10 +94,13 @@ func (k *KaiRPCTarget) Execute(ctx context.Context, test *config.TestDefinition)
 	log := util.GetLogger()
 	start := time.Now()
 
-	// Prepare work directory
+	// Prepare work directory (must be absolute since kai-analyzer runs with cmd.Dir=workDir)
 	workDir, err := PrepareWorkDir(test.GetWorkDir(), test.Name)
 	if err != nil {
 		return nil, err
+	}
+	if !filepath.IsAbs(workDir) {
+		workDir, _ = filepath.Abs(workDir)
 	}
 
 	log.Info("Executing Kai RPC analysis", "workDir", workDir)
@@ -205,14 +208,15 @@ func (k *KaiRPCTarget) startServer(ctx context.Context, pipePath, rules, provide
 		"--rules", rules,
 		"--provider-config", providerConfig,
 	}
+	// Log file path must be absolute since cmd.Dir changes the working directory
 	var logFilePath string
 	if k.logFile != "" {
 		logFilePath = k.logFile
-		if !filepath.IsAbs(logFilePath) {
-			logFilePath, _ = filepath.Abs(logFilePath)
-		}
 	} else {
 		logFilePath = filepath.Join(workDir, "kai-analyzer.log")
+	}
+	if !filepath.IsAbs(logFilePath) {
+		logFilePath, _ = filepath.Abs(logFilePath)
 	}
 	args = append(args, "--log-file", logFilePath)
 	args = append(args, "--verbosity", strconv.Itoa(k.verbosity))
@@ -290,8 +294,11 @@ func (k *KaiRPCTarget) connectToServer(ctx context.Context, pipePath string, tim
 		return nil
 	})
 
-	// Start client in background
-	go client.Run()
+	// Start client in background (recover from panics if connection dies)
+	go func() {
+		defer func() { recover() }()
+		client.Run()
+	}()
 
 	// Wait for started notification (use the test's configured timeout)
 	select {
