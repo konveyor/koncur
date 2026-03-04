@@ -1,13 +1,13 @@
 name: JMH Gradle Analysis
 description: Analysis for Gradle JMH application with custom rules
 analysis:
-    application: https://github.com/melix/jmh-gradle-example
+    application: https://github.com/jmle/gradle8-example
     context_lines: 0
     incident_selector: ""
     source: []
     target: []
     rules:
-        - https://github.com/konveyor/koncur#main/rules/jmh-gradle-annotation-state-test-rule.yaml
+        - https://github.com/sshveta/koncur#add_gradle_test/rules/jmh-gradle-annotation-state-test-rule.yaml
     disableDefaultRules: false
     analysisMode: full
 timeout: 10m0s

@@ -1,14 +1,14 @@
 name: JMH Gradle Analysis with Open Source Libraries
 description: Analysis for Gradle JMH application with custom rules and open source libraries
 analysis:
-    application: https://github.com/melix/jmh-gradle-example
+    application: https://github.com/jmle/gradle8-example
     knownLibs: true
     context_lines: 0
     incident_selector: ""
     source: []
     target: []
     rules:
-        - https://github.com/konveyor/koncur#main/rules/jmh-gradle-serializable-test-rule.yaml
+        - https://github.com/sshveta/koncur#add_gradle_test/rules/jmh-gradle-serializable-test-rule.yaml
     disableDefaultRules: false
     analysisMode: full
 timeout: 10m0s
