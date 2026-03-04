@@ -1,5 +1,5 @@
 name: JMH Gradle Analysis
-description: Analysis for Gradle JMH application with custom rules
+description: Hub Bug MTA-6211 - Analysis for Gradle JMH application with custom rules
 analysis:
     application: https://github.com/melix/jmh-gradle-example
     context_lines: 0

@@ -1,5 +1,5 @@
 name: JMH Gradle Analysis with Open Source Libraries
-description: Analysis for Gradle JMH application with custom rules and open source libraries
+description: Hub Bug MTA-6211 - Analysis for Gradle JMH application with custom rules and open source libraries
 analysis:
     application: https://github.com/melix/jmh-gradle-example
     knownLibs: true
