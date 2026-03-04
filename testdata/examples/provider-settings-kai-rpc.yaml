@@ -3,12 +3,17 @@
 # Start with: make start-kai-providers
 
 - name: java
-  # Address where the java-external-provider container is running
-  # Default port from quay.io/konveyor/java-external-provider image is 14651
   address: "localhost:14651"
   initConfig:
-    # Location will be set dynamically by koncur based on the test's application
     - analysisMode: full
       providerSpecificConfig:
         lspServerPath: /jdtls/bin/jdtls
         bundles: /jdtls/java-analyzer-bundle/java-analyzer-bundle.core/target/java-analyzer-bundle.core-1.0.0-SNAPSHOT.jar
+
+- name: csharp
+  address: "localhost:14656"
+  initConfig:
+    - analysisMode: source-only
+      providerSpecificConfig:
+        ilspy_cmd: /usr/local/bin/ilspycmd
+        paket_cmd: /usr/local/bin/paket

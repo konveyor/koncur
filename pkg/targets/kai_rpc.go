@@ -382,7 +382,7 @@ func (k *KaiRPCTarget) prepareInput(ctx context.Context, analysis *config.Analys
 
 	// Check if it's a binary file
 	if IsBinaryFile(analysis.Application) {
-		return "", fmt.Errorf("binary analysis not yet supported for kai-rpc")
+		return "", fmt.Errorf("%w: binary analysis not yet supported for kai-rpc", ErrUnsupported)
 	}
 
 	// Check if we have parsed Git components

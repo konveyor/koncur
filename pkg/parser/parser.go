@@ -47,12 +47,18 @@ func FilterRuleSets(rulesets []konveyor.RuleSet) []konveyor.RuleSet {
 // NormalizeRuleSets normalizes rulesets for comparison by removing dynamic content.
 // workDir is optional; if provided, it will be stripped from incident URIs (used by kai-rpc
 // which runs locally and produces absolute paths instead of container-relative /source/ paths).
-func NormalizeRuleSets(rulesets []konveyor.RuleSet, testDir string, workDir ...string) ([]konveyor.RuleSet, error) {
+// sourceSubPath is optional; if provided, it strips the git subdirectory from URIs
+// (e.g., "testdata/nerd-dinner" converts /source/testdata/nerd-dinner/file → /source/file).
+func NormalizeRuleSets(rulesets []konveyor.RuleSet, testDir string, workDir string, sourceSubPath ...string) ([]konveyor.RuleSet, error) {
 	wd := ""
-	if len(workDir) > 0 && workDir[0] != "" {
-		if abs, err := filepath.Abs(workDir[0]); err == nil {
+	if workDir != "" {
+		if abs, err := filepath.Abs(workDir); err == nil {
 			wd = filepath.ToSlash(abs)
 		}
+	}
+	subPath := ""
+	if len(sourceSubPath) > 0 && sourceSubPath[0] != "" {
+		subPath = filepath.ToSlash(sourceSubPath[0])
 	}
 	normalizedRuleSets := []konveyor.RuleSet{}
 	var returnError error
@@ -68,7 +74,7 @@ func NormalizeRuleSets(rulesets []konveyor.RuleSet, testDir string, workDir ...s
 			Skipped:     rs.Skipped,
 		}
 		for k, violation := range rs.Violations {
-			newViolation, err := normalizeViolation(violation, testDir, wd)
+			newViolation, err := normalizeViolation(violation, testDir, wd, subPath)
 			// Skip this for now
 			if err != nil {
 				returnError = errors.Join(returnError, err)
@@ -77,7 +83,7 @@ func NormalizeRuleSets(rulesets []konveyor.RuleSet, testDir string, workDir ...s
 			newRuleSet.Violations[k] = newViolation
 		}
 		for k, insight := range rs.Insights {
-			newInsight, err := normalizeViolation(insight, testDir, wd)
+			newInsight, err := normalizeViolation(insight, testDir, wd, subPath)
 			// Skip this for now
 			if err != nil {
 				continue
@@ -89,7 +95,7 @@ func NormalizeRuleSets(rulesets []konveyor.RuleSet, testDir string, workDir ...s
 	return normalizedRuleSets, returnError
 }
 
-func normalizeViolation(violation konveyor.Violation, testDir, workDir string) (konveyor.Violation, error) {
+func normalizeViolation(violation konveyor.Violation, testDir, workDir, sourceSubPath string) (konveyor.Violation, error) {
 	newViolation := konveyor.Violation{
 		Description: violation.Description,
 		Category:    violation.Category,
@@ -102,7 +108,7 @@ func normalizeViolation(violation konveyor.Violation, testDir, workDir string) (
 
 	var returnErr error
 	for _, inc := range violation.Incidents {
-		inc, err := normalizeIncident(inc, testDir, workDir)
+		inc, err := normalizeIncident(inc, testDir, workDir, sourceSubPath)
 		if err != nil {
 			returnErr = errors.Join(returnErr, err)
 		}
@@ -142,7 +148,7 @@ func NormalizePath(path string) string {
 
 // normalizeIncident normalizes file paths in incidents to match the expected output format
 // This applies the same normalization that saveFilteredOutput does when generating expected output
-func normalizeIncident(incident konveyor.Incident, testDir, workDir string) (konveyor.Incident, error) {
+func normalizeIncident(incident konveyor.Incident, testDir, workDir, sourceSubPath string) (konveyor.Incident, error) {
 	// Marshal to YAML to normalize paths using string replacement (same approach as generate)
 	// Normalize paths by removing the test directory path
 	if incident.URI == "" || !strings.Contains(string(incident.URI), "file://") {
@@ -173,6 +179,13 @@ func normalizeIncident(incident konveyor.Incident, testDir, workDir string) (kon
 	// workDir is pre-resolved to absolute and slash-normalized by NormalizeRuleSets.
 	if workDir != "" {
 		fileName = strings.ReplaceAll(fileName, workDir, "")
+	}
+
+	// Strip git subdirectory path from URIs.
+	// When a git repo is cloned with a path component (e.g., repo#branch/subdir),
+	// the URI contains /source/subdir/file but expected output has /source/file.
+	if sourceSubPath != "" {
+		fileName = strings.Replace(fileName, "/source/"+sourceSubPath+"/", "/source/", 1)
 	}
 
 	if strings.HasPrefix(fileName, "//") {

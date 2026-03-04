@@ -63,7 +63,7 @@ jobs:
           mirrors: '[{"id": "maven-default-http-blocker", "name": "disable http block", "mirrorOf": "tackle-testapp-public", "url": "http://${{ env.DOCKER_GATEWAY }}:8085", "blocked": false}]'
           path: "${{ runner.home }}/.m2/settings.xml"
 
-      - name: Start java-external-provider container
+      - name: Start provider containers
         run: make start-kai-providers CONTAINER_RUNTIME=docker
 
       - name: Build and run tests
@@ -76,6 +76,9 @@ jobs:
         run: |
           echo "=== java-external-provider container logs ==="
           docker logs java-external-provider || true
+          echo ""
+          echo "=== c-sharp-provider container logs ==="
+          docker logs c-sharp-provider || true
           echo ""
           echo "=== kai-analyzer logs ==="
           find .koncur/output -name "kai-analyzer*.log" -exec cat {} \; || true

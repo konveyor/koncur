@@ -4,6 +4,7 @@ import (
 	"archive/tar"
 	"compress/gzip"
 	"context"
+	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -202,6 +203,11 @@ will be extracted to a temporary directory and all tests will be run from it.`,
 				// Run single test
 				testResult, err := runSingleTest(test, target, targetConfig)
 				if err != nil {
+					if errors.Is(err, targets.ErrUnsupported) {
+						color.Yellow("  ⊘ Skipped: %s (%v)", test.Name, err)
+						skippedCount++
+						continue
+					}
 					color.Red("  ✗ Error: %v", err)
 					failCount++
 					if testResult != nil {
@@ -333,7 +339,11 @@ func runSingleTest(test *config.TestDefinition, target targets.Target, targetCon
 	testResult.FilteredFrom = len(actualOutput)
 
 	// Normalize paths in actual output to match expected output format
-	normalizedActual, err := parser.NormalizeRuleSets(filteredActual, test.GetTestDir(), result.WorkDir)
+	gitSubPath := ""
+	if test.Analysis.ApplicationGitComponents != nil {
+		gitSubPath = test.Analysis.ApplicationGitComponents.Path
+	}
+	normalizedActual, err := parser.NormalizeRuleSets(filteredActual, test.GetTestDir(), result.WorkDir, gitSubPath)
 	if err != nil {
 		testResult.Status = "failed"
 		testResult.ErrorMessage = fmt.Sprintf("failed to normalize paths: %v", err)
