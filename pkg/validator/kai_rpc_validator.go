@@ -2,6 +2,8 @@ package validator
 
 import (
 	"fmt"
+	"maps"
+	"slices"
 	"strings"
 
 	konveyor "github.com/konveyor/analyzer-lsp/output/v1/konveyor"
@@ -84,20 +86,133 @@ func (k *kaiRpcValidator) compareInsights(expected, actual map[string]konveyor.V
 	return errors
 }
 
-// compareViolationDetails delegates to baseValidator for all checks, then filters out
-// link errors when actual.Effort is nil — the cache drops Effort, Links, and Extras together.
+// incidentsMatch tries exact URI match first, then falls back to suffix matching.
+//
+// Kantra's expected output has inconsistent URI formats for the same physical files:
+//   - Builtin/discovery provider reports HOST paths that include the git subpath
+//     (e.g., file:///source/example-1/pom.xml)
+//   - Java/other providers report CONTAINER paths where the subdirectory is the
+//     mount root, so the subpath is absent (e.g., file:///source/pom.xml)
+//
+// kai-rpc providers all run on the host, so ALL URIs include the git subpath after
+// workDir stripping. This matches discovery-style expected URIs but mismatches
+// container-style expected URIs. The suffix fallback handles this: if the filename
+// portion after /source/ in one URI is a suffix of the other, they refer to the
+// same file.
+func (k *kaiRpcValidator) incidentsMatch(expected, actual konveyor.Incident) (bool, incidentField) {
+	if ok, field := k.baseValidator.incidentsMatch(expected, actual); ok {
+		return true, field
+	}
+	// Suffix fallback: check if one URI's path after /source/ is a suffix of the other.
+	expPath := pathAfterSource(string(expected.URI))
+	actPath := pathAfterSource(string(actual.URI))
+	if expPath != "" && actPath != "" && (strings.HasSuffix(actPath, expPath) || strings.HasSuffix(expPath, actPath)) {
+		// URIs refer to the same file — check remaining fields.
+		expCopy := expected
+		expCopy.URI = actual.URI
+		return k.baseValidator.incidentsMatch(expCopy, actual)
+	}
+	return false, URI
+}
+
+// pathAfterSource returns the path portion after the first "/source/" segment,
+// or "" if not found. e.g. "file:///source/example-1/pom.xml" → "example-1/pom.xml".
+func pathAfterSource(uri string) string {
+	const marker = "/source/"
+	idx := strings.Index(uri, marker)
+	if idx < 0 {
+		return ""
+	}
+	return uri[idx+len(marker):]
+}
+
+// compareViolationDetails checks category, effort, labels, links, and incidents.
+// Uses k.incidentsMatch for URI comparison (with sourceSubPath fallback), and
+// suppresses link errors when actual.Effort is nil (cache drops Effort/Links/Extras).
 // TODO: file upstream issue against konveyor/kai.
 func (k *kaiRpcValidator) compareViolationDetails(expected, actual konveyor.Violation) []ValidationError {
-	errors := k.baseValidator.compareViolationDetails(expected, actual)
-	if actual.Effort != nil {
-		return errors
+	var errors []ValidationError
+
+	if actual.Category != nil && expected.Category != nil && *expected.Category != *actual.Category {
+		errors = append(errors, ValidationError{
+			Message: fmt.Sprintf("Did not find expected category: %v", expected.Category),
+		})
 	}
-	// Cache didn't store this violation's details — suppress link errors
-	filtered := errors[:0]
-	for _, e := range errors {
-		if !strings.Contains(e.Message, "expected link:") {
-			filtered = append(filtered, e)
+	if (expected.Effort != nil && actual.Effort != nil) && (*expected.Effort != *actual.Effort) {
+		errors = append(errors, ValidationError{
+			Message: fmt.Sprintf("Did not find expected effort: %v", expected.Effort),
+		})
+	}
+	for _, l := range expected.Links {
+		found := false
+		for _, al := range actual.Links {
+			if l.Title == al.Title && l.URL == al.URL {
+				found = true
+				break
+			}
+		}
+		if !found {
+			errors = append(errors, ValidationError{
+				Message: fmt.Sprintf("Did not find expected link: %v", l),
+			})
 		}
 	}
-	return filtered
+	for _, l := range expected.Labels {
+		if !findExpectedString(l, actual.Labels) {
+			errors = append(errors, ValidationError{
+				Message: fmt.Sprintf("Did not find expected label: %v", l),
+			})
+		}
+	}
+
+	// Handle Incidents using k.incidentsMatch (sourceSubPath-aware)
+	for _, i := range expected.Incidents {
+		found := false
+		faildFields := map[incidentField]*struct{}{}
+		for _, ai := range actual.Incidents {
+			if ok, fieldFaild := k.incidentsMatch(i, ai); ok {
+				found = true
+				break
+			} else {
+				faildFields[fieldFaild] = nil
+			}
+		}
+		if !found {
+			fieldError := slices.Sorted(maps.Keys(faildFields))[len(faildFields)-1]
+			errors = append(errors, ValidationError{
+				Message: fmt.Sprintf("Did not find expected incident:  %s:%d failed to match on: %s", i.URI, lineNumberOrZero(i.LineNumber), fieldError.String()),
+			})
+		}
+	}
+	for _, ai := range actual.Incidents {
+		found := false
+		faildFields := map[incidentField]*struct{}{}
+		for _, i := range expected.Incidents {
+			if ok, fieldFaild := k.incidentsMatch(i, ai); ok {
+				found = true
+				break
+			} else {
+				faildFields[fieldFaild] = nil
+			}
+		}
+		if !found {
+			fieldError := slices.Sorted(maps.Keys(faildFields))[len(faildFields)-1]
+			errors = append(errors, ValidationError{
+				Message: fmt.Sprintf("Unexpected incident found: %s:%d failed to match on: %s", ai.URI, lineNumberOrZero(ai.LineNumber), fieldError),
+			})
+		}
+	}
+
+	// Suppress link errors when cache didn't store this violation's details
+	if actual.Effort == nil {
+		filtered := errors[:0]
+		for _, e := range errors {
+			if !strings.Contains(e.Message, "expected link:") {
+				filtered = append(filtered, e)
+			}
+		}
+		errors = filtered
+	}
+
+	return errors
 }
