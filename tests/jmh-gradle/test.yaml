@@ -7,7 +7,7 @@ analysis:
     source: []
     target: []
     rules:
-        - https://github.com/sshveta/koncur#add_gradle_test/rules/jmh-gradle-ruleset
+        - https://github.com/sshveta/koncur#add_gradle_test/tests/jmh-gradle/rules
     disableDefaultRules: false
     analysisMode: full
 timeout: 10m0s

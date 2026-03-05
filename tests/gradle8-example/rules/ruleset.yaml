@@ -1,0 +1,6 @@
+name: gradle8-serializable-rules
+description: Serializable detection rule for gradle8-example application
+labels:
+  - konveyor.io/source=java
+  - konveyor.io/target=gradle
+  - serialization

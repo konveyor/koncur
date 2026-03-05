@@ -1,0 +1,17 @@
+name: Gradle 8 Example with Serializable Detection
+description: Analysis for Gradle 8 example application with custom Serializable detection rule
+analysis:
+    application: https://github.com/jmle/gradle8-example
+    context_lines: 0
+    incident_selector: ""
+    source: []
+    target: []
+    rules:
+        - https://github.com/sshveta/koncur#add_gradle_test/tests/gradle8-example/rules
+    disableDefaultRules: false
+    analysisMode: full
+timeout: 10m0s
+expect:
+    exitCode: 0
+    output:
+        file: expected-output.yaml
