@@ -43,8 +43,9 @@
   - eap-to-azure-appservice-certificates-001
   - eap-to-azure-appservice-certificates-001
   - eap-to-azure-appservice-datasource-driver-01000
-  - eap-to-azure-appservice-environment-variables-001
   - eap-to-azure-appservice-pom-001
+  - postgres-to-aks-workload-identity-01000
+  - postgres-to-aks-workload-identity-01000
   - spring-boot-to-azure-cache-redis-01000
   - spring-boot-to-azure-cache-redis-02000
   - spring-boot-to-azure-config-server-01000
@@ -168,99 +169,226 @@
   - windup-discover-jpa-configuration
   - windup-discover-spring-configuration
   - windup-discover-web-configuration
+- name: spring-boot
+  description: Ruleset for migration of Spring Boot
+  violations:
+    spring-boot-2.x-to-3.0-core-changes-00040:
+      description: Consider using the Spring Boot Properties Migrator
+      category: optional
+      labels:
+      - konveyor.io/source=spring-boot2
+      - konveyor.io/target=spring-boot3+
+      incidents:
+      - uri: file:///source/build.gradle
+        message: |
+          Spring Boot 3.0 has renamed or removed many configuration properties. To help identify
+          properties that need to be updated, add the `spring-boot-properties-migrator` module
+          to your project temporarily.
+
+          **Maven:**
+          ```xml
+          <dependency>
+              <groupId>org.springframework.boot</groupId>
+              <artifactId>spring-boot-properties-migrator</artifactId>
+              <scope>runtime</scope>
+          </dependency>
+          ```
+
+          **Gradle:**
+          ```groovy
+          runtime 'org.springframework.boot:spring-boot-properties-migrator'
+          ```
+
+          Once added, the migrator will:
+          - Analyze your `application.properties` or `application.yml` at runtime
+          - Log warnings for deprecated properties
+          - Temporarily migrate properties at runtime where possible
+
+          **Important:** Remove this dependency after completing the migration, as it is intended
+          for development use only and adds startup overhead.
+      links:
+      - url: https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.0-Migration-Guide#configuration-properties-migration
+        title: Spring Boot 3.0 Migration Guide - Configuration Properties
+      effort: 1
+  unmatched:
+  - spring-boot-2.x-to-3.0-actuator-00010
+  - spring-boot-2.x-to-3.0-actuator-00020
+  - spring-boot-2.x-to-3.0-actuator-00030
+  - spring-boot-2.x-to-3.0-batch-00000
+  - spring-boot-2.x-to-3.0-batch-00010
+  - spring-boot-2.x-to-3.0-batch-00020
+  - spring-boot-2.x-to-3.0-core-changes-00001
+  - spring-boot-2.x-to-3.0-core-changes-00010
+  - spring-boot-2.x-to-3.0-core-changes-00020
+  - spring-boot-2.x-to-3.0-core-changes-00030
+  - spring-boot-2.x-to-3.0-core-changes-00050
+  - spring-boot-2.x-to-3.0-core-changes-00060
+  - spring-boot-2.x-to-3.0-datasource-00000
+  - spring-boot-2.x-to-3.0-datasource-00010
+  - spring-boot-2.x-to-3.0-datasource-00020
+  - spring-boot-2.x-to-3.0-datasource-00030
+  - spring-boot-2.x-to-3.0-datasource-00040
+  - spring-boot-2.x-to-3.0-datasource-00050
+  - spring-boot-2.x-to-3.0-datasource-00060
+  - spring-boot-2.x-to-3.0-datasource-00070
+  - spring-boot-2.x-to-3.0-dependencies-00001
+  - spring-boot-2.x-to-3.0-dependencies-00002
+  - spring-boot-2.x-to-3.0-dependencies-00003
+  - spring-boot-2.x-to-3.0-dependencies-00004
+  - spring-boot-2.x-to-3.0-dependencies-00005
+  - spring-boot-2.x-to-3.0-dependencies-00006
+  - spring-boot-2.x-to-3.0-dependencies-00007
+  - spring-boot-2.x-to-3.0-dependencies-00008
+  - spring-boot-2.x-to-3.0-dependencies-00009
+  - spring-boot-2.x-to-3.0-dependencies-00010
+  - spring-boot-2.x-to-3.0-dependencies-00011
+  - spring-boot-2.x-to-3.0-dependencies-00012
+  - spring-boot-2.x-to-3.0-dependencies-00013
+  - spring-boot-2.x-to-3.0-dependencies-00014
+  - spring-boot-2.x-to-3.0-dependencies-00015
+  - spring-boot-2.x-to-3.0-dependencies-00016
+  - spring-boot-2.x-to-3.0-dependencies-00020
+  - spring-boot-2.x-to-3.0-dependencies-00021
+  - spring-boot-2.x-to-3.0-micrometer-00010
+  - spring-boot-2.x-to-3.0-micrometer-00020
+  - spring-boot-2.x-to-3.0-micrometer-00030
+  - spring-boot-2.x-to-3.0-micrometer-00040
+  - spring-boot-2.x-to-3.0-removals-00010
+  - spring-boot-2.x-to-3.0-removals-00020
+  - spring-boot-2.x-to-3.0-removals-00030
+  - spring-boot-2.x-to-3.0-removals-00040
+  - spring-boot-2.x-to-3.0-removals-00050
+  - spring-boot-2.x-to-3.0-removals-00060
+  - spring-boot-2.x-to-3.0-removals-00070
+  - spring-boot-2.x-to-3.0-removals-00080
+  - spring-boot-2.x-to-3.0-removals-00090
+  - spring-boot-2.x-to-3.0-removals-00100
+  - spring-boot-2.x-to-3.0-removals-00110
+  - spring-boot-2.x-to-3.0-removals-00120
+  - spring-boot-2.x-to-3.0-removals-00130
+  - spring-boot-2.x-to-3.0-removals-00140
+  - spring-boot-2.x-to-3.0-removals-00150
+  - spring-boot-2.x-to-3.0-removals-00160
+  - spring-boot-2.x-to-3.0-removals-00170
+  - spring-boot-2.x-to-3.0-removals-00180
+  - spring-boot-2.x-to-3.0-removals-00190
+  - spring-boot-2.x-to-3.0-removals-00200
+  - spring-boot-2.x-to-3.0-removals-00210
+  - spring-boot-2.x-to-3.0-removals-00220
+  - spring-boot-2.x-to-3.0-removals-00230
+  - spring-boot-2.x-to-3.0-removals-00250
+  - spring-boot-2.x-to-3.0-removals-00260
+  - spring-boot-2.x-to-3.0-removals-00270
+  - spring-boot-2.x-to-3.0-removals-00290
+  - spring-boot-2.x-to-3.0-removals-00300
+  - spring-boot-2.x-to-3.0-removals-00310
+  - spring-boot-2.x-to-3.0-removals-00320
+  - spring-boot-2.x-to-3.0-removals-00330
+  - spring-boot-2.x-to-3.0-removals-00340
+  - spring-boot-2.x-to-3.0-removals-00350
+  - spring-boot-2.x-to-3.0-removals-00360
+  - spring-boot-2.x-to-3.0-removals-00370
+  - spring-boot-2.x-to-3.0-removals-00380
+  - spring-boot-2.x-to-3.0-removals-00390
+  - spring-boot-2.x-to-3.0-removals-00400
+  - spring-boot-2.x-to-3.0-removals-00410
+  - spring-boot-2.x-to-3.0-removals-00420
+  - spring-boot-2.x-to-3.0-removals-00430
+  - spring-boot-2.x-to-3.0-removals-00440
+  - spring-boot-2.x-to-3.0-removals-00450
+  - spring-boot-2.x-to-3.0-removals-00460
+  - spring-boot-2.x-to-3.0-removals-00470
+  - spring-boot-2.x-to-3.0-removals-00480
+  - spring-boot-2.x-to-3.0-removals-00490
+  - spring-boot-2.x-to-3.0-removals-00500
+  - spring-boot-2.x-to-3.0-removals-00510
+  - spring-boot-2.x-to-3.0-removals-00520
+  - spring-boot-2.x-to-3.0-removals-00530
+  - spring-boot-2.x-to-3.0-removals-00540
+  - spring-boot-2.x-to-3.0-removals-00550
+  - spring-boot-2.x-to-3.0-removals-00560
+  - spring-boot-2.x-to-3.0-removals-00570
+  - spring-boot-2.x-to-3.0-removals-00580
+  - spring-boot-2.x-to-3.0-removals-00590
+  - spring-boot-2.x-to-3.0-removals-00600
+  - spring-boot-2.x-to-3.0-removals-00610
+  - spring-boot-2.x-to-3.0-removals-00620
+  - spring-boot-2.x-to-3.0-removals-00630
+  - spring-boot-2.x-to-3.0-removals-00640
+  - spring-boot-2.x-to-3.0-removals-00650
+  - spring-boot-2.x-to-3.0-removals-00660
+  - spring-boot-2.x-to-3.0-removals-00670
+  - spring-boot-2.x-to-3.0-removals-00680
+  - spring-boot-2.x-to-3.0-removals-00690
+  - spring-boot-2.x-to-3.0-removals-00700
+  - spring-boot-2.x-to-3.0-removals-00710
+  - spring-boot-2.x-to-3.0-removals-00720
+  - spring-boot-2.x-to-3.0-removals-00730
+  - spring-boot-2.x-to-3.0-removals-00740
+  - spring-boot-2.x-to-3.0-removals-00750
+  - spring-boot-2.x-to-3.0-removals-00760
+  - spring-boot-2.x-to-3.0-removals-00770
+  - spring-boot-2.x-to-3.0-removals-00780
+  - spring-boot-2.x-to-3.0-removals-00790
+  - spring-boot-2.x-to-3.0-removals-00800
+  - spring-boot-2.x-to-3.0-removals-00810
+  - spring-boot-2.x-to-3.0-removals-00820
+  - spring-boot-2.x-to-3.0-removals-00830
+  - spring-boot-2.x-to-3.0-removals-00840
+  - spring-boot-2.x-to-3.0-removals-00850
+  - spring-boot-2.x-to-3.0-removals-00860
+  - spring-boot-2.x-to-3.0-removals-00870
+  - spring-boot-2.x-to-3.0-removals-00880
+  - spring-boot-2.x-to-3.0-removals-00890
+  - spring-boot-2.x-to-3.0-removals-00900
+  - spring-boot-2.x-to-3.0-removals-00910
+  - spring-boot-2.x-to-3.0-removals-00920
+  - spring-boot-2.x-to-3.0-removals-00930
+  - spring-boot-2.x-to-3.0-removals-00940
+  - spring-boot-2.x-to-3.0-removals-00950
+  - spring-boot-2.x-to-3.0-removals-00960
+  - spring-boot-2.x-to-3.0-removals-00970
+  - spring-boot-2.x-to-3.0-removals-00980
+  - spring-boot-2.x-to-3.0-removals-00990
+  - spring-boot-2.x-to-3.0-removals-01000
+  - spring-boot-2.x-to-3.0-removals-01010
+  - spring-boot-2.x-to-3.0-removals-01020
+  - spring-boot-2.x-to-3.0-removals-01030
+  - spring-boot-2.x-to-3.0-removals-01040
+  - spring-boot-2.x-to-3.0-removals-01050
+  - spring-boot-2.x-to-3.0-removals-01060
+  - spring-boot-2.x-to-3.0-removals-01070
+  - spring-boot-2.x-to-3.0-removals-01080
+  - spring-boot-2.x-to-3.0-removals-01090
+  - spring-boot-2.x-to-3.0-removals-01100
+  - spring-boot-2.x-to-3.0-removals-01110
+  - spring-boot-2.x-to-3.0-removals-01120
+  - spring-boot-2.x-to-3.0-removals-01140
+  - spring-boot-2.x-to-3.0-removals-01150
+  - spring-boot-2.x-to-3.0-removals-01160
+  - spring-boot-2.x-to-3.0-removals-01170
+  - spring-boot-2.x-to-3.0-removals-01180
+  - spring-boot-2.x-to-3.0-removals-01190
+  - spring-boot-2.x-to-3.0-removals-01200
+  - spring-boot-2.x-to-3.0-security-00000
+  - spring-boot-2.x-to-3.0-security-00010
+  - spring-boot-2.x-to-3.0-session-00000
+  - spring-boot-2.x-to-3.0-session-00010
+  - spring-boot-2.x-to-3.0-session-00020
+  - spring-boot-2.x-to-3.0-webapp-changes-00000
+  - spring-boot-2.x-to-3.0-webapp-changes-00010
+  - spring-boot-2.x-to-3.0-webapp-changes-00020
+  - spring-boot-2.x-to-3.0-webapp-changes-00030
+  - spring-boot-2.x-to-3.0-webapp-changes-00040
 - name: technology-usage
   description: This ruleset provides analysis of logging libraries.
   tags:
   - Embedded=Properties
-  - Java Threads
   - Other=Properties
   - Sustain=Properties
-  - Threads
   insights:
-    javase-01100:
-      description: Threads
-      labels:
-      - discovery
-      - konveyor.io/include=always
-      - tag=Java Threads
-      - tag=Threads
-      incidents:
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_07_FixtureLevelInvocation.java
-        message: ""
-        codeSnip: "33  import org.openjdk.jmh.annotations.Setup;\n34  import org.openjdk.jmh.annotations.State;\n35
-          \ import org.openjdk.jmh.annotations.TearDown;\n36  import org.openjdk.jmh.runner.Runner;\n37
-          \ import org.openjdk.jmh.runner.RunnerException;\n38  import org.openjdk.jmh.runner.options.Options;\n39
-          \ import org.openjdk.jmh.runner.options.OptionsBuilder;\n40  \n41  import
-          java.util.concurrent.Callable;\n42  import java.util.concurrent.ExecutionException;\n43
-          \ import java.util.concurrent.ExecutorService;\n44  import java.util.concurrent.Executors;\n45
-          \ import java.util.concurrent.TimeUnit;\n46  \n47  /**\n48   * Fixtures
-          have different Levels to control when they are about to run.\n49   * Level.Invocation
-          is useful sometimes to do some per-invocation work\n50   * which should
-          not count as payload (e.g. sleep for some time to emulate\n51   * think
-          time)\n52   */\n53  @OutputTimeUnit(TimeUnit.MICROSECONDS)"
-        lineNumber: 43
-        variables:
-          classes: ExecutorService
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_07_FixtureLevelInvocation.java
-          kind: Module
-          name: java.util.concurrent.ExecutorService
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_07_FixtureLevelInvocation.java
-        message: ""
-        codeSnip: "34  import org.openjdk.jmh.annotations.State;\n35  import org.openjdk.jmh.annotations.TearDown;\n36
-          \ import org.openjdk.jmh.runner.Runner;\n37  import org.openjdk.jmh.runner.RunnerException;\n38
-          \ import org.openjdk.jmh.runner.options.Options;\n39  import org.openjdk.jmh.runner.options.OptionsBuilder;\n40
-          \ \n41  import java.util.concurrent.Callable;\n42  import java.util.concurrent.ExecutionException;\n43
-          \ import java.util.concurrent.ExecutorService;\n44  import java.util.concurrent.Executors;\n45
-          \ import java.util.concurrent.TimeUnit;\n46  \n47  /**\n48   * Fixtures
-          have different Levels to control when they are about to run.\n49   * Level.Invocation
-          is useful sometimes to do some per-invocation work\n50   * which should
-          not count as payload (e.g. sleep for some time to emulate\n51   * think
-          time)\n52   */\n53  @OutputTimeUnit(TimeUnit.MICROSECONDS)\n54  public class
-          JMHSample_07_FixtureLevelInvocation {"
-        lineNumber: 44
-        variables:
-          classes: Executors
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_07_FixtureLevelInvocation.java
-          kind: Module
-          name: java.util.concurrent.Executors
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_07_FixtureLevelInvocation.java
-        message: ""
-        codeSnip: "65       */\n66  \n67      /*\n68       * This state handles the
-          executor.\n69       * Note we create and shutdown executor with Level.Trial,
-          so\n70       * it is kept around the same across all iterations.\n71       */\n72
-          \ \n73      @State(Scope.Benchmark)\n74      public static class NormalState
-          {\n75          ExecutorService service;\n76  \n77          @Setup(Level.Trial)\n78
-          \         public void up() {\n79              service = Executors.newCachedThreadPool();\n80
-          \         }\n81  \n82          @TearDown(Level.Trial)\n83          public
-          void down() {\n84              service.shutdown();\n85          }"
-        lineNumber: 75
-        variables:
-          classes: ""
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_07_FixtureLevelInvocation.java
-          kind: Field
-          name: service
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_07_FixtureLevelInvocation.java
-        message: ""
-        codeSnip: "69       * Note we create and shutdown executor with Level.Trial,
-          so\n70       * it is kept around the same across all iterations.\n71       */\n72
-          \ \n73      @State(Scope.Benchmark)\n74      public static class NormalState
-          {\n75          ExecutorService service;\n76  \n77          @Setup(Level.Trial)\n78
-          \         public void up() {\n79              service = Executors.newCachedThreadPool();\n80
-          \         }\n81  \n82          @TearDown(Level.Trial)\n83          public
-          void down() {\n84              service.shutdown();\n85          }\n86  \n87
-          \     }\n88  \n89      /*"
-        lineNumber: 79
-        variables:
-          classes: ""
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_07_FixtureLevelInvocation.java
-          kind: Method
-          name: up
-          package: org.openjdk.jmh.samples
     non-xml-technology-usage-20000:
-      description: ""
+      description: Properties
       labels:
       - discovery
       - konveyor.io/include=always
@@ -520,6 +648,7 @@
   - javaee-technology-usage-00957
   - javaee-technology-usage-00958
   - javase-01000
+  - javase-01100
   - javase-technology-usage-01000
   - jta-00020
   - jta-00030

@@ -7,7 +7,7 @@ analysis:
     source: []
     target: []
     rules:
-        - https://github.com/sshveta/koncur#add_gradle_test/rules/jmh-gradle-annotation-state-test-rule.yaml
+        - https://github.com/sshveta/koncur#add_gradle_test/rules/jmh-gradle-ruleset
     disableDefaultRules: false
     analysisMode: full
 timeout: 10m0s

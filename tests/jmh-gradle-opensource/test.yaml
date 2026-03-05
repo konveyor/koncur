@@ -8,7 +8,7 @@ analysis:
     source: []
     target: []
     rules:
-        - https://github.com/sshveta/koncur#add_gradle_test/rules/jmh-gradle-serializable-test-rule.yaml
+        - https://github.com/sshveta/koncur#add_gradle_test/rules/jmh-gradle-opensource-ruleset
     disableDefaultRules: false
     analysisMode: full
 timeout: 10m0s

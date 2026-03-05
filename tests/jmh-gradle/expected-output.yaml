@@ -43,8 +43,9 @@
   - eap-to-azure-appservice-certificates-001
   - eap-to-azure-appservice-certificates-001
   - eap-to-azure-appservice-datasource-driver-01000
-  - eap-to-azure-appservice-environment-variables-001
   - eap-to-azure-appservice-pom-001
+  - postgres-to-aks-workload-identity-01000
+  - postgres-to-aks-workload-identity-01000
   - spring-boot-to-azure-cache-redis-01000
   - spring-boot-to-azure-cache-redis-02000
   - spring-boot-to-azure-config-server-01000
@@ -74,675 +75,6 @@
   - spring-cloud-to-azure-version-02000
   - spring-cloud-to-azure-version-03000
   - tomcat-to-azure-external-resources-01000
-- name: custom-ruleset
-  description: temp ruleset
-  violations:
-    jmh-gradle-annotation-state-test-rule:
-      description: State reference test rule for https://github.com/melix/jmh-gradle-example
-      category: mandatory
-      incidents:
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_03_States.java
-        message: State reference test rule for https://github.com/melix/jmh-gradle-example
-        codeSnip: "43       * Below are two state objects. Their class names are not
-          essential,\n44       * it matters they are marked with @State. These objects
-          will be\n45       * instantiated on demand, and reused during the entire
-          benchmark trial.\n46       *\n47       * The important property is that
-          state is always instantiated by\n48       * one of those benchmark threads
-          which will then have the access\n49       * to that state. That means you
-          can initialize the fields as if you do\n50       * that in worker threads
-          (ThreadLocals are yours, etc).\n51       */\n52  \n53      @State(Scope.Benchmark)\n54
-          \     public static class BenchmarkState {\n55          double x = Math.PI;\n56
-          \     }\n57  \n58      @State(Scope.Thread)\n59      public static class
-          ThreadState {\n60          double x = Math.PI;\n61      }\n62  \n63      /*"
-        lineNumber: 53
-        variables:
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_03_States.java
-          kind: Class
-          name: State
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_03_States.java
-        message: State reference test rule for https://github.com/melix/jmh-gradle-example
-        codeSnip: "48       * one of those benchmark threads which will then have
-          the access\n49       * to that state. That means you can initialize the
-          fields as if you do\n50       * that in worker threads (ThreadLocals are
-          yours, etc).\n51       */\n52  \n53      @State(Scope.Benchmark)\n54      public
-          static class BenchmarkState {\n55          double x = Math.PI;\n56      }\n57
-          \ \n58      @State(Scope.Thread)\n59      public static class ThreadState
-          {\n60          double x = Math.PI;\n61      }\n62  \n63      /*\n64       *
-          Benchmark methods can reference the states, and JMH will inject\n65       *
-          the appropriate states while calling these methods. You can have\n66       *
-          no states at all, or have only one state, or have multiple states\n67       *
-          referenced. This makes building multi-threaded benchmark a breeze.\n68       *"
-        lineNumber: 58
-        variables:
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_03_States.java
-          kind: Class
-          name: State
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_04_DefaultState.java
-        message: State reference test rule for https://github.com/melix/jmh-gradle-example
-        codeSnip: "32  import org.openjdk.jmh.runner.options.Options;\n33  import
-          org.openjdk.jmh.runner.options.OptionsBuilder;\n34  \n35  /*\n36   * Fortunately,
-          in many cases you just need a single state object.\n37   * In that case,
-          we can mark the benchmark instance itself to be\n38   * the @State. Then,
-          we can reference it's own fields as will any\n39   * Java program do.\n40
-          \  */\n41  \n42  @State(Scope.Thread)\n43  public class JMHSample_04_DefaultState
-          {\n44  \n45      double x = Math.PI;\n46  \n47      @Benchmark\n48      public
-          void measure() {\n49          x++;\n50      }\n51  \n52      /*"
-        lineNumber: 42
-        variables:
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_04_DefaultState.java
-          kind: Class
-          name: State
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_05_StateFixtures.java
-        message: State reference test rule for https://github.com/melix/jmh-gradle-example
-        codeSnip: "27  import org.openjdk.jmh.annotations.Benchmark;\n28  import org.openjdk.jmh.annotations.Scope;\n29
-          \ import org.openjdk.jmh.annotations.Setup;\n30  import org.openjdk.jmh.annotations.State;\n31
-          \ import org.openjdk.jmh.annotations.TearDown;\n32  import org.openjdk.jmh.runner.Runner;\n33
-          \ import org.openjdk.jmh.runner.RunnerException;\n34  import org.openjdk.jmh.runner.options.Options;\n35
-          \ import org.openjdk.jmh.runner.options.OptionsBuilder;\n36  \n37  @State(Scope.Thread)\n38
-          \ public class JMHSample_05_StateFixtures {\n39  \n40      double x;\n41
-          \ \n42      /*\n43       * Since @State objects are kept around during the
-          lifetime of the benchmark,\n44       * it helps to have the methods which
-          do state housekeeping. These are usual\n45       * fixture methods, you
-          are probably familiar with them from JUnit and TestNG.\n46       *\n47       *
-          Fixture methods make sense only on @State objects, and JMH will fail to
-          compile"
-        lineNumber: 37
-        variables:
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_05_StateFixtures.java
-          kind: Class
-          name: State
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_06_FixtureLevel.java
-        message: State reference test rule for https://github.com/melix/jmh-gradle-example
-        codeSnip: "27  import org.openjdk.jmh.annotations.Benchmark;\n28  import org.openjdk.jmh.annotations.Level;\n29
-          \ import org.openjdk.jmh.annotations.Scope;\n30  import org.openjdk.jmh.annotations.State;\n31
-          \ import org.openjdk.jmh.annotations.TearDown;\n32  import org.openjdk.jmh.runner.Runner;\n33
-          \ import org.openjdk.jmh.runner.RunnerException;\n34  import org.openjdk.jmh.runner.options.Options;\n35
-          \ import org.openjdk.jmh.runner.options.OptionsBuilder;\n36  \n37  @State(Scope.Thread)\n38
-          \ public class JMHSample_06_FixtureLevel {\n39  \n40      double x;\n41
-          \ \n42      /*\n43       * Fixture methods have different levels to control
-          when they are about to run.\n44       * There are at least three Levels
-          available at user expense. These are, from\n45       * the top to bottom:\n46
-          \      *\n47       * Level.Trial:      before or after the entire benchmark
-          run (the sequence of iterations)"
-        lineNumber: 37
-        variables:
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_06_FixtureLevel.java
-          kind: Class
-          name: State
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_07_FixtureLevelInvocation.java
-        message: State reference test rule for https://github.com/melix/jmh-gradle-example
-        codeSnip: "63       *\n64       * Consider this sample:\n65       */\n66  \n67
-          \     /*\n68       * This state handles the executor.\n69       * Note we
-          create and shutdown executor with Level.Trial, so\n70       * it is kept
-          around the same across all iterations.\n71       */\n72  \n73      @State(Scope.Benchmark)\n74
-          \     public static class NormalState {\n75          ExecutorService service;\n76
-          \ \n77          @Setup(Level.Trial)\n78          public void up() {\n79
-          \             service = Executors.newCachedThreadPool();\n80          }\n81
-          \ \n82          @TearDown(Level.Trial)\n83          public void down() {"
-        lineNumber: 73
-        variables:
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_07_FixtureLevelInvocation.java
-          kind: Class
-          name: State
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_07_FixtureLevelInvocation.java
-        message: State reference test rule for https://github.com/melix/jmh-gradle-example
-        codeSnip: "115      @Benchmark\n116      @BenchmarkMode(Mode.AverageTime)\n117
-          \     public double measureCold(LaggingState e, final Scratch s) throws
-          ExecutionException, InterruptedException {\n118          return e.service.submit(new
-          Task(s)).get();\n119      }\n120  \n121      /*\n122       * This is our
-          scratch state which will handle the work.\n123       */\n124  \n125      @State(Scope.Thread)\n126
-          \     public static class Scratch {\n127          private double p;\n128
-          \         public double doWork() {\n129              p = Math.log(p);\n130
-          \             return p;\n131          }\n132      }\n133  \n134      public
-          static class Task implements Callable<Double> {\n135          private Scratch
-          s;"
-        lineNumber: 125
-        variables:
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_07_FixtureLevelInvocation.java
-          kind: Class
-          name: State
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_08_DeadCode.java
-        message: State reference test rule for https://github.com/melix/jmh-gradle-example
-        codeSnip: "30  import org.openjdk.jmh.annotations.OutputTimeUnit;\n31  import
-          org.openjdk.jmh.annotations.Scope;\n32  import org.openjdk.jmh.annotations.State;\n33
-          \ import org.openjdk.jmh.runner.Runner;\n34  import org.openjdk.jmh.runner.RunnerException;\n35
-          \ import org.openjdk.jmh.runner.options.Options;\n36  import org.openjdk.jmh.runner.options.OptionsBuilder;\n37
-          \ \n38  import java.util.concurrent.TimeUnit;\n39  \n40  @State(Scope.Thread)\n41
-          \ @BenchmarkMode(Mode.AverageTime)\n42  @OutputTimeUnit(TimeUnit.NANOSECONDS)\n43
-          \ public class JMHSample_08_DeadCode {\n44  \n45      /*\n46       * The
-          culprit of many benchmarks is the dead-code elimination: compilers are smart\n47
-          \      * enough to deduce some computations are redundant, and eliminate
-          them completely.\n48       * If that eliminated part was our benchmarked
-          code, we are in trouble.\n49       *\n50       * Fortunately, JMH provides
-          the essential infrastructure to fight this where appropriate:"
-        lineNumber: 40
-        variables:
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_08_DeadCode.java
-          kind: Class
-          name: State
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_09_Blackholes.java
-        message: State reference test rule for https://github.com/melix/jmh-gradle-example
-        codeSnip: "33  import org.openjdk.jmh.infra.Blackhole;\n34  import org.openjdk.jmh.runner.Runner;\n35
-          \ import org.openjdk.jmh.runner.RunnerException;\n36  import org.openjdk.jmh.runner.options.Options;\n37
-          \ import org.openjdk.jmh.runner.options.OptionsBuilder;\n38  \n39  import
-          java.util.concurrent.TimeUnit;\n40  \n41  @BenchmarkMode(Mode.AverageTime)\n42
-          \ @OutputTimeUnit(TimeUnit.NANOSECONDS)\n43  @State(Scope.Thread)\n44  public
-          class JMHSample_09_Blackholes {\n45  \n46      /*\n47       * Should you
-          need returning multiple results, you have to consider two options.\n48       *\n49
-          \      * NOTE: If you are only producing a single result, it is more readable
-          to use\n50       * the implicit return, as in org.openjdk.jmh.samples.JMHSample_08_DeadCode.\n51
-          \      * Do not make your benchmark code less readable with explicit Blackholes!\n52
-          \      */\n53  "
-        lineNumber: 43
-        variables:
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_09_Blackholes.java
-          kind: Class
-          name: BenchmarkMode
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_10_ConstantFold.java
-        message: State reference test rule for https://github.com/melix/jmh-gradle-example
-        codeSnip: "30  import org.openjdk.jmh.annotations.OutputTimeUnit;\n31  import
-          org.openjdk.jmh.annotations.Scope;\n32  import org.openjdk.jmh.annotations.State;\n33
-          \ import org.openjdk.jmh.runner.Runner;\n34  import org.openjdk.jmh.runner.RunnerException;\n35
-          \ import org.openjdk.jmh.runner.options.Options;\n36  import org.openjdk.jmh.runner.options.OptionsBuilder;\n37
-          \ \n38  import java.util.concurrent.TimeUnit;\n39  \n40  @State(Scope.Thread)\n41
-          \ @BenchmarkMode(Mode.AverageTime)\n42  @OutputTimeUnit(TimeUnit.NANOSECONDS)\n43
-          \ public class JMHSample_10_ConstantFold {\n44  \n45      /*\n46       *
-          The flip side of dead-code elimination is constant-folding.\n47       *\n48
-          \      * If JVM realizes the result of the computation is the same no matter
-          what, it\n49       * can cleverly optimize it. In our case, that means we
-          can move the computation\n50       * outside of the internal JMH loop."
-        lineNumber: 40
-        variables:
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_10_ConstantFold.java
-          kind: Class
-          name: State
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_11_Loops.java
-        message: State reference test rule for https://github.com/melix/jmh-gradle-example
-        codeSnip: "31  import org.openjdk.jmh.annotations.OutputTimeUnit;\n32  import
-          org.openjdk.jmh.annotations.Scope;\n33  import org.openjdk.jmh.annotations.State;\n34
-          \ import org.openjdk.jmh.runner.Runner;\n35  import org.openjdk.jmh.runner.RunnerException;\n36
-          \ import org.openjdk.jmh.runner.options.Options;\n37  import org.openjdk.jmh.runner.options.OptionsBuilder;\n38
-          \ \n39  import java.util.concurrent.TimeUnit;\n40  \n41  @State(Scope.Thread)\n42
-          \ @BenchmarkMode(Mode.AverageTime)\n43  @OutputTimeUnit(TimeUnit.NANOSECONDS)\n44
-          \ public class JMHSample_11_Loops {\n45  \n46      /*\n47       * It would
-          be tempting for users to do loops within the benchmarked method.\n48       *
-          (This is the bad thing Caliper taught everyone). This tests explains why\n49
-          \      * this is a bad idea.\n50       *\n51       * Looping uses the idea
-          of minimize the overhead for calling the test method,"
-        lineNumber: 41
-        variables:
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_11_Loops.java
-          kind: Class
-          name: State
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_12_Forking.java
-        message: State reference test rule for https://github.com/melix/jmh-gradle-example
-        codeSnip: "31  import org.openjdk.jmh.annotations.OutputTimeUnit;\n32  import
-          org.openjdk.jmh.annotations.Scope;\n33  import org.openjdk.jmh.annotations.State;\n34
-          \ import org.openjdk.jmh.runner.Runner;\n35  import org.openjdk.jmh.runner.RunnerException;\n36
-          \ import org.openjdk.jmh.runner.options.Options;\n37  import org.openjdk.jmh.runner.options.OptionsBuilder;\n38
-          \ \n39  import java.util.concurrent.TimeUnit;\n40  \n41  @State(Scope.Thread)\n42
-          \ @BenchmarkMode(Mode.AverageTime)\n43  @OutputTimeUnit(TimeUnit.NANOSECONDS)\n44
-          \ public class JMHSample_12_Forking {\n45  \n46      /*\n47       * JVMs
-          are notoriously good at profile-guided optimizations. This is bad for benchmarks,\n48
-          \      * because different tests can mix their profiles together, and then
-          render the \"uniformly bad\"\n49       * code for every test. Forking each
-          test can help to evade this issue.\n50       *\n51       * JMH will fork
-          the tests by default."
-        lineNumber: 41
-        variables:
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_12_Forking.java
-          kind: Class
-          name: State
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_13_RunToRun.java
-        message: State reference test rule for https://github.com/melix/jmh-gradle-example
-        codeSnip: "32  import org.openjdk.jmh.annotations.Scope;\n33  import org.openjdk.jmh.annotations.Setup;\n34
-          \ import org.openjdk.jmh.annotations.State;\n35  import org.openjdk.jmh.runner.Runner;\n36
-          \ import org.openjdk.jmh.runner.RunnerException;\n37  import org.openjdk.jmh.runner.options.Options;\n38
-          \ import org.openjdk.jmh.runner.options.OptionsBuilder;\n39  \n40  import
-          java.util.concurrent.TimeUnit;\n41  \n42  @State(Scope.Thread)\n43  @BenchmarkMode(Mode.AverageTime)\n44
-          \ @OutputTimeUnit(TimeUnit.MILLISECONDS)\n45  public class JMHSample_13_RunToRun
-          {\n46  \n47      /*\n48       * Forking also allows to estimate run-to-run
-          variance.\n49       *\n50       * JVMs are complex systems, and the non-determinism
-          is inherent for them.\n51       * This requires us to always account the
-          run-to-run variance as the one\n52       * of the effects in our experiments."
-        lineNumber: 42
-        variables:
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_13_RunToRun.java
-          kind: Class
-          name: State
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_13_RunToRun.java
-        message: State reference test rule for https://github.com/melix/jmh-gradle-example
-        codeSnip: "53       *\n54       * Luckily, forking aggregates the results
-          across several JVM launches.\n55       */\n56  \n57      /*\n58       *
-          In order to introduce readily measurable run-to-run variance, we build\n59
-          \      * the workload which performance differs from run to run. Note that
-          many workloads\n60       * will have the similar behavior, but we do that
-          artificially to make a point.\n61       */\n62  \n63      @State(Scope.Thread)\n64
-          \     public static class SleepyState {\n65          public long sleepTime;\n66
-          \ \n67          @Setup\n68          public void setup() {\n69              sleepTime
-          = (long) (Math.random() * 1000);\n70          }\n71      }\n72  \n73      /*"
-        lineNumber: 63
-        variables:
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_13_RunToRun.java
-          kind: Class
-          name: State
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_15_Asymmetric.java
-        message: State reference test rule for https://github.com/melix/jmh-gradle-example
-        codeSnip: "34  import org.openjdk.jmh.annotations.Setup;\n35  import org.openjdk.jmh.annotations.State;\n36
-          \ import org.openjdk.jmh.runner.Runner;\n37  import org.openjdk.jmh.runner.RunnerException;\n38
-          \ import org.openjdk.jmh.runner.options.Options;\n39  import org.openjdk.jmh.runner.options.OptionsBuilder;\n40
-          \ \n41  import java.util.concurrent.TimeUnit;\n42  import java.util.concurrent.atomic.AtomicInteger;\n43
-          \ \n44  @State(Scope.Group)\n45  @BenchmarkMode(Mode.AverageTime)\n46  @OutputTimeUnit(TimeUnit.NANOSECONDS)\n47
-          \ public class JMHSample_15_Asymmetric {\n48  \n49      /*\n50       * So
-          far all the tests were symmetric: the same code was executed in all the
-          threads.\n51       * At times, you need the asymmetric test. JMH provides
-          this with the notion of @Group,\n52       * which can bind several methods
-          together, and all the threads are distributed among\n53       * the test
-          methods.\n54       *"
-        lineNumber: 44
-        variables:
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_15_Asymmetric.java
-          kind: Class
-          name: State
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_16_CompilerControl.java
-        message: State reference test rule for https://github.com/melix/jmh-gradle-example
-        codeSnip: "31  import org.openjdk.jmh.annotations.OutputTimeUnit;\n32  import
-          org.openjdk.jmh.annotations.Scope;\n33  import org.openjdk.jmh.annotations.State;\n34
-          \ import org.openjdk.jmh.runner.Runner;\n35  import org.openjdk.jmh.runner.RunnerException;\n36
-          \ import org.openjdk.jmh.runner.options.Options;\n37  import org.openjdk.jmh.runner.options.OptionsBuilder;\n38
-          \ \n39  import java.util.concurrent.TimeUnit;\n40  \n41  @State(Scope.Thread)\n42
-          \ @BenchmarkMode(Mode.AverageTime)\n43  @OutputTimeUnit(TimeUnit.NANOSECONDS)\n44
-          \ public class JMHSample_16_CompilerControl {\n45  \n46      /*\n47       *
-          We can use HotSpot-specific functionality to tell the compiler what\n48
-          \      * do we want to do with particular methods. To demonstrate the effects,\n49
-          \      * we end up with 3 methods in this sample.\n50       */\n51  "
-        lineNumber: 41
-        variables:
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_16_CompilerControl.java
-          kind: Class
-          name: State
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_17_SyncIterations.java
-        message: State reference test rule for https://github.com/melix/jmh-gradle-example
-        codeSnip: "28  import org.openjdk.jmh.annotations.OutputTimeUnit;\n29  import
-          org.openjdk.jmh.annotations.Scope;\n30  import org.openjdk.jmh.annotations.State;\n31
-          \ import org.openjdk.jmh.runner.Runner;\n32  import org.openjdk.jmh.runner.RunnerException;\n33
-          \ import org.openjdk.jmh.runner.options.Options;\n34  import org.openjdk.jmh.runner.options.OptionsBuilder;\n35
-          \ \n36  import java.util.concurrent.TimeUnit;\n37  \n38  @State(Scope.Thread)\n39
-          \ @OutputTimeUnit(TimeUnit.MILLISECONDS)\n40  public class JMHSample_17_SyncIterations
-          {\n41  \n42      /*\n43       * This is the another thing that is enabled
-          in JMH by default.\n44       *\n45       * Suppose we have this simple benchmark.\n46
-          \      */\n47  \n48      private double src;"
-        lineNumber: 38
-        variables:
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_17_SyncIterations.java
-          kind: Class
-          name: State
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_18_Control.java
-        message: State reference test rule for https://github.com/melix/jmh-gradle-example
-        codeSnip: "29  import org.openjdk.jmh.annotations.Scope;\n30  import org.openjdk.jmh.annotations.State;\n31
-          \ import org.openjdk.jmh.infra.Control;\n32  import org.openjdk.jmh.runner.Runner;\n33
-          \ import org.openjdk.jmh.runner.RunnerException;\n34  import org.openjdk.jmh.runner.options.Options;\n35
-          \ import org.openjdk.jmh.runner.options.OptionsBuilder;\n36  \n37  import
-          java.util.concurrent.atomic.AtomicBoolean;\n38  \n39  @State(Scope.Group)\n40
-          \ public class JMHSample_18_Control {\n41  \n42      /*\n43       * Sometimes
-          you need the tap into the harness mind to get the info\n44       * on the
-          transition change. For this, we have the experimental state object,\n45
-          \      * Control, which is updated by JMH as we go.\n46       */\n47  \n48
-          \     /*\n49       * In this example, we want to estimate the ping-pong
-          speed for the simple"
-        lineNumber: 39
-        variables:
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_18_Control.java
-          kind: Class
-          name: State
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_20_Annotations.java
-        message: State reference test rule for https://github.com/melix/jmh-gradle-example
-        codeSnip: "31  import org.openjdk.jmh.annotations.Scope;\n32  import org.openjdk.jmh.annotations.State;\n33
-          \ import org.openjdk.jmh.annotations.Warmup;\n34  import org.openjdk.jmh.runner.Runner;\n35
-          \ import org.openjdk.jmh.runner.RunnerException;\n36  import org.openjdk.jmh.runner.options.Options;\n37
-          \ import org.openjdk.jmh.runner.options.OptionsBuilder;\n38  \n39  import
-          java.util.concurrent.TimeUnit;\n40  \n41  @State(Scope.Thread)\n42  @OutputTimeUnit(TimeUnit.MICROSECONDS)\n43
-          \ @Fork(1)\n44  public class JMHSample_20_Annotations {\n45  \n46      double
-          x1 = Math.PI;\n47  \n48      /*\n49       * In addition to all the command
-          line options usable at run time,\n50       * we have the annotations which
-          can provide the reasonable defaults\n51       * for the some of the benchmarks.
-          This is very useful when you are"
-        lineNumber: 41
-        variables:
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_20_Annotations.java
-          kind: Class
-          name: State
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_22_FalseSharing.java
-        message: State reference test rule for https://github.com/melix/jmh-gradle-example
-        codeSnip: "65       *   a) innocuous reader which blindly reads its own field\n66
-          \      *   b) furious writer which updates its own field\n67       */\n68
-          \ \n69      /*\n70       * BASELINE EXPERIMENT:\n71       * Because of the
-          false sharing, both reader and writer will experience\n72       * penalties.\n73
-          \      */\n74  \n75      @State(Scope.Group)\n76      public static class
-          StateBaseline {\n77          int readOnly;\n78          int writeOnly;\n79
-          \     }\n80  \n81      @Benchmark\n82      @Group(\"baseline\")\n83      public
-          int reader(StateBaseline s) {\n84          return s.readOnly;\n85      }"
-        lineNumber: 75
-        variables:
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_22_FalseSharing.java
-          kind: Class
-          name: State
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_22_FalseSharing.java
-        message: State reference test rule for https://github.com/melix/jmh-gradle-example
-        codeSnip: " 91      }\n 92  \n 93      /*\n 94       * APPROACH 1: PADDING\n
-          95       *\n 96       * We can try to alleviate some of the effects with
-          padding.\n 97       * This is not versatile because JVMs can freely rearrange
-          the\n 98       * field order.\n 99       */\n100  \n101      @State(Scope.Group)\n102
-          \     public static class StatePadded {\n103          int readOnly;\n104
-          \         int p01, p02, p03, p04, p05, p06, p07, p08;\n105          int
-          p11, p12, p13, p14, p15, p16, p17, p18;\n106          int writeOnly;\n107
-          \         int q01, q02, q03, q04, q05, q06, q07, q08;\n108          int
-          q11, q12, q13, q14, q15, q16, q17, q18;\n109      }\n110  \n111      @Benchmark"
-        lineNumber: 101
-        variables:
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_22_FalseSharing.java
-          kind: Class
-          name: State
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_22_FalseSharing.java
-        message: State reference test rule for https://github.com/melix/jmh-gradle-example
-        codeSnip: "140  \n141      public static class StateHierarchy_3 extends StateHierarchy_2
-          {\n142          int writeOnly;\n143      }\n144  \n145      public static
-          class StateHierarchy_4 extends StateHierarchy_3 {\n146          int q01,
-          q02, q03, q04, q05, q06, q07, q08;\n147          int q11, q12, q13, q14,
-          q15, q16, q17, q18;\n148      }\n149  \n150      @State(Scope.Group)\n151
-          \     public static class StateHierarchy extends StateHierarchy_4 {\n152
-          \     }\n153  \n154      @Benchmark\n155      @Group(\"hierarchy\")\n156
-          \     public int reader(StateHierarchy s) {\n157          return s.readOnly;\n158
-          \     }\n159  \n160      @Benchmark"
-        lineNumber: 150
-        variables:
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_22_FalseSharing.java
-          kind: Class
-          name: State
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_22_FalseSharing.java
-        message: State reference test rule for https://github.com/melix/jmh-gradle-example
-        codeSnip: "164      }\n165  \n166      /*\n167       * APPROACH 3: ARRAY TRICK\n168
-          \      *\n169       * This trick relies on the contiguous allocation of
-          an array.\n170       * Instead of placing the fields in the class, we mangle
-          them\n171       * into the array at very sparse offsets.\n172       */\n173
-          \ \n174      @State(Scope.Group)\n175      public static class StateArray
-          {\n176          int[] arr = new int[128];\n177      }\n178  \n179      @Benchmark\n180
-          \     @Group(\"sparse\")\n181      public int reader(StateArray s) {\n182
-          \         return s.arr[0];\n183      }\n184  "
-        lineNumber: 174
-        variables:
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_22_FalseSharing.java
-          kind: Class
-          name: State
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_22_FalseSharing.java
-        message: State reference test rule for https://github.com/melix/jmh-gradle-example
-        codeSnip: "189      }\n190  \n191      /*\n192       * APPROACH 4:\n193       *\n194
-          \      * @Contended (since JDK 8):\n195       *  Uncomment the annotation
-          if building with JDK 8.\n196       *  Remember to flip -XX:-RestrictContended
-          to enable.\n197       */\n198  \n199      @State(Scope.Group)\n200      public
-          static class StateContended {\n201          int readOnly;\n202  \n203  //
-          \       @sun.misc.Contended\n204          int writeOnly;\n205      }\n206
-          \ \n207      @Benchmark\n208      @Group(\"contended\")\n209      public
-          int reader(StateContended s) {"
-        lineNumber: 199
-        variables:
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_22_FalseSharing.java
-          kind: Class
-          name: State
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_23_AuxCounters.java
-        message: State reference test rule for https://github.com/melix/jmh-gradle-example
-        codeSnip: "50      /*\n51       * In some weird cases you need to get the
-          separate throughput/time\n52       * metrics for the benchmarked code depending
-          on the outcome of the\n53       * current code. Trying to accommodate the
-          cases like this, JMH optionally\n54       * provides the special annotation
-          which treats @State objects\n55       * as the object bearing user counters.
-          See @AuxCounters javadoc for\n56       * the limitations.\n57       */\n58
-          \ \n59      @AuxCounters\n60      @State(Scope.Thread)\n61      public static
-          class AdditionalCounters {\n62          public int case1, case2;\n63  \n64
-          \         @Setup(Level.Iteration)\n65          public void clean() {\n66
-          \             case1 = case2 = 0;\n67          }\n68  \n69          public
-          int total() {\n70              return case1 + case2;"
-        lineNumber: 60
-        variables:
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_23_AuxCounters.java
-          kind: Class
-          name: AuxCounters
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_24_Inheritance.java
-        message: State reference test rule for https://github.com/melix/jmh-gradle-example
-        codeSnip: "56       * during the compilation, it is only possible during the
-          same compilation\n57       * session. That is, mixing in the subclass extending
-          your benchmark class\n58       * *after* the JMH compilation would have
-          no effect.\n59       *\n60       * Note how annotations now have two possible
-          places. The closest annotation\n61       * in the hierarchy wins.\n62       */\n63
-          \ \n64      @BenchmarkMode(Mode.AverageTime)\n65      @Fork(1)\n66      @State(Scope.Thread)\n67
-          \     @OutputTimeUnit(TimeUnit.NANOSECONDS)\n68      public static abstract
-          class AbstractBenchmark {\n69          public int x = 42;\n70  \n71          @Benchmark\n72
-          \         @Warmup(iterations = 5, time = 100, timeUnit = TimeUnit.MILLISECONDS)\n73
-          \         @Measurement(iterations = 5, time = 100, timeUnit = TimeUnit.MILLISECONDS)\n74
-          \         public double bench() {\n75              return doWork() * doWork();\n76
-          \         }"
-        lineNumber: 66
-        variables:
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_24_Inheritance.java
-          kind: Class
-          name: BenchmarkMode
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_25_API_GA.java
-        message: State reference test rule for https://github.com/melix/jmh-gradle-example
-        codeSnip: "33  import org.openjdk.jmh.runner.RunnerException;\n34  import
-          org.openjdk.jmh.runner.options.Options;\n35  import org.openjdk.jmh.runner.options.OptionsBuilder;\n36
-          \ import org.openjdk.jmh.runner.options.TimeValue;\n37  import org.openjdk.jmh.runner.options.VerboseMode;\n38
-          \ \n39  import java.util.ArrayList;\n40  import java.util.Collections;\n41
-          \ import java.util.List;\n42  \n43  @State(Scope.Thread)\n44  public class
-          JMHSample_25_API_GA {\n45  \n46      /**\n47       * This example shows
-          the rather convoluted, but fun way to exploit\n48       * JMH API in complex
-          scenarios. Up to this point, we haven't consumed\n49       * the results
-          programmatically, and hence we are missing all the fun.\n50       *\n51
-          \      * Let's consider this naive code, which obviously suffers from the\n52
-          \      * performance anomalies, since current HotSpot is resistant to make\n53
-          \      * the tail-call optimizations."
-        lineNumber: 43
-        variables:
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_25_API_GA.java
-          kind: Class
-          name: State
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_26_BatchSize.java
-        message: State reference test rule for https://github.com/melix/jmh-gradle-example
-        codeSnip: "34  import org.openjdk.jmh.annotations.State;\n35  import org.openjdk.jmh.annotations.Warmup;\n36
-          \ import org.openjdk.jmh.runner.Runner;\n37  import org.openjdk.jmh.runner.RunnerException;\n38
-          \ import org.openjdk.jmh.runner.options.Options;\n39  import org.openjdk.jmh.runner.options.OptionsBuilder;\n40
-          \ \n41  import java.util.LinkedList;\n42  import java.util.List;\n43  \n44
-          \ @State(Scope.Thread)\n45  public class JMHSample_26_BatchSize {\n46  \n47
-          \     /*\n48       * Sometimes you need to evaluate operation which doesn't
-          have\n49       * the steady state. The cost of a benchmarked operation may\n50
-          \      * significantly vary from invocation to invocation.\n51       *\n52
-          \      * In this case, using the timed measurements is not a good idea,\n53
-          \      * and the only acceptable benchmark mode is a single shot. On the\n54
-          \      * other hand, the operation may be too small for reliable single"
-        lineNumber: 44
-        variables:
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_26_BatchSize.java
-          kind: Class
-          name: State
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_27_Params.java
-        message: State reference test rule for https://github.com/melix/jmh-gradle-example
-        codeSnip: "40  import org.openjdk.jmh.runner.options.OptionsBuilder;\n41  \n42
-          \ import java.math.BigInteger;\n43  import java.util.concurrent.TimeUnit;\n44
-          \ \n45  @BenchmarkMode(Mode.AverageTime)\n46  @OutputTimeUnit(TimeUnit.NANOSECONDS)\n47
-          \ @Warmup(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)\n48  @Measurement(iterations
-          = 5, time = 1, timeUnit = TimeUnit.SECONDS)\n49  @Fork(1)\n50  @State(Scope.Benchmark)\n51
-          \ public class JMHSample_27_Params {\n52  \n53      /**\n54       * In many
-          cases, the experiments require walking the configuration space\n55       *
-          for a benchmark. This is needed for additional control, or investigating\n56
-          \      * how the workload performance changes with different settings.\n57
-          \      */\n58  \n59      @Param({\"1\", \"31\", \"65\", \"101\", \"103\"})\n60
-          \     public int arg;"
-        lineNumber: 50
-        variables:
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_27_Params.java
-          kind: Class
-          name: BenchmarkMode
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_28_BlackholeHelpers.java
-        message: State reference test rule for https://github.com/melix/jmh-gradle-example
-        codeSnip: "40  import org.openjdk.jmh.runner.options.Options;\n41  import
-          org.openjdk.jmh.runner.options.OptionsBuilder;\n42  \n43  import java.util.concurrent.TimeUnit;\n44
-          \ \n45  @BenchmarkMode(Mode.AverageTime)\n46  @OutputTimeUnit(TimeUnit.NANOSECONDS)\n47
-          \ @Warmup(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)\n48  @Measurement(iterations
-          = 5, time = 1, timeUnit = TimeUnit.SECONDS)\n49  @Fork(1)\n50  @State(Scope.Thread)\n51
-          \ public class JMHSample_28_BlackholeHelpers {\n52  \n53      /**\n54       *
-          Sometimes you need the black hole not in @GMB method, but in\n55       *
-          helper methods, because you want to pass it through to the concrete\n56
-          \      * implementation which is instantiated in helper methods. In this
-          case,\n57       * you can request the black hole straight in the helper
-          method signature.\n58       * This applies to both @Setup and @TearDown
-          methods, and also to other\n59       * JMH infrastructure objects, like
-          Control.\n60       *"
-        lineNumber: 50
-        variables:
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_28_BlackholeHelpers.java
-          kind: Class
-          name: BenchmarkMode
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_29_StatesDAG.java
-        message: State reference test rule for https://github.com/melix/jmh-gradle-example
-        codeSnip: "44  import java.util.LinkedList;\n45  import java.util.List;\n46
-          \ import java.util.Queue;\n47  import java.util.concurrent.TimeUnit;\n48
-          \ \n49  @BenchmarkMode(Mode.AverageTime)\n50  @OutputTimeUnit(TimeUnit.NANOSECONDS)\n51
-          \ @Warmup(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)\n52  @Measurement(iterations
-          = 5, time = 1, timeUnit = TimeUnit.SECONDS)\n53  @Fork(1)\n54  @State(Scope.Thread)\n55
-          \ public class JMHSample_29_StatesDAG {\n56  \n57      /**\n58       * WARNING:\n59
-          \      * THIS IS AN EXPERIMENTAL FEATURE, BE READY FOR IT BECOME REMOVED
-          WITHOUT NOTICE!\n60       */\n61  \n62      /**\n63       * There are weird
-          cases when the benchmark state is more cleanly described\n64       * by
-          the set of @States, and those @States reference each other. JMH allows"
-        lineNumber: 54
-        variables:
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_29_StatesDAG.java
-          kind: Class
-          name: BenchmarkMode
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_29_StatesDAG.java
-        message: State reference test rule for https://github.com/melix/jmh-gradle-example
-        codeSnip: " 89          }\n 90      }\n 91  \n 92      /*\n 93       * Shared
-          state maintains the set of Counters, and worker threads should\n 94       *
-          poll their own instances of Counter to work with. However, it should only\n
-          95       * be done once, and therefore, Local state caches it after requesting
-          the\n 96       * counter from Shared state.\n 97       */\n 98  \n 99      @State(Scope.Benchmark)\n100
-          \     public static class Shared {\n101          List<Counter> all;\n102
-          \         Queue<Counter> available;\n103  \n104          @Setup\n105          public
-          synchronized void setup() {\n106              all = new ArrayList<Counter>();\n107
-          \             for (int c = 0; c < 10; c++) {\n108                  all.add(new
-          Counter());\n109              }"
-        lineNumber: 99
-        variables:
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_29_StatesDAG.java
-          kind: Class
-          name: State
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_29_StatesDAG.java
-        message: State reference test rule for https://github.com/melix/jmh-gradle-example
-        codeSnip: "117              for (Counter c : all) {\n118                  c.dispose();\n119
-          \             }\n120          }\n121  \n122          public synchronized
-          Counter getMine() {\n123              return available.poll();\n124          }\n125
-          \     }\n126  \n127      @State(Scope.Thread)\n128      public static class
-          Local {\n129          Counter cnt;\n130  \n131          @Setup\n132          public
-          void setup(Shared shared) {\n133              cnt = shared.getMine();\n134
-          \         }\n135      }\n136  \n137      @Benchmark"
-        lineNumber: 127
-        variables:
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_29_StatesDAG.java
-          kind: Class
-          name: State
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_30_Interrupts.java
-        message: State reference test rule for https://github.com/melix/jmh-gradle-example
-        codeSnip: "33  import org.openjdk.jmh.annotations.State;\n34  import org.openjdk.jmh.runner.Runner;\n35
-          \ import org.openjdk.jmh.runner.RunnerException;\n36  import org.openjdk.jmh.runner.options.Options;\n37
-          \ import org.openjdk.jmh.runner.options.OptionsBuilder;\n38  \n39  import
-          java.util.concurrent.ArrayBlockingQueue;\n40  import java.util.concurrent.BlockingQueue;\n41
-          \ \n42  @BenchmarkMode(Mode.AverageTime)\n43  @State(Scope.Group)\n44  public
-          class JMHSample_30_Interrupts {\n45  \n46      /*\n47       * JMH can also
-          detect when threads are stuck in the benchmarks, and try\n48       * to
-          forcefully interrupt the benchmark thread. JMH tries to do that\n49       *
-          when it is arguably sure it would not affect the measurement.\n50       */\n51
-          \ \n52      /*\n53       * In this example, we want to measure the simple
-          performance characteristics"
-        lineNumber: 43
-        variables:
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_30_Interrupts.java
-          kind: Class
-          name: BenchmarkMode
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_31_InfraParams.java
-        message: State reference test rule for https://github.com/melix/jmh-gradle-example
-        codeSnip: "38  import org.openjdk.jmh.runner.options.Options;\n39  import
-          org.openjdk.jmh.runner.options.OptionsBuilder;\n40  \n41  import java.util.ArrayList;\n42
-          \ import java.util.List;\n43  import java.util.concurrent.ConcurrentHashMap;\n44
-          \ import java.util.concurrent.TimeUnit;\n45  \n46  @BenchmarkMode(Mode.Throughput)\n47
-          \ @OutputTimeUnit(TimeUnit.SECONDS)\n48  @State(Scope.Benchmark)\n49  public
-          class JMHSample_31_InfraParams {\n50  \n51      /*\n52       * There is
-          a way to query JMH about the current running mode. This is\n53       * possible
-          with three infrastructure objects we can request to be injected:\n54       *
-          \  - BenchmarkParams: covers the benchmark-global configuration\n55       *
-          \  - IterationParams: covers the current iteration configuration\n56       *
-          \  - ThreadParams: covers the specifics about threading\n57       *\n58
-          \      * Suppose we want to check how the ConcurrentHashMap scales under
-          different"
-        lineNumber: 48
-        variables:
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_31_InfraParams.java
-          kind: Class
-          name: BenchmarkMode
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_31_InfraParams.java
-        message: State reference test rule for https://github.com/melix/jmh-gradle-example
-        codeSnip: "71      public void setup(BenchmarkParams params) {\n72          int
-          capacity = 16 * THREAD_SLICE * params.getThreads();\n73          mapSingle
-          \       = new ConcurrentHashMap<String, String>(capacity, 0.75f, 1);\n74
-          \         mapFollowThreads = new ConcurrentHashMap<String, String>(capacity,
-          0.75f, params.getThreads());\n75      }\n76  \n77      /*\n78       * Here
-          is another neat trick. Generate the distinct set of keys for all threads:\n79
-          \      */\n80  \n81      @State(Scope.Thread)\n82      public static class
-          Ids {\n83          private List<String> ids;\n84  \n85          @Setup\n86
-          \         public void setup(ThreadParams threads) {\n87              ids
-          = new ArrayList<String>();\n88              for (int c = 0; c < THREAD_SLICE;
-          c++) {\n89                  ids.add(\"ID\" + (THREAD_SLICE * threads.getThreadIndex()
-          + c));\n90              }\n91          }"
-        lineNumber: 81
-        variables:
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_31_InfraParams.java
-          kind: Class
-          name: State
-          package: org.openjdk.jmh.samples
-      effort: 1
 - name: discovery-rules
   tags:
   - Java Source
@@ -837,99 +169,226 @@
   - windup-discover-jpa-configuration
   - windup-discover-spring-configuration
   - windup-discover-web-configuration
+- name: spring-boot
+  description: Ruleset for migration of Spring Boot
+  violations:
+    spring-boot-2.x-to-3.0-core-changes-00040:
+      description: Consider using the Spring Boot Properties Migrator
+      category: optional
+      labels:
+      - konveyor.io/source=spring-boot2
+      - konveyor.io/target=spring-boot3+
+      incidents:
+      - uri: file:///source/build.gradle
+        message: |
+          Spring Boot 3.0 has renamed or removed many configuration properties. To help identify
+          properties that need to be updated, add the `spring-boot-properties-migrator` module
+          to your project temporarily.
+
+          **Maven:**
+          ```xml
+          <dependency>
+              <groupId>org.springframework.boot</groupId>
+              <artifactId>spring-boot-properties-migrator</artifactId>
+              <scope>runtime</scope>
+          </dependency>
+          ```
+
+          **Gradle:**
+          ```groovy
+          runtime 'org.springframework.boot:spring-boot-properties-migrator'
+          ```
+
+          Once added, the migrator will:
+          - Analyze your `application.properties` or `application.yml` at runtime
+          - Log warnings for deprecated properties
+          - Temporarily migrate properties at runtime where possible
+
+          **Important:** Remove this dependency after completing the migration, as it is intended
+          for development use only and adds startup overhead.
+      links:
+      - url: https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.0-Migration-Guide#configuration-properties-migration
+        title: Spring Boot 3.0 Migration Guide - Configuration Properties
+      effort: 1
+  unmatched:
+  - spring-boot-2.x-to-3.0-actuator-00010
+  - spring-boot-2.x-to-3.0-actuator-00020
+  - spring-boot-2.x-to-3.0-actuator-00030
+  - spring-boot-2.x-to-3.0-batch-00000
+  - spring-boot-2.x-to-3.0-batch-00010
+  - spring-boot-2.x-to-3.0-batch-00020
+  - spring-boot-2.x-to-3.0-core-changes-00001
+  - spring-boot-2.x-to-3.0-core-changes-00010
+  - spring-boot-2.x-to-3.0-core-changes-00020
+  - spring-boot-2.x-to-3.0-core-changes-00030
+  - spring-boot-2.x-to-3.0-core-changes-00050
+  - spring-boot-2.x-to-3.0-core-changes-00060
+  - spring-boot-2.x-to-3.0-datasource-00000
+  - spring-boot-2.x-to-3.0-datasource-00010
+  - spring-boot-2.x-to-3.0-datasource-00020
+  - spring-boot-2.x-to-3.0-datasource-00030
+  - spring-boot-2.x-to-3.0-datasource-00040
+  - spring-boot-2.x-to-3.0-datasource-00050
+  - spring-boot-2.x-to-3.0-datasource-00060
+  - spring-boot-2.x-to-3.0-datasource-00070
+  - spring-boot-2.x-to-3.0-dependencies-00001
+  - spring-boot-2.x-to-3.0-dependencies-00002
+  - spring-boot-2.x-to-3.0-dependencies-00003
+  - spring-boot-2.x-to-3.0-dependencies-00004
+  - spring-boot-2.x-to-3.0-dependencies-00005
+  - spring-boot-2.x-to-3.0-dependencies-00006
+  - spring-boot-2.x-to-3.0-dependencies-00007
+  - spring-boot-2.x-to-3.0-dependencies-00008
+  - spring-boot-2.x-to-3.0-dependencies-00009
+  - spring-boot-2.x-to-3.0-dependencies-00010
+  - spring-boot-2.x-to-3.0-dependencies-00011
+  - spring-boot-2.x-to-3.0-dependencies-00012
+  - spring-boot-2.x-to-3.0-dependencies-00013
+  - spring-boot-2.x-to-3.0-dependencies-00014
+  - spring-boot-2.x-to-3.0-dependencies-00015
+  - spring-boot-2.x-to-3.0-dependencies-00016
+  - spring-boot-2.x-to-3.0-dependencies-00020
+  - spring-boot-2.x-to-3.0-dependencies-00021
+  - spring-boot-2.x-to-3.0-micrometer-00010
+  - spring-boot-2.x-to-3.0-micrometer-00020
+  - spring-boot-2.x-to-3.0-micrometer-00030
+  - spring-boot-2.x-to-3.0-micrometer-00040
+  - spring-boot-2.x-to-3.0-removals-00010
+  - spring-boot-2.x-to-3.0-removals-00020
+  - spring-boot-2.x-to-3.0-removals-00030
+  - spring-boot-2.x-to-3.0-removals-00040
+  - spring-boot-2.x-to-3.0-removals-00050
+  - spring-boot-2.x-to-3.0-removals-00060
+  - spring-boot-2.x-to-3.0-removals-00070
+  - spring-boot-2.x-to-3.0-removals-00080
+  - spring-boot-2.x-to-3.0-removals-00090
+  - spring-boot-2.x-to-3.0-removals-00100
+  - spring-boot-2.x-to-3.0-removals-00110
+  - spring-boot-2.x-to-3.0-removals-00120
+  - spring-boot-2.x-to-3.0-removals-00130
+  - spring-boot-2.x-to-3.0-removals-00140
+  - spring-boot-2.x-to-3.0-removals-00150
+  - spring-boot-2.x-to-3.0-removals-00160
+  - spring-boot-2.x-to-3.0-removals-00170
+  - spring-boot-2.x-to-3.0-removals-00180
+  - spring-boot-2.x-to-3.0-removals-00190
+  - spring-boot-2.x-to-3.0-removals-00200
+  - spring-boot-2.x-to-3.0-removals-00210
+  - spring-boot-2.x-to-3.0-removals-00220
+  - spring-boot-2.x-to-3.0-removals-00230
+  - spring-boot-2.x-to-3.0-removals-00250
+  - spring-boot-2.x-to-3.0-removals-00260
+  - spring-boot-2.x-to-3.0-removals-00270
+  - spring-boot-2.x-to-3.0-removals-00290
+  - spring-boot-2.x-to-3.0-removals-00300
+  - spring-boot-2.x-to-3.0-removals-00310
+  - spring-boot-2.x-to-3.0-removals-00320
+  - spring-boot-2.x-to-3.0-removals-00330
+  - spring-boot-2.x-to-3.0-removals-00340
+  - spring-boot-2.x-to-3.0-removals-00350
+  - spring-boot-2.x-to-3.0-removals-00360
+  - spring-boot-2.x-to-3.0-removals-00370
+  - spring-boot-2.x-to-3.0-removals-00380
+  - spring-boot-2.x-to-3.0-removals-00390
+  - spring-boot-2.x-to-3.0-removals-00400
+  - spring-boot-2.x-to-3.0-removals-00410
+  - spring-boot-2.x-to-3.0-removals-00420
+  - spring-boot-2.x-to-3.0-removals-00430
+  - spring-boot-2.x-to-3.0-removals-00440
+  - spring-boot-2.x-to-3.0-removals-00450
+  - spring-boot-2.x-to-3.0-removals-00460
+  - spring-boot-2.x-to-3.0-removals-00470
+  - spring-boot-2.x-to-3.0-removals-00480
+  - spring-boot-2.x-to-3.0-removals-00490
+  - spring-boot-2.x-to-3.0-removals-00500
+  - spring-boot-2.x-to-3.0-removals-00510
+  - spring-boot-2.x-to-3.0-removals-00520
+  - spring-boot-2.x-to-3.0-removals-00530
+  - spring-boot-2.x-to-3.0-removals-00540
+  - spring-boot-2.x-to-3.0-removals-00550
+  - spring-boot-2.x-to-3.0-removals-00560
+  - spring-boot-2.x-to-3.0-removals-00570
+  - spring-boot-2.x-to-3.0-removals-00580
+  - spring-boot-2.x-to-3.0-removals-00590
+  - spring-boot-2.x-to-3.0-removals-00600
+  - spring-boot-2.x-to-3.0-removals-00610
+  - spring-boot-2.x-to-3.0-removals-00620
+  - spring-boot-2.x-to-3.0-removals-00630
+  - spring-boot-2.x-to-3.0-removals-00640
+  - spring-boot-2.x-to-3.0-removals-00650
+  - spring-boot-2.x-to-3.0-removals-00660
+  - spring-boot-2.x-to-3.0-removals-00670
+  - spring-boot-2.x-to-3.0-removals-00680
+  - spring-boot-2.x-to-3.0-removals-00690
+  - spring-boot-2.x-to-3.0-removals-00700
+  - spring-boot-2.x-to-3.0-removals-00710
+  - spring-boot-2.x-to-3.0-removals-00720
+  - spring-boot-2.x-to-3.0-removals-00730
+  - spring-boot-2.x-to-3.0-removals-00740
+  - spring-boot-2.x-to-3.0-removals-00750
+  - spring-boot-2.x-to-3.0-removals-00760
+  - spring-boot-2.x-to-3.0-removals-00770
+  - spring-boot-2.x-to-3.0-removals-00780
+  - spring-boot-2.x-to-3.0-removals-00790
+  - spring-boot-2.x-to-3.0-removals-00800
+  - spring-boot-2.x-to-3.0-removals-00810
+  - spring-boot-2.x-to-3.0-removals-00820
+  - spring-boot-2.x-to-3.0-removals-00830
+  - spring-boot-2.x-to-3.0-removals-00840
+  - spring-boot-2.x-to-3.0-removals-00850
+  - spring-boot-2.x-to-3.0-removals-00860
+  - spring-boot-2.x-to-3.0-removals-00870
+  - spring-boot-2.x-to-3.0-removals-00880
+  - spring-boot-2.x-to-3.0-removals-00890
+  - spring-boot-2.x-to-3.0-removals-00900
+  - spring-boot-2.x-to-3.0-removals-00910
+  - spring-boot-2.x-to-3.0-removals-00920
+  - spring-boot-2.x-to-3.0-removals-00930
+  - spring-boot-2.x-to-3.0-removals-00940
+  - spring-boot-2.x-to-3.0-removals-00950
+  - spring-boot-2.x-to-3.0-removals-00960
+  - spring-boot-2.x-to-3.0-removals-00970
+  - spring-boot-2.x-to-3.0-removals-00980
+  - spring-boot-2.x-to-3.0-removals-00990
+  - spring-boot-2.x-to-3.0-removals-01000
+  - spring-boot-2.x-to-3.0-removals-01010
+  - spring-boot-2.x-to-3.0-removals-01020
+  - spring-boot-2.x-to-3.0-removals-01030
+  - spring-boot-2.x-to-3.0-removals-01040
+  - spring-boot-2.x-to-3.0-removals-01050
+  - spring-boot-2.x-to-3.0-removals-01060
+  - spring-boot-2.x-to-3.0-removals-01070
+  - spring-boot-2.x-to-3.0-removals-01080
+  - spring-boot-2.x-to-3.0-removals-01090
+  - spring-boot-2.x-to-3.0-removals-01100
+  - spring-boot-2.x-to-3.0-removals-01110
+  - spring-boot-2.x-to-3.0-removals-01120
+  - spring-boot-2.x-to-3.0-removals-01140
+  - spring-boot-2.x-to-3.0-removals-01150
+  - spring-boot-2.x-to-3.0-removals-01160
+  - spring-boot-2.x-to-3.0-removals-01170
+  - spring-boot-2.x-to-3.0-removals-01180
+  - spring-boot-2.x-to-3.0-removals-01190
+  - spring-boot-2.x-to-3.0-removals-01200
+  - spring-boot-2.x-to-3.0-security-00000
+  - spring-boot-2.x-to-3.0-security-00010
+  - spring-boot-2.x-to-3.0-session-00000
+  - spring-boot-2.x-to-3.0-session-00010
+  - spring-boot-2.x-to-3.0-session-00020
+  - spring-boot-2.x-to-3.0-webapp-changes-00000
+  - spring-boot-2.x-to-3.0-webapp-changes-00010
+  - spring-boot-2.x-to-3.0-webapp-changes-00020
+  - spring-boot-2.x-to-3.0-webapp-changes-00030
+  - spring-boot-2.x-to-3.0-webapp-changes-00040
 - name: technology-usage
   description: This ruleset provides analysis of logging libraries.
   tags:
   - Embedded=Properties
-  - Java Threads
   - Other=Properties
   - Sustain=Properties
-  - Threads
   insights:
-    javase-01100:
-      description: Threads
-      labels:
-      - discovery
-      - konveyor.io/include=always
-      - tag=Java Threads
-      - tag=Threads
-      incidents:
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_07_FixtureLevelInvocation.java
-        message: ""
-        codeSnip: "33  import org.openjdk.jmh.annotations.Setup;\n34  import org.openjdk.jmh.annotations.State;\n35
-          \ import org.openjdk.jmh.annotations.TearDown;\n36  import org.openjdk.jmh.runner.Runner;\n37
-          \ import org.openjdk.jmh.runner.RunnerException;\n38  import org.openjdk.jmh.runner.options.Options;\n39
-          \ import org.openjdk.jmh.runner.options.OptionsBuilder;\n40  \n41  import
-          java.util.concurrent.Callable;\n42  import java.util.concurrent.ExecutionException;\n43
-          \ import java.util.concurrent.ExecutorService;\n44  import java.util.concurrent.Executors;\n45
-          \ import java.util.concurrent.TimeUnit;\n46  \n47  /**\n48   * Fixtures
-          have different Levels to control when they are about to run.\n49   * Level.Invocation
-          is useful sometimes to do some per-invocation work\n50   * which should
-          not count as payload (e.g. sleep for some time to emulate\n51   * think
-          time)\n52   */\n53  @OutputTimeUnit(TimeUnit.MICROSECONDS)"
-        lineNumber: 43
-        variables:
-          classes: ExecutorService
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_07_FixtureLevelInvocation.java
-          kind: Module
-          name: java.util.concurrent.ExecutorService
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_07_FixtureLevelInvocation.java
-        message: ""
-        codeSnip: "34  import org.openjdk.jmh.annotations.State;\n35  import org.openjdk.jmh.annotations.TearDown;\n36
-          \ import org.openjdk.jmh.runner.Runner;\n37  import org.openjdk.jmh.runner.RunnerException;\n38
-          \ import org.openjdk.jmh.runner.options.Options;\n39  import org.openjdk.jmh.runner.options.OptionsBuilder;\n40
-          \ \n41  import java.util.concurrent.Callable;\n42  import java.util.concurrent.ExecutionException;\n43
-          \ import java.util.concurrent.ExecutorService;\n44  import java.util.concurrent.Executors;\n45
-          \ import java.util.concurrent.TimeUnit;\n46  \n47  /**\n48   * Fixtures
-          have different Levels to control when they are about to run.\n49   * Level.Invocation
-          is useful sometimes to do some per-invocation work\n50   * which should
-          not count as payload (e.g. sleep for some time to emulate\n51   * think
-          time)\n52   */\n53  @OutputTimeUnit(TimeUnit.MICROSECONDS)\n54  public class
-          JMHSample_07_FixtureLevelInvocation {"
-        lineNumber: 44
-        variables:
-          classes: Executors
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_07_FixtureLevelInvocation.java
-          kind: Module
-          name: java.util.concurrent.Executors
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_07_FixtureLevelInvocation.java
-        message: ""
-        codeSnip: "65       */\n66  \n67      /*\n68       * This state handles the
-          executor.\n69       * Note we create and shutdown executor with Level.Trial,
-          so\n70       * it is kept around the same across all iterations.\n71       */\n72
-          \ \n73      @State(Scope.Benchmark)\n74      public static class NormalState
-          {\n75          ExecutorService service;\n76  \n77          @Setup(Level.Trial)\n78
-          \         public void up() {\n79              service = Executors.newCachedThreadPool();\n80
-          \         }\n81  \n82          @TearDown(Level.Trial)\n83          public
-          void down() {\n84              service.shutdown();\n85          }"
-        lineNumber: 75
-        variables:
-          classes: ""
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_07_FixtureLevelInvocation.java
-          kind: Field
-          name: service
-          package: org.openjdk.jmh.samples
-      - uri: file:///source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_07_FixtureLevelInvocation.java
-        message: ""
-        codeSnip: "69       * Note we create and shutdown executor with Level.Trial,
-          so\n70       * it is kept around the same across all iterations.\n71       */\n72
-          \ \n73      @State(Scope.Benchmark)\n74      public static class NormalState
-          {\n75          ExecutorService service;\n76  \n77          @Setup(Level.Trial)\n78
-          \         public void up() {\n79              service = Executors.newCachedThreadPool();\n80
-          \         }\n81  \n82          @TearDown(Level.Trial)\n83          public
-          void down() {\n84              service.shutdown();\n85          }\n86  \n87
-          \     }\n88  \n89      /*"
-        lineNumber: 79
-        variables:
-          classes: ""
-          file: file:///opt/input/source/src/jmh/java/org/openjdk/jmh/samples/JMHSample_07_FixtureLevelInvocation.java
-          kind: Method
-          name: up
-          package: org.openjdk.jmh.samples
     non-xml-technology-usage-20000:
-      description: ""
+      description: Properties
       labels:
       - discovery
       - konveyor.io/include=always
@@ -1189,6 +648,7 @@
   - javaee-technology-usage-00957
   - javaee-technology-usage-00958
   - javase-01000
+  - javase-01100
   - javase-technology-usage-01000
   - jta-00020
   - jta-00030

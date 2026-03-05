@@ -1,0 +1,7 @@
+name: jmh-gradle-opensource-rules
+description: Custom rules for JMH Gradle opensource analysis with Serializable detection
+labels:
+  - konveyor.io/source=java
+  - jmh
+  - gradle
+  - serialization
