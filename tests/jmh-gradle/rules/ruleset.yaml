@@ -1,6 +1,0 @@
-name: jmh-gradle-custom-rules
-description: Custom rules for JMH Gradle example analysis
-labels:
-  - konveyor.io/source=java
-  - jmh
-  - gradle
