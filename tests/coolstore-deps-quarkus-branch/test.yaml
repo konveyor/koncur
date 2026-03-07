@@ -1,17 +1,16 @@
-# SKIPPED: Skip test. Investigate on changes and fix https://github.com/konveyor/go-konveyor-tests/issues/353
 name: Coolstore Source and Deps analysis using Quarkus branch
 analysis:
-    application: https://github.com/konveyor-ecosystem/coolstore#ci-2024-quarkus
-    labelSelector: konveyor.io/target=cloud-readiness || konveyor.io/target=jakarta-ee
-    context_lines: 0
-    incident_selector: ""
-    source: []
-    target: []
-    rules: []
-    disableDefaultRules: false
-    analysisMode: source-only
+  application: https://github.com/konveyor-ecosystem/coolstore#ci-2024-quarkus
+  labelSelector: konveyor.io/target=cloud-readiness || konveyor.io/target=jakarta-ee
+  context_lines: 0
+  incident_selector: ""
+  source: []
+  target: []
+  rules: []
+  disableDefaultRules: false
+  analysisMode: full
 timeout: 10m0s
 expect:
-    exitCode: 0
-    output:
-        file: expected-output.yaml
+  exitCode: 0
+  output:
+    file: expected-output.yaml

@@ -1,5 +1,3 @@
-# SKIPPED: Skip binary test. https://issues.redhat.com/browse/MTA-5588
-
 name: "tackle-testapp-binary"
 description: ""
 analysis:
@@ -7,6 +5,7 @@ analysis:
   labelSelector: "konveyor.io/target=cloud-readiness"
   analysisMode: "binary"
 timeout: 10m
+requireMavenSettings: true
 expect:
   exitCode: 0
   output:
