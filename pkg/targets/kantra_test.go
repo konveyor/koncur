@@ -16,21 +16,28 @@ func TestNewKantraTarget(t *testing.T) {
 	tests := []struct {
 		name       string
 		cfg        *config.KantraConfig
+		setup      func(t *testing.T)
 		wantErr    bool
 		checkPath  bool
 		expectPath string
 	}{
 		{
-			name: "nil config uses PATH",
+			name: "nil config fails when kantra not on PATH",
 			cfg:  nil,
-			// This will fail if kantra is not in PATH, which is expected
+			setup: func(t *testing.T) {
+				// Set PATH to an empty temp dir so kantra won't be found
+				t.Setenv("PATH", t.TempDir())
+			},
 			wantErr:   true,
 			checkPath: false,
 		},
 		{
-			name: "empty config uses PATH",
+			name: "empty config fails when kantra not on PATH",
 			cfg:  &config.KantraConfig{},
-			// This will fail if kantra is not in PATH, which is expected
+			setup: func(t *testing.T) {
+				// Set PATH to an empty temp dir so kantra won't be found
+				t.Setenv("PATH", t.TempDir())
+			},
 			wantErr:   true,
 			checkPath: false,
 		},
@@ -57,6 +64,9 @@ func TestNewKantraTarget(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			if tt.setup != nil {
+				tt.setup(t)
+			}
 			target, err := NewKantraTarget(tt.cfg)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("NewKantraTarget() error = %v, wantErr %v", err, tt.wantErr)

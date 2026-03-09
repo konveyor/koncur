@@ -118,14 +118,9 @@ func NormalizePath(path string) string {
 	}
 
 	// Normalize Tackle Hub container paths
-	// /shared/source/{reponame}/path -> /source/path (strip repo name)
+	// /shared/source/path -> /source/path
 	if strings.Contains(path, "/shared/source/") {
-		parts := strings.SplitN(path, "/shared/source/", 2)
-		if len(parts) == 2 {
-			if slashIdx := strings.Index(parts[1], "/"); slashIdx != -1 {
-				path = parts[0] + "/source" + parts[1][slashIdx:]
-			}
-		}
+		path = strings.ReplaceAll(path, "/shared/source/", "/source/")
 	}
 	if strings.Contains(path, "/opt/input/source") {
 		path = strings.ReplaceAll(path, "/opt/input/source", "/source")
@@ -157,9 +152,10 @@ func normalizeIncident(incident konveyor.Incident, testDir string) (konveyor.Inc
 	}
 	toSlashFilePaths := filepath.ToSlash(getFilePath)
 
+	fileName = toSlashFilePaths
 	if testDir != "" {
 		normalizedTestDir := filepath.ToSlash(testDir)
-		fileName = strings.ReplaceAll(toSlashFilePaths, normalizedTestDir, "")
+		fileName = strings.ReplaceAll(fileName, normalizedTestDir, "")
 	}
 
 	if strings.HasPrefix(fileName, "//") {

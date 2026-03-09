@@ -422,7 +422,8 @@ func extractTestArchive(archivePath string) (string, error) {
 
 		// Sanitize the path to prevent directory traversal
 		target := filepath.Join(tmpDir, header.Name)
-		if !strings.HasPrefix(filepath.Clean(target), filepath.Clean(tmpDir)) {
+		rel, err := filepath.Rel(tmpDir, filepath.Clean(target))
+		if err != nil || strings.HasPrefix(rel, "..") {
 			os.RemoveAll(tmpDir)
 			return "", fmt.Errorf("invalid file path in archive: %s", header.Name)
 		}
@@ -438,7 +439,7 @@ func extractTestArchive(archivePath string) (string, error) {
 				os.RemoveAll(tmpDir)
 				return "", fmt.Errorf("failed to create parent directory for %s: %w", target, err)
 			}
-			outFile, err := os.OpenFile(target, os.O_CREATE|os.O_WRONLY, os.FileMode(header.Mode))
+			outFile, err := os.OpenFile(target, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, os.FileMode(header.Mode))
 			if err != nil {
 				os.RemoveAll(tmpDir)
 				return "", fmt.Errorf("failed to create file %s: %w", target, err)

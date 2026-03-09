@@ -226,13 +226,18 @@ build: ## Build the koncur binary
 
 test-archive: ## Build a portable test archive (koncur-tests.tar.gz)
 	@echo "Building test archive..."
-	@tar czf koncur-tests.tar.gz -C tests \
-		$$(cd tests && find . -name 'test.yaml' -o -name 'expected-output.yaml' | sed 's|^\./||' | sort)
+	@files=$$(cd tests && find . -type f \( -name 'test.yaml' -o -name 'expected-output.yaml' \) | sed 's|^\./||' | sort); \
+	if [ -z "$$files" ]; then \
+		echo "Error: no test files found in tests/"; \
+		exit 1; \
+	fi; \
+	tar czf koncur-tests.tar.gz -C tests $$files
 	@echo "Archive created: koncur-tests.tar.gz"
-	@echo "Contents:"
-	@tar tzf koncur-tests.tar.gz | head -30
-	@echo "..."
-	@echo "Total files: $$(tar tzf koncur-tests.tar.gz | wc -l | tr -d ' ')"
+	@listing=$$(tar tzf koncur-tests.tar.gz); \
+	echo "Contents:"; \
+	echo "$$listing" | head -30; \
+	echo "..."; \
+	echo "Total files: $$(echo "$$listing" | wc -l | tr -d ' ')"
 	@ls -lh koncur-tests.tar.gz | awk '{print "Size: " $$5}'
 
 clean: ## Clean build artifacts and test outputs
