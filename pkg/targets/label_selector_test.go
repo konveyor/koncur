@@ -91,6 +91,38 @@ func TestParseLabelSelector(t *testing.T) {
 				Excluded: []string{},
 			},
 		},
+		{
+			name:     "simple AND operation",
+			selector: "konveyor.io/target=quarkus && konveyor.io/source=java",
+			want: Labels{
+				Included: []string{"konveyor.io/target=quarkus", "konveyor.io/source=java"},
+				Excluded: []string{},
+			},
+		},
+		{
+			name:     "AND with parentheses",
+			selector: "(konveyor.io/target=quarkus && konveyor.io/source=java)",
+			want: Labels{
+				Included: []string{"konveyor.io/target=quarkus", "konveyor.io/source=java"},
+				Excluded: []string{},
+			},
+		},
+		{
+			name:     "AND with exclusion",
+			selector: "konveyor.io/target=quarkus && !konveyor.io/source=java8",
+			want: Labels{
+				Included: []string{"konveyor.io/target=quarkus"},
+				Excluded: []string{"konveyor.io/source=java8"},
+			},
+		},
+		{
+			name:     "complex expression with exclusions",
+			selector: "((konveyor.io/target=quarkus || konveyor.io/target=cloud) && (!konveyor.io/source=java8 || !konveyor.io/source=java11))",
+			want: Labels{
+				Included: []string{"konveyor.io/target=quarkus", "konveyor.io/target=cloud"},
+				Excluded: []string{"konveyor.io/source=java8", "konveyor.io/source=java11"},
+			},
+		},
 	}
 
 	for _, tt := range tests {
