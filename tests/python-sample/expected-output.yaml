@@ -19,6 +19,6 @@
         lineNumber: 6
         variables:
           file: file:///opt/input/source/file_a.py
-      effort: 1
+      effort: 5
   unmatched:
   - python-sample-rule-003
