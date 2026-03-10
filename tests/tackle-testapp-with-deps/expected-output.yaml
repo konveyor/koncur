@@ -3303,6 +3303,475 @@
   - springboot-associated-00014
   - springboot-associated-00015
   - springboot-rhr-00001
+- name: spring-boot
+  description: Ruleset for migration of Spring Boot
+  violations:
+    spring-boot-2.x-to-3.0-core-changes-00040:
+      description: Consider using the Spring Boot Properties Migrator
+      category: optional
+      labels:
+      - konveyor.io/source=spring-boot2
+      - konveyor.io/target=spring-boot3+
+      incidents:
+      - uri: file:///source/configuration-utils/pom.xml
+        message: |
+          Spring Boot 3.0 has renamed or removed many configuration properties. To help identify
+          properties that need to be updated, add the `spring-boot-properties-migrator` module
+          to your project temporarily.
+
+          **Maven:**
+          ```xml
+          <dependency>
+              <groupId>org.springframework.boot</groupId>
+              <artifactId>spring-boot-properties-migrator</artifactId>
+              <scope>runtime</scope>
+          </dependency>
+          ```
+
+          **Gradle:**
+          ```groovy
+          runtime 'org.springframework.boot:spring-boot-properties-migrator'
+          ```
+
+          Once added, the migrator will:
+          - Analyze your `application.properties` or `application.yml` at runtime
+          - Log warnings for deprecated properties
+          - Temporarily migrate properties at runtime where possible
+
+          **Important:** Remove this dependency after completing the migration, as it is intended
+          for development use only and adds startup overhead.
+      - uri: file:///source/pom.xml
+        message: |
+          Spring Boot 3.0 has renamed or removed many configuration properties. To help identify
+          properties that need to be updated, add the `spring-boot-properties-migrator` module
+          to your project temporarily.
+
+          **Maven:**
+          ```xml
+          <dependency>
+              <groupId>org.springframework.boot</groupId>
+              <artifactId>spring-boot-properties-migrator</artifactId>
+              <scope>runtime</scope>
+          </dependency>
+          ```
+
+          **Gradle:**
+          ```groovy
+          runtime 'org.springframework.boot:spring-boot-properties-migrator'
+          ```
+
+          Once added, the migrator will:
+          - Analyze your `application.properties` or `application.yml` at runtime
+          - Log warnings for deprecated properties
+          - Temporarily migrate properties at runtime where possible
+
+          **Important:** Remove this dependency after completing the migration, as it is intended
+          for development use only and adds startup overhead.
+      links:
+      - url: https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.0-Migration-Guide#configuration-properties-migration
+        title: Spring Boot 3.0 Migration Guide - Configuration Properties
+      effort: 1
+    spring-boot-2.x-to-3.0-core-changes-00060:
+      description: Jakarta EE 9+ is required for Spring Boot 3.0
+      category: mandatory
+      labels:
+      - konveyor.io/source=spring-boot2
+      - konveyor.io/target=spring-boot3+
+      incidents:
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/OrderManagementAppInitializer.java
+        message: |
+          Spring Boot 3.0 requires Jakarta EE 9 or later. All `javax.*` namespace dependencies
+          must be migrated to `jakarta.*`.
+
+          **Key Changes:**
+          - `javax.servlet` → `jakarta.servlet`
+          - `javax.persistence` → `jakarta.persistence`
+          - `javax.validation` → `jakarta.validation`
+          - `javax.annotation` → `jakarta.annotation`
+          - `javax.transaction` → `jakarta.transaction`
+
+          **Maven Dependency Updates:**
+          ```xml
+          <!-- Before -->
+          <dependency>
+              <groupId>javax.servlet</groupId>
+              <artifactId>javax.servlet-api</artifactId>
+          </dependency>
+
+          <!-- After -->
+          <dependency>
+              <groupId>jakarta.servlet</groupId>
+              <artifactId>jakarta.servlet-api</artifactId>
+              <version>6.0.0</version>
+          </dependency>
+          ```
+
+          **Import Updates:**
+          ```java
+          // Before
+          import javax.servlet.http.HttpServletRequest;
+
+          // After
+          import jakarta.servlet.http.HttpServletRequest;
+          ```
+
+          **Tools to help migration:**
+          - OpenRewrite recipes for Jakarta EE migration
+          - Eclipse Transformer for binary migration
+          - IntelliJ IDEA migration assistance
+        codeSnip: "\n 1  package io.konveyor.demo.ordermanagement;\n 2  \n 3  import
+          javax.servlet.ServletContext;\n 4  import javax.servlet.ServletException;\n
+          5  import javax.servlet.ServletRegistration;\n 6  \n 7  import org.springframework.web.WebApplicationInitializer;\n
+          8  import org.springframework.web.context.ContextLoaderListener;\n 9  import
+          org.springframework.web.context.support.AnnotationConfigWebApplicationContext;\n10
+          \ import org.springframework.web.servlet.DispatcherServlet;\n11  \n12  public
+          class OrderManagementAppInitializer implements WebApplicationInitializer
+          \ {\n13  "
+        lineNumber: 3
+        variables:
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/OrderManagementAppInitializer.java
+          kind: Module
+          name: javax.servlet.ServletContext
+          package: io.konveyor.demo.ordermanagement
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/OrderManagementAppInitializer.java
+        message: |
+          Spring Boot 3.0 requires Jakarta EE 9 or later. All `javax.*` namespace dependencies
+          must be migrated to `jakarta.*`.
+
+          **Key Changes:**
+          - `javax.servlet` → `jakarta.servlet`
+          - `javax.persistence` → `jakarta.persistence`
+          - `javax.validation` → `jakarta.validation`
+          - `javax.annotation` → `jakarta.annotation`
+          - `javax.transaction` → `jakarta.transaction`
+
+          **Maven Dependency Updates:**
+          ```xml
+          <!-- Before -->
+          <dependency>
+              <groupId>javax.servlet</groupId>
+              <artifactId>javax.servlet-api</artifactId>
+          </dependency>
+
+          <!-- After -->
+          <dependency>
+              <groupId>jakarta.servlet</groupId>
+              <artifactId>jakarta.servlet-api</artifactId>
+              <version>6.0.0</version>
+          </dependency>
+          ```
+
+          **Import Updates:**
+          ```java
+          // Before
+          import javax.servlet.http.HttpServletRequest;
+
+          // After
+          import jakarta.servlet.http.HttpServletRequest;
+          ```
+
+          **Tools to help migration:**
+          - OpenRewrite recipes for Jakarta EE migration
+          - Eclipse Transformer for binary migration
+          - IntelliJ IDEA migration assistance
+        codeSnip: "\n 1  package io.konveyor.demo.ordermanagement;\n 2  \n 3  import
+          javax.servlet.ServletContext;\n 4  import javax.servlet.ServletException;\n
+          5  import javax.servlet.ServletRegistration;\n 6  \n 7  import org.springframework.web.WebApplicationInitializer;\n
+          8  import org.springframework.web.context.ContextLoaderListener;\n 9  import
+          org.springframework.web.context.support.AnnotationConfigWebApplicationContext;\n10
+          \ import org.springframework.web.servlet.DispatcherServlet;\n11  \n12  public
+          class OrderManagementAppInitializer implements WebApplicationInitializer
+          \ {\n13  \n14  @Override"
+        lineNumber: 4
+        variables:
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/OrderManagementAppInitializer.java
+          kind: Module
+          name: javax.servlet.ServletException
+          package: io.konveyor.demo.ordermanagement
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/OrderManagementAppInitializer.java
+        message: |
+          Spring Boot 3.0 requires Jakarta EE 9 or later. All `javax.*` namespace dependencies
+          must be migrated to `jakarta.*`.
+
+          **Key Changes:**
+          - `javax.servlet` → `jakarta.servlet`
+          - `javax.persistence` → `jakarta.persistence`
+          - `javax.validation` → `jakarta.validation`
+          - `javax.annotation` → `jakarta.annotation`
+          - `javax.transaction` → `jakarta.transaction`
+
+          **Maven Dependency Updates:**
+          ```xml
+          <!-- Before -->
+          <dependency>
+              <groupId>javax.servlet</groupId>
+              <artifactId>javax.servlet-api</artifactId>
+          </dependency>
+
+          <!-- After -->
+          <dependency>
+              <groupId>jakarta.servlet</groupId>
+              <artifactId>jakarta.servlet-api</artifactId>
+              <version>6.0.0</version>
+          </dependency>
+          ```
+
+          **Import Updates:**
+          ```java
+          // Before
+          import javax.servlet.http.HttpServletRequest;
+
+          // After
+          import jakarta.servlet.http.HttpServletRequest;
+          ```
+
+          **Tools to help migration:**
+          - OpenRewrite recipes for Jakarta EE migration
+          - Eclipse Transformer for binary migration
+          - IntelliJ IDEA migration assistance
+        codeSnip: "\n 1  package io.konveyor.demo.ordermanagement;\n 2  \n 3  import
+          javax.servlet.ServletContext;\n 4  import javax.servlet.ServletException;\n
+          5  import javax.servlet.ServletRegistration;\n 6  \n 7  import org.springframework.web.WebApplicationInitializer;\n
+          8  import org.springframework.web.context.ContextLoaderListener;\n 9  import
+          org.springframework.web.context.support.AnnotationConfigWebApplicationContext;\n10
+          \ import org.springframework.web.servlet.DispatcherServlet;\n11  \n12  public
+          class OrderManagementAppInitializer implements WebApplicationInitializer
+          \ {\n13  \n14  @Override\n15  public void onStartup(ServletContext container)
+          throws ServletException {"
+        lineNumber: 5
+        variables:
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/OrderManagementAppInitializer.java
+          kind: Module
+          name: javax.servlet.ServletRegistration
+          package: io.konveyor.demo.ordermanagement
+      links:
+      - url: https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.0-Migration-Guide#jakarta-ee
+        title: Spring Boot 3.0 Migration Guide - Jakarta EE
+      effort: 3
+    spring-boot-2.x-to-3.0-micrometer-00030:
+      description: Micrometer has been upgraded to 1.10+ in Spring Boot 3.0
+      category: mandatory
+      labels:
+      - konveyor.io/source=spring-boot2
+      - konveyor.io/target=spring-boot3+
+      incidents:
+      - uri: file:///source/pom.xml
+        message: "Spring Boot 3.0 uses Micrometer 1.10+ which introduces the new Observation
+          API.\nThis is a significant change that affects how metrics and tracing
+          are handled.\n\n**Key Changes:**\n- New Observation API for unified metrics
+          and tracing\n- Observation context replaces individual tag providers\n-
+          Tracing is now integrated via Micrometer Tracing\n\n**New Concepts:**\n\n1.
+          **Observations** - Unified way to record metrics and traces:\n```java\n@Component\npublic
+          class MyService {\n    private final ObservationRegistry observationRegistry;\n
+          \   \n    public void doWork() {\n        Observation.createNotStarted(\"my.operation\",
+          observationRegistry)\n            .observe(() -> {\n                // Your
+          business logic\n            });\n    }\n}\n```\n\n2. **Observation Conventions**
+          - Customize key values:\n```java\npublic class CustomConvention implements
+          Observation.ObservationConvention<CustomContext> {\n    @Override\n    public
+          KeyValues getLowCardinalityKeyValues(CustomContext context) {\n        return
+          KeyValues.of(\"key\", \"value\");\n    }\n}\n```\n\n**Dependency Updates:**\n```xml\n<dependency>\n
+          \   <groupId>io.micrometer</groupId>\n    <artifactId>micrometer-observation</artifactId>\n</dependency>\n```\n"
+        codeSnip: |2-
+
+          79  <artifactId>spring-webmvc</artifactId>
+          80  <version>${spring-framework.version}</version>
+          81  </dependency>
+          82  <dependency>
+          83  <groupId>org.springframework</groupId>
+          84  <artifactId>spring-web</artifactId>
+          85  <version>${spring-framework.version}</version>
+          86  </dependency>
+          87  <dependency>
+          88  <groupId>org.springframework.boot</groupId>
+          89  <artifactId>spring-boot-starter-actuator</artifactId>
+          90  <version>2.5.0</version>
+          91  </dependency>
+          92  <dependency>
+          93  <groupId>org.apache.tomcat</groupId>
+          94  <artifactId>tomcat-jdbc</artifactId>
+          95  <version>${tomcat.version}</version>
+          96  <scope>runtime</scope>
+          97  </dependency>
+          98  <dependency>
+          99  <groupId>org.hibernate</groupId>
+        lineNumber: 88
+        variables:
+          name: io.micrometer.micrometer-core
+          version: 1.7.0
+      links:
+      - url: https://micrometer.io/docs/observation
+        title: Micrometer Observation Documentation
+      - url: https://docs.spring.io/spring-boot/docs/3.0.x/reference/html/actuator.html#actuator.observability
+        title: Spring Boot Observability
+      effort: 3
+  unmatched:
+  - spring-boot-2.x-to-3.0-actuator-00010
+  - spring-boot-2.x-to-3.0-actuator-00020
+  - spring-boot-2.x-to-3.0-actuator-00030
+  - spring-boot-2.x-to-3.0-batch-00000
+  - spring-boot-2.x-to-3.0-batch-00010
+  - spring-boot-2.x-to-3.0-batch-00020
+  - spring-boot-2.x-to-3.0-core-changes-00001
+  - spring-boot-2.x-to-3.0-core-changes-00010
+  - spring-boot-2.x-to-3.0-core-changes-00020
+  - spring-boot-2.x-to-3.0-core-changes-00030
+  - spring-boot-2.x-to-3.0-core-changes-00050
+  - spring-boot-2.x-to-3.0-datasource-00000
+  - spring-boot-2.x-to-3.0-datasource-00010
+  - spring-boot-2.x-to-3.0-datasource-00020
+  - spring-boot-2.x-to-3.0-datasource-00030
+  - spring-boot-2.x-to-3.0-datasource-00040
+  - spring-boot-2.x-to-3.0-datasource-00050
+  - spring-boot-2.x-to-3.0-datasource-00060
+  - spring-boot-2.x-to-3.0-datasource-00070
+  - spring-boot-2.x-to-3.0-dependencies-00001
+  - spring-boot-2.x-to-3.0-dependencies-00002
+  - spring-boot-2.x-to-3.0-dependencies-00003
+  - spring-boot-2.x-to-3.0-dependencies-00004
+  - spring-boot-2.x-to-3.0-dependencies-00005
+  - spring-boot-2.x-to-3.0-dependencies-00006
+  - spring-boot-2.x-to-3.0-dependencies-00007
+  - spring-boot-2.x-to-3.0-dependencies-00008
+  - spring-boot-2.x-to-3.0-dependencies-00009
+  - spring-boot-2.x-to-3.0-dependencies-00010
+  - spring-boot-2.x-to-3.0-dependencies-00011
+  - spring-boot-2.x-to-3.0-dependencies-00012
+  - spring-boot-2.x-to-3.0-dependencies-00013
+  - spring-boot-2.x-to-3.0-dependencies-00014
+  - spring-boot-2.x-to-3.0-dependencies-00015
+  - spring-boot-2.x-to-3.0-dependencies-00016
+  - spring-boot-2.x-to-3.0-dependencies-00020
+  - spring-boot-2.x-to-3.0-dependencies-00021
+  - spring-boot-2.x-to-3.0-micrometer-00010
+  - spring-boot-2.x-to-3.0-micrometer-00020
+  - spring-boot-2.x-to-3.0-micrometer-00040
+  - spring-boot-2.x-to-3.0-removals-00010
+  - spring-boot-2.x-to-3.0-removals-00020
+  - spring-boot-2.x-to-3.0-removals-00030
+  - spring-boot-2.x-to-3.0-removals-00040
+  - spring-boot-2.x-to-3.0-removals-00050
+  - spring-boot-2.x-to-3.0-removals-00060
+  - spring-boot-2.x-to-3.0-removals-00070
+  - spring-boot-2.x-to-3.0-removals-00080
+  - spring-boot-2.x-to-3.0-removals-00090
+  - spring-boot-2.x-to-3.0-removals-00100
+  - spring-boot-2.x-to-3.0-removals-00110
+  - spring-boot-2.x-to-3.0-removals-00120
+  - spring-boot-2.x-to-3.0-removals-00130
+  - spring-boot-2.x-to-3.0-removals-00140
+  - spring-boot-2.x-to-3.0-removals-00150
+  - spring-boot-2.x-to-3.0-removals-00160
+  - spring-boot-2.x-to-3.0-removals-00170
+  - spring-boot-2.x-to-3.0-removals-00180
+  - spring-boot-2.x-to-3.0-removals-00190
+  - spring-boot-2.x-to-3.0-removals-00200
+  - spring-boot-2.x-to-3.0-removals-00210
+  - spring-boot-2.x-to-3.0-removals-00220
+  - spring-boot-2.x-to-3.0-removals-00230
+  - spring-boot-2.x-to-3.0-removals-00250
+  - spring-boot-2.x-to-3.0-removals-00260
+  - spring-boot-2.x-to-3.0-removals-00270
+  - spring-boot-2.x-to-3.0-removals-00290
+  - spring-boot-2.x-to-3.0-removals-00300
+  - spring-boot-2.x-to-3.0-removals-00310
+  - spring-boot-2.x-to-3.0-removals-00320
+  - spring-boot-2.x-to-3.0-removals-00330
+  - spring-boot-2.x-to-3.0-removals-00340
+  - spring-boot-2.x-to-3.0-removals-00350
+  - spring-boot-2.x-to-3.0-removals-00360
+  - spring-boot-2.x-to-3.0-removals-00370
+  - spring-boot-2.x-to-3.0-removals-00380
+  - spring-boot-2.x-to-3.0-removals-00390
+  - spring-boot-2.x-to-3.0-removals-00400
+  - spring-boot-2.x-to-3.0-removals-00410
+  - spring-boot-2.x-to-3.0-removals-00420
+  - spring-boot-2.x-to-3.0-removals-00430
+  - spring-boot-2.x-to-3.0-removals-00440
+  - spring-boot-2.x-to-3.0-removals-00450
+  - spring-boot-2.x-to-3.0-removals-00460
+  - spring-boot-2.x-to-3.0-removals-00470
+  - spring-boot-2.x-to-3.0-removals-00480
+  - spring-boot-2.x-to-3.0-removals-00490
+  - spring-boot-2.x-to-3.0-removals-00500
+  - spring-boot-2.x-to-3.0-removals-00510
+  - spring-boot-2.x-to-3.0-removals-00520
+  - spring-boot-2.x-to-3.0-removals-00530
+  - spring-boot-2.x-to-3.0-removals-00540
+  - spring-boot-2.x-to-3.0-removals-00550
+  - spring-boot-2.x-to-3.0-removals-00560
+  - spring-boot-2.x-to-3.0-removals-00570
+  - spring-boot-2.x-to-3.0-removals-00580
+  - spring-boot-2.x-to-3.0-removals-00590
+  - spring-boot-2.x-to-3.0-removals-00600
+  - spring-boot-2.x-to-3.0-removals-00610
+  - spring-boot-2.x-to-3.0-removals-00620
+  - spring-boot-2.x-to-3.0-removals-00630
+  - spring-boot-2.x-to-3.0-removals-00640
+  - spring-boot-2.x-to-3.0-removals-00650
+  - spring-boot-2.x-to-3.0-removals-00660
+  - spring-boot-2.x-to-3.0-removals-00670
+  - spring-boot-2.x-to-3.0-removals-00680
+  - spring-boot-2.x-to-3.0-removals-00690
+  - spring-boot-2.x-to-3.0-removals-00700
+  - spring-boot-2.x-to-3.0-removals-00710
+  - spring-boot-2.x-to-3.0-removals-00720
+  - spring-boot-2.x-to-3.0-removals-00730
+  - spring-boot-2.x-to-3.0-removals-00740
+  - spring-boot-2.x-to-3.0-removals-00750
+  - spring-boot-2.x-to-3.0-removals-00760
+  - spring-boot-2.x-to-3.0-removals-00770
+  - spring-boot-2.x-to-3.0-removals-00780
+  - spring-boot-2.x-to-3.0-removals-00790
+  - spring-boot-2.x-to-3.0-removals-00800
+  - spring-boot-2.x-to-3.0-removals-00810
+  - spring-boot-2.x-to-3.0-removals-00820
+  - spring-boot-2.x-to-3.0-removals-00830
+  - spring-boot-2.x-to-3.0-removals-00840
+  - spring-boot-2.x-to-3.0-removals-00850
+  - spring-boot-2.x-to-3.0-removals-00860
+  - spring-boot-2.x-to-3.0-removals-00870
+  - spring-boot-2.x-to-3.0-removals-00880
+  - spring-boot-2.x-to-3.0-removals-00890
+  - spring-boot-2.x-to-3.0-removals-00900
+  - spring-boot-2.x-to-3.0-removals-00910
+  - spring-boot-2.x-to-3.0-removals-00920
+  - spring-boot-2.x-to-3.0-removals-00930
+  - spring-boot-2.x-to-3.0-removals-00940
+  - spring-boot-2.x-to-3.0-removals-00950
+  - spring-boot-2.x-to-3.0-removals-00960
+  - spring-boot-2.x-to-3.0-removals-00970
+  - spring-boot-2.x-to-3.0-removals-00980
+  - spring-boot-2.x-to-3.0-removals-00990
+  - spring-boot-2.x-to-3.0-removals-01000
+  - spring-boot-2.x-to-3.0-removals-01010
+  - spring-boot-2.x-to-3.0-removals-01020
+  - spring-boot-2.x-to-3.0-removals-01030
+  - spring-boot-2.x-to-3.0-removals-01040
+  - spring-boot-2.x-to-3.0-removals-01050
+  - spring-boot-2.x-to-3.0-removals-01060
+  - spring-boot-2.x-to-3.0-removals-01070
+  - spring-boot-2.x-to-3.0-removals-01080
+  - spring-boot-2.x-to-3.0-removals-01090
+  - spring-boot-2.x-to-3.0-removals-01100
+  - spring-boot-2.x-to-3.0-removals-01110
+  - spring-boot-2.x-to-3.0-removals-01120
+  - spring-boot-2.x-to-3.0-removals-01140
+  - spring-boot-2.x-to-3.0-removals-01150
+  - spring-boot-2.x-to-3.0-removals-01160
+  - spring-boot-2.x-to-3.0-removals-01170
+  - spring-boot-2.x-to-3.0-removals-01180
+  - spring-boot-2.x-to-3.0-removals-01190
+  - spring-boot-2.x-to-3.0-removals-01200
+  - spring-boot-2.x-to-3.0-security-00000
+  - spring-boot-2.x-to-3.0-security-00010
+  - spring-boot-2.x-to-3.0-session-00000
+  - spring-boot-2.x-to-3.0-session-00010
+  - spring-boot-2.x-to-3.0-session-00020
+  - spring-boot-2.x-to-3.0-webapp-changes-00000
+  - spring-boot-2.x-to-3.0-webapp-changes-00010
+  - spring-boot-2.x-to-3.0-webapp-changes-00020
+  - spring-boot-2.x-to-3.0-webapp-changes-00030
+  - spring-boot-2.x-to-3.0-webapp-changes-00040
 - name: spring-framework
   description: Ruleset for migration of Spring Framework versions
   violations:
@@ -4636,6 +5105,7 @@
   - technology-usage-mvc-03900
   - technology-usage-mvc-04000
   - technology-usage-mvc-04100
+  - technology-usage-mvc-04200
   - technology-usage-mvc-04300
   - technology-usage-mvc-04400
   - technology-usage-mvc-04500
@@ -4654,7 +5124,6 @@
   - technology-usage-mvc-05800
   - technology-usage-mvc-05900
   - technology-usage-mvc-06000
-  - technology-usage-mvc-0x4200
   - technology-usage-security-01000
   - technology-usage-security-01100
   - technology-usage-security-01200
