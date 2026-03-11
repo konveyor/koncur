@@ -268,23 +268,23 @@ func TestSyntheticRulesetCreation(t *testing.T) {
 func TestTagSourceMapping(t *testing.T) {
 	// Test the expected mapping of tag sources to rulesets
 	tests := []struct {
-		name           string
-		tagSource      string
+		name            string
+		tagSource       string
 		expectedRuleset string
 	}{
 		{
-			name:           "language-discovery maps to discovery-rules",
-			tagSource:      "language-discovery",
+			name:            "language-discovery maps to discovery-rules",
+			tagSource:       "language-discovery",
 			expectedRuleset: "discovery-rules",
 		},
 		{
-			name:           "tech-discovery maps to technology-usage",
-			tagSource:      "tech-discovery",
+			name:            "tech-discovery maps to technology-usage",
+			tagSource:       "tech-discovery",
 			expectedRuleset: "technology-usage",
 		},
 		{
-			name:           "other sources are not mapped",
-			tagSource:      "manual",
+			name:            "other sources are not mapped",
+			tagSource:       "manual",
 			expectedRuleset: "",
 		},
 	}
@@ -709,7 +709,7 @@ func TestTackleHubTarget_GitURLIntegration(t *testing.T) {
 				if len(analysis.RulesGitComponents) != 2 {
 					t.Fatalf("Expected 2 RulesGitComponents, got %d", len(analysis.RulesGitComponents))
 				}
-				
+
 				// First rule
 				if analysis.RulesGitComponents[0] == nil {
 					t.Error("Expected first rule to have Git components")
@@ -724,7 +724,7 @@ func TestTackleHubTarget_GitURLIntegration(t *testing.T) {
 						t.Errorf("First rule path mismatch: %s", analysis.RulesGitComponents[0].Path)
 					}
 				}
-				
+
 				// Second rule
 				if analysis.RulesGitComponents[1] == nil {
 					t.Error("Expected second rule to have Git components")
@@ -742,12 +742,12 @@ func TestTackleHubTarget_GitURLIntegration(t *testing.T) {
 			},
 		},
 	}
-	
+
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			// Parse Git URLs
 			tt.analysis.ParseGitURLs()
-			
+
 			// Run validation
 			tt.validate(t, &tt.analysis)
 		})

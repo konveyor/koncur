@@ -1,8 +1,11 @@
 package cli
 
 import (
+	"archive/tar"
+	"compress/gzip"
 	"context"
 	"fmt"
+	"io"
 	"os"
 	"path/filepath"
 	"strings"
@@ -24,26 +27,46 @@ var (
 	outputFormat           string
 	outputFile             string
 	skipMavenSettingsTests bool
+	testArchive            string
 )
 
 // NewRunCmd creates the run command
 func NewRunCmd() *cobra.Command {
 	runCmd := &cobra.Command{
-		Use:   "run <test-file-or-directory>",
+		Use:   "run [test-file-or-directory]",
 		Short: "Run test definition(s)",
 		Long: `Execute one or more tests and validate their output against expected results.
 
 You can provide either:
   - A specific test file (test.yaml)
-  - A directory containing test files (will search recursively)`,
-		Args: cobra.ExactArgs(1),
+  - A directory containing test files (will search recursively)
+  - A test archive (--test-archive path/to/koncur-tests.tar.gz)
+
+When using --test-archive, no positional argument is needed. The archive
+will be extracted to a temporary directory and all tests will be run from it.`,
+		Args: cobra.MaximumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			path := args[0]
 			log := util.GetLogger()
 			if val, ok := os.LookupEnv("SKIP_MAVEN"); ok {
 				if val != "false" {
 					skipMavenSettingsTests = true
 				}
+			}
+
+			var path string
+			if testArchive != "" {
+				// Extract test archive to a temp directory
+				tmpDir, err := extractTestArchive(testArchive)
+				if err != nil {
+					return fmt.Errorf("failed to extract test archive: %w", err)
+				}
+				defer os.RemoveAll(tmpDir)
+				path = tmpDir
+				log.Info("Using test archive", "archive", testArchive, "extracted", tmpDir)
+			} else if len(args) > 0 {
+				path = args[0]
+			} else {
+				return fmt.Errorf("either provide a test path or use --test-archive")
 			}
 
 			// Check if path is a file or directory
@@ -257,6 +280,7 @@ You can provide either:
 	runCmd.Flags().StringVarP(&runFilter, "filter", "f", "", "Filter tests by name pattern (only applies when running a directory)")
 	runCmd.Flags().StringVarP(&outputFormat, "output-format", "o", "console", "Output format: console, json, yaml, junit")
 	runCmd.Flags().StringVar(&outputFile, "output-file", "", "File path to write test results (only for json, yaml, junit formats)")
+	runCmd.Flags().StringVar(&testArchive, "test-archive", "", "Path to a test archive (.tar.gz) to extract and run")
 
 	return runCmd
 }
@@ -363,4 +387,71 @@ func runSingleTest(test *config.TestDefinition, target targets.Target, targetCon
 	}
 
 	return testResult, nil
+}
+
+// extractTestArchive extracts a .tar.gz test archive to a temporary directory
+// and returns the path to the extracted directory.
+func extractTestArchive(archivePath string) (string, error) {
+	f, err := os.Open(archivePath)
+	if err != nil {
+		return "", fmt.Errorf("failed to open archive %s: %w", archivePath, err)
+	}
+	defer f.Close()
+
+	gzr, err := gzip.NewReader(f)
+	if err != nil {
+		return "", fmt.Errorf("failed to create gzip reader: %w", err)
+	}
+	defer gzr.Close()
+
+	tmpDir, err := os.MkdirTemp("", "koncur-tests-*")
+	if err != nil {
+		return "", fmt.Errorf("failed to create temp directory: %w", err)
+	}
+
+	tr := tar.NewReader(gzr)
+	for {
+		header, err := tr.Next()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			os.RemoveAll(tmpDir)
+			return "", fmt.Errorf("failed to read tar entry: %w", err)
+		}
+
+		// Sanitize the path to prevent directory traversal
+		target := filepath.Join(tmpDir, header.Name)
+		rel, err := filepath.Rel(tmpDir, filepath.Clean(target))
+		if err != nil || strings.HasPrefix(rel, "..") {
+			os.RemoveAll(tmpDir)
+			return "", fmt.Errorf("invalid file path in archive: %s", header.Name)
+		}
+
+		switch header.Typeflag {
+		case tar.TypeDir:
+			if err := os.MkdirAll(target, 0755); err != nil {
+				os.RemoveAll(tmpDir)
+				return "", fmt.Errorf("failed to create directory %s: %w", target, err)
+			}
+		case tar.TypeReg:
+			if err := os.MkdirAll(filepath.Dir(target), 0755); err != nil {
+				os.RemoveAll(tmpDir)
+				return "", fmt.Errorf("failed to create parent directory for %s: %w", target, err)
+			}
+			outFile, err := os.OpenFile(target, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, os.FileMode(header.Mode))
+			if err != nil {
+				os.RemoveAll(tmpDir)
+				return "", fmt.Errorf("failed to create file %s: %w", target, err)
+			}
+			if _, err := io.Copy(outFile, tr); err != nil {
+				outFile.Close()
+				os.RemoveAll(tmpDir)
+				return "", fmt.Errorf("failed to write file %s: %w", target, err)
+			}
+			outFile.Close()
+		}
+	}
+
+	return tmpDir, nil
 }

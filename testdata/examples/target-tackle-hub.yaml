@@ -8,3 +8,17 @@ tackleHub:
   # token: your-api-token-here
   # Maven settings (optional, only for Maven projects requiring custom settings)
   # mavenSettings: /path/to/settings.xml
+
+  # Optional: override container images on the Tackle Hub cluster.
+  # When set, koncur patches the Tackle CR before running tests.
+  # images:
+  #   hub: quay.io/konveyor/tackle2-hub:latest
+  #   analyzer: quay.io/konveyor/tackle2-addon-analyzer:latest
+  #   javaProvider: quay.io/konveyor/java-external-provider:latest
+  #   genericProvider: quay.io/konveyor/generic-external-provider:latest
+  #   csharpProvider: quay.io/konveyor/c-sharp-provider:latest
+  #   runner: quay.io/konveyor/kantra:latest
+  #   discoveryAddon: quay.io/konveyor/tackle2-addon-discovery:latest
+  #   platformAddon: quay.io/konveyor/tackle2-addon-platform:latest
+  # namespace: konveyor-tackle  # default
+  # crName: tackle              # default

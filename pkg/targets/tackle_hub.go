@@ -99,6 +99,13 @@ func NewTackleHubTarget(cfg *config.TackleHubConfig) (*TackleHubTarget, error) {
 		return nil, fmt.Errorf("tackle hub configuration is required")
 	}
 
+	// Apply image overrides to the Tackle CR if configured
+	if cfg.HasImageOverrides() {
+		if err := applyImageOverrides(context.Background(), cfg); err != nil {
+			return nil, fmt.Errorf("failed to apply image overrides: %w", err)
+		}
+	}
+
 	client := binding.New(cfg.URL)
 
 	// Set authentication if provided (optional for instances with auth disabled)

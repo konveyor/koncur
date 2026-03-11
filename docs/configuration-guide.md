@@ -76,6 +76,12 @@ kantra:
 | `type` | string | Yes | Must be `"kantra"` |
 | `kantra.binaryPath` | string | No | Path to kantra binary. If not specified, uses `kantra` from PATH |
 | `kantra.mavenSettings` | string | No | Path to Maven settings.xml for dependency resolution |
+| `kantra.runnerImage` | string | No | Override the kantra runner container image (sets `RUNNER_IMG`) |
+| `kantra.javaProviderImage` | string | No | Override the Java provider image (sets `JAVA_PROVIDER_IMG`) |
+| `kantra.genericProviderImage` | string | No | Override the generic provider image for Python/Node.js/Go (sets `GENERIC_PROVIDER_IMG`) |
+| `kantra.csharpProviderImage` | string | No | Override the C# provider image (sets `CSHARP_PROVIDER_IMG`) |
+
+See [Local Testing with Custom Images](local-testing-custom-images.md) for detailed workflows using image overrides.
 
 ### Tackle Hub Target
 
@@ -136,6 +142,18 @@ tackleHub:
 | `tackleHub.username` | string | No | Username for basic auth (alternative to token) |
 | `tackleHub.password` | string | No | Password for basic auth (requires username) |
 | `tackleHub.mavenSettings` | string | No | Path to Maven settings.xml |
+| `tackleHub.images.hub` | string | No | Override Hub image (`hub_image_fqin`) |
+| `tackleHub.images.analyzer` | string | No | Override analyzer addon image (`analyzer_fqin`) |
+| `tackleHub.images.javaProvider` | string | No | Override Java provider image (`provider_java_image_fqin`) |
+| `tackleHub.images.genericProvider` | string | No | Override generic provider image (`provider_python_image_fqin` + `provider_nodejs_image_fqin`) |
+| `tackleHub.images.csharpProvider` | string | No | Override C# provider image (`provider_c_sharp_image_fqin`) |
+| `tackleHub.images.runner` | string | No | Override kantra runner image (`kantra_fqin`) |
+| `tackleHub.images.discoveryAddon` | string | No | Override discovery addon image (`language_discovery_fqin`) |
+| `tackleHub.images.platformAddon` | string | No | Override platform addon image (`platform_fqin`) |
+| `tackleHub.namespace` | string | No | Kubernetes namespace for the Tackle CR (default: `konveyor-tackle`) |
+| `tackleHub.crName` | string | No | Name of the Tackle CR (default: `tackle`) |
+
+When image overrides are specified, koncur patches the Tackle Custom Resource on the cluster via `kubectl` and waits for the Hub to become ready before running tests. See [Local Testing with Custom Images](local-testing-custom-images.md) for detailed workflows.
 
 ### Tackle UI Target
 
@@ -339,6 +357,17 @@ koncur generate my-app/test.yaml --target-config .koncur/config/target-tackle-hu
 
 # 5. Run the test
 koncur run my-app/test.yaml --target-config .koncur/config/target-tackle-hub.yaml
+```
+
+Alternatively, run the built-in test suite from a portable archive without creating custom test definitions:
+
+```bash
+# Build the archive (from the koncur repo)
+make test-archive
+
+# Run the built-in tests against your Hub
+koncur run --test-archive koncur-tests.tar.gz \
+  -t tackle-hub --target-config .koncur/config/target-tackle-hub.yaml
 ```
 
 ### Setting up Kantra Testing

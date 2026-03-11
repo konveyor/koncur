@@ -16,21 +16,28 @@ func TestNewKantraTarget(t *testing.T) {
 	tests := []struct {
 		name       string
 		cfg        *config.KantraConfig
+		setup      func(t *testing.T)
 		wantErr    bool
 		checkPath  bool
 		expectPath string
 	}{
 		{
-			name: "nil config uses PATH",
+			name: "nil config fails when kantra not on PATH",
 			cfg:  nil,
-			// This will fail if kantra is not in PATH, which is expected
+			setup: func(t *testing.T) {
+				// Set PATH to an empty temp dir so kantra won't be found
+				t.Setenv("PATH", t.TempDir())
+			},
 			wantErr:   true,
 			checkPath: false,
 		},
 		{
-			name: "empty config uses PATH",
+			name: "empty config fails when kantra not on PATH",
 			cfg:  &config.KantraConfig{},
-			// This will fail if kantra is not in PATH, which is expected
+			setup: func(t *testing.T) {
+				// Set PATH to an empty temp dir so kantra won't be found
+				t.Setenv("PATH", t.TempDir())
+			},
 			wantErr:   true,
 			checkPath: false,
 		},
@@ -57,6 +64,9 @@ func TestNewKantraTarget(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			if tt.setup != nil {
+				tt.setup(t)
+			}
 			target, err := NewKantraTarget(tt.cfg)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("NewKantraTarget() error = %v, wantErr %v", err, tt.wantErr)
@@ -84,6 +94,73 @@ func TestKantraTarget_Name(t *testing.T) {
 	target := &KantraTarget{}
 	if target.Name() != "kantra" {
 		t.Errorf("Expected name 'kantra', got '%s'", target.Name())
+	}
+}
+
+func TestNewKantraTarget_ImageEnv(t *testing.T) {
+	tests := []struct {
+		name      string
+		cfg       *config.KantraConfig
+		expectEnv []string
+	}{
+		{
+			name: "no image overrides",
+			cfg: &config.KantraConfig{
+				BinaryPath: "/usr/local/bin/kantra",
+			},
+			expectEnv: nil,
+		},
+		{
+			name: "runner image override",
+			cfg: &config.KantraConfig{
+				BinaryPath:  "/usr/local/bin/kantra",
+				RunnerImage: "my-kantra:dev",
+			},
+			expectEnv: []string{"RUNNER_IMG=my-kantra:dev"},
+		},
+		{
+			name: "all image overrides",
+			cfg: &config.KantraConfig{
+				BinaryPath:           "/usr/local/bin/kantra",
+				RunnerImage:          "my-kantra:dev",
+				JavaProviderImage:    "my-java-provider:dev",
+				GenericProviderImage: "my-generic-provider:dev",
+				CsharpProviderImage:  "my-csharp-provider:dev",
+			},
+			expectEnv: []string{
+				"RUNNER_IMG=my-kantra:dev",
+				"JAVA_PROVIDER_IMG=my-java-provider:dev",
+				"GENERIC_PROVIDER_IMG=my-generic-provider:dev",
+				"CSHARP_PROVIDER_IMG=my-csharp-provider:dev",
+			},
+		},
+		{
+			name: "partial image overrides",
+			cfg: &config.KantraConfig{
+				BinaryPath:        "/usr/local/bin/kantra",
+				JavaProviderImage: "my-java-provider:v1.2.3",
+			},
+			expectEnv: []string{"JAVA_PROVIDER_IMG=my-java-provider:v1.2.3"},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			target, err := NewKantraTarget(tt.cfg)
+			if err != nil {
+				t.Fatalf("NewKantraTarget() unexpected error: %v", err)
+			}
+
+			if len(target.imageEnv) != len(tt.expectEnv) {
+				t.Fatalf("Expected %d env vars, got %d: %v", len(tt.expectEnv), len(target.imageEnv), target.imageEnv)
+			}
+
+			for i, expected := range tt.expectEnv {
+				if target.imageEnv[i] != expected {
+					t.Errorf("Expected env[%d] = %q, got %q", i, expected, target.imageEnv[i])
+				}
+			}
+		})
 	}
 }
 

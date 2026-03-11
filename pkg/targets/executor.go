@@ -14,6 +14,12 @@ import (
 
 // ExecuteCommand runs a command with timeout and captures output
 func ExecuteCommand(ctx context.Context, binary string, args []string, workDir string, timeout time.Duration) (*ExecutionResult, error) {
+	return ExecuteCommandWithEnv(ctx, binary, args, workDir, timeout, nil)
+}
+
+// ExecuteCommandWithEnv runs a command with timeout, captures output,
+// and sets additional environment variables on the subprocess.
+func ExecuteCommandWithEnv(ctx context.Context, binary string, args []string, workDir string, timeout time.Duration, env []string) (*ExecutionResult, error) {
 	log := util.GetLogger()
 	log.Info("Executing command", "binary", binary, "args", args, "workDir", workDir)
 
@@ -24,6 +30,12 @@ func ExecuteCommand(ctx context.Context, binary string, args []string, workDir s
 	// Create command
 	cmd := exec.CommandContext(execCtx, binary, args...)
 	cmd.Dir = workDir
+
+	// Set environment: inherit current env and add overrides
+	if len(env) > 0 {
+		cmd.Env = append(os.Environ(), env...)
+		log.V(1).Info("Added environment overrides", "env", env)
+	}
 
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr

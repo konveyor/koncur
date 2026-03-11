@@ -107,6 +107,10 @@ Target configuration is separate from test definitions, allowing the same test t
 type: kantra
 kantra:
   binaryPath: /usr/local/bin/kantra  # Optional
+  # Container image overrides (optional, for container mode)
+  # javaProviderImage: my-java-provider:dev
+  # genericProviderImage: my-generic-provider:dev
+  # runnerImage: my-kantra:dev
 ```
 
 ### Tackle Hub (API)
@@ -119,7 +123,20 @@ tackleHub:
   password: secret
   # Or use token:
   # token: your-api-token
+
+  # Override component images (koncur patches the Tackle CR automatically)
+  images:
+    analyzer: my-analyzer:dev
+    javaProvider: my-java-provider:dev
+    # hub: my-hub:dev
+    # genericProvider: my-generic-provider:dev
+    # csharpProvider: my-csharp-provider:dev
+    # runner: my-kantra:dev
+    # discoveryAddon: my-discovery:dev
+    # platformAddon: my-platform:dev
 ```
+
+When `images` is specified, koncur patches the Tackle Custom Resource on the cluster via `kubectl` and waits for the Hub to become ready before running tests. See [Local Testing with Custom Images](docs/local-testing-custom-images.md) for detailed workflows.
 
 ### Tackle UI (Browser Automation)
 **Not Implemented**
@@ -301,6 +318,21 @@ make test-hub
   --target-config .koncur/config/target-tackle-hub.yaml
 ```
 
+### Portable Test Archive
+
+You can package the test suite into a portable archive for running tests without the full repo:
+
+```bash
+# Build the archive (~200KB)
+make test-archive
+
+# Run tests from the archive against any target
+./koncur run --test-archive koncur-tests.tar.gz \
+  -t tackle-hub --target-config .koncur/config/target-tackle-hub.yaml
+```
+
+See [Local Testing with Custom Images](docs/local-testing-custom-images.md) for the full portable testing workflow.
+
 ### Makefile Targets
 
 **Setup & Teardown:**
@@ -346,20 +378,33 @@ PLATFORM_ADDON ?= quay.io/konveyor/tackle2-addon-platform:latest
 
 #### Customizing Images
 
-To use custom or locally-built images, set environment variables:
+**Recommended: target config (patches the Tackle CR automatically)**
+
+Put image overrides in your target config and koncur will patch the Tackle CR and wait for readiness before running tests:
+
+```yaml
+# target-tackle-hub.yaml
+type: tackle-hub
+tackleHub:
+  url: http://localhost:8080/hub
+  images:
+    analyzer: my-analyzer:dev
+    javaProvider: my-java-provider:dev
+```
 
 ```bash
-# Use a custom Hub image
-HUB=localhost:5000/tackle2-hub:dev make hub-install
-
-# Use multiple custom images
-HUB=quay.io/myorg/tackle2-hub:v1.2.3 \
-ANALYZER_ADDON=quay.io/myorg/analyzer:latest \
-make hub-install
-
-# Use latest from a different registry
-HUB=ghcr.io/konveyor/tackle2-hub:main make hub-install
+./koncur run tests -t tackle-hub --target-config target-tackle-hub.yaml
 ```
+
+**Alternative: Makefile env vars (at install time)**
+
+Override images when first installing Hub:
+
+```bash
+ANALYZER_ADDON=my-analyzer:dev make hub-install
+```
+
+For a complete guide on building, loading, and testing with locally-built images (including Kind image loading and iteration workflows), see [Local Testing with Custom Images](docs/local-testing-custom-images.md).
 
 ### Target Configuration
 
