@@ -102,7 +102,7 @@ func (k *KantraTarget) Execute(ctx context.Context, test *config.TestDefinition)
 	}
 
 	// Handle rules that may be Git URLs
-	preparedRules, err := k.prepareRules(ctx, &test.Analysis, workDir)
+	preparedRules, err := k.prepareRules(ctx, test, workDir)
 	if err != nil {
 		return nil, fmt.Errorf("failed to prepare rules: %w", err)
 	}
@@ -234,28 +234,32 @@ func (k *KantraTarget) prepareInput(ctx context.Context, analysis *config.Analys
 
 // prepareRules handles rules that may be Git URLs or local paths
 // Returns a list of prepared rule paths
-func (k *KantraTarget) prepareRules(ctx context.Context, analysis *config.AnalysisConfig, workDir string) ([]string, error) {
-	if len(analysis.Rules) == 0 {
+func (k *KantraTarget) prepareRules(ctx context.Context, cfg *config.TestDefinition, workDir string) ([]string, error) {
+	if len(cfg.Analysis.Rules) == 0 {
 		return nil, nil
 	}
 
 	log := util.GetLogger()
-	preparedRules := make([]string, 0, len(analysis.Rules))
+	preparedRules := make([]string, 0, len(cfg.Analysis.Rules))
 
-	for i, rule := range analysis.Rules {
-		// Check if we have parsed Git components for this rule
-		if i < len(analysis.RulesGitComponents) && analysis.RulesGitComponents[i] != nil {
-			log.Info("Detected Git URL for rule", "rule", rule)
+	for i, rule := range cfg.Analysis.Rules {
+		if rule.File != nil {
+			if filepath.IsAbs(rule.File.FilePath) {
+				preparedRules = append(preparedRules, rule.File.FilePath)
+			} else {
+				preparedRules = append(preparedRules, filepath.Join(cfg.GetTestDir(), rule.File.FilePath))
+			}
+		}
+		if rule.Git != nil {
+			components := rule.Git.GetCompents()
+			log.Info("Detected Git URL for rule", "rule", rule.Git.GitRepo)
 			// Clone the repository to a unique directory for this rule
 			cloneName := fmt.Sprintf("rules-%d", i)
-			clonedPath, err := CloneGitRepository(ctx, analysis.RulesGitComponents[i], workDir, cloneName)
+			clonedPath, err := CloneGitRepository(ctx, components, workDir, cloneName)
 			if err != nil {
-				return nil, fmt.Errorf("failed to clone rules repository %s: %w", rule, err)
+				return nil, fmt.Errorf("failed to clone rules repository %s: %w", rule.Git.GitRepo, err)
 			}
 			preparedRules = append(preparedRules, clonedPath)
-		} else {
-			// Local path - use as-is
-			preparedRules = append(preparedRules, rule)
 		}
 	}
 

@@ -6,7 +6,8 @@ analysis:
     source: []
     target: []
     rules:
-        - https://github.com/konveyor/analyzer-lsp#main/external-providers/generic-external-provider/e2e-tests/python-e2e/rule-example.yaml
+      - file:
+          filePath: rule-example.yaml
     disableDefaultRules: true
     analysisMode: source-only
 timeout: 10m0s
