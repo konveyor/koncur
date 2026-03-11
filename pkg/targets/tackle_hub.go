@@ -38,6 +38,10 @@ const (
 	TaskStateFailed = "Failed"
 )
 
+const (
+	RulePrefix = "rules"
+)
+
 type Data struct {
 	// Verbosity level.
 	Verbosity int `json:"verbosity"`
@@ -420,6 +424,43 @@ func (t *TackleHubTarget) createApplication(test *config.TestDefinition) (*api.A
 	return app, nil
 }
 
+// All the rules must be file rules, there doesn't seem to be a way in the UI to pass both
+// Files and GitRepo. This should only be called when handling files.
+func (t *TackleHubTarget) uploadRuleFiles(task *api.Task, rules []config.CustomRule, testDir string) error {
+	log := util.GetLogger()
+	for _, rule := range rules {
+		if rule.File == nil {
+			return fmt.Errorf("to upload files, we must have only rules with files")
+		}
+		var absPath string
+		var err error
+		if filepath.IsAbs(rule.File.FilePath) {
+			absPath = rule.File.FilePath
+		} else {
+			// Relative path - resolve relative to test directory
+			absPath = filepath.Join(testDir, rule.File.FilePath)
+		}
+		if _, err = os.Stat(absPath); err != nil {
+			return fmt.Errorf("rule file not found at %s: %w", absPath, err)
+		}
+
+		log.Info("Uploading rule file", "path", absPath, "task", task.ID)
+
+		// Get application bucket
+		bucket := t.client.Bucket.Content(task.Bucket.ID)
+
+		// Upload the binary to the bucket
+		// The file will be stored at /binary in the bucket
+		err = bucket.Put(absPath, fmt.Sprintf("/%v/%v", RulePrefix, filepath.Base(absPath)))
+		if err != nil {
+			return fmt.Errorf("failed to upload rule: %w", err)
+		}
+
+		log.Info("Successfully uploaded rule", "path", absPath, "task", task.ID, "bucket_content")
+	}
+	return nil
+}
+
 // uploadBinary uploads a binary file to the application's bucket
 func (t *TackleHubTarget) uploadBinary(task *api.Task, binaryPath string, testDir string) error {
 	log := util.GetLogger()
@@ -522,6 +563,12 @@ func (t *TackleHubTarget) createAnalysisTask(ctx context.Context, test *config.T
 			return nil, err
 		}
 	}
+	if taskData.Rules.Path != "" {
+		err = t.uploadRuleFiles(task, test.Analysis.Rules, test.GetTestDir())
+		if err != nil {
+			return nil, err
+		}
+	}
 	task.State = "Ready"
 	err = t.client.Task.Update(task)
 	if err != nil {
@@ -534,23 +581,39 @@ func (t *TackleHubTarget) createAnalysisTask(ctx context.Context, test *config.T
 // prepareRulesForHub handles rules that may be Git URLs for Tackle Hub
 // Tackle Hub handles rules differently - it uses repositories rather than file paths
 func (t *TackleHubTarget) prepareRulesForHub(_ context.Context, test *config.TestDefinition, taskData *Data) error {
-	if len(test.Analysis.Rules) == 0 || len(test.Analysis.RulesGitComponents) == 0 {
+	if len(test.Analysis.Rules) == 0 {
 		return nil
 	}
 
 	log := util.GetLogger()
-
-	if len(test.Analysis.RulesGitComponents) != 1 {
-		return fmt.Errorf("tackle hub can only handle a single repository for custom rules")
+	var repo *config.GitURLComponents
+	var foundFiles bool
+	//	filePathsForData := []string
+	for _, rule := range test.Analysis.Rules {
+		if rule.File != nil {
+			foundFiles = true
+			continue
+		}
+		if rule.Git != nil && repo != nil {
+			return fmt.Errorf("The hub is only able to handle one git repo for custom rules.")
+		}
+		repo = rule.Git.GetCompents()
 	}
-
-	taskData.Rules.Repository = &api.Repository{
-		Kind:   "git",
-		URL:    test.Analysis.RulesGitComponents[0].URL,
-		Branch: test.Analysis.RulesGitComponents[0].Ref,
-		Path:   test.Analysis.RulesGitComponents[0].Path,
+	if foundFiles && repo != nil {
+		return fmt.Errorf("unable to use both files and git repo for hub analysis")
 	}
+	if foundFiles {
+		taskData.Rules.Path = fmt.Sprintf("/%v", RulePrefix)
+		return nil
+	} else {
 
+		taskData.Rules.Repository = &api.Repository{
+			Kind:   "git",
+			URL:    repo.URL,
+			Branch: repo.Ref,
+			Path:   repo.Path,
+		}
+	}
 	log.Info("Using rules", "rules", taskData.Rules)
 
 	return nil

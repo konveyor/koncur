@@ -53,7 +53,7 @@ type AnalysisConfig struct {
 	IncidentSelector    string                `json:"incident_selector" yaml:"incident_selector"`
 	Source              []string              `json:"source" yaml:"source"`
 	Target              []string              `json:"target" yaml:"target"`
-	Rules               []string              `json:"rules" yaml:"rules"`
+	Rules               []CustomRule          `json:"rules" yaml:"rules"`
 	DisableDefaultRules bool                  `json:"disableDefaultRules" yaml:"disableDefaultRules"`
 	AnalysisMode        provider.AnalysisMode `json:"analysis_mode" yaml:"analysisMode" validate:"required" `
 	// Extensions specifies which hub extensions to use (e.g., ["csharp", "java"])
@@ -61,8 +61,24 @@ type AnalysisConfig struct {
 	Extensions []string `json:"extensions" yaml:"extensions,omitempty"`
 
 	// Parsed Git components (not in YAML)
-	ApplicationGitComponents *GitURLComponents   `yaml:"-" json:"-"`
-	RulesGitComponents       []*GitURLComponents `yaml:"-" json:"-"`
+	ApplicationGitComponents *GitURLComponents `yaml:"-" json:"-"`
+}
+
+type CustomRule struct {
+	File *FilePathRule `json:"file" yaml:"file"`
+	Git  *GitRepoRule  `json:"git" yaml:"git"`
+}
+
+type FilePathRule struct {
+	FilePath string `json:"file_path" yaml:"filePath"`
+}
+
+type GitRepoRule struct {
+	GitRepo string `json:"git_repo" yaml:"gitRepo"`
+}
+
+func (g *GitRepoRule) GetCompents() *GitURLComponents {
+	return ParseGitURLWithPath(g.GitRepo)
 }
 
 type ApplicationGitRef struct {
@@ -161,18 +177,5 @@ func (ac *AnalysisConfig) ParseGitURLs() {
 	// Parse application Git URL if it's a Git URL
 	if IsGitURL(ac.Application) {
 		ac.ApplicationGitComponents = ParseGitURLWithPath(ac.Application)
-	}
-
-	// Parse rules Git URLs
-	if len(ac.Rules) > 0 {
-		ac.RulesGitComponents = make([]*GitURLComponents, len(ac.Rules))
-		for i, rule := range ac.Rules {
-			if IsGitURL(rule) {
-				ac.RulesGitComponents[i] = ParseGitURLWithPath(rule)
-			} else {
-				// For non-Git URLs, store nil to indicate it's a local path
-				ac.RulesGitComponents[i] = nil
-			}
-		}
 	}
 }
