@@ -1,0 +1,24 @@
+- name: konveyor-analysis
+  violations:
+    python-sample-rule-001:
+      description: ""
+      category: potential
+      incidents:
+      - uri: file:///source/file_a.py
+        message: python sample rule 001
+        lineNumber: 3
+        variables:
+          file: file:///opt/input/source/file_a.py
+      effort: 1
+    python-sample-rule-002:
+      description: ""
+      category: potential
+      incidents:
+      - uri: file:///source/file_a.py
+        message: python sample rule 002
+        lineNumber: 6
+        variables:
+          file: file:///opt/input/source/file_a.py
+      effort: 5
+  unmatched:
+  - python-sample-rule-003

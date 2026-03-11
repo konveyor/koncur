@@ -1,13 +1,13 @@
-name: c-sharp
+name: python-sample
 analysis:
-    application: https://github.com/konveyor/c-sharp-analyzer-provider#main/testdata/nerd-dinner
+    application: https://github.com/konveyor/analyzer-lsp#main/examples/python
     context_lines: 0
     incident_selector: ""
     source: []
     target: []
     rules:
-      - git:
-          gitRepo: https://github.com/konveyor/c-sharp-analyzer-provider#main/rulesets/dotnet-core-migration
+      - file:
+          filePath: rule-example.yaml
     disableDefaultRules: true
     analysisMode: source-only
 timeout: 10m0s
