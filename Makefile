@@ -1,9 +1,11 @@
-.PHONY: help kind-create kind-delete hub-install hub-uninstall hub-forward hub-status test-hub clean build test-archive
+.PHONY: help kind-create kind-delete hub-install hub-install-auth _hub-install hub-uninstall hub-forward hub-status hub-logs test-hub clean build setup setup-auth teardown test-archive
 
 # Configuration
 KIND_CLUSTER_NAME ?= koncur-test
 KONVEYOR_NAMESPACE ?= konveyor-tackle
 KUBECTL ?= kubectl
+HOST_PORT ?= 8080
+HOST_PORT_TLS ?= 8443
 
 # Image FQINs with defaults
 HUB ?= quay.io/konveyor/tackle2-hub:latest
@@ -38,11 +40,11 @@ kind-create: ## Create a Kind cluster for testing with ingress support
 	@printf '        node-labels: "ingress-ready=true"\n' >> .koncur/config/kind-config.yaml
 	@printf '  extraPortMappings:\n' >> .koncur/config/kind-config.yaml
 	@printf '  - containerPort: 80\n' >> .koncur/config/kind-config.yaml
-	@printf '    hostPort: 8080\n' >> .koncur/config/kind-config.yaml
+	@printf '    hostPort: $(HOST_PORT)\n' >> .koncur/config/kind-config.yaml
 	@printf '    protocol: TCP\n' >> .koncur/config/kind-config.yaml
 	@printf '    listenAddress: "0.0.0.0"\n' >> .koncur/config/kind-config.yaml
 	@printf '  - containerPort: 443\n' >> .koncur/config/kind-config.yaml
-	@printf '    hostPort: 8443\n' >> .koncur/config/kind-config.yaml
+	@printf '    hostPort: $(HOST_PORT_TLS)\n' >> .koncur/config/kind-config.yaml
 	@printf '    protocol: TCP\n' >> .koncur/config/kind-config.yaml
 	@printf '    listenAddress: "0.0.0.0"\n' >> .koncur/config/kind-config.yaml
 	@printf '  extraMounts:\n' >> .koncur/config/kind-config.yaml
@@ -79,18 +81,32 @@ kind-delete: ## Delete the Kind cluster
 
 ##@ Tackle Hub Installation
 
-hub-install: ## Install Tackle Hub on the Kind cluster (from main branch)
+AUTH_ENABLED ?= false
+TACKLE_ADMIN_USER ?= admin
+TACKLE_ADMIN_PASS ?= Passw0rd!
+
+hub-install: ## Install Tackle Hub on the Kind cluster (auth disabled)
+	@$(MAKE) _hub-install AUTH_ENABLED=false
+
+hub-install-auth: ## Install Tackle Hub with authentication enabled
+	@$(MAKE) _hub-install AUTH_ENABLED=true
+
+_hub-install: ## Internal target for hub installation
 	@echo "Installing OLM..."
 	@curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v0.38.0/install.sh | bash -s v0.38.0 || true
 	@echo "Waiting for OLM to be ready..."
 	@$(KUBECTL) wait --for=condition=ready pod -l app=olm-operator -n olm --timeout=300s
 	@$(KUBECTL) wait --for=condition=ready pod -l app=catalog-operator -n olm --timeout=300s
+	@echo "Restarting operatorhubio-catalog to ensure gRPC connectivity..."
+	@$(KUBECTL) delete pod -n olm -l olm.catalogSource=operatorhubio-catalog --ignore-not-found=true || true
+	@sleep 5
+	@$(KUBECTL) wait --for=condition=ready pod -l olm.catalogSource=operatorhubio-catalog -n olm --timeout=120s || true
 	@echo "Installing Tackle operator from main branch..."
 	@$(KUBECTL) apply -f https://raw.githubusercontent.com/konveyor/tackle2-operator/main/tackle-k8s.yaml
 	@echo "Waiting for Tackle CRD to be available..."
-	@for i in $$(seq 1 60); do \
+	@for i in $$(seq 1 120); do \
 		$(KUBECTL) get crd tackles.tackle.konveyor.io >/dev/null 2>&1 && break || sleep 5; \
-		if [ $$i -eq 60 ]; then echo "Timeout waiting for CRD to be created"; exit 1; fi; \
+		if [ $$i -eq 120 ]; then echo "Timeout waiting for CRD to be created"; exit 1; fi; \
 	done
 	@$(KUBECTL) wait --for condition=established --timeout=300s crd/tackles.tackle.konveyor.io
 	@echo "Waiting for operator to be ready..."
@@ -122,7 +138,7 @@ hub-install: ## Install Tackle Hub on the Kind cluster (from main branch)
 	@printf '    path: /cache/hub-cache\n' >> .koncur/config/cache-pv.yaml
 	@printf '    type: DirectoryOrCreate\n' >> .koncur/config/cache-pv.yaml
 	@$(KUBECTL) apply -f .koncur/config/cache-pv.yaml
-	@echo "Creating Tackle CR with auth disabled..."
+	@echo "Creating Tackle CR with auth=$(AUTH_ENABLED)..."
 	@mkdir -p .koncur/config
 	@printf 'kind: Tackle\n' > .koncur/config/tackle-cr.yaml
 	@printf 'apiVersion: tackle.konveyor.io/v1alpha1\n' >> .koncur/config/tackle-cr.yaml
@@ -130,7 +146,6 @@ hub-install: ## Install Tackle Hub on the Kind cluster (from main branch)
 	@printf '  name: tackle\n' >> .koncur/config/tackle-cr.yaml
 	@printf '  namespace: ${KONVEYOR_NAMESPACE}\n' >> .koncur/config/tackle-cr.yaml
 	@printf 'spec:\n' >> .koncur/config/tackle-cr.yaml
-	@printf '  feature_auth_required: "false"\n' >> .koncur/config/tackle-cr.yaml
 	@printf '  cache_storage_class: "manual"\n' >> .koncur/config/tackle-cr.yaml
 	@printf '  cache_data_volume_size: "10Gi"\n' >> .koncur/config/tackle-cr.yaml
 	@printf '  rwx_supported: "true"\n' >> .koncur/config/tackle-cr.yaml
@@ -146,26 +161,68 @@ hub-install: ## Install Tackle Hub on the Kind cluster (from main branch)
 	@printf '  kantra_fqin: $(RUNNER_IMG)\n' >> .koncur/config/tackle-cr.yaml
 	@printf '  language_discovery_fqin: $(DISCOVERY_ADDON)\n' >> .koncur/config/tackle-cr.yaml
 	@printf '  platform_fqin: $(PLATFORM_ADDON)\n' >> .koncur/config/tackle-cr.yaml
+	@printf '  feature_auth_required: "$(AUTH_ENABLED)"\n' >> .koncur/config/tackle-cr.yaml
 	@$(KUBECTL) apply -f .koncur/config/tackle-cr.yaml
 	@echo "Waiting for Tackle Hub to be ready (this may take a few minutes)..."
 	@sleep 30
 	@$(KUBECTL) wait --for=condition=ready pod -l app.kubernetes.io/name=tackle-hub -n ${KONVEYOR_NAMESPACE} --timeout=600s || true
-	@echo "Patching ingress to disable SSL redirect..."
-	@for i in $$(seq 1 30); do \
-		if $(KUBECTL) get ingress tackle -n ${KONVEYOR_NAMESPACE} >/dev/null 2>&1; then \
-			$(KUBECTL) annotate ingress tackle -n ${KONVEYOR_NAMESPACE} nginx.ingress.kubernetes.io/ssl-redirect="false" --overwrite; \
-			echo "Ingress patched successfully"; \
-			break; \
+	@echo "Waiting for Tackle Hub to be ready (this may take a few minutes)..."
+	@sleep 30
+	@$(KUBECTL) wait --for=condition=ready pod -l app.kubernetes.io/name=tackle-hub -n ${KONVEYOR_NAMESPACE} --timeout=600s || true
+	@if [ "$(AUTH_ENABLED)" = "true" ]; then \
+		echo "Waiting for Keycloak deployment to be created..."; \
+		for i in $$(seq 1 120); do \
+			$(KUBECTL) get deployment tackle-keycloak-sso -n ${KONVEYOR_NAMESPACE} >/dev/null 2>&1 && break || sleep 5; \
+			if [ $$i -eq 120 ]; then echo "Timeout waiting for Keycloak deployment"; exit 1; fi; \
+		done; \
+		echo "Waiting for Keycloak to be ready..."; \
+		$(KUBECTL) wait --for=condition=ready pod -l app.kubernetes.io/name=tackle-keycloak-sso -n ${KONVEYOR_NAMESPACE} --timeout=600s; \
+		echo "Waiting for tackle ingress to be created..."; \
+		for i in $$(seq 1 60); do \
+			$(KUBECTL) get ingress tackle -n ${KONVEYOR_NAMESPACE} >/dev/null 2>&1 && break || sleep 5; \
+			if [ $$i -eq 60 ]; then echo "Timeout waiting for tackle ingress"; exit 1; fi; \
+		done; \
+		echo "Creating NetworkPolicy to allow ingress-nginx to reach Keycloak..."; \
+		printf 'apiVersion: networking.k8s.io/v1\nkind: NetworkPolicy\nmetadata:\n  name: tackle-keycloak-ingress\n  namespace: ${KONVEYOR_NAMESPACE}\n  labels:\n    app: tackle\nspec:\n  podSelector:\n    matchLabels:\n      role: tackle-keycloak-sso\n  policyTypes:\n  - Ingress\n  ingress:\n  - from:\n    - namespaceSelector:\n        matchLabels:\n          kubernetes.io/metadata.name: ingress-nginx\n    ports:\n    - port: 8080\n      protocol: TCP\n    - port: 8443\n      protocol: TCP\n' | $(KUBECTL) apply -f -; \
+		echo "Configuring Keycloak hostname for https://localhost:$(HOST_PORT_TLS)/auth..."; \
+		$(KUBECTL) set env deployment/tackle-keycloak-sso -n ${KONVEYOR_NAMESPACE} \
+			KC_HOSTNAME=https://localhost:$(HOST_PORT_TLS)/auth \
+			KC_HOSTNAME_BACKCHANNEL_DYNAMIC=true; \
+		$(KUBECTL) patch deployment tackle-keycloak-sso -n ${KONVEYOR_NAMESPACE} --type='json' -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/args", "value": ["-Djgroups.dns.query=mta-kc-discovery.openshift-mta", "--verbose", "start", "--hostname=https://localhost:$(HOST_PORT_TLS)/auth", "--hostname-backchannel-dynamic=true"]}]'; \
+		echo "Waiting for Keycloak to restart with new configuration..."; \
+		$(KUBECTL) rollout status deployment/tackle-keycloak-sso -n ${KONVEYOR_NAMESPACE} --timeout=180s; \
+		$(KUBECTL) set env deployment/tackle-hub -n ${KONVEYOR_NAMESPACE} KEYCLOAK_REQ_PASS_UPDATE=false; \
+		$(KUBECTL) rollout status deployment/tackle-hub -n ${KONVEYOR_NAMESPACE} --timeout=120s; \
+		KC_POD=$$($(KUBECTL) get pods -n ${KONVEYOR_NAMESPACE} -l app.kubernetes.io/name=tackle-keycloak-sso -o jsonpath='{.items[0].metadata.name}'); \
+		KC_PASS=$$($(KUBECTL) get secret tackle-keycloak-sso -n ${KONVEYOR_NAMESPACE} -o jsonpath='{.data.password}' | base64 -d); \
+		$(KUBECTL) exec -n ${KONVEYOR_NAMESPACE} $$KC_POD -- /opt/keycloak/bin/kcadm.sh config credentials --server http://localhost:8080/auth --realm master --user admin --password "$$KC_PASS"; \
+		echo "Waiting for admin user to be created in Keycloak..."; \
+		ADMIN_USER_ID=""; \
+		for i in $$(seq 1 30); do \
+			ADMIN_USER_ID=$$($(KUBECTL) exec -n ${KONVEYOR_NAMESPACE} $$KC_POD -- /opt/keycloak/bin/kcadm.sh get users -r tackle -q username=$(TACKLE_ADMIN_USER) --fields id 2>/dev/null | grep -o '"id" *: *"[^"]*"' | cut -d'"' -f4); \
+			if [ -n "$$ADMIN_USER_ID" ]; then \
+				break; \
+			fi; \
+			echo "  Admin user not yet created, waiting 5s..."; \
+			sleep 5; \
+		done; \
+		if [ -n "$$ADMIN_USER_ID" ]; then \
+			$(KUBECTL) exec -n ${KONVEYOR_NAMESPACE} $$KC_POD -- /opt/keycloak/bin/kcadm.sh update users/$$ADMIN_USER_ID -r tackle -s 'requiredActions=[]'; \
+		else \
+			echo "Error: Admin user '$(TACKLE_ADMIN_USER)' was not created in Keycloak after 150s."; \
+			exit 1; \
 		fi; \
-		if [ $$i -eq 30 ]; then echo "Warning: Ingress not found, skipping patch"; fi; \
-		sleep 2; \
-	done
+	fi
 	@echo ""
 	@echo "Tackle Hub installation complete!"
 	@echo ""
 	@if $(KUBECTL) get pods -n ingress-nginx --no-headers 2>/dev/null | grep -q ingress-nginx-controller; then \
-		echo "Access Tackle Hub via ingress at: http://localhost:8080"; \
-		echo "Hub UI: http://localhost:8080/hub"; \
+		if [ "$(AUTH_ENABLED)" = "true" ]; then \
+			echo "Access Tackle Hub via ingress at: https://localhost:$(HOST_PORT_TLS)"; \
+			echo "(Auth enabled - HTTPS with self-signed certificate)"; \
+		else \
+			echo "Access Tackle Hub via ingress at: http://localhost:$(HOST_PORT)"; \
+		fi; \
 		echo ""; \
 	fi
 	@echo "Or run 'make hub-forward' to access via port-forward at :8081"
@@ -258,6 +315,20 @@ setup: kind-create hub-install build ## Complete setup: create cluster, install 
 	@echo "Next steps:"
 	@echo "1. In one terminal, run: make hub-forward"
 	@echo "2. In another terminal, run: make test-hub"
+	@echo ""
+
+setup-auth: kind-create hub-install-auth build ## Complete setup with auth: create cluster, install hub with Keycloak, build binary
+	@echo ""
+	@echo "=========================================="
+	@echo "Auth setup complete!"
+	@echo "=========================================="
+	@echo ""
+	@echo "Access: https://localhost:$(HOST_PORT_TLS)"
+	@echo "  User: $(TACKLE_ADMIN_USER)"
+	@echo "  Pass: Passw0rd!
+	@echo ""
+	@echo "Note: Uses a self-signed certificate. Accept the browser warning to proceed."
+	@echo "      Password is from the tackle-keycloak-sso secret in $(KONVEYOR_NAMESPACE)."
 	@echo ""
 
 teardown: hub-uninstall kind-delete ## Complete teardown: uninstall hub, delete cluster

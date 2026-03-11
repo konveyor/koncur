@@ -281,7 +281,7 @@ go test ./...
 
 Koncur includes a Makefile for quickly setting up and testing against a local Tackle Hub instance running in Kind (Kubernetes in Docker).
 
-### Quick Setup
+### Quick Setup (No Auth)
 
 ```bash
 # Complete setup: create cluster, install hub, build binary
@@ -289,19 +289,52 @@ make setup
 
 # This runs:
 # 1. make kind-create  - Creates Kind cluster with ingress
-# 2. make hub-install  - Installs Tackle Hub with OLM
+# 2. make hub-install  - Installs Tackle Hub with OLM (auth disabled)
 # 3. make build        - Builds the koncur binary
 ```
+
+### Quick Setup (With Auth)
+
+To install Tackle Hub with Keycloak authentication enabled:
+
+```bash
+# Complete setup with auth: create cluster, install hub with Keycloak, build binary
+make setup-auth
+
+# This runs:
+# 1. make kind-create       - Creates Kind cluster with ingress
+# 2. make hub-install-auth  - Installs Tackle Hub with Keycloak (auth enabled)
+# 3. make build             - Builds the koncur binary
+```
+
+When auth is enabled, the setup:
+- Deploys Keycloak SSO alongside Tackle Hub
+- Configures Keycloak hostname for `https://localhost:8443/auth`
+- Creates a NetworkPolicy to allow ingress traffic to Keycloak
+- Provisions an admin user with password from the `tackle-keycloak-sso` secret
+- Serves Tackle Hub over HTTPS with a self-signed certificate
+
+**Default credentials:**
+- Username: `admin`
+- Password: `Passw0rd!`
+
+The Tackle application user password (`Passw0rd!`) is set by the hub when it
+seeds the admin user into Keycloak. This is separate from the Keycloak server
+admin password stored in the `tackle-keycloak-sso` secret.
 
 ### Accessing Tackle Hub
 
 Once setup is complete, Tackle Hub is accessible via:
 
-**Ingress (recommended):**
+**Without auth (HTTP):**
 - Hub API: `http://localhost:8080/hub`
 - Hub UI: `http://localhost:8080/hub`
 
-**Port-forward (alternative):**
+**With auth (HTTPS):**
+- Hub: `https://localhost:8443`
+- Accept the self-signed certificate warning in your browser
+
+**Port-forward (alternative, works for both):**
 ```bash
 make hub-forward
 # Hub will be available at http://localhost:8081
@@ -336,7 +369,8 @@ See [Local Testing with Custom Images](docs/local-testing-custom-images.md) for 
 ### Makefile Targets
 
 **Setup & Teardown:**
-- `make setup` - Complete setup (cluster + hub + build)
+- `make setup` - Complete setup (cluster + hub + build, no auth)
+- `make setup-auth` - Complete setup with Keycloak authentication
 - `make teardown` - Complete teardown (uninstall hub + delete cluster)
 
 **Cluster Management:**
@@ -344,7 +378,8 @@ See [Local Testing with Custom Images](docs/local-testing-custom-images.md) for 
 - `make kind-delete` - Delete the Kind cluster
 
 **Tackle Hub:**
-- `make hub-install` - Install Tackle Hub (OLM + operator + CR)
+- `make hub-install` - Install Tackle Hub with auth disabled
+- `make hub-install-auth` - Install Tackle Hub with Keycloak auth enabled
 - `make hub-uninstall` - Uninstall Tackle Hub
 - `make hub-status` - Check Tackle Hub status
 - `make hub-forward` - Port-forward to access Hub at :8081
@@ -408,7 +443,7 @@ For a complete guide on building, loading, and testing with locally-built images
 
 ### Target Configuration
 
-The default Tackle Hub target config (`.koncur/config/target-tackle-hub.yaml`):
+**Without auth** - the default target config (`.koncur/config/target-tackle-hub.yaml`):
 
 ```yaml
 type: tackle-hub
@@ -417,6 +452,22 @@ tackleHub:
   token: ""
   mavenSettings: settings.xml
 ```
+
+**With auth** - when using `make setup-auth`, the target config must include
+`username`, `password`, and `insecure: true` (for the self-signed certificate):
+
+```yaml
+type: tackle-hub
+tackleHub:
+  url: https://localhost:8443/hub
+  username: admin
+  password: "Passw0rd!"
+  insecure: true
+  mavenSettings: settings.xml
+```
+
+The `insecure: true` field tells koncur to skip TLS certificate verification,
+which is required because the Kind cluster uses a self-signed certificate.
 
 ### What Gets Installed
 
@@ -431,6 +482,15 @@ The `make hub-install` target automatically:
    - All component images configurable via environment variables
 4. **Patches ingress** to disable SSL redirect (allows HTTP access at `http://localhost:8080`)
 5. **Waits for readiness** with automatic health checks
+
+The `make hub-install-auth` target does all of the above, plus:
+
+1. **Enables authentication** (`feature_auth_required: "true"`)
+2. **Deploys Keycloak SSO** and waits for it to become ready
+3. **Creates a NetworkPolicy** allowing ingress-nginx to reach Keycloak
+4. **Configures Keycloak hostname** for `https://localhost:8443/auth` with backchannel dynamic routing
+5. **Disables forced password update** so the admin user can log in immediately
+6. **Provisions the admin user** in the `tackle` realm and clears any required actions
 
 ### Troubleshooting
 
@@ -450,6 +510,22 @@ The `make hub-install` target automatically:
 **Hub pods not starting:**
 - Check pod status: `make hub-status`
 - View pod logs: `kubectl logs -n konveyor-tackle -l app.kubernetes.io/name=tackle-hub`
+
+**Auth setup: Keycloak or Hub unreachable via ingress:**
+- The ingress-nginx controller may need to be restarted after Tackle and Keycloak
+  ingress resources are created. Delete the controller pod and let Kubernetes
+  recreate it:
+  ```bash
+  kubectl delete pod -n ingress-nginx -l app.kubernetes.io/component=controller
+  ```
+- Wait for the new pod to become ready:
+  ```bash
+  kubectl wait --namespace ingress-nginx \
+    --for=condition=ready pod \
+    --selector=app.kubernetes.io/component=controller \
+    --timeout=120s
+  ```
+- Then verify you can reach the Hub at `https://localhost:8443`
 
 ## License
 

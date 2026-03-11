@@ -2,6 +2,7 @@ package targets
 
 import (
 	"context"
+	"crypto/tls"
 	"fmt"
 	"maps"
 	"os"
@@ -107,6 +108,11 @@ func NewTackleHubTarget(cfg *config.TackleHubConfig) (*TackleHubTarget, error) {
 	}
 
 	client := binding.New(cfg.URL)
+	if cfg.Insecure {
+		client.Client.Transport().TLSClientConfig = &tls.Config{
+			InsecureSkipVerify: true,
+		}
+	}
 
 	// Set authentication if provided (optional for instances with auth disabled)
 	if cfg.Token != "" {

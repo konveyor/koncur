@@ -48,6 +48,7 @@ type TackleHubConfig struct {
 	Password      string `yaml:"password,omitempty"`
 	Token         string `yaml:"token,omitempty"`
 	MavenSettings string `yaml:"mavenSettings,omitempty"`
+	Insecure      bool   `yaml:"insecure,omitempty"`
 
 	// Container image overrides for Tackle Hub components.
 	// When set, koncur patches the Tackle CR on the cluster before running tests.
