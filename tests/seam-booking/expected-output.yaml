@@ -1,0 +1,3582 @@
+- name: discovery-rules
+  tags:
+  - EJB XML
+  - JPA XML
+  - Java Source
+  - Maven XML
+  - Properties
+  - Web XML
+  insights:
+    discover-java-files:
+      description: Java source files
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - konveyor.io/target=discovery
+      - tag=Java Source
+      incidents:
+      - uri: file:///source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/Authenticator.java
+        message: ""
+      - uri: file:///source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/AuthenticatorAction.java
+        message: ""
+      - uri: file:///source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/Booking.java
+        message: ""
+      - uri: file:///source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/BookingList.java
+        message: ""
+      - uri: file:///source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/BookingListAction.java
+        message: ""
+      - uri: file:///source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/ChangePassword.java
+        message: ""
+      - uri: file:///source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/ChangePasswordAction.java
+        message: ""
+      - uri: file:///source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/Hotel.java
+        message: ""
+      - uri: file:///source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/HotelBooking.java
+        message: ""
+      - uri: file:///source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/HotelBookingAction.java
+        message: ""
+      - uri: file:///source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/HotelSearching.java
+        message: ""
+      - uri: file:///source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/HotelSearchingAction.java
+        message: ""
+      - uri: file:///source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/Register.java
+        message: ""
+      - uri: file:///source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/RegisterAction.java
+        message: ""
+      - uri: file:///source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/User.java
+        message: ""
+      - uri: file:///source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/test/BookingTest.java
+        message: ""
+      - uri: file:///source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/test/ChangePasswordTest.java
+        message: ""
+      - uri: file:///source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/test/LoginTest.java
+        message: ""
+    discover-maven-xml:
+      description: Maven XML file
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - konveyor.io/target=discovery
+      - tag=Maven XML
+      incidents:
+      - uri: file:///source/test-files/seam-booking-5.2/pom.xml
+        message: ""
+    discover-properties-file:
+      description: Properties file
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - konveyor.io/target=discovery
+      - tag=Properties
+      incidents:
+      - uri: file:///source/test-files/seam-booking-5.2/resources/components.properties
+        message: ""
+      - uri: file:///source/test-files/seam-booking-5.2/resources/messages.properties
+        message: ""
+      - uri: file:///source/test-files/seam-booking-5.2/resources/seam.properties
+        message: ""
+    windup-discover-ejb-configuration:
+      description: EJB XML Configuration
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - konveyor.io/target=discovery
+      - tag=EJB XML
+      incidents:
+      - uri: file:///source/test-files/seam-booking-5.2/resources/META-INF/ejb-jar.xml
+        message: ""
+        codeSnip: 7     <interceptors>
+        lineNumber: 6
+        variables:
+          data: ejb-jar
+          innerText: "\n         \n   \n     \n       org.jboss.seam.ejb.SeamInterceptor\n
+            \    \n   \n   \n   \n      \n         *\n         org.jboss.seam.ejb.SeamInterceptor\n
+            \     \n   \n   \n"
+          matchingXML: <interceptors><interceptor><interceptor-class>org.jboss.seam.ejb.SeamInterceptor</interceptor-class></interceptor></interceptors><assembly-descriptor><interceptor-binding><ejb-name>*</ejb-name><interceptor-class>org.jboss.seam.ejb.SeamInterceptor</interceptor-class></interceptor-binding></assembly-descriptor>
+    windup-discover-jpa-configuration:
+      description: JPA XML Configuration
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - konveyor.io/target=discovery
+      - tag=JPA XML
+      incidents:
+      - uri: file:///source/test-files/seam-booking-5.2/resources/META-INF/persistence.xml
+        message: ""
+        codeSnip: 8        <jta-data-source>java:/bookingDatasource</jta-data-source>
+        lineNumber: 7
+        variables:
+          data: persistence
+          innerText: "\n   \n      org.hibernate.ejb.HibernatePersistence\n      java:/bookingDatasource\n
+            \     \n         \n         \n         \n         \n         \n      \n
+            \  \n"
+          matchingXML: '<persistence-unit name="bookingDatabase"><provider>org.hibernate.ejb.HibernatePersistence</provider><jta-data-source>java:/bookingDatasource</jta-data-source><properties><property
+            name="hibernate.hbm2ddl.auto" value="create-drop"></property><property
+            name="hibernate.show_sql" value="true"></property><!-- These are the default
+            for JBoss EJB3, but not for HEM: --><property name="hibernate.cache.provider_class"
+            value="org.hibernate.cache.HashtableCacheProvider"></property><property
+            name="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.JBossTransactionManagerLookup"></property></properties></persistence-unit>'
+    windup-discover-web-configuration:
+      description: Web XML Configuration
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - konveyor.io/target=discovery
+      - tag=Web XML
+      incidents:
+      - uri: file:///source/test-files/seam-booking-5.2/resources/WEB-INF/web.xml
+        message: ""
+        codeSnip: "7  \t<!-- <distributable/> -->"
+        lineNumber: 6
+        variables:
+          data: web-app
+          innerText: "\n\n\t\n\n    Seam Booking Example\n    \n    \n    \n    \n
+            \       org.jboss.seam.servlet.SeamListener\n    \n    \n    \n        Seam
+            Resource Servlet\n        org.jboss.seam.servlet.SeamResourceServlet\n
+            \   \n    \n    \n        Seam Resource Servlet\n        /seam/resource/*\n
+            \   \n    \n    \n        Seam Filter\n        org.jboss.seam.servlet.SeamFilter\n
+            \   \n\n    \n        Seam Filter\n        /*\n    \n    \n    \n    \n
+            \   \n        javax.faces.DEFAULT_SUFFIX\n        .xhtml\n    \n    \n
+            \   \n        facelets.DEVELOPMENT\n        true\n    \n    \n    \n        Faces
+            Servlet\n        javax.faces.webapp.FacesServlet\n        1\n    \n    \n
+            \   \n        Faces Servlet\n        *.seam\n    \n\n    \n        10
+            \n        \n    \n"
+          matchingXML: <!-- <distributable/> --><display-name>Seam Booking Example</display-name><!--
+            Seam --><listener><listener-class>org.jboss.seam.servlet.SeamListener</listener-class></listener><servlet><servlet-name>Seam
+            Resource Servlet</servlet-name><servlet-class>org.jboss.seam.servlet.SeamResourceServlet</servlet-class></servlet><servlet-mapping><servlet-name>Seam
+            Resource Servlet</servlet-name><url-pattern>/seam/resource/*</url-pattern></servlet-mapping><filter><filter-name>Seam
+            Filter</filter-name><filter-class>org.jboss.seam.servlet.SeamFilter</filter-class></filter><filter-mapping><filter-name>Seam
+            Filter</filter-name><url-pattern>/*</url-pattern></filter-mapping><!--
+            JSF --><context-param><param-name>javax.faces.DEFAULT_SUFFIX</param-name><param-value>.xhtml</param-value></context-param><context-param><param-name>facelets.DEVELOPMENT</param-name><param-value>true</param-value></context-param><servlet><servlet-name>Faces
+            Servlet</servlet-name><servlet-class>javax.faces.webapp.FacesServlet</servlet-class><load-on-startup>1</load-on-startup></servlet><servlet-mapping><servlet-name>Faces
+            Servlet</servlet-name><url-pattern>*.seam</url-pattern></servlet-mapping><session-config><session-timeout>10</session-timeout></session-config>
+  unmatched:
+  - discover-license
+  - discover-manifest-file
+  - windup-discover-spring-configuration
+  skipped:
+  - hardcoded-ip-address
+- name: eap6/java-ee/seam
+  description: This ruleset provides generic migration knowledge from the Seam 2 UI
+    controls to pure JSF 2 UI Controls
+  tags:
+  - JBoss EAR descriptor
+  - JBoss EJB XML deployment descriptor prior to EAP 6
+  - JBoss Seam Components (components.xml)
+  - JBoss Seam Pages
+  - JSF Seam 2.x tag library usage
+  - configuration
+  - deployment
+  - descriptor
+  - jboss-eap5
+  - jsf
+  - seam
+  violations:
+    seam-ui-jsf-00001-01:
+      description: JSF Seam 2 UI control s:button
+      category: mandatory
+      labels:
+      - jsf
+      - konveyor.io/source=eap
+      - konveyor.io/source=eap5
+      - konveyor.io/source=java-ee
+      - konveyor.io/source=seam
+      - konveyor.io/source=seam2
+      - konveyor.io/target=eap
+      - konveyor.io/target=eap6
+      - konveyor.io/target=eap7
+      - seam
+      incidents:
+      - uri: file:///source/test-files/seam-booking-5.2/view/book.xhtml
+        message: |-
+          Seam UI's `<s:button>` JSF control should be replaced by `<h:button>`.
+           There are differences in attributes, for example the _action_ attribute maps to _outcome_ and there is no _propagation_ attribute.
+        codeSnip: "95  \t\t\t<h:commandButton id=\"proceed\" value=\"Proceed\" action=\"#{hotelBooking.setBookingDetails}\"/>"
+        lineNumber: 94
+        variables:
+          data: button
+          innerText: ""
+          matchingXML: ""
+      - uri: file:///source/test-files/seam-booking-5.2/view/confirm.xhtml
+        message: |-
+          Seam UI's `<s:button>` JSF control should be replaced by `<h:button>`.
+           There are differences in attributes, for example the _action_ attribute maps to _outcome_ and there is no _propagation_ attribute.
+        codeSnip: "43  \t\t<h:form id=\"confirm\">"
+        lineNumber: 42
+        variables:
+          data: button
+          innerText: ""
+          matchingXML: ""
+      - uri: file:///source/test-files/seam-booking-5.2/view/password.xhtml
+        message: |-
+          Seam UI's `<s:button>` JSF control should be replaced by `<h:button>`.
+           There are differences in attributes, for example the _action_ attribute maps to _outcome_ and there is no _propagation_ attribute.
+        codeSnip: "37  \t\t\t\t<h:commandButton id=\"change\" value=\"Change\" action=\"#{changePassword.changePassword}\"/>"
+        lineNumber: 36
+        variables:
+          data: button
+          innerText: ""
+          matchingXML: ""
+      - uri: file:///source/test-files/seam-booking-5.2/view/register.xhtml
+        message: |-
+          Seam UI's `<s:button>` JSF control should be replaced by `<h:button>`.
+           There are differences in attributes, for example the _action_ attribute maps to _outcome_ and there is no _propagation_ attribute.
+        codeSnip: "82  \t\t\t\t\t\t<h:commandButton id=\"register\" value=\"Register\"
+          action=\"#{register.register}\"/>"
+        lineNumber: 81
+        variables:
+          data: button
+          innerText: ""
+          matchingXML: ""
+      links:
+      - url: https://access.redhat.com/documentation/en-us/Red_Hat_JBoss_Web_Framework_Kit/2.7/html/Seam_Guide/_seam_2_ui_controls_migration_to_jsf.html
+        title: Seam 2 UI controls migration to JSF
+      effort: 1
+    seam-ui-jsf-01000:
+      description: JSF Seam 2 UI control s:link
+      category: mandatory
+      labels:
+      - jsf
+      - konveyor.io/source=eap
+      - konveyor.io/source=eap5
+      - konveyor.io/source=java-ee
+      - konveyor.io/source=seam
+      - konveyor.io/source=seam2
+      - konveyor.io/target=eap
+      - konveyor.io/target=eap6
+      - konveyor.io/target=eap7
+      - seam
+      incidents:
+      - uri: file:///source/test-files/seam-booking-5.2/view/home.xhtml
+        message: |-
+          Seam UI's `<s:link>` should be replaced by `<h:link>`.
+           There are differences in attributes, for example the _action_ attribute maps to _outcome_ and there is no _propagation_ attribute.
+        codeSnip: 11  </head>
+        lineNumber: 10
+        variables:
+          data: link
+          innerText: ""
+          matchingXML: ""
+      - uri: file:///source/test-files/seam-booking-5.2/view/main.xhtml
+        message: |-
+          Seam UI's `<s:link>` should be replaced by `<h:link>`.
+           There are differences in attributes, for example the _action_ attribute maps to _outcome_ and there is no _propagation_ attribute.
+        codeSnip: "69  \t\t</h:column>"
+        lineNumber: 68
+        variables:
+          data: link
+          innerText: ""
+          matchingXML: ""
+      - uri: file:///source/test-files/seam-booking-5.2/view/template.xhtml
+        message: |-
+          Seam UI's `<s:link>` should be replaced by `<h:link>`.
+           There are differences in attributes, for example the _action_ attribute maps to _outcome_ and there is no _propagation_ attribute.
+        codeSnip: 14  </head>
+        lineNumber: 13
+        variables:
+          data: link
+          innerText: ""
+          matchingXML: ""
+      links:
+      - url: https://access.redhat.com/documentation/en-us/Red_Hat_JBoss_Web_Framework_Kit/2.7/html/Seam_Guide/_seam_2_ui_controls_migration_to_jsf.html
+        title: Seam 2 UI controls migration to JSF
+      effort: 1
+    seam-ui-jsf-01005:
+      description: JSF Seam 2 UI control s:convertDateTime
+      category: mandatory
+      labels:
+      - jsf
+      - konveyor.io/source=eap
+      - konveyor.io/source=eap5
+      - konveyor.io/source=java-ee
+      - konveyor.io/source=seam
+      - konveyor.io/source=seam2
+      - konveyor.io/target=eap
+      - konveyor.io/target=eap6
+      - konveyor.io/target=eap7
+      - seam
+      incidents:
+      - uri: file:///source/test-files/seam-booking-5.2/view/conversations.xhtml
+        message: |-
+          Seam UI's `<f:convertDateTime type="time" pattern="kk:mm:ss">` should be replaced by `<f:convertDateTime>`.
+
+           The format can be configured by setting the locale,
+           or by setting the context-param `javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE` to `true`.
+        codeSnip: "25  \t                </h:outputText>"
+        lineNumber: 24
+        variables:
+          data: convertDateTime
+          innerText: ""
+          matchingXML: ""
+      links:
+      - url: https://access.redhat.com/documentation/en-us/Red_Hat_JBoss_Web_Framework_Kit/2.7/html/Seam_Guide/_seam_2_ui_controls_migration_to_jsf.html
+        title: Seam 2 UI controls migration to JSF
+      effort: 1
+    seam-ui-jsf-01022:
+      description: JSF Seam 2 UI control s:validateAll
+      category: mandatory
+      labels:
+      - jsf
+      - konveyor.io/source=eap
+      - konveyor.io/source=eap5
+      - konveyor.io/source=java-ee
+      - konveyor.io/source=seam
+      - konveyor.io/source=seam2
+      - konveyor.io/target=eap
+      - konveyor.io/target=eap6
+      - konveyor.io/target=eap7
+      - seam
+      incidents:
+      - uri: file:///source/test-files/seam-booking-5.2/view/edit.xhtml
+        message: There is no direct mapping for `<s:validateAll>` in JSF UI controls,
+          but you can achieve a similar effect by using `<f:validateBean>` or [Richfaces](http://richfaces.jboss.org/)
+          `<rich:validator>`.
+        codeSnip: 15                  <ui:insert/>
+        lineNumber: 14
+        variables:
+          data: validateAll
+          innerText: "\n                \n            "
+          matchingXML: <ui:insert></ui:insert>
+      links:
+      - url: https://access.redhat.com/documentation/en-us/Red_Hat_JBoss_Web_Framework_Kit/2.7/html/Seam_Guide/_seam_2_ui_controls_migration_to_jsf.html
+        title: Seam 2 UI controls migration to JSF
+      effort: 1
+    seam-ui-jsf-01023:
+      description: JSF Seam 2 UI control s:decorate
+      category: mandatory
+      labels:
+      - jsf
+      - konveyor.io/source=eap
+      - konveyor.io/source=eap5
+      - konveyor.io/source=java-ee
+      - konveyor.io/source=seam
+      - konveyor.io/source=seam2
+      - konveyor.io/target=eap
+      - konveyor.io/target=eap6
+      - konveyor.io/target=eap7
+      - seam
+      incidents:
+      - uri: file:///source/test-files/seam-booking-5.2/view/book.xhtml
+        message: |-
+          There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
+           [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
+        codeSnip: "30  \t\t\t<rich:calendar id=\"checkinDate\" value=\"#{booking.checkinDate}\"
+          required=\"true\" datePattern=\"MM/dd/yyyy\" event=\"onblur\" reRender=\"checkinDateDecorate\"
+          style=\"width: auto;\" />"
+        lineNumber: 29
+        variables:
+          data: decorate
+          innerText: "\n\t\t\tCheck In Date:\n\t\t\t\n\t\t"
+          matchingXML: '<ui:define name="label">Check In Date:</ui:define><rich:calendar
+            id="checkinDate" value="#{booking.checkinDate}" required="true" datePattern="MM/dd/yyyy"
+            event="onblur" reRender="checkinDateDecorate" style="width: auto;"></rich:calendar>'
+      - uri: file:///source/test-files/seam-booking-5.2/view/book.xhtml
+        message: |-
+          There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
+           [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
+        codeSnip: "35  \t\t\t<rich:calendar id=\"checkoutDate\" value=\"#{booking.checkoutDate}\"
+          required=\"true\" datePattern=\"MM/dd/yyyy\" event=\"onblur\" reRender=\"checkoutDateDecorate\"
+          \ style=\"width: auto;\"/>"
+        lineNumber: 34
+        variables:
+          data: decorate
+          innerText: "\n\t\t\tCheck Out Date:\n\t\t\t\n\t\t"
+          matchingXML: '<ui:define name="label">Check Out Date:</ui:define><rich:calendar
+            id="checkoutDate" value="#{booking.checkoutDate}" required="true" datePattern="MM/dd/yyyy"
+            event="onblur" reRender="checkoutDateDecorate" style="width: auto;"></rich:calendar>'
+      - uri: file:///source/test-files/seam-booking-5.2/view/book.xhtml
+        message: |-
+          There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
+           [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
+        codeSnip: "40  \t\t\t<h:selectOneMenu id=\"beds\" value=\"#{booking.beds}\">"
+        lineNumber: 39
+        variables:
+          data: decorate
+          innerText: "\n\t\t\tRoom Preference:\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t"
+          matchingXML: <ui:define name="label">Room Preference:</ui:define><h:selectOneMenu
+            id="beds" value="#{booking.beds}"><f:selectItem id="OneKingBed" itemLabel="One
+            king-size bed" itemValue="1"></f:selectItem><f:selectItem id="TwoDoubleBeds"
+            itemLabel="Two double beds" itemValue="2"></f:selectItem><f:selectItem
+            id="ThreeBeds" itemLabel="Three beds" itemValue="3"></f:selectItem></h:selectOneMenu>
+      - uri: file:///source/test-files/seam-booking-5.2/view/book.xhtml
+        message: |-
+          There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
+           [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
+        codeSnip: "49  \t\t\t<h:selectOneRadio id=\"smoking\" value=\"#{booking.smoking}\"
+          layout=\"pageDirection\" styleClass=\"radio\">"
+        lineNumber: 48
+        variables:
+          data: decorate
+          innerText: "\n\t\t\tSmoking Preference:\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t"
+          matchingXML: <ui:define name="label">Smoking Preference:</ui:define><h:selectOneRadio
+            id="smoking" value="#{booking.smoking}" layout="pageDirection" styleClass="radio"><f:selectItem
+            id="Smoking" itemLabel="Smoking" itemValue="true"></f:selectItem><f:selectItem
+            id="NonSmoking" itemLabel="Non Smoking" itemValue="false"></f:selectItem></h:selectOneRadio>
+      - uri: file:///source/test-files/seam-booking-5.2/view/book.xhtml
+        message: |-
+          There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
+           [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
+        codeSnip: "57  \t\t\t<h:inputText id=\"creditCard\" value=\"#{booking.creditCard}\"
+          required=\"true\">"
+        lineNumber: 56
+        variables:
+          data: decorate
+          innerText: "\n\t\t\tCredit Card #:\n\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t"
+          matchingXML: '<ui:define name="label">Credit Card #:</ui:define><h:inputText
+            id="creditCard" value="#{booking.creditCard}" required="true"><a:support
+            id="onblur" event="onblur" reRender="creditCardDecorate"></a:support></h:inputText>'
+      - uri: file:///source/test-files/seam-booking-5.2/view/book.xhtml
+        message: |-
+          There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
+           [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
+        codeSnip: "64  \t\t\t<h:inputText id=\"creditCardName\" value=\"#{booking.creditCardName}\"
+          required=\"true\">"
+        lineNumber: 63
+        variables:
+          data: decorate
+          innerText: "\n\t\t\tCredit Card Name:\n\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t"
+          matchingXML: <ui:define name="label">Credit Card Name:</ui:define><h:inputText
+            id="creditCardName" value="#{booking.creditCardName}" required="true"><a:support
+            id="onblur" event="onblur" reRender="creditCardNameDecorate"></a:support></h:inputText>
+      - uri: file:///source/test-files/seam-booking-5.2/view/book.xhtml
+        message: |-
+          There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
+           [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
+        codeSnip: "71  \t\t\t<h:selectOneMenu id=\"creditCardExpiryMonth\" value=\"#{booking.creditCardExpiryMonth}\">"
+        lineNumber: 70
+        variables:
+          data: decorate
+          innerText: "\n\t\t\tCredit Card Expiry:\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t"
+          matchingXML: <ui:define name="label">Credit Card Expiry:</ui:define><h:selectOneMenu
+            id="creditCardExpiryMonth" value="#{booking.creditCardExpiryMonth}"><f:selectItem
+            id="Jan" itemLabel="Jan" itemValue="1"></f:selectItem><f:selectItem id="Feb"
+            itemLabel="Feb" itemValue="2"></f:selectItem><f:selectItem id="Mar" itemLabel="Mar"
+            itemValue="3"></f:selectItem><f:selectItem id="Apr" itemLabel="Apr" itemValue="4"></f:selectItem><f:selectItem
+            id="May" itemLabel="May" itemValue="5"></f:selectItem><f:selectItem id="Jun"
+            itemLabel="Jun" itemValue="6"></f:selectItem><f:selectItem id="Jul" itemLabel="Jul"
+            itemValue="7"></f:selectItem><f:selectItem id="Aug" itemLabel="Aug" itemValue="8"></f:selectItem><f:selectItem
+            id="Sep" itemLabel="Sep" itemValue="9"></f:selectItem><f:selectItem id="Oct"
+            itemLabel="Oct" itemValue="10"></f:selectItem><f:selectItem id="Nov" itemLabel="Nov"
+            itemValue="11"></f:selectItem><f:selectItem id="Dec" itemLabel="Dec" itemValue="12"></f:selectItem></h:selectOneMenu><h:selectOneMenu
+            id="creditCardExpiryYear" value="#{booking.creditCardExpiryYear}"><f:selectItem
+            id="Year2005" itemLabel="2005" itemValue="2005"></f:selectItem><f:selectItem
+            id="Year2006" itemLabel="2006" itemValue="2006"></f:selectItem><f:selectItem
+            id="Year2007" itemLabel="2007" itemValue="2007"></f:selectItem><f:selectItem
+            id="Year2008" itemLabel="2008" itemValue="2008"></f:selectItem><f:selectItem
+            id="Year2009" itemLabel="2009" itemValue="2009"></f:selectItem></h:selectOneMenu>
+      - uri: file:///source/test-files/seam-booking-5.2/view/confirm.xhtml
+        message: |-
+          There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
+           [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
+        codeSnip: "22  \t\t<h:outputText id=\"BookingTotal\" value=\"#{booking.total}\">"
+        lineNumber: 21
+        variables:
+          data: decorate
+          innerText: "\n\t\tTotal Payment:\n\t\t\n\t\t\t\n\t\t\n\t"
+          matchingXML: <ui:define name="label">Total Payment:</ui:define><h:outputText
+            id="BookingTotal" value="#{booking.total}"><f:convertNumber type="currency"
+            currencySymbol="$"></f:convertNumber></h:outputText>
+      - uri: file:///source/test-files/seam-booking-5.2/view/confirm.xhtml
+        message: |-
+          There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
+           [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
+        codeSnip: "29  \t\t<h:outputText id=\"BookingCheckinDate\" value=\"#{booking.checkinDate}\"/>"
+        lineNumber: 28
+        variables:
+          data: decorate
+          innerText: "\n\t\tCheck In Date:\n\t\t\n\t"
+          matchingXML: <ui:define name="label">Check In Date:</ui:define><h:outputText
+            id="BookingCheckinDate" value="#{booking.checkinDate}"></h:outputText>
+      - uri: file:///source/test-files/seam-booking-5.2/view/confirm.xhtml
+        message: |-
+          There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
+           [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
+        codeSnip: "34  \t\t<h:outputText id=\"BookingCheckoutDate\" value=\"#{booking.checkoutDate}\"/>"
+        lineNumber: 33
+        variables:
+          data: decorate
+          innerText: "\n\t\tCheck Out Date:\n\t\t\n\t"
+          matchingXML: <ui:define name="label">Check Out Date:</ui:define><h:outputText
+            id="BookingCheckoutDate" value="#{booking.checkoutDate}"></h:outputText>
+      - uri: file:///source/test-files/seam-booking-5.2/view/confirm.xhtml
+        message: |-
+          There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
+           [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
+        codeSnip: "39  \t\t#{booking.creditCard}"
+        lineNumber: 38
+        variables:
+          data: decorate
+          innerText: "\n\t\tCredit Card #:\n\t\t#{booking.creditCard}\n\t"
+          matchingXML: "<ui:define name=\"label\">Credit Card #:</ui:define>\n\t\t#{booking.creditCard}"
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotelview.xhtml
+        message: |-
+          There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
+           [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
+        codeSnip: "10  \t\t#{hotel.name}"
+        lineNumber: 9
+        variables:
+          data: decorate
+          innerText: "             \n\t\tName:\n\t\t#{hotel.name}\n\t"
+          matchingXML: "<ui:define name=\"label\">Name:</ui:define>\n\t\t#{hotel.name}"
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotelview.xhtml
+        message: |-
+          There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
+           [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
+        codeSnip: "15  \t\t#{hotel.address}"
+        lineNumber: 14
+        variables:
+          data: decorate
+          innerText: "             \n\t\tAddress:\n\t\t#{hotel.address}\n\t"
+          matchingXML: "<ui:define name=\"label\">Address:</ui:define>\n\t\t#{hotel.address}"
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotelview.xhtml
+        message: |-
+          There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
+           [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
+        codeSnip: "20  \t\t#{hotel.city}"
+        lineNumber: 19
+        variables:
+          data: decorate
+          innerText: "             \n\t\tCity:\n\t\t#{hotel.city}\n\t"
+          matchingXML: "<ui:define name=\"label\">City:</ui:define>\n\t\t#{hotel.city}"
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotelview.xhtml
+        message: |-
+          There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
+           [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
+        codeSnip: "25  \t\t#{hotel.state}"
+        lineNumber: 24
+        variables:
+          data: decorate
+          innerText: "             \n\t\tState:\n\t\t#{hotel.state}\n\t"
+          matchingXML: "<ui:define name=\"label\">State:</ui:define>\n\t\t#{hotel.state}"
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotelview.xhtml
+        message: |-
+          There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
+           [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
+        codeSnip: "30  \t\t#{hotel.zip}"
+        lineNumber: 29
+        variables:
+          data: decorate
+          innerText: "             \n\t\tZip:\n\t\t#{hotel.zip}\n\t"
+          matchingXML: "<ui:define name=\"label\">Zip:</ui:define>\n\t\t#{hotel.zip}"
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotelview.xhtml
+        message: |-
+          There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
+           [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
+        codeSnip: "35  \t\t#{hotel.country}"
+        lineNumber: 34
+        variables:
+          data: decorate
+          innerText: "             \n\t\tCountry:\n\t\t#{hotel.country}\n\t"
+          matchingXML: "<ui:define name=\"label\">Country:</ui:define>\n\t\t#{hotel.country}"
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotelview.xhtml
+        message: |-
+          There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
+           [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
+        codeSnip: "40  \t\t<h:outputText id=\"HotelPrice\" value=\"#{hotel.price}\">"
+        lineNumber: 39
+        variables:
+          data: decorate
+          innerText: "             \n\t\tNightly rate:\n\t\t\n\t\t\t\n\t\t\n\t"
+          matchingXML: <ui:define name="label">Nightly rate:</ui:define><h:outputText
+            id="HotelPrice" value="#{hotel.price}"><f:convertNumber type="currency"
+            currencySymbol="$"></f:convertNumber></h:outputText>
+      - uri: file:///source/test-files/seam-booking-5.2/view/password.xhtml
+        message: |-
+          There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
+           [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
+        codeSnip: "28  \t\t\t\t<h:inputSecret id=\"password\" value=\"#{user.password}\"
+          required=\"true\"/>"
+        lineNumber: 27
+        variables:
+          data: decorate
+          innerText: "\n\t\t\t\tPassword:\n\t\t\t\t\n\t\t\t"
+          matchingXML: <ui:define name="label">Password:</ui:define><h:inputSecret
+            id="password" value="#{user.password}" required="true"></h:inputSecret>
+      - uri: file:///source/test-files/seam-booking-5.2/view/password.xhtml
+        message: |-
+          There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
+           [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
+        codeSnip: "33  \t\t\t\t<h:inputSecret id=\"verify\" value=\"#{changePassword.verify}\"
+          required=\"true\"/>"
+        lineNumber: 32
+        variables:
+          data: decorate
+          innerText: "\n\t\t\t\tVerify:\n\t\t\t\t\n\t\t\t"
+          matchingXML: <ui:define name="label">Verify:</ui:define><h:inputSecret id="verify"
+            value="#{changePassword.verify}" required="true"></h:inputSecret>
+      - uri: file:///source/test-files/seam-booking-5.2/view/register.xhtml
+        message: |-
+          There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
+           [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
+        codeSnip: "59  \t\t\t\t\t\t<h:inputText id=\"username\" value=\"#{user.username}\"
+          required=\"true\">"
+        lineNumber: 58
+        variables:
+          data: decorate
+          innerText: "\n\t\t\t\t\t\tUsername:\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t"
+          matchingXML: <ui:define name="label">Username:</ui:define><h:inputText id="username"
+            value="#{user.username}" required="true"><a:support id="onblur" event="onblur"
+            reRender="usernameDecorate"></a:support></h:inputText>
+      - uri: file:///source/test-files/seam-booking-5.2/view/register.xhtml
+        message: |-
+          There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
+           [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
+        codeSnip: "66  \t\t\t\t\t\t<h:inputText id=\"name\" value=\"#{user.name}\"
+          required=\"true\">"
+        lineNumber: 65
+        variables:
+          data: decorate
+          innerText: "\n\t\t\t\t\t\tReal Name:\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t"
+          matchingXML: <ui:define name="label">Real Name:</ui:define><h:inputText
+            id="name" value="#{user.name}" required="true"><a:support id="onblur"
+            event="onblur" reRender="nameDecorate"></a:support></h:inputText>
+      - uri: file:///source/test-files/seam-booking-5.2/view/register.xhtml
+        message: |-
+          There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
+           [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
+        codeSnip: "73  \t\t\t\t\t\t<h:inputSecret id=\"password\" value=\"#{user.password}\"
+          required=\"true\"/>"
+        lineNumber: 72
+        variables:
+          data: decorate
+          innerText: "\n\t\t\t\t\t\tPassword:\n\t\t\t\t\t\t\n\t\t\t\t\t"
+          matchingXML: <ui:define name="label">Password:</ui:define><h:inputSecret
+            id="password" value="#{user.password}" required="true"></h:inputSecret>
+      - uri: file:///source/test-files/seam-booking-5.2/view/register.xhtml
+        message: |-
+          There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
+           [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
+        codeSnip: "78  \t\t\t\t\t\t<h:inputSecret id=\"verify\" value=\"#{register.verify}\"
+          required=\"true\"/>"
+        lineNumber: 77
+        variables:
+          data: decorate
+          innerText: "\n\t\t\t\t\t\tVerify Password:\n\t\t\t\t\t\t\n\t\t\t\t\t"
+          matchingXML: <ui:define name="label">Verify Password:</ui:define><h:inputSecret
+            id="verify" value="#{register.verify}" required="true"></h:inputSecret>
+      links:
+      - url: https://access.redhat.com/documentation/en-us/Red_Hat_JBoss_Web_Framework_Kit/2.7/html/Seam_Guide/_seam_2_ui_controls_migration_to_jsf.html
+        title: Seam 2 UI controls migration to JSF
+      effort: 3
+    seam-ui-jsf-01025:
+      description: JSF Seam 2 UI control s:span
+      category: mandatory
+      labels:
+      - jsf
+      - konveyor.io/source=eap
+      - konveyor.io/source=eap5
+      - konveyor.io/source=java-ee
+      - konveyor.io/source=seam
+      - konveyor.io/source=seam2
+      - konveyor.io/target=eap
+      - konveyor.io/target=eap6
+      - konveyor.io/target=eap7
+      - seam
+      incidents:
+      - uri: file:///source/test-files/seam-booking-5.2/view/edit.xhtml
+        message: There is no direct mapping for `<s:span>` in JSF UI controls, but
+          you can achieve a similar effect by using `<h:panelGroup>` or a `<ui:fragment>`
+          with a span element.
+        codeSnip: 12          </s:label>
+        lineNumber: 11
+        variables:
+          data: span
+          innerText: '*'
+          matchingXML: '*'
+      links:
+      - url: https://access.redhat.com/documentation/en-us/Red_Hat_JBoss_Web_Framework_Kit/2.7/html/Seam_Guide/_seam_2_ui_controls_migration_to_jsf.html
+        title: Seam 2 UI controls migration to JSF
+      effort: 1
+    seam-ui-jsf-01026:
+      description: JSF Seam 2 UI control s:label
+      category: mandatory
+      labels:
+      - jsf
+      - konveyor.io/source=eap
+      - konveyor.io/source=eap5
+      - konveyor.io/source=java-ee
+      - konveyor.io/source=seam
+      - konveyor.io/source=seam2
+      - konveyor.io/target=eap
+      - konveyor.io/target=eap6
+      - konveyor.io/target=eap7
+      - seam
+      incidents:
+      - uri: file:///source/test-files/seam-booking-5.2/view/edit.xhtml
+        message: There is no direct mapping for `<s:label>` in JSF UI controls, but
+          `<h:outputLabel>` is similar.
+        codeSnip: 12          </s:label>
+        lineNumber: 11
+        variables:
+          data: label
+          innerText: "\n            \n            *\n        "
+          matchingXML: <ui:insert name="label"></ui:insert><s:span id="RequiredStyle"
+            styleClass="required" rendered="#{required}">*</s:span>
+      links:
+      - url: https://access.redhat.com/documentation/en-us/Red_Hat_JBoss_Web_Framework_Kit/2.7/html/Seam_Guide/_seam_2_ui_controls_migration_to_jsf.html
+        title: Seam 2 UI controls migration to JSF
+      effort: 1
+    seam-ui-jsf-01027:
+      description: JSF Seam 2 UI control s:message
+      category: mandatory
+      labels:
+      - jsf
+      - konveyor.io/source=eap
+      - konveyor.io/source=eap5
+      - konveyor.io/source=java-ee
+      - konveyor.io/source=seam
+      - konveyor.io/source=seam2
+      - konveyor.io/target=eap
+      - konveyor.io/target=eap6
+      - konveyor.io/target=eap7
+      - seam
+      incidents:
+      - uri: file:///source/test-files/seam-booking-5.2/view/edit.xhtml
+        message: Use `<h:message for="name" errorClass="invalid">` or [Richfaces](http://richfaces.jboss.org/)
+          `<rich:message>`.
+        codeSnip: 19      </div>
+        lineNumber: 18
+        variables:
+          data: message
+          innerText: ""
+          matchingXML: ""
+      links:
+      - url: https://access.redhat.com/documentation/en-us/Red_Hat_JBoss_Web_Framework_Kit/2.7/html/Seam_Guide/_seam_2_ui_controls_migration_to_jsf.html
+        title: Seam 2 UI controls migration to JSF
+      effort: 1
+  insights:
+    jboss-eap5-xml-05000:
+      description: JBoss Seam Components (components.xml)
+      labels:
+      - ejb
+      - jboss-eap5
+      - konveyor.io/source=eap
+      - konveyor.io/source=eap5
+      - konveyor.io/target=eap
+      - konveyor.io/target=eap6
+      - seam
+      - tag=JBoss Seam Components (components.xml)
+      - tag=jboss-eap5
+      - tag=seam
+      incidents:
+      - uri: file:///source/test-files/seam-booking-5.2/resources/WEB-INF/components.xml
+        message: ""
+        codeSnip: 3              xmlns:core="http://jboss.com/products/seam/core"
+        lineNumber: 2
+        variables:
+          data: components
+          innerText: "\n\n    \n\n    \n\n    \n\n    \n\n"
+          matchingXML: <core:init jndi-pattern="@jndiPattern@" debug="true" distributable="@distributable@"></core:init><core:manager
+            conversation-timeout="120000" concurrent-request-timeout="500" conversation-id-parameter="cid"></core:manager><transaction:ejb-transaction></transaction:ejb-transaction><security:identity
+            authenticate-method="#{authenticator.authenticate}"></security:identity>
+    jboss-eap5-xml-06000:
+      description: JBoss Seam Pages
+      labels:
+      - ejb
+      - jboss-eap5
+      - konveyor.io/source=eap
+      - konveyor.io/source=eap5
+      - konveyor.io/target=eap
+      - konveyor.io/target=eap6
+      - seam
+      - tag=JBoss Seam Pages
+      - tag=jboss-eap5
+      - tag=seam
+      incidents:
+      - uri: file:///source/test-files/seam-booking-5.2/resources/WEB-INF/pages.xml
+        message: ""
+        codeSnip: 64            login-required="true">
+        lineNumber: 63
+        variables:
+          data: pages
+          innerText: "\n\n    \n    \n        \n    \n        \n            \n                \n
+            \           \n        \n        \n    \n\n    \n\n        \n            \n
+            \               \n            \n        \n    \n        \n            \n
+            \               \n            \n        \n        \n    \n    \n    \n
+            \   \n        \n            \n                \n            \n        \n
+            \       \n    \n\n    \n    \n        \n            \n        \n        \n
+            \       \n            \n        \n        \n    \n    \n    \n          \n
+            \       View hotel: #{hotel.name}\n        \n        \n            \n
+            \       \n        \n    \n\n    \n          \n        Book hotel: #{hotel.name}\n
+            \       \n        \n            \n                \n            \n        \n
+            \       \n    \n\n    \n          \n        Confirm booking: #{booking.description}\n
+            \       \n        \n            \n        \n        \n    \n    \n        \n
+            \       \n            \n        \n\n        \n            \n        \n
+            \       \n    \n    \n    \n        \n            You must be logged in
+            to use this feature\n        \n    \n    \n    \n        \n            Session
+            expired, please log in again\n        \n    \n\n"
+          matchingXML: '<page view-id="/register.xhtml"><action if="#{validation.failed}"
+            execute="#{register.invalid}"></action><navigation><rule if="#{register.registered}"><redirect
+            view-id="/home.xhtml"></redirect></rule></navigation></page><page view-id="/home.xhtml"
+            action="#{identity.isLoggedIn}"><navigation from-action="#{identity.isLoggedIn}"><rule
+            if-outcome="true"><redirect view-id="/main.xhtml"></redirect></rule></navigation><navigation><rule
+            if="#{identity.loggedIn}"><redirect view-id="/main.xhtml"></redirect></rule></navigation></page><page
+            view-id="/password.xhtml" login-required="true"><navigation><rule if="#{identity.loggedIn
+            and changePassword.changed}"><redirect view-id="/main.xhtml"></redirect></rule></navigation></page><page
+            view-id="/main.xhtml" login-required="true"><navigation from-action="#{hotelBooking.selectHotel(hot)}"><redirect
+            view-id="/hotel.xhtml"></redirect></navigation><navigation from-action="#{bookingList.cancel}"><redirect></redirect></navigation></page><page
+            view-id="/hotel.xhtml" conversation-required="true" login-required="true"><description>View
+            hotel: #{hotel.name}</description><navigation from-action="#{hotelBooking.bookHotel}"><redirect
+            view-id="/book.xhtml"></redirect></navigation></page><page view-id="/book.xhtml"
+            conversation-required="true" login-required="true"><description>Book hotel:
+            #{hotel.name}</description><navigation from-action="#{hotelBooking.setBookingDetails}"><rule
+            if="#{hotelBooking.bookingValid}"><redirect view-id="/confirm.xhtml"></redirect></rule></navigation></page><page
+            view-id="/confirm.xhtml" conversation-required="true" login-required="true"><description>Confirm
+            booking: #{booking.description}</description><navigation from-action="#{hotelBooking.confirm}"><redirect
+            view-id="/main.xhtml"></redirect></navigation></page><page view-id="*"><navigation
+            from-action="#{identity.logout}"><redirect view-id="/home.xhtml"></redirect></navigation><navigation
+            from-action="#{hotelBooking.cancel}"><redirect view-id="/main.xhtml"></redirect></navigation></page><exception
+            class="org.jboss.seam.security.NotLoggedInException"><redirect view-id="/home.xhtml"><message
+            severity="warn">You must be logged in to use this feature</message></redirect></exception><exception
+            class="javax.faces.application.ViewExpiredException"><redirect view-id="/home.xhtml"><message
+            severity="warn">Session expired, please log in again</message></redirect></exception>'
+    jboss-eap5-xml-08000:
+      description: JBoss EAR descriptor
+      labels:
+      - ejb
+      - jboss-eap5
+      - konveyor.io/source=eap
+      - konveyor.io/source=eap5
+      - konveyor.io/target=eap
+      - konveyor.io/target=eap6
+      - seam
+      - tag=JBoss EAR descriptor
+      - tag=configuration
+      - tag=deployment
+      - tag=descriptor
+      - tag=jboss-eap5
+      incidents:
+      - uri: file:///source/test-files/seam-booking-5.2/resources/META-INF/jboss-app.xml
+        message: ""
+        codeSnip: '9        </loader-repository> '
+        lineNumber: 8
+        variables:
+          data: jboss-app
+          innerText: "\n       \n      seam.jboss.org:loader=seam-booking\n       \n"
+          matchingXML: "<loader-repository> \n      seam.jboss.org:loader=seam-booking\n
+            \     </loader-repository>"
+    jboss-eap5-xml-13000:
+      description: JBoss EJB XML deployment descriptor prior to EAP 6
+      labels:
+      - ejb
+      - jboss-eap5
+      - konveyor.io/source=eap
+      - konveyor.io/source=eap5
+      - konveyor.io/target=eap
+      - konveyor.io/target=eap6
+      - seam
+      - tag=JBoss EJB XML deployment descriptor prior to EAP 6
+      - tag=descriptor
+      - tag=jboss-eap5
+      incidents:
+      - uri: file:///source/test-files/seam-booking-5.2/resources/META-INF/jboss.xml
+        message: ""
+        codeSnip: 7           <clustered>@distributable@</clustered>
+        lineNumber: 6
+        variables:
+          data: jboss
+          innerText: "\n   \n      \n         BookingListAction\n         @distributable@\n
+            \     \n      \n         HotelBookingAction\n         @distributable@\n
+            \     \n      \n         HotelSearchingAction\n         @distributable@\n
+            \     \n   \n"
+          matchingXML: <enterprise-beans><session><ejb-name>BookingListAction</ejb-name><clustered>@distributable@</clustered></session><session><ejb-name>HotelBookingAction</ejb-name><clustered>@distributable@</clustered></session><session><ejb-name>HotelSearchingAction</ejb-name><clustered>@distributable@</clustered></session></enterprise-beans>
+    seam-ui-jsf-00001:
+      description: JSF Seam 2.x tag library usage
+      labels:
+      - jsf
+      - konveyor.io/source=eap
+      - konveyor.io/source=eap5
+      - konveyor.io/source=java-ee
+      - konveyor.io/source=seam
+      - konveyor.io/source=seam2
+      - konveyor.io/target=eap
+      - konveyor.io/target=eap6
+      - konveyor.io/target=eap7
+      - seam
+      - tag=JSF Seam 2.x tag library usage
+      - tag=jsf
+      - tag=seam
+      incidents:
+      - uri: file:///source/test-files/seam-booking-5.2/view/book.xhtml
+        message: ""
+        codeSnip: "30  \t\t\t<rich:calendar id=\"checkinDate\" value=\"#{booking.checkinDate}\"
+          required=\"true\" datePattern=\"MM/dd/yyyy\" event=\"onblur\" reRender=\"checkinDateDecorate\"
+          style=\"width: auto;\" />"
+        lineNumber: 29
+        variables:
+          data: decorate
+          innerText: "\n\t\t\tCheck In Date:\n\t\t\t\n\t\t"
+          matchingXML: '<ui:define name="label">Check In Date:</ui:define><rich:calendar
+            id="checkinDate" value="#{booking.checkinDate}" required="true" datePattern="MM/dd/yyyy"
+            event="onblur" reRender="checkinDateDecorate" style="width: auto;"></rich:calendar>'
+      - uri: file:///source/test-files/seam-booking-5.2/view/book.xhtml
+        message: ""
+        codeSnip: "35  \t\t\t<rich:calendar id=\"checkoutDate\" value=\"#{booking.checkoutDate}\"
+          required=\"true\" datePattern=\"MM/dd/yyyy\" event=\"onblur\" reRender=\"checkoutDateDecorate\"
+          \ style=\"width: auto;\"/>"
+        lineNumber: 34
+        variables:
+          data: decorate
+          innerText: "\n\t\t\tCheck Out Date:\n\t\t\t\n\t\t"
+          matchingXML: '<ui:define name="label">Check Out Date:</ui:define><rich:calendar
+            id="checkoutDate" value="#{booking.checkoutDate}" required="true" datePattern="MM/dd/yyyy"
+            event="onblur" reRender="checkoutDateDecorate" style="width: auto;"></rich:calendar>'
+      - uri: file:///source/test-files/seam-booking-5.2/view/book.xhtml
+        message: ""
+        codeSnip: "40  \t\t\t<h:selectOneMenu id=\"beds\" value=\"#{booking.beds}\">"
+        lineNumber: 39
+        variables:
+          data: decorate
+          innerText: "\n\t\t\tRoom Preference:\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t"
+          matchingXML: <ui:define name="label">Room Preference:</ui:define><h:selectOneMenu
+            id="beds" value="#{booking.beds}"><f:selectItem id="OneKingBed" itemLabel="One
+            king-size bed" itemValue="1"></f:selectItem><f:selectItem id="TwoDoubleBeds"
+            itemLabel="Two double beds" itemValue="2"></f:selectItem><f:selectItem
+            id="ThreeBeds" itemLabel="Three beds" itemValue="3"></f:selectItem></h:selectOneMenu>
+      - uri: file:///source/test-files/seam-booking-5.2/view/book.xhtml
+        message: ""
+        codeSnip: "49  \t\t\t<h:selectOneRadio id=\"smoking\" value=\"#{booking.smoking}\"
+          layout=\"pageDirection\" styleClass=\"radio\">"
+        lineNumber: 48
+        variables:
+          data: decorate
+          innerText: "\n\t\t\tSmoking Preference:\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t"
+          matchingXML: <ui:define name="label">Smoking Preference:</ui:define><h:selectOneRadio
+            id="smoking" value="#{booking.smoking}" layout="pageDirection" styleClass="radio"><f:selectItem
+            id="Smoking" itemLabel="Smoking" itemValue="true"></f:selectItem><f:selectItem
+            id="NonSmoking" itemLabel="Non Smoking" itemValue="false"></f:selectItem></h:selectOneRadio>
+      - uri: file:///source/test-files/seam-booking-5.2/view/book.xhtml
+        message: ""
+        codeSnip: "57  \t\t\t<h:inputText id=\"creditCard\" value=\"#{booking.creditCard}\"
+          required=\"true\">"
+        lineNumber: 56
+        variables:
+          data: decorate
+          innerText: "\n\t\t\tCredit Card #:\n\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t"
+          matchingXML: '<ui:define name="label">Credit Card #:</ui:define><h:inputText
+            id="creditCard" value="#{booking.creditCard}" required="true"><a:support
+            id="onblur" event="onblur" reRender="creditCardDecorate"></a:support></h:inputText>'
+      - uri: file:///source/test-files/seam-booking-5.2/view/book.xhtml
+        message: ""
+        codeSnip: "64  \t\t\t<h:inputText id=\"creditCardName\" value=\"#{booking.creditCardName}\"
+          required=\"true\">"
+        lineNumber: 63
+        variables:
+          data: decorate
+          innerText: "\n\t\t\tCredit Card Name:\n\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t"
+          matchingXML: <ui:define name="label">Credit Card Name:</ui:define><h:inputText
+            id="creditCardName" value="#{booking.creditCardName}" required="true"><a:support
+            id="onblur" event="onblur" reRender="creditCardNameDecorate"></a:support></h:inputText>
+      - uri: file:///source/test-files/seam-booking-5.2/view/book.xhtml
+        message: ""
+        codeSnip: "71  \t\t\t<h:selectOneMenu id=\"creditCardExpiryMonth\" value=\"#{booking.creditCardExpiryMonth}\">"
+        lineNumber: 70
+        variables:
+          data: decorate
+          innerText: "\n\t\t\tCredit Card Expiry:\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t"
+          matchingXML: <ui:define name="label">Credit Card Expiry:</ui:define><h:selectOneMenu
+            id="creditCardExpiryMonth" value="#{booking.creditCardExpiryMonth}"><f:selectItem
+            id="Jan" itemLabel="Jan" itemValue="1"></f:selectItem><f:selectItem id="Feb"
+            itemLabel="Feb" itemValue="2"></f:selectItem><f:selectItem id="Mar" itemLabel="Mar"
+            itemValue="3"></f:selectItem><f:selectItem id="Apr" itemLabel="Apr" itemValue="4"></f:selectItem><f:selectItem
+            id="May" itemLabel="May" itemValue="5"></f:selectItem><f:selectItem id="Jun"
+            itemLabel="Jun" itemValue="6"></f:selectItem><f:selectItem id="Jul" itemLabel="Jul"
+            itemValue="7"></f:selectItem><f:selectItem id="Aug" itemLabel="Aug" itemValue="8"></f:selectItem><f:selectItem
+            id="Sep" itemLabel="Sep" itemValue="9"></f:selectItem><f:selectItem id="Oct"
+            itemLabel="Oct" itemValue="10"></f:selectItem><f:selectItem id="Nov" itemLabel="Nov"
+            itemValue="11"></f:selectItem><f:selectItem id="Dec" itemLabel="Dec" itemValue="12"></f:selectItem></h:selectOneMenu><h:selectOneMenu
+            id="creditCardExpiryYear" value="#{booking.creditCardExpiryYear}"><f:selectItem
+            id="Year2005" itemLabel="2005" itemValue="2005"></f:selectItem><f:selectItem
+            id="Year2006" itemLabel="2006" itemValue="2006"></f:selectItem><f:selectItem
+            id="Year2007" itemLabel="2007" itemValue="2007"></f:selectItem><f:selectItem
+            id="Year2008" itemLabel="2008" itemValue="2008"></f:selectItem><f:selectItem
+            id="Year2009" itemLabel="2009" itemValue="2009"></f:selectItem></h:selectOneMenu>
+      - uri: file:///source/test-files/seam-booking-5.2/view/book.xhtml
+        message: ""
+        codeSnip: "95  \t\t\t<h:commandButton id=\"proceed\" value=\"Proceed\" action=\"#{hotelBooking.setBookingDetails}\"/>"
+        lineNumber: 94
+        variables:
+          data: button
+          innerText: ""
+          matchingXML: ""
+      - uri: file:///source/test-files/seam-booking-5.2/view/confirm.xhtml
+        message: ""
+        codeSnip: "22  \t\t<h:outputText id=\"BookingTotal\" value=\"#{booking.total}\">"
+        lineNumber: 21
+        variables:
+          data: decorate
+          innerText: "\n\t\tTotal Payment:\n\t\t\n\t\t\t\n\t\t\n\t"
+          matchingXML: <ui:define name="label">Total Payment:</ui:define><h:outputText
+            id="BookingTotal" value="#{booking.total}"><f:convertNumber type="currency"
+            currencySymbol="$"></f:convertNumber></h:outputText>
+      - uri: file:///source/test-files/seam-booking-5.2/view/confirm.xhtml
+        message: ""
+        codeSnip: "29  \t\t<h:outputText id=\"BookingCheckinDate\" value=\"#{booking.checkinDate}\"/>"
+        lineNumber: 28
+        variables:
+          data: decorate
+          innerText: "\n\t\tCheck In Date:\n\t\t\n\t"
+          matchingXML: <ui:define name="label">Check In Date:</ui:define><h:outputText
+            id="BookingCheckinDate" value="#{booking.checkinDate}"></h:outputText>
+      - uri: file:///source/test-files/seam-booking-5.2/view/confirm.xhtml
+        message: ""
+        codeSnip: "34  \t\t<h:outputText id=\"BookingCheckoutDate\" value=\"#{booking.checkoutDate}\"/>"
+        lineNumber: 33
+        variables:
+          data: decorate
+          innerText: "\n\t\tCheck Out Date:\n\t\t\n\t"
+          matchingXML: <ui:define name="label">Check Out Date:</ui:define><h:outputText
+            id="BookingCheckoutDate" value="#{booking.checkoutDate}"></h:outputText>
+      - uri: file:///source/test-files/seam-booking-5.2/view/confirm.xhtml
+        message: ""
+        codeSnip: "39  \t\t#{booking.creditCard}"
+        lineNumber: 38
+        variables:
+          data: decorate
+          innerText: "\n\t\tCredit Card #:\n\t\t#{booking.creditCard}\n\t"
+          matchingXML: "<ui:define name=\"label\">Credit Card #:</ui:define>\n\t\t#{booking.creditCard}"
+      - uri: file:///source/test-files/seam-booking-5.2/view/confirm.xhtml
+        message: ""
+        codeSnip: "43  \t\t<h:form id=\"confirm\">"
+        lineNumber: 42
+        variables:
+          data: button
+          innerText: ""
+          matchingXML: ""
+      - uri: file:///source/test-files/seam-booking-5.2/view/conversations.xhtml
+        message: ""
+        codeSnip: "25  \t                </h:outputText>"
+        lineNumber: 24
+        variables:
+          data: convertDateTime
+          innerText: ""
+          matchingXML: ""
+      - uri: file:///source/test-files/seam-booking-5.2/view/edit.xhtml
+        message: ""
+        codeSnip: 12          </s:label>
+        lineNumber: 11
+        variables:
+          data: label
+          innerText: "\n            \n            *\n        "
+          matchingXML: <ui:insert name="label"></ui:insert><s:span id="RequiredStyle"
+            styleClass="required" rendered="#{required}">*</s:span>
+      - uri: file:///source/test-files/seam-booking-5.2/view/edit.xhtml
+        message: ""
+        codeSnip: 15                  <ui:insert/>
+        lineNumber: 14
+        variables:
+          data: validateAll
+          innerText: "\n                \n            "
+          matchingXML: <ui:insert></ui:insert>
+      - uri: file:///source/test-files/seam-booking-5.2/view/edit.xhtml
+        message: ""
+        codeSnip: 19      </div>
+        lineNumber: 18
+        variables:
+          data: message
+          innerText: ""
+          matchingXML: ""
+      - uri: file:///source/test-files/seam-booking-5.2/view/home.xhtml
+        message: ""
+        codeSnip: 11  </head>
+        lineNumber: 10
+        variables:
+          data: link
+          innerText: ""
+          matchingXML: ""
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotelview.xhtml
+        message: ""
+        codeSnip: "10  \t\t#{hotel.name}"
+        lineNumber: 9
+        variables:
+          data: decorate
+          innerText: "             \n\t\tName:\n\t\t#{hotel.name}\n\t"
+          matchingXML: "<ui:define name=\"label\">Name:</ui:define>\n\t\t#{hotel.name}"
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotelview.xhtml
+        message: ""
+        codeSnip: "15  \t\t#{hotel.address}"
+        lineNumber: 14
+        variables:
+          data: decorate
+          innerText: "             \n\t\tAddress:\n\t\t#{hotel.address}\n\t"
+          matchingXML: "<ui:define name=\"label\">Address:</ui:define>\n\t\t#{hotel.address}"
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotelview.xhtml
+        message: ""
+        codeSnip: "20  \t\t#{hotel.city}"
+        lineNumber: 19
+        variables:
+          data: decorate
+          innerText: "             \n\t\tCity:\n\t\t#{hotel.city}\n\t"
+          matchingXML: "<ui:define name=\"label\">City:</ui:define>\n\t\t#{hotel.city}"
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotelview.xhtml
+        message: ""
+        codeSnip: "25  \t\t#{hotel.state}"
+        lineNumber: 24
+        variables:
+          data: decorate
+          innerText: "             \n\t\tState:\n\t\t#{hotel.state}\n\t"
+          matchingXML: "<ui:define name=\"label\">State:</ui:define>\n\t\t#{hotel.state}"
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotelview.xhtml
+        message: ""
+        codeSnip: "30  \t\t#{hotel.zip}"
+        lineNumber: 29
+        variables:
+          data: decorate
+          innerText: "             \n\t\tZip:\n\t\t#{hotel.zip}\n\t"
+          matchingXML: "<ui:define name=\"label\">Zip:</ui:define>\n\t\t#{hotel.zip}"
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotelview.xhtml
+        message: ""
+        codeSnip: "35  \t\t#{hotel.country}"
+        lineNumber: 34
+        variables:
+          data: decorate
+          innerText: "             \n\t\tCountry:\n\t\t#{hotel.country}\n\t"
+          matchingXML: "<ui:define name=\"label\">Country:</ui:define>\n\t\t#{hotel.country}"
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotelview.xhtml
+        message: ""
+        codeSnip: "40  \t\t<h:outputText id=\"HotelPrice\" value=\"#{hotel.price}\">"
+        lineNumber: 39
+        variables:
+          data: decorate
+          innerText: "             \n\t\tNightly rate:\n\t\t\n\t\t\t\n\t\t\n\t"
+          matchingXML: <ui:define name="label">Nightly rate:</ui:define><h:outputText
+            id="HotelPrice" value="#{hotel.price}"><f:convertNumber type="currency"
+            currencySymbol="$"></f:convertNumber></h:outputText>
+      - uri: file:///source/test-files/seam-booking-5.2/view/main.xhtml
+        message: ""
+        codeSnip: "69  \t\t</h:column>"
+        lineNumber: 68
+        variables:
+          data: link
+          innerText: ""
+          matchingXML: ""
+      - uri: file:///source/test-files/seam-booking-5.2/view/password.xhtml
+        message: ""
+        codeSnip: "28  \t\t\t\t<h:inputSecret id=\"password\" value=\"#{user.password}\"
+          required=\"true\"/>"
+        lineNumber: 27
+        variables:
+          data: decorate
+          innerText: "\n\t\t\t\tPassword:\n\t\t\t\t\n\t\t\t"
+          matchingXML: <ui:define name="label">Password:</ui:define><h:inputSecret
+            id="password" value="#{user.password}" required="true"></h:inputSecret>
+      - uri: file:///source/test-files/seam-booking-5.2/view/password.xhtml
+        message: ""
+        codeSnip: "33  \t\t\t\t<h:inputSecret id=\"verify\" value=\"#{changePassword.verify}\"
+          required=\"true\"/>"
+        lineNumber: 32
+        variables:
+          data: decorate
+          innerText: "\n\t\t\t\tVerify:\n\t\t\t\t\n\t\t\t"
+          matchingXML: <ui:define name="label">Verify:</ui:define><h:inputSecret id="verify"
+            value="#{changePassword.verify}" required="true"></h:inputSecret>
+      - uri: file:///source/test-files/seam-booking-5.2/view/password.xhtml
+        message: ""
+        codeSnip: "37  \t\t\t\t<h:commandButton id=\"change\" value=\"Change\" action=\"#{changePassword.changePassword}\"/>"
+        lineNumber: 36
+        variables:
+          data: button
+          innerText: ""
+          matchingXML: ""
+      - uri: file:///source/test-files/seam-booking-5.2/view/register.xhtml
+        message: ""
+        codeSnip: "59  \t\t\t\t\t\t<h:inputText id=\"username\" value=\"#{user.username}\"
+          required=\"true\">"
+        lineNumber: 58
+        variables:
+          data: decorate
+          innerText: "\n\t\t\t\t\t\tUsername:\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t"
+          matchingXML: <ui:define name="label">Username:</ui:define><h:inputText id="username"
+            value="#{user.username}" required="true"><a:support id="onblur" event="onblur"
+            reRender="usernameDecorate"></a:support></h:inputText>
+      - uri: file:///source/test-files/seam-booking-5.2/view/register.xhtml
+        message: ""
+        codeSnip: "66  \t\t\t\t\t\t<h:inputText id=\"name\" value=\"#{user.name}\"
+          required=\"true\">"
+        lineNumber: 65
+        variables:
+          data: decorate
+          innerText: "\n\t\t\t\t\t\tReal Name:\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t"
+          matchingXML: <ui:define name="label">Real Name:</ui:define><h:inputText
+            id="name" value="#{user.name}" required="true"><a:support id="onblur"
+            event="onblur" reRender="nameDecorate"></a:support></h:inputText>
+      - uri: file:///source/test-files/seam-booking-5.2/view/register.xhtml
+        message: ""
+        codeSnip: "73  \t\t\t\t\t\t<h:inputSecret id=\"password\" value=\"#{user.password}\"
+          required=\"true\"/>"
+        lineNumber: 72
+        variables:
+          data: decorate
+          innerText: "\n\t\t\t\t\t\tPassword:\n\t\t\t\t\t\t\n\t\t\t\t\t"
+          matchingXML: <ui:define name="label">Password:</ui:define><h:inputSecret
+            id="password" value="#{user.password}" required="true"></h:inputSecret>
+      - uri: file:///source/test-files/seam-booking-5.2/view/register.xhtml
+        message: ""
+        codeSnip: "78  \t\t\t\t\t\t<h:inputSecret id=\"verify\" value=\"#{register.verify}\"
+          required=\"true\"/>"
+        lineNumber: 77
+        variables:
+          data: decorate
+          innerText: "\n\t\t\t\t\t\tVerify Password:\n\t\t\t\t\t\t\n\t\t\t\t\t"
+          matchingXML: <ui:define name="label">Verify Password:</ui:define><h:inputSecret
+            id="verify" value="#{register.verify}" required="true"></h:inputSecret>
+      - uri: file:///source/test-files/seam-booking-5.2/view/register.xhtml
+        message: ""
+        codeSnip: "82  \t\t\t\t\t\t<h:commandButton id=\"register\" value=\"Register\"
+          action=\"#{register.register}\"/>"
+        lineNumber: 81
+        variables:
+          data: button
+          innerText: ""
+          matchingXML: ""
+      - uri: file:///source/test-files/seam-booking-5.2/view/template.xhtml
+        message: ""
+        codeSnip: 14  </head>
+        lineNumber: 13
+        variables:
+          data: link
+          innerText: ""
+          matchingXML: ""
+  unmatched:
+  - commonj-01000
+  - commonj-02000
+  - commonj-03000
+  - commonj-04000
+  - commonj-05000
+  - commonj-06000
+  - commonj-07000
+  - eap4-eap6-25000
+  - eap4-eap6-26000
+  - eap4-eap6-27000
+  - eap4-eap6-28000
+  - eap4-eap6-29000
+  - eap4-eap6-30000
+  - eap4-eap6-31000
+  - eap4-eap6-32000
+  - eap4-eap6-33000
+  - eap4-eap6-34000
+  - eap4-eap6-35000
+  - eap4-eap6-36000
+  - eap4-eap6-37000
+  - eap4-eap6-38000
+  - eap4-eap6-39000
+  - eap4-eap6-40000
+  - eap4-eap6-41000
+  - eap4-eap6-42000
+  - environment-dependent-calls-01000
+  - environment-dependent-calls-02000
+  - environment-dependent-calls-03000
+  - environment-dependent-calls-03500
+  - environment-dependent-calls-04000
+  - environment-dependent-calls-04001
+  - environment-dependent-calls-05000
+  - generic-catchall-00000
+  - generic-catchall-00001
+  - generic-catchall-00002
+  - generic-catchall-00003
+  - generic-catchall-00100
+  - generic-catchall-00200
+  - generic-catchall-00300
+  - generic-catchall-00400
+  - generic-catchall-00500
+  - generic-catchall-00600
+  - generic-catchall-00700
+  - generic-catchall-00900
+  - java-ee-jaxrpc-00000
+  - jboss-eap5-7-xml-10000
+  - jboss-eap5-7-xml-10000
+  - jboss-eap5-java-01000
+  - jboss-eap5-java-02000
+  - jboss-eap5-java-04000
+  - jboss-eap5-java-05000
+  - jboss-eap5-java-06000
+  - jboss-eap5-java-07000
+  - jboss-eap5-java-08000
+  - jboss-eap5-java-08100
+  - jboss-eap5-java-08200
+  - jboss-eap5-java-08300
+  - jboss-eap5-java-08400
+  - jboss-eap5-java-08500
+  - jboss-eap5-java-08600
+  - jboss-eap5-java-08700
+  - jboss-eap5-java-08800
+  - jboss-eap5-java-08900
+  - jboss-eap5-java-09000
+  - jboss-eap5-java-09100
+  - jboss-eap5-xml-01000
+  - jboss-eap5-xml-02000
+  - jboss-eap5-xml-03000
+  - jboss-eap5-xml-07000
+  - jboss-eap5-xml-09000
+  - jboss-eap5-xml-11000
+  - jboss-eap5-xml-12000
+  - jboss-eap5-xml-14000
+  - jboss-eap5-xml-16000
+  - jboss-eap5-xml-16000
+  - jboss-eap5-xml-17000
+  - jboss-eap5-xml-18000
+  - jboss-eap5-xml-20000
+  - jotm-00001
+  - jrun-catchall-00000
+  - jrun-catchall-00001
+  - jsp-01000
+  - log4j-01000
+  - log4j-02000
+  - log4j-03000
+  - resteasy-eap5-000001
+  - seam-java-00000
+  - seam-java-00010
+  - seam-java-00030
+  - seam-java-00040
+  - seam-java-00050
+  - seam-java-00060
+  - seam-java-00061
+  - seam-java-00070
+  - seam-java-00071
+  - seam-java-00080
+  - seam-java-00090
+  - seam-java-00091
+  - seam-java-00100
+  - seam-java-00110
+  - seam-java-00120
+  - seam-java-00130
+  - seam-java-00140
+  - seam-java-00150
+  - seam-java-00160
+  - seam-java-00170
+  - seam-java-00180
+  - seam-java-00190
+  - seam-java-00200
+  - seam-java-00210
+  - seam-java-00220
+  - seam-java-00230
+  - seam-java-00240
+  - seam-java-00250
+  - seam-java-00260
+  - seam-java-00270
+  - seam-ui-jsf-00002
+  - seam-ui-jsf-01001
+  - seam-ui-jsf-01002
+  - seam-ui-jsf-01003
+  - seam-ui-jsf-01004
+  - seam-ui-jsf-01006
+  - seam-ui-jsf-01007
+  - seam-ui-jsf-01008
+  - seam-ui-jsf-01009
+  - seam-ui-jsf-01010
+  - seam-ui-jsf-01011
+  - seam-ui-jsf-01012
+  - seam-ui-jsf-01013
+  - seam-ui-jsf-01014
+  - seam-ui-jsf-01015
+  - seam-ui-jsf-01016
+  - seam-ui-jsf-01017
+  - seam-ui-jsf-01018
+  - seam-ui-jsf-01019
+  - seam-ui-jsf-01020
+  - seam-ui-jsf-01021
+  - seam-ui-jsf-01024
+  - seam-ui-jsf-01028
+  - seam-ui-jsf-01029
+  - xml-glassfish-01000
+  - xml-glassfish-02000
+  - xml-glassfish-03000
+  - xml-jonas-01000
+  - xml-jrun-01000
+  - xml-jrun-02000
+  - xml-orion-01000
+  - xml-orion-02000
+  - xml-orion-03000
+  - xml-resin-01000
+  - xml-webservices-01000
+  - xml-webservices-02000
+  - xml-webservices-03000
+  - xml-webservices-04000
+  - xml-webservices-05000
+  - xml-webservices-06000
+  - xml-webservices-06001
+  - xml-webservices-07000
+  - xml-webservices-08000
+  - xml-webservices-09000
+  - xml-webservices-10000
+- name: eap7/weblogic/tests/data
+  tags:
+  - JBoss Seam Components (components.xml)
+  - JBoss Seam Pages (pages.xml)
+  - JBoss legacy EJB XML (jboss.xml)
+  - descriptor
+  - jboss-eap5
+  - seam
+  - seam2
+  violations:
+    hibernate51-53-01000:
+      description: Hibernate 5.3 - default_schema or default_catalog must be defined
+        or set jdbc_metadata_extraction_strategy
+      category: mandatory
+      labels:
+      - hibernate
+      - konveyor.io/source=hibernate
+      - konveyor.io/source=hibernate5.1-
+      - konveyor.io/target=eap
+      - konveyor.io/target=eap7
+      - konveyor.io/target=hibernate
+      - konveyor.io/target=hibernate5.3+
+      incidents:
+      - uri: file:///source/test-files/seam-booking-5.2/resources/META-INF/persistence.xml
+        message: Define `hibernate.default_schema` or `hibernate.default_catalog`
+          (whichever is used by the selected dialect), or, alternatively, set `hibernate.hbm2ddl.jdbc_metadata_extraction_strategy=individually`.
+        codeSnip: 8        <jta-data-source>java:/bookingDatasource</jta-data-source>
+        lineNumber: 7
+        variables:
+          data: provider
+          innerText: org.hibernate.ejb.HibernatePersistence
+          matchingXML: org.hibernate.ejb.HibernatePersistence
+      - uri: file:///source/test-files/seam-booking-5.2/resources/META-INF/persistence.xml
+        message: Define `hibernate.default_schema` or `hibernate.default_catalog`
+          (whichever is used by the selected dialect), or, alternatively, set `hibernate.hbm2ddl.jdbc_metadata_extraction_strategy=individually`.
+        codeSnip: 10           <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+        lineNumber: 9
+        variables:
+          data: properties
+          innerText: "\n         \n         \n         \n         \n         \n      "
+          matchingXML: '<property name="hibernate.hbm2ddl.auto" value="create-drop"></property><property
+            name="hibernate.show_sql" value="true"></property><!-- These are the default
+            for JBoss EJB3, but not for HEM: --><property name="hibernate.cache.provider_class"
+            value="org.hibernate.cache.HashtableCacheProvider"></property><property
+            name="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.JBossTransactionManagerLookup"></property>'
+      effort: 1
+    maven-javax-to-jakarta-00004:
+      description: The groupId 'javax' has been replaced by 'jakarta' in JBoss EAP
+        7.3, or later
+      category: potential
+      labels:
+      - JakartaEE
+      - konveyor.io/source
+      - konveyor.io/target=eap
+      - konveyor.io/target=eap7
+      - konveyor.io/target=eap8
+      - konveyor.io/target=jakarta-ee
+      - konveyor.io/target=jakarta-ee8
+      incidents:
+      - uri: file:///source/test-files/seam-booking-5.2/pom.xml
+        message: If you migrate your application to JBoss EAP 7.3, or later, and want
+          to ensure its Maven building, running or testing works as expected, use
+          instead the Jakarta EE dependency - groupId `jakarta.`.
+        codeSnip: 25              <artifactId>persistence-api</artifactId>
+        lineNumber: 24
+        variables:
+          matchingText: groupId>javax.persistence<
+      links:
+      - url: https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.3/html-single/migration_guide/index#maven-artifact-changes-for-jakarta-ee_default
+        title: 'Red Hat JBoss EAP 7.3 Migration Guide: Maven Artifact Changes for
+          Jakarta EE'
+      effort: 1
+  insights:
+    jboss-eap5-7-xml-13000:
+      description: JBoss legacy EJB XML (jboss.xml)
+      labels:
+      - ejb
+      - jboss-eap5
+      - konveyor.io/source=eap
+      - konveyor.io/source=eap5
+      - konveyor.io/target=eap
+      - konveyor.io/target=eap7+
+      - seam
+      - tag=JBoss legacy EJB XML (jboss.xml)
+      - tag=descriptor
+      - tag=jboss-eap5
+      incidents:
+      - uri: file:///source/test-files/seam-booking-5.2/resources/META-INF/jboss.xml
+        message: "\n                        The `jboss.xml` descriptor in deployments
+          is ignored by JBoss AS 7+ or JBoss EAP 6+.\n                        Replace
+          it with `jboss-ejb3.xml`.\n                    "
+        codeSnip: 7           <clustered>@distributable@</clustered>
+        lineNumber: 6
+        variables:
+          data: jboss
+          innerText: "\n   \n      \n         BookingListAction\n         @distributable@\n
+            \     \n      \n         HotelBookingAction\n         @distributable@\n
+            \     \n      \n         HotelSearchingAction\n         @distributable@\n
+            \     \n   \n"
+          matchingXML: <enterprise-beans><session><ejb-name>BookingListAction</ejb-name><clustered>@distributable@</clustered></session><session><ejb-name>HotelBookingAction</ejb-name><clustered>@distributable@</clustered></session><session><ejb-name>HotelSearchingAction</ejb-name><clustered>@distributable@</clustered></session></enterprise-beans>
+      links:
+      - url: https://access.redhat.com/documentation/en-us/jboss_enterprise_application_platform/5/html-single/administration_and_configuration_guide/#ENC_Usage_Conventions-EJB_References_with_jboss.xml_and_jboss_web.xml
+        title: JBoss EAP 5 - EJB References with jboss.xml and jboss-web.xml
+      - url: https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/6.4/html-single/migration_guide/#Replace_the_jboss.xml_File
+        title: JBoss EAP 6 - Replace the jboss.xml File
+      - url: https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/6.4/html-single/development_guide/#jboss-ejb3xml_Deployment_Descriptor_Reference
+        title: JBoss EAP 6 - jboss-ejb3.xml Deployment Descriptor
+      - url: https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.0/html-single/developing_ejb_applications/#jboss_ejb3_xml_deployment_descriptor_reference
+        title: JBoss EAP 7 - jboss-ejb3.xml Deployment Descriptor Reference
+    jboss-eap5and6to7-xml-05000:
+      description: JBoss Seam Components (components.xml)
+      labels:
+      - ejb
+      - jboss-eap5
+      - jboss-eap6
+      - konveyor.io/source=eap
+      - konveyor.io/source=eap5
+      - konveyor.io/source=eap6
+      - konveyor.io/target=eap
+      - konveyor.io/target=eap7+
+      - tag=JBoss Seam Components (components.xml)
+      - tag=jboss-eap5
+      - tag=seam2
+      incidents:
+      - uri: file:///source/test-files/seam-booking-5.2/resources/WEB-INF/components.xml
+        message: You should migrate from Seam 2 Framework to Context Dependency Injection
+          technology.
+        codeSnip: 3              xmlns:core="http://jboss.com/products/seam/core"
+        lineNumber: 2
+        variables:
+          data: components
+          innerText: "\n\n    \n\n    \n\n    \n\n    \n\n"
+          matchingXML: <core:init jndi-pattern="@jndiPattern@" debug="true" distributable="@distributable@"></core:init><core:manager
+            conversation-timeout="120000" concurrent-request-timeout="500" conversation-id-parameter="cid"></core:manager><transaction:ejb-transaction></transaction:ejb-transaction><security:identity
+            authenticate-method="#{authenticator.authenticate}"></security:identity>
+      links:
+      - url: https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.0/html-single/development_guide/#contexts_and_dependency_injection_cdi
+        title: Context and dependency injection - CDI
+      - url: https://access.redhat.com/documentation/en-us/Red_Hat_JBoss_Web_Framework_Kit/2.7/html/Seam_Guide/ch36.html
+        title: Migration from Seam 2 to Java EE and alternatives
+    jboss-eap5and6to7-xml-06000:
+      description: JBoss Seam Pages (pages.xml)
+      labels:
+      - ejb
+      - jboss-eap5
+      - jboss-eap6
+      - konveyor.io/source=eap
+      - konveyor.io/source=eap5
+      - konveyor.io/source=eap6
+      - konveyor.io/target=eap
+      - konveyor.io/target=eap7+
+      - tag=JBoss Seam Pages (pages.xml)
+      - tag=jboss-eap5
+      - tag=seam
+      incidents:
+      - uri: file:///source/test-files/seam-booking-5.2/resources/WEB-INF/pages.xml
+        message: "You should migrate from Seam 2 Framework to Context Dependency Injection
+          technology.\n                        The most features from `pages.xml`
+          file where it is specified a page flow and other configuration of the Seam
+          Framework is achievable through JSF Flow.\n                    "
+        codeSnip: 64            login-required="true">
+        lineNumber: 63
+        variables:
+          data: pages
+          innerText: "\n\n    \n    \n        \n    \n        \n            \n                \n
+            \           \n        \n        \n    \n\n    \n\n        \n            \n
+            \               \n            \n        \n    \n        \n            \n
+            \               \n            \n        \n        \n    \n    \n    \n
+            \   \n        \n            \n                \n            \n        \n
+            \       \n    \n\n    \n    \n        \n            \n        \n        \n
+            \       \n            \n        \n        \n    \n    \n    \n          \n
+            \       View hotel: #{hotel.name}\n        \n        \n            \n
+            \       \n        \n    \n\n    \n          \n        Book hotel: #{hotel.name}\n
+            \       \n        \n            \n                \n            \n        \n
+            \       \n    \n\n    \n          \n        Confirm booking: #{booking.description}\n
+            \       \n        \n            \n        \n        \n    \n    \n        \n
+            \       \n            \n        \n\n        \n            \n        \n
+            \       \n    \n    \n    \n        \n            You must be logged in
+            to use this feature\n        \n    \n    \n    \n        \n            Session
+            expired, please log in again\n        \n    \n\n"
+          matchingXML: '<page view-id="/register.xhtml"><action if="#{validation.failed}"
+            execute="#{register.invalid}"></action><navigation><rule if="#{register.registered}"><redirect
+            view-id="/home.xhtml"></redirect></rule></navigation></page><page view-id="/home.xhtml"
+            action="#{identity.isLoggedIn}"><navigation from-action="#{identity.isLoggedIn}"><rule
+            if-outcome="true"><redirect view-id="/main.xhtml"></redirect></rule></navigation><navigation><rule
+            if="#{identity.loggedIn}"><redirect view-id="/main.xhtml"></redirect></rule></navigation></page><page
+            view-id="/password.xhtml" login-required="true"><navigation><rule if="#{identity.loggedIn
+            and changePassword.changed}"><redirect view-id="/main.xhtml"></redirect></rule></navigation></page><page
+            view-id="/main.xhtml" login-required="true"><navigation from-action="#{hotelBooking.selectHotel(hot)}"><redirect
+            view-id="/hotel.xhtml"></redirect></navigation><navigation from-action="#{bookingList.cancel}"><redirect></redirect></navigation></page><page
+            view-id="/hotel.xhtml" conversation-required="true" login-required="true"><description>View
+            hotel: #{hotel.name}</description><navigation from-action="#{hotelBooking.bookHotel}"><redirect
+            view-id="/book.xhtml"></redirect></navigation></page><page view-id="/book.xhtml"
+            conversation-required="true" login-required="true"><description>Book hotel:
+            #{hotel.name}</description><navigation from-action="#{hotelBooking.setBookingDetails}"><rule
+            if="#{hotelBooking.bookingValid}"><redirect view-id="/confirm.xhtml"></redirect></rule></navigation></page><page
+            view-id="/confirm.xhtml" conversation-required="true" login-required="true"><description>Confirm
+            booking: #{booking.description}</description><navigation from-action="#{hotelBooking.confirm}"><redirect
+            view-id="/main.xhtml"></redirect></navigation></page><page view-id="*"><navigation
+            from-action="#{identity.logout}"><redirect view-id="/home.xhtml"></redirect></navigation><navigation
+            from-action="#{hotelBooking.cancel}"><redirect view-id="/main.xhtml"></redirect></navigation></page><exception
+            class="org.jboss.seam.security.NotLoggedInException"><redirect view-id="/home.xhtml"><message
+            severity="warn">You must be logged in to use this feature</message></redirect></exception><exception
+            class="javax.faces.application.ViewExpiredException"><redirect view-id="/home.xhtml"><message
+            severity="warn">Session expired, please log in again</message></redirect></exception>'
+      links:
+      - url: https://access.redhat.com/documentation/en-us/jboss_enterprise_application_platform/5/html-single/seam_reference_guide/
+        title: Seam 2 Framework Reference
+      - url: https://docs.oracle.com/javaee/7/tutorial/jsf-configure003.htm
+        title: Using Faces Flows
+  unmatched:
+  - base64-01000
+  - deprecated-singletonpolicy-00001
+  - eap6-08000
+  - eap6-08001
+  - eap6-08002
+  - eap6-11000
+  - eap6-12000
+  - eap6-xml-05000
+  - eap6-xml-06000
+  - eap7-websphere-xml-01000
+  - eap7-websphere-xml-02000
+  - eap7-websphere-xml-03500
+  - eap7-websphere-xml-06000
+  - eap7-websphere-xml-07000
+  - eap7-websphere-xml-08000
+  - eap7-websphere-xml-09000
+  - elytron-eap71-00000
+  - elytron-eap71-00010
+  - embedded-framework-libraries-01000
+  - embedded-framework-libraries-02000
+  - embedded-framework-libraries-04000
+  - embedded-framework-libraries-05000
+  - embedded-framework-libraries-06000
+  - hibernate4-00001
+  - hibernate4-00002
+  - hibernate4-00003
+  - hibernate4-00004
+  - hibernate4-00005
+  - hibernate4-00006
+  - hibernate4-00007
+  - hibernate4-00008
+  - hibernate4-00009
+  - hibernate4-00010
+  - hibernate4-00011
+  - hibernate4-00012
+  - hibernate4-00013
+  - hibernate4-00014
+  - hibernate4-00015
+  - hibernate4-00016
+  - hibernate4-00017
+  - hibernate4-00018
+  - hibernate4-00021
+  - hibernate4-00022
+  - hibernate4-00023
+  - hibernate4-00024
+  - hibernate4-00025
+  - hibernate4-00026
+  - hibernate4-00027
+  - hibernate4-00028
+  - hibernate4-00030
+  - hibernate4-00031
+  - hibernate4-00032
+  - hibernate4-00033
+  - hibernate4-00034
+  - hibernate4-00035
+  - hibernate4-00036
+  - hibernate4-00037
+  - hibernate4-00038
+  - hibernate4-00039
+  - hibernate4-00040
+  - hibernate4-xml-00001
+  - hibernate4-xml-00002
+  - hibernate4-xml-00003
+  - hibernate4-xml-00004
+  - hibernate4-xml-00005
+  - hibernate50-51-00000
+  - hibernate50-51-00100
+  - hibernate51-53-00001
+  - hibernate51-53-00100
+  - hibernate51-53-00300
+  - hibernate51-53-00400
+  - hibernate51-53-00401
+  - hibernate51-53-00402
+  - hibernate51-53-00403
+  - hibernate51-53-00404
+  - hibernate51-53-00405
+  - hibernate51-53-00406
+  - hibernate51-53-00407
+  - hibernate51-53-00500
+  - hibernate51-53-00600
+  - hibernate51-53-00700
+  - hibernate51-53-00701
+  - hibernate51-53-00702
+  - hibernate51-53-00800
+  - hibernate51-53-01001
+  - hibernate51-53-01100
+  - hibernate51-53-01200
+  - hsearch-00000
+  - hsearch-00001
+  - hsearch-00002
+  - hsearch-00003
+  - hsearch-00004
+  - hsearch-00005
+  - hsearch-00006
+  - hsearch-00007
+  - hsearch-00008
+  - hsearch-00009
+  - hsearch-00010
+  - hsearch-00011
+  - hsearch-00100
+  - hsearch-00101
+  - hsearch-00103
+  - hsearch-00104
+  - hsearch-00106
+  - hsearch-00107
+  - hsearch-00108
+  - hsearch-00109
+  - hsearch-00110
+  - hsearch-00111
+  - hsearch-00112
+  - hsearch-00113
+  - hsearch-00114
+  - hsearch-00115
+  - hsearch-00116
+  - hsearch-00117
+  - hsearch-00118
+  - hsearch-00119
+  - hsearch-00200
+  - hsearch-00201
+  - hsearch-00210
+  - hsearch-00211
+  - hsearch-00213
+  - hsearch-00214
+  - hsearch-00215
+  - hsearch-00216
+  - hsearch-00217
+  - hsearch-00218
+  - hsearch-00219
+  - hsearch-00220
+  - hsearch-00221
+  - hsearch-00222
+  - hsearch-00224
+  - hsearch-00225
+  - hsearch-00226
+  - hsearch-00227
+  - hsearch-00228
+  - hsearch-00229
+  - hsearch-00230
+  - hsearch-00231
+  - hsearch-00232
+  - hsearch-00233
+  - hsearch-00234
+  - hsearch-00235
+  - hsearch-00236
+  - hsearch-00237
+  - hsearch-00238
+  - hsearch-00239
+  - hsearch-00240
+  - jax-ws-00000
+  - jaxrpc-00000
+  - jboss-eap4and5to6and7-java-01000
+  - jboss-eap4and5to6and7-java-02000
+  - jboss-eap4and5to6and7-java-03000
+  - jboss-eap4and5to6and7-xml-01000
+  - jboss-eap4and5to6and7-xml-02000
+  - jboss-eap4and5to6and7-xml-03000
+  - jboss-eap4and5to6and7-xml-04000
+  - jboss-eap4and5to6and7-xml-05000
+  - jboss-eap4and5to6and7-xml-06000
+  - jboss-eap4and5to6and7-xml-07000
+  - jboss-eap5-7-java-02000
+  - jboss-eap5-7-java-03000
+  - jboss-eap5-7-java-05000
+  - jboss-eap5-7-java-06000
+  - jboss-eap5-7-java-07000
+  - jboss-eap5-7-java-08000
+  - jboss-eap5-7-java-08100
+  - jboss-eap5-7-java-08200
+  - jboss-eap5-7-java-08300
+  - jboss-eap5-7-java-08400
+  - jboss-eap5-7-java-08500
+  - jboss-eap5-7-java-08600
+  - jboss-eap5-7-java-08700
+  - jboss-eap5-7-java-08800
+  - jboss-eap5-7-java-08900
+  - jboss-eap5-7-java-09000
+  - jboss-eap5-7-java-09100
+  - jboss-eap5-7-xml-01000
+  - jboss-eap5-7-xml-02000
+  - jboss-eap5-7-xml-10000
+  - jboss-eap5-7-xml-10000
+  - jboss-eap5-7-xml-14000
+  - jboss-eap5-7-xml-16000
+  - jboss-eap5-7-xml-16000
+  - jboss-eap5and6to7-java-01000
+  - jboss-eap5and6to7-java-02000
+  - jboss-eap5and6to7-java-03000
+  - jboss-eap5and6to7-java-04000
+  - jboss-eap5and6to7-java-05000
+  - jboss-eap5and6to7-java-06000
+  - jboss-eap5and6to7-java-07000
+  - jboss-eap5and6to7-java-08000
+  - jboss-eap5and6to7-java-09000
+  - jboss-eap5and6to7-xml-07000
+  - jboss-eap5and6to7-xml-09000
+  - jboss-eap5and6to7-xml-12000
+  - jboss-eap5and6to7-xml-17000
+  - jboss-eap5and6to7-xml-18000
+  - jboss-eap5and6to7-xml-31000
+  - jboss-eap5and6to7-xml-31500
+  - jboss-eap5and6to7-xml-32000
+  - jboss-eap5and6to7-xml-33000
+  - jboss-eap5and6to7-xml-34000
+  - jboss-eap5and6to7-xml-37000
+  - jboss-eap5and6to7-xml-38000
+  - jboss-eap5and6to7-xml-38001
+  - jboss-eap5and6to7-xml-38002
+  - jboss-eap5and6to7-xml-38003
+  - jboss-eap5and6to7-xml-38004
+  - jboss-eap5and6to7-xml-38005
+  - jboss-eap5and6to7-xml-38006
+  - jboss-eap5and6to7-xml-38007
+  - jboss-eap5and6to7-xml-39000
+  - jboss-eap5and6to7-xml-40000
+  - maven-artemis-jms-client-00001
+  - maven-javax-to-jakarta-00001
+  - maven-javax-to-jakarta-00002
+  - maven-javax-to-jakarta-00003
+  - maven-javax-to-jakarta-00005
+  - maven-javax-to-jakarta-00006
+  - maven-javax-to-jakarta-00007
+  - maven-javax-to-jakarta-00008
+  - maven-javax-to-jakarta-00010
+  - maven-javax-to-jakarta-00011
+  - maven-javax-to-jakarta-00012
+  - maven-javax-to-jakarta-00013
+  - maven-javax-to-jakarta-00014
+  - maven-javax-to-jakarta-00015
+  - maven-javax-to-jakarta-00016
+  - maven-javax-to-jakarta-00017
+  - maven-jboss-rmi-api_1.0_spec-00001
+  - microprofile_removed_from_eap-00001
+  - microprofile_removed_from_eap-00001-01
+  - microprofile_removed_from_eap-00002
+  - microprofile_removed_from_eap-00003
+  - microprofile_removed_from_eap-00004
+  - move-to-microprofile-rest-client-1.3-00001
+  - picketlink25-00000
+  - resteasy-eap5and6to7-000018
+  - resteasy-eap6-000001
+  - resteasy-eap6-000002
+  - resteasy-eap6-000003
+  - resteasy-eap6-000004
+  - resteasy-eap6-000005
+  - resteasy-eap6-000006
+  - resteasy-eap6-000007
+  - resteasy-eap6-000008
+  - resteasy-eap6-000009
+  - resteasy-eap6-000010
+  - resteasy-eap6-000011
+  - resteasy-eap6-000012
+  - resteasy-eap6-000013
+  - resteasy-eap6-000014
+  - resteasy-eap6-000015
+  - resteasy-eap6-000017
+  - resteasy-eap6-000019
+  - resteasy-eap6-000020
+  - resteasy-eap6-000021
+  - resteasy-eap6-000022
+  - resteasy-eap6-000023
+  - resteasy-eap6-000024
+  - resteasy-eap6-000025
+  - resteasy-eap6-000029
+  - resteasy-eap6-000030
+  - resteasy-eap6-000032
+  - resteasy-eap6-000101
+  - resteasy-eap6-000103
+  - resteasy-eap6-000104
+  - resteasy-eap6-000105
+  - resteasy-eap6-000106
+  - resteasy-eap6-000107
+  - resteasy-eap6-000118
+  - resteasy-eap6-000119
+  - resteasy-eap6-000120
+  - resteasy-eap6-000121
+  - resteasy-eap6-000122
+  - resteasy-eap6-000123
+  - resteasy-eap6-000125
+  - resteasy-eap6-000126
+  - resteasy-eap6-000127
+  - resteasy-eap6-000128
+  - resteasy-eap6-000129
+  - resteasy-eap6-000130
+  - resteasy-eap6-000131
+  - resteasy-eap6-000140
+  - resteasy-eap6-000141
+  - resteasy-eap6-000142
+  - resteasy30-36-00001
+  - singleton-sessionbean-00001
+  - weblogic-catchall-01000
+  - weblogic-catchall-02000
+  - weblogic-catchall-03000
+  - weblogic-catchall-06000
+  - weblogic-catchall-06500
+  - weblogic-eap7-01000
+  - weblogic-eap7-01000
+  - weblogic-eap7-016000
+  - weblogic-eap7-017000
+  - weblogic-eap7-02000
+  - weblogic-eap7-03000
+  - weblogic-eap7-04000
+  - weblogic-eap7-05000
+  - weblogic-eap7-06000
+  - weblogic-eap7-07000
+  - weblogic-eap7-08000
+  - weblogic-eap7-09000
+  - weblogic-eap7-10000
+  - weblogic-eap7-11000
+  - weblogic-eap7-12000
+  - weblogic-eap7-13000
+  - weblogic-eap7-15000
+  - weblogic-ejb-01000
+  - weblogic-ejb-02000
+  - weblogic-ejb-03000
+  - weblogic-ejb-04000
+  - weblogic-jms-eap7-00000
+  - weblogic-jms-eap7-01000
+  - weblogic-jms-eap7-02000
+  - weblogic-jms-eap7-03000
+  - weblogic-jms-eap7-04000
+  - weblogic-jms-eap7-05000
+  - weblogic-jms-eap7-06000
+  - weblogic-jms-eap7-07000
+  - weblogic-jms-eap7-08000
+  - weblogic-services-eap7-01000
+  - weblogic-services-eap7-02000
+  - weblogic-services-eap7-03000
+  - weblogic-webapp-eap7-01000
+  - weblogic-webapp-eap7-02000
+  - weblogic-webapp-eap7-03000
+  - weblogic-webapp-eap7-04000
+  - weblogic-webapp-eap7-05000
+  - weblogic-webapp-eap7-06000
+  - weblogic-webapp-eap7-07000
+  - weblogic-webapp-eap7-08000
+  - weblogic-webapp-eap7-09000
+  - weblogic-webservices-07000
+  - weblogic-webservices-eap7-01000
+  - weblogic-webservices-eap7-02000
+  - weblogic-webservices-eap7-03000
+  - weblogic-webservices-eap7-04000
+  - weblogic-webservices-eap7-05000
+  - weblogic-webservices-eap7-06000
+  - weblogic-xml-descriptor-19000
+  - weblogic-xml-descriptor-eap7-01000
+  - weblogic-xml-descriptor-eap7-02000
+  - weblogic-xml-descriptor-eap7-03000
+  - weblogic-xml-descriptor-eap7-04000
+  - weblogic-xml-descriptor-eap7-06001
+  - weblogic-xml-descriptor-eap7-07000
+  - weblogic-xml-descriptor-eap7-08000
+  - weblogic-xml-descriptor-eap7-09000
+  - weblogic-xml-descriptor-eap7-10000
+  - weblogic-xml-descriptor-eap7-11000
+  - weblogic-xml-descriptor-eap7-12000
+  - weblogic-xml-descriptor-eap7-13000
+  - weblogic-xml-descriptor-eap7-14000
+  - weblogic-xml-descriptor-eap7-15000
+  - weblogic-xml-descriptor-eap7-16000
+  - weblogic-xml-descriptor-eap7-17000
+  - weblogic-xml-descriptor-eap7-18000
+  - websphere-catchall-00000
+  - websphere-catchall-00001
+  - websphere-catchall-db2-00000
+  - websphere-jms-eap7-00000
+  - websphere-jms-eap7-01000
+  - websphere-jms-eap7-02000
+  - websphere-jms-eap7-02500
+  - websphere-jms-eap7-03000
+  - websphere-jms-eap7-04000
+  - websphere-mq-eap7-00000
+  - websphere-mq-eap7-01000
+  - websphere-mq-eap7-01000
+  - websphere-mq-eap7-02000
+  - websphere-mq-eap7-02000
+  - websphere-mqe-eap7-00000
+  - websphere-mqe-eap7-01000
+  - websphere-mqe-eap7-02000
+  - websphere-mqe-eap7-03000
+  - websphere-mqe-eap7-04000
+  - websphere-other-eap7-01000
+  - websphere-other-eap7-02000
+  - ws-security-00000
+  - ws-security-00001
+  - ws-security-00002
+- name: eap8/eap7
+  description: This ruleset provides analysis of Java EE applications that need to
+    change certain CDI-related method calls.
+  violations:
+    javax-to-jakarta-servlet-00130:
+      description: web.xml element references a javax-prefixed class name
+      category: potential
+      labels:
+      - konveyor.io/source
+      - konveyor.io/target=eap
+      - konveyor.io/target=eap8
+      - konveyor.io/target=jakarta-ee
+      - konveyor.io/target=jakarta-ee9+
+      - konveyor.io/target=jws
+      - konveyor.io/target=jws6+
+      incidents:
+      - uri: file:///source/test-files/seam-booking-5.2/resources/WEB-INF/web.xml
+        message: web.xml element references a javax-prefixed class name
+        codeSnip: 41          <param-value>.xhtml</param-value>
+        lineNumber: 40
+        variables:
+          data: param-name
+          innerText: javax.faces.DEFAULT_SUFFIX
+          matchingXML: javax.faces.DEFAULT_SUFFIX
+      - uri: file:///source/test-files/seam-booking-5.2/resources/WEB-INF/web.xml
+        message: web.xml element references a javax-prefixed class name
+        codeSnip: 52          <load-on-startup>1</load-on-startup>
+        lineNumber: 51
+        variables:
+          data: servlet-class
+          innerText: javax.faces.webapp.FacesServlet
+          matchingXML: javax.faces.webapp.FacesServlet
+      links:
+      - url: https://access.redhat.com/articles/6980265#servlet
+        title: Red Hat JBoss EAP Application Migration from Jakarta EE 8 to EE 10
+          - Jakarta Servlet
+      effort: 1
+  unmatched:
+  - deprecated-initialcontextfactory-is-removed-00001
+  - eap8-ejb-00001
+  - eap8-ejb-00002
+  - eap8-ejb-00003
+  - eap8-faces-00001
+  - eap8-faces-00002
+  - eap8-faces-00003
+  - eap8-faces-00004
+  - eap8-faces-00005
+  - eap8-faces-00006
+  - eap8-faces-00007
+  - eap8-faces-00008
+  - eap8-faces-00009
+  - eap8-resteasy-00001
+  - eap8-resteasy-00002
+  - eap8-resteasy-00003
+  - eap8-resteasy-00004
+  - eap8-resteasy-00005
+  - eap8-resteasy-00006
+  - eap8-resteasy-00007
+  - eap8-resteasy-00008
+  - eap8-resteasy-00009
+  - eap8-resteasy-00010
+  - eap8-resteasy-00011
+  - eap8-xml-binding-00001
+  - eap8-xml-binding-00002
+  - eap8-xml-binding-00003
+  - eap8-xml-binding-00004
+  - eap8-xml-binding-00005
+  - eap8-xml-binding-00006
+  - eap8-xml-binding-00007
+  - eap8-xml-binding-00008
+  - eap8-xml-binding-00009
+  - empty-beans-xml-00001
+  - hibernate-00005
+  - hibernate-00010
+  - hibernate-6.2-00010
+  - hibernate-6.2-00020
+  - hibernate-6.2-00030
+  - hibernate-6.2-00040
+  - hibernate-6.2-00050
+  - hibernate-search-00010
+  - hibernate-search-00020
+  - hibernate-search-00030
+  - hibernate-search-00040
+  - hibernate-search-00050
+  - hibernate-search-00060
+  - hibernate-search-00070
+  - hibernate-search-00080
+  - hibernate-search-00090
+  - hibernate-search-00100
+  - hibernate-search-00105
+  - hibernate-search-00110
+  - hibernate-search-00120
+  - hibernate-search-00140
+  - hibernate-search-00150
+  - hibernate-search-00160
+  - hibernate-search-00170
+  - hibernate-search-00180
+  - hibernate-search-00190
+  - hibernate-search-00200
+  - hibernate-search-00210
+  - hibernate-search-00220
+  - hibernate-search-00230
+  - hibernate-search-00240
+  - hibernate-search-00250
+  - hibernate-search-00260
+  - hibernate-search-00270
+  - hibernate-search-00280
+  - hibernate-search-00290
+  - hibernate-search-00300
+  - hibernate-search-00310
+  - hibernate-search-00320
+  - hibernate-search-00330
+  - hibernate-search-00340
+  - hibernate-search-00350
+  - hibernate-search-00360
+  - hibernate-search-00370
+  - hibernate-search-00380
+  - hibernate-search-00390
+  - hibernate-search-00400
+  - hibernate-search-00410
+  - hibernate-search-00420
+  - hibernate-search-00430
+  - hibernate-search-00440
+  - hibernate-search-00450
+  - hibernate-search-00460
+  - hibernate-search-00470
+  - hibernate-search-00480
+  - hibernate-search-00490
+  - hibernate-search-00500
+  - hibernate-search-00510
+  - hibernate-search-00520
+  - hibernate-search-00530
+  - hibernate-search-00540
+  - hibernate-search-00550
+  - hibernate-search-00560
+  - hibernate-search-00570
+  - hibernate-search-00580
+  - hibernate-search-00590
+  - hibernate-search-00600
+  - hibernate-search-00610
+  - hibernate-search-00620
+  - hibernate-search-00630
+  - hibernate-search-00640
+  - hibernate-search-00650
+  - hibernate-search-00660
+  - hibernate-search-00670
+  - hibernate-search-00680
+  - hibernate-search-00690
+  - hibernate-search-00700
+  - hibernate-search-00710
+  - hibernate-search-00720
+  - hibernate-search-00730
+  - hibernate-search-00740
+  - hibernate-search-00750
+  - hibernate-search-00760
+  - hibernate-search-00770
+  - hibernate-search-00780
+  - hibernate-search-00790
+  - hibernate-search-00800
+  - hibernate-search-00810
+  - hibernate-search-00820
+  - hibernate-search-00830
+  - hibernate-search-00840
+  - hibernate-search-00850
+  - hibernate-search-00860
+  - hibernate-search-00870
+  - hibernate-search-00880
+  - hibernate-search-00890
+  - hibernate-search-00900
+  - hibernate-search-00910
+  - hibernate-search-00920
+  - hibernate-search-00930
+  - hibernate-search-00940
+  - hibernate-search-00950
+  - hibernate-search-00960
+  - hibernate-search-00970
+  - hibernate-search-00980
+  - hibernate-search-00990
+  - hibernate-search-01000
+  - hibernate-search-01010
+  - hibernate-search-01020
+  - hibernate-search-01030
+  - hibernate-search-01040
+  - hibernate-search-6.1-00010
+  - hibernate-search-6.1-00020
+  - hibernate-search-6.1-00030
+  - hibernate-search-6.1-00040
+  - hibernate-search-6.1-00050
+  - hibernate-search-6.1-00060
+  - hibernate-search-6.1-00070
+  - hibernate-search-6.1-00080
+  - hibernate-search-6.1-00090
+  - hibernate-search-6.1-00100
+  - hibernate-search-6.1-00120
+  - hibernate-search-6.1-00130
+  - hibernate-search-6.1-00140
+  - hibernate-search-6.1-00150
+  - hibernate-search-6.1-00160
+  - hibernate-search-6.1-00170
+  - hibernate-search-6.1-00180
+  - hibernate-search-6.1-00190
+  - hibernate6-00020
+  - hibernate6-00030
+  - hibernate6-00040
+  - hibernate6-00050
+  - hibernate6-00060
+  - hibernate6-00070
+  - hibernate6-00080
+  - hibernate6-00090
+  - hibernate6-00100
+  - hibernate6-00110
+  - hibernate6-00120
+  - hibernate6-00130
+  - hibernate6-00140
+  - hibernate6-00150
+  - hibernate6-00160
+  - hibernate6-00170
+  - hibernate6-00180
+  - hibernate6-00190
+  - hibernate6-00200
+  - hibernate6-00210
+  - hibernate6-00220
+  - hibernate6-00230
+  - hibernate6-00240
+  - hibernate6-00250
+  - hibernate6-00251
+  - hibernate6-00252
+  - hibernate6-00253
+  - hibernate6-00254
+  - hibernate6-00255
+  - hibernate6-00257
+  - hibernate6-00270
+  - hibernate6-00280
+  - jakarta-cdi-00001
+  - jakarta-cdi-00002
+  - jakarta-cdi-00003
+  - jakarta-cdi-00004
+  - jakarta-el-00010
+  - jakarta-el-00020
+  - jakarta-faces-00001
+  - jakarta-json-binding-00010
+  - jakarta-soap-00010
+  - jakarta-soap-00020
+  - jakarta-ws-rs-00001
+  - javaee-to-jakarta-namespaces-00001
+  - javaee-to-jakarta-namespaces-00002
+  - javaee-to-jakarta-namespaces-00003
+  - javaee-to-jakarta-namespaces-00004
+  - javaee-to-jakarta-namespaces-00005
+  - javaee-to-jakarta-namespaces-00006
+  - javaee-to-jakarta-namespaces-00007
+  - javaee-to-jakarta-namespaces-00008
+  - javaee-to-jakarta-namespaces-00009
+  - javaee-to-jakarta-namespaces-00010
+  - javaee-to-jakarta-namespaces-00011
+  - javaee-to-jakarta-namespaces-00012
+  - javaee-to-jakarta-namespaces-00013
+  - javaee-to-jakarta-namespaces-00014
+  - javaee-to-jakarta-namespaces-00015
+  - javaee-to-jakarta-namespaces-00016
+  - javaee-to-jakarta-namespaces-00017
+  - javaee-to-jakarta-namespaces-00018
+  - javaee-to-jakarta-namespaces-00019
+  - javaee-to-jakarta-namespaces-00020
+  - javaee-to-jakarta-namespaces-00021
+  - javaee-to-jakarta-namespaces-00022
+  - javaee-to-jakarta-namespaces-00023
+  - javaee-to-jakarta-namespaces-00024
+  - javaee-to-jakarta-namespaces-00025
+  - javaee-to-jakarta-namespaces-00026
+  - javaee-to-jakarta-namespaces-00027
+  - javaee-to-jakarta-namespaces-00028
+  - javaee-to-jakarta-namespaces-00029
+  - javaee-to-jakarta-namespaces-00030
+  - javaee-to-jakarta-namespaces-00031
+  - javaee-to-jakarta-namespaces-00032
+  - javaee-to-jakarta-namespaces-00033
+  - javaee-to-jakarta-namespaces-00034
+  - javaee-to-jakarta-namespaces-00035
+  - javaee-to-jakarta-namespaces-00036
+  - javaee-to-jakarta-namespaces-00037
+  - javaee-to-jakarta-namespaces-00038
+  - javaee-to-jakarta-namespaces-00039
+  - javaee-to-jakarta-namespaces-00040
+  - javaee-to-jakarta-namespaces-00041
+  - javaee-to-jakarta-namespaces-00042
+  - javaee-to-jakarta-namespaces-00043
+  - javaee-to-jakarta-namespaces-00044
+  - javaee-to-jakarta-namespaces-00046
+  - javaee-to-jakarta-namespaces-00047
+  - javaee-to-jakarta-namespaces-00048
+  - javaee-to-jakarta-namespaces-00049
+  - javaee-to-jakarta-namespaces-00050
+  - javaee-to-jakarta-namespaces-00051
+  - javaee-to-jakarta-namespaces-00052
+  - javaee-to-jakarta-namespaces-00053
+  - javaee-to-jakarta-namespaces-00054
+  - javaee-to-jakarta-namespaces-00055
+  - javaee-to-jakarta-namespaces-00056
+  - javax-to-jakarta-bootstrapping-files-00001
+  - javax-to-jakarta-dependencies-00001
+  - javax-to-jakarta-dependencies-00002
+  - javax-to-jakarta-dependencies-00003
+  - javax-to-jakarta-dependencies-00004
+  - javax-to-jakarta-dependencies-00005
+  - javax-to-jakarta-dependencies-00006
+  - javax-to-jakarta-dependencies-00007
+  - javax-to-jakarta-dependencies-00008
+  - javax-to-jakarta-import-00001
+  - javax-to-jakarta-properties-00001
+  - javax-to-jakarta-servlet-00010
+  - javax-to-jakarta-servlet-00020
+  - javax-to-jakarta-servlet-00030
+  - javax-to-jakarta-servlet-00040
+  - javax-to-jakarta-servlet-00041
+  - javax-to-jakarta-servlet-00042
+  - javax-to-jakarta-servlet-00043
+  - javax-to-jakarta-servlet-00050
+  - javax-to-jakarta-servlet-00060
+  - javax-to-jakarta-servlet-00070
+  - javax-to-jakarta-servlet-00071
+  - javax-to-jakarta-servlet-00072
+  - javax-to-jakarta-servlet-00080
+  - javax-to-jakarta-servlet-00090
+  - javax-to-jakarta-servlet-00100
+  - javax-to-jakarta-servlet-00101
+  - javax-to-jakarta-servlet-00102
+  - javax-to-jakarta-servlet-00110
+  - javax-to-jakarta-servlet-00111
+  - javax-to-jakarta-servlet-00112
+  - javax-to-jakarta-servlet-00120
+  - javax-to-jakarta-servlet-00121
+  - javax-to-jakarta-servlet-00122
+  - javax-to-jakarta-servlet-00123
+  - jboss-dependencies-00001
+  - jboss-dependencies-00002
+  - jboss-dependencies-00003
+  - jboss-dependencies-00004
+  - jboss-dependencies-00005
+  - jboss-dependencies-00006
+  - jboss-dependencies-00007
+  - jboss-dependencies-00008
+  - jboss-dependencies-00009
+  - jboss-dependencies-00010
+  - jboss-dependencies-00011
+  - jboss-dependencies-00012
+  - jboss-dependencies-00013
+  - jboss-dependencies-00014
+  - jboss-dependencies-00015
+  - jboss-dependencies-00016
+  - jboss-dependencies-00017
+  - jboss-dependencies-00018
+  - jboss-dependencies-00019
+  - jboss-dependencies-00020
+  - jboss-dependencies-00021
+  - jboss-dependencies-00022
+  - jboss-dependencies-00023
+  - jboss-dependencies-00024
+  - jboss-dependencies-00025
+  - jboss-dependencies-00026
+  - jboss-dependencies-00027
+  - jboss-dependencies-00028
+  - jboss-dependencies-00030
+  - jboss-dependencies-00031
+  - jboss-dependencies-00032
+  - keycloak-openid-00001
+  - keycloak-openid-00010
+  - legacy-vault-00010
+  - log4j-removed-00001
+  - log4j-removed-00002
+  - log4j-removed-00003
+  - log4j-removed-00004
+  - log4j-removed-00005
+  - login-modules-00001
+  - picketlink-00010
+  - picketlink-00020
+- name: technology-usage
+  description: This ruleset provides analysis of logging libraries.
+  tags:
+  - Bean=EJB XML
+  - Clustering EJB
+  - Clustering=EJB
+  - Connect=EJB XML
+  - Embedded technology - Java Server Faces
+  - Embedded=JSF
+  - Embedded=Properties
+  - Execute=Java EE XML
+  - JSF
+  - JSF XML
+  - Java EE XML
+  - Java EE=EJB
+  - Java EE=EJB XML
+  - Java EE=JPA XML
+  - Java EE=JPA entities
+  - Java EE=JSF Page
+  - Java EE=JSF XML
+  - Java EE=Java EE XML
+  - Java EE=Persistence units
+  - MVC=JSF
+  - Other=Properties
+  - Persistence=JPA XML
+  - Persistence=JPA entities
+  - Persistence=Persistence units
+  - Processing=Java EE XML
+  - Store=JPA XML
+  - Store=JPA entities
+  - Store=Persistence units
+  - Sustain=EJB
+  - Sustain=Properties
+  - View=JSF
+  - View=JSF Page
+  - View=JSF XML
+  - Web=JSF Page
+  - Web=JSF XML
+  insights:
+    clustering-00001:
+      description: Clustering EJB
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Clustering EJB
+      incidents:
+      - uri: file:///source/test-files/seam-booking-5.2/resources/META-INF/jboss.xml
+        message: ""
+        lineNumber: 7
+        variables:
+          data: clustered
+          innerText: '@distributable@'
+          matchingXML: '@distributable@'
+    javaee-technology-usage-00910:
+      description: Java EE XML
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Java EE XML
+      incidents:
+      - uri: file:///source/test-files/seam-booking-5.2/resources/META-INF/application.xml
+        message: ""
+        codeSnip: 5               version="5">
+        lineNumber: 4
+        variables:
+          data: version
+          innerText: "5"
+          matchingXML: "5"
+    javaee-technology-usage-00926:
+      description: JSF XML
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=JSF XML
+      incidents:
+      - uri: file:///source/test-files/seam-booking-5.2/resources/WEB-INF/faces-config.xml
+        message: ""
+        codeSnip: 3                xmlns="http://java.sun.com/xml/ns/javaee"
+        lineNumber: 2
+        variables:
+          data: version
+          innerText: "1.2"
+          matchingXML: "1.2"
+    javaee-technology-usage-00952:
+      description: Java EE XML
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Execute=Java EE XML
+      - tag=Java EE=Java EE XML
+      - tag=Processing=Java EE XML
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - Java EE XML
+    javaee-technology-usage-00957:
+      description: JSF XML
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Java EE=JSF XML
+      - tag=View=JSF XML
+      - tag=Web=JSF XML
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - JSF XML
+    non-xml-technology-usage-02000:
+      description: Non-XML EJB
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Bean=EJB XML
+      - tag=Connect=EJB XML
+      - tag=Java EE=EJB XML
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - EJB XML
+    non-xml-technology-usage-17000:
+      description: Non-XML JPA
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Java EE=JPA XML
+      - tag=Persistence=JPA XML
+      - tag=Store=JPA XML
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - JPA XML
+    non-xml-technology-usage-20000:
+      description: Properties
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded=Properties
+      - tag=Other=Properties
+      - tag=Sustain=Properties
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - Properties
+    technology-usage-clustering-02000:
+      description: Clustering EJB
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Clustering=EJB
+      - tag=Java EE=EJB
+      - tag=Sustain=EJB
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - Clustering EJB
+    technology-usage-database-01100:
+      description: JPA Entities
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Java EE=JPA entities
+      - tag=Persistence=JPA entities
+      - tag=Store=JPA entities
+      incidents:
+      - uri: file:///source/test-files/seam-booking-5.2/resources/META-INF/persistence.xml
+        message: ""
+        codeSnip: 3               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        lineNumber: 2
+        variables:
+          matchingText: http://java.sun.com/xml/ns/persistence
+      - uri: file:///source/test-files/seam-booking-5.2/resources/META-INF/persistence.xml
+        message: ""
+        codeSnip: 5               version="1.0">
+        lineNumber: 4
+        variables:
+          matchingText: http://java.sun.com/xml/ns/persistence
+    technology-usage-database-01300:
+      description: Persistence Units
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Java EE=Persistence units
+      - tag=Persistence=Persistence units
+      - tag=Store=Persistence units
+      incidents:
+      - uri: file:///source/test-files/seam-booking-5.2/resources/META-INF/persistence.xml
+        message: ""
+    technology-usage-mvc-01600:
+      description: JSF
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded=JSF
+      - tag=MVC=JSF
+      - tag=View=JSF
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - JSF
+    technology-usage-web-01000:
+      description: JSF
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Java EE=JSF Page
+      - tag=View=JSF Page
+      - tag=Web=JSF Page
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - JSF
+    web-01000:
+      description: Embedded technology - Java Server Faces
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded technology - Java Server Faces
+      - tag=JSF
+      incidents:
+      - uri: file:///source/test-files/seam-booking-5.2/view/book.xhtml
+        message: ""
+        codeSnip: "4  \t  \t\t\txmlns:h=\"http://java.sun.com/jsf/html\""
+        lineNumber: 3
+        variables:
+          matchingText: java.sun.com/jsf/
+      - uri: file:///source/test-files/seam-booking-5.2/view/book.xhtml
+        message: ""
+        codeSnip: "5  \t  \t\t\txmlns:f=\"http://java.sun.com/jsf/core\""
+        lineNumber: 4
+        variables:
+          matchingText: java.sun.com/jsf/
+      - uri: file:///source/test-files/seam-booking-5.2/view/book.xhtml
+        message: ""
+        codeSnip: "6  \t  \t\t\txmlns:s=\"http://jboss.com/products/seam/taglib\""
+        lineNumber: 5
+        variables:
+          matchingText: java.sun.com/jsf/
+      - uri: file:///source/test-files/seam-booking-5.2/view/confirm.xhtml
+        message: ""
+        codeSnip: "4  \t  \t\t\txmlns:h=\"http://java.sun.com/jsf/html\""
+        lineNumber: 3
+        variables:
+          matchingText: java.sun.com/jsf/
+      - uri: file:///source/test-files/seam-booking-5.2/view/confirm.xhtml
+        message: ""
+        codeSnip: "5  \t  \t\t\txmlns:f=\"http://java.sun.com/jsf/core\""
+        lineNumber: 4
+        variables:
+          matchingText: java.sun.com/jsf/
+      - uri: file:///source/test-files/seam-booking-5.2/view/confirm.xhtml
+        message: ""
+        codeSnip: 6                  xmlns:s="http://jboss.com/products/seam/taglib"
+        lineNumber: 5
+        variables:
+          matchingText: java.sun.com/jsf/
+      - uri: file:///source/test-files/seam-booking-5.2/view/conversations.xhtml
+        message: ""
+        codeSnip: 5       xmlns:f="http://java.sun.com/jsf/core"
+        lineNumber: 4
+        variables:
+          matchingText: java.sun.com/jsf/
+      - uri: file:///source/test-files/seam-booking-5.2/view/conversations.xhtml
+        message: ""
+        codeSnip: 6       xmlns:h="http://java.sun.com/jsf/html"
+        lineNumber: 5
+        variables:
+          matchingText: java.sun.com/jsf/
+      - uri: file:///source/test-files/seam-booking-5.2/view/conversations.xhtml
+        message: ""
+        codeSnip: 7       xmlns:s="http://jboss.com/products/seam/taglib">
+        lineNumber: 6
+        variables:
+          matchingText: java.sun.com/jsf/
+      - uri: file:///source/test-files/seam-booking-5.2/view/display.xhtml
+        message: ""
+        codeSnip: 3                   xmlns:h="http://java.sun.com/jsf/html"
+        lineNumber: 2
+        variables:
+          matchingText: java.sun.com/jsf/
+      - uri: file:///source/test-files/seam-booking-5.2/view/display.xhtml
+        message: ""
+        codeSnip: 4                   xmlns:f="http://java.sun.com/jsf/core"
+        lineNumber: 3
+        variables:
+          matchingText: java.sun.com/jsf/
+      - uri: file:///source/test-files/seam-booking-5.2/view/display.xhtml
+        message: ""
+        codeSnip: 5                   xmlns:s="http://jboss.com/products/seam/taglib">
+        lineNumber: 4
+        variables:
+          matchingText: java.sun.com/jsf/
+      - uri: file:///source/test-files/seam-booking-5.2/view/edit.xhtml
+        message: ""
+        codeSnip: 4                  xmlns:h="http://java.sun.com/jsf/html"
+        lineNumber: 3
+        variables:
+          matchingText: java.sun.com/jsf/
+      - uri: file:///source/test-files/seam-booking-5.2/view/edit.xhtml
+        message: ""
+        codeSnip: 5                  xmlns:f="http://java.sun.com/jsf/core"
+        lineNumber: 4
+        variables:
+          matchingText: java.sun.com/jsf/
+      - uri: file:///source/test-files/seam-booking-5.2/view/edit.xhtml
+        message: ""
+        codeSnip: 6                  xmlns:s="http://jboss.com/products/seam/taglib">
+        lineNumber: 5
+        variables:
+          matchingText: java.sun.com/jsf/
+      - uri: file:///source/test-files/seam-booking-5.2/view/home.xhtml
+        message: ""
+        codeSnip: "4  \t  xmlns:h=\"http://java.sun.com/jsf/html\""
+        lineNumber: 3
+        variables:
+          matchingText: java.sun.com/jsf/
+      - uri: file:///source/test-files/seam-booking-5.2/view/home.xhtml
+        message: ""
+        codeSnip: "5  \t  xmlns:f=\"http://java.sun.com/jsf/core\""
+        lineNumber: 4
+        variables:
+          matchingText: java.sun.com/jsf/
+      - uri: file:///source/test-files/seam-booking-5.2/view/home.xhtml
+        message: ""
+        codeSnip: 6        xmlns:s="http://jboss.com/products/seam/taglib">
+        lineNumber: 5
+        variables:
+          matchingText: java.sun.com/jsf/
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotel.xhtml
+        message: ""
+        codeSnip: "4  \t  \t\t\txmlns:h=\"http://java.sun.com/jsf/html\""
+        lineNumber: 3
+        variables:
+          matchingText: java.sun.com/jsf/
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotel.xhtml
+        message: ""
+        codeSnip: "5  \t  \t\t\txmlns:f=\"http://java.sun.com/jsf/core\""
+        lineNumber: 4
+        variables:
+          matchingText: java.sun.com/jsf/
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotel.xhtml
+        message: ""
+        codeSnip: 6                  xmlns:s="http://jboss.com/products/seam/taglib"
+        lineNumber: 5
+        variables:
+          matchingText: java.sun.com/jsf/
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotelview.xhtml
+        message: ""
+        codeSnip: "4  \t  \t\t\t xmlns:h=\"http://java.sun.com/jsf/html\""
+        lineNumber: 3
+        variables:
+          matchingText: java.sun.com/jsf/
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotelview.xhtml
+        message: ""
+        codeSnip: "5  \t  \t\t\t xmlns:f=\"http://java.sun.com/jsf/core\""
+        lineNumber: 4
+        variables:
+          matchingText: java.sun.com/jsf/
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotelview.xhtml
+        message: ""
+        codeSnip: 6                   xmlns:s="http://jboss.com/products/seam/taglib">
+        lineNumber: 5
+        variables:
+          matchingText: java.sun.com/jsf/
+      - uri: file:///source/test-files/seam-booking-5.2/view/main.xhtml
+        message: ""
+        codeSnip: "4  \t  \t\t\txmlns:h=\"http://java.sun.com/jsf/html\""
+        lineNumber: 3
+        variables:
+          matchingText: java.sun.com/jsf/
+      - uri: file:///source/test-files/seam-booking-5.2/view/main.xhtml
+        message: ""
+        codeSnip: "5  \t  \t\t\txmlns:f=\"http://java.sun.com/jsf/core\""
+        lineNumber: 4
+        variables:
+          matchingText: java.sun.com/jsf/
+      - uri: file:///source/test-files/seam-booking-5.2/view/main.xhtml
+        message: ""
+        codeSnip: "6  \t  \t\t\txmlns:s=\"http://jboss.com/products/seam/taglib\""
+        lineNumber: 5
+        variables:
+          matchingText: java.sun.com/jsf/
+      - uri: file:///source/test-files/seam-booking-5.2/view/password.xhtml
+        message: ""
+        codeSnip: "4  \t  \t\t\txmlns:h=\"http://java.sun.com/jsf/html\""
+        lineNumber: 3
+        variables:
+          matchingText: java.sun.com/jsf/
+      - uri: file:///source/test-files/seam-booking-5.2/view/password.xhtml
+        message: ""
+        codeSnip: "5  \t  \t\t\txmlns:f=\"http://java.sun.com/jsf/core\""
+        lineNumber: 4
+        variables:
+          matchingText: java.sun.com/jsf/
+      - uri: file:///source/test-files/seam-booking-5.2/view/password.xhtml
+        message: ""
+        codeSnip: "6  \t  \t\t\txmlns:s=\"http://jboss.com/products/seam/taglib\""
+        lineNumber: 5
+        variables:
+          matchingText: java.sun.com/jsf/
+      - uri: file:///source/test-files/seam-booking-5.2/view/register.xhtml
+        message: ""
+        codeSnip: "4  \t  xmlns:h=\"http://java.sun.com/jsf/html\""
+        lineNumber: 3
+        variables:
+          matchingText: java.sun.com/jsf/
+      - uri: file:///source/test-files/seam-booking-5.2/view/register.xhtml
+        message: ""
+        codeSnip: "5  \t  xmlns:f=\"http://java.sun.com/jsf/core\""
+        lineNumber: 4
+        variables:
+          matchingText: java.sun.com/jsf/
+      - uri: file:///source/test-files/seam-booking-5.2/view/register.xhtml
+        message: ""
+        codeSnip: "6  \t  xmlns:s=\"http://jboss.com/products/seam/taglib\""
+        lineNumber: 5
+        variables:
+          matchingText: java.sun.com/jsf/
+      - uri: file:///source/test-files/seam-booking-5.2/view/template.xhtml
+        message: ""
+        codeSnip: 5          xmlns:h="http://java.sun.com/jsf/html"
+        lineNumber: 4
+        variables:
+          matchingText: java.sun.com/jsf/
+      - uri: file:///source/test-files/seam-booking-5.2/view/template.xhtml
+        message: ""
+        codeSnip: 6          xmlns:f="http://java.sun.com/jsf/core"
+        lineNumber: 5
+        variables:
+          matchingText: java.sun.com/jsf/
+      - uri: file:///source/test-files/seam-booking-5.2/view/template.xhtml
+        message: ""
+        codeSnip: 7          xmlns:s="http://jboss.com/products/seam/taglib">
+        lineNumber: 6
+        variables:
+          matchingText: java.sun.com/jsf/
+  unmatched:
+  - 3rd-party-01000
+  - 3rd-party-02000
+  - 3rd-party-03000
+  - 3rd-party-04000
+  - 3rd-party-05000
+  - 3rd-party-06000
+  - 3rd-party-07000
+  - 3rd-party-08000
+  - 3rd-party-09000
+  - 3rd-party-10000
+  - 3rd-party-11000
+  - 3rd-party-12000
+  - 3rd-party-13000
+  - 3rd-party-14000
+  - 3rd-party-15000
+  - 3rd-party-16000
+  - 3rd-party-17000
+  - 3rd-party-18000
+  - 3rd-party-19000
+  - 3rd-party-spring-03001
+  - 3rd-party-spring-03002
+  - apm-00000
+  - apm-00001
+  - apm-00002
+  - apm-00003
+  - clustering-00000
+  - configuration-management-0100
+  - configuration-management-0200
+  - configuration-management-0300
+  - configuration-management-0400
+  - configuration-management-0500
+  - configuration-management-technology-usage-0100
+  - configuration-management-technology-usage-0200
+  - configuration-management-technology-usage-0300
+  - connect-01400
+  - connect-01500
+  - connect-01600
+  - connect-01700
+  - connect-01800
+  - connect-01900
+  - connect-02000
+  - connect-02100
+  - connect-02200
+  - connect-02300
+  - connect-02400
+  - connect-02500
+  - connect-02600
+  - connect-02700
+  - connect-02800
+  - connect-02900
+  - database-01400
+  - database-01400
+  - database-01500
+  - database-01600
+  - database-01700
+  - database-01800
+  - database-01805
+  - database-01900
+  - database-02000
+  - database-02100
+  - database-02200
+  - database-02300
+  - database-02400
+  - database-02500
+  - database-02600
+  - database-02700
+  - database-02800
+  - database-02900
+  - database-03000
+  - database-03100
+  - ejb-01000
+  - embedded-cache-libraries-01000
+  - embedded-cache-libraries-02000
+  - embedded-cache-libraries-03000
+  - embedded-cache-libraries-04000
+  - embedded-cache-libraries-05000
+  - embedded-cache-libraries-06000
+  - embedded-cache-libraries-07000
+  - embedded-cache-libraries-08000
+  - embedded-cache-libraries-09000
+  - embedded-cache-libraries-10000
+  - embedded-cache-libraries-11000
+  - embedded-cache-libraries-12000
+  - embedded-cache-libraries-13000
+  - embedded-cache-libraries-14000
+  - embedded-cache-libraries-15000
+  - embedded-cache-libraries-16000
+  - embedded-framework-01000
+  - embedded-framework-01010
+  - embedded-framework-01100
+  - embedded-framework-01200
+  - embedded-framework-01300
+  - embedded-framework-01400
+  - embedded-framework-01500
+  - embedded-framework-01600
+  - embedded-framework-01700
+  - embedded-framework-02000
+  - embedded-framework-02200
+  - embedded-framework-02300
+  - embedded-framework-02400
+  - embedded-framework-03000
+  - embedded-framework-03100
+  - embedded-framework-03200
+  - embedded-framework-03300
+  - embedded-framework-03400
+  - embedded-framework-04700
+  - embedded-framework-05000
+  - embedded-framework-05100
+  - embedded-framework-05300
+  - embedded-framework-05400
+  - embedded-framework-05500
+  - embedded-framework-05600
+  - embedded-framework-05700
+  - embedded-framework-05800
+  - embedded-framework-05900
+  - embedded-framework-06000
+  - embedded-framework-06100
+  - embedded-framework-06200
+  - embedded-framework-06300
+  - embedded-framework-06400
+  - embedded-framework-06500
+  - embedded-framework-06600
+  - embedded-framework-06700
+  - embedded-framework-06800
+  - embedded-framework-06900
+  - embedded-framework-07000
+  - embedded-framework-07100
+  - embedded-framework-07200
+  - embedded-framework-07300
+  - embedded-framework-07400
+  - embedded-framework-07500
+  - embedded-framework-07600
+  - embedded-framework-07700
+  - embedded-framework-07800
+  - embedded-framework-07900
+  - embedded-framework-08000
+  - embedded-framework-08100
+  - embedded-framework-08200
+  - embedded-framework-08300
+  - embedded-framework-08400
+  - embedded-framework-08500
+  - embedded-framework-08600
+  - embedded-framework-08700
+  - embedded-framework-08800
+  - embedded-framework-08900
+  - embedded-framework-09000
+  - embedded-framework-09100
+  - embedded-framework-09300
+  - embedded-framework-embedded-framework-02700
+  - embedded-framework-embedded-framework-02800
+  - embedded-framework-embedded-framework-02900
+  - embedded-framework-embedded-framework-03000
+  - embedded-framework-embedded-framework-03100
+  - embedded-framework-embedded-framework-03200
+  - embedded-framework-embedded-framework-03300
+  - embedded-framework-embedded-framework-03400
+  - embedded-framework-embedded-framework-03500
+  - embedded-framework-embedded-framework-03600
+  - embedded-framework-embedded-framework-03700
+  - embedded-framework-embedded-framework-03800
+  - embedded-framework-embedded-framework-03900
+  - embedded-framework-embedded-framework-04000
+  - embedded-framework-embedded-framework-04100
+  - embedded-framework-embedded-framework-04200
+  - embedded-framework-embedded-framework-04300
+  - embedded-framework-embedded-framework-04400
+  - embedded-framework-embedded-framework-04500
+  - embedded-framework-embedded-framework-04600
+  - embedded-framework-embedded-framework-09200
+  - embedded-framework-embedded-framework-09300
+  - integration-00001
+  - integration-00002
+  - integration-00003
+  - integration-00004
+  - integration-00005
+  - integration-00006
+  - integration-00007
+  - integration-00008
+  - integration-00009
+  - integration-00010
+  - integration-00011
+  - integration-00012
+  - integration-00013
+  - integration-00014
+  - integration-00015
+  - integration-00016
+  - integration-00017
+  - javaee-technology-usage-00010
+  - javaee-technology-usage-00011
+  - javaee-technology-usage-00012
+  - javaee-technology-usage-00013
+  - javaee-technology-usage-00020-jakarta
+  - javaee-technology-usage-00020-javax
+  - javaee-technology-usage-00021
+  - javaee-technology-usage-00030
+  - javaee-technology-usage-00031
+  - javaee-technology-usage-00040
+  - javaee-technology-usage-00050
+  - javaee-technology-usage-00060
+  - javaee-technology-usage-00070
+  - javaee-technology-usage-00080
+  - javaee-technology-usage-00090
+  - javaee-technology-usage-00100
+  - javaee-technology-usage-00110
+  - javaee-technology-usage-00120
+  - javaee-technology-usage-00130
+  - javaee-technology-usage-00140
+  - javaee-technology-usage-00150
+  - javaee-technology-usage-00160
+  - javaee-technology-usage-00170
+  - javaee-technology-usage-00180
+  - javaee-technology-usage-00190
+  - javaee-technology-usage-00200
+  - javaee-technology-usage-00210
+  - javaee-technology-usage-00220
+  - javaee-technology-usage-00230
+  - javaee-technology-usage-00902
+  - javaee-technology-usage-00903
+  - javaee-technology-usage-00905
+  - javaee-technology-usage-00906
+  - javaee-technology-usage-00911
+  - javaee-technology-usage-00912
+  - javaee-technology-usage-00913
+  - javaee-technology-usage-00914
+  - javaee-technology-usage-00915
+  - javaee-technology-usage-00916
+  - javaee-technology-usage-00917
+  - javaee-technology-usage-00918
+  - javaee-technology-usage-00927
+  - javaee-technology-usage-00928
+  - javaee-technology-usage-00930
+  - javaee-technology-usage-00931
+  - javaee-technology-usage-00932
+  - javaee-technology-usage-00950
+  - javaee-technology-usage-00951
+  - javaee-technology-usage-00953
+  - javaee-technology-usage-00954
+  - javaee-technology-usage-00955
+  - javaee-technology-usage-00956
+  - javaee-technology-usage-00958
+  - javase-01000
+  - javase-01100
+  - javase-technology-usage-01000
+  - jta-00020
+  - jta-00030
+  - jta-00040
+  - jta-00050
+  - jta-00060
+  - jta-00070
+  - jta-00080
+  - jta-00090
+  - jta-00100
+  - jta-00110
+  - jta-00120
+  - jta-00130
+  - jta-00140
+  - jta-00150
+  - jta-00160
+  - jta-00170
+  - jta-00180
+  - jta-00190
+  - jta-00200
+  - jta-00210
+  - logging-usage-00010
+  - logging-usage-00020
+  - logging-usage-00030
+  - logging-usage-00040
+  - logging-usage-00050
+  - logging-usage-00080
+  - logging-usage-00090
+  - logging-usage-00100
+  - logging-usage-00110
+  - logging-usage-00120
+  - logging-usage-00130
+  - logging-usage-00140
+  - logging-usage-00150
+  - logging-usage-00160
+  - logging-usage-00170
+  - logging-usage-00180
+  - logging-usage-00190
+  - logging-usage-00200
+  - logging-usage-00210
+  - logging-usage-00220
+  - logging-usage-00230
+  - logging-usage-00240
+  - logging-usage-00250
+  - logging-usage-00260
+  - logging-usage-00270
+  - logging-usage-00280
+  - logging-usage-00290
+  - mvc-01000
+  - mvc-01100
+  - mvc-01200
+  - mvc-01210
+  - mvc-01220
+  - mvc-01300
+  - mvc-01400
+  - mvc-01500
+  - mvc-01600
+  - mvc-01700
+  - mvc-01800
+  - mvc-01900
+  - mvc-02000
+  - mvc-02100
+  - mvc-02200
+  - mvc-02300
+  - mvc-02400
+  - mvc-02500
+  - mvc-02600
+  - mvc-02700
+  - mvc-02800
+  - mvc-02900
+  - mvc-03000
+  - mvc-03100
+  - mvc-03200
+  - mvc-03300
+  - mvc-03400
+  - mvc-03500
+  - mvc-03600
+  - mvc-03700
+  - mvc-03800
+  - mvc-03900
+  - mvc-04000
+  - mvc-04100
+  - mvc-04200
+  - mvc-04300
+  - mvc-04400
+  - mvc-04500
+  - mvc-04600
+  - mvc-04700
+  - mvc-04800
+  - mvc-04900
+  - mvc-05000
+  - mvc-05100
+  - mvc-05200
+  - mvc-05300
+  - mvc-05400
+  - mvc-05500
+  - mvc-05600
+  - mvc-05700
+  - mvc-05800
+  - mvc-05900
+  - mvc-06000
+  - non-xml-technology-usage-05000
+  - non-xml-technology-usage-06000
+  - non-xml-technology-usage-12000
+  - non-xml-technology-usage-13000
+  - non-xml-technology-usage-14000
+  - non-xml-technology-usage-18000
+  - non-xml-technology-usage-19000
+  - non-xml-technology-usage-21000
+  - non-xml-technology-usage-22000
+  - non-xml-technology-usage-23000
+  - non-xml-technology-usage-24000
+  - non-xml-technology-usage-25000
+  - non-xml-technology-usage-26000
+  - non-xml-technology-usage-27000
+  - observability-0100
+  - observability-0200
+  - observability-technology-usage-0100
+  - observability-technology-usage-0200
+  - security-01100
+  - security-01200
+  - security-01300
+  - security-01400
+  - security-01500
+  - security-01600
+  - security-01700
+  - security-01800
+  - security-01900
+  - security-02000
+  - security-02100
+  - security-02200
+  - security-02300
+  - security-02400
+  - security-02500
+  - security-02600
+  - security-02700
+  - security-02800
+  - security-02900
+  - security-03000
+  - security-03100
+  - security-03200
+  - security-03300
+  - security-03400
+  - security-03500
+  - security-03600
+  - spring-catchall-00001
+  - technology-usage-3rd-party-01000
+  - technology-usage-3rd-party-02000
+  - technology-usage-3rd-party-03000
+  - technology-usage-3rd-party-04000
+  - technology-usage-3rd-party-05000
+  - technology-usage-3rd-party-06000
+  - technology-usage-3rd-party-08000
+  - technology-usage-3rd-party-09000
+  - technology-usage-3rd-party-10000
+  - technology-usage-3rd-party-11000
+  - technology-usage-3rd-party-12000
+  - technology-usage-3rd-party-13000
+  - technology-usage-3rd-party-14000
+  - technology-usage-3rd-party-15000
+  - technology-usage-3rd-party-16000
+  - technology-usage-3rd-party-17000
+  - technology-usage-3rd-party-18000
+  - technology-usage-3rd-party-19000
+  - technology-usage-3rd-party-20000
+  - technology-usage-3rd-party-spring-03001-0
+  - technology-usage-3rd-party-spring-03001-1
+  - technology-usage-3rd-party-spring-03001-2
+  - technology-usage-3rd-party-spring-03002
+  - technology-usage-apm-00010
+  - technology-usage-apm-00020
+  - technology-usage-apm-00030
+  - technology-usage-apm-00040
+  - technology-usage-clustering-01000
+  - technology-usage-connect-01000
+  - technology-usage-connect-01100
+  - technology-usage-connect-01101
+  - technology-usage-connect-01200
+  - technology-usage-connect-01300
+  - technology-usage-connect-01400
+  - technology-usage-connect-01500
+  - technology-usage-connect-01600
+  - technology-usage-connect-01700
+  - technology-usage-connect-01800
+  - technology-usage-connect-01900
+  - technology-usage-connect-02000
+  - technology-usage-connect-02100
+  - technology-usage-connect-02200
+  - technology-usage-connect-02300
+  - technology-usage-connect-02400
+  - technology-usage-connect-02500
+  - technology-usage-connect-02600
+  - technology-usage-connect-02700
+  - technology-usage-connect-02800
+  - technology-usage-connect-02900
+  - technology-usage-database-01000
+  - technology-usage-database-01001
+  - technology-usage-database-01200
+  - technology-usage-database-01400
+  - technology-usage-database-01500
+  - technology-usage-database-01600
+  - technology-usage-database-01700
+  - technology-usage-database-01800
+  - technology-usage-database-01900
+  - technology-usage-database-02000
+  - technology-usage-database-02100
+  - technology-usage-database-02200
+  - technology-usage-database-02300
+  - technology-usage-database-02400
+  - technology-usage-database-02500
+  - technology-usage-database-02600
+  - technology-usage-database-02700
+  - technology-usage-database-02800
+  - technology-usage-database-02900
+  - technology-usage-database-03000
+  - technology-usage-database-03100
+  - technology-usage-database-03200
+  - technology-usage-ejb-01400
+  - technology-usage-embedded-framework-01000
+  - technology-usage-embedded-framework-01010
+  - technology-usage-embedded-framework-01100
+  - technology-usage-embedded-framework-01200
+  - technology-usage-embedded-framework-01300
+  - technology-usage-embedded-framework-01400
+  - technology-usage-embedded-framework-01500
+  - technology-usage-embedded-framework-01600
+  - technology-usage-embedded-framework-01700
+  - technology-usage-embedded-framework-02000
+  - technology-usage-embedded-framework-02100
+  - technology-usage-embedded-framework-02200
+  - technology-usage-embedded-framework-02300
+  - technology-usage-embedded-framework-02400
+  - technology-usage-embedded-framework-04700
+  - technology-usage-embedded-framework-05000
+  - technology-usage-embedded-framework-05100
+  - technology-usage-embedded-framework-05300
+  - technology-usage-embedded-framework-05400
+  - technology-usage-embedded-framework-05600
+  - technology-usage-embedded-framework-05700
+  - technology-usage-embedded-framework-05800
+  - technology-usage-embedded-framework-05900
+  - technology-usage-embedded-framework-06000
+  - technology-usage-embedded-framework-06100
+  - technology-usage-embedded-framework-06200
+  - technology-usage-embedded-framework-06300
+  - technology-usage-embedded-framework-06400
+  - technology-usage-embedded-framework-06500
+  - technology-usage-embedded-framework-06600
+  - technology-usage-embedded-framework-06700
+  - technology-usage-embedded-framework-06800
+  - technology-usage-embedded-framework-06900
+  - technology-usage-embedded-framework-07000
+  - technology-usage-embedded-framework-07100
+  - technology-usage-embedded-framework-07200
+  - technology-usage-embedded-framework-07300
+  - technology-usage-embedded-framework-07400
+  - technology-usage-embedded-framework-07500
+  - technology-usage-embedded-framework-07600
+  - technology-usage-embedded-framework-07700
+  - technology-usage-embedded-framework-07800
+  - technology-usage-embedded-framework-07900
+  - technology-usage-embedded-framework-08000
+  - technology-usage-embedded-framework-08100
+  - technology-usage-embedded-framework-08200
+  - technology-usage-embedded-framework-08300
+  - technology-usage-embedded-framework-08400
+  - technology-usage-embedded-framework-08500
+  - technology-usage-embedded-framework-08600
+  - technology-usage-embedded-framework-08700
+  - technology-usage-embedded-framework-08800
+  - technology-usage-embedded-framework-08900
+  - technology-usage-embedded-framework-09000
+  - technology-usage-embedded-framework-09100
+  - technology-usage-integration-00001
+  - technology-usage-integration-00002
+  - technology-usage-integration-00003
+  - technology-usage-integration-00004
+  - technology-usage-integration-00005
+  - technology-usage-integration-00006
+  - technology-usage-integration-00007
+  - technology-usage-integration-00008
+  - technology-usage-integration-00009
+  - technology-usage-integration-00010
+  - technology-usage-integration-00011
+  - technology-usage-integration-00012
+  - technology-usage-integration-00013
+  - technology-usage-integration-00014
+  - technology-usage-integration-00015
+  - technology-usage-jta-00020
+  - technology-usage-jta-00030
+  - technology-usage-jta-00040
+  - technology-usage-jta-00050
+  - technology-usage-jta-00060
+  - technology-usage-jta-00070
+  - technology-usage-jta-00080
+  - technology-usage-jta-00090
+  - technology-usage-jta-00100
+  - technology-usage-jta-00110
+  - technology-usage-jta-00120
+  - technology-usage-jta-00130
+  - technology-usage-jta-00140
+  - technology-usage-jta-00150
+  - technology-usage-jta-00160
+  - technology-usage-jta-00170
+  - technology-usage-jta-00180
+  - technology-usage-jta-00190
+  - technology-usage-jta-00200
+  - technology-usage-jta-00210
+  - technology-usage-logging-00010
+  - technology-usage-logging-000100
+  - technology-usage-logging-000110
+  - technology-usage-logging-000120
+  - technology-usage-logging-000130
+  - technology-usage-logging-000140
+  - technology-usage-logging-000150
+  - technology-usage-logging-000160
+  - technology-usage-logging-000170
+  - technology-usage-logging-000180
+  - technology-usage-logging-000190
+  - technology-usage-logging-00020
+  - technology-usage-logging-000200
+  - technology-usage-logging-000210
+  - technology-usage-logging-000220
+  - technology-usage-logging-000230
+  - technology-usage-logging-000240
+  - technology-usage-logging-000250
+  - technology-usage-logging-000260
+  - technology-usage-logging-000270
+  - technology-usage-logging-000280
+  - technology-usage-logging-000290
+  - technology-usage-logging-00030
+  - technology-usage-logging-00040
+  - technology-usage-logging-00050
+  - technology-usage-logging-00060
+  - technology-usage-logging-00070
+  - technology-usage-logging-00080
+  - technology-usage-logging-00090
+  - technology-usage-markup-01300
+  - technology-usage-mvc-01000
+  - technology-usage-mvc-01100
+  - technology-usage-mvc-01200
+  - technology-usage-mvc-01300
+  - technology-usage-mvc-01400
+  - technology-usage-mvc-01500
+  - technology-usage-mvc-01700
+  - technology-usage-mvc-01800
+  - technology-usage-mvc-01900
+  - technology-usage-mvc-02000
+  - technology-usage-mvc-02100
+  - technology-usage-mvc-02200
+  - technology-usage-mvc-02300
+  - technology-usage-mvc-02400
+  - technology-usage-mvc-02500
+  - technology-usage-mvc-02600
+  - technology-usage-mvc-02700
+  - technology-usage-mvc-02800
+  - technology-usage-mvc-02900
+  - technology-usage-mvc-03000
+  - technology-usage-mvc-03100
+  - technology-usage-mvc-03200
+  - technology-usage-mvc-03300
+  - technology-usage-mvc-03400
+  - technology-usage-mvc-03500
+  - technology-usage-mvc-03600
+  - technology-usage-mvc-03700
+  - technology-usage-mvc-03800
+  - technology-usage-mvc-03900
+  - technology-usage-mvc-04000
+  - technology-usage-mvc-04100
+  - technology-usage-mvc-04200
+  - technology-usage-mvc-04300
+  - technology-usage-mvc-04400
+  - technology-usage-mvc-04500
+  - technology-usage-mvc-04600
+  - technology-usage-mvc-04700
+  - technology-usage-mvc-04800
+  - technology-usage-mvc-04900
+  - technology-usage-mvc-05000
+  - technology-usage-mvc-05100
+  - technology-usage-mvc-05200
+  - technology-usage-mvc-05300
+  - technology-usage-mvc-05400
+  - technology-usage-mvc-05500
+  - technology-usage-mvc-05600
+  - technology-usage-mvc-05700
+  - technology-usage-mvc-05800
+  - technology-usage-mvc-05900
+  - technology-usage-mvc-06000
+  - technology-usage-security-01000
+  - technology-usage-security-01100
+  - technology-usage-security-01200
+  - technology-usage-security-01300
+  - technology-usage-security-01400
+  - technology-usage-security-01500
+  - technology-usage-security-01600
+  - technology-usage-security-01700
+  - technology-usage-security-01800
+  - technology-usage-security-01900
+  - technology-usage-security-02000
+  - technology-usage-security-02100
+  - technology-usage-security-02200
+  - technology-usage-security-02300
+  - technology-usage-security-02400
+  - technology-usage-security-02500
+  - technology-usage-security-02600
+  - technology-usage-security-02700
+  - technology-usage-security-02800
+  - technology-usage-security-02900
+  - technology-usage-security-03000
+  - technology-usage-security-03100
+  - technology-usage-security-03200
+  - technology-usage-security-03300
+  - technology-usage-security-03400
+  - technology-usage-security-03500
+  - technology-usage-test-frameworks-00010
+  - technology-usage-test-frameworks-00020
+  - technology-usage-test-frameworks-00030
+  - technology-usage-test-frameworks-00040
+  - technology-usage-test-frameworks-00050
+  - technology-usage-test-frameworks-00060
+  - technology-usage-test-frameworks-00070
+  - technology-usage-test-frameworks-00080
+  - technology-usage-test-frameworks-00090
+  - technology-usage-test-frameworks-00100
+  - technology-usage-test-frameworks-00110
+  - technology-usage-test-frameworks-00120
+  - technology-usage-test-frameworks-00130
+  - technology-usage-test-frameworks-00140
+  - technology-usage-test-frameworks-00150
+  - technology-usage-test-frameworks-00160
+  - technology-usage-test-frameworks-00170
+  - technology-usage-test-frameworks-00180
+  - technology-usage-test-frameworks-00190
+  - technology-usage-test-frameworks-00200
+  - technology-usage-test-frameworks-00210
+  - technology-usage-test-frameworks-00220
+  - technology-usage-test-frameworks-00230
+  - technology-usage-test-frameworks-00240
+  - technology-usage-test-frameworks-00250
+  - technology-usage-test-frameworks-00260
+  - technology-usage-test-frameworks-00270
+  - technology-usage-test-frameworks-00280
+  - technology-usage-test-frameworks-00290
+  - technology-usage-test-frameworks-00300
+  - technology-usage-test-frameworks-00310
+  - technology-usage-test-frameworks-00320
+  - technology-usage-test-frameworks-00330
+  - technology-usage-test-frameworks-00340
+  - technology-usage-test-frameworks-00350
+  - technology-usage-test-frameworks-00360
+  - technology-usage-test-frameworks-00370
+  - technology-usage-web-01100
+  - technology-usage-web-01100
+  - technology-usage-web-01200
+  - technology-usage-web-01300
+  - technology-usage-web-01300
+  - technology-usage-web-01400
+  - technology-usage-web-01400
+  - technology-usage-web-01500
+  - technology-usage-web-01500
+  - technology-usage-web-01600
+  - technology-usage-web-01600
+  - technology-usage-web-01700
+  - technology-usage-web-01700
+  - technology-usage-web-01800
+  - technology-usage-web-01800
+  - technology-usage-web-01900
+  - technology-usage-web-01900
+  - technology-usage-web-02000
+  - technology-usage-web-02000
+  - technology-usage-web-02100
+  - technology-usage-web-02100
+  - technology-usage-web-02200
+  - technology-usage-web-02200
+  - technology-usage-web-02300
+  - technology-usage-web-02300
+  - technology-usage-web-02400
+  - technology-usage-web-02400
+  - test-frameworks-sauge-00010
+  - test-frameworks-sauge-00020
+  - test-frameworks-sauge-00030
+  - test-frameworks-sauge-00040
+  - test-frameworks-sauge-00050
+  - test-frameworks-sauge-00060
+  - test-frameworks-sauge-00070
+  - test-frameworks-sauge-00080
+  - test-frameworks-sauge-00090
+  - test-frameworks-sauge-00100
+  - test-frameworks-sauge-00110
+  - test-frameworks-sauge-00120
+  - test-frameworks-sauge-00130
+  - test-frameworks-sauge-00140
+  - test-frameworks-sauge-00150
+  - test-frameworks-sauge-00160
+  - test-frameworks-sauge-00170
+  - test-frameworks-sauge-00180
+  - test-frameworks-sauge-00190
+  - test-frameworks-sauge-00200
+  - test-frameworks-sauge-00210
+  - test-frameworks-sauge-00220
+  - test-frameworks-sauge-00230
+  - test-frameworks-sauge-00240
+  - test-frameworks-sauge-00260
+  - test-frameworks-sauge-00270
+  - test-frameworks-sauge-00280
+  - test-frameworks-sauge-00290
+  - test-frameworks-sauge-00300
+  - test-frameworks-sauge-00310
+  - test-frameworks-sauge-00320
+  - test-frameworks-sauge-00330
+  - test-frameworks-sauge-00340
+  - test-frameworks-sauge-00350
+  - test-frameworks-sauge-00360
+  - test-frameworks-sauge-00370
+  - test-frameworks-sauge-00560
