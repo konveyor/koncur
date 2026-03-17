@@ -113,9 +113,14 @@ func ValidateFiles(testDir, targetType string, actual, expected []konveyor.RuleS
 	comparer := getComparer(targetType, testDir)
 
 	for _, ers := range expected {
+		expectedRulesetName := ers.Name
+		if ers.Name == "konveyor-analysis" && targetType == "tackle-hub" {
+			expectedRulesetName = "files"
+		}
+
 		found := false
 		for _, rs := range actual {
-			if rs.Name != ers.Name {
+			if rs.Name != expectedRulesetName {
 				continue
 			}
 			found = true
@@ -172,7 +177,11 @@ func ValidateFiles(testDir, targetType string, actual, expected []konveyor.RuleS
 
 	expectedRulesetNames := make(map[string]bool)
 	for _, ers := range expected {
-		expectedRulesetNames[ers.Name] = true
+		expectedRulesetName := ers.Name
+		if ers.Name == "konveyor-analysis" && targetType == "tackle-hub" {
+			expectedRulesetName = "files"
+		}
+		expectedRulesetNames[expectedRulesetName] = true
 	}
 	for _, rs := range actual {
 		if !expectedRulesetNames[rs.Name] {
