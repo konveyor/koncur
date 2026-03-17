@@ -112,7 +112,7 @@ func (k *KaiRPCTarget) Execute(ctx context.Context, test *config.TestDefinition)
 	}
 
 	// Prepare rules
-	preparedRules, err := k.prepareRules(ctx, &test.Analysis, workDir)
+	preparedRules, err := k.prepareRules(ctx, &test.Analysis, test.GetTestDir(), workDir)
 	if err != nil {
 		return nil, fmt.Errorf("failed to prepare rules: %w", err)
 	}
@@ -237,6 +237,7 @@ func (k *KaiRPCTarget) startServer(ctx context.Context, pipePath, rules, provide
 		f.Close()
 		return nil, err
 	}
+	_ = f.Close()
 
 	return cmd, nil
 }
@@ -248,8 +249,10 @@ func (k *KaiRPCTarget) connectToServer(ctx context.Context, pipePath string, tim
 	deadline := time.Now().Add(timeout)
 
 	// Wait for socket file to exist
+	socketReady := false
 	for time.Now().Before(deadline) {
 		if _, err := os.Stat(pipePath); err == nil {
+			socketReady = true
 			break
 		}
 		select {
@@ -258,6 +261,9 @@ func (k *KaiRPCTarget) connectToServer(ctx context.Context, pipePath string, tim
 		case <-time.After(500 * time.Millisecond):
 			continue
 		}
+	}
+	if !socketReady {
+		return nil, nil, fmt.Errorf("server socket %q not created within %v", pipePath, timeout)
 	}
 
 	// Try to connect with retries
@@ -305,8 +311,12 @@ func (k *KaiRPCTarget) connectToServer(ctx context.Context, pipePath string, tim
 	case <-startedCh:
 		log.Info("kai-analyzer server is ready")
 	case <-time.After(timeout):
+		client.Close()
+		conn.Close()
 		return nil, nil, fmt.Errorf("timeout waiting for server 'started' notification after %v", timeout)
 	case <-ctx.Done():
+		client.Close()
+		conn.Close()
 		return nil, nil, ctx.Err()
 	}
 
@@ -321,12 +331,13 @@ func (k *KaiRPCTarget) cleanup(cmd *exec.Cmd, pipePath string) {
 		log.Info("Stopping kai-analyzer server")
 		cmd.Process.Signal(syscall.SIGTERM)
 		// Wait briefly for graceful shutdown
-		done := make(chan error)
+		done := make(chan error, 1)
 		go func() { done <- cmd.Wait() }()
 		select {
 		case <-done:
 		case <-time.After(5 * time.Second):
-			cmd.Process.Kill()
+			_ = cmd.Process.Kill()
+			<-done
 		}
 	}
 
@@ -395,30 +406,9 @@ func (k *KaiRPCTarget) prepareInput(ctx context.Context, analysis *config.Analys
 	return analysis.Application, nil
 }
 
-// prepareRules handles rules that may be Git URLs or local paths (similar to kantra.go)
-func (k *KaiRPCTarget) prepareRules(ctx context.Context, analysis *config.AnalysisConfig, workDir string) ([]string, error) {
-	if len(analysis.Rules) == 0 {
-		return nil, nil
-	}
-
-	log := util.GetLogger()
-	preparedRules := make([]string, 0, len(analysis.Rules))
-
-	for i, rule := range analysis.Rules {
-		if i < len(analysis.RulesGitComponents) && analysis.RulesGitComponents[i] != nil {
-			log.Info("Cloning rules repository", "rule", rule)
-			cloneName := fmt.Sprintf("rules-%d", i)
-			clonedPath, err := CloneGitRepository(ctx, analysis.RulesGitComponents[i], workDir, cloneName)
-			if err != nil {
-				return nil, fmt.Errorf("failed to clone rules repository %s: %w", rule, err)
-			}
-			preparedRules = append(preparedRules, clonedPath)
-		} else {
-			preparedRules = append(preparedRules, rule)
-		}
-	}
-
-	return preparedRules, nil
+// prepareRules handles rules that may be Git URLs or local paths
+func (k *KaiRPCTarget) prepareRules(ctx context.Context, analysis *config.AnalysisConfig, testDir, workDir string) ([]string, error) {
+	return PrepareRules(ctx, analysis.Rules, testDir, workDir)
 }
 
 // LSPCodec implements the LSP-style JSON-RPC codec for client-side communication
@@ -429,10 +419,6 @@ type LSPCodec struct {
 	log     interface{ Info(string, ...interface{}) }
 	seq     uint64
 	seqLock sync.Mutex
-
-	// Pending requests waiting for response
-	pending     map[uint64]chan *json.RawMessage
-	pendingLock sync.Mutex
 
 	// Current response being read
 	currentResponse *lspResponse
@@ -457,11 +443,10 @@ type lspResponse struct {
 // NewLSPCodec creates a new LSP-style codec for client communication
 func NewLSPCodec(ctx context.Context, reader *bufio.Reader, writer *bufio.Writer, log interface{ Info(string, ...interface{}) }) *LSPCodec {
 	return &LSPCodec{
-		reader:  reader,
-		writer:  writer,
-		ctx:     ctx,
-		log:     log,
-		pending: make(map[uint64]chan *json.RawMessage),
+		reader: reader,
+		writer: writer,
+		ctx:    ctx,
+		log:    log,
 	}
 }
 

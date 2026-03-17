@@ -11,6 +11,38 @@ import (
 	"github.com/konveyor/test-harness/pkg/util"
 )
 
+// PrepareRules handles rules that may be Git URLs or local paths.
+// Returns a list of prepared rule paths ready for use by any target.
+func PrepareRules(ctx context.Context, rules []config.CustomRule, testDir, workDir string) ([]string, error) {
+	if len(rules) == 0 {
+		return nil, nil
+	}
+
+	log := util.GetLogger()
+	preparedRules := make([]string, 0, len(rules))
+
+	for i, rule := range rules {
+		if rule.File != nil {
+			if filepath.IsAbs(rule.File.FilePath) {
+				preparedRules = append(preparedRules, rule.File.FilePath)
+			} else {
+				preparedRules = append(preparedRules, filepath.Join(testDir, rule.File.FilePath))
+			}
+		} else if rule.Git != nil {
+			components := rule.Git.GetCompents()
+			log.Info("Cloning rules repository", "rule", rule.Git.GitRepo)
+			cloneName := fmt.Sprintf("rules-%d", i)
+			clonedPath, err := CloneGitRepository(ctx, components, workDir, cloneName)
+			if err != nil {
+				return nil, fmt.Errorf("failed to clone rules repository %s: %w", rule.Git.GitRepo, err)
+			}
+			preparedRules = append(preparedRules, clonedPath)
+		}
+	}
+
+	return preparedRules, nil
+}
+
 // IsBinaryFile returns true if the path appears to be a binary artifact (.jar, .war, or .ear)
 func IsBinaryFile(path string) bool {
 	ext := strings.ToLower(filepath.Ext(path))

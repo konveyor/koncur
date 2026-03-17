@@ -118,47 +118,34 @@ func TestAnalysisConfig_ParseGitURLs(t *testing.T) {
 		name        string
 		config      AnalysisConfig
 		wantAppComp *GitURLComponents
-		wantRules   int
 	}{
 		{
-			name: "Git application and mixed rules",
+			name: "Git application with path",
 			config: AnalysisConfig{
 				Application: "https://github.com/konveyor/app#main/src",
-				Rules: []string{
-					"https://github.com/konveyor/rules#v1.0/java",
-					"/local/rules",
-					"https://github.com/konveyor/rules2#main",
-				},
 			},
 			wantAppComp: &GitURLComponents{
 				URL:  "https://github.com/konveyor/app",
 				Ref:  "main",
 				Path: "src",
 			},
-			wantRules: 3,
 		},
 		{
-			name: "Local application with Git rules",
+			name: "Local application",
 			config: AnalysisConfig{
 				Application: "/local/app",
-				Rules: []string{
-					"https://github.com/konveyor/rules#main/rulesets",
-				},
 			},
 			wantAppComp: nil,
-			wantRules:   1,
 		},
 		{
-			name: "No rules",
+			name: "Git application without path",
 			config: AnalysisConfig{
 				Application: "https://github.com/konveyor/app#main",
-				Rules:       []string{},
 			},
 			wantAppComp: &GitURLComponents{
 				URL: "https://github.com/konveyor/app",
 				Ref: "main",
 			},
-			wantRules: 0,
 		},
 	}
 
@@ -189,12 +176,6 @@ func TestAnalysisConfig_ParseGitURLs(t *testing.T) {
 				if ac.ApplicationGitComponents != nil {
 					t.Error("Expected ApplicationGitComponents to be nil")
 				}
-			}
-
-			// Check rules components
-			if len(ac.RulesGitComponents) != tt.wantRules {
-				t.Errorf("RulesGitComponents length = %v, want %v",
-					len(ac.RulesGitComponents), tt.wantRules)
 			}
 		})
 	}

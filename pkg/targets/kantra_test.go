@@ -757,7 +757,7 @@ func TestKantraTarget_PrepareRules(t *testing.T) {
 		{
 			name: "no rules",
 			analysis: config.AnalysisConfig{
-				Rules: []string{},
+				Rules: []config.CustomRule{},
 			},
 			expectError:   false,
 			expectedRules: nil,
@@ -765,9 +765,9 @@ func TestKantraTarget_PrepareRules(t *testing.T) {
 		{
 			name: "local rules only",
 			analysis: config.AnalysisConfig{
-				Rules: []string{
-					"/opt/rulesets",
-					"/custom/rules",
+				Rules: []config.CustomRule{
+					{File: &config.FilePathRule{FilePath: "/opt/rulesets"}},
+					{File: &config.FilePathRule{FilePath: "/custom/rules"}},
 				},
 			},
 			expectError: false,
@@ -779,9 +779,9 @@ func TestKantraTarget_PrepareRules(t *testing.T) {
 		{
 			name: "Git URL rules",
 			analysis: config.AnalysisConfig{
-				Rules: []string{
-					"https://github.com/konveyor/rulesets#main",
-					"https://github.com/konveyor/analyzer-lsp#v1.0/rules",
+				Rules: []config.CustomRule{
+					{Git: &config.GitRepoRule{GitRepo: "https://github.com/konveyor/rulesets#main"}},
+					{Git: &config.GitRepoRule{GitRepo: "https://github.com/konveyor/analyzer-lsp#v1.0/rules"}},
 				},
 			},
 			expectError: false,
@@ -794,11 +794,11 @@ func TestKantraTarget_PrepareRules(t *testing.T) {
 		{
 			name: "mixed local and Git URL rules",
 			analysis: config.AnalysisConfig{
-				Rules: []string{
-					"/opt/rulesets",
-					"https://github.com/konveyor/rulesets#main/java",
-					"/custom/rules",
-					"https://github.com/konveyor/analyzer-lsp#v1.0/dotnet",
+				Rules: []config.CustomRule{
+					{File: &config.FilePathRule{FilePath: "/opt/rulesets"}},
+					{Git: &config.GitRepoRule{GitRepo: "https://github.com/konveyor/rulesets#main/java"}},
+					{File: &config.FilePathRule{FilePath: "/custom/rules"}},
+					{Git: &config.GitRepoRule{GitRepo: "https://github.com/konveyor/analyzer-lsp#v1.0/dotnet"}},
 				},
 			},
 			expectError: false,
@@ -813,20 +813,14 @@ func TestKantraTarget_PrepareRules(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			// Parse Git URLs in the analysis config
-			tt.analysis.ParseGitURLs()
-
-			// Create a mock prepareRules function that simulates the behavior
-			// without actually cloning repositories
+			// Simulate rule preparation without actually cloning repositories
 			preparedRules := make([]string, 0, len(tt.analysis.Rules))
 			for i, rule := range tt.analysis.Rules {
-				// Check if we have parsed Git components for this rule
-				if i < len(tt.analysis.RulesGitComponents) && tt.analysis.RulesGitComponents[i] != nil {
+				if rule.Git != nil {
 					// Simulate a cloned path
 					preparedRules = append(preparedRules, fmt.Sprintf("testwork/rules-%d", i))
-				} else {
-					// Local path - use as-is
-					preparedRules = append(preparedRules, rule)
+				} else if rule.File != nil {
+					preparedRules = append(preparedRules, rule.File.FilePath)
 				}
 			}
 
@@ -871,47 +865,44 @@ func TestKantraTarget_GitURLIntegration(t *testing.T) {
 			},
 		},
 		{
-			name: "rules with multiple Git URLs and paths",
+			name: "rules with Git URLs parse via CustomRule",
 			analysis: config.AnalysisConfig{
 				Application: "/local/app",
-				Rules: []string{
-					"https://github.com/konveyor/rulesets#main/java",
-					"/local/rules",
-					"https://github.com/konveyor/analyzer-lsp#v1.0/dotnet/rules",
+				Rules: []config.CustomRule{
+					{Git: &config.GitRepoRule{GitRepo: "https://github.com/konveyor/rulesets#main/java"}},
+					{File: &config.FilePathRule{FilePath: "/local/rules"}},
+					{Git: &config.GitRepoRule{GitRepo: "https://github.com/konveyor/analyzer-lsp#v1.0/dotnet/rules"}},
 				},
 			},
 			validate: func(t *testing.T, analysis *config.AnalysisConfig) {
 				if analysis.ApplicationGitComponents != nil {
 					t.Error("Expected ApplicationGitComponents to be nil for local path")
 				}
-				if len(analysis.RulesGitComponents) != 3 {
-					t.Fatalf("Expected 3 RulesGitComponents, got %d", len(analysis.RulesGitComponents))
-				}
 
 				// First rule - Git URL with path
-				if analysis.RulesGitComponents[0] == nil {
-					t.Error("Expected first rule to have Git components")
-				} else {
-					if analysis.RulesGitComponents[0].URL != "https://github.com/konveyor/rulesets" {
-						t.Errorf("First rule URL mismatch: %s", analysis.RulesGitComponents[0].URL)
-					}
-					if analysis.RulesGitComponents[0].Path != "java" {
-						t.Errorf("First rule path mismatch: %s", analysis.RulesGitComponents[0].Path)
-					}
+				comp := analysis.Rules[0].Git.GetCompents()
+				if comp == nil {
+					t.Fatal("Expected first rule to have Git components")
+				}
+				if comp.URL != "https://github.com/konveyor/rulesets" {
+					t.Errorf("First rule URL mismatch: %s", comp.URL)
+				}
+				if comp.Path != "java" {
+					t.Errorf("First rule path mismatch: %s", comp.Path)
 				}
 
-				// Second rule - local path
-				if analysis.RulesGitComponents[1] != nil {
-					t.Error("Expected second rule to have nil Git components (local path)")
+				// Second rule - local path (no Git)
+				if analysis.Rules[1].Git != nil {
+					t.Error("Expected second rule to have nil Git (local path)")
 				}
 
 				// Third rule - Git URL with deep path
-				if analysis.RulesGitComponents[2] == nil {
-					t.Error("Expected third rule to have Git components")
-				} else {
-					if analysis.RulesGitComponents[2].Path != "dotnet/rules" {
-						t.Errorf("Third rule path mismatch: %s", analysis.RulesGitComponents[2].Path)
-					}
+				comp2 := analysis.Rules[2].Git.GetCompents()
+				if comp2 == nil {
+					t.Fatal("Expected third rule to have Git components")
+				}
+				if comp2.Path != "dotnet/rules" {
+					t.Errorf("Third rule path mismatch: %s", comp2.Path)
 				}
 			},
 		},
@@ -919,7 +910,7 @@ func TestKantraTarget_GitURLIntegration(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			// Parse Git URLs
+			// Parse Git URLs (only handles application now)
 			tt.analysis.ParseGitURLs()
 
 			// Run validation

@@ -61,7 +61,7 @@ jobs:
           githubServer: false
           repositories: '[{"id": "tackle-testapp-public", "name": "Local tackle-testapp repo", "url": "http://${{ env.DOCKER_GATEWAY }}:8085"}]'
           mirrors: '[{"id": "maven-default-http-blocker", "name": "disable http block", "mirrorOf": "tackle-testapp-public", "url": "http://${{ env.DOCKER_GATEWAY }}:8085", "blocked": false}]'
-          path: "${{ runner.home }}/.m2/settings.xml"
+          path: "${{ env.HOME }}/.m2/settings.xml"
 
       - name: Start provider containers
         run: make start-kai-providers CONTAINER_RUNTIME=docker

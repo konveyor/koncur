@@ -29,6 +29,10 @@ func (t *tackleHubValidator) compareViolations(expected, actual map[string]konve
 	return compareViolationsUsing(expected, actual, t.compareViolationDetails)
 }
 
+func (t *tackleHubValidator) compareInsights(expected, actual map[string]konveyor.Violation) []ValidationError {
+	return t.compareViolations(expected, actual)
+}
+
 func (t *tackleHubValidator) compareViolationDetails(expected, actual konveyor.Violation) []ValidationError {
 	var errors []ValidationError
 	// Skip strict validation for insights (effort=0 or nil)

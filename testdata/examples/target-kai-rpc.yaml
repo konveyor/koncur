@@ -8,7 +8,7 @@ kaiRPC:
 
   # Default rulesets directory (used when tests don't specify rules)
   # Download with: make download-rulesets
-  defaultRulesDir: .koncur/rulesets/stable
+  defaultRulesDir: .koncur/rulesets
 
   # Log file for kai-analyzer (optional)
   # logFile: /tmp/kai-analyzer.log
