@@ -140,6 +140,13 @@ will be extracted to a temporary directory and all tests will be run from it.`,
 					skippedCount += 1
 					continue
 				}
+				// Skip Maven coordinate applications for kantra target
+				if targets.IsMavenCoordinate(test.Analysis.Application) && targetType == "kantra" {
+					log.V(1).Info("skipping test with Maven coordinate for kantra target", "test", test.Name)
+					color.Yellow("  ⊘ Skipped: %s (Maven coordinates not supported for kantra)", test.Name)
+					skippedCount += 1
+					continue
+				}
 
 				tests = append(tests, test)
 			}

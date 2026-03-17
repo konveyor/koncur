@@ -384,11 +384,12 @@ func (t *TackleHubTarget) createApplication(test *config.TestDefinition) (*api.A
 		Description: test.Description,
 	}
 
-	// Check if this is a binary analysis (based on file extension)
-	isBinary := IsBinaryFile(test.Analysis.Application)
+	// Check if this is a binary analysis (based on file extension or Maven coordinate)
+	isBinaryFile := IsBinaryFile(test.Analysis.Application)
+	isMavenCoordinate := IsMavenCoordinate(test.Analysis.Application)
 
 	// Only set repository for source code analysis
-	if !isBinary {
+	if !isBinaryFile && !isMavenCoordinate {
 		// Use parsed Git components if available, otherwise parse the URL
 		if test.Analysis.ApplicationGitComponents != nil {
 			app.Repository = &api.Repository{
@@ -406,6 +407,9 @@ func (t *TackleHubTarget) createApplication(test *config.TestDefinition) (*api.A
 				Branch: branch,
 			}
 		}
+	} else if isMavenCoordinate {
+		// For Maven coordinates, set Binary field on the application
+		app.Binary = test.Analysis.Application
 	}
 
 	err = t.client.Application.Create(app)
@@ -507,13 +511,18 @@ func (t *TackleHubTarget) createAnalysisTask(ctx context.Context, test *config.T
 	taskData.Tagger.Enabled = true
 
 	// Check if this is a binary analysis
-	isBinary := IsBinaryFile(test.Analysis.Application)
+	isBinaryFile := IsBinaryFile(test.Analysis.Application)
+	isMavenCoordinate := IsMavenCoordinate(test.Analysis.Application)
 
-	if isBinary {
-		// Binary mode
+	if isBinaryFile {
+		// Binary mode with file artifact
 		taskData.Mode.Binary = true
 		taskData.Mode.Artifact = fmt.Sprintf("/binary/%v", test.Analysis.Application) // Path where binary is stored in bucket
 		log.Info("Configuring binary analysis mode", "artifact", taskData.Mode.Artifact)
+	} else if isMavenCoordinate {
+		// Binary mode with Maven coordinate - artifact field remains empty
+		taskData.Mode.Binary = true
+		log.Info("Configuring binary analysis mode with Maven coordinate", "application", test.Analysis.Application)
 	} else {
 		// Source code mode
 		// Set analysis mode
@@ -557,7 +566,7 @@ func (t *TackleHubTarget) createAnalysisTask(ctx context.Context, test *config.T
 	if err != nil {
 		return nil, err
 	}
-	if isBinary {
+	if isBinaryFile {
 		err = t.uploadBinary(task, test.Analysis.Application, test.GetTestDir())
 		if err != nil {
 			return nil, err
