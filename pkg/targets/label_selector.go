@@ -32,7 +32,7 @@ func ParseLabelSelector(selector string) Labels {
 	// Extract all label key-value pairs from the selector
 	// Pattern matches: optional "!" + key + "=" + value
 	// where key and value contain any characters except parentheses and logical operators
-	re := regexp.MustCompile(`!?[^\)\(|&]+=[^\)\(|&]+`)
+	re := regexp.MustCompile(`!?[^\)\(|&]+`)
 	matches := re.FindAllString(selector, -1)
 
 	for _, match := range matches {
