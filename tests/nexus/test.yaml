@@ -1,0 +1,17 @@
+name: Nexus Source Analysis
+description: Source analysis of Sonatype Nexus application
+analysis:
+    application: https://github.com/sonatype/nexus-public#main
+    labelSelector: konveyor.io/target=openjdk || konveyor.io/target=cloud-readiness
+    context_lines: 0
+    incident_selector: ""
+    source: []
+    target: []
+    rules: []
+    disableDefaultRules: false
+    analysisMode: source-only
+timeout: 1h0m0s
+expect:
+    exitCode: 0
+    output:
+        file: expected-output.yaml
