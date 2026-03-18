@@ -1,3 +1,6 @@
+# SKIPPED: Skip test due to a known issue on Windows.
+# For more information, see: https://github.com/konveyor/kantra/pull/710
+
 name: Coolstore Source and Deps analysis using Quarkus branch
 analysis:
     application: https://github.com/konveyor-ecosystem/coolstore#ci-2024-quarkus
