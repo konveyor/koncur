@@ -6,7 +6,7 @@ analysis:
     source: []
     target:
     - dotnet-core
-    disableDefaultRules: true
+    disableDefaultRules: false
     analysisMode: source-only
 timeout: 10m0s
 expect:
