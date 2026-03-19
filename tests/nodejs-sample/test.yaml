@@ -9,7 +9,6 @@ analysis:
     rules:
         - file:
             filePath: nodejs-rules.yaml
-          git: null
     disableDefaultRules: true
     analysisMode: source-only
 timeout: 10m0s
