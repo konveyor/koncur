@@ -11,11 +11,13 @@ import (
 // - AND operations with "&&"
 // - Negation with "!" prefix for exclusions
 // - Key-value pairs in format "key=value"
+// - Key-only labels for existence checks (e.g. "konveyor.io/target")
 //
 // Examples:
 //   - "konveyor.io/target=cloud-readiness || konveyor.io/target=linux" -> Included: ["konveyor.io/target=cloud-readiness", "konveyor.io/target=linux"]
 //   - "!konveyor.io/target=windows" -> Excluded: ["konveyor.io/target=windows"]
 //   - "konveyor.io/target=quarkus || !konveyor.io/source=java8" -> Included: ["konveyor.io/target=quarkus"], Excluded: ["konveyor.io/source=java8"]
+//   - "konveyor.io/target" -> Included: ["konveyor.io/target"]
 func ParseLabelSelector(selector string) Labels {
 	labels := Labels{
 		Included: []string{},
@@ -29,10 +31,11 @@ func ParseLabelSelector(selector string) Labels {
 		return labels
 	}
 
-	// Extract all label key-value pairs from the selector
-	// Pattern matches: optional "!" + key + "=" + value
-	// where key and value contain any characters except parentheses and logical operators
-	re := regexp.MustCompile(`!?[^\)\(|&]+`)
+	// Extract all label expressions from the selector.
+	// Matches both key=value pairs and key-only labels (existence checks).
+	// Pattern: optional "!" + one or more chars (not parens/operators),
+	// optionally followed by "=" + value chars.
+	re := regexp.MustCompile(`!?[^\)\(|&=]+(?:=[^\)\(|&]+)?`)
 	matches := re.FindAllString(selector, -1)
 
 	for _, match := range matches {

@@ -92,6 +92,30 @@ func TestParseLabelSelector(t *testing.T) {
 			},
 		},
 		{
+			name:     "key-only label (existence check)",
+			selector: "konveyor.io/target",
+			want: Labels{
+				Included: []string{"konveyor.io/target"},
+				Excluded: []string{},
+			},
+		},
+		{
+			name:     "key-only label with exclusion",
+			selector: "!konveyor.io/source",
+			want: Labels{
+				Included: []string{},
+				Excluded: []string{"konveyor.io/source"},
+			},
+		},
+		{
+			name:     "key-only mixed with key-value",
+			selector: "konveyor.io/target || konveyor.io/source=java",
+			want: Labels{
+				Included: []string{"konveyor.io/target", "konveyor.io/source=java"},
+				Excluded: []string{},
+			},
+		},
+		{
 			name:     "simple AND operation",
 			selector: "konveyor.io/target=quarkus && konveyor.io/source=java",
 			want: Labels{
@@ -149,6 +173,9 @@ func TestParseLabelSelectorIncludedCount(t *testing.T) {
 		{"one excluded", "!label=value", 0, 1},
 		{"two excluded", "!label1=value1 || !label2=value2", 0, 2},
 		{"mixed", "label1=value1 || !label2=value2 || label3=value3", 2, 1},
+		{"key-only included", "konveyor.io/target", 1, 0},
+		{"key-only excluded", "!konveyor.io/source", 0, 1},
+		{"key-only mixed with key-value", "konveyor.io/target || label=value", 2, 0},
 	}
 
 	for _, tt := range tests {
