@@ -15,4 +15,3 @@ expect:
     exitCode: 0
     output:
         file: expected-output.yaml
-        
