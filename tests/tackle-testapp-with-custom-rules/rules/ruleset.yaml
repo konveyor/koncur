@@ -1,0 +1,5 @@
+name: tackle-testapp-custom-rules
+description: Custom rules for tackle-testapp javax package detection
+labels:
+  - konveyor.io/source=java
+  - custom-rules
