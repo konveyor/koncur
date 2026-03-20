@@ -1,0 +1,20 @@
+name: Tackle Testapp with custom rules
+analysis:
+    application: https://github.com/konveyor/tackle-testapp-public#ci-2024
+    labelSelector: konveyor.io/source=java && (konveyor.io/target=phil || konveyor.io/target=phil7)
+    context_lines: 0
+    incident_selector: ""
+    source: []
+    target: []
+    rules:
+        - file:
+            filePath: rules/
+          git: null
+    disableDefaultRules: false
+    analysisMode: full
+timeout: 10m0s
+requireMavenSettings: true
+expect:
+    exitCode: 0
+    output:
+        file: expected-output.yaml
