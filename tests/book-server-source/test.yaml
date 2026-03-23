@@ -1,13 +1,16 @@
-# SKIPPED: Skip test. Fails due to https://github.com/konveyor/analyzer-lsp/issues/936
-
-name: "book-server_source"
-description: ""
+name: book-server_source
 analysis:
-  application: "https://github.com/konveyor-ecosystem/book-server#ci-oct2025"
-  labelSelector: ""
-  analysisMode: "source-only"
-timeout: 10m
+    application: https://github.com/konveyor-ecosystem/book-server#ci-oct2025
+    labelSelector: (konveyor.io/target=cloud-readiness || konveyor.io/target=linux || konveyor.io/target=quarkus) && (konveyor.io/source=java-ee || konveyor.io/source=springboot)
+    context_lines: 0
+    incident_selector: ""
+    source: []
+    target: []
+    rules: []
+    disableDefaultRules: false
+    analysisMode: source-only
+timeout: 10m0s
 expect:
-  exitCode: 0
-  output:
-    result: []
+    exitCode: 0
+    output:
+        file: expected-output.yaml

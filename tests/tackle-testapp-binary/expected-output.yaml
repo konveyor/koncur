@@ -1,0 +1,495 @@
+- name: discovery-rules
+  violations:
+    hardcoded-ip-address:
+      description: Hardcoded IP Address
+      category: mandatory
+      labels:
+      - discovery
+      - konveyor.io/target=cloud-readiness
+      - konveyor.io/target=discovery
+      incidents:
+      - uri: file:///shared/bin/java-project/src/main/java/persistence.properties
+        message: When migrating environments, hard-coded IP addresses may need to
+          be modified or eliminated.
+        codeSnip: " 1   jdbc.driverClassName=oracle.jdbc.driver.OracleDriver\n 2   jdbc.url=jdbc:oracle:thin:@10.19.2.93:1521:xe\n
+          3   jdbc.user=customers\n 4   jdbc.password=customers\n 5   hibernate.hbm2ddl.auto=create-drop\n
+          6   hibernate.dialect=org.hibernate.dialect.OracleDialect\n 7  \n 8  # PostgreSQL\n
+          9  #jdbc.driverClassName=org.postgresql.Driver \n10  #jdbc.url=jdbc:postgresql://customers-postgresql:5432/customers\n11
+          \ #jdbc.user=customers\n12  #jdbc.password=customers\n13  #hibernate.hbm2ddl.auto=create-drop"
+        lineNumber: 2
+      effort: 1
+  insights:
+    discover-java-files:
+      description: Java source files
+      category: ""
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - konveyor.io/target=discovery
+      - tag=Java Source
+      incidents:
+      - uri: file:///shared/bin/java-project/src/main/java/io/konveyor/demo/ordermanagement/OrderManagementAppInitializer.java
+        message: ""
+        lineNumber: 0
+      - uri: file:///shared/bin/java-project/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+        message: ""
+        lineNumber: 0
+      - uri: file:///shared/bin/java-project/src/main/java/io/konveyor/demo/ordermanagement/config/WebConfig.java
+        message: ""
+        lineNumber: 0
+      - uri: file:///shared/bin/java-project/src/main/java/io/konveyor/demo/ordermanagement/controller/CustomerController.java
+        message: ""
+        lineNumber: 0
+      - uri: file:///shared/bin/java-project/src/main/java/io/konveyor/demo/ordermanagement/exception/ResourceNotFoundException.java
+        message: ""
+        lineNumber: 0
+      - uri: file:///shared/bin/java-project/src/main/java/io/konveyor/demo/ordermanagement/exception/handler/ExceptionHandlingController.java
+        message: ""
+        lineNumber: 0
+      - uri: file:///shared/bin/java-project/src/main/java/io/konveyor/demo/ordermanagement/model/Customer.java
+        message: ""
+        lineNumber: 0
+      - uri: file:///shared/bin/java-project/src/main/java/io/konveyor/demo/ordermanagement/repository/CustomerRepository.java
+        message: ""
+        lineNumber: 0
+      - uri: file:///shared/bin/java-project/src/main/java/io/konveyor/demo/ordermanagement/service/CustomerService.java
+        message: ""
+        lineNumber: 0
+      effort: 0
+    discover-maven-xml:
+      description: Maven XML file
+      category: ""
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - konveyor.io/target=discovery
+      - tag=Maven XML
+      incidents:
+      - uri: file:///shared/bin/java-project/pom.xml
+        message: ""
+        lineNumber: 0
+      effort: 0
+    discover-properties-file:
+      description: Properties file
+      category: ""
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - konveyor.io/target=discovery
+      - tag=Properties
+      incidents:
+      - uri: file:///shared/bin/java-project/src/main/java/persistence.properties
+        message: ""
+        lineNumber: 0
+      effort: 0
+- name: technology-usage
+  insights:
+    database-03000:
+      description: Embedded Spring Data JPA
+      category: ""
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded Spring Data JPA
+      - tag=Spring Data JPA
+      incidents:
+      - uri: file:///shared/bin/java-project/pom.xml
+        message: ""
+        codeSnip: |2-
+
+          41  <dependency>
+          42  <groupId>com.fasterxml.jackson.core</groupId>
+          43  <artifactId>jackson-core</artifactId>
+          44  </dependency>
+          45  <dependency>
+          46  <groupId>com.fasterxml.jackson.core</groupId>
+          47  <artifactId>jackson-databind</artifactId>
+          48  </dependency>
+          49  <dependency>
+          50  <groupId>org.springframework.data</groupId>
+          51  <artifactId>spring-data-jpa</artifactId>
+          52  </dependency>
+          53  <dependency>
+          54  <groupId>org.springframework</groupId>
+          55  <artifactId>spring-jdbc</artifactId>
+          56  <version>${spring-framework.version}</version>
+          57  </dependency>
+          58  <dependency>
+          59  <groupId>org.springframework</groupId>
+          60  <artifactId>spring-webmvc</artifactId>
+          61  <version>${spring-framework.version}</version>
+        lineNumber: 50
+      effort: 0
+    embedded-framework-08200:
+      description: Embedded framework - Spring DI
+      category: ""
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded framework - Spring DI
+      - tag=Spring DI
+      incidents:
+      - uri: file:///shared/bin/java-project/pom.xml
+        message: ""
+        codeSnip: |2-
+
+          41  <dependency>
+          42  <groupId>com.fasterxml.jackson.core</groupId>
+          43  <artifactId>jackson-core</artifactId>
+          44  </dependency>
+          45  <dependency>
+          46  <groupId>com.fasterxml.jackson.core</groupId>
+          47  <artifactId>jackson-databind</artifactId>
+          48  </dependency>
+          49  <dependency>
+          50  <groupId>org.springframework.data</groupId>
+          51  <artifactId>spring-data-jpa</artifactId>
+          52  </dependency>
+          53  <dependency>
+          54  <groupId>org.springframework</groupId>
+          55  <artifactId>spring-jdbc</artifactId>
+          56  <version>${spring-framework.version}</version>
+          57  </dependency>
+          58  <dependency>
+          59  <groupId>org.springframework</groupId>
+          60  <artifactId>spring-webmvc</artifactId>
+          61  <version>${spring-framework.version}</version>
+        lineNumber: 50
+      effort: 0
+    embedded-framework-08300:
+      description: Embedded framework - Micrometer
+      category: ""
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded framework - Micrometer
+      - tag=Micrometer
+      incidents:
+      - uri: file:///shared/bin/java-project/pom.xml
+        message: ""
+        codeSnip: |2-
+
+          60  <artifactId>spring-webmvc</artifactId>
+          61  <version>${spring-framework.version}</version>
+          62  </dependency>
+          63  <dependency>
+          64  <groupId>org.springframework</groupId>
+          65  <artifactId>spring-web</artifactId>
+          66  <version>${spring-framework.version}</version>
+          67  </dependency>
+          68  <dependency>
+          69  <groupId>org.springframework.boot</groupId>
+          70  <artifactId>spring-boot-starter-actuator</artifactId>
+          71  <version>2.5.0</version>
+          72  </dependency>
+          73  <dependency>
+          74  <groupId>org.apache.tomcat</groupId>
+          75  <artifactId>tomcat-jdbc</artifactId>
+          76  <version>${tomcat.version}</version>
+          77  <scope>runtime</scope>
+          78  </dependency>
+          79  <dependency>
+          80  <groupId>org.hibernate</groupId>
+        lineNumber: 69
+      effort: 0
+    embedded-framework-08400:
+      description: Embedded framework - Spring Web
+      category: ""
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded framework - Spring Web
+      - tag=Spring Web
+      incidents:
+      - uri: file:///shared/bin/java-project/pom.xml
+        message: ""
+        codeSnip: |2-
+
+          55  <artifactId>spring-jdbc</artifactId>
+          56  <version>${spring-framework.version}</version>
+          57  </dependency>
+          58  <dependency>
+          59  <groupId>org.springframework</groupId>
+          60  <artifactId>spring-webmvc</artifactId>
+          61  <version>${spring-framework.version}</version>
+          62  </dependency>
+          63  <dependency>
+          64  <groupId>org.springframework</groupId>
+          65  <artifactId>spring-web</artifactId>
+          66  <version>${spring-framework.version}</version>
+          67  </dependency>
+          68  <dependency>
+          69  <groupId>org.springframework.boot</groupId>
+          70  <artifactId>spring-boot-starter-actuator</artifactId>
+          71  <version>2.5.0</version>
+          72  </dependency>
+          73  <dependency>
+          74  <groupId>org.apache.tomcat</groupId>
+          75  <artifactId>tomcat-jdbc</artifactId>
+        lineNumber: 64
+      effort: 0
+    javaee-technology-usage-00120:
+      description: Java Servlet
+      category: ""
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Java Servlet
+      - tag=Servlet
+      incidents:
+      - uri: file:///shared/bin/java-project/src/main/java/io/konveyor/demo/ordermanagement/OrderManagementAppInitializer.java
+        message: ""
+        codeSnip: "\n 1  package io.konveyor.demo.ordermanagement;\n 2  \n 3  import
+          javax.servlet.ServletContext;\n 4  import javax.servlet.ServletException;\n
+          5  import javax.servlet.ServletRegistration;\n 6  import org.springframework.web.WebApplicationInitializer;\n
+          7  import org.springframework.web.context.ContextLoaderListener;\n 8  import
+          org.springframework.web.context.support.AnnotationConfigWebApplicationContext;\n
+          9  import org.springframework.web.servlet.DispatcherServlet;\n10  \n11  public
+          class OrderManagementAppInitializer implements WebApplicationInitializer
+          {\n12  public void onStartup(ServletContext container) throws ServletException
+          {\n13  AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();"
+        lineNumber: 3
+      - uri: file:///shared/bin/java-project/src/main/java/io/konveyor/demo/ordermanagement/OrderManagementAppInitializer.java
+        message: ""
+        codeSnip: "\n 1  package io.konveyor.demo.ordermanagement;\n 2  \n 3  import
+          javax.servlet.ServletContext;\n 4  import javax.servlet.ServletException;\n
+          5  import javax.servlet.ServletRegistration;\n 6  import org.springframework.web.WebApplicationInitializer;\n
+          7  import org.springframework.web.context.ContextLoaderListener;\n 8  import
+          org.springframework.web.context.support.AnnotationConfigWebApplicationContext;\n
+          9  import org.springframework.web.servlet.DispatcherServlet;\n10  \n11  public
+          class OrderManagementAppInitializer implements WebApplicationInitializer
+          {\n12  public void onStartup(ServletContext container) throws ServletException
+          {\n13  AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();\n14
+          \ context.setConfigLocation(\"io.konveyor.demo.ordermanagement.config\");"
+        lineNumber: 4
+      - uri: file:///shared/bin/java-project/src/main/java/io/konveyor/demo/ordermanagement/OrderManagementAppInitializer.java
+        message: ""
+        codeSnip: "\n 1  package io.konveyor.demo.ordermanagement;\n 2  \n 3  import
+          javax.servlet.ServletContext;\n 4  import javax.servlet.ServletException;\n
+          5  import javax.servlet.ServletRegistration;\n 6  import org.springframework.web.WebApplicationInitializer;\n
+          7  import org.springframework.web.context.ContextLoaderListener;\n 8  import
+          org.springframework.web.context.support.AnnotationConfigWebApplicationContext;\n
+          9  import org.springframework.web.servlet.DispatcherServlet;\n10  \n11  public
+          class OrderManagementAppInitializer implements WebApplicationInitializer
+          {\n12  public void onStartup(ServletContext container) throws ServletException
+          {\n13  AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();\n14
+          \ context.setConfigLocation(\"io.konveyor.demo.ordermanagement.config\");\n15
+          \ context.scan(new String[]{\"io.konveyor.demo.ordermanagement\"});"
+        lineNumber: 5
+      effort: 0
+    javaee-technology-usage-00230:
+      description: Servlet
+      category: ""
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Connect=Servlet
+      - tag=HTTP=Servlet
+      - tag=Java EE=Servlet
+      incidents:
+      - uri: ""
+        message: ""
+        lineNumber: 0
+      effort: 0
+    mvc-01220:
+      description: Embedded framework - Spring MVC
+      category: ""
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded framework - Spring MVC
+      - tag=Spring MVC
+      incidents:
+      - uri: file:///shared/bin/java-project/pom.xml
+        message: ""
+        codeSnip: |2-
+
+          50  <groupId>org.springframework.data</groupId>
+          51  <artifactId>spring-data-jpa</artifactId>
+          52  </dependency>
+          53  <dependency>
+          54  <groupId>org.springframework</groupId>
+          55  <artifactId>spring-jdbc</artifactId>
+          56  <version>${spring-framework.version}</version>
+          57  </dependency>
+          58  <dependency>
+          59  <groupId>org.springframework</groupId>
+          60  <artifactId>spring-webmvc</artifactId>
+          61  <version>${spring-framework.version}</version>
+          62  </dependency>
+          63  <dependency>
+          64  <groupId>org.springframework</groupId>
+          65  <artifactId>spring-web</artifactId>
+          66  <version>${spring-framework.version}</version>
+          67  </dependency>
+          68  <dependency>
+          69  <groupId>org.springframework.boot</groupId>
+          70  <artifactId>spring-boot-starter-actuator</artifactId>
+        lineNumber: 59
+      effort: 0
+    non-xml-technology-usage-20000:
+      description: Properties
+      category: ""
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded=Properties
+      - tag=Other=Properties
+      - tag=Sustain=Properties
+      incidents:
+      - uri: ""
+        message: ""
+        lineNumber: 0
+      effort: 0
+    observability-0100:
+      description: Embedded library - Spring Boot Actuator
+      category: ""
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded library - Spring Boot Actuator
+      - tag=Spring Boot Actuator
+      incidents:
+      - uri: file:///shared/bin/java-project/pom.xml
+        message: ""
+        codeSnip: |2-
+
+          60  <artifactId>spring-webmvc</artifactId>
+          61  <version>${spring-framework.version}</version>
+          62  </dependency>
+          63  <dependency>
+          64  <groupId>org.springframework</groupId>
+          65  <artifactId>spring-web</artifactId>
+          66  <version>${spring-framework.version}</version>
+          67  </dependency>
+          68  <dependency>
+          69  <groupId>org.springframework.boot</groupId>
+          70  <artifactId>spring-boot-starter-actuator</artifactId>
+          71  <version>2.5.0</version>
+          72  </dependency>
+          73  <dependency>
+          74  <groupId>org.apache.tomcat</groupId>
+          75  <artifactId>tomcat-jdbc</artifactId>
+          76  <version>${tomcat.version}</version>
+          77  <scope>runtime</scope>
+          78  </dependency>
+          79  <dependency>
+          80  <groupId>org.hibernate</groupId>
+        lineNumber: 69
+      effort: 0
+    observability-technology-usage-0100:
+      description: Spring Boot Actuator
+      category: ""
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded=Spring Boot Actuator
+      - tag=Observability=Spring Boot Actuator
+      - tag=Sustain=Spring Boot Actuator
+      incidents:
+      - uri: ""
+        message: ""
+        lineNumber: 0
+      effort: 0
+    technology-usage-database-01200:
+      description: JPA Queries
+      category: ""
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Java EE=JPA named queries
+      - tag=Persistence=JPA named queries
+      - tag=Store=JPA named queries
+      incidents:
+      - uri: file:///shared/bin/java-project/src/main/java/io/konveyor/demo/ordermanagement/model/Customer.java
+        message: ""
+        codeSnip: "\n 1  package io.konveyor.demo.ordermanagement.model;\n 2  \n 3
+          \ import javax.persistence.Column;\n 4  import javax.persistence.Entity;\n
+          5  import javax.persistence.GeneratedValue;\n 6  import javax.persistence.GenerationType;\n
+          7  import javax.persistence.Id;\n 8  import javax.persistence.SequenceGenerator;\n
+          9  import javax.persistence.Table;\n10  \n11  @Entity\n12  @Table(\n13  name
+          = \"customers\"\n14  )\n15  public class Customer {\n16  @Id\n17  @SequenceGenerator(\n18
+          \ name = \"customersSequence\",\n19  sequenceName = \"customers_id_seq\",\n20
+          \ allocationSize = 1,\n21  initialValue = 6"
+        lineNumber: 11
+      - uri: file:///shared/bin/java-project/src/main/java/io/konveyor/demo/ordermanagement/model/Customer.java
+        message: ""
+        codeSnip: "\n 2  \n 3  import javax.persistence.Column;\n 4  import javax.persistence.Entity;\n
+          5  import javax.persistence.GeneratedValue;\n 6  import javax.persistence.GenerationType;\n
+          7  import javax.persistence.Id;\n 8  import javax.persistence.SequenceGenerator;\n
+          9  import javax.persistence.Table;\n10  \n11  @Entity\n12  @Table(\n13  name
+          = \"customers\"\n14  )\n15  public class Customer {\n16  @Id\n17  @SequenceGenerator(\n18
+          \ name = \"customersSequence\",\n19  sequenceName = \"customers_id_seq\",\n20
+          \ allocationSize = 1,\n21  initialValue = 6\n22  )"
+        lineNumber: 12
+      effort: 0
+    technology-usage-database-03100:
+      description: Spring Data JPA
+      category: ""
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded=Spring Data JPA
+      - tag=Persistence=Spring Data JPA
+      - tag=Store=Spring Data JPA
+      incidents:
+      - uri: ""
+        message: ""
+        lineNumber: 0
+      effort: 0
+    technology-usage-embedded-framework-08200:
+      description: Spring DI
+      category: ""
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded=Spring DI
+      - tag=Execute=Spring DI
+      - tag=Inversion of Control=Spring DI
+      incidents:
+      - uri: ""
+        message: ""
+        lineNumber: 0
+      effort: 0
+    technology-usage-embedded-framework-08300:
+      description: Micrometer
+      category: ""
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded=Micrometer
+      - tag=Execute=Micrometer
+      - tag=Integration=Micrometer
+      incidents:
+      - uri: ""
+        message: ""
+        lineNumber: 0
+      effort: 0
+    technology-usage-embedded-framework-08400:
+      description: Spring Web
+      category: ""
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded=Spring Web
+      - tag=View=Spring Web
+      - tag=Web=Spring Web
+      incidents:
+      - uri: ""
+        message: ""
+        lineNumber: 0
+      effort: 0
+    technology-usage-mvc-01200:
+      description: Spring MVC
+      category: ""
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded=Spring MVC
+      - tag=MVC=Spring MVC
+      - tag=View=Spring MVC
+      incidents:
+      - uri: ""
+        message: ""
+        lineNumber: 0
+      effort: 0
