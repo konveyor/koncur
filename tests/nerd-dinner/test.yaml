@@ -5,7 +5,8 @@ analysis:
     incident_selector: ""
     source: []
     target:
-    - dotnet-core
+      - dotnet-core
+    rules: []
     disableDefaultRules: false
     analysisMode: source-only
 timeout: 10m0s
