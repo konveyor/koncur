@@ -3,6 +3,7 @@ package parser
 import (
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 
 	konveyor "github.com/konveyor/analyzer-lsp/output/v1/konveyor"
@@ -183,6 +184,7 @@ func TestNormalizeRuleSets(t *testing.T) {
 		name        string
 		input       []konveyor.RuleSet
 		testDir     string
+		workDir     string
 		expectError bool
 		validate    func(t *testing.T, result []konveyor.RuleSet)
 	}{
@@ -311,11 +313,42 @@ func TestNormalizeRuleSets(t *testing.T) {
 				}
 			},
 		},
+		{
+			name: "workDir normalization",
+			input: []konveyor.RuleSet{
+				{
+					Name: "test-ruleset",
+					Violations: map[string]konveyor.Violation{
+						"rule1": {
+							Description: "Test violation",
+							Incidents: []konveyor.Incident{
+								{
+									URI:     uri.URI("file:///tmp/koncur-work-123/source/example-1/src/main/java/App.java"),
+									Message: "Test message",
+								},
+							},
+						},
+					},
+				},
+			},
+			testDir: "/does-not-matter",
+			workDir: "/tmp/koncur-work-123",
+			validate: func(t *testing.T, result []konveyor.RuleSet) {
+				incident := result[0].Violations["rule1"].Incidents[0]
+				uriStr := string(incident.URI)
+				if strings.Contains(uriStr, "/tmp/koncur-work-123") {
+					t.Errorf("Expected workDir to be stripped from URI, got: %s", uriStr)
+				}
+				if !strings.Contains(uriStr, "/source/example-1/src/main/java/App.java") {
+					t.Errorf("Expected path after workDir to be preserved, got: %s", uriStr)
+				}
+			},
+		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			result, err := NormalizeRuleSets(tt.input, tt.testDir, "")
+			result, err := NormalizeRuleSets(tt.input, tt.testDir, tt.workDir)
 
 			if tt.expectError && err == nil {
 				t.Error("Expected error but got nil")

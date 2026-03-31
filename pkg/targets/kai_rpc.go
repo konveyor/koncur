@@ -13,7 +13,6 @@ import (
 	"strconv"
 	"strings"
 	"sync"
-	"syscall"
 	"time"
 
 	rpc "github.com/cenkalti/rpc2"
@@ -117,8 +116,8 @@ func (k *KaiRPCTarget) Execute(ctx context.Context, test *config.TestDefinition)
 		return nil, fmt.Errorf("failed to prepare rules: %w", err)
 	}
 
-	// Generate unique pipe path for this execution
-	pipePath := filepath.Join(os.TempDir(), fmt.Sprintf("kai-rpc-%d.sock", time.Now().UnixNano()))
+	// Generate unique pipe path for this execution (platform-specific: Unix socket or Windows named pipe)
+	pipePath := generatePipePath()
 
 	// Create output directory
 	outputDir := filepath.Join(workDir, "output")
@@ -148,10 +147,11 @@ func (k *KaiRPCTarget) Execute(ctx context.Context, test *config.TestDefinition)
 
 	// Start kai-analyzer server
 	log.Info("Starting kai-analyzer server", "pipePath", pipePath)
-	cmd, err := k.startServer(ctx, pipePath, rulesArg, providerConfigPath, workDir)
+	cmd, outputLog, err := k.startServer(ctx, pipePath, rulesArg, providerConfigPath, workDir)
 	if err != nil {
 		return nil, fmt.Errorf("failed to start kai-analyzer server: %w", err)
 	}
+	defer outputLog.Close()
 	defer k.cleanup(cmd, pipePath)
 
 	// Wait for server to be ready and connect
@@ -202,7 +202,7 @@ func (k *KaiRPCTarget) Execute(ctx context.Context, test *config.TestDefinition)
 }
 
 // startServer starts the kai-analyzer server process
-func (k *KaiRPCTarget) startServer(ctx context.Context, pipePath, rules, providerConfig, workDir string) (*exec.Cmd, error) {
+func (k *KaiRPCTarget) startServer(ctx context.Context, pipePath, rules, providerConfig, workDir string) (*exec.Cmd, *os.File, error) {
 	args := []string{
 		"--server-pipe", pipePath,
 		"--rules", rules,
@@ -228,18 +228,19 @@ func (k *KaiRPCTarget) startServer(ctx context.Context, pipePath, rules, provide
 	logFile := filepath.Join(workDir, "kai-analyzer-output.log")
 	f, err := os.Create(logFile)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	cmd.Stdout = f
 	cmd.Stderr = f
 
 	if err := cmd.Start(); err != nil {
 		f.Close()
-		return nil, err
+		return nil, nil, err
 	}
-	_ = f.Close()
 
-	return cmd, nil
+	// Return the log file handle — caller closes it after the process exits
+	// to avoid closing a file descriptor the child process is writing to.
+	return cmd, f, nil
 }
 
 // connectToServer waits for the server to be ready and connects
@@ -248,42 +249,10 @@ func (k *KaiRPCTarget) connectToServer(ctx context.Context, pipePath string, tim
 
 	deadline := time.Now().Add(timeout)
 
-	// Wait for socket file to exist
-	socketReady := false
-	for time.Now().Before(deadline) {
-		if _, err := os.Stat(pipePath); err == nil {
-			socketReady = true
-			break
-		}
-		select {
-		case <-ctx.Done():
-			return nil, nil, ctx.Err()
-		case <-time.After(500 * time.Millisecond):
-			continue
-		}
-	}
-	if !socketReady {
-		return nil, nil, fmt.Errorf("server socket %q not created within %v", pipePath, timeout)
-	}
-
-	// Try to connect with retries
-	var conn net.Conn
-	var err error
-	for time.Now().Before(deadline) {
-		conn, err = net.Dial("unix", pipePath)
-		if err == nil {
-			break
-		}
-		log.V(1).Info("Waiting for kai-analyzer server...", "error", err)
-		select {
-		case <-ctx.Done():
-			return nil, nil, ctx.Err()
-		case <-time.After(time.Second):
-			continue
-		}
-	}
+	// Wait for pipe/socket to be ready and connect (platform-specific)
+	conn, err := waitAndDial(ctx, pipePath, deadline)
 	if err != nil {
-		return nil, nil, fmt.Errorf("failed to connect to server after %v: %w", timeout, err)
+		return nil, nil, fmt.Errorf("failed to connect to server within %v: %w", timeout, err)
 	}
 
 	// Create RPC client with LSP-style codec
@@ -329,7 +298,9 @@ func (k *KaiRPCTarget) cleanup(cmd *exec.Cmd, pipePath string) {
 
 	if cmd != nil && cmd.Process != nil {
 		log.Info("Stopping kai-analyzer server")
-		cmd.Process.Signal(syscall.SIGTERM)
+		if err := signalGracefulShutdown(cmd.Process); err != nil {
+			log.V(1).Info("Failed to signal process for shutdown", "error", err)
+		}
 		// Wait briefly for graceful shutdown
 		done := make(chan error, 1)
 		go func() { done <- cmd.Wait() }()
@@ -342,7 +313,7 @@ func (k *KaiRPCTarget) cleanup(cmd *exec.Cmd, pipePath string) {
 	}
 
 	if pipePath != "" {
-		os.Remove(pipePath)
+		removePipe(pipePath)
 	}
 }
 
@@ -411,7 +382,10 @@ func (k *KaiRPCTarget) prepareRules(ctx context.Context, analysis *config.Analys
 	return PrepareRules(ctx, analysis.Rules, testDir, workDir)
 }
 
-// LSPCodec implements the LSP-style JSON-RPC codec for client-side communication
+// LSPCodec implements the LSP-style JSON-RPC codec for client-side communication.
+// TODO: import codec from github.com/konveyor/kai-analyzer/pkg/codec once the
+// upstream module path is fixed (currently declares github.com/konveyor/kai-analyzer
+// but lives at github.com/konveyor/kai/kai_analyzer_rpc, making it unresolvable).
 type LSPCodec struct {
 	reader  *bufio.Reader
 	writer  *bufio.Writer
