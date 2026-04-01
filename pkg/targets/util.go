@@ -100,8 +100,12 @@ func CloneGitRepository(ctx context.Context, components *config.GitURLComponents
 	// exclusion pattern; if the directory is missing, it falls back to a regex
 	// where "." is a wildcard, matching "github" in paths and excluding all files.
 	gitDir := filepath.Join(absCloneDir, ".git")
-	os.RemoveAll(gitDir)
-	os.MkdirAll(gitDir, 0755)
+	if err := os.RemoveAll(gitDir); err != nil {
+		return "", fmt.Errorf("failed to remove .git directory: %w", err)
+	}
+	if err := os.MkdirAll(gitDir, 0755); err != nil {
+		return "", fmt.Errorf("failed to recreate .git directory: %w", err)
+	}
 	log.Info("Cleaned .git directory contents", "path", gitDir)
 
 	// Verify the target path exists if specified

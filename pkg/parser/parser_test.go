@@ -3,7 +3,6 @@ package parser
 import (
 	"os"
 	"path/filepath"
-	"strings"
 	"testing"
 
 	konveyor "github.com/konveyor/analyzer-lsp/output/v1/konveyor"
@@ -336,11 +335,9 @@ func TestNormalizeRuleSets(t *testing.T) {
 			validate: func(t *testing.T, result []konveyor.RuleSet) {
 				incident := result[0].Violations["rule1"].Incidents[0]
 				uriStr := string(incident.URI)
-				if strings.Contains(uriStr, "/tmp/koncur-work-123") {
-					t.Errorf("Expected workDir to be stripped from URI, got: %s", uriStr)
-				}
-				if !strings.Contains(uriStr, "/source/example-1/src/main/java/App.java") {
-					t.Errorf("Expected path after workDir to be preserved, got: %s", uriStr)
+				expectedURI := "file:///source/example-1/src/main/java/App.java"
+				if uriStr != expectedURI {
+					t.Errorf("Expected normalized URI %s, got: %s", expectedURI, uriStr)
 				}
 			},
 		},
@@ -368,6 +365,7 @@ func TestNormalizeIncident(t *testing.T) {
 		name        string
 		incident    konveyor.Incident
 		testDir     string
+		workDir     string
 		expectedURI uri.URI
 		expectError bool
 	}{
@@ -482,6 +480,17 @@ func TestNormalizeIncident(t *testing.T) {
 			expectError: false,
 		},
 		{
+			name: "workDir stripping",
+			incident: konveyor.Incident{
+				URI:     uri.URI("file:///tmp/koncur-work-123/source/example-1/src/main/java/App.java"),
+				Message: "Test message",
+			},
+			testDir:     "",
+			workDir:     "/tmp/koncur-work-123",
+			expectedURI: uri.URI("file:///source/example-1/src/main/java/App.java"),
+			expectError: false,
+		},
+		{
 			name: "preserves all incident fields",
 			incident: konveyor.Incident{
 				URI:        uri.URI("file:///test/file.go"),
@@ -497,7 +506,7 @@ func TestNormalizeIncident(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			result, err := normalizeIncident(tt.incident, tt.testDir, "")
+			result, err := normalizeIncident(tt.incident, tt.testDir, tt.workDir)
 
 			if tt.expectError && err == nil {
 				t.Error("Expected error but got nil")

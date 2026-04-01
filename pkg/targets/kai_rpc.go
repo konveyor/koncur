@@ -263,9 +263,10 @@ func (k *KaiRPCTarget) connectToServer(ctx context.Context, pipePath string, tim
 
 	// Wait for "started" notification (with timeout)
 	startedCh := make(chan struct{})
+	var startedOnce sync.Once
 	client.Handle("started", func(client *rpc.Client, args *json.RawMessage, reply *interface{}) error {
 		log.Info("Received 'started' notification from server")
-		close(startedCh)
+		startedOnce.Do(func() { close(startedCh) })
 		return nil
 	})
 

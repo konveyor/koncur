@@ -7,6 +7,10 @@ on:
         description: "Whether to skip tests that require maven settings"
         default: true
         type: boolean
+      kai_ref:
+        description: "Git ref (branch, tag, or SHA) of konveyor/kai to build from"
+        default: "main"
+        type: string
 
 # TODO: switch to podman for consistency with kantra workflow
 jobs:
@@ -27,6 +31,7 @@ jobs:
         uses: actions/checkout@v6
         with:
           repository: konveyor/kai
+          ref: ${{ inputs.kai_ref }}
           path: kai
 
       - name: Build kai-analyzer

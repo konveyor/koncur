@@ -44,7 +44,10 @@ func waitAndDial(ctx context.Context, path string, deadline time.Time) (net.Conn
 		case <-time.After(time.Second):
 		}
 	}
-	return nil, err
+	if err != nil {
+		return nil, err
+	}
+	return nil, fmt.Errorf("timed out waiting for socket %s", path)
 }
 
 func removePipe(path string) {
