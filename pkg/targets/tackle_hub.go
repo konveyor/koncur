@@ -534,6 +534,9 @@ func (t *TackleHubTarget) createAnalysisTask(ctx context.Context, test *config.T
 		}
 	}
 
+	// Set known libraries flag
+	taskData.Scope.WithKnownLibs = test.Analysis.KnownLibs
+
 	// Add label selector
 	if test.Analysis.LabelSelector != "" {
 		taskData.Rules.Labels = ParseLabelSelector(test.Analysis.LabelSelector)
