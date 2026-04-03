@@ -10,6 +10,7 @@ analysis:
     rules:
         - file:
             filePath: rules
+          git: null
     disableDefaultRules: false
     analysisMode: full
 timeout: 10m0s

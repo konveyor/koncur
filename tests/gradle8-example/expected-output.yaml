@@ -1232,22 +1232,13 @@
            * Configuration: Store configuration settings in environment variables so that they can be updated without code changes.
            * Data storage: Use a database backing service for relational data or use a persistent data storage system.
            * Temporary data storage: Use the file system of a running container as a brief, single-transaction cache.
-        codeSnip: "\n251  }\n252  \n253  /**\n254  * Sets the {@link #getValuesFileURL()
-          values file URL} using a string\n255  * URL representation.\n256  *\n257
-          \ * @param url String representation for new valuesFileURL.\n258  * @throws
-          MalformedURLException if url is not well formed\n259  */\n260  public void
-          setValuesFileURL(String url) throws MalformedURLException {\n261  this.valuesFileURL
-          = new URL(url);\n262  }\n263  \n264  /**\n265  * Sets the the {@link #getValuesFileURL()
-          values file URL}.\n266  *\n267  * <p>The values file <i>must</i> be an ASCII
-          text file containing one\n268  * valid numeric entry per line.</p>\n269
-          \ *\n270  * @param url URL of the values file.\n271  */"
         lineNumber: 261
         variables:
           class: ""
           file: file:///addon/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-math3/3.2/cd098e055bf192a60c81d81893893e6e31a6482f/org/apache/commons/math3/random/ValueServer.java
           kind: Constructor
           name: setValuesFileURL
-          package: org.apache.commons.math3.random
+          package: ""
       links:
       - url: https://docs.openshift.com/container-platform/4.5/builds/creating-build-inputs.html#builds-input-secrets-configmaps_creating-build-inputs
         title: 'OpenShift Container Platform: Input secrets and ConfigMaps'
@@ -15854,6 +15845,7 @@
   - technology-usage-mvc-03900
   - technology-usage-mvc-04000
   - technology-usage-mvc-04100
+  - technology-usage-mvc-04200
   - technology-usage-mvc-04300
   - technology-usage-mvc-04400
   - technology-usage-mvc-04500
@@ -15872,7 +15864,6 @@
   - technology-usage-mvc-05800
   - technology-usage-mvc-05900
   - technology-usage-mvc-06000
-  - technology-usage-mvc-0x4200
   - technology-usage-security-01000
   - technology-usage-security-01100
   - technology-usage-security-01200
