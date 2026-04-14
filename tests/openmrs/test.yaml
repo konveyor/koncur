@@ -1,0 +1,17 @@
+name: OpenMRS Source Analysis
+description: Source analysis of OpenMRS core application
+analysis:
+    application: https://github.com/migtools/openmrs-core#koncur-ci-2026
+    labelSelector: konveyor.io/target=openjdk
+    context_lines: 0
+    incident_selector: ""
+    source: []
+    target: []
+    rules: []
+    disableDefaultRules: false
+    analysisMode: source-only
+timeout: 30m0s
+expect:
+    exitCode: 0
+    output:
+        file: expected-output.yaml
