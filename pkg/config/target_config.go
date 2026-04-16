@@ -9,8 +9,8 @@ import (
 
 // TargetConfig defines how to execute tests (separate from test definitions)
 type TargetConfig struct {
-	// Type specifies the target: kantra, tackle-hub, tackle-ui, kai-rpc, vscode
-	Type string `yaml:"type" validate:"required,oneof=kantra tackle-hub tackle-ui kai-rpc vscode"`
+	// Type specifies the target: kantra, tackle-hub, tackle-ui, kai-rpc, mcp, vscode
+	Type string `yaml:"type" validate:"required,oneof=kantra tackle-hub tackle-ui kai-rpc mcp vscode"`
 
 	// Kantra-specific configuration
 	Kantra *KantraConfig `yaml:"kantra,omitempty"`
@@ -23,6 +23,9 @@ type TargetConfig struct {
 
 	// Kai RPC configuration
 	KaiRPC *KaiRPCConfig `yaml:"kaiRPC,omitempty"`
+
+	// MCP analyzer server configuration
+	MCP *MCPConfig `yaml:"mcp,omitempty"`
 
 	// VSCode extension configuration
 	VSCode *VSCodeConfig `yaml:"vscode,omitempty"`
@@ -117,6 +120,15 @@ type TackleUIConfig struct {
 type KaiRPCConfig struct {
 	Host string `yaml:"host" validate:"required"`
 	Port int    `yaml:"port" validate:"required"`
+}
+
+// MCPConfig for MCP analyzer server
+type MCPConfig struct {
+	BinaryPath     string `yaml:"binaryPath,omitempty"`
+	ProviderConfig string `yaml:"providerConfig,omitempty"`
+	Rules          string `yaml:"rules,omitempty"`
+	Endpoint       string `yaml:"endpoint,omitempty"`
+	Token          string `yaml:"token,omitempty"`
 }
 
 // VSCodeConfig for VSCode extension execution
