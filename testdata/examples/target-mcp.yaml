@@ -1,0 +1,11 @@
+type: mcp
+mcp:
+  # Option 1: stdio mode — spawn analyzer-mcp as a subprocess
+  binaryPath: /usr/local/bin/analyzer-mcp
+  providerConfig: /path/to/provider-config.yaml
+  rules: /path/to/rules
+
+  # Option 2: HTTP mode — connect to a running analyzer-mcp server
+  # (mutually exclusive with binaryPath)
+  # endpoint: http://localhost:8080
+  # token: optional-bearer-token
