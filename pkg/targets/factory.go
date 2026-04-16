@@ -17,6 +17,8 @@ func NewTarget(cfg *config.TargetConfig) (Target, error) {
 		return NewTackleUITarget(cfg.TackleUI)
 	case "kai-rpc":
 		return NewKaiRPCTarget(cfg.KaiRPC)
+	case "mcp":
+		return NewMCPTarget(cfg.MCP)
 	case "vscode":
 		return NewVSCodeTarget(cfg.VSCode)
 	default:
