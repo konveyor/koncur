@@ -539,6 +539,20 @@ func (t *TackleHubTarget) createAnalysisTask(ctx context.Context, test *config.T
 		taskData.Rules.Labels = ParseLabelSelector(test.Analysis.LabelSelector)
 	}
 
+	if len(test.Analysis.Target) != 0 || len(test.Analysis.Source) != 0 {
+		labels := []string{}
+		for _, s := range test.Analysis.Target {
+			labels = append(labels, fmt.Sprintf("konveyor.io/target=%s", s))
+		}
+		for _, s := range test.Analysis.Source {
+			labels = append(labels, fmt.Sprintf("konveyor.io/source=%s", s))
+		}
+		taskData.Rules.Labels = Labels{
+			Included: labels,
+		}
+	}
+	log.Info("Using labels", "labels", taskData.Rules.Labels, "source", test.Analysis.Source, "target", test.Analysis.Target, "selector", test.Analysis.LabelSelector)
+
 	// Handle rules that may be Git URLs
 	// Tackle Hub uses repositories for rules, so we'll prepare them differently
 	err := t.prepareRulesForHub(ctx, test, &taskData)

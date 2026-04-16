@@ -1,3 +1,49 @@
+- name: discovery-rules
+  tags:
+  - License=BSD License
+  insights:
+    discover-license:
+      description: Discover project license
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - konveyor.io/target=discovery
+      - tag=License=BSD License
+      incidents:
+      - uri: file:///source/testdata/nerd-dinner/mvc4/NerdDinner/Scripts/jquery-1.7.1-vsdoc.js
+        message: ""
+        codeSnip: 40  *
+        lineNumber: 39
+        variables:
+          matchingText: BSD License
+      - uri: file:///source/testdata/nerd-dinner/mvc4/NerdDinner/Scripts/jquery-1.7.1.js
+        message: ""
+        codeSnip: 13   *
+        lineNumber: 12
+        variables:
+          matchingText: BSD License
+      - uri: file:///source/testdata/nerd-dinner/packages/jQuery/Content/Scripts/jquery-1.7.1-vsdoc.js
+        message: ""
+        codeSnip: 40  *
+        lineNumber: 39
+        variables:
+          matchingText: BSD License
+      - uri: file:///source/testdata/nerd-dinner/packages/jQuery/Content/Scripts/jquery-1.7.1.js
+        message: ""
+        codeSnip: 13   *
+        lineNumber: 12
+        variables:
+          matchingText: BSD License
+  unmatched:
+  - discover-java-files
+  - discover-manifest-file
+  - discover-maven-xml
+  - discover-properties-file
+  - hardcoded-ip-address
+  - windup-discover-ejb-configuration
+  - windup-discover-jpa-configuration
+  - windup-discover-spring-configuration
+  - windup-discover-web-configuration
 - name: dotnet-core-migration
   description: |
     Ruleset for migrating ASP.NET MVC applications to ASP.NET Core / .NET Core.
