@@ -2,6 +2,7 @@ name: Tackle Testapp with custom rules
 analysis:
     application: https://github.com/konveyor/tackle-testapp-public#ci-2024
     labelSelector: konveyor.io/source=java && (konveyor.io/target=phil || konveyor.io/target=phil7)
+    logLevel: 9
     context_lines: 0
     incident_selector: ""
     source: []

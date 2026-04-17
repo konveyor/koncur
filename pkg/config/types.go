@@ -59,6 +59,7 @@ type AnalysisConfig struct {
 	// Extensions specifies which hub extensions to use (e.g., ["csharp", "java"])
 	// If empty, the hub will auto-select extensions based on selectors
 	Extensions []string `json:"extensions" yaml:"extensions,omitempty"`
+	LogLevel   *uint32  `json:"logLevel,omitempty" yaml:"logLevel,omitempty"`
 
 	// Parsed Git components (not in YAML)
 	ApplicationGitComponents *GitURLComponents `yaml:"-" json:"-"`

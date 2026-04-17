@@ -3,6 +3,7 @@ description: Source analysis of OpenMRS core application
 analysis:
     application: https://github.com/migtools/openmrs-core#koncur-ci-2026
     labelSelector: konveyor.io/target=openjdk
+    logLevel: 9
     context_lines: 0
     incident_selector: ""
     source: []

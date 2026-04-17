@@ -2,6 +2,7 @@ name: Customer Tomcat Legacy - shoud never fail
 analysis:
     application: https://github.com/konveyor/example-applications.git#ci-2023/example-1
     labelSelector: konveyor.io/target=cloud-readiness || konveyor.io/target=linux
+    logLevel: 9
     context_lines: 0
     incident_selector: ""
     source: []

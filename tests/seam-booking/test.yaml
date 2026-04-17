@@ -3,6 +3,7 @@ analysis:
     application: https://github.com/konveyor-ecosystem/windup.git#ci-2024/test-files/seam-booking-5.2
     labelSelector: konveyor.io/target=eap
     context_lines: 0
+    logLevel: 9
     incident_selector: ""
     source: []
     target: []

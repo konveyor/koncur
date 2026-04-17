@@ -4,6 +4,7 @@ name: tackle-testapp-binary
 analysis:
     application: mvn://io.konveyor.demo:customers-tomcat:0.0.1-SNAPSHOT:war
     labelSelector: konveyor.io/target=cloud-readiness
+    logLevel: 9
     context_lines: 0
     incident_selector: ""
     source: []

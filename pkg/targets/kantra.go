@@ -156,6 +156,10 @@ func (k *KantraTarget) buildArgs(test *config.TestDefinition, inputPath, outputD
 		args = append(args, "--incident-selector", analysis.IncidentSelector)
 	}
 
+	if analysis.LogLevel != nil {
+		args = append(args, "--log-level", strconv.FormatUint(uint64(*analysis.LogLevel), 10))
+	}
+
 	// Maven settings (from test-level configuration)
 	if test.RequireMavenSettings && k.mavenSettings != "" {
 		args = append(args, "--maven-settings", k.mavenSettings)
