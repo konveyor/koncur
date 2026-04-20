@@ -165,6 +165,7 @@ func TestNewKantraTarget_ImageEnv(t *testing.T) {
 }
 
 func TestKantraTarget_BuildArgs(t *testing.T) {
+	runLocalTrue := true
 	tests := []struct {
 		name              string
 		analysis          config.AnalysisConfig
@@ -192,6 +193,19 @@ func TestKantraTarget_BuildArgs(t *testing.T) {
 				"--mode", "source-only",
 				"--run-local=false",
 				"--overwrite",
+			},
+		},
+		{
+			name: "kantra run-local enabled",
+			analysis: config.AnalysisConfig{
+				AnalysisMode:   provider.SourceOnlyAnalysisMode,
+				ContextLines:   10,
+				KantraRunLocal: &runLocalTrue,
+			},
+			inputPath: "/path/to/app",
+			outputDir: "/path/to/output",
+			expectContain: []string{
+				"--run-local=true",
 			},
 		},
 		{

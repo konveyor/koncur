@@ -61,6 +61,10 @@ type AnalysisConfig struct {
 	Extensions []string `json:"extensions" yaml:"extensions,omitempty"`
 	LogLevel   *uint32  `json:"logLevel,omitempty" yaml:"logLevel,omitempty"`
 
+	// KantraRunLocal sets kantra's --run-local flag: true runs providers on the host,
+	// false uses container mode. When omitted, container mode is used (same as false).
+	KantraRunLocal *bool `json:"kantraRunLocal,omitempty" yaml:"kantraRunLocal,omitempty"`
+
 	// Parsed Git components (not in YAML)
 	ApplicationGitComponents *GitURLComponents `yaml:"-" json:"-"`
 }

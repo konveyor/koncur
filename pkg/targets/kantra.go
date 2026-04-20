@@ -196,8 +196,11 @@ func (k *KantraTarget) buildArgs(test *config.TestDefinition, inputPath, outputD
 		args = append(args, "--mode", "full")
 	}
 
-	// Use container mode instead of run-local to avoid dependency issues
-	args = append(args, "--run-local=false")
+	runLocal := false
+	if analysis.KantraRunLocal != nil {
+		runLocal = *analysis.KantraRunLocal
+	}
+	args = append(args, fmt.Sprintf("--run-local=%t", runLocal))
 
 	// Allow overwriting existing output
 	args = append(args, "--overwrite")
