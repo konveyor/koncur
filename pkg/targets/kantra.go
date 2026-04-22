@@ -196,6 +196,11 @@ func (k *KantraTarget) buildArgs(test *config.TestDefinition, inputPath, outputD
 		args = append(args, "--mode", "full")
 	}
 
+	// Analyze known/open-source libraries
+	if analysis.KnownLibs {
+		args = append(args, "--analyze-known-libraries")
+	}
+
 	// Use container mode instead of run-local to avoid dependency issues
 	args = append(args, "--run-local=false")
 
