@@ -1,3 +1,6 @@
+# SKIPPED: Skip test due to a known issue on Windows.
+# For more information, see https://github.com/konveyor/kantra/issues/806
+
 name: OpenMRS Source Analysis
 description: Source analysis of OpenMRS core application
 analysis:
