@@ -271,6 +271,87 @@
   - windup-discover-jpa-configuration
   - windup-discover-spring-configuration
   - windup-discover-web-configuration
+- name: konveyor-analysis
+  violations:
+    hazelcast-cloud-readiness-hz001:
+      description: Embedded Hazelcast
+      category: mandatory
+      labels:
+      - Hazelcast
+      - konveyor.io/source
+      - konveyor.io/target=cloud-readiness
+      incidents:
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/config/SessionConfiguration.java
+        message: "Consider using Kubernetes specific configuration.\n\t\t\t\t\t\n\t\t\t\t\t\t\t//
+          Example using Kubernetes specific configuration\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\tJoinConfig
+          joinConfig = config.getNetworkConfig().getJoin();\n\t\t\t\t\t\t\tconfig.getKubernetesConfig().setEnabled(true)\n\t\t\t\t\t\t\t
+          .setProperty(\"namespace\", \"namespace\")\n\t\t\t\t\t\t\t .setProperty(\"service-name\",
+          \"hazelcast-service\");"
+        codeSnip: "\n67  new IndexConfig(IndexType.HASH, Hazelcast4IndexedSessionRepository.PRINCIPAL_NAME_ATTRIBUTE));\n68
+          \ \n69  \n70  // Use custom serializer to de/serialize sessions faster.\n71
+          \ SerializerConfig serializerConfig = new SerializerConfig();\n72  serializerConfig.setImplementation(new
+          HazelcastSessionSerializer()).setTypeClass(MapSession.class);\n73  config.getSerializationConfig().addSerializerConfig(serializerConfig);\n74
+          \ \n75  JoinConfig joinConfig = config.getNetworkConfig().getJoin();\n76
+          \ \n77  joinConfig.getMulticastConfig().setEnabled(false);\n78  joinConfig.getTcpIpConfig().setEnabled(true).setMembers(members);\n79
+          \ \n80  return Hazelcast.newHazelcastInstance(config);\n81  }\n82  \n83
+          \ \n84  // Workaround for https://github.com/spring-projects/spring-session/issues/1040
+          and https://github.com/spring-projects/spring-framework/issues/22319\n85
+          \ @Bean\n86  public CookieSerializer cookieSerializer(ServletContext ctx)
+          {\n87  DefaultCookieSerializer cs = new DefaultCookieSerializer();"
+        lineNumber: 77
+        variables:
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/config/SessionConfiguration.java
+          kind: Method
+          name: hazelcastInstance
+          package: org.springframework.samples.petclinic.config
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/config/SessionConfiguration.java
+        message: "Consider using Kubernetes specific configuration.\n\t\t\t\t\t\n\t\t\t\t\t\t\t//
+          Example using Kubernetes specific configuration\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\tJoinConfig
+          joinConfig = config.getNetworkConfig().getJoin();\n\t\t\t\t\t\t\tconfig.getKubernetesConfig().setEnabled(true)\n\t\t\t\t\t\t\t
+          .setProperty(\"namespace\", \"namespace\")\n\t\t\t\t\t\t\t .setProperty(\"service-name\",
+          \"hazelcast-service\");"
+        codeSnip: "\n68  \n69  \n70  // Use custom serializer to de/serialize sessions
+          faster.\n71  SerializerConfig serializerConfig = new SerializerConfig();\n72
+          \ serializerConfig.setImplementation(new HazelcastSessionSerializer()).setTypeClass(MapSession.class);\n73
+          \ config.getSerializationConfig().addSerializerConfig(serializerConfig);\n74
+          \ \n75  JoinConfig joinConfig = config.getNetworkConfig().getJoin();\n76
+          \ \n77  joinConfig.getMulticastConfig().setEnabled(false);\n78  joinConfig.getTcpIpConfig().setEnabled(true).setMembers(members);\n79
+          \ \n80  return Hazelcast.newHazelcastInstance(config);\n81  }\n82  \n83
+          \ \n84  // Workaround for https://github.com/spring-projects/spring-session/issues/1040
+          and https://github.com/spring-projects/spring-framework/issues/22319\n85
+          \ @Bean\n86  public CookieSerializer cookieSerializer(ServletContext ctx)
+          {\n87  DefaultCookieSerializer cs = new DefaultCookieSerializer();\n88  "
+        lineNumber: 78
+        variables:
+          file: file:///opt/input/source/src/main/java/org/springframework/samples/petclinic/config/SessionConfiguration.java
+          kind: Method
+          name: hazelcastInstance
+          package: org.springframework.samples.petclinic.config
+      effort: 3
+    hazelcast-cloud-readiness-hz002:
+      description: Embedded Hazelcast dependencies
+      category: mandatory
+      labels:
+      - Hazelcast
+      - konveyor.io/source
+      - konveyor.io/target=cloud-readiness
+      incidents:
+      - uri: file:///source/pom.xml
+        message: The project uses hazelcast with the version between 2.0.0 and less
+          than 5.0.0. Please use hazelcast 5.0 or above.
+        codeSnip: "\n207  -->\n208  <dependency>\n209  <groupId>org.apache.tomcat</groupId>\n210
+          \ <artifactId>tomcat-jdbc</artifactId>\n211  <version>${tomcat.version}</version>\n212
+          \ </dependency>\n213  \n214  <!-- Session caching -->\n215  <dependency>\n216
+          \ <groupId>com.hazelcast</groupId>\n217  <artifactId>hazelcast</artifactId>\n218
+          \ <version>${hazelcast.version}</version>\n219  </dependency>\n220  \n221
+          \ <!-- Logging with SLF4J & LogBack -->\n222  <dependency>\n223  <groupId>org.slf4j</groupId>\n224
+          \ <artifactId>slf4j-api</artifactId>\n225  <version>${slf4j.version}</version>\n226
+          \ </dependency>\n227  <dependency>"
+        lineNumber: 216
+        variables:
+          name: com.hazelcast.hazelcast
+          version: 4.2.2
+      effort: 1
 - name: technology-usage
   description: This ruleset provides analysis of logging libraries.
   tags:
