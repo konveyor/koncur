@@ -2,7 +2,6 @@ name: Coolstore-Source and dependencies
 analysis:
     application: https://github.com/konveyor-ecosystem/coolstore#ci-2024
     labelSelector: konveyor.io/target=cloud-readiness || konveyor.io/target=jakarta-ee
-    logLevel: 9
     context_lines: 0
     incident_selector: ""
     source: []
@@ -10,6 +9,7 @@ analysis:
     rules: []
     disableDefaultRules: false
     analysisMode: source-only
+    logLevel: 9
 timeout: 15m0s
 expect:
     exitCode: 0
