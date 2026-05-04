@@ -7,7 +7,10 @@ analysis:
     incident_selector: ""
     source: []
     target: []
-    rules: []
+    rules:
+        - file:
+            filePath: 01-hz.windup.yaml
+          git: null
     disableDefaultRules: false
     analysisMode: source-only
 timeout: 10m0s
