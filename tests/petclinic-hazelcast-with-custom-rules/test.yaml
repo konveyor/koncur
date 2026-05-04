@@ -9,7 +9,7 @@ analysis:
     target: []
     rules:
         - file:
-            filePath: rules/
+            filePath: 01-hz.windup.yaml
           git: null
     disableDefaultRules: false
     analysisMode: source-only
