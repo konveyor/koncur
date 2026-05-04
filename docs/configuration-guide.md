@@ -76,6 +76,7 @@ kantra:
 | `type` | string | Yes | Must be `"kantra"` |
 | `kantra.binaryPath` | string | No | Path to kantra binary. If not specified, uses `kantra` from PATH |
 | `kantra.mavenSettings` | string | No | Path to Maven settings.xml for dependency resolution |
+| `kantra.forceLocal` | bool | No | If `true`, koncur passes `--run-local=true` (local / containerless mode when supported). Omit for legacy behavior: `--run-local=false` (container mode) |
 | `kantra.runnerImage` | string | No | Override the kantra runner container image (sets `RUNNER_IMG`) |
 | `kantra.javaProviderImage` | string | No | Override the Java provider image (sets `JAVA_PROVIDER_IMG`) |
 | `kantra.genericProviderImage` | string | No | Override the generic provider image for Python/Node.js/Go (sets `GENERIC_PROVIDER_IMG`) |

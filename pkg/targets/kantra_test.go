@@ -167,6 +167,8 @@ func TestNewKantraTarget_ImageEnv(t *testing.T) {
 func TestKantraTarget_BuildArgs(t *testing.T) {
 	tests := []struct {
 		name              string
+		forceLocal        bool
+		testForceLocal    bool
 		analysis          config.AnalysisConfig
 		inputPath         string
 		outputDir         string
@@ -192,6 +194,39 @@ func TestKantraTarget_BuildArgs(t *testing.T) {
 				"--mode", "source-only",
 				"--run-local=false",
 				"--overwrite",
+			},
+		},
+		{
+			name: "force local (containerless) mode",
+			analysis: config.AnalysisConfig{
+				AnalysisMode: provider.SourceOnlyAnalysisMode,
+				ContextLines: 10,
+			},
+			forceLocal: true,
+			inputPath:  "/path/to/app",
+			outputDir:  "/path/to/output",
+			expectContain: []string{
+				"--run-local=true",
+			},
+			expectNotContain: []string{
+				"--run-local=false",
+			},
+		},
+		{
+			name:           "per-test forceLocal when target has forceLocal false",
+			forceLocal:     false,
+			testForceLocal: true,
+			analysis: config.AnalysisConfig{
+				AnalysisMode: provider.SourceOnlyAnalysisMode,
+				ContextLines: 10,
+			},
+			inputPath: "/path/to/app",
+			outputDir: "/path/to/output",
+			expectContain: []string{
+				"--run-local=true",
+			},
+			expectNotContain: []string{
+				"--run-local=false",
 			},
 		},
 		{
@@ -287,9 +322,11 @@ func TestKantraTarget_BuildArgs(t *testing.T) {
 			k := &KantraTarget{
 				binaryPath:    "/usr/local/bin/kantra",
 				mavenSettings: tt.mavenSettings,
+				forceLocal:    tt.forceLocal,
 			}
 			test := &config.TestDefinition{
 				RequireMavenSettings: true,
+				ForceLocal:           tt.testForceLocal,
 				Analysis:             tt.analysis,
 			}
 

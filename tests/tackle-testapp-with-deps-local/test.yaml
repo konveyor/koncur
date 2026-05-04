@@ -1,0 +1,20 @@
+name: Tackle Testapp public with deps
+analysis:
+    application: https://github.com/konveyor/tackle-testapp-public#ci-2024
+    labelSelector: konveyor.io/target
+    logLevel: 9
+    context_lines: 0
+    incident_selector: ""
+    source: []
+    target: []
+    rules: []
+    disableDefaultRules: false
+    analysisMode: full
+timeout: 10m0s
+requireMavenSettings: true
+# Kantra only: pass --run-local=true (same effect as kantra.forceLocal in target config).
+forceLocal: true
+expect:
+    exitCode: 0
+    output:
+        file: expected-output.yaml

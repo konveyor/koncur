@@ -19,6 +19,7 @@ type KantraTarget struct {
 	binaryPath    string
 	mavenSettings string
 	imageEnv      []string // Environment variable overrides for provider images
+	forceLocal    bool     // if true, pass --run-local=true; if false, pass --run-local=false; if not set, use the default behavior of the target config
 }
 
 // NewKantraTarget creates a new Kantra target
@@ -60,10 +61,15 @@ func NewKantraTarget(cfg *config.KantraConfig) (*KantraTarget, error) {
 		}
 	}
 
+	forceLocal := false
+	if cfg != nil {
+		forceLocal = cfg.ForceLocal
+	}
 	return &KantraTarget{
 		binaryPath:    binaryPath,
 		mavenSettings: mavenSettings,
 		imageEnv:      imageEnv,
+		forceLocal:    forceLocal,
 	}, nil
 }
 
@@ -196,8 +202,9 @@ func (k *KantraTarget) buildArgs(test *config.TestDefinition, inputPath, outputD
 		args = append(args, "--mode", "full")
 	}
 
-	// Use container mode instead of run-local to avoid dependency issues
-	args = append(args, "--run-local=false")
+	// Target config or per-test forceLocal requests local/containerless mode (--run-local=true).
+	runLocal := k.forceLocal || test.ForceLocal
+	args = append(args, fmt.Sprintf("--run-local=%t", runLocal))
 
 	// Allow overwriting existing output
 	args = append(args, "--overwrite")

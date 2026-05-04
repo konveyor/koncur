@@ -21,6 +21,8 @@ type TestDefinition struct {
 	Timeout              *Duration `yaml:"timeout,omitempty"`
 	WorkDir              string    `yaml:"workDir,omitempty"`
 	RequireMavenSettings bool      `yaml:"requireMavenSettings,omitempty"`
+	// ForceLocal applies only to the Kantra target; when true, koncur passes --run-local=true.
+	ForceLocal bool `yaml:"forceLocal,omitempty"`
 
 	// Validation configuration
 	Expect ExpectConfig `yaml:"expect" validate:"required"`

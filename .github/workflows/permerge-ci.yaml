@@ -26,6 +26,18 @@ jobs:
       os: ${{ matrix.os }}
       skip_maven: false
 
+  run-kantra-java-local-test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-15-intel, ubuntu-24.04-arm, windows-latest]
+        exclude:
+          - os: macos-15-intel
+    secrets: inherit
+    uses: ./.github/workflows/kantra-local.yaml
+    with:
+      os: ${{ matrix.os }}
+      skip_maven: false
 
   run-hub-test:
     secrets: inherit

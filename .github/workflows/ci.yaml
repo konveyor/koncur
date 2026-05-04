@@ -19,7 +19,17 @@ jobs:
     with:
       os: ${{ matrix.os }}
 
-
+  # Java-analysis tests only, Kantra --run-local=true (see kantra-local.yaml). Skips nerd-dinner / python-sample.
+  run-kantra-java-local-test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-15-intel, ubuntu-24.04-arm, windows-latest]
+        exclude:
+          - os: macos-15-intel
+    uses: ./.github/workflows/kantra-local.yaml
+    with:
+      os: ${{ matrix.os }}
 
   run-hub-test:
     secrets: inherit

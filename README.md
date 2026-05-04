@@ -107,6 +107,7 @@ Target configuration is separate from test definitions, allowing the same test t
 type: kantra
 kantra:
   binaryPath: /usr/local/bin/kantra  # Optional
+  # forceLocal: true   # optional: pass --run-local=true for local/containerless mode (default is --run-local=false)
   # Container image overrides (optional, for container mode)
   # javaProviderImage: my-java-provider:dev
   # genericProviderImage: my-generic-provider:dev
