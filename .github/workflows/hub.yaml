@@ -7,6 +7,10 @@ on:
         description: "Whether to setup access to the testing maven packages"
         default: true
         type: boolean
+      image_tag:
+        description: "Image tag for Konveyor images"
+        default: "latest"
+        type: string
 
 jobs:
   hub-test:
@@ -43,7 +47,7 @@ jobs:
         timeout-minutes: 10
 
       - name: Install Tackle Hub
-        run: make hub-install
+        run: make hub-install IMAGE_TAG=${{ inputs.image_tag }}
         timeout-minutes: 20
 
       - name: Wait for Hub readiness
