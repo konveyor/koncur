@@ -9,6 +9,7 @@ on:
       - auto_merge_enabled
     branches:
       - "main"
+      - "release-*"
 
 jobs:
   run-kantra-test:
@@ -44,3 +45,5 @@ jobs:
     uses: ./.github/workflows/hub.yaml
     with:
       skip_maven: false
+      # Uses target branch as image tag: base_ref for PRs, ref_name for push (latest for main)
+      image_tag: ${{ (github.base_ref || github.ref_name) == 'main' && 'latest' || (github.base_ref || github.ref_name) }}
