@@ -6,6 +6,7 @@ KONVEYOR_NAMESPACE ?= konveyor-tackle
 KUBECTL ?= kubectl
 HOST_PORT ?= 8080
 HOST_PORT_TLS ?= 8443
+IMAGE_TAG ?= latest
 
 # Image FQINs with defaults
 HUB ?= quay.io/konveyor/tackle2-hub:latest

@@ -4,6 +4,7 @@ on:
   pull_request:
     branches:
       - "main"
+      - "release-*"
 
 jobs:
   run-kantra-test:
@@ -36,3 +37,4 @@ jobs:
     uses: ./.github/workflows/hub.yaml
     with:
       skip_maven: true
+      image_tag: ${{ github.base_ref == 'main' && 'latest' || github.base_ref }}
