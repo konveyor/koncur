@@ -11,6 +11,10 @@ on:
         description: os to run on 
         required: true 
         type: string
+      image_tag:
+        description: "Image tag for kantra image"
+        default: "latest"
+        type: string
 
 jobs:
   kantra-test:
@@ -31,7 +35,7 @@ jobs:
           podman machine init --rootful --memory 8192 --cpus 2
           podman machine start
 
-          CID=$(podman create quay.io/konveyor/kantra:latest)
+          CID=$(podman create quay.io/konveyor/kantra:${{ inputs.image_tag }})
 
           # Copy kantra binary
           podman cp "${CID}:/usr/local/bin/darwin-kantra" ./darwin-kantra
@@ -61,7 +65,7 @@ jobs:
           choco install podman-cli
           podman machine init --rootful --memory 10240 --cpus 3
           podman machine start 
-          CID=$(podman create quay.io/konveyor/kantra:latest)
+          CID=$(podman create quay.io/konveyor/kantra:${{ inputs.image_tag }})
           HOME_DIR="$HOME/.kantra/"
           mkdir -p $HOME_DIR
           podman cp "${CID}:/usr/local/bin/." $HOME_DIR
@@ -101,7 +105,7 @@ jobs:
         if: ${{ inputs.os == 'ubuntu-24.04-arm' }}
         shell: bash
         run: |
-          CID=$(podman create quay.io/konveyor/kantra:latest)
+          CID=$(podman create quay.io/konveyor/kantra:${{ inputs.image_tag }})
           podman cp "${CID}:/usr/local/bin/." ./
           podman cp "${CID}:/jdtls/" ./
           podman cp "${CID}:/usr/local/static-report/" ./
