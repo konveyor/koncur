@@ -30,6 +30,9 @@ type TestDefinition struct {
 	// Internal field - path to the test file (not in YAML)
 	testFilePath string `yaml:"-"`
 	Skipped      bool   `yaml:"skipped,omitempty"`
+	// Parsed from # SKIPPED preamble comments in the test file (not from YAML); see loader.go.
+	commentSkipAll     bool     `yaml:"-"`
+	commentSkipTargets []string `yaml:"-"`
 }
 
 // SetTestFilePath sets the test file path

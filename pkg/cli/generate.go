@@ -92,13 +92,6 @@ This is useful when:
 					continue
 				}
 
-				// Check if test is marked as skipped
-				if isTestSkipped(testFile) {
-					color.Yellow("  ⊘ Skipped (marked as SKIPPED in file)")
-					skippedCount++
-					continue
-				}
-
 				// Validate test definition (skip expected output validation since we're generating it)
 				if err := validateTestForGeneration(test); err != nil {
 					color.Red("  ✗ Invalid test definition: %v", err)
@@ -146,6 +139,12 @@ This is useful when:
 						// Create default kantra config
 						targetConfig = &config.TargetConfig{Type: "kantra"}
 					}
+				}
+
+				if test.ShouldSkipForTarget(targetConfig.Type) {
+					color.Yellow("  ⊘ Skipped (marked as SKIPPED in file for this target)")
+					skippedCount++
+					continue
 				}
 
 				// Check if test requires maven settings but target doesn't have it
@@ -284,22 +283,6 @@ func findTestFiles(dir string) ([]string, error) {
 	})
 
 	return testFiles, err
-}
-
-// isTestSkipped checks if the test file contains a SKIPPED marker in the first few lines
-func isTestSkipped(testFile string) bool {
-	content, err := os.ReadFile(testFile)
-	if err != nil {
-		return false
-	}
-
-	// Check first 500 bytes for SKIPPED marker
-	searchContent := string(content)
-	if len(searchContent) > 500 {
-		searchContent = searchContent[:500]
-	}
-
-	return strings.Contains(searchContent, "SKIPPED:") || strings.Contains(searchContent, "# SKIPPED")
 }
 
 // validateTestForGeneration validates a test but skips expected output validation
