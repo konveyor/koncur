@@ -1,81 +1,3 @@
-- name: discovery-rules
-  tags:
-  - Java Source
-  - Maven XML
-  - Properties
-  violations:
-    hardcoded-ip-address:
-      description: Hardcoded IP Address
-      category: mandatory
-      labels:
-      - discovery
-      - konveyor.io/target=cloud-readiness
-      - konveyor.io/target=discovery
-      incidents:
-      - uri: file:///source/example-1/src/main/resources/persistence.properties
-        message: When migrating environments, hard-coded IP addresses may need to
-          be modified or eliminated.
-        codeSnip: 3  jdbc.user=customers
-        lineNumber: 2
-        variables:
-          matchingText: 169.60.225.216
-      effort: 1
-  insights:
-    discover-java-files:
-      description: Java source files
-      labels:
-      - discovery
-      - konveyor.io/include=always
-      - konveyor.io/target=discovery
-      - tag=Java Source
-      incidents:
-      - uri: file:///source/example-1/src/main/java/io/konveyor/demo/ordermanagement/OrderManagementAppInitializer.java
-        message: ""
-      - uri: file:///source/example-1/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
-        message: ""
-      - uri: file:///source/example-1/src/main/java/io/konveyor/demo/ordermanagement/config/WebConfig.java
-        message: ""
-      - uri: file:///source/example-1/src/main/java/io/konveyor/demo/ordermanagement/controller/CustomerController.java
-        message: ""
-      - uri: file:///source/example-1/src/main/java/io/konveyor/demo/ordermanagement/exception/ResourceNotFoundException.java
-        message: ""
-      - uri: file:///source/example-1/src/main/java/io/konveyor/demo/ordermanagement/exception/handler/ExceptionHandlingController.java
-        message: ""
-      - uri: file:///source/example-1/src/main/java/io/konveyor/demo/ordermanagement/model/Customer.java
-        message: ""
-      - uri: file:///source/example-1/src/main/java/io/konveyor/demo/ordermanagement/repository/CustomerRepository.java
-        message: ""
-      - uri: file:///source/example-1/src/main/java/io/konveyor/demo/ordermanagement/service/CustomerService.java
-        message: ""
-      - uri: file:///source/example-1/src/main/java/io/konveyor/demo/ordermanagement/service/ICustomerService.java
-        message: ""
-    discover-maven-xml:
-      description: Maven XML file
-      labels:
-      - discovery
-      - konveyor.io/include=always
-      - konveyor.io/target=discovery
-      - tag=Maven XML
-      incidents:
-      - uri: file:///source/example-1/pom.xml
-        message: ""
-    discover-properties-file:
-      description: Properties file
-      labels:
-      - discovery
-      - konveyor.io/include=always
-      - konveyor.io/target=discovery
-      - tag=Properties
-      incidents:
-      - uri: file:///source/example-1/src/main/resources/persistence.properties
-        message: ""
-  unmatched:
-  - discover-license
-  - discover-manifest-file
-  - windup-discover-ejb-configuration
-  - windup-discover-jpa-configuration
-  - windup-discover-spring-configuration
-  - windup-discover-web-configuration
 - name: technology-usage
   description: This ruleset provides analysis of logging libraries.
   tags:
@@ -87,7 +9,6 @@
   - Embedded framework - Spring Web
   - Embedded library - Spring Boot Actuator
   - Embedded=Micrometer
-  - Embedded=Properties
   - Embedded=Spring Boot Actuator
   - Embedded=Spring DI
   - Embedded=Spring Data JPA
@@ -104,7 +25,6 @@
   - MVC=Spring MVC
   - Micrometer
   - Observability=Spring Boot Actuator
-  - Other=Properties
   - Persistence=JPA named queries
   - Persistence=Spring Data JPA
   - Servlet
@@ -115,7 +35,6 @@
   - Spring Web
   - Store=JPA named queries
   - Store=Spring Data JPA
-  - Sustain=Properties
   - Sustain=Spring Boot Actuator
   - View=Spring MVC
   - View=Spring Web
@@ -331,20 +250,6 @@
         variables:
           name: org.springframework.spring-webmvc
           version: 5.3.7
-    non-xml-technology-usage-20000:
-      description: Properties
-      labels:
-      - discovery
-      - konveyor.io/include=always
-      - tag=Embedded=Properties
-      - tag=Other=Properties
-      - tag=Sustain=Properties
-      incidents:
-      - uri: ""
-        message: ""
-        variables:
-          tags:
-          - Properties
     observability-0100:
       description: Embedded library - Spring Boot Actuator
       labels:
@@ -861,6 +766,7 @@
   - non-xml-technology-usage-17000
   - non-xml-technology-usage-18000
   - non-xml-technology-usage-19000
+  - non-xml-technology-usage-20000
   - non-xml-technology-usage-21000
   - non-xml-technology-usage-22000
   - non-xml-technology-usage-23000
@@ -1118,7 +1024,6 @@
   - technology-usage-mvc-03900
   - technology-usage-mvc-04000
   - technology-usage-mvc-04100
-  - technology-usage-mvc-04200
   - technology-usage-mvc-04300
   - technology-usage-mvc-04400
   - technology-usage-mvc-04500
@@ -1137,6 +1042,7 @@
   - technology-usage-mvc-05800
   - technology-usage-mvc-05900
   - technology-usage-mvc-06000
+  - technology-usage-mvc-0x4200
   - technology-usage-security-01000
   - technology-usage-security-01100
   - technology-usage-security-01200
