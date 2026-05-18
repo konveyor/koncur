@@ -1,3 +1,289 @@
+- name: cloud-readiness
+  description: This ruleset detects logging configurations that may be problematic
+    when migrating an application to a cloud environment.
+  tags:
+  - Caching - Hazelcast embedded library
+  - Hazelcast
+  violations:
+    localhost-jdbc-00002:
+      description: Local JDBC Calls
+      category: mandatory
+      labels:
+      - konveyor.io/source
+      - konveyor.io/target=cloud-readiness
+      - localhost
+      incidents:
+      - uri: file:///source/pom.xml
+        message: The app is trying to access local resource by JDBC, please try to
+          migrate the resource to cloud
+        codeSnip: "561  \t\t\t\t<jdbc.username>petclinic</jdbc.username>"
+        lineNumber: 560
+        variables:
+          matchingText: jdbc:mysql://localhost:3306
+      - uri: file:///source/pom.xml
+        message: The app is trying to access local resource by JDBC, please try to
+          migrate the resource to cloud
+        codeSnip: "580  \t\t\t\t<jdbc.username>postgres</jdbc.username>"
+        lineNumber: 579
+        variables:
+          matchingText: jdbc:postgresql://localhost:5432
+      effort: 7
+  insights:
+    embedded-cache-libraries-06000:
+      description: Caching - Hazelcast embedded library
+      labels:
+      - konveyor.io/source
+      - konveyor.io/target=cloud-readiness
+      - tag=Caching - Hazelcast embedded library
+      - tag=Hazelcast
+      incidents:
+      - uri: file:///source/.mvn/wrapper/maven-wrapper.jar
+        message: ""
+  unmatched:
+  - embedded-cache-libraries-01000
+  - embedded-cache-libraries-02000
+  - embedded-cache-libraries-03000
+  - embedded-cache-libraries-04000
+  - embedded-cache-libraries-05000
+  - embedded-cache-libraries-07000
+  - embedded-cache-libraries-08000
+  - embedded-cache-libraries-09000
+  - embedded-cache-libraries-10000
+  - embedded-cache-libraries-11000
+  - embedded-cache-libraries-12000
+  - embedded-cache-libraries-13000
+  - embedded-cache-libraries-14000
+  - embedded-cache-libraries-15000
+  - embedded-cache-libraries-16000
+  - java-corba-00000
+  - java-rmi-00000
+  - java-rmi-00000
+  - java-rmi-00001
+  - java-rpc-00000
+  - jca-00000
+  - jni-native-code-00000
+  - jni-native-code-00001
+  - local-storage-00001
+  - local-storage-00002
+  - local-storage-00003
+  - local-storage-00004
+  - local-storage-00005
+  - local-storage-00006
+  - localhost-http-00001
+  - localhost-ws-00003
+  - logging-0000
+  - logging-0000
+  - logging-0001
+  - logging-0001
+  - mail-00000
+  - session-00000
+  - session-00001
+  - socket-communication-00000
+  - socket-communication-00001
+- name: discovery-rules
+  tags:
+  - Java Source
+  - Maven XML
+  - Properties
+  insights:
+    discover-java-files:
+      description: Java source files
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - konveyor.io/target=discovery
+      - tag=Java Source
+      incidents:
+      - uri: file:///source/.mvn/wrapper/MavenWrapperDownloader.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/PetclinicInitializer.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/config/BusinessConfig.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/config/DataSourceConfig.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/config/InitDataSourceConfig.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/config/Initializer.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/config/JdbcConfig.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/config/JpaConfig.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/config/MvcCoreConfig.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/config/NotProfile.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/config/NotProfileCondition.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/config/RootApplicationContextConfig.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/config/SessionConfiguration.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/config/SharedJpaConfig.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/config/SpringDataJpaConfig.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/config/ToolsConfig.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/model/BaseEntity.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/model/NamedEntity.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/model/Owner.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/model/Person.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/model/Pet.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/model/PetType.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/model/Specialty.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/model/Vet.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/model/Vets.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/model/Visit.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/model/package-info.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/OwnerRepository.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/PetRepository.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/VetRepository.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/VisitRepository.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcOwnerRepositoryImpl.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcPet.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcPetRepositoryImpl.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcPetRowMapper.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcPetVisitExtractor.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcVetRepositoryImpl.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcVisitRepositoryImpl.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcVisitRowMapper.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/OneToManyResultSetExtractor.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/jdbc/package-info.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/jpa/JpaOwnerRepositoryImpl.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/jpa/JpaPetRepositoryImpl.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/jpa/JpaVetRepositoryImpl.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/jpa/JpaVisitRepositoryImpl.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/jpa/package-info.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/springdatajpa/SpringDataOwnerRepository.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/springdatajpa/SpringDataPetRepository.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/springdatajpa/SpringDataVetRepository.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/repository/springdatajpa/SpringDataVisitRepository.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/service/ClinicService.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/service/ClinicServiceImpl.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/util/CallMonitoringAspect.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/util/EntityUtils.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/web/CrashController.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/web/OwnerController.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/web/PetController.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/web/PetTypeFormatter.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/web/PetValidator.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/web/VetController.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/web/VisitController.java
+        message: ""
+      - uri: file:///source/src/main/java/org/springframework/samples/petclinic/web/package-info.java
+        message: ""
+      - uri: file:///source/src/test/java/org/springframework/samples/petclinic/config/MvcTestConfig.java
+        message: ""
+      - uri: file:///source/src/test/java/org/springframework/samples/petclinic/model/ValidatorTests.java
+        message: ""
+      - uri: file:///source/src/test/java/org/springframework/samples/petclinic/service/AbstractClinicServiceTests.java
+        message: ""
+      - uri: file:///source/src/test/java/org/springframework/samples/petclinic/service/ClinicServiceJdbcTests.java
+        message: ""
+      - uri: file:///source/src/test/java/org/springframework/samples/petclinic/service/ClinicServiceJpaTests.java
+        message: ""
+      - uri: file:///source/src/test/java/org/springframework/samples/petclinic/service/ClinicServiceSpringDataJpaTests.java
+        message: ""
+      - uri: file:///source/src/test/java/org/springframework/samples/petclinic/web/CrashControllerTests.java
+        message: ""
+      - uri: file:///source/src/test/java/org/springframework/samples/petclinic/web/OwnerControllerTests.java
+        message: ""
+      - uri: file:///source/src/test/java/org/springframework/samples/petclinic/web/PetControllerTests.java
+        message: ""
+      - uri: file:///source/src/test/java/org/springframework/samples/petclinic/web/PetTypeFormatterTests.java
+        message: ""
+      - uri: file:///source/src/test/java/org/springframework/samples/petclinic/web/VetControllerTests.java
+        message: ""
+      - uri: file:///source/src/test/java/org/springframework/samples/petclinic/web/VisitControllerTests.java
+        message: ""
+    discover-maven-xml:
+      description: Maven XML file
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - konveyor.io/target=discovery
+      - tag=Maven XML
+      incidents:
+      - uri: file:///source/pom.xml
+        message: ""
+    discover-properties-file:
+      description: Properties file
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - konveyor.io/target=discovery
+      - tag=Properties
+      incidents:
+      - uri: file:///source/.mvn/wrapper/maven-wrapper.properties
+        message: ""
+      - uri: file:///source/src/main/resources/messages/messages.properties
+        message: ""
+      - uri: file:///source/src/main/resources/messages/messages_de.properties
+        message: ""
+      - uri: file:///source/src/main/resources/messages/messages_en.properties
+        message: ""
+      - uri: file:///source/src/main/resources/messages/messages_es.properties
+        message: ""
+      - uri: file:///source/src/main/resources/session/session.properties
+        message: ""
+      - uri: file:///source/src/main/resources/spring/data-access.properties
+        message: ""
+      - uri: file:///source/src/main/wro/wro.properties
+        message: ""
+  unmatched:
+  - discover-license
+  - discover-manifest-file
+  - hardcoded-ip-address
+  - windup-discover-ejb-configuration
+  - windup-discover-jpa-configuration
+  - windup-discover-spring-configuration
+  - windup-discover-web-configuration
 - name: konveyor-analysis
   violations:
     hazelcast-cloud-readiness-hz001:
@@ -83,27 +369,36 @@
   description: This ruleset provides analysis of logging libraries.
   tags:
   - Bean Validation
+  - Caching=Hazelcast
   - Common Annotations
   - Connect=Common Annotations
   - Connect=Servlet
   - Embedded framework - Spring DI
   - Embedded framework - Spring MVC
   - Embedded framework - Spring Web
+  - Embedded technology - Java Server Pages
+  - Embedded=Hazelcast
+  - Embedded=Properties
   - Embedded=Spring DI
   - Embedded=Spring JMX
   - Embedded=Spring MVC
   - Embedded=Spring Web
   - Execute=Spring DI
   - HTTP=Servlet
+  - Hazelcast
+  - Hazelcast embedded library
   - Inversion of Control=Spring DI
+  - JSP
   - Java EE=Bean Validation
   - Java EE=Common Annotations
   - Java EE=JPA named queries
+  - Java EE=JSP Page
   - Java EE=Servlet
   - Java Servlet
   - MVC=Spring MVC
   - Observability=Spring JMX
   - Other=Common Annotations
+  - Other=Properties
   - Persistence=JPA named queries
   - Servlet
   - Spring DI
@@ -112,13 +407,27 @@
   - Spring MVC
   - Spring Web
   - Store=Bean Validation
+  - Store=Hazelcast
   - Store=JPA named queries
+  - Sustain=Properties
   - Sustain=Spring JMX
   - Validation=Bean Validation
+  - View=JSP Page
   - View=Spring MVC
   - View=Spring Web
+  - Web=JSP Page
   - Web=Spring Web
   insights:
+    embedded-cache-libraries-06000:
+      description: Hazelcast embedded library
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Hazelcast
+      - tag=Hazelcast embedded library
+      incidents:
+      - uri: file:///source/.mvn/wrapper/maven-wrapper.jar
+        message: ""
     embedded-framework-08200:
       description: Embedded framework - Spring DI
       labels:
@@ -164,6 +473,20 @@
         variables:
           name: org.springframework.spring-web
           version: 5.3.12
+    embedded-framework-embedded-framework-03900:
+      description: Hazelcast
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Caching=Hazelcast
+      - tag=Embedded=Hazelcast
+      - tag=Store=Hazelcast
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - Hazelcast
     javaee-technology-usage-00080:
       description: Common Annotations
       labels:
@@ -439,6 +762,20 @@
         variables:
           name: org.springframework.spring-webmvc
           version: 5.3.12
+    non-xml-technology-usage-20000:
+      description: Properties
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded=Properties
+      - tag=Other=Properties
+      - tag=Sustain=Properties
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - Properties
     observability-0200:
       description: Spring JMX configuration detected
       labels:
@@ -779,6 +1116,20 @@
         variables:
           tags:
           - Spring MVC
+    technology-usage-web-01100:
+      description: JSP
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Java EE=JSP Page
+      - tag=View=JSP Page
+      - tag=Web=JSP Page
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - JSP
   unmatched:
   - 3rd-party-01000
   - 3rd-party-02000
@@ -857,7 +1208,6 @@
   - embedded-cache-libraries-03000
   - embedded-cache-libraries-04000
   - embedded-cache-libraries-05000
-  - embedded-cache-libraries-06000
   - embedded-cache-libraries-07000
   - embedded-cache-libraries-08000
   - embedded-cache-libraries-09000
@@ -939,7 +1289,6 @@
   - embedded-framework-embedded-framework-03600
   - embedded-framework-embedded-framework-03700
   - embedded-framework-embedded-framework-03800
-  - embedded-framework-embedded-framework-03900
   - embedded-framework-embedded-framework-04000
   - embedded-framework-embedded-framework-04100
   - embedded-framework-embedded-framework-04200
@@ -1128,7 +1477,6 @@
   - non-xml-technology-usage-17000
   - non-xml-technology-usage-18000
   - non-xml-technology-usage-19000
-  - non-xml-technology-usage-20000
   - non-xml-technology-usage-21000
   - non-xml-technology-usage-22000
   - non-xml-technology-usage-23000
@@ -1471,8 +1819,6 @@
   - technology-usage-test-frameworks-00360
   - technology-usage-test-frameworks-00370
   - technology-usage-web-01000
-  - technology-usage-web-01100
-  - technology-usage-web-01100
   - technology-usage-web-01200
   - technology-usage-web-01300
   - technology-usage-web-01300

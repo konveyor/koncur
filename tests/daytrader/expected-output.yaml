@@ -231,6 +231,22 @@
       - url: https://12factor.net/logs
         title: 'Twelve-Factor App: Logs'
       effort: 1
+    localhost-http-00001:
+      description: Local HTTP Calls
+      category: mandatory
+      labels:
+      - konveyor.io/source
+      - konveyor.io/target=cloud-readiness
+      - localhost
+      incidents:
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingServlet2PDF.java
+        message: The app is trying to access local resource by HTTP, please try to
+          migrate the resource to cloud
+        codeSnip: 86              URL url = new URL(fileURL);
+        lineNumber: 85
+        variables:
+          matchingText: http://localhost:9080/daytrader/WAS_V7_64-bit_performance.pdf";
+      effort: 7
     session-00001:
       description: HTTP Session data storage
       category: optional
@@ -725,7 +741,6 @@
   - local-storage-00004
   - local-storage-00005
   - local-storage-00006
-  - localhost-http-00001
   - localhost-jdbc-00002
   - localhost-ws-00003
   - logging-0000
@@ -736,6 +751,598 @@
   - session-00000
   - socket-communication-00000
   - socket-communication-00001
+- name: discovery-rules
+  tags:
+  - EJB XML
+  - JPA XML
+  - Java Source
+  - Manifest
+  - Maven XML
+  - Properties
+  - Spring XML
+  - Web XML
+  insights:
+    discover-java-files:
+      description: Java source files
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - konveyor.io/target=discovery
+      - tag=Java Source
+      incidents:
+      - uri: file:///source/daytrader-ee7-ejb/src/main/java/com/ibm/websphere/samples/daytrader/TradeAction.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-ejb/src/main/java/com/ibm/websphere/samples/daytrader/TradeServices.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-ejb/src/main/java/com/ibm/websphere/samples/daytrader/beans/MarketSummaryDataBean.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-ejb/src/main/java/com/ibm/websphere/samples/daytrader/beans/RunStatsDataBean.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-ejb/src/main/java/com/ibm/websphere/samples/daytrader/direct/KeySequenceDirect.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-ejb/src/main/java/com/ibm/websphere/samples/daytrader/direct/TradeDirect.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-ejb/src/main/java/com/ibm/websphere/samples/daytrader/ejb3/DTBroker3MDB.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-ejb/src/main/java/com/ibm/websphere/samples/daytrader/ejb3/DTStreamer3MDB.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-ejb/src/main/java/com/ibm/websphere/samples/daytrader/ejb3/MarketSummarySingleton.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-ejb/src/main/java/com/ibm/websphere/samples/daytrader/ejb3/TradeSLSBBean.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-ejb/src/main/java/com/ibm/websphere/samples/daytrader/ejb3/TradeSLSBLocal.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-ejb/src/main/java/com/ibm/websphere/samples/daytrader/ejb3/TradeSLSBRemote.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-ejb/src/main/java/com/ibm/websphere/samples/daytrader/entities/AccountDataBean.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-ejb/src/main/java/com/ibm/websphere/samples/daytrader/entities/AccountProfileDataBean.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-ejb/src/main/java/com/ibm/websphere/samples/daytrader/entities/HoldingDataBean.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-ejb/src/main/java/com/ibm/websphere/samples/daytrader/entities/OrderDataBean.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-ejb/src/main/java/com/ibm/websphere/samples/daytrader/entities/QuoteDataBean.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-ejb/src/main/java/com/ibm/websphere/samples/daytrader/util/CompleteOrderThread.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-ejb/src/main/java/com/ibm/websphere/samples/daytrader/util/FinancialUtils.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-ejb/src/main/java/com/ibm/websphere/samples/daytrader/util/KeyBlock.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-ejb/src/main/java/com/ibm/websphere/samples/daytrader/util/Log.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-ejb/src/main/java/com/ibm/websphere/samples/daytrader/util/MDBStats.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-ejb/src/main/java/com/ibm/websphere/samples/daytrader/util/TimerStat.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-ejb/src/main/java/com/ibm/websphere/samples/daytrader/util/TradeConfig.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-ejb/src/main/java/com/ibm/websphere/samples/daytrader/util/WebSocketJMSMessage.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/OrdersAlertFilter.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/TestServlet.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/TradeAppServlet.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/TradeBuildDB.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/TradeConfigServlet.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/TradeScenarioServlet.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/TradeServletAction.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/TradeWebContextListener.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/jsf/AccountDataJSF.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/jsf/ExternalContextProducer.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/jsf/HoldingData.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/jsf/JSFLoginFilter.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/jsf/LoginValidator.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/jsf/MarketSummaryJSF.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/jsf/OrderData.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/jsf/OrderDataJSF.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/jsf/PortfolioJSF.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/jsf/QuoteData.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/jsf/QuoteJSF.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/jsf/TradeActionProducer.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/jsf/TradeAppJSF.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/jsf/TradeConfigJSF.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/ExplicitGC.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingBean.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingCDIBean.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingCDIJSFBean.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingEJBIFace.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingEJBLocal.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingEJBLocalDecorator.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingInterceptor.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingInterceptorBinding.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingJDBCRead.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingJDBCRead2JSP.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingJDBCWrite.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingJSONP.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingManagedExecutor.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingManagedThread.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingReentryServlet.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingServlet.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingServlet2DB.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingServlet2Include.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingServlet2IncludeRcv.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingServlet2JNDI.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingServlet2Jsp.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingServlet2PDF.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingServlet2Servlet.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingServlet2ServletRcv.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingServlet30Async.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingServlet31Async.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingServlet31AsyncRead.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingServletCDI.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingServletCDIBeanManagerViaCDICurrent.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingServletCDIBeanManagerViaJNDI.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingServletLargeContentLength.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingServletSetContentLength.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingServletWriter.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingSession1.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingSession2.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingSession3.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingSession3Object.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingUpgradeServlet.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingWebSocketBinary.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingWebSocketJson.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingWebSocketTextAsync.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/PingWebSocketTextSync.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/ejb3/PingServlet2Entity.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/ejb3/PingServlet2MDBQueue.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/ejb3/PingServlet2MDBTopic.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/ejb3/PingServlet2Session2CMROne2Many.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/ejb3/PingServlet2Session2CMROne2One.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/ejb3/PingServlet2Session2Entity.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/ejb3/PingServlet2Session2Entity2JSP.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/ejb3/PingServlet2Session2EntityCollection.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/ejb3/PingServlet2SessionLocal.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/ejb3/PingServlet2SessionRemote.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/prims/ejb3/PingServlet2TwoPhase.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/websocket/ActionDecoder.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/websocket/ActionMessage.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/websocket/JsonDecoder.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/websocket/JsonEncoder.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/websocket/JsonMessage.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/websocket/MarketSummaryWebSocket.java
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/com/ibm/websphere/samples/daytrader/web/websocket/RecentStockChangeList.java
+        message: ""
+    discover-manifest-file:
+      description: Manifest file
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - konveyor.io/target=discovery
+      - tag=Manifest
+      incidents:
+      - uri: file:///source/daytrader-ee7-ejb/src/main/resources/META-INF/MANIFEST.MF
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/META-INF/MANIFEST.MF
+        message: ""
+    discover-maven-xml:
+      description: Maven XML file
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - konveyor.io/target=discovery
+      - tag=Maven XML
+      incidents:
+      - uri: file:///source/daytrader-ee7-ejb/pom.xml
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/pom.xml
+        message: ""
+      - uri: file:///source/daytrader-ee7/pom.xml
+        message: ""
+      - uri: file:///source/pom.xml
+        message: ""
+    discover-properties-file:
+      description: Properties file
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - konveyor.io/target=discovery
+      - tag=Properties
+      incidents:
+      - uri: file:///source/daytrader-ee7-web/src/main/java/build.properties
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/WEB-INF/classes/build.properties
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/properties/daytrader.properties
+        message: ""
+      - uri: file:///source/daytrader-ee7/resources/data/tradedb/service.properties
+        message: ""
+    windup-discover-ejb-configuration:
+      description: EJB XML Configuration
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - konveyor.io/target=discovery
+      - tag=EJB XML
+      incidents:
+      - uri: file:///source/daytrader-ee7-ejb/src/main/resources/META-INF/ejb-jar.xml
+        message: ""
+        codeSnip: 18           xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+          http://xmlns.jcp.org/xml/ns/javaee/ejb-jar_3_2.xsd"
+        lineNumber: 17
+        variables:
+          data: ejb-jar
+          innerText: "\n    DayTrader Enterprise Bean Definitions\n\n    \n    \n
+            \       \n            grp1\n        \n        \n            grp2\n        \n
+            \       \n            grp3\n        \n        \n            grp4\n        \n
+            \       \n            grp5\n        \n        \n            grp1\n            grp2\n
+            \           grp3\n            grp4\n            grp5\n            \n                DirectSLSBBean\n
+            \               buy\n                \n                    java.lang.String\n
+            \                   java.lang.String\n                    double\n                    int\n
+            \               \n            \n            \n                DirectSLSBBean\n
+            \               cancelOrder\n                \n                    java.lang.Integer\n
+            \                   boolean\n                \n            \n            \n
+            \               DirectSLSBBean\n                completeOrder\n                \n
+            \                   java.lang.Integer\n                    boolean\n                \n
+            \           \n            \n                DirectSLSBBean\n                createQuote\n
+            \               \n                    java.lang.String\n                    java.lang.String\n
+            \                   java.math.BigDecimal\n                \n            \n
+            \           \n                DirectSLSBBean\n                getAccountData\n
+            \               \n                    java.lang.String\n                \n
+            \           \n            \n                DirectSLSBBean\n                getAccountProfileData\n
+            \               \n                    java.lang.String\n                \n
+            \           \n            \n                DirectSLSBBean\n                getAllQuotes\n
+            \               \n                    \n                \n            \n
+            \           \n                DirectSLSBBean\n                getClosedOrders\n
+            \               \n                    java.lang.String\n                \n
+            \           \n            \n                DirectSLSBBean\n                getHolding\n
+            \               \n                    java.lang.Integer\n                \n
+            \           \n            \n                DirectSLSBBean\n                getHoldings\n
+            \               \n                    java.lang.String\n                \n
+            \           \n            \n                DirectSLSBBean\n                getMarketSummary\n
+            \               \n                    \n                \n            \n
+            \           \n                DirectSLSBBean\n                getOrders\n
+            \               \n                    java.lang.String\n                \n
+            \           \n            \n                DirectSLSBBean\n                getQuote\n
+            \               \n                    java.lang.String\n                \n
+            \           \n            \n                DirectSLSBBean\n                login\n
+            \               \n                    java.lang.String\n                    java.lang.String\n
+            \               \n            \n            \n                DirectSLSBBean\n
+            \               logout\n                \n                    java.lang.String\n
+            \               \n            \n            \n                DirectSLSBBean\n
+            \               orderCompleted\n                \n                    java.lang.String\n
+            \                   java.lang.Integer\n                \n            \n
+            \           \n                DirectSLSBBean\n                queueOrder\n
+            \               \n                    java.lang.Integer\n                    boolean\n
+            \               \n            \n            \n                DirectSLSBBean\n
+            \               register\n                \n                    java.lang.String\n
+            \                   java.lang.String\n                    java.lang.String\n
+            \                   java.lang.String\n                    java.lang.String\n
+            \                   java.lang.String\n                    java.math.BigDecimal\n
+            \               \n            \n            \n                DirectSLSBBean\n
+            \               sell\n                \n                    java.lang.String\n
+            \                   java.lang.Integer\n                    int\n                \n
+            \           \n            \n                DirectSLSBBean\n                updateAccountProfile\n
+            \               \n                    \n                        com.ibm.websphere.samples.daytrader.AccountProfileDataBean\n
+            \                   \n                \n            \n            \n                DirectSLSBBean\n
+            \               updateQuotePriceVolume\n                \n                    java.lang.String\n
+            \                   java.math.BigDecimal\n                    double\n
+            \               \n            \n            \n                TradeSLSBBean\n
+            \               buy\n                \n                    java.lang.String\n
+            \                   java.lang.String\n                    double\n                    int\n
+            \               \n            \n            \n                TradeSLSBBean\n
+            \               cancelOrder\n                \n                    java.lang.Integer\n
+            \                   boolean\n                \n            \n            \n
+            \               TradeSLSBBean\n                completeOrder\n                \n
+            \                   java.lang.Integer\n                    boolean\n                \n
+            \           \n            \n                TradeSLSBBean\n                createHolding\n
+            \               \n                    \n                        com.ibm.websphere.samples.daytrader.AccountDataBean\n
+            \                   \n                    \n                        com.ibm.websphere.samples.daytrader.QuoteDataBean\n
+            \                   \n                    double\n                    java.math.BigDecimal\n
+            \               \n            \n            \n                TradeSLSBBean\n
+            \               createOrder\n                \n                    \n
+            \                       com.ibm.websphere.samples.daytrader.AccountDataBean\n
+            \                   \n                    \n                        com.ibm.websphere.samples.daytrader.QuoteDataBean\n
+            \                   \n                    \n                        com.ibm.websphere.samples.daytrader.HoldingDataBean\n
+            \                   \n                    java.lang.String\n                    double\n
+            \               \n            \n            \n                TradeSLSBBean\n
+            \               createQuote\n                \n                    java.lang.String\n
+            \                   java.lang.String\n                    java.math.BigDecimal\n
+            \               \n            \n            \n                TradeSLSBBean\n
+            \               getAccountData\n                \n                    java.lang.String\n
+            \               \n            \n            \n                TradeSLSBBean\n
+            \               getAccountProfileData\n                \n                    java.lang.String\n
+            \               \n            \n            \n                TradeSLSBBean\n
+            \               getAllQuotes\n                \n                    \n
+            \               \n            \n            \n                TradeSLSBBean\n
+            \               getClosedOrders\n                \n                    java.lang.String\n
+            \               \n            \n            \n                TradeSLSBBean\n
+            \               getHolding\n                \n                    java.lang.Integer\n
+            \               \n            \n            \n                TradeSLSBBean\n
+            \               getHoldings\n                \n                    java.lang.String\n
+            \               \n            \n            \n                TradeSLSBBean\n
+            \               getMarketSummary\n                \n                    \n
+            \               \n            \n            \n                TradeSLSBBean\n
+            \               getOrders\n                \n                    java.lang.String\n
+            \               \n            \n            \n                TradeSLSBBean\n
+            \               getQuote\n                \n                    java.lang.String\n
+            \               \n            \n            \n                TradeSLSBBean\n
+            \               investmentReturn\n                \n                    double\n
+            \                   double\n                \n            \n            \n
+            \               TradeSLSBBean\n                login\n                \n
+            \                   java.lang.String\n                    java.lang.String\n
+            \               \n            \n            \n                TradeSLSBBean\n
+            \               logout\n                \n                    java.lang.String\n
+            \               \n            \n            \n                TradeSLSBBean\n
+            \               orderCompleted\n                \n                    java.lang.String\n
+            \                   java.lang.Integer\n                \n            \n
+            \           \n                TradeSLSBBean\n                pingTwoPhase\n
+            \               \n                    java.lang.String\n                \n
+            \           \n            \n                TradeSLSBBean\n                publishQuotePriceChange\n
+            \               \n                    \n                        com.ibm.websphere.samples.daytrader.QuoteDataBean\n
+            \                   \n                    java.math.BigDecimal\n                    java.math.BigDecimal\n
+            \                   double\n                \n            \n            \n
+            \               TradeSLSBBean\n                queueOrder\n                \n
+            \                   java.lang.Integer\n                    boolean\n                \n
+            \           \n            \n                TradeSLSBBean\n                register\n
+            \               \n                    java.lang.String\n                    java.lang.String\n
+            \                   java.lang.String\n                    java.lang.String\n
+            \                   java.lang.String\n                    java.lang.String\n
+            \                   java.math.BigDecimal\n                \n            \n
+            \           \n                TradeSLSBBean\n                sell\n                \n
+            \                   java.lang.String\n                    java.lang.Integer\n
+            \                   int\n                \n            \n            \n
+            \               TradeSLSBBean\n                updateAccountProfile\n
+            \               \n                    \n                        com.ibm.websphere.samples.daytrader.AccountProfileDataBean\n
+            \                   \n                \n            \n            \n                TradeSLSBBean\n
+            \               updateQuotePriceVolume\n                \n                    java.lang.String\n
+            \                   java.math.BigDecimal\n                    double\n
+            \               \n            \n         \n\n    \n"
+          matchingXML: "<display-name>DayTrader Enterprise Bean Definitions</display-name><!--
+            All EJB 3.1 properties and attributes have been applied to the various
+            \r\n        DayTrader entity, session and message driven beans using annotations.
+            The \r\n        inline annotations can be overriden by modifing this file.
+            --><assembly-descriptor><security-role><role-name>grp1</role-name></security-role><security-role><role-name>grp2</role-name></security-role><security-role><role-name>grp3</role-name></security-role><security-role><role-name>grp4</role-name></security-role><security-role><role-name>grp5</role-name></security-role><method-permission><role-name>grp1</role-name><role-name>grp2</role-name><role-name>grp3</role-name><role-name>grp4</role-name><role-name>grp5</role-name><method><ejb-name>DirectSLSBBean</ejb-name><method-name>buy</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>double</method-param><method-param>int</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>cancelOrder</method-name><method-params><method-param>java.lang.Integer</method-param><method-param>boolean</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>completeOrder</method-name><method-params><method-param>java.lang.Integer</method-param><method-param>boolean</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>createQuote</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>java.math.BigDecimal</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>getAccountData</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>getAccountProfileData</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>getAllQuotes</method-name><method-params><method-param></method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>getClosedOrders</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>getHolding</method-name><method-params><method-param>java.lang.Integer</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>getHoldings</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>getMarketSummary</method-name><method-params><method-param></method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>getOrders</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>getQuote</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>login</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>logout</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>orderCompleted</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.lang.Integer</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>queueOrder</method-name><method-params><method-param>java.lang.Integer</method-param><method-param>boolean</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>register</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>java.math.BigDecimal</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>sell</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.lang.Integer</method-param><method-param>int</method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>updateAccountProfile</method-name><method-params><method-param>\n
+            \                       com.ibm.websphere.samples.daytrader.AccountProfileDataBean\n
+            \                   </method-param></method-params></method><method><ejb-name>DirectSLSBBean</ejb-name><method-name>updateQuotePriceVolume</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.math.BigDecimal</method-param><method-param>double</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>buy</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>double</method-param><method-param>int</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>cancelOrder</method-name><method-params><method-param>java.lang.Integer</method-param><method-param>boolean</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>completeOrder</method-name><method-params><method-param>java.lang.Integer</method-param><method-param>boolean</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>createHolding</method-name><method-params><method-param>\n
+            \                       com.ibm.websphere.samples.daytrader.AccountDataBean\n
+            \                   </method-param><method-param>\n                        com.ibm.websphere.samples.daytrader.QuoteDataBean\n
+            \                   </method-param><method-param>double</method-param><method-param>java.math.BigDecimal</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>createOrder</method-name><method-params><method-param>\n
+            \                       com.ibm.websphere.samples.daytrader.AccountDataBean\n
+            \                   </method-param><method-param>\n                        com.ibm.websphere.samples.daytrader.QuoteDataBean\n
+            \                   </method-param><method-param>\n                        com.ibm.websphere.samples.daytrader.HoldingDataBean\n
+            \                   </method-param><method-param>java.lang.String</method-param><method-param>double</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>createQuote</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>java.math.BigDecimal</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>getAccountData</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>getAccountProfileData</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>getAllQuotes</method-name><method-params><method-param></method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>getClosedOrders</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>getHolding</method-name><method-params><method-param>java.lang.Integer</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>getHoldings</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>getMarketSummary</method-name><method-params><method-param></method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>getOrders</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>getQuote</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>investmentReturn</method-name><method-params><method-param>double</method-param><method-param>double</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>login</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>logout</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>orderCompleted</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.lang.Integer</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>pingTwoPhase</method-name><method-params><method-param>java.lang.String</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>publishQuotePriceChange</method-name><method-params><method-param>\n
+            \                       com.ibm.websphere.samples.daytrader.QuoteDataBean\n
+            \                   </method-param><method-param>java.math.BigDecimal</method-param><method-param>java.math.BigDecimal</method-param><method-param>double</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>queueOrder</method-name><method-params><method-param>java.lang.Integer</method-param><method-param>boolean</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>register</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>java.lang.String</method-param><method-param>java.math.BigDecimal</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>sell</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.lang.Integer</method-param><method-param>int</method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>updateAccountProfile</method-name><method-params><method-param>\n
+            \                       com.ibm.websphere.samples.daytrader.AccountProfileDataBean\n
+            \                   </method-param></method-params></method><method><ejb-name>TradeSLSBBean</ejb-name><method-name>updateQuotePriceVolume</method-name><method-params><method-param>java.lang.String</method-param><method-param>java.math.BigDecimal</method-param><method-param>double</method-param></method-params></method></method-permission></assembly-descriptor>"
+    windup-discover-jpa-configuration:
+      description: JPA XML Configuration
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - konveyor.io/target=discovery
+      - tag=JPA XML
+      incidents:
+      - uri: file:///source/daytrader-ee7-ejb/src/main/resources/META-INF/persistence.xml
+        message: ""
+        codeSnip: '25          '
+        lineNumber: 24
+        variables:
+          data: persistence
+          innerText: "\n\n    \n        \n        jdbc/TradeDataSource\n        \n
+            \       com.ibm.websphere.samples.daytrader.entities.AccountDataBean\n
+            \       com.ibm.websphere.samples.daytrader.entities.AccountProfileDataBean\n
+            \       com.ibm.websphere.samples.daytrader.entities.HoldingDataBean\n
+            \       com.ibm.websphere.samples.daytrader.entities.OrderDataBean\n        com.ibm.websphere.samples.daytrader.entities.QuoteDataBean\n
+            \       true\n        NONE\n    \n"
+          matchingXML: <persistence-unit transaction-type="JTA" name="daytrader"><jta-data-source>jdbc/TradeDataSource</jta-data-source><class>com.ibm.websphere.samples.daytrader.entities.AccountDataBean</class><class>com.ibm.websphere.samples.daytrader.entities.AccountProfileDataBean</class><class>com.ibm.websphere.samples.daytrader.entities.HoldingDataBean</class><class>com.ibm.websphere.samples.daytrader.entities.OrderDataBean</class><class>com.ibm.websphere.samples.daytrader.entities.QuoteDataBean</class><exclude-unlisted-classes>true</exclude-unlisted-classes><shared-cache-mode>NONE</shared-cache-mode></persistence-unit>
+      - uri: file:///source/daytrader-ee7-web/src/main/java/META-INF/persistence.xml
+        message: ""
+        codeSnip: '25          '
+        lineNumber: 24
+        variables:
+          data: persistence
+          innerText: "\n\n    \n        \n        jdbc/TradeDataSource\n        \n
+            \       com.ibm.websphere.samples.daytrader.entities.AccountDataBean\n
+            \       com.ibm.websphere.samples.daytrader.entities.AccountProfileDataBean\n
+            \       com.ibm.websphere.samples.daytrader.entities.HoldingDataBean\n
+            \       com.ibm.websphere.samples.daytrader.entities.OrderDataBean\n        com.ibm.websphere.samples.daytrader.entities.QuoteDataBean\n
+            \       true\n        NONE\n    \n"
+          matchingXML: <persistence-unit transaction-type="JTA" name="daytrader"><jta-data-source>jdbc/TradeDataSource</jta-data-source><class>com.ibm.websphere.samples.daytrader.entities.AccountDataBean</class><class>com.ibm.websphere.samples.daytrader.entities.AccountProfileDataBean</class><class>com.ibm.websphere.samples.daytrader.entities.HoldingDataBean</class><class>com.ibm.websphere.samples.daytrader.entities.OrderDataBean</class><class>com.ibm.websphere.samples.daytrader.entities.QuoteDataBean</class><exclude-unlisted-classes>true</exclude-unlisted-classes><shared-cache-mode>NONE</shared-cache-mode></persistence-unit>
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/WEB-INF/classes/META-INF/persistence.xml
+        message: ""
+        codeSnip: '26          '
+        lineNumber: 25
+        variables:
+          data: persistence
+          innerText: "\n\n    \n        \n        jdbc/TradeDataSource\n        \n
+            \       com.ibm.websphere.samples.daytrader.entities.AccountDataBean\n
+            \       com.ibm.websphere.samples.daytrader.entities.AccountProfileDataBean\n
+            \       com.ibm.websphere.samples.daytrader.entities.HoldingDataBean\n
+            \       com.ibm.websphere.samples.daytrader.entities.OrderDataBean\n        com.ibm.websphere.samples.daytrader.entities.QuoteDataBean\n
+            \       true\n        NONE\n    \n"
+          matchingXML: <persistence-unit transaction-type="JTA" name="daytrader"><jta-data-source>jdbc/TradeDataSource</jta-data-source><class>com.ibm.websphere.samples.daytrader.entities.AccountDataBean</class><class>com.ibm.websphere.samples.daytrader.entities.AccountProfileDataBean</class><class>com.ibm.websphere.samples.daytrader.entities.HoldingDataBean</class><class>com.ibm.websphere.samples.daytrader.entities.OrderDataBean</class><class>com.ibm.websphere.samples.daytrader.entities.QuoteDataBean</class><exclude-unlisted-classes>true</exclude-unlisted-classes><shared-cache-mode>NONE</shared-cache-mode></persistence-unit>
+    windup-discover-spring-configuration:
+      description: Spring XML Configuration
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - konveyor.io/target=discovery
+      - tag=Spring XML
+      incidents:
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/WEB-INF/beans.xml
+        message: ""
+        codeSnip: 18         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        lineNumber: 17
+        variables:
+          data: beans
+          innerText: |2+
+
+          matchingXML: ""
+    windup-discover-web-configuration:
+      description: Web XML Configuration
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - konveyor.io/target=discovery
+      - tag=Web XML
+      incidents:
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/WEB-INF/web.xml
+        message: ""
+        codeSnip: 22      <context-param>
+        lineNumber: 21
+        variables:
+          data: web-app
+          innerText: "\n    DayTrader Web\n    \n        javax.faces.PROJECT_STAGE\n
+            \       Production\n    \n    \n        javax.faces.STATE_SAVING_METHOD\n
+            \       server\n    \n    \n        javax.faces.DEFAULT_SUFFIX\n        .xhtml\n
+            \   \n           \n    \n        Faces Servlet\n        javax.faces.webapp.FacesServlet\n
+            \       -1\n        true\n        false\n    \n\n    \n        Faces Servlet\n
+            \       *.faces\n    \n\n    \n        30\n    \n    \n    \n    \tindex.html\n
+            \   \tindex.jsp\n    \tindex.faces\n    \n\n    \n        java.lang.Exception\n
+            \       /error.jsp\n    \n\n    \n        500\n        /error.jsp\n    \n
+            \   \n    \n    \n        ejb/TradeSLSBBeanRemote\n        Session\n                \n
+            \       com.ibm.websphere.samples.daytrader.ejb3.TradeSLSBRemote\n        TradeSLSBBean\n
+            \   \n    \n    \n        ejb/TradeSLSBBean\n        Session        \n
+            \       com.ibm.websphere.samples.daytrader.ejb3.TradeSLSBLocal\n        TradeSLSBBean\n
+            \   \n   \n    \n        jdbc/TradeDataSource\n        javax.sql.DataSource\n
+            \       Container\n        Shareable\n        jdbc/TradeDataSource\n    \n
+            \   \n        jms/QueueConnectionFactory\n        javax.jms.QueueConnectionFactory\n
+            \       Application\n        Shareable\n        jms/QueueConnectionFactory\n
+            \   \n    \n        jms/TopicConnectionFactory\n        javax.jms.TopicConnectionFactory\n
+            \       Application\n        Shareable\n        jms/TopicConnectionFactory\n
+            \    \n      \n    \n        jms/TradeBrokerQueue\n        javax.jms.Queue\n
+            \       Produces\n        daytrader-ee7-ejb#TradeBrokerQueue\n        jms/TradeBrokerQueue\n
+            \   \n    \n        jms/TradeStreamerTopic\n        javax.jms.Topic\n
+            \       Produces\n        daytrader-ee7-ejb#TradeStreamerTopic\n        jms/TradeStreamerTopic\n
+            \   \n\n    \n\n    \n\n    \n\n        testing\n\n    \n\n\n    \n\n
+            \       \n\t\t\ttesting\n            /*\n        \n\n        \n\n            testing\n\n
+            \       \n\n    \n\n\n    \n        \n            Constraint1\n        \n
+            \       \n            AllAuthd area\n            /*\n            GET\n
+            \           PUT\n            POST\n            DELETE\n        \n        \n
+            \           \n            \n            AllAuthenticated\n        \n    \n
+            \   \n        \n            Constraint2\n        \n        \n            Protected
+            Area\n            /daytrader/servlet/PingServlet2Session2Entity/*\n            \n
+            \           /servlet/PingServlet2Session2Entity/*\n            \n            /PingServlet2Session2Entity/*\n
+            \           /PingServlet2Session2Entity\n            GET\n            PUT\n
+            \           POST\n            DELETE\n        \n        \n            Protected
+            Area 2\n            /daytrader/servlet/TradeScenarioServlet/*\n            \n
+            \           /servlet/TradeScenarioServlet/*\n            /TradeScenarioServlet/*\n
+            \           TradeScenarioServlet\n            GET\n            PUT\n            POST\n
+            \           DELETE\n        \n        \n            Protected Area 3\n
+            \           /daytrader/servlet/TradeAppServlet/*\n            \n            /servlet/TradeAppServlet/*\n
+            \           /TradeAppServlet/*\n            /daytrader/app/*\n            /daytrader/app\n
+            \           /daytrader/*\n            /app\n            /*\n            GET\n
+            \           PUT\n            POST\n            DELETE\n        \n        \n
+            \           \n            \n            grp1\n            grp2\n            grp3\n
+            \           grp4\n            grp5\n            webSecOnly\n        \n
+            \   \n    \n        \n            All Authenticated Users\n        \n
+            \       AllAuthenticated\n    \n    \n        \n            Group 1\n
+            \       \n        grp1\n    \n    \n        \n            Group 2\n        \n
+            \       grp2\n    \n    \n        \n            Group 3\n        \n        grp3\n
+            \   \n    \n        \n            Group 4\n        \n        grp4\n    \n
+            \   \n        \n            Group 5\n        \n        grp5\n    \n    \n
+            \       \n            WebSecOnly\n        \n        webSecOnly\n    \n\n
+            \   \n\n        BASIC\n\n    \t    \n"
+          matchingXML: "<display-name>DayTrader Web</display-name><context-param><param-name>javax.faces.PROJECT_STAGE</param-name><param-value>Production</param-value></context-param><context-param><param-name>javax.faces.STATE_SAVING_METHOD</param-name><param-value>server</param-value></context-param><context-param><param-name>javax.faces.DEFAULT_SUFFIX</param-name><param-value>.xhtml</param-value></context-param><servlet><servlet-name>Faces
+            Servlet</servlet-name><servlet-class>javax.faces.webapp.FacesServlet</servlet-class><load-on-startup>-1</load-on-startup><enabled>true</enabled><async-supported>false</async-supported></servlet><servlet-mapping><servlet-name>Faces
+            Servlet</servlet-name><url-pattern>*.faces</url-pattern></servlet-mapping><session-config><session-timeout>30</session-timeout></session-config><welcome-file-list><welcome-file>index.html</welcome-file><welcome-file>index.jsp</welcome-file><welcome-file>index.faces</welcome-file></welcome-file-list><error-page><exception-type>java.lang.Exception</exception-type><location>/error.jsp</location></error-page><error-page><error-code>500</error-code><location>/error.jsp</location></error-page><ejb-ref><ejb-ref-name>ejb/TradeSLSBBeanRemote</ejb-ref-name><ejb-ref-type>Session</ejb-ref-type><home></home><remote>com.ibm.websphere.samples.daytrader.ejb3.TradeSLSBRemote</remote><ejb-link>TradeSLSBBean</ejb-link></ejb-ref><ejb-local-ref><ejb-ref-name>ejb/TradeSLSBBean</ejb-ref-name><ejb-ref-type>Session</ejb-ref-type><local>com.ibm.websphere.samples.daytrader.ejb3.TradeSLSBLocal</local><ejb-link>TradeSLSBBean</ejb-link></ejb-local-ref><resource-ref><res-ref-name>jdbc/TradeDataSource</res-ref-name><res-type>javax.sql.DataSource</res-type><res-auth>Container</res-auth><res-sharing-scope>Shareable</res-sharing-scope><lookup-name>jdbc/TradeDataSource</lookup-name></resource-ref><resource-ref><res-ref-name>jms/QueueConnectionFactory</res-ref-name><res-type>javax.jms.QueueConnectionFactory</res-type><res-auth>Application</res-auth><res-sharing-scope>Shareable</res-sharing-scope><lookup-name>jms/QueueConnectionFactory</lookup-name></resource-ref><resource-ref><res-ref-name>jms/TopicConnectionFactory</res-ref-name><res-type>javax.jms.TopicConnectionFactory</res-type><res-auth>Application</res-auth><res-sharing-scope>Shareable</res-sharing-scope><lookup-name>jms/TopicConnectionFactory</lookup-name></resource-ref><message-destination-ref><message-destination-ref-name>jms/TradeBrokerQueue</message-destination-ref-name><message-destination-type>javax.jms.Queue</message-destination-type><message-destination-usage>Produces</message-destination-usage><message-destination-link>daytrader-ee7-ejb#TradeBrokerQueue</message-destination-link><lookup-name>jms/TradeBrokerQueue</lookup-name></message-destination-ref><message-destination-ref><message-destination-ref-name>jms/TradeStreamerTopic</message-destination-ref-name><message-destination-type>javax.jms.Topic</message-destination-type><message-destination-usage>Produces</message-destination-usage><message-destination-link>daytrader-ee7-ejb#TradeStreamerTopic</message-destination-link><lookup-name>jms/TradeStreamerTopic</lookup-name></message-destination-ref><!--
+            JBOSS  \n    <resource-ref><res-ref-name>jdbc/TradeDataSource</res-ref-name><res-type>javax.sql.DataSource</res-type><res-auth>Container</res-auth><res-sharing-scope>Shareable</res-sharing-scope><lookup-name>java:/jdbc/TradeDataSource</lookup-name></resource-ref><resource-ref><res-ref-name>jms/QueueConnectionFactory</res-ref-name><res-type>javax.jms.QueueConnectionFactory</res-type><res-auth>Application</res-auth><res-sharing-scope>Shareable</res-sharing-scope><lookup-name>java:/jms/QueueConnectionFactory</lookup-name></resource-ref><resource-ref><res-ref-name>jms/TopicConnectionFactory</res-ref-name><res-type>javax.jms.TopicConnectionFactory</res-type><res-auth>Application</res-auth><res-sharing-scope>Shareable</res-sharing-scope><lookup-name>java:/jms/TopicConnectionFactory</lookup-name></resource-ref><message-destination-ref><message-destination-ref-name>jms/TradeBrokerQueue</message-destination-ref-name><message-destination-type>javax.jms.Queue</message-destination-type><message-destination-usage>Produces</message-destination-usage><message-destination-link>daytrader-ee7-ejb#TradeBrokerQueue</message-destination-link><lookup-name>java:/jms/TradeBrokerQueue</lookup-name></message-destination-ref><message-destination-ref><message-destination-ref-name>jms/TradeStreamerTopic</message-destination-ref-name><message-destination-type>javax.jms.Topic</message-destination-type><message-destination-usage>Produces</message-destination-usage><message-destination-link>daytrader-ee7-ejb#TradeStreamerTopic</message-destination-link><lookup-name>java:/jms/TradeStreamerTopic</lookup-name></message-destination-ref>\n
+            \   --><!-- BASIC SECURITY ROLES AND CONSTRAINTS --><security-role><role-name>testing</role-name></security-role><security-constraint><web-resource-collection><web-resource-name>testing</web-resource-name><url-pattern>/*</url-pattern></web-resource-collection><auth-constraint><role-name>testing</role-name></auth-constraint></security-constraint><security-constraint><display-name>\n
+            \           Constraint1\n        </display-name><web-resource-collection><web-resource-name>AllAuthd
+            area</web-resource-name><url-pattern>/*</url-pattern><http-method>GET</http-method><http-method>PUT</http-method><http-method>POST</http-method><http-method>DELETE</http-method></web-resource-collection><auth-constraint><description></description><role-name>AllAuthenticated</role-name></auth-constraint></security-constraint><security-constraint><display-name>\n
+            \           Constraint2\n        </display-name><web-resource-collection><web-resource-name>Protected
+            Area</web-resource-name><url-pattern>/daytrader/servlet/PingServlet2Session2Entity/*\n
+            \           </url-pattern><url-pattern>/servlet/PingServlet2Session2Entity/*\n
+            \           </url-pattern><url-pattern>/PingServlet2Session2Entity/*</url-pattern><url-pattern>/PingServlet2Session2Entity</url-pattern><http-method>GET</http-method><http-method>PUT</http-method><http-method>POST</http-method><http-method>DELETE</http-method></web-resource-collection><web-resource-collection><web-resource-name>Protected
+            Area 2</web-resource-name><url-pattern>/daytrader/servlet/TradeScenarioServlet/*\n
+            \           </url-pattern><url-pattern>/servlet/TradeScenarioServlet/*</url-pattern><url-pattern>/TradeScenarioServlet/*</url-pattern><url-pattern>TradeScenarioServlet</url-pattern><http-method>GET</http-method><http-method>PUT</http-method><http-method>POST</http-method><http-method>DELETE</http-method></web-resource-collection><web-resource-collection><web-resource-name>Protected
+            Area 3</web-resource-name><url-pattern>/daytrader/servlet/TradeAppServlet/*\n
+            \           </url-pattern><url-pattern>/servlet/TradeAppServlet/*</url-pattern><url-pattern>/TradeAppServlet/*</url-pattern><url-pattern>/daytrader/app/*</url-pattern><url-pattern>/daytrader/app</url-pattern><url-pattern>/daytrader/*</url-pattern><url-pattern>/app</url-pattern><url-pattern>/*</url-pattern><http-method>GET</http-method><http-method>PUT</http-method><http-method>POST</http-method><http-method>DELETE</http-method></web-resource-collection><auth-constraint><description></description><role-name>grp1</role-name><role-name>grp2</role-name><role-name>grp3</role-name><role-name>grp4</role-name><role-name>grp5</role-name><role-name>webSecOnly</role-name></auth-constraint></security-constraint><security-role><description>\n
+            \           All Authenticated Users\n        </description><role-name>AllAuthenticated</role-name></security-role><security-role><description>\n
+            \           Group 1\n        </description><role-name>grp1</role-name></security-role><security-role><description>\n
+            \           Group 2\n        </description><role-name>grp2</role-name></security-role><security-role><description>\n
+            \           Group 3\n        </description><role-name>grp3</role-name></security-role><security-role><description>\n
+            \           Group 4\n        </description><role-name>grp4</role-name></security-role><security-role><description>\n
+            \           Group 5\n        </description><role-name>grp5</role-name></security-role><security-role><description>\n
+            \           WebSecOnly\n        </description><role-name>webSecOnly</role-name></security-role><login-config><auth-method>BASIC</auth-method></login-config>"
+  unmatched:
+  - discover-license
+  - hardcoded-ip-address
 - name: eap8/eap7
   description: This ruleset provides analysis of Java EE applications that need to
     change certain CDI-related method calls.
@@ -1198,6 +1805,25 @@
 - name: quarkus/springboot
   description: This ruleset gives hints to migrate from SpringBoot devtools to Quarkus
   violations:
+    cdi-to-quarkus-00030:
+      description: '`beans.xml` descriptor content is ignored'
+      category: potential
+      labels:
+      - konveyor.io/source=java-ee
+      - konveyor.io/target=quarkus
+      incidents:
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/WEB-INF/beans.xml
+        message: "`beans.xml` descriptor content is ignored and it could be removed
+          from the application. \n Refer to the guide referenced below to check the
+          supported CDI feature in Quarkus."
+        codeSnip: 18         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        lineNumber: 17
+        variables:
+          data: beans
+          innerText: |2+
+
+          matchingXML: ""
+      effort: 3
     cdi-to-quarkus-00040:
       description: '@Produces annotation no longer required'
       category: potential
@@ -2448,6 +3074,850 @@
       - url: https://quarkus.io/guides/cdi-reference
         title: Quarkus CDI reference
       effort: 3
+    javaee-pom-to-quarkus-00000:
+      description: The expected project artifact's extension is `jar`
+      category: mandatory
+      labels:
+      - konveyor.io/source=java-ee
+      - konveyor.io/target=quarkus
+      incidents:
+      - uri: file:///source/daytrader-ee7-web/pom.xml
+        message: The expected value of the pom's artifact element should be jar
+        codeSnip: 7    <name>WAS Liberty Sample - Java EE7 Benchmark Sample - Web
+          Module</name>
+        lineNumber: 6
+        variables:
+          data: war
+          innerText: war
+          matchingXML: ""
+      - uri: file:///source/daytrader-ee7/pom.xml
+        message: The expected value of the pom's artifact element should be jar
+        codeSnip: 32     <artifactId>daytrader-ee7</artifactId>
+        lineNumber: 31
+        variables:
+          data: ear
+          innerText: ear
+          matchingXML: ""
+      - uri: file:///source/pom.xml
+        message: The expected value of the pom's artifact element should be jar
+        codeSnip: 10      <version>1.0-SNAPSHOT</version>
+        lineNumber: 9
+        variables:
+          data: pom
+          innerText: pom
+          matchingXML: ""
+      links:
+      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven;
+        title: Quarkus - Guide;
+      effort: 1
+    javaee-pom-to-quarkus-00010:
+      description: Adopt Quarkus BOM
+      category: mandatory
+      labels:
+      - konveyor.io/source=java-ee
+      - konveyor.io/target=quarkus
+      incidents:
+      - uri: file:///source/daytrader-ee7-ejb/pom.xml
+        message: "Use the Quarkus BOM to omit the version of the different Quarkus
+          dependencies. \n Add the following sections to the `pom.xml` file: \n\n
+          ```xml\n <properties> \n <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
+          \n <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
+          \n <quarkus.platform.version>3.1.0.Final</quarkus.platform.version>\n </properties>
+          \n <dependencyManagement> \n <dependencies> \n <dependency> \n <groupId>${quarkus.platform.group-id}</groupId>
+          \n <artifactId>${quarkus.platform.artifact-id}</artifactId> \n <version>${quarkus.platform.version}</version>
+          \n <type>pom</type> \n <scope>import</scope> \n </dependency> \n </dependencies>
+          \n </dependencyManagement> \n ```\n Check the latest Quarkus version available
+          from the `Quarkus - Releases` link below."
+        codeSnip: 4    <groupId>net.wasdev.wlp.sample</groupId>
+        lineNumber: 3
+        variables:
+          data: project
+          innerText: "\n  4.0.0\n  net.wasdev.wlp.sample\n  jar\n  WAS Liberty Sample
+            - Java EE7 Benchmark Sample - EJB Module\n  daytrader-ee7-ejb\n  1.0-SNAPSHOT\n\n
+            \ \n    UTF-8\n    UTF-8\n    1.8\n    1.8\n  \n\n  \n    \n      javax\n
+            \     javaee-api\n      7.0\n      provided\n    \n    \n      javax.annotation\n
+            \     javax.annotation-api\n      1.3.2\n      provided\n    \n  \n"
+          matchingXML: <modelVersion>4.0.0</modelVersion><groupId>net.wasdev.wlp.sample</groupId><packaging>jar</packaging><name>WAS
+            Liberty Sample - Java EE7 Benchmark Sample - EJB Module</name><artifactId>daytrader-ee7-ejb</artifactId><version>1.0-SNAPSHOT</version><properties><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding><maven.compiler.source>1.8</maven.compiler.source><maven.compiler.target>1.8</maven.compiler.target></properties><dependencies><dependency><groupId>javax</groupId><artifactId>javaee-api</artifactId><version>7.0</version><scope>provided</scope></dependency><dependency><groupId>javax.annotation</groupId><artifactId>javax.annotation-api</artifactId><version>1.3.2</version><scope>provided</scope></dependency></dependencies>
+      - uri: file:///source/daytrader-ee7-web/pom.xml
+        message: "Use the Quarkus BOM to omit the version of the different Quarkus
+          dependencies. \n Add the following sections to the `pom.xml` file: \n\n
+          ```xml\n <properties> \n <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
+          \n <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
+          \n <quarkus.platform.version>3.1.0.Final</quarkus.platform.version>\n </properties>
+          \n <dependencyManagement> \n <dependencies> \n <dependency> \n <groupId>${quarkus.platform.group-id}</groupId>
+          \n <artifactId>${quarkus.platform.artifact-id}</artifactId> \n <version>${quarkus.platform.version}</version>
+          \n <type>pom</type> \n <scope>import</scope> \n </dependency> \n </dependencies>
+          \n </dependencyManagement> \n ```\n Check the latest Quarkus version available
+          from the `Quarkus - Releases` link below."
+        codeSnip: 4    <groupId>net.wasdev.wlp.sample</groupId>
+        lineNumber: 3
+        variables:
+          data: project
+          innerText: "\n  4.0.0\n  net.wasdev.wlp.sample\n\n  war\n  WAS Liberty Sample
+            - Java EE7 Benchmark Sample - Web Module\n  daytrader-ee7-web\n  1.0-SNAPSHOT\n\n
+            \ \n    UTF-8\n    UTF-8\n    1.8\n    1.8\n  \n\n  \n    \n      javax\n
+            \     javaee-api\n      7.0\n      provided\n    \n    \n      taglibs\n
+            \     standard\n      1.1.1\n      compile\n    \n    \n      javax.annotation\n
+            \     javax.annotation-api\n      1.3.2\n      provided\n    \n    \n
+            \     net.wasdev.wlp.sample\n      daytrader-ee7-ejb\n      1.0-SNAPSHOT\n
+            \     jar\n      provided\n    \n  \n"
+          matchingXML: <modelVersion>4.0.0</modelVersion><groupId>net.wasdev.wlp.sample</groupId><packaging>war</packaging><name>WAS
+            Liberty Sample - Java EE7 Benchmark Sample - Web Module</name><artifactId>daytrader-ee7-web</artifactId><version>1.0-SNAPSHOT</version><properties><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding><maven.compiler.source>1.8</maven.compiler.source><maven.compiler.target>1.8</maven.compiler.target></properties><dependencies><dependency><groupId>javax</groupId><artifactId>javaee-api</artifactId><version>7.0</version><scope>provided</scope></dependency><dependency><groupId>taglibs</groupId><artifactId>standard</artifactId><version>1.1.1</version><scope>compile</scope></dependency><dependency><groupId>javax.annotation</groupId><artifactId>javax.annotation-api</artifactId><version>1.3.2</version><scope>provided</scope></dependency><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-ejb</artifactId><version>1.0-SNAPSHOT</version><type>jar</type><scope>provided</scope></dependency></dependencies>
+      - uri: file:///source/daytrader-ee7/pom.xml
+        message: "Use the Quarkus BOM to omit the version of the different Quarkus
+          dependencies. \n Add the following sections to the `pom.xml` file: \n\n
+          ```xml\n <properties> \n <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
+          \n <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
+          \n <quarkus.platform.version>3.1.0.Final</quarkus.platform.version>\n </properties>
+          \n <dependencyManagement> \n <dependencies> \n <dependency> \n <groupId>${quarkus.platform.group-id}</groupId>
+          \n <artifactId>${quarkus.platform.artifact-id}</artifactId> \n <version>${quarkus.platform.version}</version>
+          \n <type>pom</type> \n <scope>import</scope> \n </dependency> \n </dependencies>
+          \n </dependencyManagement> \n ```\n Check the latest Quarkus version available
+          from the `Quarkus - Releases` link below."
+        codeSnip: '5  '
+        lineNumber: 4
+        variables:
+          data: project
+          innerText: "\n   4.0.0\n\n   \n      net.wasdev.wlp.sample\n      daytrader7\n
+            \     1.0-SNAPSHOT\n   \n\n   WAS Liberty Sample - Java EE7 Benchmark
+            Sample - EAR\n\n   \n      \n      9082\n      false\n      UTF-8\n      UTF-8\n
+            \     1.8\n      1.8\n      \n      10.14.2.0\n      ${user.home}/.m2/repository/org/apache/derby/derby\n
+            \     \n      9080\n      9443\n   \n\n   ear\n   daytrader-ee7\n   1.0-SNAPSHOT\n\n
+            \  \n      \n         net.wasdev.wlp.sample\n         daytrader-ee7-ejb\n
+            \        1.0-SNAPSHOT\n         ejb\n      \n      \n         net.wasdev.wlp.sample\n
+            \        daytrader-ee7-web\n         1.0-SNAPSHOT\n         war\n      \n
+            \     \n\n      \n         org.apache.derby\n         derby\n         ${version.derby}\n
+            \        test\n      \n   \n\n   \n      ${project.artifactId}\n      \n
+            \        \n            org.apache.maven.plugins\n            maven-compiler-plugin\n
+            \           3.11.0\n         \n         \n            \n            org.apache.maven.plugins\n
+            \           maven-ear-plugin\n            3.0.2\n            \n               7\n
+            \              \n                  \n                     net.wasdev.wlp.sample\n
+            \                    daytrader-ee7-web\n                     /daytrader-ee7-web.war\n
+            \                    /daytrader\n                  \n                  \n
+            \                    net.wasdev.wlp.sample\n                     daytrader-ee7-ejb\n
+            \                    /daytrader-ee7-ejb.jar\n                  \n               \n
+            \           \n         \n         \n            io.openliberty.tools\n
+            \           liberty-maven-plugin\n            3.3.4\n            \n               \n
+            \                 ${testServerHttpPort}\n                  ${testServerHttpsPort}\n
+            \              \n            \n         \n         \n            org.apache.maven.plugins\n
+            \           maven-dependency-plugin\n            3.1.2\n            \n
+            \              \n                  copy-derby-dependency\n                  package\n
+            \                 \n                     copy-dependencies\n                  \n
+            \                 \n                     derby\n                     \n
+            \                       ${project.build.directory}/liberty/wlp/usr/shared/resources/DerbyLibs/\n
+            \                 \n               \n            \n         \n         \n
+            \           maven-resources-plugin\n            2.6\n            \n               \n
+            \                 copy-resources\n                  package\n                  \n
+            \                    copy-resources\n                  \n                  \n
+            \                    \n                        ${project.build.directory}/liberty/wlp/usr/shared/resources/data\n
+            \                    \n                        \n                           resources/data\n
+            \                          false\n                        \n                     \n
+            \                 \n               \n            \n         \n      \n
+            \  \n\n"
+          matchingXML: "<modelVersion>4.0.0</modelVersion><parent><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader7</artifactId><version>1.0-SNAPSHOT</version></parent><name>WAS
+            Liberty Sample - Java EE7 Benchmark Sample - EAR</name><properties><!--
+            Update this to match the port number in the websocketSample server.xml\r\n
+            \       This is needed to run the tests --><libertyTestPort>9082</libertyTestPort><skipFVT>false</skipFVT><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding><maven.compiler.source>1.8</maven.compiler.source><maven.compiler.target>1.8</maven.compiler.target><!--
+            Derby library --><version.derby>10.14.2.0</version.derby><derby.path>${user.home}/.m2/repository/org/apache/derby/derby</derby.path><!--
+            Liberty configuration --><testServerHttpPort>9080</testServerHttpPort><testServerHttpsPort>9443</testServerHttpsPort></properties><packaging>ear</packaging><artifactId>daytrader-ee7</artifactId><version>1.0-SNAPSHOT</version><dependencies><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-ejb</artifactId><version>1.0-SNAPSHOT</version><type>ejb</type></dependency><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-web</artifactId><version>1.0-SNAPSHOT</version><type>war</type></dependency><!--
+            Derby from https://mvnrepository.com/artifact/org.apache.derby/derby --><dependency><groupId>org.apache.derby</groupId><artifactId>derby</artifactId><version>${version.derby}</version><scope>test</scope></dependency></dependencies><build><finalName>${project.artifactId}</finalName><plugins><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>3.11.0</version></plugin><plugin><?m2e
+            ignore?><groupId>org.apache.maven.plugins</groupId><artifactId>maven-ear-plugin</artifactId><version>3.0.2</version><configuration><version>7</version><modules><webModule><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-web</artifactId><uri>/daytrader-ee7-web.war</uri><contextRoot>/daytrader</contextRoot></webModule><ejbModule><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-ejb</artifactId><uri>/daytrader-ee7-ejb.jar</uri></ejbModule></modules></configuration></plugin><plugin><groupId>io.openliberty.tools</groupId><artifactId>liberty-maven-plugin</artifactId><version>3.3.4</version><configuration><bootstrapProperties><default.http.port>${testServerHttpPort}</default.http.port><default.https.port>${testServerHttpsPort}</default.https.port></bootstrapProperties></configuration></plugin><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-dependency-plugin</artifactId><version>3.1.2</version><executions><execution><id>copy-derby-dependency</id><phase>package</phase><goals><goal>copy-dependencies</goal></goals><configuration><includeArtifactIds>derby</includeArtifactIds><outputDirectory>\n
+            \                       ${project.build.directory}/liberty/wlp/usr/shared/resources/DerbyLibs/</outputDirectory></configuration></execution></executions></plugin><plugin><artifactId>maven-resources-plugin</artifactId><version>2.6</version><executions><execution><id>copy-resources</id><phase>package</phase><goals><goal>copy-resources</goal></goals><configuration><outputDirectory>\n
+            \                       ${project.build.directory}/liberty/wlp/usr/shared/resources/data</outputDirectory><resources><resource><directory>resources/data</directory><filtering>false</filtering></resource></resources></configuration></execution></executions></plugin></plugins></build>"
+      - uri: file:///source/pom.xml
+        message: "Use the Quarkus BOM to omit the version of the different Quarkus
+          dependencies. \n Add the following sections to the `pom.xml` file: \n\n
+          ```xml\n <properties> \n <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
+          \n <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
+          \n <quarkus.platform.version>3.1.0.Final</quarkus.platform.version>\n </properties>
+          \n <dependencyManagement> \n <dependencies> \n <dependency> \n <groupId>${quarkus.platform.group-id}</groupId>
+          \n <artifactId>${quarkus.platform.artifact-id}</artifactId> \n <version>${quarkus.platform.version}</version>
+          \n <type>pom</type> \n <scope>import</scope> \n </dependency> \n </dependencies>
+          \n </dependencyManagement> \n ```\n Check the latest Quarkus version available
+          from the `Quarkus - Releases` link below."
+        codeSnip: '6  '
+        lineNumber: 5
+        variables:
+          data: project
+          innerText: "\n    4.0.0\n\n    net.wasdev.wlp.sample\n    daytrader7\n    pom\n
+            \   1.0-SNAPSHOT\n    WAS Liberty Sample - Java EE7 Benchmark Sample\n\n
+            \   \n        \n            The Apache Software License, Version 2.0\n
+            \           https://raw.github.com/WASdev/sample.daytrader7/master/LICENSE\n
+            \           repo\n        \n    \n    \n    \n\t\tdaytrader-ee7-ejb\n\t\tdaytrader-ee7-web\n\t\tdaytrader-ee7\n
+            \   \n"
+          matchingXML: <modelVersion>4.0.0</modelVersion><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader7</artifactId><packaging>pom</packaging><version>1.0-SNAPSHOT</version><name>WAS
+            Liberty Sample - Java EE7 Benchmark Sample</name><licenses><license><name>The
+            Apache Software License, Version 2.0</name><url>https://raw.github.com/WASdev/sample.daytrader7/master/LICENSE</url><distribution>repo</distribution></license></licenses><modules><module>daytrader-ee7-ejb</module><module>daytrader-ee7-web</module><module>daytrader-ee7</module></modules>
+      links:
+      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven;
+        title: Quarkus - Guide;
+      - url: https://quarkus.io/blog/tag/release/
+        title: Quarkus - Releases
+      effort: 1
+    javaee-pom-to-quarkus-00020:
+      description: Adopt Quarkus Maven plugin
+      category: mandatory
+      labels:
+      - konveyor.io/source=java-ee
+      - konveyor.io/target=quarkus
+      incidents:
+      - uri: file:///source/daytrader-ee7-ejb/pom.xml
+        message: "Use the Quarkus Maven plugin adding the following sections to the
+          `pom.xml` file: \n\n ```xml\n <properties> \n <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
+          \n <quarkus.platform.version>3.1.0.Final</quarkus.platform.version>\n </properties>
+          \n <build>\n <plugins>\n <plugin>\n <groupId>${quarkus.platform.group-id}</groupId>\n
+          <artifactId>quarkus-maven-plugin</artifactId>\n <version>${quarkus.platform.version}</version>\n
+          <extensions>true</extensions>\n <executions>\n <execution>\n <goals>\n <goal>build</goal>\n
+          <goal>generate-code</goal>\n <goal>generate-code-tests</goal>\n </goals>\n
+          </execution>\n </executions>\n </plugin>\n </plugins>\n </build>\n ```"
+        codeSnip: 4    <groupId>net.wasdev.wlp.sample</groupId>
+        lineNumber: 3
+        variables:
+          data: project
+          innerText: "\n  4.0.0\n  net.wasdev.wlp.sample\n  jar\n  WAS Liberty Sample
+            - Java EE7 Benchmark Sample - EJB Module\n  daytrader-ee7-ejb\n  1.0-SNAPSHOT\n\n
+            \ \n    UTF-8\n    UTF-8\n    1.8\n    1.8\n  \n\n  \n    \n      javax\n
+            \     javaee-api\n      7.0\n      provided\n    \n    \n      javax.annotation\n
+            \     javax.annotation-api\n      1.3.2\n      provided\n    \n  \n"
+          matchingXML: <modelVersion>4.0.0</modelVersion><groupId>net.wasdev.wlp.sample</groupId><packaging>jar</packaging><name>WAS
+            Liberty Sample - Java EE7 Benchmark Sample - EJB Module</name><artifactId>daytrader-ee7-ejb</artifactId><version>1.0-SNAPSHOT</version><properties><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding><maven.compiler.source>1.8</maven.compiler.source><maven.compiler.target>1.8</maven.compiler.target></properties><dependencies><dependency><groupId>javax</groupId><artifactId>javaee-api</artifactId><version>7.0</version><scope>provided</scope></dependency><dependency><groupId>javax.annotation</groupId><artifactId>javax.annotation-api</artifactId><version>1.3.2</version><scope>provided</scope></dependency></dependencies>
+      - uri: file:///source/daytrader-ee7-web/pom.xml
+        message: "Use the Quarkus Maven plugin adding the following sections to the
+          `pom.xml` file: \n\n ```xml\n <properties> \n <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
+          \n <quarkus.platform.version>3.1.0.Final</quarkus.platform.version>\n </properties>
+          \n <build>\n <plugins>\n <plugin>\n <groupId>${quarkus.platform.group-id}</groupId>\n
+          <artifactId>quarkus-maven-plugin</artifactId>\n <version>${quarkus.platform.version}</version>\n
+          <extensions>true</extensions>\n <executions>\n <execution>\n <goals>\n <goal>build</goal>\n
+          <goal>generate-code</goal>\n <goal>generate-code-tests</goal>\n </goals>\n
+          </execution>\n </executions>\n </plugin>\n </plugins>\n </build>\n ```"
+        codeSnip: 4    <groupId>net.wasdev.wlp.sample</groupId>
+        lineNumber: 3
+        variables:
+          data: project
+          innerText: "\n  4.0.0\n  net.wasdev.wlp.sample\n\n  war\n  WAS Liberty Sample
+            - Java EE7 Benchmark Sample - Web Module\n  daytrader-ee7-web\n  1.0-SNAPSHOT\n\n
+            \ \n    UTF-8\n    UTF-8\n    1.8\n    1.8\n  \n\n  \n    \n      javax\n
+            \     javaee-api\n      7.0\n      provided\n    \n    \n      taglibs\n
+            \     standard\n      1.1.1\n      compile\n    \n    \n      javax.annotation\n
+            \     javax.annotation-api\n      1.3.2\n      provided\n    \n    \n
+            \     net.wasdev.wlp.sample\n      daytrader-ee7-ejb\n      1.0-SNAPSHOT\n
+            \     jar\n      provided\n    \n  \n"
+          matchingXML: <modelVersion>4.0.0</modelVersion><groupId>net.wasdev.wlp.sample</groupId><packaging>war</packaging><name>WAS
+            Liberty Sample - Java EE7 Benchmark Sample - Web Module</name><artifactId>daytrader-ee7-web</artifactId><version>1.0-SNAPSHOT</version><properties><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding><maven.compiler.source>1.8</maven.compiler.source><maven.compiler.target>1.8</maven.compiler.target></properties><dependencies><dependency><groupId>javax</groupId><artifactId>javaee-api</artifactId><version>7.0</version><scope>provided</scope></dependency><dependency><groupId>taglibs</groupId><artifactId>standard</artifactId><version>1.1.1</version><scope>compile</scope></dependency><dependency><groupId>javax.annotation</groupId><artifactId>javax.annotation-api</artifactId><version>1.3.2</version><scope>provided</scope></dependency><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-ejb</artifactId><version>1.0-SNAPSHOT</version><type>jar</type><scope>provided</scope></dependency></dependencies>
+      - uri: file:///source/daytrader-ee7/pom.xml
+        message: "Use the Quarkus Maven plugin adding the following sections to the
+          `pom.xml` file: \n\n ```xml\n <properties> \n <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
+          \n <quarkus.platform.version>3.1.0.Final</quarkus.platform.version>\n </properties>
+          \n <build>\n <plugins>\n <plugin>\n <groupId>${quarkus.platform.group-id}</groupId>\n
+          <artifactId>quarkus-maven-plugin</artifactId>\n <version>${quarkus.platform.version}</version>\n
+          <extensions>true</extensions>\n <executions>\n <execution>\n <goals>\n <goal>build</goal>\n
+          <goal>generate-code</goal>\n <goal>generate-code-tests</goal>\n </goals>\n
+          </execution>\n </executions>\n </plugin>\n </plugins>\n </build>\n ```"
+        codeSnip: '5  '
+        lineNumber: 4
+        variables:
+          data: project
+          innerText: "\n   4.0.0\n\n   \n      net.wasdev.wlp.sample\n      daytrader7\n
+            \     1.0-SNAPSHOT\n   \n\n   WAS Liberty Sample - Java EE7 Benchmark
+            Sample - EAR\n\n   \n      \n      9082\n      false\n      UTF-8\n      UTF-8\n
+            \     1.8\n      1.8\n      \n      10.14.2.0\n      ${user.home}/.m2/repository/org/apache/derby/derby\n
+            \     \n      9080\n      9443\n   \n\n   ear\n   daytrader-ee7\n   1.0-SNAPSHOT\n\n
+            \  \n      \n         net.wasdev.wlp.sample\n         daytrader-ee7-ejb\n
+            \        1.0-SNAPSHOT\n         ejb\n      \n      \n         net.wasdev.wlp.sample\n
+            \        daytrader-ee7-web\n         1.0-SNAPSHOT\n         war\n      \n
+            \     \n\n      \n         org.apache.derby\n         derby\n         ${version.derby}\n
+            \        test\n      \n   \n\n   \n      ${project.artifactId}\n      \n
+            \        \n            org.apache.maven.plugins\n            maven-compiler-plugin\n
+            \           3.11.0\n         \n         \n            \n            org.apache.maven.plugins\n
+            \           maven-ear-plugin\n            3.0.2\n            \n               7\n
+            \              \n                  \n                     net.wasdev.wlp.sample\n
+            \                    daytrader-ee7-web\n                     /daytrader-ee7-web.war\n
+            \                    /daytrader\n                  \n                  \n
+            \                    net.wasdev.wlp.sample\n                     daytrader-ee7-ejb\n
+            \                    /daytrader-ee7-ejb.jar\n                  \n               \n
+            \           \n         \n         \n            io.openliberty.tools\n
+            \           liberty-maven-plugin\n            3.3.4\n            \n               \n
+            \                 ${testServerHttpPort}\n                  ${testServerHttpsPort}\n
+            \              \n            \n         \n         \n            org.apache.maven.plugins\n
+            \           maven-dependency-plugin\n            3.1.2\n            \n
+            \              \n                  copy-derby-dependency\n                  package\n
+            \                 \n                     copy-dependencies\n                  \n
+            \                 \n                     derby\n                     \n
+            \                       ${project.build.directory}/liberty/wlp/usr/shared/resources/DerbyLibs/\n
+            \                 \n               \n            \n         \n         \n
+            \           maven-resources-plugin\n            2.6\n            \n               \n
+            \                 copy-resources\n                  package\n                  \n
+            \                    copy-resources\n                  \n                  \n
+            \                    \n                        ${project.build.directory}/liberty/wlp/usr/shared/resources/data\n
+            \                    \n                        \n                           resources/data\n
+            \                          false\n                        \n                     \n
+            \                 \n               \n            \n         \n      \n
+            \  \n\n"
+          matchingXML: "<modelVersion>4.0.0</modelVersion><parent><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader7</artifactId><version>1.0-SNAPSHOT</version></parent><name>WAS
+            Liberty Sample - Java EE7 Benchmark Sample - EAR</name><properties><!--
+            Update this to match the port number in the websocketSample server.xml\r\n
+            \       This is needed to run the tests --><libertyTestPort>9082</libertyTestPort><skipFVT>false</skipFVT><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding><maven.compiler.source>1.8</maven.compiler.source><maven.compiler.target>1.8</maven.compiler.target><!--
+            Derby library --><version.derby>10.14.2.0</version.derby><derby.path>${user.home}/.m2/repository/org/apache/derby/derby</derby.path><!--
+            Liberty configuration --><testServerHttpPort>9080</testServerHttpPort><testServerHttpsPort>9443</testServerHttpsPort></properties><packaging>ear</packaging><artifactId>daytrader-ee7</artifactId><version>1.0-SNAPSHOT</version><dependencies><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-ejb</artifactId><version>1.0-SNAPSHOT</version><type>ejb</type></dependency><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-web</artifactId><version>1.0-SNAPSHOT</version><type>war</type></dependency><!--
+            Derby from https://mvnrepository.com/artifact/org.apache.derby/derby --><dependency><groupId>org.apache.derby</groupId><artifactId>derby</artifactId><version>${version.derby}</version><scope>test</scope></dependency></dependencies><build><finalName>${project.artifactId}</finalName><plugins><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>3.11.0</version></plugin><plugin><?m2e
+            ignore?><groupId>org.apache.maven.plugins</groupId><artifactId>maven-ear-plugin</artifactId><version>3.0.2</version><configuration><version>7</version><modules><webModule><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-web</artifactId><uri>/daytrader-ee7-web.war</uri><contextRoot>/daytrader</contextRoot></webModule><ejbModule><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-ejb</artifactId><uri>/daytrader-ee7-ejb.jar</uri></ejbModule></modules></configuration></plugin><plugin><groupId>io.openliberty.tools</groupId><artifactId>liberty-maven-plugin</artifactId><version>3.3.4</version><configuration><bootstrapProperties><default.http.port>${testServerHttpPort}</default.http.port><default.https.port>${testServerHttpsPort}</default.https.port></bootstrapProperties></configuration></plugin><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-dependency-plugin</artifactId><version>3.1.2</version><executions><execution><id>copy-derby-dependency</id><phase>package</phase><goals><goal>copy-dependencies</goal></goals><configuration><includeArtifactIds>derby</includeArtifactIds><outputDirectory>\n
+            \                       ${project.build.directory}/liberty/wlp/usr/shared/resources/DerbyLibs/</outputDirectory></configuration></execution></executions></plugin><plugin><artifactId>maven-resources-plugin</artifactId><version>2.6</version><executions><execution><id>copy-resources</id><phase>package</phase><goals><goal>copy-resources</goal></goals><configuration><outputDirectory>\n
+            \                       ${project.build.directory}/liberty/wlp/usr/shared/resources/data</outputDirectory><resources><resource><directory>resources/data</directory><filtering>false</filtering></resource></resources></configuration></execution></executions></plugin></plugins></build>"
+      - uri: file:///source/pom.xml
+        message: "Use the Quarkus Maven plugin adding the following sections to the
+          `pom.xml` file: \n\n ```xml\n <properties> \n <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
+          \n <quarkus.platform.version>3.1.0.Final</quarkus.platform.version>\n </properties>
+          \n <build>\n <plugins>\n <plugin>\n <groupId>${quarkus.platform.group-id}</groupId>\n
+          <artifactId>quarkus-maven-plugin</artifactId>\n <version>${quarkus.platform.version}</version>\n
+          <extensions>true</extensions>\n <executions>\n <execution>\n <goals>\n <goal>build</goal>\n
+          <goal>generate-code</goal>\n <goal>generate-code-tests</goal>\n </goals>\n
+          </execution>\n </executions>\n </plugin>\n </plugins>\n </build>\n ```"
+        codeSnip: '6  '
+        lineNumber: 5
+        variables:
+          data: project
+          innerText: "\n    4.0.0\n\n    net.wasdev.wlp.sample\n    daytrader7\n    pom\n
+            \   1.0-SNAPSHOT\n    WAS Liberty Sample - Java EE7 Benchmark Sample\n\n
+            \   \n        \n            The Apache Software License, Version 2.0\n
+            \           https://raw.github.com/WASdev/sample.daytrader7/master/LICENSE\n
+            \           repo\n        \n    \n    \n    \n\t\tdaytrader-ee7-ejb\n\t\tdaytrader-ee7-web\n\t\tdaytrader-ee7\n
+            \   \n"
+          matchingXML: <modelVersion>4.0.0</modelVersion><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader7</artifactId><packaging>pom</packaging><version>1.0-SNAPSHOT</version><name>WAS
+            Liberty Sample - Java EE7 Benchmark Sample</name><licenses><license><name>The
+            Apache Software License, Version 2.0</name><url>https://raw.github.com/WASdev/sample.daytrader7/master/LICENSE</url><distribution>repo</distribution></license></licenses><modules><module>daytrader-ee7-ejb</module><module>daytrader-ee7-web</module><module>daytrader-ee7</module></modules>
+      links:
+      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven;
+        title: Quarkus - Guide;
+      effort: 1
+    javaee-pom-to-quarkus-00030:
+      description: Adopt Maven Compiler plugin
+      category: mandatory
+      labels:
+      - konveyor.io/source=java-ee
+      - konveyor.io/target=quarkus
+      incidents:
+      - uri: file:///source/daytrader-ee7-ejb/pom.xml
+        message: "Use the Maven Compiler plugin adding the following sections to the
+          `pom.xml` file: \n\n ```xml\n <properties> \n <compiler-plugin.version>3.10.1</compiler-plugin.version>\n
+          <maven.compiler.release>11</maven.compiler.release>\n </properties> \n <build>\n
+          <plugins>\n <plugin>\n <artifactId>maven-compiler-plugin</artifactId>\n
+          <version>${compiler-plugin.version}</version>\n <configuration>\n <compilerArgs>\n
+          <arg>-parameters</arg>\n </compilerArgs>\n </configuration>\n </plugin>\n
+          </plugins>\n </build>\n ```"
+        codeSnip: 4    <groupId>net.wasdev.wlp.sample</groupId>
+        lineNumber: 3
+        variables:
+          data: project
+          innerText: "\n  4.0.0\n  net.wasdev.wlp.sample\n  jar\n  WAS Liberty Sample
+            - Java EE7 Benchmark Sample - EJB Module\n  daytrader-ee7-ejb\n  1.0-SNAPSHOT\n\n
+            \ \n    UTF-8\n    UTF-8\n    1.8\n    1.8\n  \n\n  \n    \n      javax\n
+            \     javaee-api\n      7.0\n      provided\n    \n    \n      javax.annotation\n
+            \     javax.annotation-api\n      1.3.2\n      provided\n    \n  \n"
+          matchingXML: <modelVersion>4.0.0</modelVersion><groupId>net.wasdev.wlp.sample</groupId><packaging>jar</packaging><name>WAS
+            Liberty Sample - Java EE7 Benchmark Sample - EJB Module</name><artifactId>daytrader-ee7-ejb</artifactId><version>1.0-SNAPSHOT</version><properties><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding><maven.compiler.source>1.8</maven.compiler.source><maven.compiler.target>1.8</maven.compiler.target></properties><dependencies><dependency><groupId>javax</groupId><artifactId>javaee-api</artifactId><version>7.0</version><scope>provided</scope></dependency><dependency><groupId>javax.annotation</groupId><artifactId>javax.annotation-api</artifactId><version>1.3.2</version><scope>provided</scope></dependency></dependencies>
+      - uri: file:///source/daytrader-ee7-web/pom.xml
+        message: "Use the Maven Compiler plugin adding the following sections to the
+          `pom.xml` file: \n\n ```xml\n <properties> \n <compiler-plugin.version>3.10.1</compiler-plugin.version>\n
+          <maven.compiler.release>11</maven.compiler.release>\n </properties> \n <build>\n
+          <plugins>\n <plugin>\n <artifactId>maven-compiler-plugin</artifactId>\n
+          <version>${compiler-plugin.version}</version>\n <configuration>\n <compilerArgs>\n
+          <arg>-parameters</arg>\n </compilerArgs>\n </configuration>\n </plugin>\n
+          </plugins>\n </build>\n ```"
+        codeSnip: 4    <groupId>net.wasdev.wlp.sample</groupId>
+        lineNumber: 3
+        variables:
+          data: project
+          innerText: "\n  4.0.0\n  net.wasdev.wlp.sample\n\n  war\n  WAS Liberty Sample
+            - Java EE7 Benchmark Sample - Web Module\n  daytrader-ee7-web\n  1.0-SNAPSHOT\n\n
+            \ \n    UTF-8\n    UTF-8\n    1.8\n    1.8\n  \n\n  \n    \n      javax\n
+            \     javaee-api\n      7.0\n      provided\n    \n    \n      taglibs\n
+            \     standard\n      1.1.1\n      compile\n    \n    \n      javax.annotation\n
+            \     javax.annotation-api\n      1.3.2\n      provided\n    \n    \n
+            \     net.wasdev.wlp.sample\n      daytrader-ee7-ejb\n      1.0-SNAPSHOT\n
+            \     jar\n      provided\n    \n  \n"
+          matchingXML: <modelVersion>4.0.0</modelVersion><groupId>net.wasdev.wlp.sample</groupId><packaging>war</packaging><name>WAS
+            Liberty Sample - Java EE7 Benchmark Sample - Web Module</name><artifactId>daytrader-ee7-web</artifactId><version>1.0-SNAPSHOT</version><properties><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding><maven.compiler.source>1.8</maven.compiler.source><maven.compiler.target>1.8</maven.compiler.target></properties><dependencies><dependency><groupId>javax</groupId><artifactId>javaee-api</artifactId><version>7.0</version><scope>provided</scope></dependency><dependency><groupId>taglibs</groupId><artifactId>standard</artifactId><version>1.1.1</version><scope>compile</scope></dependency><dependency><groupId>javax.annotation</groupId><artifactId>javax.annotation-api</artifactId><version>1.3.2</version><scope>provided</scope></dependency><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-ejb</artifactId><version>1.0-SNAPSHOT</version><type>jar</type><scope>provided</scope></dependency></dependencies>
+      - uri: file:///source/daytrader-ee7/pom.xml
+        message: "Use the Maven Compiler plugin adding the following sections to the
+          `pom.xml` file: \n\n ```xml\n <properties> \n <compiler-plugin.version>3.10.1</compiler-plugin.version>\n
+          <maven.compiler.release>11</maven.compiler.release>\n </properties> \n <build>\n
+          <plugins>\n <plugin>\n <artifactId>maven-compiler-plugin</artifactId>\n
+          <version>${compiler-plugin.version}</version>\n <configuration>\n <compilerArgs>\n
+          <arg>-parameters</arg>\n </compilerArgs>\n </configuration>\n </plugin>\n
+          </plugins>\n </build>\n ```"
+        codeSnip: '5  '
+        lineNumber: 4
+        variables:
+          data: project
+          innerText: "\n   4.0.0\n\n   \n      net.wasdev.wlp.sample\n      daytrader7\n
+            \     1.0-SNAPSHOT\n   \n\n   WAS Liberty Sample - Java EE7 Benchmark
+            Sample - EAR\n\n   \n      \n      9082\n      false\n      UTF-8\n      UTF-8\n
+            \     1.8\n      1.8\n      \n      10.14.2.0\n      ${user.home}/.m2/repository/org/apache/derby/derby\n
+            \     \n      9080\n      9443\n   \n\n   ear\n   daytrader-ee7\n   1.0-SNAPSHOT\n\n
+            \  \n      \n         net.wasdev.wlp.sample\n         daytrader-ee7-ejb\n
+            \        1.0-SNAPSHOT\n         ejb\n      \n      \n         net.wasdev.wlp.sample\n
+            \        daytrader-ee7-web\n         1.0-SNAPSHOT\n         war\n      \n
+            \     \n\n      \n         org.apache.derby\n         derby\n         ${version.derby}\n
+            \        test\n      \n   \n\n   \n      ${project.artifactId}\n      \n
+            \        \n            org.apache.maven.plugins\n            maven-compiler-plugin\n
+            \           3.11.0\n         \n         \n            \n            org.apache.maven.plugins\n
+            \           maven-ear-plugin\n            3.0.2\n            \n               7\n
+            \              \n                  \n                     net.wasdev.wlp.sample\n
+            \                    daytrader-ee7-web\n                     /daytrader-ee7-web.war\n
+            \                    /daytrader\n                  \n                  \n
+            \                    net.wasdev.wlp.sample\n                     daytrader-ee7-ejb\n
+            \                    /daytrader-ee7-ejb.jar\n                  \n               \n
+            \           \n         \n         \n            io.openliberty.tools\n
+            \           liberty-maven-plugin\n            3.3.4\n            \n               \n
+            \                 ${testServerHttpPort}\n                  ${testServerHttpsPort}\n
+            \              \n            \n         \n         \n            org.apache.maven.plugins\n
+            \           maven-dependency-plugin\n            3.1.2\n            \n
+            \              \n                  copy-derby-dependency\n                  package\n
+            \                 \n                     copy-dependencies\n                  \n
+            \                 \n                     derby\n                     \n
+            \                       ${project.build.directory}/liberty/wlp/usr/shared/resources/DerbyLibs/\n
+            \                 \n               \n            \n         \n         \n
+            \           maven-resources-plugin\n            2.6\n            \n               \n
+            \                 copy-resources\n                  package\n                  \n
+            \                    copy-resources\n                  \n                  \n
+            \                    \n                        ${project.build.directory}/liberty/wlp/usr/shared/resources/data\n
+            \                    \n                        \n                           resources/data\n
+            \                          false\n                        \n                     \n
+            \                 \n               \n            \n         \n      \n
+            \  \n\n"
+          matchingXML: "<modelVersion>4.0.0</modelVersion><parent><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader7</artifactId><version>1.0-SNAPSHOT</version></parent><name>WAS
+            Liberty Sample - Java EE7 Benchmark Sample - EAR</name><properties><!--
+            Update this to match the port number in the websocketSample server.xml\r\n
+            \       This is needed to run the tests --><libertyTestPort>9082</libertyTestPort><skipFVT>false</skipFVT><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding><maven.compiler.source>1.8</maven.compiler.source><maven.compiler.target>1.8</maven.compiler.target><!--
+            Derby library --><version.derby>10.14.2.0</version.derby><derby.path>${user.home}/.m2/repository/org/apache/derby/derby</derby.path><!--
+            Liberty configuration --><testServerHttpPort>9080</testServerHttpPort><testServerHttpsPort>9443</testServerHttpsPort></properties><packaging>ear</packaging><artifactId>daytrader-ee7</artifactId><version>1.0-SNAPSHOT</version><dependencies><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-ejb</artifactId><version>1.0-SNAPSHOT</version><type>ejb</type></dependency><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-web</artifactId><version>1.0-SNAPSHOT</version><type>war</type></dependency><!--
+            Derby from https://mvnrepository.com/artifact/org.apache.derby/derby --><dependency><groupId>org.apache.derby</groupId><artifactId>derby</artifactId><version>${version.derby}</version><scope>test</scope></dependency></dependencies><build><finalName>${project.artifactId}</finalName><plugins><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>3.11.0</version></plugin><plugin><?m2e
+            ignore?><groupId>org.apache.maven.plugins</groupId><artifactId>maven-ear-plugin</artifactId><version>3.0.2</version><configuration><version>7</version><modules><webModule><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-web</artifactId><uri>/daytrader-ee7-web.war</uri><contextRoot>/daytrader</contextRoot></webModule><ejbModule><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-ejb</artifactId><uri>/daytrader-ee7-ejb.jar</uri></ejbModule></modules></configuration></plugin><plugin><groupId>io.openliberty.tools</groupId><artifactId>liberty-maven-plugin</artifactId><version>3.3.4</version><configuration><bootstrapProperties><default.http.port>${testServerHttpPort}</default.http.port><default.https.port>${testServerHttpsPort}</default.https.port></bootstrapProperties></configuration></plugin><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-dependency-plugin</artifactId><version>3.1.2</version><executions><execution><id>copy-derby-dependency</id><phase>package</phase><goals><goal>copy-dependencies</goal></goals><configuration><includeArtifactIds>derby</includeArtifactIds><outputDirectory>\n
+            \                       ${project.build.directory}/liberty/wlp/usr/shared/resources/DerbyLibs/</outputDirectory></configuration></execution></executions></plugin><plugin><artifactId>maven-resources-plugin</artifactId><version>2.6</version><executions><execution><id>copy-resources</id><phase>package</phase><goals><goal>copy-resources</goal></goals><configuration><outputDirectory>\n
+            \                       ${project.build.directory}/liberty/wlp/usr/shared/resources/data</outputDirectory><resources><resource><directory>resources/data</directory><filtering>false</filtering></resource></resources></configuration></execution></executions></plugin></plugins></build>"
+      - uri: file:///source/pom.xml
+        message: "Use the Maven Compiler plugin adding the following sections to the
+          `pom.xml` file: \n\n ```xml\n <properties> \n <compiler-plugin.version>3.10.1</compiler-plugin.version>\n
+          <maven.compiler.release>11</maven.compiler.release>\n </properties> \n <build>\n
+          <plugins>\n <plugin>\n <artifactId>maven-compiler-plugin</artifactId>\n
+          <version>${compiler-plugin.version}</version>\n <configuration>\n <compilerArgs>\n
+          <arg>-parameters</arg>\n </compilerArgs>\n </configuration>\n </plugin>\n
+          </plugins>\n </build>\n ```"
+        codeSnip: '6  '
+        lineNumber: 5
+        variables:
+          data: project
+          innerText: "\n    4.0.0\n\n    net.wasdev.wlp.sample\n    daytrader7\n    pom\n
+            \   1.0-SNAPSHOT\n    WAS Liberty Sample - Java EE7 Benchmark Sample\n\n
+            \   \n        \n            The Apache Software License, Version 2.0\n
+            \           https://raw.github.com/WASdev/sample.daytrader7/master/LICENSE\n
+            \           repo\n        \n    \n    \n    \n\t\tdaytrader-ee7-ejb\n\t\tdaytrader-ee7-web\n\t\tdaytrader-ee7\n
+            \   \n"
+          matchingXML: <modelVersion>4.0.0</modelVersion><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader7</artifactId><packaging>pom</packaging><version>1.0-SNAPSHOT</version><name>WAS
+            Liberty Sample - Java EE7 Benchmark Sample</name><licenses><license><name>The
+            Apache Software License, Version 2.0</name><url>https://raw.github.com/WASdev/sample.daytrader7/master/LICENSE</url><distribution>repo</distribution></license></licenses><modules><module>daytrader-ee7-ejb</module><module>daytrader-ee7-web</module><module>daytrader-ee7</module></modules>
+      links:
+      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven;
+        title: Quarkus - Guide;
+      effort: 1
+    javaee-pom-to-quarkus-00040:
+      description: Adopt Maven Surefire plugin
+      category: mandatory
+      labels:
+      - konveyor.io/source=java-ee
+      - konveyor.io/target=quarkus
+      incidents:
+      - uri: file:///source/daytrader-ee7-ejb/pom.xml
+        message: "Use the Maven Surefire plugin adding the following sections to the
+          `pom.xml` file: \n\n ```xml\n <properties> \n <surefire-plugin.version>3.0.0</compiler-plugin.version>\n
+          </properties> \n <build>\n <plugins>\n <plugin>\n <artifactId>maven-surefire-plugin</artifactId>\n
+          <version>${surefire-plugin.version}</version>\n <configuration>\n <systemPropertyVariables>\n
+          <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>\n
+          <maven.home>${maven.home}</maven.home>\n </systemPropertyVariables>\n </configuration>\n
+          </plugin>\n </plugins>\n </build>\n ```"
+        codeSnip: 4    <groupId>net.wasdev.wlp.sample</groupId>
+        lineNumber: 3
+        variables:
+          data: project
+          innerText: "\n  4.0.0\n  net.wasdev.wlp.sample\n  jar\n  WAS Liberty Sample
+            - Java EE7 Benchmark Sample - EJB Module\n  daytrader-ee7-ejb\n  1.0-SNAPSHOT\n\n
+            \ \n    UTF-8\n    UTF-8\n    1.8\n    1.8\n  \n\n  \n    \n      javax\n
+            \     javaee-api\n      7.0\n      provided\n    \n    \n      javax.annotation\n
+            \     javax.annotation-api\n      1.3.2\n      provided\n    \n  \n"
+          matchingXML: <modelVersion>4.0.0</modelVersion><groupId>net.wasdev.wlp.sample</groupId><packaging>jar</packaging><name>WAS
+            Liberty Sample - Java EE7 Benchmark Sample - EJB Module</name><artifactId>daytrader-ee7-ejb</artifactId><version>1.0-SNAPSHOT</version><properties><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding><maven.compiler.source>1.8</maven.compiler.source><maven.compiler.target>1.8</maven.compiler.target></properties><dependencies><dependency><groupId>javax</groupId><artifactId>javaee-api</artifactId><version>7.0</version><scope>provided</scope></dependency><dependency><groupId>javax.annotation</groupId><artifactId>javax.annotation-api</artifactId><version>1.3.2</version><scope>provided</scope></dependency></dependencies>
+      - uri: file:///source/daytrader-ee7-web/pom.xml
+        message: "Use the Maven Surefire plugin adding the following sections to the
+          `pom.xml` file: \n\n ```xml\n <properties> \n <surefire-plugin.version>3.0.0</compiler-plugin.version>\n
+          </properties> \n <build>\n <plugins>\n <plugin>\n <artifactId>maven-surefire-plugin</artifactId>\n
+          <version>${surefire-plugin.version}</version>\n <configuration>\n <systemPropertyVariables>\n
+          <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>\n
+          <maven.home>${maven.home}</maven.home>\n </systemPropertyVariables>\n </configuration>\n
+          </plugin>\n </plugins>\n </build>\n ```"
+        codeSnip: 4    <groupId>net.wasdev.wlp.sample</groupId>
+        lineNumber: 3
+        variables:
+          data: project
+          innerText: "\n  4.0.0\n  net.wasdev.wlp.sample\n\n  war\n  WAS Liberty Sample
+            - Java EE7 Benchmark Sample - Web Module\n  daytrader-ee7-web\n  1.0-SNAPSHOT\n\n
+            \ \n    UTF-8\n    UTF-8\n    1.8\n    1.8\n  \n\n  \n    \n      javax\n
+            \     javaee-api\n      7.0\n      provided\n    \n    \n      taglibs\n
+            \     standard\n      1.1.1\n      compile\n    \n    \n      javax.annotation\n
+            \     javax.annotation-api\n      1.3.2\n      provided\n    \n    \n
+            \     net.wasdev.wlp.sample\n      daytrader-ee7-ejb\n      1.0-SNAPSHOT\n
+            \     jar\n      provided\n    \n  \n"
+          matchingXML: <modelVersion>4.0.0</modelVersion><groupId>net.wasdev.wlp.sample</groupId><packaging>war</packaging><name>WAS
+            Liberty Sample - Java EE7 Benchmark Sample - Web Module</name><artifactId>daytrader-ee7-web</artifactId><version>1.0-SNAPSHOT</version><properties><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding><maven.compiler.source>1.8</maven.compiler.source><maven.compiler.target>1.8</maven.compiler.target></properties><dependencies><dependency><groupId>javax</groupId><artifactId>javaee-api</artifactId><version>7.0</version><scope>provided</scope></dependency><dependency><groupId>taglibs</groupId><artifactId>standard</artifactId><version>1.1.1</version><scope>compile</scope></dependency><dependency><groupId>javax.annotation</groupId><artifactId>javax.annotation-api</artifactId><version>1.3.2</version><scope>provided</scope></dependency><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-ejb</artifactId><version>1.0-SNAPSHOT</version><type>jar</type><scope>provided</scope></dependency></dependencies>
+      - uri: file:///source/daytrader-ee7/pom.xml
+        message: "Use the Maven Surefire plugin adding the following sections to the
+          `pom.xml` file: \n\n ```xml\n <properties> \n <surefire-plugin.version>3.0.0</compiler-plugin.version>\n
+          </properties> \n <build>\n <plugins>\n <plugin>\n <artifactId>maven-surefire-plugin</artifactId>\n
+          <version>${surefire-plugin.version}</version>\n <configuration>\n <systemPropertyVariables>\n
+          <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>\n
+          <maven.home>${maven.home}</maven.home>\n </systemPropertyVariables>\n </configuration>\n
+          </plugin>\n </plugins>\n </build>\n ```"
+        codeSnip: '5  '
+        lineNumber: 4
+        variables:
+          data: project
+          innerText: "\n   4.0.0\n\n   \n      net.wasdev.wlp.sample\n      daytrader7\n
+            \     1.0-SNAPSHOT\n   \n\n   WAS Liberty Sample - Java EE7 Benchmark
+            Sample - EAR\n\n   \n      \n      9082\n      false\n      UTF-8\n      UTF-8\n
+            \     1.8\n      1.8\n      \n      10.14.2.0\n      ${user.home}/.m2/repository/org/apache/derby/derby\n
+            \     \n      9080\n      9443\n   \n\n   ear\n   daytrader-ee7\n   1.0-SNAPSHOT\n\n
+            \  \n      \n         net.wasdev.wlp.sample\n         daytrader-ee7-ejb\n
+            \        1.0-SNAPSHOT\n         ejb\n      \n      \n         net.wasdev.wlp.sample\n
+            \        daytrader-ee7-web\n         1.0-SNAPSHOT\n         war\n      \n
+            \     \n\n      \n         org.apache.derby\n         derby\n         ${version.derby}\n
+            \        test\n      \n   \n\n   \n      ${project.artifactId}\n      \n
+            \        \n            org.apache.maven.plugins\n            maven-compiler-plugin\n
+            \           3.11.0\n         \n         \n            \n            org.apache.maven.plugins\n
+            \           maven-ear-plugin\n            3.0.2\n            \n               7\n
+            \              \n                  \n                     net.wasdev.wlp.sample\n
+            \                    daytrader-ee7-web\n                     /daytrader-ee7-web.war\n
+            \                    /daytrader\n                  \n                  \n
+            \                    net.wasdev.wlp.sample\n                     daytrader-ee7-ejb\n
+            \                    /daytrader-ee7-ejb.jar\n                  \n               \n
+            \           \n         \n         \n            io.openliberty.tools\n
+            \           liberty-maven-plugin\n            3.3.4\n            \n               \n
+            \                 ${testServerHttpPort}\n                  ${testServerHttpsPort}\n
+            \              \n            \n         \n         \n            org.apache.maven.plugins\n
+            \           maven-dependency-plugin\n            3.1.2\n            \n
+            \              \n                  copy-derby-dependency\n                  package\n
+            \                 \n                     copy-dependencies\n                  \n
+            \                 \n                     derby\n                     \n
+            \                       ${project.build.directory}/liberty/wlp/usr/shared/resources/DerbyLibs/\n
+            \                 \n               \n            \n         \n         \n
+            \           maven-resources-plugin\n            2.6\n            \n               \n
+            \                 copy-resources\n                  package\n                  \n
+            \                    copy-resources\n                  \n                  \n
+            \                    \n                        ${project.build.directory}/liberty/wlp/usr/shared/resources/data\n
+            \                    \n                        \n                           resources/data\n
+            \                          false\n                        \n                     \n
+            \                 \n               \n            \n         \n      \n
+            \  \n\n"
+          matchingXML: "<modelVersion>4.0.0</modelVersion><parent><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader7</artifactId><version>1.0-SNAPSHOT</version></parent><name>WAS
+            Liberty Sample - Java EE7 Benchmark Sample - EAR</name><properties><!--
+            Update this to match the port number in the websocketSample server.xml\r\n
+            \       This is needed to run the tests --><libertyTestPort>9082</libertyTestPort><skipFVT>false</skipFVT><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding><maven.compiler.source>1.8</maven.compiler.source><maven.compiler.target>1.8</maven.compiler.target><!--
+            Derby library --><version.derby>10.14.2.0</version.derby><derby.path>${user.home}/.m2/repository/org/apache/derby/derby</derby.path><!--
+            Liberty configuration --><testServerHttpPort>9080</testServerHttpPort><testServerHttpsPort>9443</testServerHttpsPort></properties><packaging>ear</packaging><artifactId>daytrader-ee7</artifactId><version>1.0-SNAPSHOT</version><dependencies><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-ejb</artifactId><version>1.0-SNAPSHOT</version><type>ejb</type></dependency><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-web</artifactId><version>1.0-SNAPSHOT</version><type>war</type></dependency><!--
+            Derby from https://mvnrepository.com/artifact/org.apache.derby/derby --><dependency><groupId>org.apache.derby</groupId><artifactId>derby</artifactId><version>${version.derby}</version><scope>test</scope></dependency></dependencies><build><finalName>${project.artifactId}</finalName><plugins><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>3.11.0</version></plugin><plugin><?m2e
+            ignore?><groupId>org.apache.maven.plugins</groupId><artifactId>maven-ear-plugin</artifactId><version>3.0.2</version><configuration><version>7</version><modules><webModule><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-web</artifactId><uri>/daytrader-ee7-web.war</uri><contextRoot>/daytrader</contextRoot></webModule><ejbModule><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-ejb</artifactId><uri>/daytrader-ee7-ejb.jar</uri></ejbModule></modules></configuration></plugin><plugin><groupId>io.openliberty.tools</groupId><artifactId>liberty-maven-plugin</artifactId><version>3.3.4</version><configuration><bootstrapProperties><default.http.port>${testServerHttpPort}</default.http.port><default.https.port>${testServerHttpsPort}</default.https.port></bootstrapProperties></configuration></plugin><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-dependency-plugin</artifactId><version>3.1.2</version><executions><execution><id>copy-derby-dependency</id><phase>package</phase><goals><goal>copy-dependencies</goal></goals><configuration><includeArtifactIds>derby</includeArtifactIds><outputDirectory>\n
+            \                       ${project.build.directory}/liberty/wlp/usr/shared/resources/DerbyLibs/</outputDirectory></configuration></execution></executions></plugin><plugin><artifactId>maven-resources-plugin</artifactId><version>2.6</version><executions><execution><id>copy-resources</id><phase>package</phase><goals><goal>copy-resources</goal></goals><configuration><outputDirectory>\n
+            \                       ${project.build.directory}/liberty/wlp/usr/shared/resources/data</outputDirectory><resources><resource><directory>resources/data</directory><filtering>false</filtering></resource></resources></configuration></execution></executions></plugin></plugins></build>"
+      - uri: file:///source/pom.xml
+        message: "Use the Maven Surefire plugin adding the following sections to the
+          `pom.xml` file: \n\n ```xml\n <properties> \n <surefire-plugin.version>3.0.0</compiler-plugin.version>\n
+          </properties> \n <build>\n <plugins>\n <plugin>\n <artifactId>maven-surefire-plugin</artifactId>\n
+          <version>${surefire-plugin.version}</version>\n <configuration>\n <systemPropertyVariables>\n
+          <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>\n
+          <maven.home>${maven.home}</maven.home>\n </systemPropertyVariables>\n </configuration>\n
+          </plugin>\n </plugins>\n </build>\n ```"
+        codeSnip: '6  '
+        lineNumber: 5
+        variables:
+          data: project
+          innerText: "\n    4.0.0\n\n    net.wasdev.wlp.sample\n    daytrader7\n    pom\n
+            \   1.0-SNAPSHOT\n    WAS Liberty Sample - Java EE7 Benchmark Sample\n\n
+            \   \n        \n            The Apache Software License, Version 2.0\n
+            \           https://raw.github.com/WASdev/sample.daytrader7/master/LICENSE\n
+            \           repo\n        \n    \n    \n    \n\t\tdaytrader-ee7-ejb\n\t\tdaytrader-ee7-web\n\t\tdaytrader-ee7\n
+            \   \n"
+          matchingXML: <modelVersion>4.0.0</modelVersion><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader7</artifactId><packaging>pom</packaging><version>1.0-SNAPSHOT</version><name>WAS
+            Liberty Sample - Java EE7 Benchmark Sample</name><licenses><license><name>The
+            Apache Software License, Version 2.0</name><url>https://raw.github.com/WASdev/sample.daytrader7/master/LICENSE</url><distribution>repo</distribution></license></licenses><modules><module>daytrader-ee7-ejb</module><module>daytrader-ee7-web</module><module>daytrader-ee7</module></modules>
+      links:
+      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven;
+        title: Quarkus - Guide;
+      effort: 1
+    javaee-pom-to-quarkus-00050:
+      description: Adopt Maven Failsafe plugin
+      category: mandatory
+      labels:
+      - konveyor.io/source=java-ee
+      - konveyor.io/target=quarkus
+      incidents:
+      - uri: file:///source/daytrader-ee7-ejb/pom.xml
+        message: "Use the Maven Failsafe plugin adding the following sections to the
+          `pom.xml` file: \n\n ```xml\n <properties> \n <surefire-plugin.version>3.0.0</compiler-plugin.version>\n
+          </properties> \n <build>\n <plugins>\n <plugin>\n <artifactId>maven-failsafe-plugin</artifactId>\n
+          <version>${surefire-plugin.version}</version>\n <executions>\n <execution>\n
+          <goals>\n <goals>integration-test</goal>\n <goals>verify</goal>\n </goals>\n
+          <configuration>\n <systemPropertyVariables>\n <native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>\n
+          <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>\n
+          <maven.home>${maven.home}</maven.home>\n </systemPropertyVariables>\n </configuration>\n
+          </execution>\n </executions>\n </plugin>\n </plugins>\n </build>\n ```"
+        codeSnip: 4    <groupId>net.wasdev.wlp.sample</groupId>
+        lineNumber: 3
+        variables:
+          data: project
+          innerText: "\n  4.0.0\n  net.wasdev.wlp.sample\n  jar\n  WAS Liberty Sample
+            - Java EE7 Benchmark Sample - EJB Module\n  daytrader-ee7-ejb\n  1.0-SNAPSHOT\n\n
+            \ \n    UTF-8\n    UTF-8\n    1.8\n    1.8\n  \n\n  \n    \n      javax\n
+            \     javaee-api\n      7.0\n      provided\n    \n    \n      javax.annotation\n
+            \     javax.annotation-api\n      1.3.2\n      provided\n    \n  \n"
+          matchingXML: <modelVersion>4.0.0</modelVersion><groupId>net.wasdev.wlp.sample</groupId><packaging>jar</packaging><name>WAS
+            Liberty Sample - Java EE7 Benchmark Sample - EJB Module</name><artifactId>daytrader-ee7-ejb</artifactId><version>1.0-SNAPSHOT</version><properties><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding><maven.compiler.source>1.8</maven.compiler.source><maven.compiler.target>1.8</maven.compiler.target></properties><dependencies><dependency><groupId>javax</groupId><artifactId>javaee-api</artifactId><version>7.0</version><scope>provided</scope></dependency><dependency><groupId>javax.annotation</groupId><artifactId>javax.annotation-api</artifactId><version>1.3.2</version><scope>provided</scope></dependency></dependencies>
+      - uri: file:///source/daytrader-ee7-web/pom.xml
+        message: "Use the Maven Failsafe plugin adding the following sections to the
+          `pom.xml` file: \n\n ```xml\n <properties> \n <surefire-plugin.version>3.0.0</compiler-plugin.version>\n
+          </properties> \n <build>\n <plugins>\n <plugin>\n <artifactId>maven-failsafe-plugin</artifactId>\n
+          <version>${surefire-plugin.version}</version>\n <executions>\n <execution>\n
+          <goals>\n <goals>integration-test</goal>\n <goals>verify</goal>\n </goals>\n
+          <configuration>\n <systemPropertyVariables>\n <native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>\n
+          <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>\n
+          <maven.home>${maven.home}</maven.home>\n </systemPropertyVariables>\n </configuration>\n
+          </execution>\n </executions>\n </plugin>\n </plugins>\n </build>\n ```"
+        codeSnip: 4    <groupId>net.wasdev.wlp.sample</groupId>
+        lineNumber: 3
+        variables:
+          data: project
+          innerText: "\n  4.0.0\n  net.wasdev.wlp.sample\n\n  war\n  WAS Liberty Sample
+            - Java EE7 Benchmark Sample - Web Module\n  daytrader-ee7-web\n  1.0-SNAPSHOT\n\n
+            \ \n    UTF-8\n    UTF-8\n    1.8\n    1.8\n  \n\n  \n    \n      javax\n
+            \     javaee-api\n      7.0\n      provided\n    \n    \n      taglibs\n
+            \     standard\n      1.1.1\n      compile\n    \n    \n      javax.annotation\n
+            \     javax.annotation-api\n      1.3.2\n      provided\n    \n    \n
+            \     net.wasdev.wlp.sample\n      daytrader-ee7-ejb\n      1.0-SNAPSHOT\n
+            \     jar\n      provided\n    \n  \n"
+          matchingXML: <modelVersion>4.0.0</modelVersion><groupId>net.wasdev.wlp.sample</groupId><packaging>war</packaging><name>WAS
+            Liberty Sample - Java EE7 Benchmark Sample - Web Module</name><artifactId>daytrader-ee7-web</artifactId><version>1.0-SNAPSHOT</version><properties><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding><maven.compiler.source>1.8</maven.compiler.source><maven.compiler.target>1.8</maven.compiler.target></properties><dependencies><dependency><groupId>javax</groupId><artifactId>javaee-api</artifactId><version>7.0</version><scope>provided</scope></dependency><dependency><groupId>taglibs</groupId><artifactId>standard</artifactId><version>1.1.1</version><scope>compile</scope></dependency><dependency><groupId>javax.annotation</groupId><artifactId>javax.annotation-api</artifactId><version>1.3.2</version><scope>provided</scope></dependency><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-ejb</artifactId><version>1.0-SNAPSHOT</version><type>jar</type><scope>provided</scope></dependency></dependencies>
+      - uri: file:///source/daytrader-ee7/pom.xml
+        message: "Use the Maven Failsafe plugin adding the following sections to the
+          `pom.xml` file: \n\n ```xml\n <properties> \n <surefire-plugin.version>3.0.0</compiler-plugin.version>\n
+          </properties> \n <build>\n <plugins>\n <plugin>\n <artifactId>maven-failsafe-plugin</artifactId>\n
+          <version>${surefire-plugin.version}</version>\n <executions>\n <execution>\n
+          <goals>\n <goals>integration-test</goal>\n <goals>verify</goal>\n </goals>\n
+          <configuration>\n <systemPropertyVariables>\n <native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>\n
+          <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>\n
+          <maven.home>${maven.home}</maven.home>\n </systemPropertyVariables>\n </configuration>\n
+          </execution>\n </executions>\n </plugin>\n </plugins>\n </build>\n ```"
+        codeSnip: '5  '
+        lineNumber: 4
+        variables:
+          data: project
+          innerText: "\n   4.0.0\n\n   \n      net.wasdev.wlp.sample\n      daytrader7\n
+            \     1.0-SNAPSHOT\n   \n\n   WAS Liberty Sample - Java EE7 Benchmark
+            Sample - EAR\n\n   \n      \n      9082\n      false\n      UTF-8\n      UTF-8\n
+            \     1.8\n      1.8\n      \n      10.14.2.0\n      ${user.home}/.m2/repository/org/apache/derby/derby\n
+            \     \n      9080\n      9443\n   \n\n   ear\n   daytrader-ee7\n   1.0-SNAPSHOT\n\n
+            \  \n      \n         net.wasdev.wlp.sample\n         daytrader-ee7-ejb\n
+            \        1.0-SNAPSHOT\n         ejb\n      \n      \n         net.wasdev.wlp.sample\n
+            \        daytrader-ee7-web\n         1.0-SNAPSHOT\n         war\n      \n
+            \     \n\n      \n         org.apache.derby\n         derby\n         ${version.derby}\n
+            \        test\n      \n   \n\n   \n      ${project.artifactId}\n      \n
+            \        \n            org.apache.maven.plugins\n            maven-compiler-plugin\n
+            \           3.11.0\n         \n         \n            \n            org.apache.maven.plugins\n
+            \           maven-ear-plugin\n            3.0.2\n            \n               7\n
+            \              \n                  \n                     net.wasdev.wlp.sample\n
+            \                    daytrader-ee7-web\n                     /daytrader-ee7-web.war\n
+            \                    /daytrader\n                  \n                  \n
+            \                    net.wasdev.wlp.sample\n                     daytrader-ee7-ejb\n
+            \                    /daytrader-ee7-ejb.jar\n                  \n               \n
+            \           \n         \n         \n            io.openliberty.tools\n
+            \           liberty-maven-plugin\n            3.3.4\n            \n               \n
+            \                 ${testServerHttpPort}\n                  ${testServerHttpsPort}\n
+            \              \n            \n         \n         \n            org.apache.maven.plugins\n
+            \           maven-dependency-plugin\n            3.1.2\n            \n
+            \              \n                  copy-derby-dependency\n                  package\n
+            \                 \n                     copy-dependencies\n                  \n
+            \                 \n                     derby\n                     \n
+            \                       ${project.build.directory}/liberty/wlp/usr/shared/resources/DerbyLibs/\n
+            \                 \n               \n            \n         \n         \n
+            \           maven-resources-plugin\n            2.6\n            \n               \n
+            \                 copy-resources\n                  package\n                  \n
+            \                    copy-resources\n                  \n                  \n
+            \                    \n                        ${project.build.directory}/liberty/wlp/usr/shared/resources/data\n
+            \                    \n                        \n                           resources/data\n
+            \                          false\n                        \n                     \n
+            \                 \n               \n            \n         \n      \n
+            \  \n\n"
+          matchingXML: "<modelVersion>4.0.0</modelVersion><parent><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader7</artifactId><version>1.0-SNAPSHOT</version></parent><name>WAS
+            Liberty Sample - Java EE7 Benchmark Sample - EAR</name><properties><!--
+            Update this to match the port number in the websocketSample server.xml\r\n
+            \       This is needed to run the tests --><libertyTestPort>9082</libertyTestPort><skipFVT>false</skipFVT><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding><maven.compiler.source>1.8</maven.compiler.source><maven.compiler.target>1.8</maven.compiler.target><!--
+            Derby library --><version.derby>10.14.2.0</version.derby><derby.path>${user.home}/.m2/repository/org/apache/derby/derby</derby.path><!--
+            Liberty configuration --><testServerHttpPort>9080</testServerHttpPort><testServerHttpsPort>9443</testServerHttpsPort></properties><packaging>ear</packaging><artifactId>daytrader-ee7</artifactId><version>1.0-SNAPSHOT</version><dependencies><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-ejb</artifactId><version>1.0-SNAPSHOT</version><type>ejb</type></dependency><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-web</artifactId><version>1.0-SNAPSHOT</version><type>war</type></dependency><!--
+            Derby from https://mvnrepository.com/artifact/org.apache.derby/derby --><dependency><groupId>org.apache.derby</groupId><artifactId>derby</artifactId><version>${version.derby}</version><scope>test</scope></dependency></dependencies><build><finalName>${project.artifactId}</finalName><plugins><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>3.11.0</version></plugin><plugin><?m2e
+            ignore?><groupId>org.apache.maven.plugins</groupId><artifactId>maven-ear-plugin</artifactId><version>3.0.2</version><configuration><version>7</version><modules><webModule><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-web</artifactId><uri>/daytrader-ee7-web.war</uri><contextRoot>/daytrader</contextRoot></webModule><ejbModule><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-ejb</artifactId><uri>/daytrader-ee7-ejb.jar</uri></ejbModule></modules></configuration></plugin><plugin><groupId>io.openliberty.tools</groupId><artifactId>liberty-maven-plugin</artifactId><version>3.3.4</version><configuration><bootstrapProperties><default.http.port>${testServerHttpPort}</default.http.port><default.https.port>${testServerHttpsPort}</default.https.port></bootstrapProperties></configuration></plugin><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-dependency-plugin</artifactId><version>3.1.2</version><executions><execution><id>copy-derby-dependency</id><phase>package</phase><goals><goal>copy-dependencies</goal></goals><configuration><includeArtifactIds>derby</includeArtifactIds><outputDirectory>\n
+            \                       ${project.build.directory}/liberty/wlp/usr/shared/resources/DerbyLibs/</outputDirectory></configuration></execution></executions></plugin><plugin><artifactId>maven-resources-plugin</artifactId><version>2.6</version><executions><execution><id>copy-resources</id><phase>package</phase><goals><goal>copy-resources</goal></goals><configuration><outputDirectory>\n
+            \                       ${project.build.directory}/liberty/wlp/usr/shared/resources/data</outputDirectory><resources><resource><directory>resources/data</directory><filtering>false</filtering></resource></resources></configuration></execution></executions></plugin></plugins></build>"
+      - uri: file:///source/pom.xml
+        message: "Use the Maven Failsafe plugin adding the following sections to the
+          `pom.xml` file: \n\n ```xml\n <properties> \n <surefire-plugin.version>3.0.0</compiler-plugin.version>\n
+          </properties> \n <build>\n <plugins>\n <plugin>\n <artifactId>maven-failsafe-plugin</artifactId>\n
+          <version>${surefire-plugin.version}</version>\n <executions>\n <execution>\n
+          <goals>\n <goals>integration-test</goal>\n <goals>verify</goal>\n </goals>\n
+          <configuration>\n <systemPropertyVariables>\n <native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>\n
+          <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>\n
+          <maven.home>${maven.home}</maven.home>\n </systemPropertyVariables>\n </configuration>\n
+          </execution>\n </executions>\n </plugin>\n </plugins>\n </build>\n ```"
+        codeSnip: '6  '
+        lineNumber: 5
+        variables:
+          data: project
+          innerText: "\n    4.0.0\n\n    net.wasdev.wlp.sample\n    daytrader7\n    pom\n
+            \   1.0-SNAPSHOT\n    WAS Liberty Sample - Java EE7 Benchmark Sample\n\n
+            \   \n        \n            The Apache Software License, Version 2.0\n
+            \           https://raw.github.com/WASdev/sample.daytrader7/master/LICENSE\n
+            \           repo\n        \n    \n    \n    \n\t\tdaytrader-ee7-ejb\n\t\tdaytrader-ee7-web\n\t\tdaytrader-ee7\n
+            \   \n"
+          matchingXML: <modelVersion>4.0.0</modelVersion><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader7</artifactId><packaging>pom</packaging><version>1.0-SNAPSHOT</version><name>WAS
+            Liberty Sample - Java EE7 Benchmark Sample</name><licenses><license><name>The
+            Apache Software License, Version 2.0</name><url>https://raw.github.com/WASdev/sample.daytrader7/master/LICENSE</url><distribution>repo</distribution></license></licenses><modules><module>daytrader-ee7-ejb</module><module>daytrader-ee7-web</module><module>daytrader-ee7</module></modules>
+      links:
+      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven;
+        title: Quarkus - Guide;
+      effort: 1
+    javaee-pom-to-quarkus-00060:
+      description: Add Maven profile to run the Quarkus native build
+      category: mandatory
+      labels:
+      - konveyor.io/source=java-ee
+      - konveyor.io/target=quarkus
+      incidents:
+      - uri: file:///source/daytrader-ee7-ejb/pom.xml
+        message: "Leverage a Maven profile to run the Quarkus native build adding
+          the following section to the `pom.xml` file: \n\n ```xml\n <profiles>\n
+          <profile>\n <id>native</id>\n <activation>\n <property>\n <name>native</name>\n
+          </property>\n </activation>\n <properties>\n <skipITs>false</skipITs>\n
+          <quarkus.package.type>native</quarkus.package.type>\n </properties>\n </profile>\n
+          </profiles>\n ```"
+        codeSnip: 4    <groupId>net.wasdev.wlp.sample</groupId>
+        lineNumber: 3
+        variables:
+          data: project
+          innerText: "\n  4.0.0\n  net.wasdev.wlp.sample\n  jar\n  WAS Liberty Sample
+            - Java EE7 Benchmark Sample - EJB Module\n  daytrader-ee7-ejb\n  1.0-SNAPSHOT\n\n
+            \ \n    UTF-8\n    UTF-8\n    1.8\n    1.8\n  \n\n  \n    \n      javax\n
+            \     javaee-api\n      7.0\n      provided\n    \n    \n      javax.annotation\n
+            \     javax.annotation-api\n      1.3.2\n      provided\n    \n  \n"
+          matchingXML: <modelVersion>4.0.0</modelVersion><groupId>net.wasdev.wlp.sample</groupId><packaging>jar</packaging><name>WAS
+            Liberty Sample - Java EE7 Benchmark Sample - EJB Module</name><artifactId>daytrader-ee7-ejb</artifactId><version>1.0-SNAPSHOT</version><properties><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding><maven.compiler.source>1.8</maven.compiler.source><maven.compiler.target>1.8</maven.compiler.target></properties><dependencies><dependency><groupId>javax</groupId><artifactId>javaee-api</artifactId><version>7.0</version><scope>provided</scope></dependency><dependency><groupId>javax.annotation</groupId><artifactId>javax.annotation-api</artifactId><version>1.3.2</version><scope>provided</scope></dependency></dependencies>
+      - uri: file:///source/daytrader-ee7-web/pom.xml
+        message: "Leverage a Maven profile to run the Quarkus native build adding
+          the following section to the `pom.xml` file: \n\n ```xml\n <profiles>\n
+          <profile>\n <id>native</id>\n <activation>\n <property>\n <name>native</name>\n
+          </property>\n </activation>\n <properties>\n <skipITs>false</skipITs>\n
+          <quarkus.package.type>native</quarkus.package.type>\n </properties>\n </profile>\n
+          </profiles>\n ```"
+        codeSnip: 4    <groupId>net.wasdev.wlp.sample</groupId>
+        lineNumber: 3
+        variables:
+          data: project
+          innerText: "\n  4.0.0\n  net.wasdev.wlp.sample\n\n  war\n  WAS Liberty Sample
+            - Java EE7 Benchmark Sample - Web Module\n  daytrader-ee7-web\n  1.0-SNAPSHOT\n\n
+            \ \n    UTF-8\n    UTF-8\n    1.8\n    1.8\n  \n\n  \n    \n      javax\n
+            \     javaee-api\n      7.0\n      provided\n    \n    \n      taglibs\n
+            \     standard\n      1.1.1\n      compile\n    \n    \n      javax.annotation\n
+            \     javax.annotation-api\n      1.3.2\n      provided\n    \n    \n
+            \     net.wasdev.wlp.sample\n      daytrader-ee7-ejb\n      1.0-SNAPSHOT\n
+            \     jar\n      provided\n    \n  \n"
+          matchingXML: <modelVersion>4.0.0</modelVersion><groupId>net.wasdev.wlp.sample</groupId><packaging>war</packaging><name>WAS
+            Liberty Sample - Java EE7 Benchmark Sample - Web Module</name><artifactId>daytrader-ee7-web</artifactId><version>1.0-SNAPSHOT</version><properties><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding><maven.compiler.source>1.8</maven.compiler.source><maven.compiler.target>1.8</maven.compiler.target></properties><dependencies><dependency><groupId>javax</groupId><artifactId>javaee-api</artifactId><version>7.0</version><scope>provided</scope></dependency><dependency><groupId>taglibs</groupId><artifactId>standard</artifactId><version>1.1.1</version><scope>compile</scope></dependency><dependency><groupId>javax.annotation</groupId><artifactId>javax.annotation-api</artifactId><version>1.3.2</version><scope>provided</scope></dependency><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-ejb</artifactId><version>1.0-SNAPSHOT</version><type>jar</type><scope>provided</scope></dependency></dependencies>
+      - uri: file:///source/daytrader-ee7/pom.xml
+        message: "Leverage a Maven profile to run the Quarkus native build adding
+          the following section to the `pom.xml` file: \n\n ```xml\n <profiles>\n
+          <profile>\n <id>native</id>\n <activation>\n <property>\n <name>native</name>\n
+          </property>\n </activation>\n <properties>\n <skipITs>false</skipITs>\n
+          <quarkus.package.type>native</quarkus.package.type>\n </properties>\n </profile>\n
+          </profiles>\n ```"
+        codeSnip: '5  '
+        lineNumber: 4
+        variables:
+          data: project
+          innerText: "\n   4.0.0\n\n   \n      net.wasdev.wlp.sample\n      daytrader7\n
+            \     1.0-SNAPSHOT\n   \n\n   WAS Liberty Sample - Java EE7 Benchmark
+            Sample - EAR\n\n   \n      \n      9082\n      false\n      UTF-8\n      UTF-8\n
+            \     1.8\n      1.8\n      \n      10.14.2.0\n      ${user.home}/.m2/repository/org/apache/derby/derby\n
+            \     \n      9080\n      9443\n   \n\n   ear\n   daytrader-ee7\n   1.0-SNAPSHOT\n\n
+            \  \n      \n         net.wasdev.wlp.sample\n         daytrader-ee7-ejb\n
+            \        1.0-SNAPSHOT\n         ejb\n      \n      \n         net.wasdev.wlp.sample\n
+            \        daytrader-ee7-web\n         1.0-SNAPSHOT\n         war\n      \n
+            \     \n\n      \n         org.apache.derby\n         derby\n         ${version.derby}\n
+            \        test\n      \n   \n\n   \n      ${project.artifactId}\n      \n
+            \        \n            org.apache.maven.plugins\n            maven-compiler-plugin\n
+            \           3.11.0\n         \n         \n            \n            org.apache.maven.plugins\n
+            \           maven-ear-plugin\n            3.0.2\n            \n               7\n
+            \              \n                  \n                     net.wasdev.wlp.sample\n
+            \                    daytrader-ee7-web\n                     /daytrader-ee7-web.war\n
+            \                    /daytrader\n                  \n                  \n
+            \                    net.wasdev.wlp.sample\n                     daytrader-ee7-ejb\n
+            \                    /daytrader-ee7-ejb.jar\n                  \n               \n
+            \           \n         \n         \n            io.openliberty.tools\n
+            \           liberty-maven-plugin\n            3.3.4\n            \n               \n
+            \                 ${testServerHttpPort}\n                  ${testServerHttpsPort}\n
+            \              \n            \n         \n         \n            org.apache.maven.plugins\n
+            \           maven-dependency-plugin\n            3.1.2\n            \n
+            \              \n                  copy-derby-dependency\n                  package\n
+            \                 \n                     copy-dependencies\n                  \n
+            \                 \n                     derby\n                     \n
+            \                       ${project.build.directory}/liberty/wlp/usr/shared/resources/DerbyLibs/\n
+            \                 \n               \n            \n         \n         \n
+            \           maven-resources-plugin\n            2.6\n            \n               \n
+            \                 copy-resources\n                  package\n                  \n
+            \                    copy-resources\n                  \n                  \n
+            \                    \n                        ${project.build.directory}/liberty/wlp/usr/shared/resources/data\n
+            \                    \n                        \n                           resources/data\n
+            \                          false\n                        \n                     \n
+            \                 \n               \n            \n         \n      \n
+            \  \n\n"
+          matchingXML: "<modelVersion>4.0.0</modelVersion><parent><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader7</artifactId><version>1.0-SNAPSHOT</version></parent><name>WAS
+            Liberty Sample - Java EE7 Benchmark Sample - EAR</name><properties><!--
+            Update this to match the port number in the websocketSample server.xml\r\n
+            \       This is needed to run the tests --><libertyTestPort>9082</libertyTestPort><skipFVT>false</skipFVT><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding><maven.compiler.source>1.8</maven.compiler.source><maven.compiler.target>1.8</maven.compiler.target><!--
+            Derby library --><version.derby>10.14.2.0</version.derby><derby.path>${user.home}/.m2/repository/org/apache/derby/derby</derby.path><!--
+            Liberty configuration --><testServerHttpPort>9080</testServerHttpPort><testServerHttpsPort>9443</testServerHttpsPort></properties><packaging>ear</packaging><artifactId>daytrader-ee7</artifactId><version>1.0-SNAPSHOT</version><dependencies><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-ejb</artifactId><version>1.0-SNAPSHOT</version><type>ejb</type></dependency><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-web</artifactId><version>1.0-SNAPSHOT</version><type>war</type></dependency><!--
+            Derby from https://mvnrepository.com/artifact/org.apache.derby/derby --><dependency><groupId>org.apache.derby</groupId><artifactId>derby</artifactId><version>${version.derby}</version><scope>test</scope></dependency></dependencies><build><finalName>${project.artifactId}</finalName><plugins><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>3.11.0</version></plugin><plugin><?m2e
+            ignore?><groupId>org.apache.maven.plugins</groupId><artifactId>maven-ear-plugin</artifactId><version>3.0.2</version><configuration><version>7</version><modules><webModule><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-web</artifactId><uri>/daytrader-ee7-web.war</uri><contextRoot>/daytrader</contextRoot></webModule><ejbModule><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-ejb</artifactId><uri>/daytrader-ee7-ejb.jar</uri></ejbModule></modules></configuration></plugin><plugin><groupId>io.openliberty.tools</groupId><artifactId>liberty-maven-plugin</artifactId><version>3.3.4</version><configuration><bootstrapProperties><default.http.port>${testServerHttpPort}</default.http.port><default.https.port>${testServerHttpsPort}</default.https.port></bootstrapProperties></configuration></plugin><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-dependency-plugin</artifactId><version>3.1.2</version><executions><execution><id>copy-derby-dependency</id><phase>package</phase><goals><goal>copy-dependencies</goal></goals><configuration><includeArtifactIds>derby</includeArtifactIds><outputDirectory>\n
+            \                       ${project.build.directory}/liberty/wlp/usr/shared/resources/DerbyLibs/</outputDirectory></configuration></execution></executions></plugin><plugin><artifactId>maven-resources-plugin</artifactId><version>2.6</version><executions><execution><id>copy-resources</id><phase>package</phase><goals><goal>copy-resources</goal></goals><configuration><outputDirectory>\n
+            \                       ${project.build.directory}/liberty/wlp/usr/shared/resources/data</outputDirectory><resources><resource><directory>resources/data</directory><filtering>false</filtering></resource></resources></configuration></execution></executions></plugin></plugins></build>"
+      - uri: file:///source/pom.xml
+        message: "Leverage a Maven profile to run the Quarkus native build adding
+          the following section to the `pom.xml` file: \n\n ```xml\n <profiles>\n
+          <profile>\n <id>native</id>\n <activation>\n <property>\n <name>native</name>\n
+          </property>\n </activation>\n <properties>\n <skipITs>false</skipITs>\n
+          <quarkus.package.type>native</quarkus.package.type>\n </properties>\n </profile>\n
+          </profiles>\n ```"
+        codeSnip: '6  '
+        lineNumber: 5
+        variables:
+          data: project
+          innerText: "\n    4.0.0\n\n    net.wasdev.wlp.sample\n    daytrader7\n    pom\n
+            \   1.0-SNAPSHOT\n    WAS Liberty Sample - Java EE7 Benchmark Sample\n\n
+            \   \n        \n            The Apache Software License, Version 2.0\n
+            \           https://raw.github.com/WASdev/sample.daytrader7/master/LICENSE\n
+            \           repo\n        \n    \n    \n    \n\t\tdaytrader-ee7-ejb\n\t\tdaytrader-ee7-web\n\t\tdaytrader-ee7\n
+            \   \n"
+          matchingXML: <modelVersion>4.0.0</modelVersion><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader7</artifactId><packaging>pom</packaging><version>1.0-SNAPSHOT</version><name>WAS
+            Liberty Sample - Java EE7 Benchmark Sample</name><licenses><license><name>The
+            Apache Software License, Version 2.0</name><url>https://raw.github.com/WASdev/sample.daytrader7/master/LICENSE</url><distribution>repo</distribution></license></licenses><modules><module>daytrader-ee7-ejb</module><module>daytrader-ee7-web</module><module>daytrader-ee7</module></modules>
+      links:
+      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven;
+        title: Quarkus - Guide;
+      effort: 1
     jdbc-jpa-mixed-to-quarkus-00001:
       description: Mixed JDBC and JPA usage detected
       category: optional
@@ -3985,6 +5455,108 @@
       - url: https://quarkus.io/guides/cdi-reference
         title: Quarkus CDI Reference
       effort: 5
+    persistence-to-quarkus-00000:
+      description: Move persistence config to a properties file
+      category: optional
+      labels:
+      - konveyor.io/source=jakarta-ee
+      - konveyor.io/source=java-ee
+      - konveyor.io/target=quarkus
+      incidents:
+      - uri: file:///source/daytrader-ee7-ejb/src/main/resources/META-INF/persistence.xml
+        message: "It is recommended to move persistence related configuration from
+          an XML file to a properties one.\n This allows centralization of the configuration
+          in Quarkus. Check the link for more information.\n \n \n Datasource and
+          persistence configurations in XML can be substituted with a single centralized
+          properties file. Here is an example of a translation:\n \n The following
+          datasource configuration:\n ```\n <datasources xmlns=\"http://www.jboss.org/ironjacamar/schema\"\n
+          xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n xsi:schemaLocation=\"http://www.jboss.org/ironjacamar/schema
+          http://docs.jboss.org/ironjacamar/schema/datasources_1_0.xsd\">\n <!-- The
+          datasource is bound into JNDI at this location. We reference\n this in META-INF/persistence.xml
+          -->\n <datasource jndi-name=\"java:jboss/datasources/TasksJsfQuickstartDS\"\n
+          pool-name=\"tasks-jsf-quickstart\" enabled=\"true\"\n use-java-context=\"true\">\n
+          <connection-url>jdbc:h2:mem:tasks-jsf-quickstart;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1</connection-url>\n
+          <driver>h2</driver>\n <security>\n <user-name>sa</user-name>\n <password>sa</password>\n
+          </security>\n </datasource>\n </datasources>\n ```\n along with the following
+          persistence configuration:\n ```\n <persistence version=\"2.1\"\n xmlns=\"http://xmlns.jcp.org/xml/ns/persistence\"
+          xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n xsi:schemaLocation=\"\n
+          http://xmlns.jcp.org/xml/ns/persistence\n http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd\">\n
+          <persistence-unit name=\"primary\">\n <!-- We use a different datasource
+          for tests, so as to not overwrite\n production data. This is an unmanaged
+          data source, backed by H2, an in memory\n database. Production applications
+          should use a managed datasource. -->\n <!-- The datasource is deployed as
+          WEB-INF/test-ds.xml,\n you can find it in the source at src/test/resources/test-ds.xml
+          -->\n <jta-data-source>java:jboss/datasources/TasksJsfQuickstartDS</jta-data-source>\n
+          <properties>\n <!-- Properties for Hibernate -->\n <property name=\"hibernate.hbm2ddl.auto\"
+          value=\"create-drop\" />\n <property name=\"hibernate.show_sql\" value=\"false\"
+          />\n </properties>\n </persistence-unit>\n </persistence>\n ```\n can be
+          translated to:\n ```\n quarkus.datasource.jdbc.url=jdbc:h2:mem:tasks-jsf-quickstart;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1\n
+          quarkus.datasource.db-kind=h2\n quarkus.datasource.username=sa\n quarkus.datasource.password=sa\n\n
+          quarkus.hibernate-orm.database.generation=drop-and-create\n ```"
+      - uri: file:///source/daytrader-ee7-web/src/main/java/META-INF/persistence.xml
+        message: "It is recommended to move persistence related configuration from
+          an XML file to a properties one.\n This allows centralization of the configuration
+          in Quarkus. Check the link for more information.\n \n \n Datasource and
+          persistence configurations in XML can be substituted with a single centralized
+          properties file. Here is an example of a translation:\n \n The following
+          datasource configuration:\n ```\n <datasources xmlns=\"http://www.jboss.org/ironjacamar/schema\"\n
+          xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n xsi:schemaLocation=\"http://www.jboss.org/ironjacamar/schema
+          http://docs.jboss.org/ironjacamar/schema/datasources_1_0.xsd\">\n <!-- The
+          datasource is bound into JNDI at this location. We reference\n this in META-INF/persistence.xml
+          -->\n <datasource jndi-name=\"java:jboss/datasources/TasksJsfQuickstartDS\"\n
+          pool-name=\"tasks-jsf-quickstart\" enabled=\"true\"\n use-java-context=\"true\">\n
+          <connection-url>jdbc:h2:mem:tasks-jsf-quickstart;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1</connection-url>\n
+          <driver>h2</driver>\n <security>\n <user-name>sa</user-name>\n <password>sa</password>\n
+          </security>\n </datasource>\n </datasources>\n ```\n along with the following
+          persistence configuration:\n ```\n <persistence version=\"2.1\"\n xmlns=\"http://xmlns.jcp.org/xml/ns/persistence\"
+          xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n xsi:schemaLocation=\"\n
+          http://xmlns.jcp.org/xml/ns/persistence\n http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd\">\n
+          <persistence-unit name=\"primary\">\n <!-- We use a different datasource
+          for tests, so as to not overwrite\n production data. This is an unmanaged
+          data source, backed by H2, an in memory\n database. Production applications
+          should use a managed datasource. -->\n <!-- The datasource is deployed as
+          WEB-INF/test-ds.xml,\n you can find it in the source at src/test/resources/test-ds.xml
+          -->\n <jta-data-source>java:jboss/datasources/TasksJsfQuickstartDS</jta-data-source>\n
+          <properties>\n <!-- Properties for Hibernate -->\n <property name=\"hibernate.hbm2ddl.auto\"
+          value=\"create-drop\" />\n <property name=\"hibernate.show_sql\" value=\"false\"
+          />\n </properties>\n </persistence-unit>\n </persistence>\n ```\n can be
+          translated to:\n ```\n quarkus.datasource.jdbc.url=jdbc:h2:mem:tasks-jsf-quickstart;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1\n
+          quarkus.datasource.db-kind=h2\n quarkus.datasource.username=sa\n quarkus.datasource.password=sa\n\n
+          quarkus.hibernate-orm.database.generation=drop-and-create\n ```"
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/WEB-INF/classes/META-INF/persistence.xml
+        message: "It is recommended to move persistence related configuration from
+          an XML file to a properties one.\n This allows centralization of the configuration
+          in Quarkus. Check the link for more information.\n \n \n Datasource and
+          persistence configurations in XML can be substituted with a single centralized
+          properties file. Here is an example of a translation:\n \n The following
+          datasource configuration:\n ```\n <datasources xmlns=\"http://www.jboss.org/ironjacamar/schema\"\n
+          xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n xsi:schemaLocation=\"http://www.jboss.org/ironjacamar/schema
+          http://docs.jboss.org/ironjacamar/schema/datasources_1_0.xsd\">\n <!-- The
+          datasource is bound into JNDI at this location. We reference\n this in META-INF/persistence.xml
+          -->\n <datasource jndi-name=\"java:jboss/datasources/TasksJsfQuickstartDS\"\n
+          pool-name=\"tasks-jsf-quickstart\" enabled=\"true\"\n use-java-context=\"true\">\n
+          <connection-url>jdbc:h2:mem:tasks-jsf-quickstart;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1</connection-url>\n
+          <driver>h2</driver>\n <security>\n <user-name>sa</user-name>\n <password>sa</password>\n
+          </security>\n </datasource>\n </datasources>\n ```\n along with the following
+          persistence configuration:\n ```\n <persistence version=\"2.1\"\n xmlns=\"http://xmlns.jcp.org/xml/ns/persistence\"
+          xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n xsi:schemaLocation=\"\n
+          http://xmlns.jcp.org/xml/ns/persistence\n http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd\">\n
+          <persistence-unit name=\"primary\">\n <!-- We use a different datasource
+          for tests, so as to not overwrite\n production data. This is an unmanaged
+          data source, backed by H2, an in memory\n database. Production applications
+          should use a managed datasource. -->\n <!-- The datasource is deployed as
+          WEB-INF/test-ds.xml,\n you can find it in the source at src/test/resources/test-ds.xml
+          -->\n <jta-data-source>java:jboss/datasources/TasksJsfQuickstartDS</jta-data-source>\n
+          <properties>\n <!-- Properties for Hibernate -->\n <property name=\"hibernate.hbm2ddl.auto\"
+          value=\"create-drop\" />\n <property name=\"hibernate.show_sql\" value=\"false\"
+          />\n </properties>\n </persistence-unit>\n </persistence>\n ```\n can be
+          translated to:\n ```\n quarkus.datasource.jdbc.url=jdbc:h2:mem:tasks-jsf-quickstart;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1\n
+          quarkus.datasource.db-kind=h2\n quarkus.datasource.username=sa\n quarkus.datasource.password=sa\n\n
+          quarkus.hibernate-orm.database.generation=drop-and-create\n ```"
+      links:
+      - url: https://quarkus.io/guides/hibernate-orm#persistence-xml
+        title: Using Hibernate ORM and Jakarta persistence
+      effort: 1
     persistence-to-quarkus-00010:
       description: Replace @PersistenceContext with @Inject
       category: optional
@@ -4514,7 +6086,6 @@
   unmatched:
   - cdi-to-quarkus-00000
   - cdi-to-quarkus-00020
-  - cdi-to-quarkus-00030
   - dependency-removal-for-quarkus-00000
   - jakarta-cdi-to-quarkus-00000
   - jakarta-cdi-to-quarkus-00020
@@ -4526,13 +6097,6 @@
   - jakarta-jaxrs-to-quarkus-00010
   - jakarta-jaxrs-to-quarkus-00020
   - javaee-faces-to-quarkus-00000
-  - javaee-pom-to-quarkus-00000
-  - javaee-pom-to-quarkus-00010
-  - javaee-pom-to-quarkus-00020
-  - javaee-pom-to-quarkus-00030
-  - javaee-pom-to-quarkus-00040
-  - javaee-pom-to-quarkus-00050
-  - javaee-pom-to-quarkus-00060
   - javaee-pom-to-quarkus-00070
   - javaee-pom-to-quarkus-00080
   - jaxrs-to-quarkus-00000
@@ -4541,7 +6105,6 @@
   - jms-to-reactive-quarkus-00000
   - jms-to-reactive-quarkus-00020
   - jndi-to-quarkus-00002
-  - persistence-to-quarkus-00000
   - persistence-to-quarkus-00011
   - springboot-actuator-to-quarkus-0100
   - springboot-actuator-to-quarkus-0200
@@ -4581,36 +6144,72 @@
   description: This ruleset provides analysis of logging libraries.
   tags:
   - Bean Validation
+  - Bean=EJB XML
   - CDI
+  - CDI XML
   - Common Annotations
   - Connect=Common Annotations
+  - Connect=EJB XML
   - Connect=Servlet
   - EJB Timer
+  - Embedded technology - Java Server Faces
+  - Embedded technology - Java Server Pages
   - Embedded technology - WebSocket
+  - Embedded=JSF
+  - Embedded=Properties
   - Execute=CDI
+  - Execute=CDI XML
   - Execute=EJB Timer
   - Execute=Java EE JSON-P
   - HTTP=Servlet
   - Inversion of Control=CDI
+  - Inversion of Control=CDI XML
+  - JSF
+  - JSF XML
+  - JSP
   - Java EE JSON-P
   - Java EE=Bean Validation
   - Java EE=CDI
+  - Java EE=CDI XML
   - Java EE=Common Annotations
   - Java EE=EJB Timer
+  - Java EE=EJB XML
+  - Java EE=JPA XML
+  - Java EE=JPA entities
   - Java EE=JPA named queries
+  - Java EE=JSF Page
+  - Java EE=JSF XML
+  - Java EE=JSP Page
   - Java EE=Java EE JSON-P
+  - Java EE=Persistence units
   - Java EE=Servlet
   - Java EE=WebSocket
   - Java Servlet
+  - MVC=JSF
   - Other=Common Annotations
+  - Other=Properties
+  - Persistence=JPA XML
+  - Persistence=JPA entities
   - Persistence=JPA named queries
+  - Persistence=Persistence units
   - Processing=EJB Timer
   - Processing=Java EE JSON-P
   - Servlet
   - Store=Bean Validation
+  - Store=JPA XML
+  - Store=JPA entities
   - Store=JPA named queries
+  - Store=Persistence units
+  - Sustain=Properties
   - Validation=Bean Validation
+  - View=JSF
+  - View=JSF Page
+  - View=JSF XML
+  - View=JSP Page
   - View=WebSocket
+  - Web=JSF Page
+  - Web=JSF XML
+  - Web=JSP Page
   - Web=WebSocket
   - WebSocket
   insights:
@@ -12013,6 +13612,151 @@
         variables:
           tags:
           - Servlet
+    javaee-technology-usage-00905:
+      description: CDI XML
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=CDI XML
+      incidents:
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/WEB-INF/beans.xml
+        message: ""
+        codeSnip: 22  </beans>
+        lineNumber: 21
+        variables:
+          data: version
+          innerText: "1.1"
+          matchingXML: "1.1"
+    javaee-technology-usage-00927:
+      description: JSF XML
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=JSF XML
+      incidents:
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/WEB-INF/faces-config.xml
+        message: ""
+        codeSnip: 21       <navigation-rule>
+        lineNumber: 20
+        variables:
+          data: version
+          innerText: "2.2"
+          matchingXML: "2.2"
+    javaee-technology-usage-00951:
+      description: CDI XML
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Execute=CDI XML
+      - tag=Inversion of Control=CDI XML
+      - tag=Java EE=CDI XML
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - CDI XML
+    javaee-technology-usage-00957:
+      description: JSF XML
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Java EE=JSF XML
+      - tag=View=JSF XML
+      - tag=Web=JSF XML
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - JSF XML
+    non-xml-technology-usage-02000:
+      description: Non-XML EJB
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Bean=EJB XML
+      - tag=Connect=EJB XML
+      - tag=Java EE=EJB XML
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - EJB XML
+    non-xml-technology-usage-17000:
+      description: Non-XML JPA
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Java EE=JPA XML
+      - tag=Persistence=JPA XML
+      - tag=Store=JPA XML
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - JPA XML
+    non-xml-technology-usage-20000:
+      description: Properties
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded=Properties
+      - tag=Other=Properties
+      - tag=Sustain=Properties
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - Properties
+    technology-usage-database-01100:
+      description: JPA Entities
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Java EE=JPA entities
+      - tag=Persistence=JPA entities
+      - tag=Store=JPA entities
+      incidents:
+      - uri: file:///source/daytrader-ee7-ejb/src/main/resources/META-INF/persistence.xml
+        message: ""
+        codeSnip: 18               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        lineNumber: 17
+        variables:
+          matchingText: http://xmlns.jcp.org/xml/ns/persistence
+      - uri: file:///source/daytrader-ee7-ejb/src/main/resources/META-INF/persistence.xml
+        message: ""
+        codeSnip: 20               version="2.1">
+        lineNumber: 19
+        variables:
+          matchingText: http://xmlns.jcp.org/xml/ns/persistence
+      - uri: file:///source/daytrader-ee7-web/src/main/java/META-INF/persistence.xml
+        message: ""
+        codeSnip: 18               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        lineNumber: 17
+        variables:
+          matchingText: http://xmlns.jcp.org/xml/ns/persistence
+      - uri: file:///source/daytrader-ee7-web/src/main/java/META-INF/persistence.xml
+        message: ""
+        codeSnip: 20               version="2.1">
+        lineNumber: 19
+        variables:
+          matchingText: http://xmlns.jcp.org/xml/ns/persistence
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/WEB-INF/classes/META-INF/persistence.xml
+        message: ""
+        codeSnip: 19               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        lineNumber: 18
+        variables:
+          matchingText: http://xmlns.jcp.org/xml/ns/persistence
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/WEB-INF/classes/META-INF/persistence.xml
+        message: ""
+        codeSnip: 21               version="2.1">
+        lineNumber: 20
+        variables:
+          matchingText: http://xmlns.jcp.org/xml/ns/persistence
     technology-usage-database-01200:
       description: JPA Queries
       labels:
@@ -12747,6 +14491,21 @@
           kind: Property
           name: Entity
           package: com.ibm.websphere.samples.daytrader.entities
+    technology-usage-database-01300:
+      description: Persistence Units
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Java EE=Persistence units
+      - tag=Persistence=Persistence units
+      - tag=Store=Persistence units
+      incidents:
+      - uri: file:///source/daytrader-ee7-ejb/src/main/resources/META-INF/persistence.xml
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/java/META-INF/persistence.xml
+        message: ""
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/WEB-INF/classes/META-INF/persistence.xml
+        message: ""
     technology-usage-ejb-01400:
       description: EJB Timer
       labels:
@@ -12761,6 +14520,48 @@
         variables:
           tags:
           - EJB Timer
+    technology-usage-mvc-01600:
+      description: JSF
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded=JSF
+      - tag=MVC=JSF
+      - tag=View=JSF
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - JSF
+    technology-usage-web-01000:
+      description: JSF
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Java EE=JSF Page
+      - tag=View=JSF Page
+      - tag=Web=JSF Page
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - JSF
+    technology-usage-web-01100:
+      description: JSP
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Java EE=JSP Page
+      - tag=View=JSP Page
+      - tag=Web=JSP Page
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - JSP
     technology-usage-web-01300:
       description: WebSocket
       labels:
@@ -12775,6 +14576,284 @@
         variables:
           tags:
           - WebSocket
+    web-01000:
+      description: Embedded technology - Java Server Faces
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded technology - Java Server Faces
+      - tag=JSF
+      incidents:
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/PingCDIJSF.xhtml
+        message: ""
+        codeSnip: 20         xmlns:f="http://xmlns.jcp.org/jsf/core"
+        lineNumber: 19
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/PingCDIJSF.xhtml
+        message: ""
+        codeSnip: '21         xmlns:ui="http://xmlns.jcp.org/jsf/facelets" '
+        lineNumber: 20
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/PingCDIJSF.xhtml
+        message: ""
+        codeSnip: 22         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+        lineNumber: 21
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/PingJsf.xhtml
+        message: ""
+        codeSnip: 20         xmlns:f="http://xmlns.jcp.org/jsf/core"
+        lineNumber: 19
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/PingJsf.xhtml
+        message: ""
+        codeSnip: '21         xmlns:ui="http://xmlns.jcp.org/jsf/facelets" '
+        lineNumber: 20
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/PingJsf.xhtml
+        message: ""
+        codeSnip: 22         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+        lineNumber: 21
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/account.xhtml
+        message: ""
+        codeSnip: 21         xmlns:f="http://xmlns.jcp.org/jsf/core"
+        lineNumber: 20
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/account.xhtml
+        message: ""
+        codeSnip: "22  \t   xmlns:ui=\"http://xmlns.jcp.org/jsf/facelets\" "
+        lineNumber: 21
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/account.xhtml
+        message: ""
+        codeSnip: 23         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+        lineNumber: 22
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/config.xhtml
+        message: ""
+        codeSnip: 20         xmlns:f="http://xmlns.jcp.org/jsf/core"
+        lineNumber: 19
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/config.xhtml
+        message: ""
+        codeSnip: '21         xmlns:ui="http://xmlns.jcp.org/jsf/facelets" '
+        lineNumber: 20
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/config.xhtml
+        message: ""
+        codeSnip: 22         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+        lineNumber: 21
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/configure.xhtml
+        message: ""
+        codeSnip: 20         xmlns:f="http://xmlns.jcp.org/jsf/core"
+        lineNumber: 19
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/configure.xhtml
+        message: ""
+        codeSnip: '21         xmlns:ui="http://xmlns.jcp.org/jsf/facelets" '
+        lineNumber: 20
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/configure.xhtml
+        message: ""
+        codeSnip: 22         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+        lineNumber: 21
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/docs/tradeFAQ.xhtml
+        message: ""
+        codeSnip: 20         xmlns:f="http://xmlns.jcp.org/jsf/core"
+        lineNumber: 19
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/docs/tradeFAQ.xhtml
+        message: ""
+        codeSnip: '21         xmlns:ui="http://xmlns.jcp.org/jsf/facelets" '
+        lineNumber: 20
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/docs/tradeFAQ.xhtml
+        message: ""
+        codeSnip: 22         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+        lineNumber: 21
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/index.xhtml
+        message: ""
+        codeSnip: 20         xmlns:f="http://xmlns.jcp.org/jsf/core"
+        lineNumber: 19
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/index.xhtml
+        message: ""
+        codeSnip: '21         xmlns:ui="http://xmlns.jcp.org/jsf/facelets" '
+        lineNumber: 20
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/index.xhtml
+        message: ""
+        codeSnip: 22         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+        lineNumber: 21
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/marketSummary.xhtml
+        message: ""
+        codeSnip: 20         xmlns:f="http://xmlns.jcp.org/jsf/core"
+        lineNumber: 19
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/marketSummary.xhtml
+        message: ""
+        codeSnip: '21         xmlns:ui="http://xmlns.jcp.org/jsf/facelets" '
+        lineNumber: 20
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/marketSummary.xhtml
+        message: ""
+        codeSnip: 22         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+        lineNumber: 21
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/order.xhtml
+        message: ""
+        codeSnip: 20         xmlns:f="http://xmlns.jcp.org/jsf/core"
+        lineNumber: 19
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/order.xhtml
+        message: ""
+        codeSnip: '21         xmlns:ui="http://xmlns.jcp.org/jsf/facelets" '
+        lineNumber: 20
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/order.xhtml
+        message: ""
+        codeSnip: 22         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+        lineNumber: 21
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/portfolio.xhtml
+        message: ""
+        codeSnip: 20         xmlns:f="http://xmlns.jcp.org/jsf/core"
+        lineNumber: 19
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/portfolio.xhtml
+        message: ""
+        codeSnip: '21         xmlns:ui="http://xmlns.jcp.org/jsf/facelets" '
+        lineNumber: 20
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/portfolio.xhtml
+        message: ""
+        codeSnip: 22         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+        lineNumber: 21
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/quote.xhtml
+        message: ""
+        codeSnip: 20         xmlns:f="http://xmlns.jcp.org/jsf/core"
+        lineNumber: 19
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/quote.xhtml
+        message: ""
+        codeSnip: '21         xmlns:ui="http://xmlns.jcp.org/jsf/facelets" '
+        lineNumber: 20
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/quote.xhtml
+        message: ""
+        codeSnip: 22         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+        lineNumber: 21
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/register.xhtml
+        message: ""
+        codeSnip: 20         xmlns:f="http://xmlns.jcp.org/jsf/core"
+        lineNumber: 19
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/register.xhtml
+        message: ""
+        codeSnip: '21         xmlns:ui="http://xmlns.jcp.org/jsf/facelets" '
+        lineNumber: 20
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/register.xhtml
+        message: ""
+        codeSnip: 22         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+        lineNumber: 21
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/tradehome.xhtml
+        message: ""
+        codeSnip: 20         xmlns:f="http://xmlns.jcp.org/jsf/core"
+        lineNumber: 19
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/tradehome.xhtml
+        message: ""
+        codeSnip: '21         xmlns:ui="http://xmlns.jcp.org/jsf/facelets" '
+        lineNumber: 20
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/tradehome.xhtml
+        message: ""
+        codeSnip: 22         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+        lineNumber: 21
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/web_prmtv.xhtml
+        message: ""
+        codeSnip: 20         xmlns:f="http://xmlns.jcp.org/jsf/core"
+        lineNumber: 19
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/web_prmtv.xhtml
+        message: ""
+        codeSnip: '21         xmlns:ui="http://xmlns.jcp.org/jsf/facelets" '
+        lineNumber: 20
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/web_prmtv.xhtml
+        message: ""
+        codeSnip: 22         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+        lineNumber: 21
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/welcome.xhtml
+        message: ""
+        codeSnip: 20         xmlns:f="http://xmlns.jcp.org/jsf/core"
+        lineNumber: 19
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/welcome.xhtml
+        message: ""
+        codeSnip: '21         xmlns:ui="http://xmlns.jcp.org/jsf/facelets" '
+        lineNumber: 20
+        variables:
+          matchingText: xmlns.jcp.org/jsf
+      - uri: file:///source/daytrader-ee7-web/src/main/webapp/welcome.xhtml
+        message: ""
+        codeSnip: 22         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+        lineNumber: 21
+        variables:
+          matchingText: xmlns.jcp.org/jsf
   unmatched:
   - 3rd-party-01000
   - 3rd-party-02000
@@ -12984,7 +15063,6 @@
   - javaee-technology-usage-00220
   - javaee-technology-usage-00902
   - javaee-technology-usage-00903
-  - javaee-technology-usage-00905
   - javaee-technology-usage-00906
   - javaee-technology-usage-00910
   - javaee-technology-usage-00911
@@ -12996,19 +15074,16 @@
   - javaee-technology-usage-00917
   - javaee-technology-usage-00918
   - javaee-technology-usage-00926
-  - javaee-technology-usage-00927
   - javaee-technology-usage-00928
   - javaee-technology-usage-00930
   - javaee-technology-usage-00931
   - javaee-technology-usage-00932
   - javaee-technology-usage-00950
-  - javaee-technology-usage-00951
   - javaee-technology-usage-00952
   - javaee-technology-usage-00953
   - javaee-technology-usage-00954
   - javaee-technology-usage-00955
   - javaee-technology-usage-00956
-  - javaee-technology-usage-00957
   - javaee-technology-usage-00958
   - javase-01000
   - javase-01100
@@ -13113,16 +15188,13 @@
   - mvc-05800
   - mvc-05900
   - mvc-06000
-  - non-xml-technology-usage-02000
   - non-xml-technology-usage-05000
   - non-xml-technology-usage-06000
   - non-xml-technology-usage-12000
   - non-xml-technology-usage-13000
   - non-xml-technology-usage-14000
-  - non-xml-technology-usage-17000
   - non-xml-technology-usage-18000
   - non-xml-technology-usage-19000
-  - non-xml-technology-usage-20000
   - non-xml-technology-usage-21000
   - non-xml-technology-usage-22000
   - non-xml-technology-usage-23000
@@ -13213,8 +15285,6 @@
   - technology-usage-connect-02900
   - technology-usage-database-01000
   - technology-usage-database-01001
-  - technology-usage-database-01100
-  - technology-usage-database-01300
   - technology-usage-database-01400
   - technology-usage-database-01500
   - technology-usage-database-01600
@@ -13360,7 +15430,6 @@
   - technology-usage-mvc-01300
   - technology-usage-mvc-01400
   - technology-usage-mvc-01500
-  - technology-usage-mvc-01600
   - technology-usage-mvc-01700
   - technology-usage-mvc-01800
   - technology-usage-mvc-01900
@@ -13468,9 +15537,6 @@
   - technology-usage-test-frameworks-00350
   - technology-usage-test-frameworks-00360
   - technology-usage-test-frameworks-00370
-  - technology-usage-web-01000
-  - technology-usage-web-01100
-  - technology-usage-web-01100
   - technology-usage-web-01200
   - technology-usage-web-01400
   - technology-usage-web-01400
@@ -13531,4 +15597,3 @@
   - test-frameworks-sauge-00360
   - test-frameworks-sauge-00370
   - test-frameworks-sauge-00560
-  - web-01000

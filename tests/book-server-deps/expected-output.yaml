@@ -179,9 +179,316 @@
   - session-00001
   - socket-communication-00000
   - socket-communication-00001
+- name: discovery-rules
+  tags:
+  - Java Source
+  - Maven XML
+  insights:
+    discover-java-files:
+      description: Java source files
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - konveyor.io/target=discovery
+      - tag=Java Source
+      incidents:
+      - uri: file:///source/src/main/java/com/telran/application/BookServerApp.java
+        message: ""
+      - uri: file:///source/src/main/java/com/telran/application/controller/BookQuerriesController.java
+        message: ""
+      - uri: file:///source/src/main/java/com/telran/application/controller/BookStartEndController.java
+        message: ""
+      - uri: file:///source/src/main/java/com/telran/application/model/BookModel.java
+        message: ""
+      - uri: file:///source/src/main/java/com/telran/application/model/dto/Book.java
+        message: ""
+    discover-maven-xml:
+      description: Maven XML file
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - konveyor.io/target=discovery
+      - tag=Maven XML
+      incidents:
+      - uri: file:///source/pom.xml
+        message: ""
+  unmatched:
+  - discover-license
+  - discover-manifest-file
+  - discover-properties-file
+  - hardcoded-ip-address
+  - windup-discover-ejb-configuration
+  - windup-discover-jpa-configuration
+  - windup-discover-spring-configuration
+  - windup-discover-web-configuration
 - name: quarkus/springboot
   description: This ruleset gives hints to migrate from SpringBoot devtools to Quarkus
   violations:
+    javaee-pom-to-quarkus-00010:
+      description: Adopt Quarkus BOM
+      category: mandatory
+      labels:
+      - konveyor.io/source=java-ee
+      - konveyor.io/target=quarkus
+      incidents:
+      - uri: file:///source/pom.xml
+        message: "Use the Quarkus BOM to omit the version of the different Quarkus
+          dependencies. \n Add the following sections to the `pom.xml` file: \n\n
+          ```xml\n <properties> \n <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
+          \n <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
+          \n <quarkus.platform.version>3.1.0.Final</quarkus.platform.version>\n </properties>
+          \n <dependencyManagement> \n <dependencies> \n <dependency> \n <groupId>${quarkus.platform.group-id}</groupId>
+          \n <artifactId>${quarkus.platform.artifact-id}</artifactId> \n <version>${quarkus.platform.version}</version>
+          \n <type>pom</type> \n <scope>import</scope> \n </dependency> \n </dependencies>
+          \n </dependencyManagement> \n ```\n Check the latest Quarkus version available
+          from the `Quarkus - Releases` link below."
+        codeSnip: '6  '
+        lineNumber: 5
+        variables:
+          data: project
+          innerText: "\n    4.0.0\n\n    com.telran\n    BookServer\n    1.0-SNAPSHOT\n\n
+            \   \n        \n            \n                org.springframework.boot\n
+            \               spring-boot-maven-plugin\n                2.1.0.RELEASE
+            \ \t\t\t\n            \n        \n    \n\n    \n        \n        \n            org.springframework.boot\n
+            \           spring-boot-starter-web\n            2.1.0.RELEASE                \n
+            \       \n\n        \n        \n            org.projectlombok\n            lombok\n
+            \           1.18.2\n        \n\n        \n        \n            com.fasterxml.jackson.core\n
+            \           jackson-databind\n            2.9.5\n        \n\n        \n
+            \           com.fasterxml.jackson.datatype\n            jackson-datatype-jsr310\n
+            \           2.9.5\n        \n\n        \n            com.fasterxml.jackson.dataformat\n
+            \           jackson-dataformat-xml\n            2.9.5\n        \n\n        \n
+            \       \n            \n            \n            \n            \n        \n\n
+            \   \n\n"
+          matchingXML: <modelVersion>4.0.0</modelVersion><groupId>com.telran</groupId><artifactId>BookServer</artifactId><version>1.0-SNAPSHOT</version><build><plugins><plugin><groupId>org.springframework.boot</groupId><artifactId>spring-boot-maven-plugin</artifactId><version>2.1.0.RELEASE</version><!--  09.11.2018
+            --></plugin></plugins></build><dependencies><!-- spring boot --><dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-web</artifactId><version>2.1.0.RELEASE</version><!--  09.11.2018
+            --></dependency><!--  lombok --><dependency><groupId>org.projectlombok</groupId><artifactId>lombok</artifactId><version>1.18.2</version></dependency><!--
+            jackson --><dependency><groupId>com.fasterxml.jackson.core</groupId><artifactId>jackson-databind</artifactId><version>2.9.5</version></dependency><dependency><groupId>com.fasterxml.jackson.datatype</groupId><artifactId>jackson-datatype-jsr310</artifactId><version>2.9.5</version></dependency><dependency><groupId>com.fasterxml.jackson.dataformat</groupId><artifactId>jackson-dataformat-xml</artifactId><version>2.9.5</version></dependency><!--&lt;!&ndash;
+            jdbc connector &ndash;&gt;--><!--<dependency>--><!--<groupId>mysql</groupId>--><!--<artifactId>mysql-connector-java</artifactId>--><!--&lt;!&ndash;
+            <version>8.0.12</version> &ndash;&gt;               &lt;!&ndash; TimeZone
+            bug not fixed since 5.1.39 &ndash;&gt;--><!--<version>5.1.39</version>--><!--</dependency>--></dependencies>
+      links:
+      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven;
+        title: Quarkus - Guide;
+      - url: https://quarkus.io/blog/tag/release/
+        title: Quarkus - Releases
+      effort: 1
+    javaee-pom-to-quarkus-00020:
+      description: Adopt Quarkus Maven plugin
+      category: mandatory
+      labels:
+      - konveyor.io/source=java-ee
+      - konveyor.io/target=quarkus
+      incidents:
+      - uri: file:///source/pom.xml
+        message: "Use the Quarkus Maven plugin adding the following sections to the
+          `pom.xml` file: \n\n ```xml\n <properties> \n <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
+          \n <quarkus.platform.version>3.1.0.Final</quarkus.platform.version>\n </properties>
+          \n <build>\n <plugins>\n <plugin>\n <groupId>${quarkus.platform.group-id}</groupId>\n
+          <artifactId>quarkus-maven-plugin</artifactId>\n <version>${quarkus.platform.version}</version>\n
+          <extensions>true</extensions>\n <executions>\n <execution>\n <goals>\n <goal>build</goal>\n
+          <goal>generate-code</goal>\n <goal>generate-code-tests</goal>\n </goals>\n
+          </execution>\n </executions>\n </plugin>\n </plugins>\n </build>\n ```"
+        codeSnip: '6  '
+        lineNumber: 5
+        variables:
+          data: project
+          innerText: "\n    4.0.0\n\n    com.telran\n    BookServer\n    1.0-SNAPSHOT\n\n
+            \   \n        \n            \n                org.springframework.boot\n
+            \               spring-boot-maven-plugin\n                2.1.0.RELEASE
+            \ \t\t\t\n            \n        \n    \n\n    \n        \n        \n            org.springframework.boot\n
+            \           spring-boot-starter-web\n            2.1.0.RELEASE                \n
+            \       \n\n        \n        \n            org.projectlombok\n            lombok\n
+            \           1.18.2\n        \n\n        \n        \n            com.fasterxml.jackson.core\n
+            \           jackson-databind\n            2.9.5\n        \n\n        \n
+            \           com.fasterxml.jackson.datatype\n            jackson-datatype-jsr310\n
+            \           2.9.5\n        \n\n        \n            com.fasterxml.jackson.dataformat\n
+            \           jackson-dataformat-xml\n            2.9.5\n        \n\n        \n
+            \       \n            \n            \n            \n            \n        \n\n
+            \   \n\n"
+          matchingXML: <modelVersion>4.0.0</modelVersion><groupId>com.telran</groupId><artifactId>BookServer</artifactId><version>1.0-SNAPSHOT</version><build><plugins><plugin><groupId>org.springframework.boot</groupId><artifactId>spring-boot-maven-plugin</artifactId><version>2.1.0.RELEASE</version><!--  09.11.2018
+            --></plugin></plugins></build><dependencies><!-- spring boot --><dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-web</artifactId><version>2.1.0.RELEASE</version><!--  09.11.2018
+            --></dependency><!--  lombok --><dependency><groupId>org.projectlombok</groupId><artifactId>lombok</artifactId><version>1.18.2</version></dependency><!--
+            jackson --><dependency><groupId>com.fasterxml.jackson.core</groupId><artifactId>jackson-databind</artifactId><version>2.9.5</version></dependency><dependency><groupId>com.fasterxml.jackson.datatype</groupId><artifactId>jackson-datatype-jsr310</artifactId><version>2.9.5</version></dependency><dependency><groupId>com.fasterxml.jackson.dataformat</groupId><artifactId>jackson-dataformat-xml</artifactId><version>2.9.5</version></dependency><!--&lt;!&ndash;
+            jdbc connector &ndash;&gt;--><!--<dependency>--><!--<groupId>mysql</groupId>--><!--<artifactId>mysql-connector-java</artifactId>--><!--&lt;!&ndash;
+            <version>8.0.12</version> &ndash;&gt;               &lt;!&ndash; TimeZone
+            bug not fixed since 5.1.39 &ndash;&gt;--><!--<version>5.1.39</version>--><!--</dependency>--></dependencies>
+      links:
+      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven;
+        title: Quarkus - Guide;
+      effort: 1
+    javaee-pom-to-quarkus-00030:
+      description: Adopt Maven Compiler plugin
+      category: mandatory
+      labels:
+      - konveyor.io/source=java-ee
+      - konveyor.io/target=quarkus
+      incidents:
+      - uri: file:///source/pom.xml
+        message: "Use the Maven Compiler plugin adding the following sections to the
+          `pom.xml` file: \n\n ```xml\n <properties> \n <compiler-plugin.version>3.10.1</compiler-plugin.version>\n
+          <maven.compiler.release>11</maven.compiler.release>\n </properties> \n <build>\n
+          <plugins>\n <plugin>\n <artifactId>maven-compiler-plugin</artifactId>\n
+          <version>${compiler-plugin.version}</version>\n <configuration>\n <compilerArgs>\n
+          <arg>-parameters</arg>\n </compilerArgs>\n </configuration>\n </plugin>\n
+          </plugins>\n </build>\n ```"
+        codeSnip: '6  '
+        lineNumber: 5
+        variables:
+          data: project
+          innerText: "\n    4.0.0\n\n    com.telran\n    BookServer\n    1.0-SNAPSHOT\n\n
+            \   \n        \n            \n                org.springframework.boot\n
+            \               spring-boot-maven-plugin\n                2.1.0.RELEASE
+            \ \t\t\t\n            \n        \n    \n\n    \n        \n        \n            org.springframework.boot\n
+            \           spring-boot-starter-web\n            2.1.0.RELEASE                \n
+            \       \n\n        \n        \n            org.projectlombok\n            lombok\n
+            \           1.18.2\n        \n\n        \n        \n            com.fasterxml.jackson.core\n
+            \           jackson-databind\n            2.9.5\n        \n\n        \n
+            \           com.fasterxml.jackson.datatype\n            jackson-datatype-jsr310\n
+            \           2.9.5\n        \n\n        \n            com.fasterxml.jackson.dataformat\n
+            \           jackson-dataformat-xml\n            2.9.5\n        \n\n        \n
+            \       \n            \n            \n            \n            \n        \n\n
+            \   \n\n"
+          matchingXML: <modelVersion>4.0.0</modelVersion><groupId>com.telran</groupId><artifactId>BookServer</artifactId><version>1.0-SNAPSHOT</version><build><plugins><plugin><groupId>org.springframework.boot</groupId><artifactId>spring-boot-maven-plugin</artifactId><version>2.1.0.RELEASE</version><!--  09.11.2018
+            --></plugin></plugins></build><dependencies><!-- spring boot --><dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-web</artifactId><version>2.1.0.RELEASE</version><!--  09.11.2018
+            --></dependency><!--  lombok --><dependency><groupId>org.projectlombok</groupId><artifactId>lombok</artifactId><version>1.18.2</version></dependency><!--
+            jackson --><dependency><groupId>com.fasterxml.jackson.core</groupId><artifactId>jackson-databind</artifactId><version>2.9.5</version></dependency><dependency><groupId>com.fasterxml.jackson.datatype</groupId><artifactId>jackson-datatype-jsr310</artifactId><version>2.9.5</version></dependency><dependency><groupId>com.fasterxml.jackson.dataformat</groupId><artifactId>jackson-dataformat-xml</artifactId><version>2.9.5</version></dependency><!--&lt;!&ndash;
+            jdbc connector &ndash;&gt;--><!--<dependency>--><!--<groupId>mysql</groupId>--><!--<artifactId>mysql-connector-java</artifactId>--><!--&lt;!&ndash;
+            <version>8.0.12</version> &ndash;&gt;               &lt;!&ndash; TimeZone
+            bug not fixed since 5.1.39 &ndash;&gt;--><!--<version>5.1.39</version>--><!--</dependency>--></dependencies>
+      links:
+      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven;
+        title: Quarkus - Guide;
+      effort: 1
+    javaee-pom-to-quarkus-00040:
+      description: Adopt Maven Surefire plugin
+      category: mandatory
+      labels:
+      - konveyor.io/source=java-ee
+      - konveyor.io/target=quarkus
+      incidents:
+      - uri: file:///source/pom.xml
+        message: "Use the Maven Surefire plugin adding the following sections to the
+          `pom.xml` file: \n\n ```xml\n <properties> \n <surefire-plugin.version>3.0.0</compiler-plugin.version>\n
+          </properties> \n <build>\n <plugins>\n <plugin>\n <artifactId>maven-surefire-plugin</artifactId>\n
+          <version>${surefire-plugin.version}</version>\n <configuration>\n <systemPropertyVariables>\n
+          <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>\n
+          <maven.home>${maven.home}</maven.home>\n </systemPropertyVariables>\n </configuration>\n
+          </plugin>\n </plugins>\n </build>\n ```"
+        codeSnip: '6  '
+        lineNumber: 5
+        variables:
+          data: project
+          innerText: "\n    4.0.0\n\n    com.telran\n    BookServer\n    1.0-SNAPSHOT\n\n
+            \   \n        \n            \n                org.springframework.boot\n
+            \               spring-boot-maven-plugin\n                2.1.0.RELEASE
+            \ \t\t\t\n            \n        \n    \n\n    \n        \n        \n            org.springframework.boot\n
+            \           spring-boot-starter-web\n            2.1.0.RELEASE                \n
+            \       \n\n        \n        \n            org.projectlombok\n            lombok\n
+            \           1.18.2\n        \n\n        \n        \n            com.fasterxml.jackson.core\n
+            \           jackson-databind\n            2.9.5\n        \n\n        \n
+            \           com.fasterxml.jackson.datatype\n            jackson-datatype-jsr310\n
+            \           2.9.5\n        \n\n        \n            com.fasterxml.jackson.dataformat\n
+            \           jackson-dataformat-xml\n            2.9.5\n        \n\n        \n
+            \       \n            \n            \n            \n            \n        \n\n
+            \   \n\n"
+          matchingXML: <modelVersion>4.0.0</modelVersion><groupId>com.telran</groupId><artifactId>BookServer</artifactId><version>1.0-SNAPSHOT</version><build><plugins><plugin><groupId>org.springframework.boot</groupId><artifactId>spring-boot-maven-plugin</artifactId><version>2.1.0.RELEASE</version><!--  09.11.2018
+            --></plugin></plugins></build><dependencies><!-- spring boot --><dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-web</artifactId><version>2.1.0.RELEASE</version><!--  09.11.2018
+            --></dependency><!--  lombok --><dependency><groupId>org.projectlombok</groupId><artifactId>lombok</artifactId><version>1.18.2</version></dependency><!--
+            jackson --><dependency><groupId>com.fasterxml.jackson.core</groupId><artifactId>jackson-databind</artifactId><version>2.9.5</version></dependency><dependency><groupId>com.fasterxml.jackson.datatype</groupId><artifactId>jackson-datatype-jsr310</artifactId><version>2.9.5</version></dependency><dependency><groupId>com.fasterxml.jackson.dataformat</groupId><artifactId>jackson-dataformat-xml</artifactId><version>2.9.5</version></dependency><!--&lt;!&ndash;
+            jdbc connector &ndash;&gt;--><!--<dependency>--><!--<groupId>mysql</groupId>--><!--<artifactId>mysql-connector-java</artifactId>--><!--&lt;!&ndash;
+            <version>8.0.12</version> &ndash;&gt;               &lt;!&ndash; TimeZone
+            bug not fixed since 5.1.39 &ndash;&gt;--><!--<version>5.1.39</version>--><!--</dependency>--></dependencies>
+      links:
+      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven;
+        title: Quarkus - Guide;
+      effort: 1
+    javaee-pom-to-quarkus-00050:
+      description: Adopt Maven Failsafe plugin
+      category: mandatory
+      labels:
+      - konveyor.io/source=java-ee
+      - konveyor.io/target=quarkus
+      incidents:
+      - uri: file:///source/pom.xml
+        message: "Use the Maven Failsafe plugin adding the following sections to the
+          `pom.xml` file: \n\n ```xml\n <properties> \n <surefire-plugin.version>3.0.0</compiler-plugin.version>\n
+          </properties> \n <build>\n <plugins>\n <plugin>\n <artifactId>maven-failsafe-plugin</artifactId>\n
+          <version>${surefire-plugin.version}</version>\n <executions>\n <execution>\n
+          <goals>\n <goals>integration-test</goal>\n <goals>verify</goal>\n </goals>\n
+          <configuration>\n <systemPropertyVariables>\n <native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>\n
+          <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>\n
+          <maven.home>${maven.home}</maven.home>\n </systemPropertyVariables>\n </configuration>\n
+          </execution>\n </executions>\n </plugin>\n </plugins>\n </build>\n ```"
+        codeSnip: '6  '
+        lineNumber: 5
+        variables:
+          data: project
+          innerText: "\n    4.0.0\n\n    com.telran\n    BookServer\n    1.0-SNAPSHOT\n\n
+            \   \n        \n            \n                org.springframework.boot\n
+            \               spring-boot-maven-plugin\n                2.1.0.RELEASE
+            \ \t\t\t\n            \n        \n    \n\n    \n        \n        \n            org.springframework.boot\n
+            \           spring-boot-starter-web\n            2.1.0.RELEASE                \n
+            \       \n\n        \n        \n            org.projectlombok\n            lombok\n
+            \           1.18.2\n        \n\n        \n        \n            com.fasterxml.jackson.core\n
+            \           jackson-databind\n            2.9.5\n        \n\n        \n
+            \           com.fasterxml.jackson.datatype\n            jackson-datatype-jsr310\n
+            \           2.9.5\n        \n\n        \n            com.fasterxml.jackson.dataformat\n
+            \           jackson-dataformat-xml\n            2.9.5\n        \n\n        \n
+            \       \n            \n            \n            \n            \n        \n\n
+            \   \n\n"
+          matchingXML: <modelVersion>4.0.0</modelVersion><groupId>com.telran</groupId><artifactId>BookServer</artifactId><version>1.0-SNAPSHOT</version><build><plugins><plugin><groupId>org.springframework.boot</groupId><artifactId>spring-boot-maven-plugin</artifactId><version>2.1.0.RELEASE</version><!--  09.11.2018
+            --></plugin></plugins></build><dependencies><!-- spring boot --><dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-web</artifactId><version>2.1.0.RELEASE</version><!--  09.11.2018
+            --></dependency><!--  lombok --><dependency><groupId>org.projectlombok</groupId><artifactId>lombok</artifactId><version>1.18.2</version></dependency><!--
+            jackson --><dependency><groupId>com.fasterxml.jackson.core</groupId><artifactId>jackson-databind</artifactId><version>2.9.5</version></dependency><dependency><groupId>com.fasterxml.jackson.datatype</groupId><artifactId>jackson-datatype-jsr310</artifactId><version>2.9.5</version></dependency><dependency><groupId>com.fasterxml.jackson.dataformat</groupId><artifactId>jackson-dataformat-xml</artifactId><version>2.9.5</version></dependency><!--&lt;!&ndash;
+            jdbc connector &ndash;&gt;--><!--<dependency>--><!--<groupId>mysql</groupId>--><!--<artifactId>mysql-connector-java</artifactId>--><!--&lt;!&ndash;
+            <version>8.0.12</version> &ndash;&gt;               &lt;!&ndash; TimeZone
+            bug not fixed since 5.1.39 &ndash;&gt;--><!--<version>5.1.39</version>--><!--</dependency>--></dependencies>
+      links:
+      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven;
+        title: Quarkus - Guide;
+      effort: 1
+    javaee-pom-to-quarkus-00060:
+      description: Add Maven profile to run the Quarkus native build
+      category: mandatory
+      labels:
+      - konveyor.io/source=java-ee
+      - konveyor.io/target=quarkus
+      incidents:
+      - uri: file:///source/pom.xml
+        message: "Leverage a Maven profile to run the Quarkus native build adding
+          the following section to the `pom.xml` file: \n\n ```xml\n <profiles>\n
+          <profile>\n <id>native</id>\n <activation>\n <property>\n <name>native</name>\n
+          </property>\n </activation>\n <properties>\n <skipITs>false</skipITs>\n
+          <quarkus.package.type>native</quarkus.package.type>\n </properties>\n </profile>\n
+          </profiles>\n ```"
+        codeSnip: '6  '
+        lineNumber: 5
+        variables:
+          data: project
+          innerText: "\n    4.0.0\n\n    com.telran\n    BookServer\n    1.0-SNAPSHOT\n\n
+            \   \n        \n            \n                org.springframework.boot\n
+            \               spring-boot-maven-plugin\n                2.1.0.RELEASE
+            \ \t\t\t\n            \n        \n    \n\n    \n        \n        \n            org.springframework.boot\n
+            \           spring-boot-starter-web\n            2.1.0.RELEASE                \n
+            \       \n\n        \n        \n            org.projectlombok\n            lombok\n
+            \           1.18.2\n        \n\n        \n        \n            com.fasterxml.jackson.core\n
+            \           jackson-databind\n            2.9.5\n        \n\n        \n
+            \           com.fasterxml.jackson.datatype\n            jackson-datatype-jsr310\n
+            \           2.9.5\n        \n\n        \n            com.fasterxml.jackson.dataformat\n
+            \           jackson-dataformat-xml\n            2.9.5\n        \n\n        \n
+            \       \n            \n            \n            \n            \n        \n\n
+            \   \n\n"
+          matchingXML: <modelVersion>4.0.0</modelVersion><groupId>com.telran</groupId><artifactId>BookServer</artifactId><version>1.0-SNAPSHOT</version><build><plugins><plugin><groupId>org.springframework.boot</groupId><artifactId>spring-boot-maven-plugin</artifactId><version>2.1.0.RELEASE</version><!--  09.11.2018
+            --></plugin></plugins></build><dependencies><!-- spring boot --><dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-web</artifactId><version>2.1.0.RELEASE</version><!--  09.11.2018
+            --></dependency><!--  lombok --><dependency><groupId>org.projectlombok</groupId><artifactId>lombok</artifactId><version>1.18.2</version></dependency><!--
+            jackson --><dependency><groupId>com.fasterxml.jackson.core</groupId><artifactId>jackson-databind</artifactId><version>2.9.5</version></dependency><dependency><groupId>com.fasterxml.jackson.datatype</groupId><artifactId>jackson-datatype-jsr310</artifactId><version>2.9.5</version></dependency><dependency><groupId>com.fasterxml.jackson.dataformat</groupId><artifactId>jackson-dataformat-xml</artifactId><version>2.9.5</version></dependency><!--&lt;!&ndash;
+            jdbc connector &ndash;&gt;--><!--<dependency>--><!--<groupId>mysql</groupId>--><!--<artifactId>mysql-connector-java</artifactId>--><!--&lt;!&ndash;
+            <version>8.0.12</version> &ndash;&gt;               &lt;!&ndash; TimeZone
+            bug not fixed since 5.1.39 &ndash;&gt;--><!--<version>5.1.39</version>--><!--</dependency>--></dependencies>
+      links:
+      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven;
+        title: Quarkus - Guide;
+      effort: 1
     springboot-annotations-to-quarkus-00000:
       description: Remove the SpringBoot @SpringBootApplication annotation
       category: mandatory
@@ -241,6 +548,29 @@
       links:
       - url: https://quarkus.io/guides/spring-di
         title: Quarkus DI Guide
+      effort: 1
+    springboot-plugins-to-quarkus-0000:
+      description: Replace the spring-boot-maven-plugin dependency
+      category: mandatory
+      labels:
+      - konveyor.io/source=springboot
+      - konveyor.io/target=quarkus
+      incidents:
+      - uri: file:///source/pom.xml
+        message: |-
+          Replace the `spring-boot-maven-plugin` dependency.
+           The `spring-boot-maven-plugin` dependency needs to be replaced with `quarkus-maven-plugin`, so that the application is built with Quarkus, both for running on the JVM and in native mode.
+        codeSnip: 15                  <artifactId>spring-boot-maven-plugin</artifactId>
+        lineNumber: 14
+        variables:
+          data: plugin
+          innerText: "\n                org.springframework.boot\n                spring-boot-maven-plugin\n
+            \               2.1.0.RELEASE  \t\t\t\n            "
+          matchingXML: <groupId>org.springframework.boot</groupId><artifactId>spring-boot-maven-plugin</artifactId><version>2.1.0.RELEASE</version><!--  09.11.2018
+            -->
+      links:
+      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven
+        title: Building Quarkus with maven
       effort: 1
     springboot-properties-to-quarkus-00000:
       description: Replace the SpringBoot artifact with Quarkus 'spring-boot-properties'
@@ -324,12 +654,6 @@
   - jakarta-jaxrs-to-quarkus-00020
   - javaee-faces-to-quarkus-00000
   - javaee-pom-to-quarkus-00000
-  - javaee-pom-to-quarkus-00010
-  - javaee-pom-to-quarkus-00020
-  - javaee-pom-to-quarkus-00030
-  - javaee-pom-to-quarkus-00040
-  - javaee-pom-to-quarkus-00050
-  - javaee-pom-to-quarkus-00060
   - javaee-pom-to-quarkus-00070
   - javaee-pom-to-quarkus-00080
   - jaxrs-to-quarkus-00000
@@ -367,7 +691,6 @@
   - springboot-metrics-to-quarkus-0200
   - springboot-metrics-to-quarkus-0300
   - springboot-parent-pom-to-quarkus-00000
-  - springboot-plugins-to-quarkus-0000
   - springboot-properties-to-quarkus-00001
   - springboot-properties-to-quarkus-00002
   - springboot-properties-to-quarkus-00003

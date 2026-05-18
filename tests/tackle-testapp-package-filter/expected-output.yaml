@@ -1,11 +1,97 @@
+- name: discovery-rules
+  tags:
+  - Java Source
+  - Maven XML
+  - Properties
+  violations:
+    hardcoded-ip-address:
+      description: Hardcoded IP Address
+      category: mandatory
+      labels:
+      - discovery
+      - konveyor.io/target=cloud-readiness
+      - konveyor.io/target=discovery
+      incidents:
+      - uri: file:///source/src/main/resources/persistence.properties
+        message: When migrating environments, hard-coded IP addresses may need to
+          be modified or eliminated.
+        codeSnip: 3   jdbc.user=customers
+        lineNumber: 2
+        variables:
+          matchingText: 10.19.2.93
+      effort: 1
+  insights:
+    discover-java-files:
+      description: Java source files
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - konveyor.io/target=discovery
+      - tag=Java Source
+      incidents:
+      - uri: file:///source/configuration-utils/src/main/java/io/konveyor/demo/config/ApplicationConfiguration.java
+        message: ""
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/OrderManagementAppInitializer.java
+        message: ""
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+        message: ""
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/config/WebConfig.java
+        message: ""
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/controller/CustomerController.java
+        message: ""
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/exception/ResourceNotFoundException.java
+        message: ""
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/exception/handler/ExceptionHandlingController.java
+        message: ""
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/model/Customer.java
+        message: ""
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/repository/CustomerRepository.java
+        message: ""
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/service/CustomerService.java
+        message: ""
+    discover-maven-xml:
+      description: Maven XML file
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - konveyor.io/target=discovery
+      - tag=Maven XML
+      incidents:
+      - uri: file:///source/configuration-utils/pom.xml
+        message: ""
+      - uri: file:///source/pom.xml
+        message: ""
+    discover-properties-file:
+      description: Properties file
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - konveyor.io/target=discovery
+      - tag=Properties
+      incidents:
+      - uri: file:///source/src/main/resources/persistence.properties
+        message: ""
+  unmatched:
+  - discover-license
+  - discover-manifest-file
+  - windup-discover-ejb-configuration
+  - windup-discover-jpa-configuration
+  - windup-discover-spring-configuration
+  - windup-discover-web-configuration
 - name: technology-usage
   description: This ruleset provides analysis of logging libraries.
   tags:
   - Connect=Servlet
+  - Embedded=Properties
   - HTTP=Servlet
+  - Java EE=JPA named queries
   - Java EE=Servlet
   - Java Servlet
+  - Other=Properties
+  - Persistence=JPA named queries
   - Servlet
+  - Store=JPA named queries
+  - Sustain=Properties
   insights:
     javaee-technology-usage-00120:
       description: Java Servlet
@@ -78,34 +164,64 @@
         variables:
           tags:
           - Servlet
-  errors:
-    technology-usage-database-01200: "maven dependency:tree command failed with error
-      exit status 1, maven output: [INFO] Scanning for projects...\n[INFO] Downloading
-      from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-dependency-plugin/3.7.0/maven-dependency-plugin-3.7.0.pom\n[INFO]
-      Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-dependency-plugin/3.7.0/maven-dependency-plugin-3.7.0.pom
-      (19 kB at 102 kB/s)\n[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-plugins/42/maven-plugins-42.pom\n[INFO]
-      Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-plugins/42/maven-plugins-42.pom
-      (7.7 kB at 296 kB/s)\n[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-dependency-plugin/3.7.0/maven-dependency-plugin-3.7.0.jar\n[INFO]
-      Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-dependency-plugin/3.7.0/maven-dependency-plugin-3.7.0.jar
-      (207 kB at 4.0 MB/s)\n[INFO] \n[INFO] -----------------< io.konveyor.demo:customers-tomcat
-      >------------------\n[INFO] Building Order Management 0.0.1-SNAPSHOT\n[INFO]
-      \  from pom.xml\n[INFO] --------------------------------[ war ]---------------------------------\n[INFO]
-      Downloading from tackle-testapp-public: https://maven.pkg.github.com/konveyor/tackle-testapp-public/io/konveyor/demo/configuration-utils/1.0.0/configuration-utils-1.0.0.pom\n[INFO]
-      ------------------------------------------------------------------------\n[INFO]
-      BUILD FAILURE\n[INFO] ------------------------------------------------------------------------\n[INFO]
-      Total time:  0.677 s\n[INFO] Finished at: 2026-05-14T11:56:45Z\n[INFO] ------------------------------------------------------------------------\n[ERROR]
-      Failed to execute goal on project customers-tomcat: Could not collect dependencies
-      for project io.konveyor.demo:customers-tomcat:war:0.0.1-SNAPSHOT\n[ERROR] Failed
-      to read artifact descriptor for io.konveyor.demo:configuration-utils:jar:1.0.0\n[ERROR]
-      \tCaused by: The following artifacts could not be resolved: io.konveyor.demo:configuration-utils:pom:1.0.0
-      (absent): Could not transfer artifact io.konveyor.demo:configuration-utils:pom:1.0.0
-      from/to tackle-testapp-public (https://maven.pkg.github.com/konveyor/tackle-testapp-public):
-      (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException:
-      unable to find valid certification path to requested target\n[ERROR] -> [Help
-      1]\n[ERROR] \n[ERROR] To see the full stack trace of the errors, re-run Maven
-      with the -e switch.\n[ERROR] Re-run Maven using the -X switch to enable full
-      debug logging.\n[ERROR] \n[ERROR] For more information about the errors and
-      possible solutions, please read the following articles:\n[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/DependencyResolutionException\n"
+    non-xml-technology-usage-20000:
+      description: Properties
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded=Properties
+      - tag=Other=Properties
+      - tag=Sustain=Properties
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - Properties
+    technology-usage-database-01200:
+      description: JPA Queries
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Java EE=JPA named queries
+      - tag=Persistence=JPA named queries
+      - tag=Store=JPA named queries
+      incidents:
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/model/Customer.java
+        message: ""
+        codeSnip: "\n 1  package io.konveyor.demo.ordermanagement.model;\n 2  \n 3
+          \ import javax.persistence.Column;\n 4  import javax.persistence.Entity;\n
+          5  import javax.persistence.GeneratedValue;\n 6  import javax.persistence.GenerationType;\n
+          7  import javax.persistence.Id;\n 8  import javax.persistence.SequenceGenerator;\n
+          9  import javax.persistence.Table;\n10  \n11  @Entity\n12  @Table(name =
+          \"customers\")\n13  public class Customer {\n14  @Id\n15  @SequenceGenerator(\n16
+          \ name = \"customersSequence\",\n17  sequenceName = \"customers_id_seq\",\n18
+          \ allocationSize = 1,\n19  initialValue = 6)\n20  @GeneratedValue(strategy
+          = GenerationType.SEQUENCE, generator = \"customersSequence\")\n21  private
+          Long id;"
+        lineNumber: 11
+        variables:
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/model/Customer.java
+          kind: Property
+          name: Entity
+          package: io.konveyor.demo.ordermanagement.model
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/model/Customer.java
+        message: ""
+        codeSnip: "\n 2  \n 3  import javax.persistence.Column;\n 4  import javax.persistence.Entity;\n
+          5  import javax.persistence.GeneratedValue;\n 6  import javax.persistence.GenerationType;\n
+          7  import javax.persistence.Id;\n 8  import javax.persistence.SequenceGenerator;\n
+          9  import javax.persistence.Table;\n10  \n11  @Entity\n12  @Table(name =
+          \"customers\")\n13  public class Customer {\n14  @Id\n15  @SequenceGenerator(\n16
+          \ name = \"customersSequence\",\n17  sequenceName = \"customers_id_seq\",\n18
+          \ allocationSize = 1,\n19  initialValue = 6)\n20  @GeneratedValue(strategy
+          = GenerationType.SEQUENCE, generator = \"customersSequence\")\n21  private
+          Long id;\n22  "
+        lineNumber: 12
+        variables:
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/model/Customer.java
+          kind: Property
+          name: Entity
+          package: io.konveyor.demo.ordermanagement.model
   unmatched:
   - 3rd-party-01000
   - 3rd-party-02000
@@ -462,7 +578,6 @@
   - non-xml-technology-usage-17000
   - non-xml-technology-usage-18000
   - non-xml-technology-usage-19000
-  - non-xml-technology-usage-20000
   - non-xml-technology-usage-21000
   - non-xml-technology-usage-22000
   - non-xml-technology-usage-23000
