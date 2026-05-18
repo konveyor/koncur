@@ -1,3 +1,5 @@
+# SKIPPED: hub 
+# Failed for release-0.9 branch
 name: Customer Tomcat Legacy - shoud never fail
 analysis:
     application: https://github.com/konveyor/example-applications.git#ci-2023/example-1

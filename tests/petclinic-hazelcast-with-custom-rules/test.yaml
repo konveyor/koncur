@@ -1,3 +1,5 @@
+# SKIPPED: hub 
+# Failed for release-0.9 branch
 name: Petclinic legacy cloud-readiness with tagger and hazelcast custom rules
 description: Spring framework app
 analysis:

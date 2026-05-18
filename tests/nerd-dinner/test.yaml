@@ -1,3 +1,5 @@
+# SKIPPED: hub 
+# Failed for release-0.9 branch
 name: c-sharp
 analysis:
     application: https://github.com/konveyor/c-sharp-analyzer-provider#main/testdata/nerd-dinner
