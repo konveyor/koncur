@@ -9,6 +9,7 @@ analysis:
     rules: []
     disableDefaultRules: false
     analysisMode: full
+    logLevel: 9
 timeout: 10m0s
 requireMavenSettings: true
 expect:

@@ -11,6 +11,10 @@ on:
         description: os to run on 
         required: true 
         type: string
+      image_tag:
+        description: "Image tag for kantra image"
+        default: "latest"
+        type: string
 
 jobs:
   kantra-test:
@@ -29,7 +33,7 @@ jobs:
           brew install podman
           podman machine init --rootful --memory 8192 --cpus 2
           podman machine start 
-          podman cp $(podman create --name kantra-download quay.io/konveyor/kantra:latest):/usr/local/bin/darwin-kantra . &&\
+          podman cp $(podman create --name kantra-download quay.io/konveyor/kantra:${{ inputs.image_tag }}):/usr/local/bin/darwin-kantra . &&\
           podman rm kantra-download
           cp darwin-kantra $HOME/.local/bin/kantra
           echo "NETWORK_GATEWAY=host.containers.internal" >> $GITHUB_ENV
@@ -41,7 +45,7 @@ jobs:
           choco install podman-cli
           podman machine init --rootful --memory 10240 --cpus 3
           podman machine start 
-          podman cp $(podman create --name kantra-download quay.io/konveyor/kantra:latest):/usr/local/bin/windows-kantra . &&\
+          podman cp $(podman create --name kantra-download quay.io/konveyor/kantra:${{ inputs.image_tag }}):/usr/local/bin/windows-kantra . &&\
           podman rm kantra-download
           cp windows-kantra $HOME/.local/bin/kantra.exe
           ls -la $HOME/.local/bin/kantra.exe
@@ -73,7 +77,7 @@ jobs:
         if: ${{ inputs.os == 'ubuntu-24.04-arm' }}
         shell: bash
         run: |
-          podman cp $(podman create --name kantra-download quay.io/konveyor/kantra:latest):/usr/local/bin/kantra . &&\
+          podman cp $(podman create --name kantra-download quay.io/konveyor/kantra:${{ inputs.image_tag }}):/usr/local/bin/kantra . &&\
           podman rm kantra-download
           cp kantra $HOME/.local/bin/kantra
           podman network inspect podman

@@ -21,6 +21,8 @@ type TestDefinition struct {
 	Timeout              *Duration `yaml:"timeout,omitempty"`
 	WorkDir              string    `yaml:"workDir,omitempty"`
 	RequireMavenSettings bool      `yaml:"requireMavenSettings,omitempty"`
+	// ForceLocal applies only to the Kantra target; when true, koncur passes --run-local=true.
+	ForceLocal bool `yaml:"forceLocal,omitempty"`
 
 	// Validation configuration
 	Expect ExpectConfig `yaml:"expect" validate:"required"`
@@ -28,6 +30,9 @@ type TestDefinition struct {
 	// Internal field - path to the test file (not in YAML)
 	testFilePath string `yaml:"-"`
 	Skipped      bool   `yaml:"skipped,omitempty"`
+	// Parsed from # SKIPPED preamble comments in the test file (not from YAML); see loader.go.
+	commentSkipAll     bool     `yaml:"-"`
+	commentSkipTargets []string `yaml:"-"`
 }
 
 // SetTestFilePath sets the test file path
@@ -56,6 +61,10 @@ type AnalysisConfig struct {
 	Rules               []CustomRule          `json:"rules" yaml:"rules"`
 	DisableDefaultRules bool                  `json:"disableDefaultRules" yaml:"disableDefaultRules"`
 	AnalysisMode        provider.AnalysisMode `json:"analysis_mode" yaml:"analysisMode" validate:"required" `
+	// Extensions specifies which hub extensions to use (e.g., ["csharp", "java"])
+	// If empty, the hub will auto-select extensions based on selectors
+	Extensions []string `json:"extensions" yaml:"extensions,omitempty"`
+	LogLevel   *uint32  `json:"logLevel,omitempty" yaml:"logLevel,omitempty"`
 
 	// Parsed Git components (not in YAML)
 	ApplicationGitComponents *GitURLComponents `yaml:"-" json:"-"`

@@ -1,0 +1,22 @@
+# SKIPPED: hub 
+# Failed for release-0.9 branch
+name: Petclinic legacy cloud-readiness with tagger and hazelcast custom rules
+description: Spring framework app
+analysis:
+    application: https://github.com/konveyor/spring-framework-petclinic.git#ci-2023-legacy
+    labelSelector: konveyor.io/target=cloud-readiness
+    context_lines: 0
+    incident_selector: ""
+    source: []
+    target: []
+    rules:
+        - file:
+            filePath: 01-hz.windup.yaml
+          git: null
+    disableDefaultRules: false
+    analysisMode: source-only
+timeout: 10m0s
+expect:
+    exitCode: 0
+    output:
+        file: expected-output.yaml

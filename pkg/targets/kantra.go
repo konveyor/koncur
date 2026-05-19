@@ -16,8 +16,10 @@ import (
 
 // KantraTarget implements Target for Kantra
 type KantraTarget struct {
-	binaryPath    string `yaml:"binaryPath"`
-	mavenSettings string `yaml:"mavenSettings"`
+	binaryPath    string
+	mavenSettings string
+	imageEnv      []string // Environment variable overrides for provider images
+	forceLocal    bool     // if true, pass --run-local=true; if false, pass --run-local=false; if not set, use the default behavior of the target config
 }
 
 // NewKantraTarget creates a new Kantra target
@@ -42,9 +44,32 @@ func NewKantraTarget(cfg *config.KantraConfig) (*KantraTarget, error) {
 		mavenSettings = cfg.MavenSettings
 	}
 
+	// Build image environment overrides from config
+	var imageEnv []string
+	if cfg != nil {
+		if cfg.RunnerImage != "" {
+			imageEnv = append(imageEnv, "RUNNER_IMG="+cfg.RunnerImage)
+		}
+		if cfg.JavaProviderImage != "" {
+			imageEnv = append(imageEnv, "JAVA_PROVIDER_IMG="+cfg.JavaProviderImage)
+		}
+		if cfg.GenericProviderImage != "" {
+			imageEnv = append(imageEnv, "GENERIC_PROVIDER_IMG="+cfg.GenericProviderImage)
+		}
+		if cfg.CsharpProviderImage != "" {
+			imageEnv = append(imageEnv, "CSHARP_PROVIDER_IMG="+cfg.CsharpProviderImage)
+		}
+	}
+
+	forceLocal := false
+	if cfg != nil {
+		forceLocal = cfg.ForceLocal
+	}
 	return &KantraTarget{
 		binaryPath:    binaryPath,
 		mavenSettings: mavenSettings,
+		imageEnv:      imageEnv,
+		forceLocal:    forceLocal,
 	}, nil
 }
 
@@ -101,8 +126,8 @@ func (k *KantraTarget) Execute(ctx context.Context, test *config.TestDefinition)
 	// Build kantra command arguments with prepared rules
 	args := k.buildArgs(test, inputPath, absOutputDir, preparedRules)
 
-	// Execute kantra
-	result, err := ExecuteCommand(ctx, k.binaryPath, args, workDir, test.GetTimeout())
+	// Execute kantra with image environment overrides
+	result, err := ExecuteCommandWithEnv(ctx, k.binaryPath, args, workDir, test.GetTimeout(), k.imageEnv)
 	if err != nil {
 		return nil, err
 	}
@@ -135,6 +160,10 @@ func (k *KantraTarget) buildArgs(test *config.TestDefinition, inputPath, outputD
 
 	if analysis.IncidentSelector != "" {
 		args = append(args, "--incident-selector", analysis.IncidentSelector)
+	}
+
+	if analysis.LogLevel != nil {
+		args = append(args, "--log-level", strconv.FormatUint(uint64(*analysis.LogLevel), 10))
 	}
 
 	// Maven settings (from test-level configuration)
@@ -173,8 +202,9 @@ func (k *KantraTarget) buildArgs(test *config.TestDefinition, inputPath, outputD
 		args = append(args, "--mode", "full")
 	}
 
-	// Use container mode instead of run-local to avoid dependency issues
-	args = append(args, "--run-local=false")
+	// Target config or per-test forceLocal requests local/containerless mode (--run-local=true).
+	runLocal := k.forceLocal || test.ForceLocal
+	args = append(args, fmt.Sprintf("--run-local=%t", runLocal))
 
 	// Allow overwriting existing output
 	args = append(args, "--overwrite")

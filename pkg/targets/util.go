@@ -17,6 +17,11 @@ func IsBinaryFile(path string) bool {
 	return ext == ".jar" || ext == ".war" || ext == ".ear"
 }
 
+// IsMavenCoordinate returns true if the path is a Maven coordinate (mvn://)
+func IsMavenCoordinate(path string) bool {
+	return strings.HasPrefix(path, "mvn://")
+}
+
 // CloneGitRepository clones a Git repository and returns the path to the cloned directory
 // or subdirectory if specified in the GitURLComponents
 func CloneGitRepository(ctx context.Context, components *config.GitURLComponents, workDir string, cloneName string) (string, error) {

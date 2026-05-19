@@ -1,4 +1,6 @@
-# SKIPPED: Skip test. Investigate on changes and fix https://github.com/konveyor/go-konveyor-tests/issues/353
+# SKIPPED: Skip test due to a known issue on Windows.
+# For more information, see: https://github.com/konveyor/kantra/pull/710
+
 name: Coolstore Source and Deps analysis using Quarkus branch
 analysis:
     application: https://github.com/konveyor-ecosystem/coolstore#ci-2024-quarkus
@@ -9,7 +11,7 @@ analysis:
     target: []
     rules: []
     disableDefaultRules: false
-    analysisMode: source-only
+    analysisMode: full
 timeout: 10m0s
 expect:
     exitCode: 0

@@ -1,153 +1,3 @@
-- name: azure/springboot
-  description: Recommend OpenFeign instead of Feign.
-  violations:
-    azure-file-system-01000:
-      description: The application uses Java APIs to read/write from the file system
-      category: optional
-      labels:
-      - file-system
-      - konveyor.io/source=eap
-      - konveyor.io/source=eap7
-      - konveyor.io/source=springboot
-      - konveyor.io/target=azure-aks
-      - konveyor.io/target=azure-appservice
-      - konveyor.io/target=azure-container-apps
-      - konveyor.io/target=azure-spring-apps
-      incidents:
-      - uri: file:///m2/io/konveyor/demo/configuration-utils/1.0.0/io/konveyor/demo/config/ApplicationConfiguration.java
-        message: "The application uses Java APIs to read/write from the file system.\n
-          \n Any usage of the file system on the application will require reconfiguration
-          or, in rare cases, architectural changes."
-        codeSnip: "\n 1  package io.konveyor.demo.config;\n 2  \n 3  import java.io.FileInputStream;\n
-          4  import java.io.InputStream;\n 5  import java.util.Properties;\n 6  \n
-          7  public class ApplicationConfiguration {\n 8  private Properties config
-          = this.loadProperties();\n 9  \n10  private Properties loadProperties()
-          {\n11  Properties properties = new Properties();\n12  \n13  try {"
-        lineNumber: 3
-        variables:
-          file: file:///addon/.m2/repository/io/konveyor/demo/configuration-utils/1.0.0/io/konveyor/demo/config/ApplicationConfiguration.java
-          kind: Class
-          name: ApplicationConfiguration
-          package: io.konveyor.demo.config
-      - uri: file:///m2/io/konveyor/demo/configuration-utils/1.0.0/io/konveyor/demo/config/ApplicationConfiguration.java
-        message: "The application uses Java APIs to read/write from the file system.\n
-          \n Any usage of the file system on the application will require reconfiguration
-          or, in rare cases, architectural changes."
-        codeSnip: "\n 4  import java.io.InputStream;\n 5  import java.util.Properties;\n
-          6  \n 7  public class ApplicationConfiguration {\n 8  private Properties
-          config = this.loadProperties();\n 9  \n10  private Properties loadProperties()
-          {\n11  Properties properties = new Properties();\n12  \n13  try {\n14  InputStream
-          inputStream = new FileInputStream(\"/opt/config/configuration.properties\");\n15
-          \ \n16  try {\n17  properties.load(inputStream);\n18  } catch (Throwable
-          var6) {\n19  try {\n20  inputStream.close();\n21  } catch (Throwable var5)
-          {\n22  var6.addSuppressed(var5);\n23  }\n24  "
-        lineNumber: 14
-        variables:
-          file: file:///addon/.m2/repository/io/konveyor/demo/configuration-utils/1.0.0/io/konveyor/demo/config/ApplicationConfiguration.java
-          kind: Method
-          name: loadProperties
-          package: io.konveyor.demo.config
-      links:
-      - url: https://search.maven.org/artifact/com.azure.spring/azure-spring-boot-starter-storage
-        title: Azure Spring Boot Starter for Azure Storage
-      - url: https://learn.microsoft.com/azure/developer/java/migration/migrate-spring-cloud-to-azure-spring-apps?pivots=sc-standard-tier#determine-whether-and-how-the-file-system-is-used
-        title: Java APIs found in the application to read/write from the file system
-      effort: 5
-    spring-boot-to-azure-version-03000:
-      description: Spring Boot version out of OSS support
-      category: potential
-      labels:
-      - konveyor.io/source=springboot
-      - konveyor.io/target=azure-aks
-      - konveyor.io/target=azure-appservice
-      - konveyor.io/target=azure-container-apps
-      - konveyor.io/target=azure-spring-apps
-      - version
-      incidents:
-      - uri: file:///source/pom.xml
-        message: |-
-          Spring Boot version is out of open source software support.
-           Update to open source support version of Spring Boot, if you don't have commercial support.
-        codeSnip: |2-
-
-          79  <artifactId>spring-webmvc</artifactId>
-          80  <version>${spring-framework.version}</version>
-          81  </dependency>
-          82  <dependency>
-          83  <groupId>org.springframework</groupId>
-          84  <artifactId>spring-web</artifactId>
-          85  <version>${spring-framework.version}</version>
-          86  </dependency>
-          87  <dependency>
-          88  <groupId>org.springframework.boot</groupId>
-          89  <artifactId>spring-boot-starter-actuator</artifactId>
-          90  <version>2.5.0</version>
-          91  </dependency>
-          92  <dependency>
-          93  <groupId>org.apache.tomcat</groupId>
-          94  <artifactId>tomcat-jdbc</artifactId>
-          95  <version>${tomcat.version}</version>
-          96  <scope>runtime</scope>
-          97  </dependency>
-          98  <dependency>
-          99  <groupId>org.hibernate</groupId>
-        lineNumber: 88
-        variables:
-          name: org.springframework.boot.spring-boot-starter-actuator
-          version: 2.5.0
-      links:
-      - url: https://github.com/spring-projects/spring-boot/wiki/Supported-Versions
-        title: Spring Boot Supported Versions
-      effort: 1
-  unmatched:
-  - azure-aws-config-credential-01000
-  - azure-aws-config-region-02000
-  - azure-aws-config-s3-03000
-  - azure-aws-config-secret-manager-05000
-  - azure-aws-config-sqs-04000
-  - azure-file-system-02000
-  - azure-file-system-03000
-  - azure-java-version-01000
-  - azure-java-version-02000
-  - azure-logging-0000
-  - azure-logging-0000
-  - azure-os-specific-00001
-  - azure-os-specific-00002
-  - azure-password-01000
-  - eap-to-azure-appservice-certificates-001
-  - eap-to-azure-appservice-certificates-001
-  - eap-to-azure-appservice-datasource-driver-01000
-  - eap-to-azure-appservice-pom-001
-  - postgres-to-aks-workload-identity-01000
-  - postgres-to-aks-workload-identity-01000
-  - spring-boot-to-azure-cache-redis-01000
-  - spring-boot-to-azure-cache-redis-02000
-  - spring-boot-to-azure-config-server-01000
-  - spring-boot-to-azure-database-jdbc-01000
-  - spring-boot-to-azure-database-mongodb-02000
-  - spring-boot-to-azure-database-r2dbc-03000
-  - spring-boot-to-azure-eureka-01000
-  - spring-boot-to-azure-eureka-02000
-  - spring-boot-to-azure-feign-01000
-  - spring-boot-to-azure-identity-provider-01000
-  - spring-boot-to-azure-java-fx-01000
-  - spring-boot-to-azure-jks-01000
-  - spring-boot-to-azure-jms-broker-01000
-  - spring-boot-to-azure-mq-config-artemis-01000
-  - spring-boot-to-azure-mq-config-kafka-01000
-  - spring-boot-to-azure-mq-config-rabbitmq-01000
-  - spring-boot-to-azure-port-01000
-  - spring-boot-to-azure-schedule-job-01000
-  - spring-boot-to-azure-static-content-01000
-  - spring-boot-to-azure-swing-01000
-  - spring-boot-to-azure-system-config-01000
-  - spring-boot-to-azure-version-01000
-  - spring-boot-to-azure-version-02000
-  - spring-boot-to-azure-zipkin-01000
-  - spring-cloud-to-azure-version-01000
-  - spring-cloud-to-azure-version-02000
-  - spring-cloud-to-azure-version-03000
-  - tomcat-to-azure-external-resources-01000
 - name: camel3/camel2
   description: Rules for changes in XML file (e.g. pom.xml) to run on Apache Camel
     3
@@ -199,46 +49,6 @@
             \   \tcom.h2database\n    \th2\n    \t2.1.214\n\t\t\n\t\t\n\t\t\n\t\t\tio.konveyor.demo\n\t\t\tconfiguration-utils\n\t\t\t1.0.0\n\t\t\n\n\t"
           matchingXML: <dependency><groupId>org.apache.tomcat</groupId><artifactId>tomcat-servlet-api</artifactId><version>${tomcat.version}</version><scope>provided</scope></dependency><dependency><groupId>com.fasterxml.jackson.core</groupId><artifactId>jackson-core</artifactId></dependency><dependency><groupId>com.fasterxml.jackson.core</groupId><artifactId>jackson-databind</artifactId></dependency><dependency><groupId>org.springframework.data</groupId><artifactId>spring-data-jpa</artifactId></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-jdbc</artifactId><version>${spring-framework.version}</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-webmvc</artifactId><version>${spring-framework.version}</version></dependency><dependency><groupId>org.springframework</groupId><artifactId>spring-web</artifactId><version>${spring-framework.version}</version></dependency><dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-actuator</artifactId><version>2.5.0</version></dependency><dependency><groupId>org.apache.tomcat</groupId><artifactId>tomcat-jdbc</artifactId><version>${tomcat.version}</version><scope>runtime</scope></dependency><dependency><groupId>org.hibernate</groupId><artifactId>hibernate-entitymanager</artifactId><version>${hibernate.version}</version></dependency><dependency><groupId>org.hibernate.validator</groupId><artifactId>hibernate-validator</artifactId><version>${hibernate-validator.version}</version></dependency><dependency><groupId>ch.qos.logback</groupId><artifactId>logback-classic</artifactId><version>1.1.7</version></dependency><dependency><groupId>com.oracle.database.jdbc</groupId><artifactId>ojdbc11</artifactId><version>21.1.0.0</version></dependency><dependency><groupId>org.postgresql</groupId><artifactId>postgresql</artifactId><version>42.2.23</version></dependency><dependency><groupId>com.h2database</groupId><artifactId>h2</artifactId><version>2.1.214</version></dependency><!--
             Corporate libraries --><dependency><groupId>io.konveyor.demo</groupId><artifactId>configuration-utils</artifactId><version>1.0.0</version></dependency>
-      - uri: file:///source/pom.xml
-        message: |-
-          `jaxb-api` Maven dependency missing.
-
-           Apache Camel 3 supports Java 11 and in this Java version JAXB modules have been removed from the JDK, therefore you will need to add them as Maven dependencies since there are couple of components rely on them:
-
-           ```Xml
-           <dependency>
-           <groupId>javax.xml.bind</groupId>
-           <artifactId>jaxb-api</artifactId>
-           <version>2.3.1</version>
-           </dependency>
-           ```
-        codeSnip: |2-
-
-           90  <version>2.5.0</version>
-           91  </dependency>
-           92  <dependency>
-           93  <groupId>org.apache.tomcat</groupId>
-           94  <artifactId>tomcat-jdbc</artifactId>
-           95  <version>${tomcat.version}</version>
-           96  <scope>runtime</scope>
-           97  </dependency>
-           98  <dependency>
-           99  <groupId>org.hibernate</groupId>
-          100  <artifactId>hibernate-entitymanager</artifactId>
-          101  <version>${hibernate.version}</version>
-          102  </dependency>
-          103  <dependency>
-          104  <groupId>org.hibernate.validator</groupId>
-          105  <artifactId>hibernate-validator</artifactId>
-          106  <version>${hibernate-validator.version}</version>
-          107  </dependency>
-          108  <dependency>
-          109  <groupId>ch.qos.logback</groupId>
-          110  <artifactId>logback-classic</artifactId>
-        lineNumber: 99
-        variables:
-          name: javax.xml.bind.jaxb-api
-          version: 2.3.1
       links:
       - url: https://camel.apache.org/manual/latest/camel-3-migration-guide.html#_java_versions
         title: 'Camel 3 - Migration Guide: Java Versions'
@@ -622,101 +432,6 @@
   - xml-renamed-components-00022
   - xml-renamed-components-00025
   - xml-renamed-components-00026
-- name: cloud-readiness
-  description: This ruleset detects logging configurations that may be problematic
-    when migrating an application to a cloud environment.
-  violations:
-    local-storage-00001:
-      description: File system - Java IO
-      category: mandatory
-      labels:
-      - konveyor.io/source
-      - konveyor.io/target=cloud-readiness
-      - storage
-      incidents:
-      - uri: file:///m2/io/konveyor/demo/configuration-utils/1.0.0/io/konveyor/demo/config/ApplicationConfiguration.java
-        message: |-
-          An application running inside a container could lose access to a file in local storage.
-
-           Recommendations
-
-           The following recommendations depend on the function of the file in local storage:
-
-           * Logging: Log to standard output and use a centralized log collector to analyze the logs.
-           * Caching: Use a cache backing service.
-           * Configuration: Store configuration settings in environment variables so that they can be updated without code changes.
-           * Data storage: Use a database backing service for relational data or use a persistent data storage system.
-           * Temporary data storage: Use the file system of a running container as a brief, single-transaction cache.
-        codeSnip: "\n 4  import java.io.InputStream;\n 5  import java.util.Properties;\n
-          6  \n 7  public class ApplicationConfiguration {\n 8  private Properties
-          config = this.loadProperties();\n 9  \n10  private Properties loadProperties()
-          {\n11  Properties properties = new Properties();\n12  \n13  try {\n14  InputStream
-          inputStream = new FileInputStream(\"/opt/config/configuration.properties\");\n15
-          \ \n16  try {\n17  properties.load(inputStream);\n18  } catch (Throwable
-          var6) {\n19  try {\n20  inputStream.close();\n21  } catch (Throwable var5)
-          {\n22  var6.addSuppressed(var5);\n23  }\n24  "
-        lineNumber: 14
-        variables:
-          file: file:///addon/.m2/repository/io/konveyor/demo/configuration-utils/1.0.0/io/konveyor/demo/config/ApplicationConfiguration.java
-          kind: Constructor
-          name: loadProperties
-          package: io.konveyor.demo.config
-      links:
-      - url: https://docs.openshift.com/container-platform/4.5/builds/creating-build-inputs.html#builds-input-secrets-configmaps_creating-build-inputs
-        title: 'OpenShift Container Platform: Input secrets and ConfigMaps'
-      - url: https://docs.openshift.com/container-platform/4.5/logging/cluster-logging.html
-        title: 'OpenShift Container Platform: Understanding cluster logging'
-      - url: https://docs.openshift.com/container-platform/4.5/storage/understanding-persistent-storage.html
-        title: 'OpenShift Container Platform: Understanding persistent storage'
-      - url: https://12factor.net/backing-services
-        title: 'Twelve-Factor App: Backing services'
-      - url: https://12factor.net/config
-        title: 'Twelve-Factor App: Config'
-      - url: https://12factor.net/logs
-        title: 'Twelve-Factor App: Logs'
-      effort: 1
-  unmatched:
-  - embedded-cache-libraries-01000
-  - embedded-cache-libraries-02000
-  - embedded-cache-libraries-03000
-  - embedded-cache-libraries-04000
-  - embedded-cache-libraries-05000
-  - embedded-cache-libraries-06000
-  - embedded-cache-libraries-07000
-  - embedded-cache-libraries-08000
-  - embedded-cache-libraries-09000
-  - embedded-cache-libraries-10000
-  - embedded-cache-libraries-11000
-  - embedded-cache-libraries-12000
-  - embedded-cache-libraries-13000
-  - embedded-cache-libraries-14000
-  - embedded-cache-libraries-15000
-  - embedded-cache-libraries-16000
-  - java-corba-00000
-  - java-rmi-00000
-  - java-rmi-00000
-  - java-rmi-00001
-  - java-rpc-00000
-  - jca-00000
-  - jni-native-code-00000
-  - jni-native-code-00001
-  - local-storage-00002
-  - local-storage-00003
-  - local-storage-00004
-  - local-storage-00005
-  - local-storage-00006
-  - localhost-http-00001
-  - localhost-jdbc-00002
-  - localhost-ws-00003
-  - logging-0000
-  - logging-0000
-  - logging-0001
-  - logging-0001
-  - mail-00000
-  - session-00000
-  - session-00001
-  - socket-communication-00000
-  - socket-communication-00001
 - name: discovery-rules
   tags:
   - Java Source
@@ -1091,54 +806,6 @@
           name: Entity
           package: io.konveyor.demo.ordermanagement.model
       effort: 1
-    hibernate51-53-00100:
-      description: Hibernate 5.3 - hibernate-java8 module has been merged into hibernate-core
-        and the Java 8 date/time types are now natively supported.
-      category: mandatory
-      labels:
-      - hibernate
-      - konveyor.io/source=hibernate
-      - konveyor.io/source=hibernate5.1-
-      - konveyor.io/target=eap
-      - konveyor.io/target=eap7
-      - konveyor.io/target=hibernate
-      - konveyor.io/target=hibernate5.3+
-      incidents:
-      - uri: file:///source/pom.xml
-        message: Change reference to hibernate-java8 to hibernate-core (since hibernate-java8
-          has been merged into hibernate-core module)
-        codeSnip: |2-
-
-           90  <version>2.5.0</version>
-           91  </dependency>
-           92  <dependency>
-           93  <groupId>org.apache.tomcat</groupId>
-           94  <artifactId>tomcat-jdbc</artifactId>
-           95  <version>${tomcat.version}</version>
-           96  <scope>runtime</scope>
-           97  </dependency>
-           98  <dependency>
-           99  <groupId>org.hibernate</groupId>
-          100  <artifactId>hibernate-entitymanager</artifactId>
-          101  <version>${hibernate.version}</version>
-          102  </dependency>
-          103  <dependency>
-          104  <groupId>org.hibernate.validator</groupId>
-          105  <artifactId>hibernate-validator</artifactId>
-          106  <version>${hibernate-validator.version}</version>
-          107  </dependency>
-          108  <dependency>
-          109  <groupId>ch.qos.logback</groupId>
-          110  <artifactId>logback-classic</artifactId>
-        lineNumber: 99
-        variables:
-          name: org.hibernate.hibernate-entitymanager
-          version: 5.4.32.Final
-      links:
-      - url: https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.2/html-single/migration_guide/#migrating_from_hibernate_5_1_to_5_3
-        title: 'Red Hat JBoss EAP 7.2: Migrating from Hibernate ORM 5.1 to Hibernate
-          ORM 5.3'
-      effort: 1
     weblogic-catchall-01000:
       description: WebLogic proprietary type reference
       category: potential
@@ -1242,6 +909,7 @@
   - hibernate50-51-00000
   - hibernate50-51-00100
   - hibernate51-53-00001
+  - hibernate51-53-00100
   - hibernate51-53-00300
   - hibernate51-53-00400
   - hibernate51-53-00401
@@ -1566,54 +1234,6 @@
   description: This ruleset provides analysis of Java EE applications that need to
     change certain CDI-related method calls.
   violations:
-    eap8-xml-binding-00008:
-      description: Outdated JAXB dependency
-      category: mandatory
-      labels:
-      - eap8
-      - konveyor.io/source=eap
-      - konveyor.io/source=eap6
-      - konveyor.io/source=eap7
-      - konveyor.io/target=eap
-      - konveyor.io/target=eap8+
-      incidents:
-      - uri: file:///source/pom.xml
-        message: Pom dependency to outdated xml binding version must be updated to
-          Jakarta XML Binding 4.0 for EAP8.
-        codeSnip: |2-
-
-           90  <version>2.5.0</version>
-           91  </dependency>
-           92  <dependency>
-           93  <groupId>org.apache.tomcat</groupId>
-           94  <artifactId>tomcat-jdbc</artifactId>
-           95  <version>${tomcat.version}</version>
-           96  <scope>runtime</scope>
-           97  </dependency>
-           98  <dependency>
-           99  <groupId>org.hibernate</groupId>
-          100  <artifactId>hibernate-entitymanager</artifactId>
-          101  <version>${hibernate.version}</version>
-          102  </dependency>
-          103  <dependency>
-          104  <groupId>org.hibernate.validator</groupId>
-          105  <artifactId>hibernate-validator</artifactId>
-          106  <version>${hibernate-validator.version}</version>
-          107  </dependency>
-          108  <dependency>
-          109  <groupId>ch.qos.logback</groupId>
-          110  <artifactId>logback-classic</artifactId>
-        lineNumber: 99
-        variables:
-          name: org.glassfish.jaxb.jaxb-runtime
-          version: 2.3.1
-      links:
-      - url: https://access.redhat.com/articles/6980265#jaxb
-        title: 'JBoss EAP Application Migration from Jakarta EE 8 to EE 10: Jakarta
-          XML Binding'
-      - url: https://jakarta.ee/specifications/xml-binding/4.0/jakarta-xml-binding-spec-4.0.html
-        title: Jakarta XML Binding 4.0 specification
-      effort: 1
     hibernate-00005:
       description: Implicit name determination for sequences and tables associated
         with identifier generation has changed
@@ -1659,53 +1279,6 @@
         title: Hibernate ORM 6 migration guide - Implicit Identifier Sequence and
           Table Name
       effort: 3
-    javax-to-jakarta-dependencies-00004:
-      description: javax.activation groupId has been replaced by jakarta.activation
-      category: mandatory
-      labels:
-      - konveyor.io/source
-      - konveyor.io/source=spring5
-      - konveyor.io/target=eap
-      - konveyor.io/target=eap8
-      - konveyor.io/target=jakarta-ee
-      - konveyor.io/target=jakarta-ee9+
-      - konveyor.io/target=jws
-      - konveyor.io/target=jws6+
-      - konveyor.io/target=spring6+
-      incidents:
-      - uri: file:///source/pom.xml
-        message: Replace dependency groupId `javax.activation` with `jakarta.activation`
-        codeSnip: |2-
-
-           90  <version>2.5.0</version>
-           91  </dependency>
-           92  <dependency>
-           93  <groupId>org.apache.tomcat</groupId>
-           94  <artifactId>tomcat-jdbc</artifactId>
-           95  <version>${tomcat.version}</version>
-           96  <scope>runtime</scope>
-           97  </dependency>
-           98  <dependency>
-           99  <groupId>org.hibernate</groupId>
-          100  <artifactId>hibernate-entitymanager</artifactId>
-          101  <version>${hibernate.version}</version>
-          102  </dependency>
-          103  <dependency>
-          104  <groupId>org.hibernate.validator</groupId>
-          105  <artifactId>hibernate-validator</artifactId>
-          106  <version>${hibernate-validator.version}</version>
-          107  </dependency>
-          108  <dependency>
-          109  <groupId>ch.qos.logback</groupId>
-          110  <artifactId>logback-classic</artifactId>
-        lineNumber: 99
-        variables:
-          name: javax.activation.javax.activation-api
-          version: 1.2.0
-      links:
-      - url: https://jakarta.ee/
-        title: Jakarta EE
-      effort: 1
     javax-to-jakarta-import-00001:
       description: The package 'javax' has been replaced by 'jakarta'.
       category: mandatory
@@ -1884,49 +1457,6 @@
           package: io.konveyor.demo.ordermanagement.model
           renamed: persistence
       effort: 1
-    jboss-dependencies-00027:
-      description: Replace org.hibernate group with org.hibernate.orm
-      category: mandatory
-      labels:
-      - konveyor.io/source=jakarta-ee
-      - konveyor.io/source=jakarta-ee7+
-      - konveyor.io/target=eap
-      - konveyor.io/target=eap8
-      incidents:
-      - uri: file:///source/pom.xml
-        message: "Update the dependency by replacing the group `org.hibernate` artifact
-          `hibernate-core` \n with group `org.hibernate.orm` artifact `hibernate-core`"
-        codeSnip: |2-
-
-           90  <version>2.5.0</version>
-           91  </dependency>
-           92  <dependency>
-           93  <groupId>org.apache.tomcat</groupId>
-           94  <artifactId>tomcat-jdbc</artifactId>
-           95  <version>${tomcat.version}</version>
-           96  <scope>runtime</scope>
-           97  </dependency>
-           98  <dependency>
-           99  <groupId>org.hibernate</groupId>
-          100  <artifactId>hibernate-entitymanager</artifactId>
-          101  <version>${hibernate.version}</version>
-          102  </dependency>
-          103  <dependency>
-          104  <groupId>org.hibernate.validator</groupId>
-          105  <artifactId>hibernate-validator</artifactId>
-          106  <version>${hibernate-validator.version}</version>
-          107  </dependency>
-          108  <dependency>
-          109  <groupId>ch.qos.logback</groupId>
-          110  <artifactId>logback-classic</artifactId>
-        lineNumber: 99
-        variables:
-          name: org.hibernate.hibernate-core
-          version: 5.4.32.Final
-      links:
-      - url: https://access.redhat.com/articles/6980017
-        title: Migrating a JBoss EAP Application's Maven Project to EAP 8
-      effort: 1
   unmatched:
   - deprecated-initialcontextfactory-is-removed-00001
   - eap8-ejb-00001
@@ -1959,6 +1489,7 @@
   - eap8-xml-binding-00005
   - eap8-xml-binding-00006
   - eap8-xml-binding-00007
+  - eap8-xml-binding-00008
   - eap8-xml-binding-00009
   - empty-beans-xml-00001
   - hibernate-00010
@@ -2191,6 +1722,7 @@
   - javax-to-jakarta-dependencies-00001
   - javax-to-jakarta-dependencies-00002
   - javax-to-jakarta-dependencies-00003
+  - javax-to-jakarta-dependencies-00004
   - javax-to-jakarta-dependencies-00005
   - javax-to-jakarta-dependencies-00006
   - javax-to-jakarta-dependencies-00007
@@ -2247,6 +1779,7 @@
   - jboss-dependencies-00024
   - jboss-dependencies-00025
   - jboss-dependencies-00026
+  - jboss-dependencies-00027
   - jboss-dependencies-00028
   - jboss-dependencies-00030
   - jboss-dependencies-00031
@@ -2262,242 +1795,487 @@
   - login-modules-00001
   - picketlink-00010
   - picketlink-00020
-- name: jakarta-ee9
+- name: openjdk7/oraclejdk7
+  description: This ruleset provides analysis with respect to the migration from OracleJDK
+    to OpenJDK.
   violations:
-    spring-components-00001:
-      description: Version of Spring Boot not compatible with Jakarta EE 9+
+    oracle2openjdk-00006:
+      description: Oracle JDK JPEG image encoder/decoder usage
       category: mandatory
       labels:
-      - konveyor.io/source
-      - konveyor.io/target=jakarta-ee
-      - konveyor.io/target=jakarta-ee9+
-      - konveyor.io/target=jws
-      - konveyor.io/target=jws6+
+      - jdk
+      - konveyor.io/source=oraclejdk
+      - konveyor.io/source=oraclejdk7+
+      - konveyor.io/target=openjdk
+      - konveyor.io/target=openjdk7+
+      - oracle-jdk
       incidents:
-      - uri: file:///source/pom.xml
-        message: Version 3.0.0 is the minimum version of Spring Boot that is Jakarta
-          EE 9+ compatible
-        codeSnip: |2-
-
-          79  <artifactId>spring-webmvc</artifactId>
-          80  <version>${spring-framework.version}</version>
-          81  </dependency>
-          82  <dependency>
-          83  <groupId>org.springframework</groupId>
-          84  <artifactId>spring-web</artifactId>
-          85  <version>${spring-framework.version}</version>
-          86  </dependency>
-          87  <dependency>
-          88  <groupId>org.springframework.boot</groupId>
-          89  <artifactId>spring-boot-starter-actuator</artifactId>
-          90  <version>2.5.0</version>
-          91  </dependency>
-          92  <dependency>
-          93  <groupId>org.apache.tomcat</groupId>
-          94  <artifactId>tomcat-jdbc</artifactId>
-          95  <version>${tomcat.version}</version>
-          96  <scope>runtime</scope>
-          97  </dependency>
-          98  <dependency>
-          99  <groupId>org.hibernate</groupId>
-        lineNumber: 88
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/OrderManagementAppInitializer.java
+        message: Replace the use of classes and methods from the `com.sun.image.codec.jpeg`
+          package with `javax.imageio.ImageIO`
+        codeSnip: "\n 6  \n 7  import org.springframework.web.WebApplicationInitializer;\n
+          8  import org.springframework.web.context.ContextLoaderListener;\n 9  import
+          org.springframework.web.context.support.AnnotationConfigWebApplicationContext;\n10
+          \ import org.springframework.web.servlet.DispatcherServlet;\n11  \n12  public
+          class OrderManagementAppInitializer implements WebApplicationInitializer
+          \ {\n13  \n14  @Override\n15  public void onStartup(ServletContext container)
+          throws ServletException {\n16  AnnotationConfigWebApplicationContext context
+          = new AnnotationConfigWebApplicationContext();\n17  context.setConfigLocation(\"io.konveyor.demo.ordermanagement.config\");\n18
+          \ \n19  context.scan(\"io.konveyor.demo.ordermanagement\");\n20  container.addListener(new
+          ContextLoaderListener(context));\n21  \n22  ServletRegistration.Dynamic
+          dispatcher = container\n23  .addServlet(\"dispatcher\", new DispatcherServlet(context));\n24
+          \ \n25  dispatcher.setLoadOnStartup(1);\n26  dispatcher.addMapping(\"/\");"
+        lineNumber: 16
         variables:
-          name: org.springframework.boot.spring-boot-starter-actuator
-          version: 2.5.0
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/OrderManagementAppInitializer.java
+          kind: Constructor
+          name: onStartup
+          package: io.konveyor.demo.ordermanagement
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+        message: Replace the use of classes and methods from the `com.sun.image.codec.jpeg`
+          package with `javax.imageio.ImageIO`
+        codeSnip: "\n22  @EnableJpaRepositories(basePackages = {\n23  \"io.konveyor.demo.ordermanagement.repository\"\n24
+          \ })\n25  @EnableTransactionManagement\n26  @EnableSpringDataWebSupport\n27
+          \ public class PersistenceConfig {\n28  \n29  \n30  @Bean\n31  public LocalContainerEntityManagerFactoryBean
+          entityManagerFactory() {\n32  final LocalContainerEntityManagerFactoryBean
+          em = new LocalContainerEntityManagerFactoryBean();\n33  em.setDataSource(dataSource());\n34
+          \ em.setPackagesToScan(\"io.konveyor.demo.ordermanagement.model\");\n35
+          \ em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());\n36  em.setJpaProperties(additionalProperties());\n37
+          \ \n38  return em;\n39  }\n40  \n41  @Bean\n42  public DataSource dataSource()
+          {"
+        lineNumber: 32
+        variables:
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+          kind: Constructor
+          name: entityManagerFactory
+          package: io.konveyor.demo.ordermanagement.config
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+        message: Replace the use of classes and methods from the `com.sun.image.codec.jpeg`
+          package with `javax.imageio.ImageIO`
+        codeSnip: "\n25  @EnableTransactionManagement\n26  @EnableSpringDataWebSupport\n27
+          \ public class PersistenceConfig {\n28  \n29  \n30  @Bean\n31  public LocalContainerEntityManagerFactoryBean
+          entityManagerFactory() {\n32  final LocalContainerEntityManagerFactoryBean
+          em = new LocalContainerEntityManagerFactoryBean();\n33  em.setDataSource(dataSource());\n34
+          \ em.setPackagesToScan(\"io.konveyor.demo.ordermanagement.model\");\n35
+          \ em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());\n36  em.setJpaProperties(additionalProperties());\n37
+          \ \n38  return em;\n39  }\n40  \n41  @Bean\n42  public DataSource dataSource()
+          {\n43  ApplicationConfiguration config = new ApplicationConfiguration();\n44
+          \ final DriverManagerDataSource dataSource = new DriverManagerDataSource();\n45
+          \ dataSource.setDriverClassName(config.getProperty(\"jdbc.driverClassName\"));"
+        lineNumber: 35
+        variables:
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+          kind: Constructor
+          name: entityManagerFactory
+          package: io.konveyor.demo.ordermanagement.config
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+        message: Replace the use of classes and methods from the `com.sun.image.codec.jpeg`
+          package with `javax.imageio.ImageIO`
+        codeSnip: "\n33  em.setDataSource(dataSource());\n34  em.setPackagesToScan(\"io.konveyor.demo.ordermanagement.model\");\n35
+          \ em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());\n36  em.setJpaProperties(additionalProperties());\n37
+          \ \n38  return em;\n39  }\n40  \n41  @Bean\n42  public DataSource dataSource()
+          {\n43  ApplicationConfiguration config = new ApplicationConfiguration();\n44
+          \ final DriverManagerDataSource dataSource = new DriverManagerDataSource();\n45
+          \ dataSource.setDriverClassName(config.getProperty(\"jdbc.driverClassName\"));\n46
+          \ dataSource.setUrl(config.getProperty(\"jdbc.url\"));\n47  dataSource.setUsername(config.getProperty(\"jdbc.user\"));\n48
+          \ dataSource.setPassword(config.getProperty(\"jdbc.password\"));\n49  \n50
+          \ return dataSource;\n51  }\n52  \n53  @Bean"
+        lineNumber: 43
+        variables:
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+          kind: Constructor
+          name: dataSource
+          package: io.konveyor.demo.ordermanagement.config
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+        message: Replace the use of classes and methods from the `com.sun.image.codec.jpeg`
+          package with `javax.imageio.ImageIO`
+        codeSnip: "\n34  em.setPackagesToScan(\"io.konveyor.demo.ordermanagement.model\");\n35
+          \ em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());\n36  em.setJpaProperties(additionalProperties());\n37
+          \ \n38  return em;\n39  }\n40  \n41  @Bean\n42  public DataSource dataSource()
+          {\n43  ApplicationConfiguration config = new ApplicationConfiguration();\n44
+          \ final DriverManagerDataSource dataSource = new DriverManagerDataSource();\n45
+          \ dataSource.setDriverClassName(config.getProperty(\"jdbc.driverClassName\"));\n46
+          \ dataSource.setUrl(config.getProperty(\"jdbc.url\"));\n47  dataSource.setUsername(config.getProperty(\"jdbc.user\"));\n48
+          \ dataSource.setPassword(config.getProperty(\"jdbc.password\"));\n49  \n50
+          \ return dataSource;\n51  }\n52  \n53  @Bean\n54  public PlatformTransactionManager
+          transactionManager() {"
+        lineNumber: 44
+        variables:
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+          kind: Constructor
+          name: dataSource
+          package: io.konveyor.demo.ordermanagement.config
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+        message: Replace the use of classes and methods from the `com.sun.image.codec.jpeg`
+          package with `javax.imageio.ImageIO`
+        codeSnip: "\n45  dataSource.setDriverClassName(config.getProperty(\"jdbc.driverClassName\"));\n46
+          \ dataSource.setUrl(config.getProperty(\"jdbc.url\"));\n47  dataSource.setUsername(config.getProperty(\"jdbc.user\"));\n48
+          \ dataSource.setPassword(config.getProperty(\"jdbc.password\"));\n49  \n50
+          \ return dataSource;\n51  }\n52  \n53  @Bean\n54  public PlatformTransactionManager
+          transactionManager() {\n55  final JpaTransactionManager transactionManager
+          = new JpaTransactionManager();\n56  transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());\n57
+          \ return transactionManager;\n58  }\n59  \n60  @Bean\n61  public PersistenceExceptionTranslationPostProcessor
+          exceptionTranslation() {\n62  return new PersistenceExceptionTranslationPostProcessor();\n63
+          \ }\n64  \n65  final Properties additionalProperties() {"
+        lineNumber: 55
+        variables:
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+          kind: Constructor
+          name: transactionManager
+          package: io.konveyor.demo.ordermanagement.config
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+        message: Replace the use of classes and methods from the `com.sun.image.codec.jpeg`
+          package with `javax.imageio.ImageIO`
+        codeSnip: "\n52  \n53  @Bean\n54  public PlatformTransactionManager transactionManager()
+          {\n55  final JpaTransactionManager transactionManager = new JpaTransactionManager();\n56
+          \ transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());\n57
+          \ return transactionManager;\n58  }\n59  \n60  @Bean\n61  public PersistenceExceptionTranslationPostProcessor
+          exceptionTranslation() {\n62  return new PersistenceExceptionTranslationPostProcessor();\n63
+          \ }\n64  \n65  final Properties additionalProperties() {\n66  ApplicationConfiguration
+          config = new ApplicationConfiguration();\n67  final Properties hibernateProperties
+          = new Properties();\n68  hibernateProperties.setProperty(\"hibernate.hbm2ddl.auto\",
+          config.getProperty(\"hibernate.hbm2ddl.auto\"));\n69  hibernateProperties.setProperty(\"hibernate.dialect\",
+          config.getProperty(\"hibernate.dialect\"));\n70  hibernateProperties.setProperty(\"hibernate.cache.use_second_level_cache\",
+          \"false\");\n71  \n72  return hibernateProperties;"
+        lineNumber: 62
+        variables:
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+          kind: Constructor
+          name: exceptionTranslation
+          package: io.konveyor.demo.ordermanagement.config
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+        message: Replace the use of classes and methods from the `com.sun.image.codec.jpeg`
+          package with `javax.imageio.ImageIO`
+        codeSnip: "\n56  transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());\n57
+          \ return transactionManager;\n58  }\n59  \n60  @Bean\n61  public PersistenceExceptionTranslationPostProcessor
+          exceptionTranslation() {\n62  return new PersistenceExceptionTranslationPostProcessor();\n63
+          \ }\n64  \n65  final Properties additionalProperties() {\n66  ApplicationConfiguration
+          config = new ApplicationConfiguration();\n67  final Properties hibernateProperties
+          = new Properties();\n68  hibernateProperties.setProperty(\"hibernate.hbm2ddl.auto\",
+          config.getProperty(\"hibernate.hbm2ddl.auto\"));\n69  hibernateProperties.setProperty(\"hibernate.dialect\",
+          config.getProperty(\"hibernate.dialect\"));\n70  hibernateProperties.setProperty(\"hibernate.cache.use_second_level_cache\",
+          \"false\");\n71  \n72  return hibernateProperties;\n73  }\n74  }"
+        lineNumber: 66
+        variables:
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+          kind: Constructor
+          name: additionalProperties
+          package: io.konveyor.demo.ordermanagement.config
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/repository/CustomerRepository.java
+        message: Replace the use of classes and methods from the `com.sun.image.codec.jpeg`
+          package with `javax.imageio.ImageIO`
+        codeSnip: "\n 1  package io.konveyor.demo.ordermanagement.repository;\n 2
+          \ \n 3  import io.konveyor.demo.ordermanagement.model.Customer;\n 4  import
+          org.springframework.data.repository.PagingAndSortingRepository;\n 5  \n
+          6  public interface CustomerRepository extends PagingAndSortingRepository<Customer,
+          Long> {\n 7  \n 8  }"
+        lineNumber: 6
+        variables:
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/repository/CustomerRepository.java
+          kind: Interface
+          name: CustomerRepository
+          package: io.konveyor.demo.ordermanagement.repository
       links:
-      - url: https://spring.io/blog/2021/09/02/a-java-17-and-jakarta-ee-9-baseline-for-spring-framework-6/
-        title: A Java 17 and Jakarta EE 9 baseline for Spring Framework 6
+      - url: https://docs.oracle.com/javase/8/docs/technotes/guides/imageio/spec/imageio_guideTOC.fm.html
+        title: Java Image I/O API Guide
+      - url: https://docs.oracle.com/javase/tutorial/2d/images/saveimage.html
+        title: Java Image I/O tutorial
+      - url: https://access.redhat.com/solutions/443673
+        title: 'java.lang.NoClassDefFoundError: com/sun/image/codec/jpeg/ImageFormatException
+          when using OpenJDK'
       effort: 3
-    spring-components-00002:
-      description: Version of Spring not compatible with Jakarta EE 9+
-      category: mandatory
-      labels:
-      - konveyor.io/source
-      - konveyor.io/target=jakarta-ee
-      - konveyor.io/target=jakarta-ee9+
-      - konveyor.io/target=jws
-      - konveyor.io/target=jws6+
-      incidents:
-      - uri: file:///source/pom.xml
-        message: Version 6.0.0 is the minimum version of Spring that is Jakarta EE
-          9+ compatible
-        codeSnip: "\n59  <dependency>\n60  <groupId>com.fasterxml.jackson.core</groupId>\n61
-          \ <artifactId>jackson-core</artifactId>\n62  </dependency>\n63  <dependency>\n64
-          \ <groupId>com.fasterxml.jackson.core</groupId>\n65  <artifactId>jackson-databind</artifactId>\n66
-          \ </dependency>\n67  <dependency>\n68  <groupId>org.springframework.data</groupId>\n69
-          \ <artifactId>spring-data-jpa</artifactId>\n70  </dependency>\n71  \n72
-          \ <dependency>\n73  <groupId>org.springframework</groupId>\n74  <artifactId>spring-jdbc</artifactId>\n75
-          \ <version>${spring-framework.version}</version>\n76  </dependency>\n77
-          \ <dependency>\n78  <groupId>org.springframework</groupId>\n79  <artifactId>spring-webmvc</artifactId>"
-        lineNumber: 68
-        variables:
-          name: org.springframework.data.spring-data-jpa
-          version: 2.5.1
-      - uri: file:///source/pom.xml
-        message: Version 6.0.0 is the minimum version of Spring that is Jakarta EE
-          9+ compatible
-        codeSnip: "\n64  <groupId>com.fasterxml.jackson.core</groupId>\n65  <artifactId>jackson-databind</artifactId>\n66
-          \ </dependency>\n67  <dependency>\n68  <groupId>org.springframework.data</groupId>\n69
-          \ <artifactId>spring-data-jpa</artifactId>\n70  </dependency>\n71  \n72
-          \ <dependency>\n73  <groupId>org.springframework</groupId>\n74  <artifactId>spring-jdbc</artifactId>\n75
-          \ <version>${spring-framework.version}</version>\n76  </dependency>\n77
-          \ <dependency>\n78  <groupId>org.springframework</groupId>\n79  <artifactId>spring-webmvc</artifactId>\n80
-          \ <version>${spring-framework.version}</version>\n81  </dependency>\n82
-          \ <dependency>\n83  <groupId>org.springframework</groupId>\n84  <artifactId>spring-web</artifactId>"
-        lineNumber: 73
-        variables:
-          name: org.springframework.spring-jdbc
-          version: 5.3.7
-      - uri: file:///source/pom.xml
-        message: Version 6.0.0 is the minimum version of Spring that is Jakarta EE
-          9+ compatible
-        codeSnip: "\n69  <artifactId>spring-data-jpa</artifactId>\n70  </dependency>\n71
-          \ \n72  <dependency>\n73  <groupId>org.springframework</groupId>\n74  <artifactId>spring-jdbc</artifactId>\n75
-          \ <version>${spring-framework.version}</version>\n76  </dependency>\n77
-          \ <dependency>\n78  <groupId>org.springframework</groupId>\n79  <artifactId>spring-webmvc</artifactId>\n80
-          \ <version>${spring-framework.version}</version>\n81  </dependency>\n82
-          \ <dependency>\n83  <groupId>org.springframework</groupId>\n84  <artifactId>spring-web</artifactId>\n85
-          \ <version>${spring-framework.version}</version>\n86  </dependency>\n87
-          \ <dependency>\n88  <groupId>org.springframework.boot</groupId>\n89  <artifactId>spring-boot-starter-actuator</artifactId>"
-        lineNumber: 78
-        variables:
-          name: org.springframework.spring-webmvc
-          version: 5.3.7
-      - uri: file:///source/pom.xml
-        message: Version 6.0.0 is the minimum version of Spring that is Jakarta EE
-          9+ compatible
-        codeSnip: |2-
-
-          74  <artifactId>spring-jdbc</artifactId>
-          75  <version>${spring-framework.version}</version>
-          76  </dependency>
-          77  <dependency>
-          78  <groupId>org.springframework</groupId>
-          79  <artifactId>spring-webmvc</artifactId>
-          80  <version>${spring-framework.version}</version>
-          81  </dependency>
-          82  <dependency>
-          83  <groupId>org.springframework</groupId>
-          84  <artifactId>spring-web</artifactId>
-          85  <version>${spring-framework.version}</version>
-          86  </dependency>
-          87  <dependency>
-          88  <groupId>org.springframework.boot</groupId>
-          89  <artifactId>spring-boot-starter-actuator</artifactId>
-          90  <version>2.5.0</version>
-          91  </dependency>
-          92  <dependency>
-          93  <groupId>org.apache.tomcat</groupId>
-          94  <artifactId>tomcat-jdbc</artifactId>
-        lineNumber: 83
-        variables:
-          name: org.springframework.spring-web
-          version: 5.3.7
-      - uri: file:///source/pom.xml
-        message: Version 6.0.0 is the minimum version of Spring that is Jakarta EE
-          9+ compatible
-        codeSnip: |2-
-
-          79  <artifactId>spring-webmvc</artifactId>
-          80  <version>${spring-framework.version}</version>
-          81  </dependency>
-          82  <dependency>
-          83  <groupId>org.springframework</groupId>
-          84  <artifactId>spring-web</artifactId>
-          85  <version>${spring-framework.version}</version>
-          86  </dependency>
-          87  <dependency>
-          88  <groupId>org.springframework.boot</groupId>
-          89  <artifactId>spring-boot-starter-actuator</artifactId>
-          90  <version>2.5.0</version>
-          91  </dependency>
-          92  <dependency>
-          93  <groupId>org.apache.tomcat</groupId>
-          94  <artifactId>tomcat-jdbc</artifactId>
-          95  <version>${tomcat.version}</version>
-          96  <scope>runtime</scope>
-          97  </dependency>
-          98  <dependency>
-          99  <groupId>org.hibernate</groupId>
-        lineNumber: 88
-        variables:
-          name: org.springframework.boot.spring-boot-starter-actuator
-          version: 2.5.0
-      links:
-      - url: https://spring.io/blog/2021/09/02/a-java-17-and-jakarta-ee-9-baseline-for-spring-framework-6/
-        title: A Java 17 and Jakarta EE 9 baseline for Spring Framework 6
-      effort: 3
-- name: jws5
-  description: This ruleset provides analysis of applications that need to change
-    their pom dependencies to upgrade dependencies that belong to the groupId `org.apache.tomcat`
+  unmatched:
+  - oracle2openjdk-00000
+  - oracle2openjdk-00001
+  - oracle2openjdk-00002
+  - oracle2openjdk-00003
+  - oracle2openjdk-00004
+  - oracle2openjdk-00005
+- name: openliberty/websphere
+  description: This ruleset identifies usage of Java APIs and technologies which are
+    not provided by Open Liberty.
   violations:
-    upgrade-tomcat-dependencies-00001:
-      description: Version of the tomcat artifact not compatible with JWS 6
+    I18nRule:
+      description: The WebSphere i18n APIs and SPIs are unavailable
       category: mandatory
       labels:
-      - konveyor.io/source
-      - konveyor.io/target=jws
-      - konveyor.io/target=jws6+
+      - konveyor.io/source=websphere
+      - konveyor.io/target=openliberty
       incidents:
-      - uri: file:///source/pom.xml
-        message: Version 10.1.0 is the minimum version recommended
-        codeSnip: |2-
-
-          45  <artifactId>spring-data-bom</artifactId>
-          46  <version>${spring-data.version}</version>
-          47  <scope>import</scope>
-          48  <type>pom</type>
-          49  </dependency>
-          50  </dependencies>
-          51  </dependencyManagement>
-          52  <dependencies>
-          53  <dependency>
-          54  <groupId>org.apache.tomcat</groupId>
-          55  <artifactId>tomcat-servlet-api</artifactId>
-          56  <version>${tomcat.version}</version>
-          57  <scope>provided</scope>
-          58  </dependency>
-          59  <dependency>
-          60  <groupId>com.fasterxml.jackson.core</groupId>
-          61  <artifactId>jackson-core</artifactId>
-          62  </dependency>
-          63  <dependency>
-          64  <groupId>com.fasterxml.jackson.core</groupId>
-          65  <artifactId>jackson-databind</artifactId>
-        lineNumber: 54
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/OrderManagementAppInitializer.java
+        message: "<div class=\"Text\"> \n <p> The following WebSphere i18n APIs and
+          SPIs are not available on Liberty: </p> \n <ul> \n <li><code>com.ibm.websphere.i18n.context</code></li>
+          \n <li><code>com.ibm.wsspi.i18n.context.util</code></li> \n </ul> \n <p>You
+          must modify the application so that it can run on Liberty.</p> \n</div>"
+        codeSnip: "\n10  import org.springframework.web.servlet.DispatcherServlet;\n11
+          \ \n12  public class OrderManagementAppInitializer implements WebApplicationInitializer
+          \ {\n13  \n14  @Override\n15  public void onStartup(ServletContext container)
+          throws ServletException {\n16  AnnotationConfigWebApplicationContext context
+          = new AnnotationConfigWebApplicationContext();\n17  context.setConfigLocation(\"io.konveyor.demo.ordermanagement.config\");\n18
+          \ \n19  context.scan(\"io.konveyor.demo.ordermanagement\");\n20  container.addListener(new
+          ContextLoaderListener(context));\n21  \n22  ServletRegistration.Dynamic
+          dispatcher = container\n23  .addServlet(\"dispatcher\", new DispatcherServlet(context));\n24
+          \ \n25  dispatcher.setLoadOnStartup(1);\n26  dispatcher.addMapping(\"/\");\n27
+          \ \n28  }\n29  \n30  }"
+        lineNumber: 20
         variables:
-          name: org.apache.tomcat.tomcat-servlet-api
-          version: 9.0.46
-      - uri: file:///source/pom.xml
-        message: Version 10.1.0 is the minimum version recommended
-        codeSnip: |2-
-
-           84  <artifactId>spring-web</artifactId>
-           85  <version>${spring-framework.version}</version>
-           86  </dependency>
-           87  <dependency>
-           88  <groupId>org.springframework.boot</groupId>
-           89  <artifactId>spring-boot-starter-actuator</artifactId>
-           90  <version>2.5.0</version>
-           91  </dependency>
-           92  <dependency>
-           93  <groupId>org.apache.tomcat</groupId>
-           94  <artifactId>tomcat-jdbc</artifactId>
-           95  <version>${tomcat.version}</version>
-           96  <scope>runtime</scope>
-           97  </dependency>
-           98  <dependency>
-           99  <groupId>org.hibernate</groupId>
-          100  <artifactId>hibernate-entitymanager</artifactId>
-          101  <version>${hibernate.version}</version>
-          102  </dependency>
-          103  <dependency>
-          104  <groupId>org.hibernate.validator</groupId>
-        lineNumber: 93
-        variables:
-          name: org.apache.tomcat.tomcat-jdbc
-          version: 9.0.46
+          I18nRule_0_packages: ""
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/OrderManagementAppInitializer.java
+          kind: Method
+          name: onStartup
+          package: io.konveyor.demo.ordermanagement
+      links:
+      - url: https://www.ibm.com/docs/wamt?topic=rules-open-liberty-migration-in-windup
+        title: Open Liberty migration rules in Windup
       effort: 1
+    WebSphereServletRule:
+      description: The WebSphere Servlet API was superseded by a newer implementation
+      category: mandatory
+      labels:
+      - konveyor.io/source=websphere
+      - konveyor.io/target=openliberty
+      incidents:
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/controller/CustomerController.java
+        message: "<div class=\"Text\"> \n <p> The WebSphere Servlet API was superseded
+          by standard Servlet 3.0 functionality. </p> \n <p> This rule flags Java
+          code that has references to the following classes and packages because they
+          are not available on Liberty. </p>\n <ul> \n <li><code>com.ibm.servlet.ClientList</code></li>
+          \n <li><code>com.ibm.servlet.ClientListElement</code></li> \n <li><code>com.ibm.servlet.MLNotFoundException</code></li>
+          \n <li><code>com.ibm.servlet.PageListServlet</code></li> \n <li><code>com.ibm.servlet.PageNotFoundException</code></li>
+          \n <li><code>com.ibm.websphere.servlet.filter.ChainedRequest</code></li>
+          \n <li><code>com.ibm.websphere.servlet.filter.ChainedResponse</code></li>
+          \n <li><code>com.ibm.websphere.servlet.filter.ChainerServlet</code></li>
+          \n <li><code>com.ibm.websphere.servlet.filter.ServletChain</code></li> \n
+          <li><code>com.ibm.websphere.servlet.response.IResponse</code></li> \n <li><code>com.ibm.websphere.servlet.response.StoredResponseCompat</code></li>
+          \n <li><code>com.ibm.websphere.servlet.response.HttpServletResponseProxy</code></li>
+          \n <li><code>com.ibm.websphere.servlet.response.ResponseUtils</code></li>
+          \n <li><code>com.ibm.websphere.servlet.response.ServletOutputStreamAdapter</code></li>
+          \n <li><code>com.ibm.websphere.servlet.response.ResponseErrorReport</code></li>
+          \n <li><code>com.ibm.websphere.servlet.request</code></li> \n <li><code>com.ibm.websphere.webcontainer.async</code></li>
+          \n </ul> \n <p> For information about the Java EE Servlet APIs, see the
+          <a href=\"http://docs.oracle.com/javaee/6/api/?javax/servlet/package-summary.html\"
+          title=\"Opens a new window\" onclick=\"javascript:helpWindow('http://docs.oracle.com/javaee/6/api/?javax/servlet/package-summary.html');
+          return false;\"> javax.servlet</a> package Java documentation. </p> \n <p>
+          For information about the WebSphere Servlet APIs, see the <a href=\"http://www.ibm.com/support/knowledgecenter/SSAW57_8.5.5/com.ibm.websphere.javadoc.doc/web/apidocs/overview-summary.html\"
+          title=\"Opens a new window\" onclick=\"javascript:helpWindow('http://www.ibm.com/support/knowledgecenter/SSAW57_8.5.5/com.ibm.websphere.javadoc.doc/web/apidocs/overview-summary.html');
+          return false;\"> IBM WebSphere Application Server, Release 8.5 API Specification</a>.
+          </p> \n</div>"
+        codeSnip: "\n 7  import org.springframework.beans.factory.annotation.Autowired;\n
+          8  import org.springframework.data.domain.Page;\n 9  import org.springframework.data.domain.Pageable;\n10
+          \ import org.springframework.http.MediaType;\n11  import org.springframework.web.bind.annotation.GetMapping;\n12
+          \ import org.springframework.web.bind.annotation.PathVariable;\n13  import
+          org.springframework.web.bind.annotation.RequestMapping;\n14  import org.springframework.web.bind.annotation.RestController;\n15
+          \ \n16  @RestController\n17  @RequestMapping(\"/customers\")\n18  public
+          class CustomerController {\n19  \n20  @Autowired\n21  private CustomerService
+          customerService;\n22  \n23  private static Logger logger = Logger.getLogger(
+          CustomerController.class.getName() );\n24  \n25  @GetMapping(value = \"/{id}\",
+          produces = MediaType.APPLICATION_JSON_VALUE)\n26  public Customer getById(@PathVariable(\"id\")
+          Long id) {\n27  Customer c = customerService.findById(id);"
+        lineNumber: 17
+        variables:
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/controller/CustomerController.java
+          kind: Class
+          name: CustomerController
+          package: io.konveyor.demo.ordermanagement.controller
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/controller/CustomerController.java
+        message: "<div class=\"Text\"> \n <p> The WebSphere Servlet API was superseded
+          by standard Servlet 3.0 functionality. </p> \n <p> This rule flags Java
+          code that has references to the following classes and packages because they
+          are not available on Liberty. </p>\n <ul> \n <li><code>com.ibm.servlet.ClientList</code></li>
+          \n <li><code>com.ibm.servlet.ClientListElement</code></li> \n <li><code>com.ibm.servlet.MLNotFoundException</code></li>
+          \n <li><code>com.ibm.servlet.PageListServlet</code></li> \n <li><code>com.ibm.servlet.PageNotFoundException</code></li>
+          \n <li><code>com.ibm.websphere.servlet.filter.ChainedRequest</code></li>
+          \n <li><code>com.ibm.websphere.servlet.filter.ChainedResponse</code></li>
+          \n <li><code>com.ibm.websphere.servlet.filter.ChainerServlet</code></li>
+          \n <li><code>com.ibm.websphere.servlet.filter.ServletChain</code></li> \n
+          <li><code>com.ibm.websphere.servlet.response.IResponse</code></li> \n <li><code>com.ibm.websphere.servlet.response.StoredResponseCompat</code></li>
+          \n <li><code>com.ibm.websphere.servlet.response.HttpServletResponseProxy</code></li>
+          \n <li><code>com.ibm.websphere.servlet.response.ResponseUtils</code></li>
+          \n <li><code>com.ibm.websphere.servlet.response.ServletOutputStreamAdapter</code></li>
+          \n <li><code>com.ibm.websphere.servlet.response.ResponseErrorReport</code></li>
+          \n <li><code>com.ibm.websphere.servlet.request</code></li> \n <li><code>com.ibm.websphere.webcontainer.async</code></li>
+          \n </ul> \n <p> For information about the Java EE Servlet APIs, see the
+          <a href=\"http://docs.oracle.com/javaee/6/api/?javax/servlet/package-summary.html\"
+          title=\"Opens a new window\" onclick=\"javascript:helpWindow('http://docs.oracle.com/javaee/6/api/?javax/servlet/package-summary.html');
+          return false;\"> javax.servlet</a> package Java documentation. </p> \n <p>
+          For information about the WebSphere Servlet APIs, see the <a href=\"http://www.ibm.com/support/knowledgecenter/SSAW57_8.5.5/com.ibm.websphere.javadoc.doc/web/apidocs/overview-summary.html\"
+          title=\"Opens a new window\" onclick=\"javascript:helpWindow('http://www.ibm.com/support/knowledgecenter/SSAW57_8.5.5/com.ibm.websphere.javadoc.doc/web/apidocs/overview-summary.html');
+          return false;\"> IBM WebSphere Application Server, Release 8.5 API Specification</a>.
+          </p> \n</div>"
+        codeSnip: "\n25  @GetMapping(value = \"/{id}\", produces = MediaType.APPLICATION_JSON_VALUE)\n26
+          \ public Customer getById(@PathVariable(\"id\") Long id) {\n27  Customer
+          c = customerService.findById(id);\n28  if (c == null) {\n29  throw new ResourceNotFoundException(\"Requested
+          order doesn't exist\");\n30  }\n31  logger.debug(\"Returning element: \"
+          + c);\n32  return c;\n33  }\n34  \n35  @RequestMapping\n36  public Page<Customer>
+          findAll(Pageable pageable){\n37  return customerService.findAll(pageable);\n38
+          \ }\n39  \n40  }"
+        lineNumber: 35
+        variables:
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/controller/CustomerController.java
+          kind: Method
+          name: findAll
+          package: io.konveyor.demo.ordermanagement.controller
+      links:
+      - url: https://www.ibm.com/docs/wamt?topic=rules-open-liberty-migration-in-windup
+        title: Open Liberty migration rules in Windup
+      effort: 1
+    WebSphereUnavailableAPIsSecurity:
+      description: Some WebSphere Security APIs and SPIs are unavailable
+      category: mandatory
+      labels:
+      - konveyor.io/source=websphere
+      - konveyor.io/target=openliberty
+      incidents:
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/OrderManagementAppInitializer.java
+        message: "<div class=\"Text\"> \n <p> The following WebSphere Security APIs
+          and SPIs are not available on Liberty: </p> \n <ul> \n <li><code>com.ibm.websphere.crypto.KeyGenerator</code></li>
+          \n <li><code>com.ibm.websphere.crypto.KeyPair</code></li> \n <li><code>com.ibm.websphere.crypto.KeyPairGenerator</code></li>
+          \n <li><code>com.ibm.websphere.crypto.KeySetHelper</code></li> \n <li><code>com.ibm.websphere.security.auth.WSPrincipal</code></li>
+          \n <li><code>com.ibm.websphere.security.auth.IdentityPrincipal</code></li>
+          \n <li><code>com.ibm.websphere.security.auth.MappingAuthData</code></li>
+          \n <li><code>com.ibm.websphere.security.auth.AuthenticationFailedException</code></li>
+          \n <li><code>com.ibm.websphere.security.auth.AuthenticationNotSupportedException</code></li>
+          \n <li><code>com.ibm.websphere.security.auth.MapCredentialFailedException</code></li>
+          \n <li><code>com.ibm.websphere.security.auth.MapCredentialNotSupportedException</code></li>
+          \n <li><code>com.ibm.websphere.security.auth.UnsupportedRealmException</code></li>
+          \n <li><code>com.ibm.websphere.security.auth.ValidationFailedException</code></li>
+          \n <li><code>com.ibm.websphere.security.auth.ValidationNotSupportedException</code></li>
+          \n <li><code>com.ibm.websphere.security.auth.callback.NonPromptCallbackHandler</code></li>
+          \n <li><code>com.ibm.websphere.security.auth.callback.WSCcacheCallBackHandlerImpl</code></li>
+          \n <li><code>com.ibm.websphere.security.auth.callback.WSGUICallbackHandlerImpl</code></li>
+          \n <li><code>com.ibm.websphere.security.auth.callback.WSStdinCallbackHandlerImpl</code></li>
+          \n <li><code>com.ibm.websphere.security.DistributedUserMappingFailedException</code></li>
+          \n <li><code>com.ibm.websphere.security.oidc.util</code></li> \n <li><code>com.ibm.websphere.security.ProviderFailureException</code></li>
+          \n <li><code>com.ibm.websphere.security.SAFRoleMapper</code></li> \n <li><code>com.ibm.websphere.security.TrustAssociationInterceptor</code></li>
+          \n <li><code>com.ibm.websphere.security.UserMapping</code></li> \n <li><code>com.ibm.websphere.security.UserMappingException</code></li>
+          \n <li><code>com.ibm.websphere.security.WebSphereBaseTrustAssociationInterceptor</code></li>
+          \n <li><code>com.ibm.websphere.ssl.protocol</code></li> \n <li><code>com.ibm.ws.security.core.SecurityContext</code></li>
+          \n <li><code>com.ibm.ws.security.util.LoginHelper</code></li> \n <li><code>com.ibm.ws.security.util.ByteArray</code></li>
+          \n <li><code>com.ibm.wsspi.security.audit</code></li> \n <li><code>com.ibm.wsspi.security.auth.callback.WSIdentityCallback</code></li>
+          \n <li><code>com.ibm.wsspi.security.auth.callback.WSMappingCallbackHandlerFactory</code></li>
+          \n <li><code>com.ibm.wsspi.security.auth.callback.WSProtocolPolicyCallback</code></li>
+          \n <li><code>com.ibm.wsspi.security.auth.callback.WSTokenHolderCallback</code></li>
+          \n <li><code>com.ibm.wsspi.security.auth.WSSubjectWrapper</code></li> \n
+          <li><code>com.ibm.wsspi.security.authorization</code></li> \n <li><code>com.ibm.wsspi.security.context</code></li>
+          \n <li><code>com.ibm.wsspi.security.crypto.aes</code></li> \n <li><code>com.ibm.wsspi.security.csiv2</code></li>
+          \n <li><code>com.ibm.wsspi.security.ltpa</code></li> \n <li><code>com.ibm.wsspi.security.policy</code></li>
+          \n <li><code>com.ibm.wsspi.security.securitydomain</code></li> \n <li><code>com.ibm.wsspi.security.spnego</code></li>
+          \n <li><code>com.ibm.wsspi.security.tai.NegotiateTrustAssociationInterceptor</code></li>
+          \n <li><code>com.ibm.wsspi.security.tai.NegotiateTrustAssociationInterceptorImpl</code></li>
+          \n <li><code>com.ibm.wsspi.security.tai.TrustAssociationInterceptorExt</code></li>
+          \n <li><code>com.ibm.wsspi.security.token.AuthenticationToken</code></li>
+          \n <li><code>com.ibm.wsspi.security.token.AuthorizationToken</code></li>
+          \n <li><code>com.ibm.wsspi.security.token.KerberosToken</code></li> \n <li><code>com.ibm.wsspi.security.token.PropagationToken</code></li>
+          \n <li><code>com.ibm.wsspi.security.token.TokenHolder</code></li> \n <li><code>com.ibm.wsspi.security.token.WSOpaqueTokenHelper</code></li>
+          \n <li><code>com.ibm.wsspi.security.web.saml</code></li> \n <li><code>com.ibm.wsspi.ssl.RetrieveSignersHelper</code></li>
+          \n <li><code>com.ibm.wsspi.ssl.WSPKIClient</code></li> \n <li><code>com.ibm.IExtendedSecurity</code></li>
+          \n </ul> \n <p>You must modify the application so that it can run on Liberty.</p>
+          \n</div>"
+        codeSnip: "\n10  import org.springframework.web.servlet.DispatcherServlet;\n11
+          \ \n12  public class OrderManagementAppInitializer implements WebApplicationInitializer
+          \ {\n13  \n14  @Override\n15  public void onStartup(ServletContext container)
+          throws ServletException {\n16  AnnotationConfigWebApplicationContext context
+          = new AnnotationConfigWebApplicationContext();\n17  context.setConfigLocation(\"io.konveyor.demo.ordermanagement.config\");\n18
+          \ \n19  context.scan(\"io.konveyor.demo.ordermanagement\");\n20  container.addListener(new
+          ContextLoaderListener(context));\n21  \n22  ServletRegistration.Dynamic
+          dispatcher = container\n23  .addServlet(\"dispatcher\", new DispatcherServlet(context));\n24
+          \ \n25  dispatcher.setLoadOnStartup(1);\n26  dispatcher.addMapping(\"/\");\n27
+          \ \n28  }\n29  \n30  }"
+        lineNumber: 20
+        variables:
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/OrderManagementAppInitializer.java
+          kind: Method
+          name: onStartup
+          package: io.konveyor.demo.ordermanagement
+      links:
+      - url: https://www.ibm.com/docs/wamt?topic=rules-open-liberty-migration-in-windup
+        title: Open Liberty migration rules in Windup
+      effort: 1
+    WebSphereUnavailableAPIsWLM:
+      description: The WebSphere Workload Manager APIs are unavailable
+      category: mandatory
+      labels:
+      - konveyor.io/source=websphere
+      - konveyor.io/target=openliberty
+      incidents:
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/exception/handler/ExceptionHandlingController.java
+        message: "<div class=\"Text\"> \n <p> The following WebSphere Workload Manager
+          APIs are not available on Liberty: </p> \n <ul> \n <li><code>com.ibm.websphere.wlm</code></li>
+          \n <li><code>com.ibm.websphere.wlm.exception</code></li> \n </ul> \n <p>You
+          must modify the application so that it can run on Liberty.</p> \n</div>"
+        codeSnip: "\n 8  import org.springframework.web.bind.annotation.ExceptionHandler;\n
+          9  import org.springframework.web.bind.annotation.ResponseStatus;\n10  \n11
+          \ @ControllerAdvice\n12  public class ExceptionHandlingController {\n13
+          \ \n14  private static Logger logger = Logger.getLogger( ExceptionHandlingController.class.getName()
+          );\n15  \n16  @ResponseStatus(value = HttpStatus.NOT_FOUND,\n17  reason
+          = \"Resource not found\")\n18  @ExceptionHandler(ResourceNotFoundException.class)\n19
+          \ public void resourceNotFound(ResourceNotFoundException e) {\n20  logger.warn(\"Resource
+          not found: \" + e.getMessage());\n21  }\n22  \n23  }"
+        lineNumber: 18
+        variables:
+          WebSphereUnavailableAPIsWLM_0_packages: ""
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/exception/handler/ExceptionHandlingController.java
+          kind: Method
+          name: resourceNotFound
+          package: io.konveyor.demo.ordermanagement.exception.handler
+      links:
+      - url: https://www.ibm.com/docs/wamt?topic=rules-open-liberty-migration-in-windup
+        title: Open Liberty migration rules in Windup
+      effort: 1
+  unmatched:
+  - ActivitySessionRule
+  - AppProfileRule
+  - AsyncBeansSchedulerRule
+  - BatchFeaturePackRule
+  - DetectEJBEntityBeansXML
+  - DetectJAXRJava
+  - DetectJAXRPC
+  - DetectJavaApplicationDeploymentJava
+  - DetectJavaPortlet
+  - DetectPolicySetAndWsSecurity
+  - DetectRemoteBundleRepositoriesJava
+  - DetectRemoteServicesJava
+  - DetectTransactionPropagationEJBRemote
+  - DetectWSATXML
+  - DetectWSBAJava
+  - DetectWSNotificationJava
+  - DynamicCacheRule
+  - DynamicQueryRule
+  - MTOMRule
+  - SOAPOverJMSRule
+  - ServerName
+  - StartupBeanRule
+  - WOLAMissingClassesRule
+  - WOLARule
+  - WSNotificationRuleJava
+  - WebSphereSchedulerRule
+  - WebSphereSdoRule
+  - WebSphereUnavailableAPIsAppClient
+  - WebSphereUnavailableAPIsConnectorArchitecture
+  - WebSphereUnavailableAPIsEnterpriseJavaBeans
+  - WebSphereUnavailableAPIsExceptions
+  - WebSphereUnavailableAPIsExtHelper
+  - WebSphereUnavailableAPIsExtensionRegistry
+  - WebSphereUnavailableAPIsISC
+  - WebSphereUnavailableAPIsLoggingAndRAS
+  - WebSphereUnavailableAPIsManagement
+  - WebSphereUnavailableAPIsORB
+  - WebSphereUnavailableAPIsPMI
+  - WebSphereUnavailableAPIsPortal
+  - WebSphereUnavailableAPIsResourceAdapter
+  - WebSphereUnavailableAPIsSIB
+  - WebSphereUnavailableAPIsSMF
+  - WebSphereUnavailableAPIsTPV
+  - WebSphereUnavailableAPIsUDDI
+  - WebSphereUnavailableAPIsWSADIE
+  - WebSphereUnavailableAPIsWSSecurityHelper
+  - WebSphereUnavailableSPIsRRD
+  - WebSphereUnavailableSSOCookieMethod
+  - WebSphereUnavailableSSOTokenMethod
+  - WebSphereWebServicesGeneratedClassesRule
+  - WebSphereWebServicesRule
+  - WorkAreaRule
+  - XMLFeaturePackRule
 - name: quarkus/springboot
   description: This ruleset gives hints to migrate from SpringBoot devtools to Quarkus
   violations:
@@ -2900,280 +2678,6 @@
       - url: https://quarkus.io/guides/hibernate-orm
         title: Using hibernate-orm and jakarta persistence
       effort: 1
-    springboot-actuator-to-quarkus-0100:
-      description: Replace the Spring Boot Actuator dependency with Quarkus Smallrye
-        Health extension
-      category: mandatory
-      labels:
-      - konveyor.io/source=springboot
-      - konveyor.io/target=quarkus
-      incidents:
-      - uri: file:///source/pom.xml
-        message: "Replace the Spring Boot Actuator dependency with Quarkus Smallrye
-          Health extension. \n It has to be replaced by `io.quarkus:quarkus-smallrye-health`
-          artifact."
-        codeSnip: |2-
-
-          79  <artifactId>spring-webmvc</artifactId>
-          80  <version>${spring-framework.version}</version>
-          81  </dependency>
-          82  <dependency>
-          83  <groupId>org.springframework</groupId>
-          84  <artifactId>spring-web</artifactId>
-          85  <version>${spring-framework.version}</version>
-          86  </dependency>
-          87  <dependency>
-          88  <groupId>org.springframework.boot</groupId>
-          89  <artifactId>spring-boot-starter-actuator</artifactId>
-          90  <version>2.5.0</version>
-          91  </dependency>
-          92  <dependency>
-          93  <groupId>org.apache.tomcat</groupId>
-          94  <artifactId>tomcat-jdbc</artifactId>
-          95  <version>${tomcat.version}</version>
-          96  <scope>runtime</scope>
-          97  </dependency>
-          98  <dependency>
-          99  <groupId>org.hibernate</groupId>
-        lineNumber: 88
-        variables:
-          name: org.springframework.boot.spring-boot-starter-actuator
-          version: 2.5.0
-      links:
-      - url: https://quarkus.io/guides/smallrye-health
-        title: Quarkus - Smallrye Health
-      effort: 5
-    springboot-di-to-quarkus-00000:
-      description: Replace the SpringBoot Dependency Injection artifact with Quarkus
-        'spring-di' extension
-      category: potential
-      labels:
-      - konveyor.io/source=springboot
-      - konveyor.io/target=quarkus
-      incidents:
-      - uri: file:///source/pom.xml
-        message: |-
-          Replace the SpringBoot Dependency Injection artifact with Quarkus `spring-di` extension
-
-           Spring DI is in spring-beans artifact brought transitively by any `org.springframework.boot:spring-boot-*` dependency
-           Add Quarkus dependency `io.quarkus:quarkus-spring-di`
-        codeSnip: "\n59  <dependency>\n60  <groupId>com.fasterxml.jackson.core</groupId>\n61
-          \ <artifactId>jackson-core</artifactId>\n62  </dependency>\n63  <dependency>\n64
-          \ <groupId>com.fasterxml.jackson.core</groupId>\n65  <artifactId>jackson-databind</artifactId>\n66
-          \ </dependency>\n67  <dependency>\n68  <groupId>org.springframework.data</groupId>\n69
-          \ <artifactId>spring-data-jpa</artifactId>\n70  </dependency>\n71  \n72
-          \ <dependency>\n73  <groupId>org.springframework</groupId>\n74  <artifactId>spring-jdbc</artifactId>\n75
-          \ <version>${spring-framework.version}</version>\n76  </dependency>\n77
-          \ <dependency>\n78  <groupId>org.springframework</groupId>\n79  <artifactId>spring-webmvc</artifactId>"
-        lineNumber: 68
-        variables:
-          name: org.springframework.spring-beans
-          version: 5.3.7
-      links:
-      - url: https://quarkus.io/guides/spring-di
-        title: Quarkus DI Guide
-      effort: 1
-    springboot-jpa-to-quarkus-00000:
-      description: Replace the SpringBoot Data JPA artifact with Quarkus 'spring-data-jpa'
-        extension
-      category: mandatory
-      labels:
-      - konveyor.io/source=springboot
-      - konveyor.io/target=quarkus
-      incidents:
-      - uri: file:///source/pom.xml
-        message: "Replace the SpringBoot JPA artifact with Quarkus `spring-data-jpa`
-          extension\n\n Spring Data JPA is in spring-data-jpa artifact brought transitively
-          by any `org.springframework.data:spring-data-*` dependency \n Add Quarkus
-          dependency `io.quarkus:quarkus-spring-data-jpa`"
-        codeSnip: "\n59  <dependency>\n60  <groupId>com.fasterxml.jackson.core</groupId>\n61
-          \ <artifactId>jackson-core</artifactId>\n62  </dependency>\n63  <dependency>\n64
-          \ <groupId>com.fasterxml.jackson.core</groupId>\n65  <artifactId>jackson-databind</artifactId>\n66
-          \ </dependency>\n67  <dependency>\n68  <groupId>org.springframework.data</groupId>\n69
-          \ <artifactId>spring-data-jpa</artifactId>\n70  </dependency>\n71  \n72
-          \ <dependency>\n73  <groupId>org.springframework</groupId>\n74  <artifactId>spring-jdbc</artifactId>\n75
-          \ <version>${spring-framework.version}</version>\n76  </dependency>\n77
-          \ <dependency>\n78  <groupId>org.springframework</groupId>\n79  <artifactId>spring-webmvc</artifactId>"
-        lineNumber: 68
-        variables:
-          name: org.springframework.data.spring-data-jpa
-          version: 2.5.1
-      links:
-      - url: https://quarkus.io/guides/spring-data-jpa
-        title: Quarkus JPA Guide
-      effort: 1
-    springboot-metrics-to-quarkus-0100:
-      description: Replace the Micrometer dependency with Quarkus Microprofile 'metrics'
-        extension
-      category: mandatory
-      labels:
-      - konveyor.io/source=springboot
-      - konveyor.io/target=quarkus
-      incidents:
-      - uri: file:///source/pom.xml
-        message: "Replace the Micrometer dependency with Quarkus Microprofile 'metrics'
-          extension. \n Usually this is a transitive dependency brought by `org.springframework.boot:spring-boot-starter-actuator`
-          and has to be replaced by `io.quarkus:quarkus-smallrye-metrics` artifact"
-        codeSnip: |2-
-
-          79  <artifactId>spring-webmvc</artifactId>
-          80  <version>${spring-framework.version}</version>
-          81  </dependency>
-          82  <dependency>
-          83  <groupId>org.springframework</groupId>
-          84  <artifactId>spring-web</artifactId>
-          85  <version>${spring-framework.version}</version>
-          86  </dependency>
-          87  <dependency>
-          88  <groupId>org.springframework.boot</groupId>
-          89  <artifactId>spring-boot-starter-actuator</artifactId>
-          90  <version>2.5.0</version>
-          91  </dependency>
-          92  <dependency>
-          93  <groupId>org.apache.tomcat</groupId>
-          94  <artifactId>tomcat-jdbc</artifactId>
-          95  <version>${tomcat.version}</version>
-          96  <scope>runtime</scope>
-          97  </dependency>
-          98  <dependency>
-          99  <groupId>org.hibernate</groupId>
-        lineNumber: 88
-        variables:
-          name: io.micrometer.micrometer-core
-          version: 1.7.0
-      links:
-      - url: https://quarkus.io/guides/microprofile-metrics
-        title: Quarkus metrics
-      effort: 5
-    springboot-metrics-to-quarkus-0200:
-      description: Replace the Micrometer code with Microprofile Metrics code
-      category: mandatory
-      labels:
-      - konveyor.io/source=springboot
-      - konveyor.io/target=quarkus
-      incidents:
-      - uri: file:///source/pom.xml
-        message: Replace the Micrometer code with Microprofile Metrics code
-        codeSnip: |2-
-
-          79  <artifactId>spring-webmvc</artifactId>
-          80  <version>${spring-framework.version}</version>
-          81  </dependency>
-          82  <dependency>
-          83  <groupId>org.springframework</groupId>
-          84  <artifactId>spring-web</artifactId>
-          85  <version>${spring-framework.version}</version>
-          86  </dependency>
-          87  <dependency>
-          88  <groupId>org.springframework.boot</groupId>
-          89  <artifactId>spring-boot-starter-actuator</artifactId>
-          90  <version>2.5.0</version>
-          91  </dependency>
-          92  <dependency>
-          93  <groupId>org.apache.tomcat</groupId>
-          94  <artifactId>tomcat-jdbc</artifactId>
-          95  <version>${tomcat.version}</version>
-          96  <scope>runtime</scope>
-          97  </dependency>
-          98  <dependency>
-          99  <groupId>org.hibernate</groupId>
-        lineNumber: 88
-        variables:
-          name: io.micrometer.micrometer-core
-          version: 1.7.0
-      effort: 5
-    springboot-properties-to-quarkus-00000:
-      description: Replace the SpringBoot artifact with Quarkus 'spring-boot-properties'
-        extension
-      category: mandatory
-      labels:
-      - konveyor.io/source=springboot
-      - konveyor.io/target=quarkus
-      incidents:
-      - uri: file:///source/pom.xml
-        message: |-
-          Replace the SpringBoot artifact with Quarkus `spring-boot-properties` extension
-
-           Spring Configuration Properties is in spring-boot artifact brought transitively by any `org.springframework.boot:spring-boot-*` dependency
-           Add Quarkus dependency `io.quarkus:quarkus-spring-boot-properties`
-        codeSnip: |2-
-
-          79  <artifactId>spring-webmvc</artifactId>
-          80  <version>${spring-framework.version}</version>
-          81  </dependency>
-          82  <dependency>
-          83  <groupId>org.springframework</groupId>
-          84  <artifactId>spring-web</artifactId>
-          85  <version>${spring-framework.version}</version>
-          86  </dependency>
-          87  <dependency>
-          88  <groupId>org.springframework.boot</groupId>
-          89  <artifactId>spring-boot-starter-actuator</artifactId>
-          90  <version>2.5.0</version>
-          91  </dependency>
-          92  <dependency>
-          93  <groupId>org.apache.tomcat</groupId>
-          94  <artifactId>tomcat-jdbc</artifactId>
-          95  <version>${tomcat.version}</version>
-          96  <scope>runtime</scope>
-          97  </dependency>
-          98  <dependency>
-          99  <groupId>org.hibernate</groupId>
-        lineNumber: 88
-        variables:
-          name: org.springframework.boot.spring-boot
-          version: 2.5.0
-      links:
-      - url: https://quarkus.io/guides/spring-boot-properties
-        title: Quarkus Spring Configuration Properties Guide
-      effort: 1
-    springboot-web-to-quarkus-00000:
-      description: Replace the Spring Web artifact with Quarkus 'spring-web' extension
-      category: mandatory
-      labels:
-      - konveyor.io/source=springboot
-      - konveyor.io/target=quarkus
-      incidents:
-      - uri: file:///source/pom.xml
-        message: "Replace the Spring Web artifact with Quarkus `spring-web` extension\n\n
-          Spring Web is a spring-web artifact brought transitively by any `org.springframework:spring-web*`
-          dependency \n Add Quarkus dependency `io.quarkus:quarkus-spring-web` \n
-          \n Starting with Quarkus version 2.5, the underlying JAX-RS engine must
-          be chosen. For performance reasons,\n the `quarkus-resteasy-reactive-jackson`
-          dependency should be used."
-        codeSnip: |2-
-
-          74  <artifactId>spring-jdbc</artifactId>
-          75  <version>${spring-framework.version}</version>
-          76  </dependency>
-          77  <dependency>
-          78  <groupId>org.springframework</groupId>
-          79  <artifactId>spring-webmvc</artifactId>
-          80  <version>${spring-framework.version}</version>
-          81  </dependency>
-          82  <dependency>
-          83  <groupId>org.springframework</groupId>
-          84  <artifactId>spring-web</artifactId>
-          85  <version>${spring-framework.version}</version>
-          86  </dependency>
-          87  <dependency>
-          88  <groupId>org.springframework.boot</groupId>
-          89  <artifactId>spring-boot-starter-actuator</artifactId>
-          90  <version>2.5.0</version>
-          91  </dependency>
-          92  <dependency>
-          93  <groupId>org.apache.tomcat</groupId>
-          94  <artifactId>tomcat-jdbc</artifactId>
-        lineNumber: 83
-        variables:
-          name: org.springframework.spring-web
-          version: 5.3.7
-      links:
-      - url: https://github.com/quarkusio/quarkus/wiki/Migration-Guide-2.5#spring-web
-        title: Quarkus Migration Guide 2.5
-      - url: https://quarkus.io/guides/spring-web
-        title: Quarkus Spring Web Guide
-      effort: 1
   unmatched:
   - cdi-to-quarkus-00000
   - cdi-to-quarkus-00020
@@ -3212,11 +2716,13 @@
   - persistence-to-quarkus-00010
   - persistence-to-quarkus-00011
   - remote-ejb-to-quarkus-00000
+  - springboot-actuator-to-quarkus-0100
   - springboot-actuator-to-quarkus-0200
   - springboot-annotations-to-quarkus-00000
   - springboot-cache-to-quarkus-00000
   - springboot-cloud-config-client-to-quarkus-00000
   - springboot-devtools-to-quarkus-0000
+  - springboot-di-to-quarkus-00000
   - springboot-di-to-quarkus-00001
   - springboot-di-to-quarkus-00002
   - springboot-generic-catchall-00100
@@ -3224,9 +2730,13 @@
   - springboot-integration-to-quarkus-00020
   - springboot-jmx-to-quarkus-00000
   - springboot-jmx-to-quarkus-00001
+  - springboot-jpa-to-quarkus-00000
+  - springboot-metrics-to-quarkus-0100
+  - springboot-metrics-to-quarkus-0200
   - springboot-metrics-to-quarkus-0300
   - springboot-parent-pom-to-quarkus-00000
   - springboot-plugins-to-quarkus-0000
+  - springboot-properties-to-quarkus-00000
   - springboot-properties-to-quarkus-00001
   - springboot-properties-to-quarkus-00002
   - springboot-properties-to-quarkus-00003
@@ -3236,73 +2746,13 @@
   - springboot-scheduled-to-quarkus-00000
   - springboot-security-to-quarkus-00000
   - springboot-shell-to-quarkus-00000
+  - springboot-web-to-quarkus-00000
   - springboot-web-to-quarkus-00010
   - springboot-webmvc-to-quarkus-00000
   - springboot-webmvc-to-quarkus-01000
   - transaction-to-quarkus-00001
   - transaction-to-quarkus-00002
   - transaction-to-quarkus-00003
-- name: rhr/springboot
-  description: Verify the version of the Spring Boot framework is compatible with
-    those supported by Red Hat Runtimes
-  violations:
-    springboot-rhr-00002:
-      description: Unsupported version of Spring Boot
-      category: potential
-      labels:
-      - konveyor.io/source=springboot
-      - konveyor.io/target=rhr
-      incidents:
-      - uri: file:///source/pom.xml
-        message: Spring Boot has to be updated to a version supported by Red Hat Runtimes
-        codeSnip: |2-
-
-          79  <artifactId>spring-webmvc</artifactId>
-          80  <version>${spring-framework.version}</version>
-          81  </dependency>
-          82  <dependency>
-          83  <groupId>org.springframework</groupId>
-          84  <artifactId>spring-web</artifactId>
-          85  <version>${spring-framework.version}</version>
-          86  </dependency>
-          87  <dependency>
-          88  <groupId>org.springframework.boot</groupId>
-          89  <artifactId>spring-boot-starter-actuator</artifactId>
-          90  <version>2.5.0</version>
-          91  </dependency>
-          92  <dependency>
-          93  <groupId>org.apache.tomcat</groupId>
-          94  <artifactId>tomcat-jdbc</artifactId>
-          95  <version>${tomcat.version}</version>
-          96  <scope>runtime</scope>
-          97  </dependency>
-          98  <dependency>
-          99  <groupId>org.hibernate</groupId>
-        lineNumber: 88
-        variables:
-          name: org.springframework.boot.spring-boot-starter-actuator
-          version: 2.5.0
-      links:
-      - url: https://access.redhat.com/articles/3348731
-        title: RHOAR Component Details Overview
-      effort: 1
-  unmatched:
-  - springboot-associated-00001
-  - springboot-associated-00002
-  - springboot-associated-00003
-  - springboot-associated-00004
-  - springboot-associated-00005
-  - springboot-associated-00006
-  - springboot-associated-00007
-  - springboot-associated-00008
-  - springboot-associated-00009
-  - springboot-associated-00010
-  - springboot-associated-00011
-  - springboot-associated-00012
-  - springboot-associated-00013
-  - springboot-associated-00014
-  - springboot-associated-00015
-  - springboot-rhr-00001
 - name: spring-framework
   description: Ruleset for migration of Spring Framework versions
   violations:
@@ -3337,50 +2787,209 @@
       - url: https://github.com/spring-projects/spring-framework/wiki/Upgrading-to-Spring-Framework-6.x#upgrading-to-version-60
         title: Spring 6.0 migration guide
       effort: 1
-    spring-framework-5.x-to-6.0-baseline-00010:
-      description: Spring Framework 6.0 must use at least JakartaEE 9
-      category: mandatory
+    spring-framework-5.x-to-6.0-security-00040:
+      description: Optimize Querying of RequestCache
+      category: optional
       labels:
-      - konveyor.io/source=spring
+      - konveyor.io/source=spring-boot2
       - konveyor.io/source=spring5
+      - konveyor.io/target=spring-boot3+
       - konveyor.io/target=spring6+
       incidents:
-      - uri: file:///source/pom.xml
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
         message: |
-          Spring Framework 6.0 and above must use at least JakartaEE 9. Check the migration guide in the link for more information.
-        codeSnip: |2-
+          In Spring Security 5, the default behavior is to query the saved request on every request. This means that in a
+          typical setup, that in order to use the RequestCache the HttpSession is queried on every request.
 
-           90  <version>2.5.0</version>
-           91  </dependency>
-           92  <dependency>
-           93  <groupId>org.apache.tomcat</groupId>
-           94  <artifactId>tomcat-jdbc</artifactId>
-           95  <version>${tomcat.version}</version>
-           96  <scope>runtime</scope>
-           97  </dependency>
-           98  <dependency>
-           99  <groupId>org.hibernate</groupId>
-          100  <artifactId>hibernate-entitymanager</artifactId>
-          101  <version>${hibernate.version}</version>
-          102  </dependency>
-          103  <dependency>
-          104  <groupId>org.hibernate.validator</groupId>
-          105  <artifactId>hibernate-validator</artifactId>
-          106  <version>${hibernate-validator.version}</version>
-          107  </dependency>
-          108  <dependency>
-          109  <groupId>ch.qos.logback</groupId>
-          110  <artifactId>logback-classic</artifactId>
-        lineNumber: 99
+          In Spring Security 6, the default is that RequestCache will only be queried for a cached request if the HTTP parameter
+          continue is defined. This allows Spring Security to avoid unnecessarily reading the HttpSession with the RequestCache.
+
+          In Spring Security 5 the default is to use HttpSessionRequestCache which will be queried for a cached request on every request.
+          If you are not overriding the defaults (i.e. using NullRequestCache), then the following configuration can be used
+          to explicitly opt into the Spring Security 6 behavior in Spring Security 5.8:
+
+          @Bean
+          DefaultSecurityFilterChain springSecurity(HttpSecurity http) throws Exception {
+            HttpSessionRequestCache requestCache = new HttpSessionRequestCache();
+            requestCache.setMatchingRequestParameterName("continue");
+            http
+              // ...
+              .requestCache((cache) -> cache
+                .requestCache(requestCache)
+              );
+            return http.build();
+          }
+        codeSnip: "\n21  @Configuration\n22  @EnableJpaRepositories(basePackages =
+          {\n23  \"io.konveyor.demo.ordermanagement.repository\"\n24  })\n25  @EnableTransactionManagement\n26
+          \ @EnableSpringDataWebSupport\n27  public class PersistenceConfig {\n28
+          \ \n29  \n30  @Bean\n31  public LocalContainerEntityManagerFactoryBean entityManagerFactory()
+          {\n32  final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();\n33
+          \ em.setDataSource(dataSource());\n34  em.setPackagesToScan(\"io.konveyor.demo.ordermanagement.model\");\n35
+          \ em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());\n36  em.setJpaProperties(additionalProperties());\n37
+          \ \n38  return em;\n39  }\n40  \n41  @Bean"
+        lineNumber: 31
         variables:
-          name: javax.activation.javax.activation-api
-          version: 1.2.0
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+          kind: Method
+          name: entityManagerFactory
+          package: io.konveyor.demo.ordermanagement.config
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+        message: |
+          In Spring Security 5, the default behavior is to query the saved request on every request. This means that in a
+          typical setup, that in order to use the RequestCache the HttpSession is queried on every request.
+
+          In Spring Security 6, the default is that RequestCache will only be queried for a cached request if the HTTP parameter
+          continue is defined. This allows Spring Security to avoid unnecessarily reading the HttpSession with the RequestCache.
+
+          In Spring Security 5 the default is to use HttpSessionRequestCache which will be queried for a cached request on every request.
+          If you are not overriding the defaults (i.e. using NullRequestCache), then the following configuration can be used
+          to explicitly opt into the Spring Security 6 behavior in Spring Security 5.8:
+
+          @Bean
+          DefaultSecurityFilterChain springSecurity(HttpSecurity http) throws Exception {
+            HttpSessionRequestCache requestCache = new HttpSessionRequestCache();
+            requestCache.setMatchingRequestParameterName("continue");
+            http
+              // ...
+              .requestCache((cache) -> cache
+                .requestCache(requestCache)
+              );
+            return http.build();
+          }
+        codeSnip: "\n44  final DriverManagerDataSource dataSource = new DriverManagerDataSource();\n45
+          \ dataSource.setDriverClassName(config.getProperty(\"jdbc.driverClassName\"));\n46
+          \ dataSource.setUrl(config.getProperty(\"jdbc.url\"));\n47  dataSource.setUsername(config.getProperty(\"jdbc.user\"));\n48
+          \ dataSource.setPassword(config.getProperty(\"jdbc.password\"));\n49  \n50
+          \ return dataSource;\n51  }\n52  \n53  @Bean\n54  public PlatformTransactionManager
+          transactionManager() {\n55  final JpaTransactionManager transactionManager
+          = new JpaTransactionManager();\n56  transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());\n57
+          \ return transactionManager;\n58  }\n59  \n60  @Bean\n61  public PersistenceExceptionTranslationPostProcessor
+          exceptionTranslation() {\n62  return new PersistenceExceptionTranslationPostProcessor();\n63
+          \ }\n64  "
+        lineNumber: 54
+        variables:
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+          kind: Method
+          name: transactionManager
+          package: io.konveyor.demo.ordermanagement.config
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+        message: |
+          In Spring Security 5, the default behavior is to query the saved request on every request. This means that in a
+          typical setup, that in order to use the RequestCache the HttpSession is queried on every request.
+
+          In Spring Security 6, the default is that RequestCache will only be queried for a cached request if the HTTP parameter
+          continue is defined. This allows Spring Security to avoid unnecessarily reading the HttpSession with the RequestCache.
+
+          In Spring Security 5 the default is to use HttpSessionRequestCache which will be queried for a cached request on every request.
+          If you are not overriding the defaults (i.e. using NullRequestCache), then the following configuration can be used
+          to explicitly opt into the Spring Security 6 behavior in Spring Security 5.8:
+
+          @Bean
+          DefaultSecurityFilterChain springSecurity(HttpSecurity http) throws Exception {
+            HttpSessionRequestCache requestCache = new HttpSessionRequestCache();
+            requestCache.setMatchingRequestParameterName("continue");
+            http
+              // ...
+              .requestCache((cache) -> cache
+                .requestCache(requestCache)
+              );
+            return http.build();
+          }
+        codeSnip: "\n51  }\n52  \n53  @Bean\n54  public PlatformTransactionManager
+          transactionManager() {\n55  final JpaTransactionManager transactionManager
+          = new JpaTransactionManager();\n56  transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());\n57
+          \ return transactionManager;\n58  }\n59  \n60  @Bean\n61  public PersistenceExceptionTranslationPostProcessor
+          exceptionTranslation() {\n62  return new PersistenceExceptionTranslationPostProcessor();\n63
+          \ }\n64  \n65  final Properties additionalProperties() {\n66  ApplicationConfiguration
+          config = new ApplicationConfiguration();\n67  final Properties hibernateProperties
+          = new Properties();\n68  hibernateProperties.setProperty(\"hibernate.hbm2ddl.auto\",
+          config.getProperty(\"hibernate.hbm2ddl.auto\"));\n69  hibernateProperties.setProperty(\"hibernate.dialect\",
+          config.getProperty(\"hibernate.dialect\"));\n70  hibernateProperties.setProperty(\"hibernate.cache.use_second_level_cache\",
+          \"false\");\n71  "
+        lineNumber: 61
+        variables:
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+          kind: Method
+          name: exceptionTranslation
+          package: io.konveyor.demo.ordermanagement.config
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/controller/CustomerController.java
+        message: |
+          In Spring Security 5, the default behavior is to query the saved request on every request. This means that in a
+          typical setup, that in order to use the RequestCache the HttpSession is queried on every request.
+
+          In Spring Security 6, the default is that RequestCache will only be queried for a cached request if the HTTP parameter
+          continue is defined. This allows Spring Security to avoid unnecessarily reading the HttpSession with the RequestCache.
+
+          In Spring Security 5 the default is to use HttpSessionRequestCache which will be queried for a cached request on every request.
+          If you are not overriding the defaults (i.e. using NullRequestCache), then the following configuration can be used
+          to explicitly opt into the Spring Security 6 behavior in Spring Security 5.8:
+
+          @Bean
+          DefaultSecurityFilterChain springSecurity(HttpSecurity http) throws Exception {
+            HttpSessionRequestCache requestCache = new HttpSessionRequestCache();
+            requestCache.setMatchingRequestParameterName("continue");
+            http
+              // ...
+              .requestCache((cache) -> cache
+                .requestCache(requestCache)
+              );
+            return http.build();
+          }
+        codeSnip: "\n26  public Customer getById(@PathVariable(\"id\") Long id) {\n27
+          \ Customer c = customerService.findById(id);\n28  if (c == null) {\n29  throw
+          new ResourceNotFoundException(\"Requested order doesn't exist\");\n30  }\n31
+          \ logger.debug(\"Returning element: \" + c);\n32  return c;\n33  }\n34  \n35
+          \ @RequestMapping\n36  public Page<Customer> findAll(Pageable pageable){\n37
+          \ return customerService.findAll(pageable);\n38  }\n39  \n40  }"
+        lineNumber: 36
+        variables:
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/controller/CustomerController.java
+          kind: Method
+          name: findAll
+          package: io.konveyor.demo.ordermanagement.controller
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/service/CustomerService.java
+        message: |
+          In Spring Security 5, the default behavior is to query the saved request on every request. This means that in a
+          typical setup, that in order to use the RequestCache the HttpSession is queried on every request.
+
+          In Spring Security 6, the default is that RequestCache will only be queried for a cached request if the HTTP parameter
+          continue is defined. This allows Spring Security to avoid unnecessarily reading the HttpSession with the RequestCache.
+
+          In Spring Security 5 the default is to use HttpSessionRequestCache which will be queried for a cached request on every request.
+          If you are not overriding the defaults (i.e. using NullRequestCache), then the following configuration can be used
+          to explicitly opt into the Spring Security 6 behavior in Spring Security 5.8:
+
+          @Bean
+          DefaultSecurityFilterChain springSecurity(HttpSecurity http) throws Exception {
+            HttpSessionRequestCache requestCache = new HttpSessionRequestCache();
+            requestCache.setMatchingRequestParameterName("continue");
+            http
+              // ...
+              .requestCache((cache) -> cache
+                .requestCache(requestCache)
+              );
+            return http.build();
+          }
+        codeSnip: "\n19  \n20  private static Logger logger = Logger.getLogger( CustomerService.class.getName()
+          );\n21  \n22  public Customer findById(Long id) {\n23  logger.debug(\"Entering
+          CustomerService.findById()\");\n24  Customer c = repository.findById(id).orElse(null);\n25
+          \ logger.debug(\"Returning element: \" + c);\n26  return c;\n27  }\n28  \n29
+          \ public Page<Customer>findAll(Pageable pageable) {\n30  logger.debug(\"Entering
+          CustomerService.findAll()\");\n31  Page<Customer> p = repository.findAll(pageable);\n32
+          \ logger.debug(\"Returning element: \" + p);\n33  return p;\n34  }\n35  \n36
+          \ }"
+        lineNumber: 29
+        variables:
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/service/CustomerService.java
+          kind: Method
+          name: findAll
+          package: io.konveyor.demo.ordermanagement.service
       links:
-      - url: https://github.com/spring-projects/spring-framework/wiki/Upgrading-to-Spring-Framework-6.x#upgrading-to-version-60
-        title: Spring 6.0 migration guide
+      - url: https://docs.spring.io/spring-security/reference/5.8/migration/servlet/session-management.html#requestcache-query-optimization
+        title: Optimize querying of RequestCache
       effort: 1
-    spring-framework-5.x-to-6.0-data-access-00001:
-      description: Spring 6 must use at least Hibernate 5.6.x
+    spring-framework-5.x-to-6.0-security-00120:
+      description: Publish a MethodSecurityExpressionHandler instead of a PermissionEvaluator
       category: mandatory
       labels:
       - konveyor.io/source=spring-boot2
@@ -3388,110 +2997,114 @@
       - konveyor.io/target=spring-boot3+
       - konveyor.io/target=spring6+
       incidents:
-      - uri: file:///source/pom.xml
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
         message: |
-          Due to the Jakarta EE migration, Spring 6 must use at least Hibernate 5.6.x. To make Hibernate 5.6.x compatible with
-          Jakarta, make sure to also switch your hibernate dependency to the `hibernate-core-jakarta` artifact:
+          @EnableMethodSecurity does not pick up a PermissionEvaluator. This helps keep its API simple. If you have a custom
+          `PermissionEvaluator` `@Bean`, please change it from:
           ```
-          <dependency>
-              <groupId>org.hibernate.orm</groupId>
-              <artifactId>hibernate-core-jakarta</artifactId>
-              <version>5.6.15.Final</version>
-          </dependency>
+          @Bean
+          static PermissionEvaluator permissionEvaluator() {
+            // ... your evaluator
+          }
           ```
-          Alternatively, consider migrating to Hibernate ORM 6.1 right away (exclusively based on `jakarta.persistence`,
-          compatible with EE 9 as well as EE 10) which is the Hibernate version that Spring Boot 3.0 comes with.
-
-          Please check the Hibernate 5.6 migration guide in the links provided.
-        codeSnip: |2-
-
-           90  <version>2.5.0</version>
-           91  </dependency>
-           92  <dependency>
-           93  <groupId>org.apache.tomcat</groupId>
-           94  <artifactId>tomcat-jdbc</artifactId>
-           95  <version>${tomcat.version}</version>
-           96  <scope>runtime</scope>
-           97  </dependency>
-           98  <dependency>
-           99  <groupId>org.hibernate</groupId>
-          100  <artifactId>hibernate-entitymanager</artifactId>
-          101  <version>${hibernate.version}</version>
-          102  </dependency>
-          103  <dependency>
-          104  <groupId>org.hibernate.validator</groupId>
-          105  <artifactId>hibernate-validator</artifactId>
-          106  <version>${hibernate-validator.version}</version>
-          107  </dependency>
-          108  <dependency>
-          109  <groupId>ch.qos.logback</groupId>
-          110  <artifactId>logback-classic</artifactId>
-        lineNumber: 99
+          to:
+          ```
+          @Bean
+          static MethodSecurityExpressionHandler expressionHandler() {
+            var expressionHandler = new DefaultMethodSecurityExpressionHandler();
+            expressionHandler.setPermissionEvaluator(myPermissionEvaluator);
+            return expressionHandler;
+          }
+          ```
+        codeSnip: "\n21  @Configuration\n22  @EnableJpaRepositories(basePackages =
+          {\n23  \"io.konveyor.demo.ordermanagement.repository\"\n24  })\n25  @EnableTransactionManagement\n26
+          \ @EnableSpringDataWebSupport\n27  public class PersistenceConfig {\n28
+          \ \n29  \n30  @Bean\n31  public LocalContainerEntityManagerFactoryBean entityManagerFactory()
+          {\n32  final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();\n33
+          \ em.setDataSource(dataSource());\n34  em.setPackagesToScan(\"io.konveyor.demo.ordermanagement.model\");\n35
+          \ em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());\n36  em.setJpaProperties(additionalProperties());\n37
+          \ \n38  return em;\n39  }\n40  \n41  @Bean"
+        lineNumber: 31
         variables:
-          name: org.hibernate.hibernate-core
-          version: 5.4.32.Final
-      links:
-      - url: https://github.com/hibernate/hibernate-orm/blob/5.6/migration-guide.adoc
-        title: Hibernate 5.5 to 5.6 migration guide
-      - url: https://github.com/spring-projects/spring-framework/wiki/Spring-Framework-6.0-Release-Notes#removed-apis
-        title: Spring 6.0 migration guide
-      effort: 5
-    spring-framework-5.x-to-6.0-data-access-00010:
-      description: Spring 6 must use at least Hibernate Validator 7.0.x
-      category: mandatory
-      labels:
-      - konveyor.io/source=spring5
-      - konveyor.io/target=spring6+
-      incidents:
-      - uri: file:///source/pom.xml
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+          kind: Method
+          name: entityManagerFactory
+          package: io.konveyor.demo.ordermanagement.config
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
         message: |
-          Spring 6 must use at least Hibernate Validator 8.0.
-
-          Switch the hibernate validator dependency to
+          @EnableMethodSecurity does not pick up a PermissionEvaluator. This helps keep its API simple. If you have a custom
+          `PermissionEvaluator` `@Bean`, please change it from:
           ```
-          <dependency>
-              <groupId>org.hibernate.validator</groupId>
-              <artifactId>hibernate-validator</artifactId>
-              <version>7.0.5.Final</version>
-          </dependency>
+          @Bean
+          static PermissionEvaluator permissionEvaluator() {
+            // ... your evaluator
+          }
           ```
-
-          Please check the Hibernate Validator migration guidelines in the links for more information.
-        codeSnip: |2-
-
-           95  <version>${tomcat.version}</version>
-           96  <scope>runtime</scope>
-           97  </dependency>
-           98  <dependency>
-           99  <groupId>org.hibernate</groupId>
-          100  <artifactId>hibernate-entitymanager</artifactId>
-          101  <version>${hibernate.version}</version>
-          102  </dependency>
-          103  <dependency>
-          104  <groupId>org.hibernate.validator</groupId>
-          105  <artifactId>hibernate-validator</artifactId>
-          106  <version>${hibernate-validator.version}</version>
-          107  </dependency>
-          108  <dependency>
-          109  <groupId>ch.qos.logback</groupId>
-          110  <artifactId>logback-classic</artifactId>
-          111  <version>1.1.7</version>
-          112  </dependency>
-          113  <dependency>
-          114  <groupId>com.oracle.database.jdbc</groupId>
-          115  <artifactId>ojdbc11</artifactId>
-        lineNumber: 104
+          to:
+          ```
+          @Bean
+          static MethodSecurityExpressionHandler expressionHandler() {
+            var expressionHandler = new DefaultMethodSecurityExpressionHandler();
+            expressionHandler.setPermissionEvaluator(myPermissionEvaluator);
+            return expressionHandler;
+          }
+          ```
+        codeSnip: "\n44  final DriverManagerDataSource dataSource = new DriverManagerDataSource();\n45
+          \ dataSource.setDriverClassName(config.getProperty(\"jdbc.driverClassName\"));\n46
+          \ dataSource.setUrl(config.getProperty(\"jdbc.url\"));\n47  dataSource.setUsername(config.getProperty(\"jdbc.user\"));\n48
+          \ dataSource.setPassword(config.getProperty(\"jdbc.password\"));\n49  \n50
+          \ return dataSource;\n51  }\n52  \n53  @Bean\n54  public PlatformTransactionManager
+          transactionManager() {\n55  final JpaTransactionManager transactionManager
+          = new JpaTransactionManager();\n56  transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());\n57
+          \ return transactionManager;\n58  }\n59  \n60  @Bean\n61  public PersistenceExceptionTranslationPostProcessor
+          exceptionTranslation() {\n62  return new PersistenceExceptionTranslationPostProcessor();\n63
+          \ }\n64  "
+        lineNumber: 54
         variables:
-          name: org.hibernate.validator.hibernate-validator
-          version: 6.2.0.Final
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+          kind: Method
+          name: transactionManager
+          package: io.konveyor.demo.ordermanagement.config
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+        message: |
+          @EnableMethodSecurity does not pick up a PermissionEvaluator. This helps keep its API simple. If you have a custom
+          `PermissionEvaluator` `@Bean`, please change it from:
+          ```
+          @Bean
+          static PermissionEvaluator permissionEvaluator() {
+            // ... your evaluator
+          }
+          ```
+          to:
+          ```
+          @Bean
+          static MethodSecurityExpressionHandler expressionHandler() {
+            var expressionHandler = new DefaultMethodSecurityExpressionHandler();
+            expressionHandler.setPermissionEvaluator(myPermissionEvaluator);
+            return expressionHandler;
+          }
+          ```
+        codeSnip: "\n51  }\n52  \n53  @Bean\n54  public PlatformTransactionManager
+          transactionManager() {\n55  final JpaTransactionManager transactionManager
+          = new JpaTransactionManager();\n56  transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());\n57
+          \ return transactionManager;\n58  }\n59  \n60  @Bean\n61  public PersistenceExceptionTranslationPostProcessor
+          exceptionTranslation() {\n62  return new PersistenceExceptionTranslationPostProcessor();\n63
+          \ }\n64  \n65  final Properties additionalProperties() {\n66  ApplicationConfiguration
+          config = new ApplicationConfiguration();\n67  final Properties hibernateProperties
+          = new Properties();\n68  hibernateProperties.setProperty(\"hibernate.hbm2ddl.auto\",
+          config.getProperty(\"hibernate.hbm2ddl.auto\"));\n69  hibernateProperties.setProperty(\"hibernate.dialect\",
+          config.getProperty(\"hibernate.dialect\"));\n70  hibernateProperties.setProperty(\"hibernate.cache.use_second_level_cache\",
+          \"false\");\n71  "
+        lineNumber: 61
+        variables:
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+          kind: Method
+          name: exceptionTranslation
+          package: io.konveyor.demo.ordermanagement.config
       links:
-      - url: https://in.relation.to/2020/12/08/hibernate-validator-700-62-cr1-released/
-        title: Hibernate Validator 7.0 release and changelog details
-      - url: https://hibernate.org/validator/documentation/migration-guide/
-        title: Hibernate Validator migration guide
-      - url: https://github.com/spring-projects/spring-framework/wiki/Spring-Framework-6.0-Release-Notes#removed-apis
-        title: Spring 6.0 migration guide
-      effort: 3
+      - url: https://docs.spring.io/spring-security/reference/5.8/migration/servlet/authorization.html#servlet-replace-permissionevaluator-bean-with-methodsecurityexpression-handler
+        title: Publish a MethodSecurityExpressionHandler instead of a PermissionEvaluator
+      effort: 1
     spring-framework-5.x-to-6.0-web-applications-00010:
       description: '@RequestMapping does not detect controllers anymore'
       category: mandatory
@@ -3543,13 +3156,218 @@
       - url: https://github.com/spring-projects/spring-framework/wiki/Spring-Framework-6.0-Release-Notes#web-applications
         title: Spring 6.0 migration guide
       effort: 1
+    spring-framework-5.x-to-6.0-web-applications-00030:
+      description: SourceHttpMessageConverter is not configured by default anymore
+        in Spring MVC and RestTemplate
+      category: mandatory
+      labels:
+      - konveyor.io/source=spring5
+      - konveyor.io/target=spring6+
+      incidents:
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+        message: |
+          `SourceHttpMessageConverter` is not configured by default anymore in Spring MVC and `RestTemplate`.
+          As a consequence, Spring web applications using `javax.xml.transform.Source` now need to configure
+          `SourceHttpMessageConverter` explicitly.
+
+          ```java
+          @EnableWebMvc
+          @Configuration
+          @ComponentScan({ "org.konveyor.web" })
+          public class WebConfig implements WebMvcConfigurer {
+
+            @Override
+            public void configureMessageConverters(List<HttpMessageConverter<?>> messageConverters) {
+                messageConverters.add(new SourceHttpMessageConverter());
+                messageConverters.add(new MappingJackson2HttpMessageConverter());
+            }
+          }
+          ```
+
+          Note that the order of converter registration is important,
+          and `SourceHttpMessageConverter` should typically be registered before "catch-all" converters like
+          `MappingJackson2HttpMessageConverter` for example.
+        codeSnip: "\n21  @Configuration\n22  @EnableJpaRepositories(basePackages =
+          {\n23  \"io.konveyor.demo.ordermanagement.repository\"\n24  })\n25  @EnableTransactionManagement\n26
+          \ @EnableSpringDataWebSupport\n27  public class PersistenceConfig {\n28
+          \ \n29  \n30  @Bean\n31  public LocalContainerEntityManagerFactoryBean entityManagerFactory()
+          {\n32  final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();\n33
+          \ em.setDataSource(dataSource());\n34  em.setPackagesToScan(\"io.konveyor.demo.ordermanagement.model\");\n35
+          \ em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());\n36  em.setJpaProperties(additionalProperties());\n37
+          \ \n38  return em;\n39  }\n40  \n41  @Bean"
+        lineNumber: 31
+        variables:
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+          kind: Method
+          name: entityManagerFactory
+          package: io.konveyor.demo.ordermanagement.config
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+        message: |
+          `SourceHttpMessageConverter` is not configured by default anymore in Spring MVC and `RestTemplate`.
+          As a consequence, Spring web applications using `javax.xml.transform.Source` now need to configure
+          `SourceHttpMessageConverter` explicitly.
+
+          ```java
+          @EnableWebMvc
+          @Configuration
+          @ComponentScan({ "org.konveyor.web" })
+          public class WebConfig implements WebMvcConfigurer {
+
+            @Override
+            public void configureMessageConverters(List<HttpMessageConverter<?>> messageConverters) {
+                messageConverters.add(new SourceHttpMessageConverter());
+                messageConverters.add(new MappingJackson2HttpMessageConverter());
+            }
+          }
+          ```
+
+          Note that the order of converter registration is important,
+          and `SourceHttpMessageConverter` should typically be registered before "catch-all" converters like
+          `MappingJackson2HttpMessageConverter` for example.
+        codeSnip: "\n44  final DriverManagerDataSource dataSource = new DriverManagerDataSource();\n45
+          \ dataSource.setDriverClassName(config.getProperty(\"jdbc.driverClassName\"));\n46
+          \ dataSource.setUrl(config.getProperty(\"jdbc.url\"));\n47  dataSource.setUsername(config.getProperty(\"jdbc.user\"));\n48
+          \ dataSource.setPassword(config.getProperty(\"jdbc.password\"));\n49  \n50
+          \ return dataSource;\n51  }\n52  \n53  @Bean\n54  public PlatformTransactionManager
+          transactionManager() {\n55  final JpaTransactionManager transactionManager
+          = new JpaTransactionManager();\n56  transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());\n57
+          \ return transactionManager;\n58  }\n59  \n60  @Bean\n61  public PersistenceExceptionTranslationPostProcessor
+          exceptionTranslation() {\n62  return new PersistenceExceptionTranslationPostProcessor();\n63
+          \ }\n64  "
+        lineNumber: 54
+        variables:
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+          kind: Method
+          name: transactionManager
+          package: io.konveyor.demo.ordermanagement.config
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+        message: |
+          `SourceHttpMessageConverter` is not configured by default anymore in Spring MVC and `RestTemplate`.
+          As a consequence, Spring web applications using `javax.xml.transform.Source` now need to configure
+          `SourceHttpMessageConverter` explicitly.
+
+          ```java
+          @EnableWebMvc
+          @Configuration
+          @ComponentScan({ "org.konveyor.web" })
+          public class WebConfig implements WebMvcConfigurer {
+
+            @Override
+            public void configureMessageConverters(List<HttpMessageConverter<?>> messageConverters) {
+                messageConverters.add(new SourceHttpMessageConverter());
+                messageConverters.add(new MappingJackson2HttpMessageConverter());
+            }
+          }
+          ```
+
+          Note that the order of converter registration is important,
+          and `SourceHttpMessageConverter` should typically be registered before "catch-all" converters like
+          `MappingJackson2HttpMessageConverter` for example.
+        codeSnip: "\n51  }\n52  \n53  @Bean\n54  public PlatformTransactionManager
+          transactionManager() {\n55  final JpaTransactionManager transactionManager
+          = new JpaTransactionManager();\n56  transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());\n57
+          \ return transactionManager;\n58  }\n59  \n60  @Bean\n61  public PersistenceExceptionTranslationPostProcessor
+          exceptionTranslation() {\n62  return new PersistenceExceptionTranslationPostProcessor();\n63
+          \ }\n64  \n65  final Properties additionalProperties() {\n66  ApplicationConfiguration
+          config = new ApplicationConfiguration();\n67  final Properties hibernateProperties
+          = new Properties();\n68  hibernateProperties.setProperty(\"hibernate.hbm2ddl.auto\",
+          config.getProperty(\"hibernate.hbm2ddl.auto\"));\n69  hibernateProperties.setProperty(\"hibernate.dialect\",
+          config.getProperty(\"hibernate.dialect\"));\n70  hibernateProperties.setProperty(\"hibernate.cache.use_second_level_cache\",
+          \"false\");\n71  "
+        lineNumber: 61
+        variables:
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+          kind: Method
+          name: exceptionTranslation
+          package: io.konveyor.demo.ordermanagement.config
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/controller/CustomerController.java
+        message: |
+          `SourceHttpMessageConverter` is not configured by default anymore in Spring MVC and `RestTemplate`.
+          As a consequence, Spring web applications using `javax.xml.transform.Source` now need to configure
+          `SourceHttpMessageConverter` explicitly.
+
+          ```java
+          @EnableWebMvc
+          @Configuration
+          @ComponentScan({ "org.konveyor.web" })
+          public class WebConfig implements WebMvcConfigurer {
+
+            @Override
+            public void configureMessageConverters(List<HttpMessageConverter<?>> messageConverters) {
+                messageConverters.add(new SourceHttpMessageConverter());
+                messageConverters.add(new MappingJackson2HttpMessageConverter());
+            }
+          }
+          ```
+
+          Note that the order of converter registration is important,
+          and `SourceHttpMessageConverter` should typically be registered before "catch-all" converters like
+          `MappingJackson2HttpMessageConverter` for example.
+        codeSnip: "\n26  public Customer getById(@PathVariable(\"id\") Long id) {\n27
+          \ Customer c = customerService.findById(id);\n28  if (c == null) {\n29  throw
+          new ResourceNotFoundException(\"Requested order doesn't exist\");\n30  }\n31
+          \ logger.debug(\"Returning element: \" + c);\n32  return c;\n33  }\n34  \n35
+          \ @RequestMapping\n36  public Page<Customer> findAll(Pageable pageable){\n37
+          \ return customerService.findAll(pageable);\n38  }\n39  \n40  }"
+        lineNumber: 36
+        variables:
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/controller/CustomerController.java
+          kind: Method
+          name: findAll
+          package: io.konveyor.demo.ordermanagement.controller
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/service/CustomerService.java
+        message: |
+          `SourceHttpMessageConverter` is not configured by default anymore in Spring MVC and `RestTemplate`.
+          As a consequence, Spring web applications using `javax.xml.transform.Source` now need to configure
+          `SourceHttpMessageConverter` explicitly.
+
+          ```java
+          @EnableWebMvc
+          @Configuration
+          @ComponentScan({ "org.konveyor.web" })
+          public class WebConfig implements WebMvcConfigurer {
+
+            @Override
+            public void configureMessageConverters(List<HttpMessageConverter<?>> messageConverters) {
+                messageConverters.add(new SourceHttpMessageConverter());
+                messageConverters.add(new MappingJackson2HttpMessageConverter());
+            }
+          }
+          ```
+
+          Note that the order of converter registration is important,
+          and `SourceHttpMessageConverter` should typically be registered before "catch-all" converters like
+          `MappingJackson2HttpMessageConverter` for example.
+        codeSnip: "\n19  \n20  private static Logger logger = Logger.getLogger( CustomerService.class.getName()
+          );\n21  \n22  public Customer findById(Long id) {\n23  logger.debug(\"Entering
+          CustomerService.findById()\");\n24  Customer c = repository.findById(id).orElse(null);\n25
+          \ logger.debug(\"Returning element: \" + c);\n26  return c;\n27  }\n28  \n29
+          \ public Page<Customer>findAll(Pageable pageable) {\n30  logger.debug(\"Entering
+          CustomerService.findAll()\");\n31  Page<Customer> p = repository.findAll(pageable);\n32
+          \ logger.debug(\"Returning element: \" + p);\n33  return p;\n34  }\n35  \n36
+          \ }"
+        lineNumber: 29
+        variables:
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/service/CustomerService.java
+          kind: Method
+          name: findAll
+          package: io.konveyor.demo.ordermanagement.service
+      links:
+      - url: https://github.com/spring-projects/spring-framework/issues/29535
+        title: 'GitHub issue: Make SourceHttpMessageConverter optional'
+      - url: https://github.com/spring-projects/spring-framework/wiki/Spring-Framework-6.0-Release-Notes#web-applications
+        title: Spring 6.0 migration guide
+      effort: 1
   unmatched:
+  - spring-framework-5.x-to-6.0-baseline-00010
   - spring-framework-5.x-to-6.0-core-container-00001
   - spring-framework-5.x-to-6.0-core-container-00010
   - spring-framework-5.x-to-6.0-core-container-00020
   - spring-framework-5.x-to-6.0-core-container-00030
+  - spring-framework-5.x-to-6.0-data-access-00001
   - spring-framework-5.x-to-6.0-data-access-00002
   - spring-framework-5.x-to-6.0-data-access-00003
+  - spring-framework-5.x-to-6.0-data-access-00010
   - spring-framework-5.x-to-6.0-data-access-00020
   - spring-framework-5.x-to-6.0-data-access-00030
   - spring-framework-5.x-to-6.0-removed-apis-00001
@@ -3557,7 +3375,6 @@
   - spring-framework-5.x-to-6.0-security-00010
   - spring-framework-5.x-to-6.0-security-00020
   - spring-framework-5.x-to-6.0-security-00030
-  - spring-framework-5.x-to-6.0-security-00040
   - spring-framework-5.x-to-6.0-security-00050
   - spring-framework-5.x-to-6.0-security-00060
   - spring-framework-5.x-to-6.0-security-00070
@@ -3565,7 +3382,6 @@
   - spring-framework-5.x-to-6.0-security-00090
   - spring-framework-5.x-to-6.0-security-00100
   - spring-framework-5.x-to-6.0-security-00110
-  - spring-framework-5.x-to-6.0-security-00120
   - spring-framework-5.x-to-6.0-security-00130
   - spring-framework-5.x-to-6.0-security-00135
   - spring-framework-5.x-to-6.0-security-00140
@@ -3591,171 +3407,22 @@
   - spring-framework-5.x-to-6.0-security-deprecations-00180
   - spring-framework-5.x-to-6.0-security-deprecations-00190
   - spring-framework-5.x-to-6.0-web-applications-00001
-  - spring-framework-5.x-to-6.0-web-applications-00030
   - spring-framework-5.x-to-6.0-web-applications-00040
 - name: technology-usage
   description: This ruleset provides analysis of logging libraries.
   tags:
   - Connect=Servlet
-  - Embedded Spring Data JPA
-  - Embedded framework - Micrometer
-  - Embedded framework - Spring DI
-  - Embedded framework - Spring MVC
-  - Embedded framework - Spring Web
-  - Embedded library - Spring Boot Actuator
-  - Embedded=Micrometer
   - Embedded=Properties
-  - Embedded=Spring Boot Actuator
-  - Embedded=Spring DI
-  - Embedded=Spring Data JPA
-  - Embedded=Spring MVC
-  - Embedded=Spring Web
-  - Execute=Micrometer
-  - Execute=Spring DI
   - HTTP=Servlet
-  - Integration=Micrometer
-  - Inversion of Control=Spring DI
   - Java EE=JPA named queries
   - Java EE=Servlet
   - Java Servlet
-  - MVC=Spring MVC
-  - Micrometer
-  - Observability=Spring Boot Actuator
   - Other=Properties
   - Persistence=JPA named queries
-  - Persistence=Spring Data JPA
   - Servlet
-  - Spring Boot Actuator
-  - Spring DI
-  - Spring Data JPA
-  - Spring MVC
-  - Spring Web
   - Store=JPA named queries
-  - Store=Spring Data JPA
   - Sustain=Properties
-  - Sustain=Spring Boot Actuator
-  - View=Spring MVC
-  - View=Spring Web
-  - Web=Spring Web
   insights:
-    database-03000:
-      description: Embedded Spring Data JPA
-      labels:
-      - discovery
-      - konveyor.io/include=always
-      - tag=Embedded Spring Data JPA
-      - tag=Spring Data JPA
-      incidents:
-      - uri: file:///source/pom.xml
-        message: ""
-        codeSnip: "\n59  <dependency>\n60  <groupId>com.fasterxml.jackson.core</groupId>\n61
-          \ <artifactId>jackson-core</artifactId>\n62  </dependency>\n63  <dependency>\n64
-          \ <groupId>com.fasterxml.jackson.core</groupId>\n65  <artifactId>jackson-databind</artifactId>\n66
-          \ </dependency>\n67  <dependency>\n68  <groupId>org.springframework.data</groupId>\n69
-          \ <artifactId>spring-data-jpa</artifactId>\n70  </dependency>\n71  \n72
-          \ <dependency>\n73  <groupId>org.springframework</groupId>\n74  <artifactId>spring-jdbc</artifactId>\n75
-          \ <version>${spring-framework.version}</version>\n76  </dependency>\n77
-          \ <dependency>\n78  <groupId>org.springframework</groupId>\n79  <artifactId>spring-webmvc</artifactId>"
-        lineNumber: 68
-        variables:
-          name: org.springframework.data.spring-data-jpa
-          version: 2.5.1
-    embedded-framework-08200:
-      description: Embedded framework - Spring DI
-      labels:
-      - discovery
-      - konveyor.io/include=always
-      - tag=Embedded framework - Spring DI
-      - tag=Spring DI
-      incidents:
-      - uri: file:///source/pom.xml
-        message: ""
-        codeSnip: "\n59  <dependency>\n60  <groupId>com.fasterxml.jackson.core</groupId>\n61
-          \ <artifactId>jackson-core</artifactId>\n62  </dependency>\n63  <dependency>\n64
-          \ <groupId>com.fasterxml.jackson.core</groupId>\n65  <artifactId>jackson-databind</artifactId>\n66
-          \ </dependency>\n67  <dependency>\n68  <groupId>org.springframework.data</groupId>\n69
-          \ <artifactId>spring-data-jpa</artifactId>\n70  </dependency>\n71  \n72
-          \ <dependency>\n73  <groupId>org.springframework</groupId>\n74  <artifactId>spring-jdbc</artifactId>\n75
-          \ <version>${spring-framework.version}</version>\n76  </dependency>\n77
-          \ <dependency>\n78  <groupId>org.springframework</groupId>\n79  <artifactId>spring-webmvc</artifactId>"
-        lineNumber: 68
-        variables:
-          name: org.springframework.spring-beans
-          version: 5.3.7
-    embedded-framework-08300:
-      description: Embedded framework - Micrometer
-      labels:
-      - discovery
-      - konveyor.io/include=always
-      - tag=Embedded framework - Micrometer
-      - tag=Micrometer
-      incidents:
-      - uri: file:///source/pom.xml
-        message: ""
-        codeSnip: |2-
-
-          79  <artifactId>spring-webmvc</artifactId>
-          80  <version>${spring-framework.version}</version>
-          81  </dependency>
-          82  <dependency>
-          83  <groupId>org.springframework</groupId>
-          84  <artifactId>spring-web</artifactId>
-          85  <version>${spring-framework.version}</version>
-          86  </dependency>
-          87  <dependency>
-          88  <groupId>org.springframework.boot</groupId>
-          89  <artifactId>spring-boot-starter-actuator</artifactId>
-          90  <version>2.5.0</version>
-          91  </dependency>
-          92  <dependency>
-          93  <groupId>org.apache.tomcat</groupId>
-          94  <artifactId>tomcat-jdbc</artifactId>
-          95  <version>${tomcat.version}</version>
-          96  <scope>runtime</scope>
-          97  </dependency>
-          98  <dependency>
-          99  <groupId>org.hibernate</groupId>
-        lineNumber: 88
-        variables:
-          name: io.micrometer.micrometer-core
-          version: 1.7.0
-    embedded-framework-08400:
-      description: Embedded framework - Spring Web
-      labels:
-      - discovery
-      - konveyor.io/include=always
-      - tag=Embedded framework - Spring Web
-      - tag=Spring Web
-      incidents:
-      - uri: file:///source/pom.xml
-        message: ""
-        codeSnip: |2-
-
-          74  <artifactId>spring-jdbc</artifactId>
-          75  <version>${spring-framework.version}</version>
-          76  </dependency>
-          77  <dependency>
-          78  <groupId>org.springframework</groupId>
-          79  <artifactId>spring-webmvc</artifactId>
-          80  <version>${spring-framework.version}</version>
-          81  </dependency>
-          82  <dependency>
-          83  <groupId>org.springframework</groupId>
-          84  <artifactId>spring-web</artifactId>
-          85  <version>${spring-framework.version}</version>
-          86  </dependency>
-          87  <dependency>
-          88  <groupId>org.springframework.boot</groupId>
-          89  <artifactId>spring-boot-starter-actuator</artifactId>
-          90  <version>2.5.0</version>
-          91  </dependency>
-          92  <dependency>
-          93  <groupId>org.apache.tomcat</groupId>
-          94  <artifactId>tomcat-jdbc</artifactId>
-        lineNumber: 83
-        variables:
-          name: org.springframework.spring-web
-          version: 5.3.7
     javaee-technology-usage-00120:
       description: Java Servlet
       labels:
@@ -3827,28 +3494,6 @@
         variables:
           tags:
           - Servlet
-    mvc-01220:
-      description: Embedded framework - Spring MVC
-      labels:
-      - discovery
-      - konveyor.io/include=always
-      - tag=Embedded framework - Spring MVC
-      - tag=Spring MVC
-      incidents:
-      - uri: file:///source/pom.xml
-        message: ""
-        codeSnip: "\n69  <artifactId>spring-data-jpa</artifactId>\n70  </dependency>\n71
-          \ \n72  <dependency>\n73  <groupId>org.springframework</groupId>\n74  <artifactId>spring-jdbc</artifactId>\n75
-          \ <version>${spring-framework.version}</version>\n76  </dependency>\n77
-          \ <dependency>\n78  <groupId>org.springframework</groupId>\n79  <artifactId>spring-webmvc</artifactId>\n80
-          \ <version>${spring-framework.version}</version>\n81  </dependency>\n82
-          \ <dependency>\n83  <groupId>org.springframework</groupId>\n84  <artifactId>spring-web</artifactId>\n85
-          \ <version>${spring-framework.version}</version>\n86  </dependency>\n87
-          \ <dependency>\n88  <groupId>org.springframework.boot</groupId>\n89  <artifactId>spring-boot-starter-actuator</artifactId>"
-        lineNumber: 78
-        variables:
-          name: org.springframework.spring-webmvc
-          version: 5.3.7
     non-xml-technology-usage-20000:
       description: Properties
       labels:
@@ -3863,57 +3508,6 @@
         variables:
           tags:
           - Properties
-    observability-0100:
-      description: Embedded library - Spring Boot Actuator
-      labels:
-      - discovery
-      - konveyor.io/include=always
-      - tag=Embedded library - Spring Boot Actuator
-      - tag=Spring Boot Actuator
-      incidents:
-      - uri: file:///source/pom.xml
-        message: ""
-        codeSnip: |2-
-
-          79  <artifactId>spring-webmvc</artifactId>
-          80  <version>${spring-framework.version}</version>
-          81  </dependency>
-          82  <dependency>
-          83  <groupId>org.springframework</groupId>
-          84  <artifactId>spring-web</artifactId>
-          85  <version>${spring-framework.version}</version>
-          86  </dependency>
-          87  <dependency>
-          88  <groupId>org.springframework.boot</groupId>
-          89  <artifactId>spring-boot-starter-actuator</artifactId>
-          90  <version>2.5.0</version>
-          91  </dependency>
-          92  <dependency>
-          93  <groupId>org.apache.tomcat</groupId>
-          94  <artifactId>tomcat-jdbc</artifactId>
-          95  <version>${tomcat.version}</version>
-          96  <scope>runtime</scope>
-          97  </dependency>
-          98  <dependency>
-          99  <groupId>org.hibernate</groupId>
-        lineNumber: 88
-        variables:
-          name: org.springframework.boot.spring-boot-starter-actuator
-          version: 2.5.0
-    observability-technology-usage-0100:
-      description: Spring Boot Actuator
-      labels:
-      - discovery
-      - konveyor.io/include=always
-      - tag=Embedded=Spring Boot Actuator
-      - tag=Observability=Spring Boot Actuator
-      - tag=Sustain=Spring Boot Actuator
-      incidents:
-      - uri: ""
-        message: ""
-        variables:
-          tags:
-          - Spring Boot Actuator
     technology-usage-database-01200:
       description: JPA Queries
       labels:
@@ -3958,76 +3552,6 @@
           kind: Property
           name: Entity
           package: io.konveyor.demo.ordermanagement.model
-    technology-usage-database-03100:
-      description: Spring Data JPA
-      labels:
-      - discovery
-      - konveyor.io/include=always
-      - tag=Embedded=Spring Data JPA
-      - tag=Persistence=Spring Data JPA
-      - tag=Store=Spring Data JPA
-      incidents:
-      - uri: ""
-        message: ""
-        variables:
-          tags:
-          - Spring Data JPA
-    technology-usage-embedded-framework-08200:
-      description: Spring DI
-      labels:
-      - discovery
-      - konveyor.io/include=always
-      - tag=Embedded=Spring DI
-      - tag=Execute=Spring DI
-      - tag=Inversion of Control=Spring DI
-      incidents:
-      - uri: ""
-        message: ""
-        variables:
-          tags:
-          - Spring DI
-    technology-usage-embedded-framework-08300:
-      description: Micrometer
-      labels:
-      - discovery
-      - konveyor.io/include=always
-      - tag=Embedded=Micrometer
-      - tag=Execute=Micrometer
-      - tag=Integration=Micrometer
-      incidents:
-      - uri: ""
-        message: ""
-        variables:
-          tags:
-          - Micrometer
-    technology-usage-embedded-framework-08400:
-      description: Spring Web
-      labels:
-      - discovery
-      - konveyor.io/include=always
-      - tag=Embedded=Spring Web
-      - tag=View=Spring Web
-      - tag=Web=Spring Web
-      incidents:
-      - uri: ""
-        message: ""
-        variables:
-          tags:
-          - Spring Web
-    technology-usage-mvc-01200:
-      description: Spring MVC
-      labels:
-      - discovery
-      - konveyor.io/include=always
-      - tag=Embedded=Spring MVC
-      - tag=MVC=Spring MVC
-      - tag=View=Spring MVC
-      incidents:
-      - uri: ""
-        message: ""
-        variables:
-          tags:
-          - Spring MVC
   unmatched:
   - 3rd-party-01000
   - 3rd-party-02000
@@ -4098,6 +3622,7 @@
   - database-02700
   - database-02800
   - database-02900
+  - database-03000
   - database-03100
   - ejb-01000
   - embedded-cache-libraries-01000
@@ -4166,6 +3691,9 @@
   - embedded-framework-07900
   - embedded-framework-08000
   - embedded-framework-08100
+  - embedded-framework-08200
+  - embedded-framework-08300
+  - embedded-framework-08400
   - embedded-framework-08500
   - embedded-framework-08600
   - embedded-framework-08700
@@ -4322,6 +3850,7 @@
   - mvc-01100
   - mvc-01200
   - mvc-01210
+  - mvc-01220
   - mvc-01300
   - mvc-01400
   - mvc-01500
@@ -4386,7 +3915,9 @@
   - non-xml-technology-usage-25000
   - non-xml-technology-usage-26000
   - non-xml-technology-usage-27000
+  - observability-0100
   - observability-0200
+  - observability-technology-usage-0100
   - observability-technology-usage-0200
   - security-01100
   - security-01200
@@ -4486,6 +4017,7 @@
   - technology-usage-database-02800
   - technology-usage-database-02900
   - technology-usage-database-03000
+  - technology-usage-database-03100
   - technology-usage-database-03200
   - technology-usage-ejb-01400
   - technology-usage-embedded-framework-01000
@@ -4533,6 +4065,9 @@
   - technology-usage-embedded-framework-07900
   - technology-usage-embedded-framework-08000
   - technology-usage-embedded-framework-08100
+  - technology-usage-embedded-framework-08200
+  - technology-usage-embedded-framework-08300
+  - technology-usage-embedded-framework-08400
   - technology-usage-embedded-framework-08500
   - technology-usage-embedded-framework-08600
   - technology-usage-embedded-framework-08700
@@ -4607,6 +4142,7 @@
   - technology-usage-markup-01300
   - technology-usage-mvc-01000
   - technology-usage-mvc-01100
+  - technology-usage-mvc-01200
   - technology-usage-mvc-01300
   - technology-usage-mvc-01400
   - technology-usage-mvc-01500

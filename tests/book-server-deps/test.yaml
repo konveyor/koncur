@@ -9,6 +9,7 @@ analysis:
     rules: []
     disableDefaultRules: false
     analysisMode: source-only
+    logLevel: 9
 timeout: 10m0s
 expect:
     exitCode: 0

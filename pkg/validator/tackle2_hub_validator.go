@@ -59,15 +59,27 @@ func (t *tackleHubValidator) compareViolations(expected, actual map[string]konve
 
 func (t *tackleHubValidator) compareViolationDetails(expected, actual konveyor.Violation) []ValidationError {
 	var errors []ValidationError
-	skipForInsight := expected.Effort == nil
+	// Skip strict validation for insights (effort=0 or nil)
+	// Hub API doesn't return category correctly for insights
+	// TODO: https://github.com/konveyor/koncur/issues/29
+	skipForInsight := expected.Effort == nil || (expected.Effort != nil && *expected.Effort == 0)
 	if !skipForInsight && (expected.Effort != nil && actual.Effort != nil) && (*expected.Effort != *actual.Effort) {
 		errors = append(errors, ValidationError{
 			Message: fmt.Sprintf("Did not find expected effort: %v", expected.Effort),
 		})
 	}
-	if !skipForInsight && actual.Category != nil && expected.Category != nil && *expected.Category != *actual.Category {
+
+	var actualCat konveyor.Category
+	if actual.Category != nil {
+		actualCat = *actual.Category
+	}
+	var expectedCat konveyor.Category
+	if expected.Category != nil {
+		expectedCat = *expected.Category
+	}
+	if !skipForInsight && expectedCat != actualCat {
 		errors = append(errors, ValidationError{
-			Message: fmt.Sprintf("Did not find expected category: %v", expected.Category),
+			Message: fmt.Sprintf("Did not find expected category: %v got %v", expectedCat, actualCat),
 		})
 	}
 
