@@ -497,7 +497,7 @@
       - konveyor.io/source=springboot
       - konveyor.io/target=quarkus
       incidents:
-      - uri: file:///source/src/main/java/com/telran/application/BookServerApp.java
+      - uri: file:///source/book-server/src/main/java/com/telran/application/BookServerApp.java
         message: |-
           Remove or refactor the SpringBoot `@SpringBootApplication` bootstrap model for Quarkus.
 
@@ -746,7 +746,7 @@
       - tag=Spring Boot Component Scan
       - tag=Spring Boot Configuration
       incidents:
-      - uri: file:///source/src/main/java/com/telran/application/BookServerApp.java
+      - uri: file:///source/book-server/src/main/java/com/telran/application/BookServerApp.java
         message: ""
         codeSnip: "\n 1  package com.telran.application;\n 2  \n 3  import org.springframework.boot.SpringApplication;\n
           4  import org.springframework.boot.autoconfigure.SpringBootApplication;\n
