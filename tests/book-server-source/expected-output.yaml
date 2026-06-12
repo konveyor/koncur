@@ -502,9 +502,9 @@
           Remove or refactor the SpringBoot `@SpringBootApplication` bootstrap model for Quarkus.
 
           `@SpringBootApplication` combines three concerns; in Quarkus they map differently:
-              - `@EnableAutoConfiguration`: Quarkus configures features by adding Quarkus extensions at build time (no Spring Boot auto-configuration runtime model).
-              - `@ComponentScan`: Quarkus uses CDI bean discovery with bean-defining annotations (for example `@ApplicationScoped`, `@Singleton`), not Spring component scanning semantics.
-              - `@SpringBootConfiguration`: use CDI scopes and producer methods (`@Produces`) for bean registration; for tests, use Quarkus testing patterns instead of Spring Boot configuration detection.
+          - `@EnableAutoConfiguration`: Quarkus configures features by adding Quarkus extensions at build time (no Spring Boot auto-configuration runtime model).
+          - `@ComponentScan`: Quarkus uses CDI bean discovery with bean-defining annotations (for example `@ApplicationScoped`, `@Singleton`), not Spring component scanning semantics.
+          - `@SpringBootConfiguration`: use CDI scopes and producer methods (`@Produces`) for bean registration; for tests, use Quarkus testing patterns instead of Spring Boot configuration detection.
 
           If needed as an intermediate step, keeping `org.springframework.boot:spring-boot-autoconfigure` as `optional` may allow compilation, but this keeps Spring compatibility baggage and should not be the target end state.
         codeSnip: "\n 1  package com.telran.application;\n 2  \n 3  import org.springframework.boot.SpringApplication;\n
