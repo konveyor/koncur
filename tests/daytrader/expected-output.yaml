@@ -6108,13 +6108,22 @@
   - persistence-to-quarkus-00011
   - springboot-actuator-to-quarkus-0100
   - springboot-actuator-to-quarkus-0200
+  - springboot-actuator-to-quarkus-0210
   - springboot-annotations-to-quarkus-00000
+  - springboot-annotations-to-quarkus-00001
+  - springboot-annotations-to-quarkus-00002
+  - springboot-annotations-to-quarkus-00003
   - springboot-cache-to-quarkus-00000
   - springboot-cloud-config-client-to-quarkus-00000
+  - springboot-cloud-consul-to-quarkus-stork-00000
+  - springboot-cloud-consul-to-quarkus-stork-00001
+  - springboot-devservices-to-quarkus-00000
   - springboot-devtools-to-quarkus-0000
   - springboot-di-to-quarkus-00000
   - springboot-di-to-quarkus-00001
   - springboot-di-to-quarkus-00002
+  - springboot-di-to-quarkus-00003
+  - springboot-di-to-quarkus-00004
   - springboot-generic-catchall-00100
   - springboot-integration-to-quarkus-00010
   - springboot-integration-to-quarkus-00020

@@ -2,7 +2,6 @@ name: Tackle Testapp public with deps
 analysis:
     application: https://github.com/konveyor/tackle-testapp-public#ci-2024
     labelSelector: konveyor.io/target
-    logLevel: 9
     context_lines: 0
     incident_selector: ""
     source: []
@@ -10,6 +9,7 @@ analysis:
     rules: []
     disableDefaultRules: false
     analysisMode: full
+    logLevel: 9
 timeout: 10m0s
 requireMavenSettings: true
 expect:
