@@ -24,6 +24,44 @@ type unmatchedCompare interface {
 type skippedCompare interface {
 	compareSkipped(expected, actual []string) []ValidationError
 }
+type insightCompare interface {
+	compareInsights(expected, actual map[string]konveyor.Violation) []ValidationError
+}
+
+// compareViolationsUsing iterates expected/actual violations and delegates detail
+// comparison to detailsFn.
+func compareViolationsUsing(
+	expected, actual map[string]konveyor.Violation,
+	detailsFn func(exp, act konveyor.Violation) []ValidationError,
+) []ValidationError {
+	var errors []ValidationError
+	for k, exp := range expected {
+		act, exists := actual[k]
+		if !exists {
+			errors = append(errors, ValidationError{
+				Path:     fmt.Sprintf("/%s", k),
+				Message:  fmt.Sprintf("Did not find expected violation: %s", k),
+				Expected: exp,
+			})
+			continue
+		}
+		detailErrors := detailsFn(exp, act)
+		for i := range detailErrors {
+			detailErrors[i].Path = fmt.Sprintf("/%s%s", k, detailErrors[i].Path)
+		}
+		errors = append(errors, detailErrors...)
+	}
+	for k := range actual {
+		if _, exists := expected[k]; !exists {
+			errors = append(errors, ValidationError{
+				Path:    fmt.Sprintf("/%s", k),
+				Message: fmt.Sprintf("Unexpected violation found: %s", k),
+				Actual:  actual[k],
+			})
+		}
+	}
+	return errors
+}
 
 func findExpectedString(expected string, actual []string) bool {
 	for _, a := range actual {
@@ -34,9 +72,16 @@ func findExpectedString(expected string, actual []string) bool {
 	return false
 }
 
+// rulesetFilter is an optional interface that comparers can implement to
+// skip expected rulesets that are known to be missing from the target output.
+type rulesetFilter interface {
+	skipMissingRuleset(rs konveyor.RuleSet) bool
+}
+
 type comparer interface {
 	tagCompare
 	violationCompare
+	insightCompare
 	errorsCompare
 	unmatchedCompare
 	skippedCompare
@@ -52,7 +97,7 @@ func getComparer(targetType, testDir string) comparer {
 	case "tackle-ui":
 		return &kantraValidator{baseValidator: *base}
 	case "kai-rpc":
-		return &kantraValidator{baseValidator: *base}
+		return &kaiRpcValidator{baseValidator: *base}
 	case "vscode":
 		return &kantraValidator{baseValidator: *base}
 	}
@@ -141,7 +186,7 @@ func ValidateFiles(testDir, targetType string, actual, expected []konveyor.RuleS
 				errors = append(errors, errs...)
 			}
 			if !reflect.DeepEqual(rs.Insights, ers.Insights) {
-				errs := comparer.compareViolations(ers.Insights, rs.Insights)
+				errs := comparer.compareInsights(ers.Insights, rs.Insights)
 				for i := range errs {
 					errs[i].Path = fmt.Sprintf("%s/insights%s", rs.Name, errs[i].Path)
 				}
@@ -171,7 +216,14 @@ func ValidateFiles(testDir, targetType string, actual, expected []konveyor.RuleS
 			break
 		}
 		if !found {
-			errors = append(errors, ValidationError{Path: fmt.Sprintf("ruleset/%s", ers.Name), Message: "Did not find a matching ruleset"})
+			// Check if this comparer allows skipping missing rulesets
+			skip := false
+			if rf, ok := comparer.(rulesetFilter); ok {
+				skip = rf.skipMissingRuleset(ers)
+			}
+			if !skip {
+				errors = append(errors, ValidationError{Path: fmt.Sprintf("ruleset/%s", ers.Name), Message: "Did not find a matching ruleset"})
+			}
 		}
 	}
 

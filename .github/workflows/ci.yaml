@@ -36,3 +36,6 @@ jobs:
     uses: ./.github/workflows/hub.yaml
     with:
       skip_maven: true
+
+  run-kai-rpc-test:
+    uses: ./.github/workflows/kai-rpc.yaml

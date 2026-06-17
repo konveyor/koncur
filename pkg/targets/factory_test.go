@@ -53,8 +53,7 @@ func TestNewTarget(t *testing.T) {
 			cfg: &config.TargetConfig{
 				Type: "kai-rpc",
 				KaiRPC: &config.KaiRPCConfig{
-					Host: "localhost",
-					Port: 8000,
+					ProviderConfigPath: "testdata/provider.yaml",
 				},
 			},
 			wantType: "kai-rpc",
@@ -167,8 +166,7 @@ func TestNewTarget_AllTypes(t *testing.T) {
 				cfg = &config.TargetConfig{
 					Type: "kai-rpc",
 					KaiRPC: &config.KaiRPCConfig{
-						Host: "localhost",
-						Port: 8000,
+						ProviderConfigPath: "testdata/provider.yaml",
 					},
 				}
 			case "vscode":

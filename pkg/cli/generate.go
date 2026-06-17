@@ -356,7 +356,7 @@ func saveSimpleTestDefinition(testFile string, test *config.TestDefinition) erro
 // saveFilteredOutput saves the filtered rulesets to a YAML file with path normalization
 // Uses yaml.v2 to match analyzer-lsp's marshalling behavior and avoid circular reference issues
 func saveFilteredOutput(rulesets []konveyor.RuleSet, path string, testDir string) error {
-	rulesets, err := parser.NormalizeRuleSets(rulesets, testDir)
+	rulesets, err := parser.NormalizeRuleSets(rulesets, testDir, "")
 	if err != nil {
 		return err
 	}

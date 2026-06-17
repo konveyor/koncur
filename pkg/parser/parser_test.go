@@ -183,6 +183,7 @@ func TestNormalizeRuleSets(t *testing.T) {
 		name        string
 		input       []konveyor.RuleSet
 		testDir     string
+		workDir     string
 		expectError bool
 		validate    func(t *testing.T, result []konveyor.RuleSet)
 	}{
@@ -311,11 +312,40 @@ func TestNormalizeRuleSets(t *testing.T) {
 				}
 			},
 		},
+		{
+			name: "workDir normalization",
+			input: []konveyor.RuleSet{
+				{
+					Name: "test-ruleset",
+					Violations: map[string]konveyor.Violation{
+						"rule1": {
+							Description: "Test violation",
+							Incidents: []konveyor.Incident{
+								{
+									URI:     uri.URI("file:///tmp/koncur-work-123/source/example-1/src/main/java/App.java"),
+									Message: "Test message",
+								},
+							},
+						},
+					},
+				},
+			},
+			testDir: "/does-not-matter",
+			workDir: "/tmp/koncur-work-123",
+			validate: func(t *testing.T, result []konveyor.RuleSet) {
+				incident := result[0].Violations["rule1"].Incidents[0]
+				uriStr := string(incident.URI)
+				expectedURI := "file:///source/example-1/src/main/java/App.java"
+				if uriStr != expectedURI {
+					t.Errorf("Expected normalized URI %s, got: %s", expectedURI, uriStr)
+				}
+			},
+		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			result, err := NormalizeRuleSets(tt.input, tt.testDir)
+			result, err := NormalizeRuleSets(tt.input, tt.testDir, tt.workDir)
 
 			if tt.expectError && err == nil {
 				t.Error("Expected error but got nil")
@@ -335,6 +365,7 @@ func TestNormalizeIncident(t *testing.T) {
 		name        string
 		incident    konveyor.Incident
 		testDir     string
+		workDir     string
 		expectedURI uri.URI
 		expectError bool
 	}{
@@ -449,6 +480,17 @@ func TestNormalizeIncident(t *testing.T) {
 			expectError: false,
 		},
 		{
+			name: "workDir stripping",
+			incident: konveyor.Incident{
+				URI:     uri.URI("file:///tmp/koncur-work-123/source/example-1/src/main/java/App.java"),
+				Message: "Test message",
+			},
+			testDir:     "",
+			workDir:     "/tmp/koncur-work-123",
+			expectedURI: uri.URI("file:///source/example-1/src/main/java/App.java"),
+			expectError: false,
+		},
+		{
 			name: "preserves all incident fields",
 			incident: konveyor.Incident{
 				URI:        uri.URI("file:///test/file.go"),
@@ -464,7 +506,7 @@ func TestNormalizeIncident(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			result, err := normalizeIncident(tt.incident, tt.testDir)
+			result, err := normalizeIncident(tt.incident, tt.testDir, tt.workDir)
 
 			if tt.expectError && err == nil {
 				t.Error("Expected error but got nil")

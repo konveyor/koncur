@@ -1,0 +1,109 @@
+name: Koncur Test with kai-analyzer-rpc
+
+on:
+  workflow_call:
+    inputs:
+      skip_maven:
+        description: "Whether to skip tests that require maven settings"
+        default: true
+        type: boolean
+      kai_ref:
+        description: "Git ref (branch, tag, or SHA) of konveyor/kai to build from"
+        default: "main"
+        type: string
+
+# TODO: switch to podman for consistency with kantra workflow
+jobs:
+  kai-rpc-test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout koncur
+        uses: actions/checkout@v6
+
+      - name: Setup Go
+        uses: actions/setup-go@v6
+        with:
+          go-version: '1.25'
+
+      - name: Checkout kai repo
+        uses: actions/checkout@v6
+        with:
+          repository: konveyor/kai
+          ref: ${{ inputs.kai_ref }}
+          path: kai
+
+      - name: Build kai-analyzer
+        run: |
+          cd kai/kai_analyzer_rpc
+          go build -o $HOME/.local/bin/kai-analyzer .
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: Download rulesets
+        run: make download-rulesets
+
+      # Maven setup — settings.xml goes into ~/.m2/ which is mounted
+      # into the java-external-provider container as /root/.m2/
+      - name: Run server for maven-local-resources
+        if: ${{ !inputs.skip_maven }}
+        uses: Eun/http-server-action@v1
+        with:
+          directory: local-maven-resources
+          port: 8085
+
+      - name: Get Docker bridge gateway
+        if: ${{ !inputs.skip_maven }}
+        run: |
+          GATEWAY=$(docker network inspect bridge --format '{{(index .IPAM.Config 0).Gateway}}')
+          echo "DOCKER_GATEWAY=$GATEWAY" >> $GITHUB_ENV
+          echo "Docker gateway: $GATEWAY"
+
+      - name: Create maven settings file
+        if: ${{ !inputs.skip_maven }}
+        uses: s4u/maven-settings-action@v4.0.0
+        with:
+          githubServer: false
+          repositories: '[{"id": "tackle-testapp-public", "name": "Local tackle-testapp repo", "url": "http://${{ env.DOCKER_GATEWAY }}:8085"}]'
+          mirrors: '[{"id": "maven-default-http-blocker", "name": "disable http block", "mirrorOf": "tackle-testapp-public", "url": "http://${{ env.DOCKER_GATEWAY }}:8085", "blocked": false}]'
+          path: "${{ env.HOME }}/.m2/settings.xml"
+
+      - name: Start provider containers
+        run: make start-kai-providers CONTAINER_RUNTIME=docker
+
+      - name: Build and run tests
+        env:
+          SKIP_MAVEN: ${{ inputs.skip_maven }}
+        run: make test-kai-rpc CONTAINER_RUNTIME=docker
+
+      - name: Show logs on failure
+        if: failure()
+        run: |
+          echo "=== java-external-provider container logs ==="
+          docker logs java-external-provider || true
+          echo ""
+          echo "=== c-sharp-provider container logs ==="
+          docker logs c-sharp-provider || true
+          echo ""
+          echo "=== kai-analyzer logs ==="
+          find .koncur/output -name "kai-analyzer*.log" -exec cat {} \; || true
+
+      - name: Upload output on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: koncur-kai-rpc-failures
+          path: .koncur/output
+          retention-days: 5
+
+      - name: Upload result yaml
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: koncur-kai-rpc-summary
+          path: test-kai-rpc.yaml
+          retention-days: 3
+
+      - name: Stop providers
+        if: always()
+        run: make stop-kai-providers CONTAINER_RUNTIME=docker

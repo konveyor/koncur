@@ -492,7 +492,7 @@ func TestTackleHubTarget_PrepareRulesForHub(t *testing.T) {
 			name: "no rules",
 			analysis: config.AnalysisConfig{
 				Application: "https://github.com/konveyor/test-app",
-				Rules:       []string{},
+				Rules:       []config.CustomRule{},
 			},
 			expectError: false,
 			validate: func(t *testing.T, taskData *Data) {
@@ -508,9 +508,9 @@ func TestTackleHubTarget_PrepareRulesForHub(t *testing.T) {
 			name: "local rules only",
 			analysis: config.AnalysisConfig{
 				Application: "https://github.com/konveyor/test-app",
-				Rules: []string{
-					"/opt/rulesets",
-					"/custom/rules",
+				Rules: []config.CustomRule{
+					{File: &config.FilePathRule{FilePath: "/opt/rulesets"}},
+					{File: &config.FilePathRule{FilePath: "/custom/rules"}},
 				},
 			},
 			expectError: false,
@@ -534,9 +534,9 @@ func TestTackleHubTarget_PrepareRulesForHub(t *testing.T) {
 			name: "Git URL rules",
 			analysis: config.AnalysisConfig{
 				Application: "https://github.com/konveyor/test-app",
-				Rules: []string{
-					"https://github.com/konveyor/rulesets#main",
-					"https://github.com/konveyor/analyzer-lsp#v1.0/rules",
+				Rules: []config.CustomRule{
+					{Git: &config.GitRepoRule{GitRepo: "https://github.com/konveyor/rulesets#main"}},
+					{Git: &config.GitRepoRule{GitRepo: "https://github.com/konveyor/analyzer-lsp#v1.0/rules"}},
 				},
 			},
 			expectError: false,
@@ -566,11 +566,11 @@ func TestTackleHubTarget_PrepareRulesForHub(t *testing.T) {
 			name: "mixed local and Git URL rules",
 			analysis: config.AnalysisConfig{
 				Application: "https://github.com/konveyor/test-app",
-				Rules: []string{
-					"/opt/rulesets",
-					"https://github.com/konveyor/rulesets#main/java",
-					"/custom/rules",
-					"https://github.com/konveyor/analyzer-lsp#v1.0/dotnet",
+				Rules: []config.CustomRule{
+					{File: &config.FilePathRule{FilePath: "/opt/rulesets"}},
+					{Git: &config.GitRepoRule{GitRepo: "https://github.com/konveyor/rulesets#main/java"}},
+					{File: &config.FilePathRule{FilePath: "/custom/rules"}},
+					{Git: &config.GitRepoRule{GitRepo: "https://github.com/konveyor/analyzer-lsp#v1.0/dotnet"}},
 				},
 			},
 			expectError: false,
@@ -623,11 +623,10 @@ func TestTackleHubTarget_PrepareRulesForHub(t *testing.T) {
 			}
 
 			// Simulate prepareRulesForHub logic
-			for i, rule := range test.Analysis.Rules {
-				// Check if we have parsed Git components for this rule
-				if i < len(test.Analysis.RulesGitComponents) && test.Analysis.RulesGitComponents[i] != nil {
+			for _, rule := range test.Analysis.Rules {
+				if rule.Git != nil {
 					// Git URL - add to repositories
-					components := test.Analysis.RulesGitComponents[i]
+					components := rule.Git.GetCompents()
 					repoString := components.URL
 					if components.Ref != "" {
 						repoString += "#" + components.Ref
@@ -636,9 +635,9 @@ func TestTackleHubTarget_PrepareRulesForHub(t *testing.T) {
 						}
 					}
 					taskData.Rules.repositories = append(taskData.Rules.repositories, repoString)
-				} else {
+				} else if rule.File != nil {
 					// Local path - add to rules
-					taskData.Rules.rules = append(taskData.Rules.rules, rule)
+					taskData.Rules.rules = append(taskData.Rules.rules, rule.File.FilePath)
 				}
 			}
 
@@ -697,46 +696,48 @@ func TestTackleHubTarget_GitURLIntegration(t *testing.T) {
 			name: "rules with Git URLs containing paths",
 			analysis: config.AnalysisConfig{
 				Application: "/local/app",
-				Rules: []string{
-					"https://github.com/konveyor/rulesets#main/java/cloud-readiness",
-					"https://github.com/konveyor/analyzer-lsp#v2.0/dotnet/migration",
+				Rules: []config.CustomRule{
+					{Git: &config.GitRepoRule{GitRepo: "https://github.com/konveyor/rulesets#main/java/cloud-readiness"}},
+					{Git: &config.GitRepoRule{GitRepo: "https://github.com/konveyor/analyzer-lsp#v2.0/dotnet/migration"}},
 				},
 			},
 			validate: func(t *testing.T, analysis *config.AnalysisConfig) {
 				if analysis.ApplicationGitComponents != nil {
 					t.Error("Expected ApplicationGitComponents to be nil for local path")
 				}
-				if len(analysis.RulesGitComponents) != 2 {
-					t.Fatalf("Expected 2 RulesGitComponents, got %d", len(analysis.RulesGitComponents))
+				if len(analysis.Rules) != 2 {
+					t.Fatalf("Expected 2 rules, got %d", len(analysis.Rules))
 				}
 
 				// First rule
-				if analysis.RulesGitComponents[0] == nil {
+				comp0 := analysis.Rules[0].Git.GetCompents()
+				if comp0 == nil {
 					t.Error("Expected first rule to have Git components")
 				} else {
-					if analysis.RulesGitComponents[0].URL != "https://github.com/konveyor/rulesets" {
-						t.Errorf("First rule URL mismatch: %s", analysis.RulesGitComponents[0].URL)
+					if comp0.URL != "https://github.com/konveyor/rulesets" {
+						t.Errorf("First rule URL mismatch: %s", comp0.URL)
 					}
-					if analysis.RulesGitComponents[0].Ref != "main" {
-						t.Errorf("First rule ref mismatch: %s", analysis.RulesGitComponents[0].Ref)
+					if comp0.Ref != "main" {
+						t.Errorf("First rule ref mismatch: %s", comp0.Ref)
 					}
-					if analysis.RulesGitComponents[0].Path != "java/cloud-readiness" {
-						t.Errorf("First rule path mismatch: %s", analysis.RulesGitComponents[0].Path)
+					if comp0.Path != "java/cloud-readiness" {
+						t.Errorf("First rule path mismatch: %s", comp0.Path)
 					}
 				}
 
 				// Second rule
-				if analysis.RulesGitComponents[1] == nil {
+				comp1 := analysis.Rules[1].Git.GetCompents()
+				if comp1 == nil {
 					t.Error("Expected second rule to have Git components")
 				} else {
-					if analysis.RulesGitComponents[1].URL != "https://github.com/konveyor/analyzer-lsp" {
-						t.Errorf("Second rule URL mismatch: %s", analysis.RulesGitComponents[1].URL)
+					if comp1.URL != "https://github.com/konveyor/analyzer-lsp" {
+						t.Errorf("Second rule URL mismatch: %s", comp1.URL)
 					}
-					if analysis.RulesGitComponents[1].Ref != "v2.0" {
-						t.Errorf("Second rule ref mismatch: %s", analysis.RulesGitComponents[1].Ref)
+					if comp1.Ref != "v2.0" {
+						t.Errorf("Second rule ref mismatch: %s", comp1.Ref)
 					}
-					if analysis.RulesGitComponents[1].Path != "dotnet/migration" {
-						t.Errorf("Second rule path mismatch: %s", analysis.RulesGitComponents[1].Path)
+					if comp1.Path != "dotnet/migration" {
+						t.Errorf("Second rule path mismatch: %s", comp1.Path)
 					}
 				}
 			},

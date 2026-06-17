@@ -2,10 +2,16 @@ package targets
 
 import (
 	"context"
+	"errors"
 	"time"
 
 	"github.com/konveyor/test-harness/pkg/config"
 )
+
+// ErrUnsupported is returned by targets that cannot run a particular test
+// (e.g., binary analysis on kai-rpc). The test runner treats this as a skip.
+var ErrUnsupported = errors.New("unsupported")
+
 
 // Target represents a tool that can be executed (kantra, tackle, kai)
 type Target interface {

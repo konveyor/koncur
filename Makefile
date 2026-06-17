@@ -1,4 +1,4 @@
-.PHONY: help kind-create kind-delete hub-install hub-install-auth _hub-install hub-uninstall hub-forward hub-status hub-logs test-hub clean build setup setup-auth teardown test-archive
+.PHONY: help kind-create kind-delete hub-install hub-install-auth _hub-install hub-uninstall hub-forward hub-status hub-logs test-hub test-kai-rpc clean build setup setup-auth teardown test-archive
 
 # Configuration
 KIND_CLUSTER_NAME ?= koncur-test
@@ -336,3 +336,57 @@ setup-auth: kind-create hub-install-auth build ## Complete setup with auth: crea
 
 teardown: hub-uninstall kind-delete ## Complete teardown: uninstall hub, delete cluster
 	@echo "Teardown complete"
+
+##@ Kai RPC Testing
+
+CONTAINER_RUNTIME ?= podman
+JAVA_PROVIDER_IMAGE ?= quay.io/konveyor/java-external-provider:latest
+JAVA_PROVIDER_PORT ?= 14651
+CSHARP_PROVIDER_IMAGE ?= quay.io/konveyor/c-sharp-provider:latest
+CSHARP_PROVIDER_PORT ?= 14656
+RULESETS_DIR ?= .koncur/rulesets
+
+download-rulesets: ## Download konveyor rulesets for analysis
+	@if [ ! -d "$(RULESETS_DIR)" ]; then \
+		echo "Cloning konveyor rulesets..."; \
+		git clone --depth 1 https://github.com/konveyor/rulesets $(RULESETS_DIR); \
+		echo "Rulesets downloaded to $(RULESETS_DIR)"; \
+	else \
+		echo "Rulesets already exist at $(RULESETS_DIR)"; \
+	fi
+
+start-kai-providers: ## Start provider containers for kai-rpc analysis
+	@echo "Starting java-external-provider container..."
+	@if $(CONTAINER_RUNTIME) ps --format '{{.Names}}' | grep -q '^java-external-provider$$'; then \
+		echo "java-external-provider is already running"; \
+	else \
+		$(CONTAINER_RUNTIME) run -d --rm --name java-external-provider \
+			-p $(JAVA_PROVIDER_PORT):$(JAVA_PROVIDER_PORT) \
+			-v $(PWD):$(PWD):z \
+			-v $(HOME)/.m2:/root/.m2:z \
+			$(JAVA_PROVIDER_IMAGE); \
+		echo "Started java-external-provider on port $(JAVA_PROVIDER_PORT)"; \
+	fi
+	@echo "Starting c-sharp-provider container..."
+	@if $(CONTAINER_RUNTIME) ps --format '{{.Names}}' | grep -q '^c-sharp-provider$$'; then \
+		echo "c-sharp-provider is already running"; \
+	else \
+		$(CONTAINER_RUNTIME) run -d --rm --name c-sharp-provider \
+			-p $(CSHARP_PROVIDER_PORT):8000 \
+			-v $(PWD):$(PWD):z \
+			$(CSHARP_PROVIDER_IMAGE) \
+			--port 8000; \
+		echo "Started c-sharp-provider on port $(CSHARP_PROVIDER_PORT)"; \
+	fi
+	@echo "Waiting for providers to be ready..."
+	@sleep 5
+
+stop-kai-providers: ## Stop provider containers for kai-rpc analysis
+	@echo "Stopping kai providers..."
+	@$(CONTAINER_RUNTIME) stop java-external-provider 2>/dev/null || true
+	@$(CONTAINER_RUNTIME) stop c-sharp-provider 2>/dev/null || true
+	@echo "Providers stopped"
+
+test-kai-rpc: build ## Test the Kai RPC integration (requires providers running)
+	@echo "Testing Kai RPC integration..."
+	./koncur run tests -t kai-rpc --target-config testdata/examples/target-kai-rpc.yaml -o yaml --output-file test-kai-rpc.yaml

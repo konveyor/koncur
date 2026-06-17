@@ -13,6 +13,9 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
+// javaBinPattern matches ephemeral java-bin temp directories in URIs.
+var javaBinPattern = regexp.MustCompile(`.*/java-bin-\d+/`)
+
 // ParseOutput reads and parses the analyzer output.yaml file
 func ParseOutput(outputFile string) ([]konveyor.RuleSet, error) {
 	data, err := os.ReadFile(outputFile)
@@ -41,8 +44,16 @@ func FilterRuleSets(rulesets []konveyor.RuleSet) []konveyor.RuleSet {
 	return filtered
 }
 
-// NormalizeRuleSets normalizes rulesets for comparison by removing dynamic content
-func NormalizeRuleSets(rulesets []konveyor.RuleSet, testDir string) ([]konveyor.RuleSet, error) {
+// NormalizeRuleSets normalizes rulesets for comparison by removing dynamic content.
+// workDir is optional; if provided, it will be stripped from incident URIs (used by kai-rpc
+// which runs locally and produces absolute paths instead of container-relative /source/ paths).
+func NormalizeRuleSets(rulesets []konveyor.RuleSet, testDir string, workDir string) ([]konveyor.RuleSet, error) {
+	wd := ""
+	if workDir != "" {
+		if abs, err := filepath.Abs(workDir); err == nil {
+			wd = filepath.ToSlash(abs)
+		}
+	}
 	normalizedRuleSets := []konveyor.RuleSet{}
 	var returnError error
 	for _, rs := range rulesets {
@@ -57,7 +68,7 @@ func NormalizeRuleSets(rulesets []konveyor.RuleSet, testDir string) ([]konveyor.
 			Skipped:     rs.Skipped,
 		}
 		for k, violation := range rs.Violations {
-			newViolation, err := normalizeViolation(violation, testDir)
+			newViolation, err := normalizeViolation(violation, testDir, wd)
 			// Skip this for now
 			if err != nil {
 				returnError = errors.Join(returnError, err)
@@ -66,7 +77,7 @@ func NormalizeRuleSets(rulesets []konveyor.RuleSet, testDir string) ([]konveyor.
 			newRuleSet.Violations[k] = newViolation
 		}
 		for k, insight := range rs.Insights {
-			newInsight, err := normalizeViolation(insight, testDir)
+			newInsight, err := normalizeViolation(insight, testDir, wd)
 			// Skip this for now
 			if err != nil {
 				continue
@@ -78,7 +89,7 @@ func NormalizeRuleSets(rulesets []konveyor.RuleSet, testDir string) ([]konveyor.
 	return normalizedRuleSets, returnError
 }
 
-func normalizeViolation(violation konveyor.Violation, testDir string) (konveyor.Violation, error) {
+func normalizeViolation(violation konveyor.Violation, testDir, workDir string) (konveyor.Violation, error) {
 	newViolation := konveyor.Violation{
 		Description: violation.Description,
 		Category:    violation.Category,
@@ -91,7 +102,7 @@ func normalizeViolation(violation konveyor.Violation, testDir string) (konveyor.
 
 	var returnErr error
 	for _, inc := range violation.Incidents {
-		inc, err := normalizeIncident(inc, testDir)
+		inc, err := normalizeIncident(inc, testDir, workDir)
 		if err != nil {
 			returnErr = errors.Join(returnErr, err)
 		}
@@ -131,7 +142,7 @@ func NormalizePath(path string) string {
 
 // normalizeIncident normalizes file paths in incidents to match the expected output format
 // This applies the same normalization that saveFilteredOutput does when generating expected output
-func normalizeIncident(incident konveyor.Incident, testDir string) (konveyor.Incident, error) {
+func normalizeIncident(incident konveyor.Incident, testDir, workDir string) (konveyor.Incident, error) {
 	// Marshal to YAML to normalize paths using string replacement (same approach as generate)
 	// Normalize paths by removing the test directory path
 	if incident.URI == "" || !strings.Contains(string(incident.URI), "file://") {
@@ -158,6 +169,12 @@ func normalizeIncident(incident konveyor.Incident, testDir string) (konveyor.Inc
 		fileName = strings.ReplaceAll(fileName, normalizedTestDir, "")
 	}
 
+	// Strip workDir from URIs (used by kai-rpc which runs locally with absolute paths).
+	// workDir is pre-resolved to absolute and slash-normalized by NormalizeRuleSets.
+	if workDir != "" {
+		fileName = strings.ReplaceAll(fileName, workDir, "")
+	}
+
 	if strings.HasPrefix(fileName, "//") {
 		fileName = strings.Replace(fileName, "//", "/", 1)
 		fileName = fmt.Sprintf("/%s", strings.TrimLeft(fileName, "/"))
@@ -170,7 +187,6 @@ func normalizeIncident(incident konveyor.Incident, testDir string) (konveyor.Inc
 
 	// Normalize ephemeral java-bin paths (containers, temp dirs) to /source/
 	// This handles macOS (/var/folders/.../T/), Linux (/tmp/), and container storage
-	javaBinPattern := regexp.MustCompile(`.*/java-bin-\d+/`)
 	fileName = javaBinPattern.ReplaceAllString(fileName, "file:///source/")
 
 	if fileName == "" {

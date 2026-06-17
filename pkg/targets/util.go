@@ -11,6 +11,38 @@ import (
 	"github.com/konveyor/test-harness/pkg/util"
 )
 
+// PrepareRules handles rules that may be Git URLs or local paths.
+// Returns a list of prepared rule paths ready for use by any target.
+func PrepareRules(ctx context.Context, rules []config.CustomRule, testDir, workDir string) ([]string, error) {
+	if len(rules) == 0 {
+		return nil, nil
+	}
+
+	log := util.GetLogger()
+	preparedRules := make([]string, 0, len(rules))
+
+	for i, rule := range rules {
+		if rule.File != nil {
+			if filepath.IsAbs(rule.File.FilePath) {
+				preparedRules = append(preparedRules, rule.File.FilePath)
+			} else {
+				preparedRules = append(preparedRules, filepath.Join(testDir, rule.File.FilePath))
+			}
+		} else if rule.Git != nil {
+			components := rule.Git.GetCompents()
+			log.Info("Cloning rules repository", "rule", rule.Git.GitRepo)
+			cloneName := fmt.Sprintf("rules-%d", i)
+			clonedPath, err := CloneGitRepository(ctx, components, workDir, cloneName)
+			if err != nil {
+				return nil, fmt.Errorf("failed to clone rules repository %s: %w", rule.Git.GitRepo, err)
+			}
+			preparedRules = append(preparedRules, clonedPath)
+		}
+	}
+
+	return preparedRules, nil
+}
+
 // IsBinaryFile returns true if the path appears to be a binary artifact (.jar, .war, or .ear)
 func IsBinaryFile(path string) bool {
 	ext := strings.ToLower(filepath.Ext(path))
@@ -69,14 +101,17 @@ func CloneGitRepository(ctx context.Context, components *config.GitURLComponents
 
 	log.Info("Git clone completed successfully")
 
-	// Remove .git directory to save space and avoid git-related issues
+	// Keep .git as an empty directory. The builtin provider uses ".git" as an
+	// exclusion pattern; if the directory is missing, it falls back to a regex
+	// where "." is a wildcard, matching "github" in paths and excluding all files.
 	gitDir := filepath.Join(absCloneDir, ".git")
 	if err := os.RemoveAll(gitDir); err != nil {
-		log.Info("Warning: failed to remove .git directory", "error", err.Error())
-		// Don't fail the entire operation if we can't remove .git
-	} else {
-		log.Info("Removed .git directory", "path", gitDir)
+		return "", fmt.Errorf("failed to remove .git directory: %w", err)
 	}
+	if err := os.MkdirAll(gitDir, 0755); err != nil {
+		return "", fmt.Errorf("failed to recreate .git directory: %w", err)
+	}
+	log.Info("Cleaned .git directory contents", "path", gitDir)
 
 	// Verify the target path exists if specified
 	if components.Path != "" {
