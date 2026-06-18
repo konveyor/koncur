@@ -61,6 +61,39 @@ func TestNewTarget(t *testing.T) {
 			wantErr:  false,
 		},
 		{
+			name: "mcp target with stdio config",
+			cfg: &config.TargetConfig{
+				Type: "mcp",
+				MCP: &config.MCPConfig{
+					BinaryPath:     "/usr/local/bin/analyzer-mcp",
+					ProviderConfig: "/path/to/config.yaml",
+					Rules:          "/path/to/rules",
+				},
+			},
+			wantType: "mcp",
+			wantErr:  false,
+		},
+		{
+			name: "mcp target with http config",
+			cfg: &config.TargetConfig{
+				Type: "mcp",
+				MCP: &config.MCPConfig{
+					Endpoint: "http://localhost:8080",
+				},
+			},
+			wantType: "mcp",
+			wantErr:  false,
+		},
+		{
+			name: "mcp target without config",
+			cfg: &config.TargetConfig{
+				Type: "mcp",
+				MCP:  nil,
+			},
+			wantErr:    true,
+			errContain: "mcp configuration is required",
+		},
+		{
 			name: "vscode target",
 			cfg: &config.TargetConfig{
 				Type: "vscode",
@@ -135,7 +168,7 @@ func TestNewTarget(t *testing.T) {
 
 func TestNewTarget_AllTypes(t *testing.T) {
 	// Test that we can create all target types without panics
-	targetTypes := []string{"kantra", "tackle-hub", "tackle-ui", "kai-rpc", "vscode"}
+	targetTypes := []string{"kantra", "tackle-hub", "tackle-ui", "kai-rpc", "mcp", "vscode"}
 
 	for _, targetType := range targetTypes {
 		t.Run(targetType, func(t *testing.T) {
@@ -169,6 +202,14 @@ func TestNewTarget_AllTypes(t *testing.T) {
 					KaiRPC: &config.KaiRPCConfig{
 						Host: "localhost",
 						Port: 8000,
+					},
+				}
+			case "mcp":
+				cfg = &config.TargetConfig{
+					Type: "mcp",
+					MCP: &config.MCPConfig{
+						BinaryPath: "/usr/local/bin/analyzer-mcp",
+						Rules:      "/path/to/rules",
 					},
 				}
 			case "vscode":

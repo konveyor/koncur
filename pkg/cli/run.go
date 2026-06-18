@@ -283,7 +283,7 @@ will be extracted to a temporary directory and all tests will be run from it.`,
 	// Flags
 	runCmd.Flags().StringVarP(&targetConfigFile, "target-config", "c", "", "Path to target configuration file")
 	runCmd.Flags().BoolVarP(&skipMavenSettingsTests, "skip-maven", "", false, "Skip the tests that need maven settings files")
-	runCmd.Flags().StringVarP(&targetType, "target", "t", "", "Target type (kantra, tackle-hub, tackle-ui, kai-rpc, vscode)")
+	runCmd.Flags().StringVarP(&targetType, "target", "t", "", "Target type (kantra, tackle-hub, tackle-ui, kai-rpc, mcp, vscode)")
 	runCmd.Flags().StringVarP(&runFilter, "filter", "f", "", "Filter tests by name pattern (only applies when running a directory)")
 	runCmd.Flags().StringVarP(&outputFormat, "output-format", "o", "console", "Output format: console, json, yaml, junit")
 	runCmd.Flags().StringVar(&outputFile, "output-file", "", "File path to write test results (only for json, yaml, junit formats)")
