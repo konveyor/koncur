@@ -109,6 +109,10 @@ func NormalizePath(path string) string {
 	if strings.Contains(path, "/root/.m2/repository") {
 		path = strings.ReplaceAll(path, "/root/.m2/repository/", "/m2/")
 	}
+	if strings.Contains(path, "/opt/input/maven-cache/repository") {
+		path = strings.ReplaceAll(path, "/opt/input/maven-cache/repository/", "/m2/")
+	}
+
 	if strings.Contains(path, "/cache/m2/") {
 		path = strings.ReplaceAll(path, "/cache/m2/", "/m2/")
 	}

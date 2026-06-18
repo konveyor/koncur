@@ -6,8 +6,9 @@ analysis:
     source: []
     target: []
     rules:
-      - file:
-          filePath: rule-example.yaml
+        - file:
+            filePath: rule-example.yaml
+          git: null
     disableDefaultRules: true
     analysisMode: source-only
 timeout: 10m0s

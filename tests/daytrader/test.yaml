@@ -3,7 +3,6 @@ description: Daytrader 7 EE application
 analysis:
     application: https://github.com/konveyor-ecosystem/sample.daytrader7.git#ci-oct2025
     labelSelector: konveyor.io/target=cloud-readiness || konveyor.io/target=quarkus
-    logLevel: 9
     context_lines: 0
     incident_selector: ""
     source: []
@@ -11,6 +10,7 @@ analysis:
     rules: []
     disableDefaultRules: false
     analysisMode: source-only
+    logLevel: 9
 timeout: 10m0s
 expect:
     exitCode: 0
