@@ -314,6 +314,232 @@
       - url: https://learn.microsoft.com/en-us/aspnet/core/security/anti-request-forgery
         title: Prevent Cross-Site Request Forgery (XSRF/CSRF) attacks
       effort: 1
+    dotnet-core-application-state-01:
+      description: Review HttpContext.Application usage - replaced by different patterns
+      category: optional
+      labels:
+      - konveyor.io/source=dotnet
+      - konveyor.io/target=dotnet-core
+      incidents:
+      - uri: file:///source/mvc4/NerdDinner/Global.asax.cs
+        message: |
+          HttpContext.Application (Application state) is not available in .NET Core.
+          Application state storage has different patterns in ASP.NET Core.
+
+          Migration actions:
+          - For application-wide state, use singleton services registered in DI
+          - For caching, use IMemoryCache or IDistributedCache
+          - Review if state is truly needed across the application
+          - Consider using configuration or static fields for truly static data
+        codeSnip: " 21  \n 22              WebApiConfig.Register(GlobalConfiguration.Configuration);\n
+          23              FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);\n
+          24              RouteConfig.RegisterRoutes(RouteTable.Routes);\n 25              BundleConfig.RegisterBundles(BundleTable.Bundles);\n
+          26              AuthConfig.RegisterAuth();\n 27  \n 28              ModelBinderProviders.BinderProviders.Add(new
+          EFModelBinderProvider());\n 29  \n 30              Version version = Assembly.GetExecutingAssembly().GetName().Version;\n
+          31              Application[\"Version\"] = string.Format(\"{0}.{1}\", version.Major,
+          version.Minor);\n 32          }\n 33      }\n 34  }"
+        lineNumber: 30
+        variables:
+          file: file:///opt/input/source/mvc4/NerdDinner/Global.asax.cs
+          fqdn_class: HttpApplication
+          fqdn_field: Application
+          fqdn_namespace: System.Web
+          symbol: Application
+          syntax_type: field_reference
+      links:
+      - url: https://learn.microsoft.com/en-us/aspnet/core/fundamentals/app-state
+        title: App state in ASP.NET Core
+      effort: 5
+    dotnet-core-area-registration-01:
+      description: AreaRegistration is replaced by area routing in ASP.NET Core
+      category: mandatory
+      labels:
+      - konveyor.io/source=dotnet
+      - konveyor.io/target=dotnet-core
+      incidents:
+      - uri: file:///source/mvc4/NerdDinner/Global.asax.cs
+        message: |
+          AreaRegistration.RegisterAllAreas() is not available in ASP.NET Core.
+          Areas still exist but are registered differently.
+
+          Migration actions:
+          - Remove AreaRegistration.RegisterAllAreas() call
+          - Use [Area] attribute on controllers
+          - Configure area routes using MapAreaControllerRoute in Startup.Configure
+        codeSnip: " 10  \n 11  namespace NerdDinner\n 12  {\n 13      // Note: For
+          instructions on enabling IIS6 or IIS7 classic mode, \n 14      // visit
+          http://go.microsoft.com/?LinkId=9394801\n 15  \n 16      public class MvcApplication
+          : System.Web.HttpApplication\n 17      {\n 18          protected void Application_Start()\n
+          19          {\n 20              AreaRegistration.RegisterAllAreas();\n 21
+          \ \n 22              WebApiConfig.Register(GlobalConfiguration.Configuration);\n
+          23              FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);\n
+          24              RouteConfig.RegisterRoutes(RouteTable.Routes);\n 25              BundleConfig.RegisterBundles(BundleTable.Bundles);\n
+          26              AuthConfig.RegisterAuth();\n 27  \n 28              ModelBinderProviders.BinderProviders.Add(new
+          EFModelBinderProvider());\n 29  \n 30              Version version = Assembly.GetExecutingAssembly().GetName().Version;"
+        lineNumber: 19
+        variables:
+          file: file:///opt/input/source/mvc4/NerdDinner/Global.asax.cs
+          fqdn_class: AreaRegistration
+          fqdn_method: RegisterAllAreas
+          fqdn_namespace: System.Web.Mvc
+          symbol: AreaRegistration.RegisterAllAreas
+          syntax_type: method_reference
+      links:
+      - url: https://learn.microsoft.com/en-us/aspnet/core/mvc/controllers/areas
+        title: Areas in ASP.NET Core
+      effort: 3
+    dotnet-core-bundletable-01:
+      description: BundleTable is not available in .NET Core
+      category: mandatory
+      labels:
+      - konveyor.io/source=dotnet
+      - konveyor.io/target=dotnet-core
+      incidents:
+      - uri: file:///source/mvc4/NerdDinner/Global.asax.cs
+        message: |
+          BundleTable.Bundles is not available in .NET Core.
+          Bundling and minification are handled differently.
+
+          Migration actions:
+          - Remove BundleConfig.cs and bundle definitions
+          - Choose a bundling strategy:
+            * BuildBundlerMinifier (MSBuild-based, simple)
+            * WebOptimizer (runtime bundling)
+            * Webpack/Rollup (full-featured build tools)
+            * Vite (modern, fast build tool)
+          - Update _ViewImports.cshtml or layout files
+          - Update script and style references in views
+          - Configure bundling for development and production environments
+        codeSnip: " 15  \n 16      public class MvcApplication : System.Web.HttpApplication\n
+          17      {\n 18          protected void Application_Start()\n 19          {\n
+          20              AreaRegistration.RegisterAllAreas();\n 21  \n 22              WebApiConfig.Register(GlobalConfiguration.Configuration);\n
+          23              FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);\n
+          24              RouteConfig.RegisterRoutes(RouteTable.Routes);\n 25              BundleConfig.RegisterBundles(BundleTable.Bundles);\n
+          26              AuthConfig.RegisterAuth();\n 27  \n 28              ModelBinderProviders.BinderProviders.Add(new
+          EFModelBinderProvider());\n 29  \n 30              Version version = Assembly.GetExecutingAssembly().GetName().Version;\n
+          31              Application[\"Version\"] = string.Format(\"{0}.{1}\", version.Major,
+          version.Minor);\n 32          }\n 33      }\n 34  }"
+        lineNumber: 24
+        variables:
+          file: file:///opt/input/source/mvc4/NerdDinner/Global.asax.cs
+          fqdn_class: BundleTable
+          fqdn_field: Bundles
+          fqdn_namespace: System.Web.Optimization
+          symbol: BundleTable.Bundles
+          syntax_type: field_reference
+      links:
+      - url: https://learn.microsoft.com/en-us/aspnet/core/client-side/bundling-and-minification
+        title: Bundle and minify in ASP.NET Core
+      effort: 7
+    dotnet-core-childaction-01:
+      description: Review ChildActionOnly usage - concept removed in ASP.NET Core
+      category: optional
+      labels:
+      - konveyor.io/source=dotnet
+      - konveyor.io/target=dotnet-core
+      incidents:
+      - uri: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+        message: |
+          ChildActionOnly attribute and Html.Action/Html.RenderAction are not available in ASP.NET Core.
+
+          Migration actions:
+          - Replace with View Components (recommended for complex logic)
+          - Or use Partial Views for simple rendering
+          - Or use Tag Helpers for reusable components
+          - Remove [ChildActionOnly] attributes
+          - Convert action methods to View Component InvokeAsync methods
+        codeSnip: "293          //\n294          // GET: /Account/ExternalLoginFailure\n295
+          \ \n296          [AllowAnonymous]\n297          public ActionResult ExternalLoginFailure()\n298
+          \         {\n299              return View();\n300          }\n301  \n302
+          \         [AllowAnonymous]\n303          [ChildActionOnly]\n304          public
+          ActionResult ExternalLoginsList(string returnUrl)\n305          {\n306              ViewBag.ReturnUrl
+          = returnUrl;\n307              return PartialView(\"_ExternalLoginsListPartial\",
+          OAuthWebSecurity.RegisteredClientData);\n308          }\n309  \n310          [ChildActionOnly]\n311
+          \         public ActionResult RemoveExternalLogins()\n312          {\n313
+          \             ICollection<OAuthAccount> accounts = OAuthWebSecurity.GetAccountsFromUserName(User.Identity.Name);"
+        lineNumber: 302
+        variables:
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
+          fqdn_class: ChildActionOnlyAttribute
+          fqdn_namespace: System.Web.Mvc
+          symbol: ChildActionOnlyAttribute
+          syntax_type: annotation
+      - uri: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+        message: |
+          ChildActionOnly attribute and Html.Action/Html.RenderAction are not available in ASP.NET Core.
+
+          Migration actions:
+          - Replace with View Components (recommended for complex logic)
+          - Or use Partial Views for simple rendering
+          - Or use Tag Helpers for reusable components
+          - Remove [ChildActionOnly] attributes
+          - Convert action methods to View Component InvokeAsync methods
+        codeSnip: "300          }\n301  \n302          [AllowAnonymous]\n303          [ChildActionOnly]\n304
+          \         public ActionResult ExternalLoginsList(string returnUrl)\n305
+          \         {\n306              ViewBag.ReturnUrl = returnUrl;\n307              return
+          PartialView(\"_ExternalLoginsListPartial\", OAuthWebSecurity.RegisteredClientData);\n308
+          \         }\n309  \n310          [ChildActionOnly]\n311          public
+          ActionResult RemoveExternalLogins()\n312          {\n313              ICollection<OAuthAccount>
+          accounts = OAuthWebSecurity.GetAccountsFromUserName(User.Identity.Name);\n314
+          \             List<ExternalLogin> externalLogins = new List<ExternalLogin>();\n315
+          \             foreach (OAuthAccount account in accounts)\n316              {\n317
+          \                 AuthenticationClientData clientData = OAuthWebSecurity.GetOAuthClientData(account.Provider);\n318
+          \ \n319                  externalLogins.Add(new ExternalLogin\n320                  {"
+        lineNumber: 309
+        variables:
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
+          fqdn_class: ChildActionOnlyAttribute
+          fqdn_namespace: System.Web.Mvc
+          symbol: ChildActionOnlyAttribute
+          syntax_type: annotation
+      links:
+      - url: https://learn.microsoft.com/en-us/aspnet/core/mvc/views/tag-helpers/intro
+        title: Tag Helpers in ASP.NET Core
+      - url: https://learn.microsoft.com/en-us/aspnet/core/mvc/views/view-components
+        title: View Components in ASP.NET Core
+      effort: 5
+    dotnet-core-configmanager-01:
+      description: ConfigurationManager.AppSettings must be replaced with IConfiguration
+      category: mandatory
+      labels:
+      - konveyor.io/source=dotnet
+      - konveyor.io/target=dotnet-core
+      incidents:
+      - uri: file:///source/mvc4/NerdDinner/Services/GeolocationService.cs
+        message: |
+          ConfigurationManager.AppSettings is not the recommended approach in .NET Core.
+          Use the ASP.NET Core configuration system instead.
+
+          Migration actions:
+          - Move app settings from Web.config/app.config to appsettings.json
+          - Use dependency injection to access IConfiguration
+          - Replace ConfigurationManager.AppSettings["key"] with Configuration["key"]
+          - Use environment-specific configuration files (appsettings.Development.json, etc.)
+          - Consider using user secrets for sensitive data in development
+        codeSnip: " 38          }\n 39  \n 40          public static LocationInfo
+          HostIpToPlaceName(string ip)\n 41          {\n 42              if (ip ==
+          \"127.0.0.1\")\n 43              {\n 44                  ip = \"71.117.141.83\";\n
+          45                  //return string.Empty;\n 46              }\n 47  \n
+          48              string apiKey = System.Configuration.ConfigurationManager.AppSettings[\"ipInfoDbKey\"];\n
+          49              string url = \"http://api.ipinfodb.com/v3/ip-city/?ip={0}&key=\"
+          + apiKey;\n 50              //string url = \"http://ipinfodb.com/ip_query.php?ip={0}&timezone=false\";\n
+          51              url = String.Format(url, ip);\n 52  \n 53              var
+          result = XDocument.Load(url);\n 54  \n 55              var location = (from
+          x in result.Descendants(\"Response\")\n 56                              select
+          new LocationInfo\n 57                              {\n 58                                  City
+          = (string)x.Element(\"City\"),"
+        lineNumber: 47
+        variables:
+          file: file:///opt/input/source/mvc4/NerdDinner/Services/GeolocationService.cs
+          fqdn_class: ConfigurationManager
+          fqdn_field: AppSettings
+          fqdn_namespace: System.Configuration
+          symbol: ConfigurationManager.AppSettings
+          syntax_type: field_reference
+      links:
+      - url: https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/
+        title: Configuration in ASP.NET Core
+      effort: 5
     dotnet-core-ef-dbcontext-01:
       description: System.Data.Entity.DbContext must be replaced with Entity Framework
         Core
@@ -679,6 +905,439 @@
       - url: https://learn.microsoft.com/en-us/ef/efcore-and-ef6/porting/
         title: Porting from EF6 to EF Core
       effort: 7
+    dotnet-core-ef-dbset-01:
+      description: Review DbSet usage for EF Core compatibility
+      category: optional
+      labels:
+      - konveyor.io/source=dotnet
+      - konveyor.io/target=dotnet-core
+      incidents:
+      - uri: file:///source/mvc4/NerdDinner/Controllers/AccountController.cs
+        message: |
+          DbSet is available in EF Core but some behaviors have changed.
+
+          Review actions:
+          - DbSet API is largely compatible but review LINQ query behavior
+          - Some LINQ operators may require client evaluation in EF Core 2.x (throws exception in 3.0+)
+          - Check for use of unsupported query patterns
+          - Add .AsNoTracking() where appropriate for better performance
+          - Review any custom DbSet implementations
+        codeSnip: "263              if (ModelState.IsValid)\n264              {\n265
+          \                 // Insert a new user into the database\n266                  using
+          (UsersContext db = new UsersContext())\n267                  {\n268                      UserProfile
+          user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());\n269
+          \                     // Check if user already exists\n270                      if
+          (user == null)\n271                      {\n272                          //
+          Insert name into the profile table\n273                          db.UserProfiles.Add(new
+          UserProfile { UserName = model.UserName });\n274                          db.SaveChanges();\n275
+          \ \n276                          OAuthWebSecurity.CreateOrUpdateAccount(provider,
+          providerUserId, model.UserName);\n277                          OAuthWebSecurity.Login(provider,
+          providerUserId, createPersistentCookie: false);\n278  \n279                          return
+          RedirectToLocal(returnUrl);\n280                      }\n281                      else\n282
+          \                     {\n283                          ModelState.AddModelError(\"UserName\",
+          \"User name already exists. Please enter a different user name.\");"
+        lineNumber: 272
+        variables:
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/AccountController.cs
+          fqdn_class: DbSet
+          fqdn_method: Add
+          fqdn_namespace: System.Data.Entity
+          symbol: UserProfiles.Add
+          syntax_type: method_reference
+      - uri: file:///source/mvc4/NerdDinner/Controllers/DinnersController.cs
+        message: |
+          DbSet is available in EF Core but some behaviors have changed.
+
+          Review actions:
+          - DbSet API is largely compatible but review LINQ query behavior
+          - Some LINQ operators may require client evaluation in EF Core 2.x (throws exception in 3.0+)
+          - Check for use of unsupported query patterns
+          - Add .AsNoTracking() where appropriate for better performance
+          - Review any custom DbSet implementations
+        codeSnip: " 23  \n 24              var dinners = db.Dinners.Where(d => d.EventDate
+          >= DateTime.Now).OrderBy(d => d.EventDate);\n 25              return View(dinners.ToPagedList(pageIndex,
+          PageSize));\n 26          }\n 27  \n 28          //\n 29          // GET:
+          /Dinners/Details/5\n 30  \n 31          public ActionResult Details(int
+          id = 0)\n 32          {\n 33              Dinner dinner = db.Dinners.Find(id);\n
+          34              if (dinner == null)\n 35              {\n 36                  return
+          HttpNotFound();\n 37              }\n 38              return View(dinner);\n
+          39          }\n 40  \n 41          //\n 42          // GET: /Dinners/Create\n
+          43  "
+        lineNumber: 32
+        variables:
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/DinnersController.cs
+          fqdn_class: DbSet
+          fqdn_method: Find
+          fqdn_namespace: System.Data.Entity
+          symbol: Dinners.Find
+          syntax_type: method_reference
+      - uri: file:///source/mvc4/NerdDinner/Controllers/DinnersController.cs
+        message: |
+          DbSet is available in EF Core but some behaviors have changed.
+
+          Review actions:
+          - DbSet API is largely compatible but review LINQ query behavior
+          - Some LINQ operators may require client evaluation in EF Core 2.x (throws exception in 3.0+)
+          - Check for use of unsupported query patterns
+          - Add .AsNoTracking() where appropriate for better performance
+          - Review any custom DbSet implementations
+        codeSnip: " 62              if (ModelState.IsValid)\n 63              {\n
+          64                  dinner.HostedBy = User.Identity.Name;\n 65  \n 66                  RSVP
+          rsvp = new RSVP();\n 67                  rsvp.AttendeeName = User.Identity.Name;\n
+          68  \n 69                  dinner.RSVPs = new List<RSVP>();\n 70                  dinner.RSVPs.Add(rsvp);\n
+          71  \n 72                  db.Dinners.Add(dinner);\n 73                  db.SaveChanges();\n
+          74                  return RedirectToAction(\"Index\");\n 75              }\n
+          76  \n 77              return View(dinner);\n 78          }\n 79  \n 80
+          \         //\n 81          // GET: /Dinners/Edit/5\n 82  "
+        lineNumber: 71
+        variables:
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/DinnersController.cs
+          fqdn_class: DbSet
+          fqdn_method: Add
+          fqdn_namespace: System.Data.Entity
+          symbol: Dinners.Add
+          syntax_type: method_reference
+      - uri: file:///source/mvc4/NerdDinner/Controllers/DinnersController.cs
+        message: |
+          DbSet is available in EF Core but some behaviors have changed.
+
+          Review actions:
+          - DbSet API is largely compatible but review LINQ query behavior
+          - Some LINQ operators may require client evaluation in EF Core 2.x (throws exception in 3.0+)
+          - Check for use of unsupported query patterns
+          - Add .AsNoTracking() where appropriate for better performance
+          - Review any custom DbSet implementations
+        codeSnip: " 76  \n 77              return View(dinner);\n 78          }\n
+          79  \n 80          //\n 81          // GET: /Dinners/Edit/5\n 82  \n 83
+          \         [Authorize]\n 84          public ActionResult Edit(int id = 0)\n
+          85          {\n 86              Dinner dinner = db.Dinners.Find(id);\n 87
+          \             if (dinner == null)\n 88              {\n 89                  return
+          HttpNotFound();\n 90              }\n 91              if (!dinner.IsHostedBy(User.Identity.Name))\n
+          92              {\n 93                  return View(\"InvalidOwner\");\n
+          94              }\n 95              return View(dinner);\n 96          }"
+        lineNumber: 85
+        variables:
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/DinnersController.cs
+          fqdn_class: DbSet
+          fqdn_method: Find
+          fqdn_namespace: System.Data.Entity
+          symbol: Dinners.Find
+          syntax_type: method_reference
+      - uri: file:///source/mvc4/NerdDinner/Controllers/DinnersController.cs
+        message: |
+          DbSet is available in EF Core but some behaviors have changed.
+
+          Review actions:
+          - DbSet API is largely compatible but review LINQ query behavior
+          - Some LINQ operators may require client evaluation in EF Core 2.x (throws exception in 3.0+)
+          - Check for use of unsupported query patterns
+          - Add .AsNoTracking() where appropriate for better performance
+          - Review any custom DbSet implementations
+        codeSnip: "114              }\n115              return View(dinner);\n116
+          \         }\n117  \n118          //\n119          // GET: /Dinners/Delete/5\n120
+          \ \n121          [Authorize]\n122          public ActionResult Delete(int
+          id = 0)\n123          {\n124              Dinner dinner = db.Dinners.Find(id);\n125
+          \             if (dinner == null)\n126              {\n127                  return
+          HttpNotFound();\n128              }\n129              if (!dinner.IsHostedBy(User.Identity.Name))\n130
+          \             {\n131                  return View(\"InvalidOwner\");\n132
+          \             }\n133              return View(dinner);\n134          }"
+        lineNumber: 123
+        variables:
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/DinnersController.cs
+          fqdn_class: DbSet
+          fqdn_method: Find
+          fqdn_namespace: System.Data.Entity
+          symbol: Dinners.Find
+          syntax_type: method_reference
+      - uri: file:///source/mvc4/NerdDinner/Controllers/DinnersController.cs
+        message: |
+          DbSet is available in EF Core but some behaviors have changed.
+
+          Review actions:
+          - DbSet API is largely compatible but review LINQ query behavior
+          - Some LINQ operators may require client evaluation in EF Core 2.x (throws exception in 3.0+)
+          - Check for use of unsupported query patterns
+          - Add .AsNoTracking() where appropriate for better performance
+          - Review any custom DbSet implementations
+        codeSnip: "132              }\n133              return View(dinner);\n134
+          \         }\n135  \n136          //\n137          // POST: /Dinners/Delete/5\n138
+          \ \n139          [HttpPost, ActionName(\"Delete\"), Authorize, ValidateAntiForgeryToken]\n140
+          \         public ActionResult DeleteConfirmed(int id)\n141          {\n142
+          \             Dinner dinner = db.Dinners.Find(id);\n143  \n144              if
+          (!dinner.IsHostedBy(User.Identity.Name))\n145              {\n146                  return
+          View(\"InvalidOwner\");\n147              }\n148  \n149              db.Dinners.Remove(dinner);\n150
+          \             db.SaveChanges();\n151              return RedirectToAction(\"Index\");\n152
+          \         }"
+        lineNumber: 141
+        variables:
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/DinnersController.cs
+          fqdn_class: DbSet
+          fqdn_method: Find
+          fqdn_namespace: System.Data.Entity
+          symbol: Dinners.Find
+          syntax_type: method_reference
+      - uri: file:///source/mvc4/NerdDinner/Controllers/DinnersController.cs
+        message: |
+          DbSet is available in EF Core but some behaviors have changed.
+
+          Review actions:
+          - DbSet API is largely compatible but review LINQ query behavior
+          - Some LINQ operators may require client evaluation in EF Core 2.x (throws exception in 3.0+)
+          - Check for use of unsupported query patterns
+          - Add .AsNoTracking() where appropriate for better performance
+          - Review any custom DbSet implementations
+        codeSnip: "139          [HttpPost, ActionName(\"Delete\"), Authorize, ValidateAntiForgeryToken]\n140
+          \         public ActionResult DeleteConfirmed(int id)\n141          {\n142
+          \             Dinner dinner = db.Dinners.Find(id);\n143  \n144              if
+          (!dinner.IsHostedBy(User.Identity.Name))\n145              {\n146                  return
+          View(\"InvalidOwner\");\n147              }\n148  \n149              db.Dinners.Remove(dinner);\n150
+          \             db.SaveChanges();\n151              return RedirectToAction(\"Index\");\n152
+          \         }\n153  \n154          protected override void Dispose(bool disposing)\n155
+          \         {\n156              db.Dispose();\n157              base.Dispose(disposing);\n158
+          \         }\n159  "
+        lineNumber: 148
+        variables:
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/DinnersController.cs
+          fqdn_class: DbSet
+          fqdn_method: Remove
+          fqdn_namespace: System.Data.Entity
+          symbol: Dinners.Remove
+          syntax_type: method_reference
+      - uri: file:///source/mvc4/NerdDinner/Controllers/RSVPController.cs
+        message: |
+          DbSet is available in EF Core but some behaviors have changed.
+
+          Review actions:
+          - DbSet API is largely compatible but review LINQ query behavior
+          - Some LINQ operators may require client evaluation in EF Core 2.x (throws exception in 3.0+)
+          - Check for use of unsupported query patterns
+          - Add .AsNoTracking() where appropriate for better performance
+          - Review any custom DbSet implementations
+        codeSnip: " 24          // AJAX: /Dinners/RegisterAjax/1\n 25          [Authorize,
+          HttpPost]\n 26          public ActionResult RegisterAjax(int id)\n 27          {\n
+          28              RegisterForDinner(id);\n 29              return Content(\"Thanks
+          - we'll see you there!\");\n 30          }\n 31  \n 32          private
+          void RegisterForDinner(int id)\n 33          {\n 34              Dinner
+          dinner = db.Dinners.Find(id);\n 35  \n 36              if (!dinner.IsUserRegistered(User.Identity.Name))\n
+          37              {\n 38                  RSVP rsvp = new RSVP();\n 39                  rsvp.AttendeeName
+          = User.Identity.Name;\n 40  \n 41                  dinner.RSVPs.Add(rsvp);\n
+          42                  db.SaveChanges();\n 43              }\n 44          }"
+        lineNumber: 33
+        variables:
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/RSVPController.cs
+          fqdn_class: DbSet
+          fqdn_method: Find
+          fqdn_namespace: System.Data.Entity
+          symbol: Dinners.Find
+          syntax_type: method_reference
+      - uri: file:///source/mvc4/NerdDinner/Controllers/RSVPController.cs
+        message: |
+          DbSet is available in EF Core but some behaviors have changed.
+
+          Review actions:
+          - DbSet API is largely compatible but review LINQ query behavior
+          - Some LINQ operators may require client evaluation in EF Core 2.x (throws exception in 3.0+)
+          - Check for use of unsupported query patterns
+          - Add .AsNoTracking() where appropriate for better performance
+          - Review any custom DbSet implementations
+        codeSnip: " 42                  db.SaveChanges();\n 43              }\n 44
+          \         }\n 45  \n 46          //\n 47          // AJAX: /RSVP/CancelAjax/1\n
+          48  \n 49          [Authorize, HttpPost]\n 50          public ActionResult
+          CancelAjax(int id)\n 51          {\n 52              Dinner dinner = db.Dinners.Find(id);\n
+          53  \n 54              RSVP rsvp = dinner.RSVPs.SingleOrDefault(r => this.User.Identity.Name
+          ==  r.AttendeeName);\n 55              if (rsvp != null)\n 56              {\n
+          57                  db.RSVPs.Remove(rsvp);\n 58                  db.SaveChanges();\n
+          59              }\n 60  \n 61              return Content(\"Sorry you can't
+          make it!\");\n 62          }"
+        lineNumber: 51
+        variables:
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/RSVPController.cs
+          fqdn_class: DbSet
+          fqdn_method: Find
+          fqdn_namespace: System.Data.Entity
+          symbol: Dinners.Find
+          syntax_type: method_reference
+      - uri: file:///source/mvc4/NerdDinner/Controllers/RSVPController.cs
+        message: |
+          DbSet is available in EF Core but some behaviors have changed.
+
+          Review actions:
+          - DbSet API is largely compatible but review LINQ query behavior
+          - Some LINQ operators may require client evaluation in EF Core 2.x (throws exception in 3.0+)
+          - Check for use of unsupported query patterns
+          - Add .AsNoTracking() where appropriate for better performance
+          - Review any custom DbSet implementations
+        codeSnip: " 47          // AJAX: /RSVP/CancelAjax/1\n 48  \n 49          [Authorize,
+          HttpPost]\n 50          public ActionResult CancelAjax(int id)\n 51          {\n
+          52              Dinner dinner = db.Dinners.Find(id);\n 53  \n 54              RSVP
+          rsvp = dinner.RSVPs.SingleOrDefault(r => this.User.Identity.Name ==  r.AttendeeName);\n
+          55              if (rsvp != null)\n 56              {\n 57                  db.RSVPs.Remove(rsvp);\n
+          58                  db.SaveChanges();\n 59              }\n 60  \n 61              return
+          Content(\"Sorry you can't make it!\");\n 62          }\n 63      }\n 64
+          \ }"
+        lineNumber: 56
+        variables:
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/RSVPController.cs
+          fqdn_class: DbSet
+          fqdn_method: Remove
+          fqdn_namespace: System.Data.Entity
+          symbol: RSVPs.Remove
+          syntax_type: method_reference
+      - uri: file:///source/mvc4/NerdDinner/Controllers/SearchController.cs
+        message: |
+          DbSet is available in EF Core but some behaviors have changed.
+
+          Review actions:
+          - DbSet API is largely compatible but review LINQ query behavior
+          - Some LINQ operators may require client evaluation in EF Core 2.x (throws exception in 3.0+)
+          - Check for use of unsupported query patterns
+          - Add .AsNoTracking() where appropriate for better performance
+          - Review any custom DbSet implementations
+        codeSnip: " 46                  return FindByLocation(foundlocation.Lat, foundlocation.Long).\n
+          47                                  OrderByDescending(p => p.EventDate);\n
+          48              }\n 49              return null;\n 50          }\n 51  \n
+          52          // POST api/Search?limit=10\n 53          [HttpPost]\n 54          public
+          IEnumerable<JsonDinner> GetMostPopularDinners(int limit)\n 55          {\n
+          56              var mostPopularDinners = from dinner in db.Dinners.Include(\"RSVPs\")\n
+          57                                       where dinner.EventDate >= DateTime.Now\n
+          58                                       orderby dinner.RSVPs.Count descending\n
+          59                                       select dinner;\n 60  \n 61              return
+          mostPopularDinners.Take(limit).AsEnumerable().Select(item => JsonDinnerFromDinner(item));\n
+          62          }\n 63  \n 64          protected IQueryable<JsonDinner> FindByLocation(double
+          latitude, double longitude)\n 65          {\n 66              var sourcePoint
+          = DbGeography.FromText(string.Format(\"POINT ({0} {1})\", longitude, latitude));"
+        lineNumber: 55
+        variables:
+          file: file:///opt/input/source/mvc4/NerdDinner/Controllers/SearchController.cs
+          fqdn_class: DbQuery
+          fqdn_method: Include
+          fqdn_namespace: System.Data.Entity.Infrastructure
+          symbol: Dinners.Include
+          syntax_type: method_reference
+      - uri: file:///source/mvc4/NerdDinner/Models/AccountModels.cs
+        message: |
+          DbSet is available in EF Core but some behaviors have changed.
+
+          Review actions:
+          - DbSet API is largely compatible but review LINQ query behavior
+          - Some LINQ operators may require client evaluation in EF Core 2.x (throws exception in 3.0+)
+          - Check for use of unsupported query patterns
+          - Add .AsNoTracking() where appropriate for better performance
+          - Review any custom DbSet implementations
+        codeSnip: "  8  \n  9  namespace NerdDinner.Models\n 10  {\n 11      public
+          class UsersContext : DbContext\n 12      {\n 13          public UsersContext()\n
+          14              : base(\"DefaultConnection\")\n 15          {\n 16          }\n
+          17  \n 18          public DbSet<UserProfile> UserProfiles { get; set; }\n
+          19      }\n 20  \n 21      [Table(\"UserProfile\")]\n 22      public class
+          UserProfile\n 23      {\n 24          [Key]\n 25          [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]\n
+          26          public int UserId { get; set; }\n 27          public string
+          UserName { get; set; }\n 28      }"
+        lineNumber: 17
+        variables:
+          file: file:///opt/input/source/mvc4/NerdDinner/Models/AccountModels.cs
+          fqdn_class: DbSet
+          fqdn_namespace: System.Data.Entity
+          symbol: DbSet<UserProfile>
+          syntax_type: type_reference
+      - uri: file:///source/mvc4/NerdDinner/Models/NerdDinnerContext.cs
+        message: |
+          DbSet is available in EF Core but some behaviors have changed.
+
+          Review actions:
+          - DbSet API is largely compatible but review LINQ query behavior
+          - Some LINQ operators may require client evaluation in EF Core 2.x (throws exception in 3.0+)
+          - Check for use of unsupported query patterns
+          - Add .AsNoTracking() where appropriate for better performance
+          - Review any custom DbSet implementations
+        codeSnip: " 10          // automatically whenever you change your model schema,
+          add the following\n 11          // code to the Application_Start method
+          in your Global.asax file.\n 12          // Note: this will destroy and re-create
+          your database with every model change.\n 13          // \n 14          //
+          System.Data.Entity.Database.SetInitializer(new System.Data.Entity.DropCreateDatabaseIfModelChanges<NerdDinner.Models.NerdDinnerContext>());\n
+          15  \n 16          public NerdDinnerContext() : base(\"name=NerdDinnerContext\")\n
+          17          {\n 18          }\n 19  \n 20          public DbSet<Dinner>
+          Dinners { get; set; }\n 21          public DbSet<RSVP> RSVPs { get; set;
+          }\n 22      }\n 23  }"
+        lineNumber: 19
+        variables:
+          file: file:///opt/input/source/mvc4/NerdDinner/Models/NerdDinnerContext.cs
+          fqdn_class: DbSet
+          fqdn_namespace: System.Data.Entity
+          symbol: DbSet<Dinner>
+          syntax_type: type_reference
+      - uri: file:///source/mvc4/NerdDinner/Models/NerdDinnerContext.cs
+        message: |
+          DbSet is available in EF Core but some behaviors have changed.
+
+          Review actions:
+          - DbSet API is largely compatible but review LINQ query behavior
+          - Some LINQ operators may require client evaluation in EF Core 2.x (throws exception in 3.0+)
+          - Check for use of unsupported query patterns
+          - Add .AsNoTracking() where appropriate for better performance
+          - Review any custom DbSet implementations
+        codeSnip: " 11          // code to the Application_Start method in your Global.asax
+          file.\n 12          // Note: this will destroy and re-create your database
+          with every model change.\n 13          // \n 14          // System.Data.Entity.Database.SetInitializer(new
+          System.Data.Entity.DropCreateDatabaseIfModelChanges<NerdDinner.Models.NerdDinnerContext>());\n
+          15  \n 16          public NerdDinnerContext() : base(\"name=NerdDinnerContext\")\n
+          17          {\n 18          }\n 19  \n 20          public DbSet<Dinner>
+          Dinners { get; set; }\n 21          public DbSet<RSVP> RSVPs { get; set;
+          }\n 22      }\n 23  }"
+        lineNumber: 20
+        variables:
+          file: file:///opt/input/source/mvc4/NerdDinner/Models/NerdDinnerContext.cs
+          fqdn_class: DbSet
+          fqdn_namespace: System.Data.Entity
+          symbol: DbSet<RSVP>
+          syntax_type: type_reference
+      links:
+      - url: https://learn.microsoft.com/en-us/ef/core/querying/
+        title: DbSet in EF Core
+      effort: 3
+    dotnet-core-ef-initializer-01:
+      description: Entity Framework Database.SetInitializer is not available in EF
+        Core
+      category: mandatory
+      labels:
+      - konveyor.io/source=dotnet
+      - konveyor.io/target=dotnet-core
+      incidents:
+      - uri: file:///source/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
+        message: |
+          Database.SetInitializer is not available in Entity Framework Core.
+          Database initialization is handled differently in EF Core.
+
+          Migration actions:
+          - Remove Database.SetInitializer calls
+          - Use EF Core migrations for schema management (recommended)
+          - Or use Database.EnsureCreated() for development/testing scenarios
+          - Or use Database.Migrate() to apply migrations at runtime
+          - Configure database initialization in Startup or Program.cs
+        codeSnip: " 18          public override void OnActionExecuting(ActionExecutingContext
+          filterContext)\n 19          {\n 20              // Ensure ASP.NET Simple
+          Membership is initialized only once per app start\n 21              LazyInitializer.EnsureInitialized(ref
+          _initializer, ref _isInitialized, ref _initializerLock);\n 22          }\n
+          23  \n 24          private class SimpleMembershipInitializer\n 25          {\n
+          26              public SimpleMembershipInitializer()\n 27              {\n
+          28                  Database.SetInitializer<UsersContext>(null);\n 29  \n
+          30                  try\n 31                  {\n 32                      using
+          (var context = new UsersContext())\n 33                      {\n 34                          if
+          (!context.Database.Exists())\n 35                          {\n 36                              //
+          Create the SimpleMembership database without Entity Framework migration
+          schema\n 37                              ((IObjectContextAdapter)context).ObjectContext.CreateDatabase();\n
+          38                          }"
+        lineNumber: 27
+        variables:
+          file: file:///opt/input/source/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
+          fqdn_class: Database
+          fqdn_method: SetInitializer
+          fqdn_namespace: System.Data.Entity
+          symbol: Database.SetInitializer<UsersContext>
+          syntax_type: method_reference
+      links:
+      - url: https://learn.microsoft.com/en-us/ef/core/managing-schemas/
+        title: Managing database schemas in EF Core
+      effort: 5
     dotnet-core-ef-lazy-loading-01:
       description: Review Entity Framework lazy loading configuration
       category: optional
@@ -1567,6 +2226,88 @@
       - url: https://learn.microsoft.com/en-us/ef/core/querying/related-data/lazy
         title: Lazy loading in EF Core
       effort: 3
+    dotnet-core-globalconfig-01:
+      description: GlobalConfiguration is not available in .NET Core
+      category: mandatory
+      labels:
+      - konveyor.io/source=dotnet
+      - konveyor.io/target=dotnet-core
+      incidents:
+      - uri: file:///source/mvc4/NerdDinner/Global.asax.cs
+        message: |
+          GlobalConfiguration for Web API is not available in .NET Core.
+          API configuration is done in Startup.ConfigureServices.
+
+          Migration actions:
+          - Remove WebApiConfig.Register(GlobalConfiguration.Configuration) call
+          - Move Web API configuration to Startup.ConfigureServices
+          - Use services.AddControllers() or AddMvc() to configure API services
+          - Configure JSON serialization using AddJsonOptions
+          - Web API and MVC controllers are unified in ASP.NET Core
+        codeSnip: " 12  {\n 13      // Note: For instructions on enabling IIS6 or
+          IIS7 classic mode, \n 14      // visit http://go.microsoft.com/?LinkId=9394801\n
+          15  \n 16      public class MvcApplication : System.Web.HttpApplication\n
+          17      {\n 18          protected void Application_Start()\n 19          {\n
+          20              AreaRegistration.RegisterAllAreas();\n 21  \n 22              WebApiConfig.Register(GlobalConfiguration.Configuration);\n
+          23              FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);\n
+          24              RouteConfig.RegisterRoutes(RouteTable.Routes);\n 25              BundleConfig.RegisterBundles(BundleTable.Bundles);\n
+          26              AuthConfig.RegisterAuth();\n 27  \n 28              ModelBinderProviders.BinderProviders.Add(new
+          EFModelBinderProvider());\n 29  \n 30              Version version = Assembly.GetExecutingAssembly().GetName().Version;\n
+          31              Application[\"Version\"] = string.Format(\"{0}.{1}\", version.Major,
+          version.Minor);\n 32          }"
+        lineNumber: 21
+        variables:
+          file: file:///opt/input/source/mvc4/NerdDinner/Global.asax.cs
+          fqdn_class: GlobalConfiguration
+          fqdn_field: Configuration
+          fqdn_namespace: System.Web.Http
+          symbol: GlobalConfiguration.Configuration
+          syntax_type: field_reference
+      links:
+      - url: https://learn.microsoft.com/en-us/aspnet/core/web-api/
+        title: Web API in ASP.NET Core
+      effort: 5
+    dotnet-core-globalfilters-01:
+      description: GlobalFilters is replaced by MVC options configuration
+      category: mandatory
+      labels:
+      - konveyor.io/source=dotnet
+      - konveyor.io/target=dotnet-core
+      incidents:
+      - uri: file:///source/mvc4/NerdDinner/Global.asax.cs
+        message: |
+          GlobalFilters.Filters is not available in .NET Core.
+          Global filters are configured differently.
+
+          Migration actions:
+          - Move global filter registration to Startup.ConfigureServices
+          - Use services.AddMvc(options => options.Filters.Add(...))
+          - Or use AddControllersWithViews for MVC applications
+          - Register filters by type or instance
+          - Review custom filters for compatibility with ASP.NET Core
+        codeSnip: " 13      // Note: For instructions on enabling IIS6 or IIS7 classic
+          mode, \n 14      // visit http://go.microsoft.com/?LinkId=9394801\n 15  \n
+          16      public class MvcApplication : System.Web.HttpApplication\n 17      {\n
+          18          protected void Application_Start()\n 19          {\n 20              AreaRegistration.RegisterAllAreas();\n
+          21  \n 22              WebApiConfig.Register(GlobalConfiguration.Configuration);\n
+          23              FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);\n
+          24              RouteConfig.RegisterRoutes(RouteTable.Routes);\n 25              BundleConfig.RegisterBundles(BundleTable.Bundles);\n
+          26              AuthConfig.RegisterAuth();\n 27  \n 28              ModelBinderProviders.BinderProviders.Add(new
+          EFModelBinderProvider());\n 29  \n 30              Version version = Assembly.GetExecutingAssembly().GetName().Version;\n
+          31              Application[\"Version\"] = string.Format(\"{0}.{1}\", version.Major,
+          version.Minor);\n 32          }\n 33      }"
+        lineNumber: 22
+        variables:
+          file: file:///opt/input/source/mvc4/NerdDinner/Global.asax.cs
+          fqdn_class: GlobalFilters
+          fqdn_field: Filters
+          fqdn_namespace: System.Web.Mvc
+          symbol: GlobalFilters.Filters
+          syntax_type: field_reference
+      links:
+      - url: https://learn.microsoft.com/en-us/aspnet/core/mvc/controllers/filters
+        title: Filters in ASP.NET Core
+      effort: 3
     dotnet-core-httpapplication-01:
       description: System.Web.HttpApplication base class not available in .NET Core
       category: mandatory
@@ -2013,6 +2754,44 @@
       - url: https://learn.microsoft.com/en-us/aspnet/core/migration/identity
         title: Migrate from ASP.NET membership to ASP.NET Core Identity
       effort: 7
+    dotnet-core-modelbinder-01:
+      description: Review ModelBinderProviders usage for ASP.NET Core compatibility
+      category: optional
+      labels:
+      - konveyor.io/source=dotnet
+      - konveyor.io/target=dotnet-core
+      incidents:
+      - uri: file:///source/mvc4/NerdDinner/Global.asax.cs
+        message: |
+          Model binding works differently in ASP.NET Core.
+          ModelBinderProviders API has changed.
+
+          Migration actions:
+          - Implement IModelBinder interface (similar but with changes)
+          - Implement IModelBinderProvider to create binder instances
+          - Register custom model binders in Startup.ConfigureServices
+          - Use options.ModelBinderProviders.Insert(0, new MyBinderProvider())
+          - Review and update custom model binder implementations
+        codeSnip: " 18          protected void Application_Start()\n 19          {\n
+          20              AreaRegistration.RegisterAllAreas();\n 21  \n 22              WebApiConfig.Register(GlobalConfiguration.Configuration);\n
+          23              FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);\n
+          24              RouteConfig.RegisterRoutes(RouteTable.Routes);\n 25              BundleConfig.RegisterBundles(BundleTable.Bundles);\n
+          26              AuthConfig.RegisterAuth();\n 27  \n 28              ModelBinderProviders.BinderProviders.Add(new
+          EFModelBinderProvider());\n 29  \n 30              Version version = Assembly.GetExecutingAssembly().GetName().Version;\n
+          31              Application[\"Version\"] = string.Format(\"{0}.{1}\", version.Major,
+          version.Minor);\n 32          }\n 33      }\n 34  }"
+        lineNumber: 27
+        variables:
+          file: file:///opt/input/source/mvc4/NerdDinner/Global.asax.cs
+          fqdn_class: ModelBinderProviders
+          fqdn_field: BinderProviders
+          fqdn_namespace: System.Web.Mvc
+          symbol: ModelBinderProviders.BinderProviders
+          syntax_type: field_reference
+      links:
+      - url: https://learn.microsoft.com/en-us/aspnet/core/mvc/models/model-binding
+        title: Model binding in ASP.NET Core
+      effort: 5
     dotnet-core-oauth-01:
       description: Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available
         in .NET Core
@@ -3281,6 +4060,46 @@
       links:
       - url: https://learn.microsoft.com/en-us/aspnet/core/client-side/bundling-and-minification
         title: Bundle and minify static assets in ASP.NET Core
+      effort: 5
+    dotnet-core-routetable-01:
+      description: RouteTable is replaced by endpoint routing
+      category: mandatory
+      labels:
+      - konveyor.io/source=dotnet
+      - konveyor.io/target=dotnet-core
+      incidents:
+      - uri: file:///source/mvc4/NerdDinner/Global.asax.cs
+        message: |
+          RouteTable.Routes is not available in .NET Core.
+          Routing is configured in the middleware pipeline.
+
+          Migration actions:
+          - Move route configuration from RouteConfig to Startup.Configure
+          - Use endpoint routing with app.UseRouting() and app.UseEndpoints()
+          - Define routes using MapControllerRoute or attribute routing
+          - Default route: endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}")
+          - Consider using attribute routing for cleaner code
+        codeSnip: " 14      // visit http://go.microsoft.com/?LinkId=9394801\n 15
+          \ \n 16      public class MvcApplication : System.Web.HttpApplication\n
+          17      {\n 18          protected void Application_Start()\n 19          {\n
+          20              AreaRegistration.RegisterAllAreas();\n 21  \n 22              WebApiConfig.Register(GlobalConfiguration.Configuration);\n
+          23              FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);\n
+          24              RouteConfig.RegisterRoutes(RouteTable.Routes);\n 25              BundleConfig.RegisterBundles(BundleTable.Bundles);\n
+          26              AuthConfig.RegisterAuth();\n 27  \n 28              ModelBinderProviders.BinderProviders.Add(new
+          EFModelBinderProvider());\n 29  \n 30              Version version = Assembly.GetExecutingAssembly().GetName().Version;\n
+          31              Application[\"Version\"] = string.Format(\"{0}.{1}\", version.Major,
+          version.Minor);\n 32          }\n 33      }\n 34  }"
+        lineNumber: 23
+        variables:
+          file: file:///opt/input/source/mvc4/NerdDinner/Global.asax.cs
+          fqdn_class: RouteTable
+          fqdn_field: Routes
+          fqdn_namespace: System.Web.Routing
+          symbol: RouteTable.Routes
+          syntax_type: field_reference
+      links:
+      - url: https://learn.microsoft.com/en-us/aspnet/core/fundamentals/routing
+        title: Routing in ASP.NET Core
       effort: 5
     dotnet-core-routing-01:
       description: System.Web.Routing is replaced by ASP.NET Core routing
@@ -9561,72 +10380,30 @@
         title: Migrate from ASP.NET to ASP.NET Core
       - url: https://learn.microsoft.com/en-us/aspnet/core/migration/mvc
         title: System.Web namespace migration
-  errors:
-    dotnet-core-appdomain-01: Invalid pattern '*.AppDomain' at offset 1. Quantifier
-      '*' following nothing.
-    dotnet-core-appdomain-createdomain-01: Invalid pattern '*.AppDomain.CreateDomain'
-      at offset 1. Quantifier '*' following nothing.
-    dotnet-core-appdomain-unload-01: Invalid pattern '*.AppDomain.Unload' at offset
-      1. Quantifier '*' following nothing.
-    dotnet-core-application-state-01: Invalid pattern '*.(Application|HttpContext.Application)'
-      at offset 1. Quantifier '*' following nothing.
-    dotnet-core-area-registration-01: Invalid pattern '*.AreaRegistration.RegisterAllAreas'
-      at offset 1. Quantifier '*' following nothing.
-    dotnet-core-assembly-codebase-01: Invalid pattern '*.Assembly.CodeBase' at offset
-      1. Quantifier '*' following nothing.
-    dotnet-core-assembly-save-01: Invalid pattern '*.(AssemblyBuilder.Save|ModuleBuilder.CreateGlobalFunctions)'
-      at offset 1. Quantifier '*' following nothing.
-    dotnet-core-assemblybuilder-access-01: Invalid pattern '*.AssemblyBuilderAccess.(Save|RunAndSave|ReflectionOnly)'
-      at offset 1. Quantifier '*' following nothing.
-    dotnet-core-binaryformatter-01: Invalid pattern '*.BinaryFormatter' at offset
-      1. Quantifier '*' following nothing.
-    dotnet-core-bundletable-01: Invalid pattern '*.BundleTable.Bundles' at offset
-      1. Quantifier '*' following nothing.
-    dotnet-core-childaction-01: Invalid pattern '*.ChildActionOnly' at offset 1. Quantifier
-      '*' following nothing.
-    dotnet-core-configmanager-01: Invalid pattern '*.ConfigurationManager.AppSettings'
-      at offset 1. Quantifier '*' following nothing.
-    dotnet-core-connectionstrings-01: Invalid pattern '*.ConfigurationManager.ConnectionStrings'
-      at offset 1. Quantifier '*' following nothing.
-    dotnet-core-dotnetopenauth-01: Invalid pattern '*.DotNetOpenAuth.*' at offset
-      1. Quantifier '*' following nothing.
-    dotnet-core-ef-dbset-01: Invalid pattern '*.DbSet' at offset 1. Quantifier '*'
-      following nothing.
-    dotnet-core-ef-initializer-01: Invalid pattern '*.Database.SetInitializer' at
-      offset 1. Quantifier '*' following nothing.
-    dotnet-core-globalconfig-01: Invalid pattern '*.GlobalConfiguration' at offset
-      1. Quantifier '*' following nothing.
-    dotnet-core-globalfilters-01: Invalid pattern '*.GlobalFilters.Filters' at offset
-      1. Quantifier '*' following nothing.
-    dotnet-core-httpcontext-current-01: Invalid pattern '*.HttpContext.Current' at
-      offset 1. Quantifier '*' following nothing.
-    dotnet-core-httpruntime-01: Invalid pattern '*.HttpRuntime.*' at offset 1. Quantifier
-      '*' following nothing.
-    dotnet-core-install-01: Invalid pattern '*.System.Configuration.Install' at offset
-      1. Quantifier '*' following nothing.
-    dotnet-core-machinekey-01: Invalid pattern '*.MachineKey.*' at offset 1. Quantifier
-      '*' following nothing.
-    dotnet-core-modelbinder-01: Invalid pattern '*.ModelBinderProviders' at offset
-      1. Quantifier '*' following nothing.
-    dotnet-core-multimodule-assembly-01: Invalid pattern '*.(DefineDynamicModule.*fileName|Assembly.LoadModule)'
-      at offset 1. Quantifier '*' following nothing.
-    dotnet-core-reflection-only-01: Invalid pattern '*.ReflectionOnlyLoad' at offset
-      1. Quantifier '*' following nothing.
-    dotnet-core-routetable-01: Invalid pattern '*.RouteTable.Routes' at offset 1.
-      Quantifier '*' following nothing.
-    dotnet-core-server-mappath-01: Invalid pattern '*.Server.MapPath' at offset 1.
-      Quantifier '*' following nothing.
-    dotnet-core-session-01: Invalid pattern '*.(Session|HttpContext.Session)' at offset
-      1. Quantifier '*' following nothing.
-    dotnet-core-thread-abort-01: Invalid pattern '*.Thread.Abort' at offset 1. Quantifier
-      '*' following nothing.
-    dotnet-core-xslt-scripts-01: Invalid pattern '*.(XslCompiledTransform.*EnableScript|msxsl:script)'
-      at offset 1. Quantifier '*' following nothing.
   unmatched:
+  - dotnet-core-appdomain-01
+  - dotnet-core-appdomain-createdomain-01
+  - dotnet-core-appdomain-unload-01
+  - dotnet-core-assembly-codebase-01
+  - dotnet-core-assembly-save-01
+  - dotnet-core-assemblybuilder-access-01
+  - dotnet-core-binaryformatter-01
+  - dotnet-core-connectionstrings-01
+  - dotnet-core-dotnetopenauth-01
   - dotnet-core-ef-spatial-01
   - dotnet-core-forms-auth-01
+  - dotnet-core-httpcontext-current-01
+  - dotnet-core-httpruntime-01
+  - dotnet-core-install-01
+  - dotnet-core-machinekey-01
+  - dotnet-core-multimodule-assembly-01
+  - dotnet-core-reflection-only-01
   - dotnet-core-remoting-01
+  - dotnet-core-server-mappath-01
+  - dotnet-core-session-01
   - dotnet-core-system-drawing-01
+  - dotnet-core-thread-abort-01
   - dotnet-core-wcf-01
   - dotnet-core-webforms-01
   - dotnet-core-winforms-01
+  - dotnet-core-xslt-scripts-01
