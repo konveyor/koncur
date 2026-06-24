@@ -4,9 +4,19 @@ on:
   pull_request:
     branches:
       - "main"
+      - "release-*"
 
 jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      image_tag: ${{ steps.set-tag.outputs.image_tag }}
+    steps:
+      - id: set-tag
+        run: echo "image_tag=${{ github.base_ref == 'main' && 'latest' || github.base_ref }}" >> $GITHUB_OUTPUT
+
   run-kantra-test:
+    needs: setup
     strategy:
       fail-fast: false
       matrix:
@@ -18,9 +28,11 @@ jobs:
     uses: ./.github/workflows/kantra.yaml
     with:
       os: ${{ matrix.os }}
+      image_tag: ${{ needs.setup.outputs.image_tag }}
 
   # Java-analysis tests only, Kantra --run-local=true (see kantra-local.yaml). Skips nerd-dinner / python-sample.
   run-kantra-java-local-test:
+    needs: setup
     strategy:
       fail-fast: false
       matrix:
@@ -30,9 +42,13 @@ jobs:
     uses: ./.github/workflows/kantra-local.yaml
     with:
       os: ${{ matrix.os }}
+      image_tag: ${{ needs.setup.outputs.image_tag }}
+
 
   run-hub-test:
+    needs: setup
     secrets: inherit
     uses: ./.github/workflows/hub.yaml
     with:
       skip_maven: true
+      image_tag: ${{ needs.setup.outputs.image_tag }}

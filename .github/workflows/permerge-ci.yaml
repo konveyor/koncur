@@ -9,9 +9,19 @@ on:
       - auto_merge_enabled
     branches:
       - "main"
+      - "release-*"
 
 jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      image_tag: ${{ steps.set-tag.outputs.image_tag }}
+    steps:
+      - id: set-tag
+        run: echo "image_tag=${{ (github.base_ref || github.ref_name) == 'main' && 'latest' || (github.base_ref || github.ref_name) }}" >> $GITHUB_OUTPUT
+
   run-kantra-test:
+    needs: setup
     strategy:
       fail-fast: false
       matrix:
@@ -20,27 +30,29 @@ jobs:
         os: [macos-15-intel, ubuntu-24.04-arm, windows-latest]
         exclude:
           - os: macos-15-intel
-    secrets: inherit
     uses: ./.github/workflows/kantra.yaml
     with:
       os: ${{ matrix.os }}
       skip_maven: false
+      image_tag: ${{ needs.setup.outputs.image_tag }}
 
   run-kantra-java-local-test:
+    needs: setup
     strategy:
       fail-fast: false
       matrix:
         os: [macos-15-intel, ubuntu-24.04-arm, windows-latest]
         exclude:
           - os: macos-15-intel
-    secrets: inherit
     uses: ./.github/workflows/kantra-local.yaml
     with:
       os: ${{ matrix.os }}
       skip_maven: false
+      image_tag: ${{ needs.setup.outputs.image_tag }}
 
   run-hub-test:
-    secrets: inherit
+    needs: setup
     uses: ./.github/workflows/hub.yaml
     with:
       skip_maven: false
+      image_tag: ${{ needs.setup.outputs.image_tag }}

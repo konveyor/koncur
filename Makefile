@@ -6,18 +6,19 @@ KONVEYOR_NAMESPACE ?= konveyor-tackle
 KUBECTL ?= kubectl
 HOST_PORT ?= 8080
 HOST_PORT_TLS ?= 8443
+IMAGE_TAG ?= latest
 
 # Image FQINs with defaults
-HUB ?= quay.io/konveyor/tackle2-hub:latest
-ANALYZER_ADDON ?= quay.io/konveyor/tackle2-addon-analyzer:latest
-CSHARP_PROVIDER_IMG ?= quay.io/konveyor/c-sharp-provider:latest
-GO_PROVIDER_IMG ?= quay.io/konveyor/go-external-provider:latest
-PYTHON_PROVIDER_IMG ?= quay.io/konveyor/python-external-provider:latest
-NODEJS_PROVIDER_IMG ?= quay.io/konveyor/nodejs-external-provider:latest
-JAVA_PROVIDER_IMG ?= quay.io/konveyor/java-external-provider:latest
-RUNNER_IMG ?= quay.io/konveyor/kantra:latest
-DISCOVERY_ADDON ?= quay.io/konveyor/tackle2-addon-discovery:latest
-PLATFORM_ADDON ?= quay.io/konveyor/tackle2-addon-platform:latest
+HUB ?= quay.io/konveyor/tackle2-hub:$(IMAGE_TAG)
+ANALYZER_ADDON ?= quay.io/konveyor/tackle2-addon-analyzer:$(IMAGE_TAG)
+CSHARP_PROVIDER_IMG ?= quay.io/konveyor/c-sharp-provider:$(IMAGE_TAG)
+GO_PROVIDER_IMG ?= quay.io/konveyor/go-external-provider:$(IMAGE_TAG)
+PYTHON_PROVIDER_IMG ?= quay.io/konveyor/python-external-provider:$(IMAGE_TAG)
+NODEJS_PROVIDER_IMG ?= quay.io/konveyor/nodejs-external-provider:$(IMAGE_TAG)
+JAVA_PROVIDER_IMG ?= quay.io/konveyor/java-external-provider:$(IMAGE_TAG)
+RUNNER_IMG ?= quay.io/konveyor/kantra:$(IMAGE_TAG)
+DISCOVERY_ADDON ?= quay.io/konveyor/tackle2-addon-discovery:$(IMAGE_TAG)
+PLATFORM_ADDON ?= quay.io/konveyor/tackle2-addon-platform:$(IMAGE_TAG)
 
 help: ## Show this help message
 	@echo 'Usage: make [target]'

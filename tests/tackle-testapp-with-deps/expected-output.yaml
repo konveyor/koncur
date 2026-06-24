@@ -14,7 +14,7 @@
       - konveyor.io/target=azure-container-apps
       - konveyor.io/target=azure-spring-apps
       incidents:
-      - uri: file:///m2/io/konveyor/demo/configuration-utils/1.0.0/io/konveyor/demo/config/ApplicationConfiguration.java
+      - uri: file:///opt/input/maven-cache/repository/io/konveyor/demo/configuration-utils/1.0.0/io/konveyor/demo/config/ApplicationConfiguration.java
         message: "The application uses Java APIs to read/write from the file system.\n
           \n Any usage of the file system on the application will require reconfiguration
           or, in rare cases, architectural changes."
@@ -29,7 +29,7 @@
           kind: Class
           name: ApplicationConfiguration
           package: io.konveyor.demo.config
-      - uri: file:///m2/io/konveyor/demo/configuration-utils/1.0.0/io/konveyor/demo/config/ApplicationConfiguration.java
+      - uri: file:///opt/input/maven-cache/repository/io/konveyor/demo/configuration-utils/1.0.0/io/konveyor/demo/config/ApplicationConfiguration.java
         message: "The application uses Java APIs to read/write from the file system.\n
           \n Any usage of the file system on the application will require reconfiguration
           or, in rare cases, architectural changes."
@@ -634,7 +634,7 @@
       - konveyor.io/target=cloud-readiness
       - storage
       incidents:
-      - uri: file:///m2/io/konveyor/demo/configuration-utils/1.0.0/io/konveyor/demo/config/ApplicationConfiguration.java
+      - uri: file:///opt/input/maven-cache/repository/io/konveyor/demo/configuration-utils/1.0.0/io/konveyor/demo/config/ApplicationConfiguration.java
         message: |-
           An application running inside a container could lose access to a file in local storage.
 
