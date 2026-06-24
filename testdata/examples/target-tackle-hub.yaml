@@ -15,7 +15,9 @@ tackleHub:
   #   hub: quay.io/konveyor/tackle2-hub:latest
   #   analyzer: quay.io/konveyor/tackle2-addon-analyzer:latest
   #   javaProvider: quay.io/konveyor/java-external-provider:latest
-  #   genericProvider: quay.io/konveyor/generic-external-provider:latest
+  #   goProvider: quay.io/konveyor/go-external-provider:latest
+  #   pythonProvider: quay.io/konveyor/python-external-provider:latest
+  #   nodejsProvider: quay.io/konveyor/nodejs-external-provider:latest
   #   csharpProvider: quay.io/konveyor/c-sharp-provider:latest
   #   runner: quay.io/konveyor/kantra:latest
   #   discoveryAddon: quay.io/konveyor/tackle2-addon-discovery:latest

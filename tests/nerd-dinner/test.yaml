@@ -1,4 +1,4 @@
-name: c-sharp
+name: c-sharp-nerd-dinner
 analysis:
     application: https://github.com/konveyor/c-sharp-analyzer-provider#main/testdata/nerd-dinner
     context_lines: 0

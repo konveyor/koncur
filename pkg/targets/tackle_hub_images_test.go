@@ -43,13 +43,23 @@ func TestBuildCRPatch(t *testing.T) {
 			},
 		},
 		{
-			name: "generic provider sets both python and nodejs",
+			name: "python and nodejs providers",
 			images: &config.TackleHubImages{
-				GenericProvider: "my-generic:dev",
+				PythonProvider: "my-python:dev",
+				NodejsProvider: "my-nodejs:dev",
 			},
 			wantFields: map[string]string{
-				"provider_python_image_fqin": "my-generic:dev",
-				"provider_nodejs_image_fqin": "my-generic:dev",
+				"provider_python_image_fqin": "my-python:dev",
+				"provider_nodejs_image_fqin": "my-nodejs:dev",
+			},
+		},
+		{
+			name: "go provider only",
+			images: &config.TackleHubImages{
+				GoProvider: "my-go:dev",
+			},
+			wantFields: map[string]string{
+				"provider_go_image_fqin": "my-go:dev",
 			},
 		},
 		{
@@ -58,7 +68,9 @@ func TestBuildCRPatch(t *testing.T) {
 				Hub:             "my-hub:dev",
 				Analyzer:        "my-analyzer:dev",
 				JavaProvider:    "my-java:dev",
-				GenericProvider: "my-generic:dev",
+				GoProvider:      "my-go:dev",
+				PythonProvider:  "my-python:dev",
+				NodejsProvider:  "my-nodejs:dev",
 				CsharpProvider:  "my-csharp:dev",
 				Runner:          "my-kantra:dev",
 				DiscoveryAddon:  "my-discovery:dev",
@@ -68,8 +80,9 @@ func TestBuildCRPatch(t *testing.T) {
 				"hub_image_fqin":              "my-hub:dev",
 				"analyzer_fqin":               "my-analyzer:dev",
 				"provider_java_image_fqin":    "my-java:dev",
-				"provider_python_image_fqin":  "my-generic:dev",
-				"provider_nodejs_image_fqin":  "my-generic:dev",
+				"provider_go_image_fqin":      "my-go:dev",
+				"provider_python_image_fqin":  "my-python:dev",
+				"provider_nodejs_image_fqin":  "my-nodejs:dev",
 				"provider_c_sharp_image_fqin": "my-csharp:dev",
 				"kantra_fqin":                 "my-kantra:dev",
 				"language_discovery_fqin":     "my-discovery:dev",

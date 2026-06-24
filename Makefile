@@ -11,7 +11,9 @@ HOST_PORT_TLS ?= 8443
 HUB ?= quay.io/konveyor/tackle2-hub:latest
 ANALYZER_ADDON ?= quay.io/konveyor/tackle2-addon-analyzer:latest
 CSHARP_PROVIDER_IMG ?= quay.io/konveyor/c-sharp-provider:latest
-GENERIC_PROVIDER_IMG ?= quay.io/konveyor/generic-external-provider:latest
+GO_PROVIDER_IMG ?= quay.io/konveyor/go-external-provider:latest
+PYTHON_PROVIDER_IMG ?= quay.io/konveyor/python-external-provider:latest
+NODEJS_PROVIDER_IMG ?= quay.io/konveyor/nodejs-external-provider:latest
 JAVA_PROVIDER_IMG ?= quay.io/konveyor/java-external-provider:latest
 RUNNER_IMG ?= quay.io/konveyor/kantra:latest
 DISCOVERY_ADDON ?= quay.io/konveyor/tackle2-addon-discovery:latest
@@ -155,8 +157,9 @@ _hub-install: ## Internal target for hub installation
 	@printf '  hub_image_fqin: $(HUB)\n' >> .koncur/config/tackle-cr.yaml
 	@printf '  analyzer_fqin: $(ANALYZER_ADDON)\n' >> .koncur/config/tackle-cr.yaml
 	@printf '  provider_c_sharp_image_fqin: $(CSHARP_PROVIDER_IMG)\n' >> .koncur/config/tackle-cr.yaml
-	@printf '  provider_python_image_fqin: $(GENERIC_PROVIDER_IMG)\n' >> .koncur/config/tackle-cr.yaml
-	@printf '  provider_nodejs_image_fqin: $(GENERIC_PROVIDER_IMG)\n' >> .koncur/config/tackle-cr.yaml
+	@printf '  provider_go_image_fqin: $(GO_PROVIDER_IMG)\n' >> .koncur/config/tackle-cr.yaml
+	@printf '  provider_python_image_fqin: $(PYTHON_PROVIDER_IMG)\n' >> .koncur/config/tackle-cr.yaml
+	@printf '  provider_nodejs_image_fqin: $(NODEJS_PROVIDER_IMG)\n' >> .koncur/config/tackle-cr.yaml
 	@printf '  provider_java_image_fqin: $(JAVA_PROVIDER_IMG)\n' >> .koncur/config/tackle-cr.yaml
 	@printf '  kantra_fqin: $(RUNNER_IMG)\n' >> .koncur/config/tackle-cr.yaml
 	@printf '  language_discovery_fqin: $(DISCOVERY_ADDON)\n' >> .koncur/config/tackle-cr.yaml
@@ -302,6 +305,7 @@ clean: ## Clean build artifacts and test outputs
 	@rm -f koncur
 	@rm -f koncur-tests.tar.gz
 	@rm -rf .koncur/output/*
+	@find tests -type d -name "source" -exec rm -rf {} +
 	@echo "Clean complete"
 
 ##@ Quick Setup

@@ -1,0 +1,26 @@
+
+- message: "dependency {{name}} with {{version}} found"
+  ruleID: golang-dependencies-rule-01
+  effort: 1
+  description: "Testing golang dependencies"
+  when:
+    or:
+      - go.dependency:
+          name: golang.org/x/text
+          upperbound: v0.3.8
+      - go.dependency:
+          name: k8s.io/apimachinery
+          lowerbound: v0.24.3
+- message: golang function call
+  ruleID: golang-sample-rule-01
+  effort: 1
+  when:
+    go.referenced:
+      pattern: "HelloWorld"
+- message: golang main test
+  ruleID: golang-sample-rule-02
+  effort: 1
+  when:
+    go.referenced:
+      pattern: "v1beta1.CustomResourceDefinition"
+      

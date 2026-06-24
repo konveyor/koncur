@@ -111,47 +111,7 @@ will be extracted to a temporary directory and all tests will be run from it.`,
 				testFiles = []string{path}
 			}
 
-			tests := []*config.TestDefinition{}
-			skippedCount := 0
-			for _, testFile := range testFiles {
-				// Load test definition
-				test, err := config.Load(testFile)
-				if err != nil {
-					log.V(1).Info("failed to load test:", "error", err)
-					color.Red("  ✗ Failed to load test: %v because: %v", testFile, err)
-					continue
-				}
-
-				// Validate test definition
-				if err := config.Validate(test); err != nil {
-					log.V(1).Info("invalid test definition", "error", err)
-					color.Red("  ✗ invalid test definition: %v failed because: %v", testFile, err)
-					continue
-				}
-				if test.RequireMavenSettings && skipMavenSettingsTests {
-					log.V(1).Info("skipping test because has maven settings requirements")
-					color.Yellow("  ⊘ Skipped: %s (maven settings)", test.Name)
-					skippedCount += 1
-					continue
-				}
-				if test.Skipped {
-					log.V(1).Info("skipping test because marked as skipped")
-					color.Yellow("  ⊘ Skipped: %s (marked skip)", test.Name)
-					skippedCount += 1
-					continue
-				}
-				// Skip Maven coordinate applications for kantra target
-				if targets.IsMavenCoordinate(test.Analysis.Application) && targetType == "kantra" {
-					log.V(1).Info("skipping test with Maven coordinate for kantra target", "test", test.Name)
-					color.Yellow("  ⊘ Skipped: %s (Maven coordinates not supported for kantra)", test.Name)
-					skippedCount += 1
-					continue
-				}
-
-				tests = append(tests, test)
-			}
-
-			// Load or create target config once for all tests
+			// Load or create target config once for all tests (needed for per-target # SKIPPED comments)
 			var targetConfig *config.TargetConfig
 			if targetConfigFile != "" {
 				log.Info("Loading target configuration", "file", targetConfigFile)
@@ -189,10 +149,50 @@ will be extracted to a temporary directory and all tests will be run from it.`,
 
 			log.Info("Using target", "type", targetConfig.Type)
 
-			// Create target from config
-			target, err := targets.NewTarget(targetConfig)
+			var target targets.Target
+			target, err = targets.NewTarget(targetConfig)
 			if err != nil {
 				return fmt.Errorf("failed to create target: %w", err)
+			}
+
+			tests := []*config.TestDefinition{}
+			skippedCount := 0
+			for _, testFile := range testFiles {
+				// Load test definition
+				test, err := config.Load(testFile)
+				if err != nil {
+					log.V(1).Info("failed to load test:", "error", err)
+					color.Red("  ✗ Failed to load test: %v because: %v", testFile, err)
+					continue
+				}
+
+				// Validate test definition
+				if err := config.Validate(test); err != nil {
+					log.V(1).Info("invalid test definition", "error", err)
+					color.Red("  ✗ invalid test definition: %v failed because: %v", testFile, err)
+					continue
+				}
+				if test.RequireMavenSettings && skipMavenSettingsTests {
+					log.V(1).Info("skipping test because has maven settings requirements")
+					color.Yellow("  ⊘ Skipped: %s (maven settings)", test.Name)
+					skippedCount += 1
+					continue
+				}
+				if test.ShouldSkipForTarget(targetConfig.Type) {
+					log.V(1).Info("skipping test because marked as skipped for this target", "target", targetConfig.Type)
+					color.Yellow("  ⊘ Skipped: %s (marked skip)", test.Name)
+					skippedCount += 1
+					continue
+				}
+				// Skip Maven coordinate applications for kantra target
+				if targets.IsMavenCoordinate(test.Analysis.Application) && targetConfig.Type == "kantra" {
+					log.V(1).Info("skipping test with Maven coordinate for kantra target", "test", test.Name)
+					color.Yellow("  ⊘ Skipped: %s (Maven coordinates not supported for kantra)", test.Name)
+					skippedCount += 1
+					continue
+				}
+
+				tests = append(tests, test)
 			}
 
 			// Run all tests

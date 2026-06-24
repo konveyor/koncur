@@ -12,5 +12,7 @@ kantra:
   # Optional: override container images (default target uses --run-local=false)
   # runnerImage: quay.io/konveyor/kantra:latest
   # javaProviderImage: quay.io/konveyor/java-external-provider:latest
-  # genericProviderImage: quay.io/konveyor/generic-external-provider:latest
+  # goProviderImage: quay.io/konveyor/go-external-provider:latest
+  # pythonProviderImage: quay.io/konveyor/python-external-provider:latest
+  # nodejsProviderImage: quay.io/konveyor/nodejs-external-provider:latest
   # csharpProviderImage: quay.io/konveyor/c-sharp-provider:latest

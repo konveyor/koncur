@@ -220,7 +220,7 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: koncur-kantra-${{ inputs.os }}-failures
+          name: koncur-kantra-local-${{ inputs.os }}-failures
           path: .koncur/output 
           retention-days: 5
           include-hidden-files: true
@@ -230,7 +230,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: koncur-kantra-${{ inputs.os }}-summary
+          name: koncur-kantra-local-${{ inputs.os }}-summary
           path: test.yaml
           retention-days: 3
 

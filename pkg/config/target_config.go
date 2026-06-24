@@ -41,10 +41,12 @@ type KantraConfig struct {
 
 	// Container image overrides. Used when kantra runs providers in containers.
 	// These correspond to kantra's environment variables for provider images.
-	RunnerImage          string `yaml:"runnerImage,omitempty"`
-	JavaProviderImage    string `yaml:"javaProviderImage,omitempty"`
-	GenericProviderImage string `yaml:"genericProviderImage,omitempty"`
-	CsharpProviderImage  string `yaml:"csharpProviderImage,omitempty"`
+	RunnerImage         string `yaml:"runnerImage,omitempty"`
+	JavaProviderImage   string `yaml:"javaProviderImage,omitempty"`
+	GoProviderImage     string `yaml:"goProviderImage,omitempty"`
+	PythonProviderImage string `yaml:"pythonProviderImage,omitempty"`
+	NodejsProviderImage string `yaml:"nodejsProviderImage,omitempty"`
+	CsharpProviderImage string `yaml:"csharpProviderImage,omitempty"`
 }
 
 // TackleHubConfig for Tackle Hub API execution
@@ -71,9 +73,11 @@ type TackleHubConfig struct {
 type TackleHubImages struct {
 	Hub             string `yaml:"hub,omitempty"`             // hub_image_fqin
 	Analyzer        string `yaml:"analyzer,omitempty"`        // analyzer_fqin
-	JavaProvider    string `yaml:"javaProvider,omitempty"`    // provider_java_image_fqin
-	GenericProvider string `yaml:"genericProvider,omitempty"` // provider_python_image_fqin + provider_nodejs_image_fqin
-	CsharpProvider  string `yaml:"csharpProvider,omitempty"`  // provider_c_sharp_image_fqin
+	JavaProvider   string `yaml:"javaProvider,omitempty"`   // provider_java_image_fqin
+	GoProvider     string `yaml:"goProvider,omitempty"`     // provider_go_image_fqin
+	PythonProvider string `yaml:"pythonProvider,omitempty"` // provider_python_image_fqin
+	NodejsProvider string `yaml:"nodejsProvider,omitempty"` // provider_nodejs_image_fqin
+	CsharpProvider string `yaml:"csharpProvider,omitempty"` // provider_c_sharp_image_fqin
 	Runner          string `yaml:"runner,omitempty"`          // kantra_fqin
 	DiscoveryAddon  string `yaml:"discoveryAddon,omitempty"`  // language_discovery_fqin
 	PlatformAddon   string `yaml:"platformAddon,omitempty"`   // platform_fqin
@@ -103,7 +107,9 @@ func (c *TackleHubConfig) HasImageOverrides() bool {
 	return c.Images.Hub != "" ||
 		c.Images.Analyzer != "" ||
 		c.Images.JavaProvider != "" ||
-		c.Images.GenericProvider != "" ||
+		c.Images.GoProvider != "" ||
+		c.Images.PythonProvider != "" ||
+		c.Images.NodejsProvider != "" ||
 		c.Images.CsharpProvider != "" ||
 		c.Images.Runner != "" ||
 		c.Images.DiscoveryAddon != "" ||

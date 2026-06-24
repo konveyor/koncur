@@ -490,23 +490,23 @@
         title: Quarkus - Guide;
       effort: 1
     springboot-annotations-to-quarkus-00000:
-      description: Remove the SpringBoot @SpringBootApplication annotation
+      description: Replace SpringBootApplication bootstrap model with Quarkus bootstrap
+        and CDI
       category: mandatory
       labels:
       - konveyor.io/source=springboot
       - konveyor.io/target=quarkus
       incidents:
       - uri: file:///source/src/main/java/com/telran/application/BookServerApp.java
-        message: "Remove the SpringBoot @SpringBootApplication annotation.\n\n A Spring
-          Boot application contains a \"main\" class with the @SpringBootApplication
-          annotation. A Quarkus application does not have such a class. Two different
-          alternatives can be followed - either\n to remove the \"main\" class associated
-          with the annotation, or add the `org.springframework.boot:spring-boot-autoconfigure`
-          dependency as an `optional` Maven dependency. An optional dependency \n
-          is available when an application compiles but is not packaged with the application
-          at runtime. Doing this would allow the application to compile without modification,
-          but you\n would also need to maintain a Spring version along with the Quarkus
-          application."
+        message: |-
+          Remove or refactor the SpringBoot `@SpringBootApplication` bootstrap model for Quarkus.
+
+          `@SpringBootApplication` combines three concerns; in Quarkus they map differently:
+          - `@EnableAutoConfiguration`: Quarkus configures features by adding Quarkus extensions at build time (no Spring Boot auto-configuration runtime model).
+          - `@ComponentScan`: Quarkus uses CDI bean discovery with bean-defining annotations (for example `@ApplicationScoped`, `@Singleton`), not Spring component scanning semantics.
+          - `@SpringBootConfiguration`: use CDI scopes and producer methods (`@Produces`) for bean registration; for tests, use Quarkus testing patterns instead of Spring Boot configuration detection.
+
+          If needed as an intermediate step, keeping `org.springframework.boot:spring-boot-autoconfigure` as `optional` may allow compilation, but this keeps Spring compatibility baggage and should not be the target end state.
         codeSnip: "\n 1  package com.telran.application;\n 2  \n 3  import org.springframework.boot.SpringApplication;\n
           4  import org.springframework.boot.autoconfigure.SpringBootApplication;\n
           5  \n 6  @SpringBootApplication\n 7  public class BookServerApp {\n 8  public
@@ -518,11 +518,18 @@
           kind: Property
           name: SpringBootApplication
           package: com.telran.application
+      links:
+      - url: https://quarkus.io/guides/cdi-reference
+        title: Quarkus CDI reference
+      - url: https://quarkus.io/guides/spring-di
+        title: Quarkus Spring DI guide
+      - url: https://quarkus.io/guides/getting-started-testing
+        title: Quarkus testing guide
       effort: 1
     springboot-di-to-quarkus-00000:
       description: Replace the SpringBoot Dependency Injection artifact with Quarkus
         'spring-di' extension
-      category: potential
+      category: mandatory
       labels:
       - konveyor.io/source=springboot
       - konveyor.io/target=quarkus
@@ -676,11 +683,20 @@
   - remote-ejb-to-quarkus-00000
   - springboot-actuator-to-quarkus-0100
   - springboot-actuator-to-quarkus-0200
+  - springboot-actuator-to-quarkus-0210
+  - springboot-annotations-to-quarkus-00001
+  - springboot-annotations-to-quarkus-00002
+  - springboot-annotations-to-quarkus-00003
   - springboot-cache-to-quarkus-00000
   - springboot-cloud-config-client-to-quarkus-00000
+  - springboot-cloud-consul-to-quarkus-stork-00000
+  - springboot-cloud-consul-to-quarkus-stork-00001
+  - springboot-devservices-to-quarkus-00000
   - springboot-devtools-to-quarkus-0000
   - springboot-di-to-quarkus-00001
   - springboot-di-to-quarkus-00002
+  - springboot-di-to-quarkus-00003
+  - springboot-di-to-quarkus-00004
   - springboot-generic-catchall-00100
   - springboot-integration-to-quarkus-00010
   - springboot-integration-to-quarkus-00020

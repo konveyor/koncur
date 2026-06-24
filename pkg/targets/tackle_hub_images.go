@@ -30,9 +30,14 @@ func buildCRPatch(images *config.TackleHubImages) (string, error) {
 	if images.JavaProvider != "" {
 		spec["provider_java_image_fqin"] = images.JavaProvider
 	}
-	if images.GenericProvider != "" {
-		spec["provider_python_image_fqin"] = images.GenericProvider
-		spec["provider_nodejs_image_fqin"] = images.GenericProvider
+	if images.GoProvider != "" {
+		spec["provider_go_image_fqin"] = images.GoProvider
+	}
+	if images.PythonProvider != "" {
+		spec["provider_python_image_fqin"] = images.PythonProvider
+	}
+	if images.NodejsProvider != "" {
+		spec["provider_nodejs_image_fqin"] = images.NodejsProvider
 	}
 	if images.CsharpProvider != "" {
 		spec["provider_c_sharp_image_fqin"] = images.CsharpProvider

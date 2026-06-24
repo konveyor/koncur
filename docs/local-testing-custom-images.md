@@ -134,11 +134,13 @@ kantra:
   binaryPath: /usr/local/bin/kantra
   runnerImage: my-kantra:dev
   javaProviderImage: my-java-provider:dev
-  genericProviderImage: my-generic-provider:dev
+  goProviderImage: my-go-provider:dev
+  pythonProviderImage: my-python-provider:dev
+  nodejsProviderImage: my-nodejs-provider:dev
   csharpProviderImage: my-csharp-provider:dev
 ```
 
-Koncur sets the corresponding environment variables (`RUNNER_IMG`, `JAVA_PROVIDER_IMG`, `GENERIC_PROVIDER_IMG`, `CSHARP_PROVIDER_IMG`) before invoking kantra, so kantra picks up your custom images automatically.
+Koncur sets the corresponding environment variables (`RUNNER_IMG`, `JAVA_PROVIDER_IMG`, `GO_PROVIDER_IMG`, `PYTHON_PROVIDER_IMG`, `NODEJS_PROVIDER_IMG`, `CSHARP_PROVIDER_IMG`) before invoking kantra, so kantra picks up your custom images automatically.
 
 #### Available Image Overrides
 
@@ -146,10 +148,10 @@ Koncur sets the corresponding environment variables (`RUNNER_IMG`, `JAVA_PROVIDE
 |---|---|---|
 | `runnerImage` | `RUNNER_IMG` | `quay.io/konveyor/kantra` |
 | `javaProviderImage` | `JAVA_PROVIDER_IMG` | `quay.io/konveyor/java-external-provider:latest` |
-| `genericProviderImage` | `GENERIC_PROVIDER_IMG` | `quay.io/konveyor/generic-external-provider:latest` |
+| `goProviderImage` | `GO_PROVIDER_IMG` | `quay.io/konveyor/go-external-provider:latest` |
+| `pythonProviderImage` | `PYTHON_PROVIDER_IMG` | `quay.io/konveyor/python-external-provider:latest` |
+| `nodejsProviderImage` | `NODEJS_PROVIDER_IMG` | `quay.io/konveyor/nodejs-external-provider:latest` |
 | `csharpProviderImage` | `CSHARP_PROVIDER_IMG` | `quay.io/konveyor/c-sharp-provider:latest` |
-
-The generic provider image is used for Python, Node.js, and Go analysis.
 
 #### Example: Testing a Custom Java Provider
 
@@ -355,7 +357,9 @@ Images can be overridden in two ways: via the target config (`images` block) or 
 | `images.hub` | `HUB` | `hub_image_fqin` | `quay.io/konveyor/tackle2-hub:latest` |
 | `images.analyzer` | `ANALYZER_ADDON` | `analyzer_fqin` | `quay.io/konveyor/tackle2-addon-analyzer:latest` |
 | `images.javaProvider` | `JAVA_PROVIDER_IMG` | `provider_java_image_fqin` | `quay.io/konveyor/java-external-provider:latest` |
-| `images.genericProvider` | `GENERIC_PROVIDER_IMG` | `provider_python_image_fqin` + `provider_nodejs_image_fqin` | `quay.io/konveyor/generic-external-provider:latest` |
+| `images.goProvider` | `GO_PROVIDER_IMG` | `provider_go_image_fqin` | `quay.io/konveyor/go-external-provider:latest` |
+| `images.pythonProvider` | `PYTHON_PROVIDER_IMG` | `provider_python_image_fqin` | `quay.io/konveyor/python-external-provider:latest` |
+| `images.nodejsProvider` | `NODEJS_PROVIDER_IMG` | `provider_nodejs_image_fqin` | `quay.io/konveyor/nodejs-external-provider:latest` |
 | `images.csharpProvider` | `CSHARP_PROVIDER_IMG` | `provider_c_sharp_image_fqin` | `quay.io/konveyor/c-sharp-provider:latest` |
 | `images.runner` | `RUNNER_IMG` | `kantra_fqin` | `quay.io/konveyor/kantra:latest` |
 | `images.discoveryAddon` | `DISCOVERY_ADDON` | `language_discovery_fqin` | `quay.io/konveyor/tackle2-addon-discovery:latest` |

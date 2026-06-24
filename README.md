@@ -110,7 +110,9 @@ kantra:
   # forceLocal: true   # optional: pass --run-local=true for local/containerless mode (default is --run-local=false)
   # Container image overrides (optional, for container mode)
   # javaProviderImage: my-java-provider:dev
-  # genericProviderImage: my-generic-provider:dev
+  # goProviderImage: my-go-provider:dev
+  # pythonProviderImage: my-python-provider:dev
+  # nodejsProviderImage: my-nodejs-provider:dev
   # runnerImage: my-kantra:dev
 ```
 
@@ -129,8 +131,9 @@ tackleHub:
   images:
     analyzer: my-analyzer:dev
     javaProvider: my-java-provider:dev
-    # hub: my-hub:dev
-    # genericProvider: my-generic-provider:dev
+    goProvider: my-go-provider:dev
+    pythonProvider: my-python-provider:dev
+    nodejsProvider: my-nodejs-provider:dev
     # csharpProvider: my-csharp-provider:dev
     # runner: my-kantra:dev
     # discoveryAddon: my-discovery:dev
@@ -405,7 +408,9 @@ KUBECTL ?= kubectl
 HUB ?= quay.io/konveyor/tackle2-hub:latest
 ANALYZER_ADDON ?= quay.io/konveyor/tackle2-addon-analyzer:latest
 CSHARP_PROVIDER_IMG ?= quay.io/konveyor/c-sharp-provider:latest
-GENERIC_PROVIDER_IMG ?= quay.io/konveyor/generic-external-provider:latest
+GO_PROVIDER_IMG ?= quay.io/konveyor/go-external-provider:latest
+PYTHON_PROVIDER_IMG ?= quay.io/konveyor/python-external-provider:latest
+NODEJS_PROVIDER_IMG ?= quay.io/konveyor/nodejs-external-provider:latest
 JAVA_PROVIDER_IMG ?= quay.io/konveyor/java-external-provider:latest
 RUNNER_IMG ?= quay.io/konveyor/kantra:latest
 DISCOVERY_ADDON ?= quay.io/konveyor/tackle2-addon-discovery:latest

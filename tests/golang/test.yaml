@@ -1,0 +1,20 @@
+# SKIPPED: hub 
+# Goland provider is not yet supported
+name: golang
+analysis:
+    application: https://github.com/konveyor/analyzer-lsp#v0.9.2/examples/golang
+    context_lines: 0
+    incident_selector: ""
+    source: []
+    target: []
+    rules:
+        - file:
+            filePath: golang-rules.yaml
+          git: null
+    disableDefaultRules: true
+    analysisMode: source-only
+timeout: 10m0s
+expect:
+    exitCode: 0
+    output:
+        file: expected-output.yaml

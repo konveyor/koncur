@@ -79,7 +79,9 @@ kantra:
 | `kantra.forceLocal` | bool | No | If `true`, koncur passes `--run-local=true` (local / containerless mode when supported). Omit for legacy behavior: `--run-local=false` (container mode) |
 | `kantra.runnerImage` | string | No | Override the kantra runner container image (sets `RUNNER_IMG`) |
 | `kantra.javaProviderImage` | string | No | Override the Java provider image (sets `JAVA_PROVIDER_IMG`) |
-| `kantra.genericProviderImage` | string | No | Override the generic provider image for Python/Node.js/Go (sets `GENERIC_PROVIDER_IMG`) |
+| `kantra.goProviderImage` | string | No | Override the Go provider image (sets `GO_PROVIDER_IMG`) |
+| `kantra.pythonProviderImage` | string | No | Override the Python provider image (sets `PYTHON_PROVIDER_IMG`) |
+| `kantra.nodejsProviderImage` | string | No | Override the Node.js provider image (sets `NODEJS_PROVIDER_IMG`) |
 | `kantra.csharpProviderImage` | string | No | Override the C# provider image (sets `CSHARP_PROVIDER_IMG`) |
 
 See [Local Testing with Custom Images](local-testing-custom-images.md) for detailed workflows using image overrides.
@@ -146,7 +148,9 @@ tackleHub:
 | `tackleHub.images.hub` | string | No | Override Hub image (`hub_image_fqin`) |
 | `tackleHub.images.analyzer` | string | No | Override analyzer addon image (`analyzer_fqin`) |
 | `tackleHub.images.javaProvider` | string | No | Override Java provider image (`provider_java_image_fqin`) |
-| `tackleHub.images.genericProvider` | string | No | Override generic provider image (`provider_python_image_fqin` + `provider_nodejs_image_fqin`) |
+| `tackleHub.images.goProvider` | string | No | Override Go provider image (`provider_go_image_fqin`) |
+| `tackleHub.images.pythonProvider` | string | No | Override Python provider image (`provider_python_image_fqin`) |
+| `tackleHub.images.nodejsProvider` | string | No | Override Node.js provider image (`provider_nodejs_image_fqin`) |
 | `tackleHub.images.csharpProvider` | string | No | Override C# provider image (`provider_c_sharp_image_fqin`) |
 | `tackleHub.images.runner` | string | No | Override kantra runner image (`kantra_fqin`) |
 | `tackleHub.images.discoveryAddon` | string | No | Override discovery addon image (`language_discovery_fqin`) |

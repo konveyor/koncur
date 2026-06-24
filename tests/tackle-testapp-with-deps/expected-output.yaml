@@ -25,7 +25,7 @@
           {\n11  Properties properties = new Properties();\n12  \n13  try {"
         lineNumber: 3
         variables:
-          file: file:///addon/.m2/repository/io/konveyor/demo/configuration-utils/1.0.0/io/konveyor/demo/config/ApplicationConfiguration.java
+          file: file:///cache/m2/io/konveyor/demo/configuration-utils/1.0.0/io/konveyor/demo/config/ApplicationConfiguration.java
           kind: Class
           name: ApplicationConfiguration
           package: io.konveyor.demo.config
@@ -43,8 +43,8 @@
           {\n22  var6.addSuppressed(var5);\n23  }\n24  "
         lineNumber: 14
         variables:
-          file: file:///addon/.m2/repository/io/konveyor/demo/configuration-utils/1.0.0/io/konveyor/demo/config/ApplicationConfiguration.java
-          kind: Method
+          file: file:///cache/m2/io/konveyor/demo/configuration-utils/1.0.0/io/konveyor/demo/config/ApplicationConfiguration.java
+          kind: Constructor
           name: loadProperties
           package: io.konveyor.demo.config
       links:
@@ -657,7 +657,7 @@
           {\n22  var6.addSuppressed(var5);\n23  }\n24  "
         lineNumber: 14
         variables:
-          file: file:///addon/.m2/repository/io/konveyor/demo/configuration-utils/1.0.0/io/konveyor/demo/config/ApplicationConfiguration.java
+          file: file:///cache/m2/io/konveyor/demo/configuration-utils/1.0.0/io/konveyor/demo/config/ApplicationConfiguration.java
           kind: Constructor
           name: loadProperties
           package: io.konveyor.demo.config
@@ -2901,17 +2901,31 @@
         title: Using hibernate-orm and jakarta persistence
       effort: 1
     springboot-actuator-to-quarkus-0100:
-      description: Replace the Spring Boot Actuator dependency with Quarkus Smallrye
-        Health extension
+      description: Replace Spring Boot Actuator with Quarkus health, metrics, info
+        and management interface capabilities
       category: mandatory
       labels:
       - konveyor.io/source=springboot
       - konveyor.io/target=quarkus
       incidents:
       - uri: file:///source/pom.xml
-        message: "Replace the Spring Boot Actuator dependency with Quarkus Smallrye
-          Health extension. \n It has to be replaced by `io.quarkus:quarkus-smallrye-health`
-          artifact."
+        message: |-
+          Spring Boot Actuator dependency detected. Replace Actuator usage with Quarkus operational extensions and management endpoints.
+
+          Recommended Quarkus baseline:
+          - Health: `io.quarkus:quarkus-smallrye-health`
+          - Metrics / Prometheus: `io.quarkus:quarkus-micrometer` (+ registry extension as needed)
+          - Info endpoint: `io.quarkus:quarkus-info`
+          - Dedicated management server/path (optional): `quarkus.management.*` and `/q` endpoints
+
+          Actuator endpoint mapping guidance:
+          - `health` -> `/q/health` (or management interface endpoint)
+          - `metrics` / `prometheus` -> Micrometer endpoint(s)
+          - `info` -> `/q/info` via `quarkus-info`
+          - `loggers`, `env`, `configprops`, `beans`, `conditions`, `mappings`, `scheduledtasks` -> reassess per use case; there is no single 1:1 Quarkus Actuator replacement for all of these
+          - `heapdump` / `threaddump` -> use JVM/container diagnostics and platform tooling rather than Actuator-specific endpoints
+
+          A migration usually requires both dependency changes and endpoint/configuration redesign.
         codeSnip: |2-
 
           79  <artifactId>spring-webmvc</artifactId>
@@ -2940,13 +2954,48 @@
           name: org.springframework.boot.spring-boot-starter-actuator
           version: 2.5.0
       links:
+      - url: https://quarkus.io/guides/management-interface-reference
+        title: Quarkus - Management interface reference
+      - url: https://quarkus.io/guides/telemetry-micrometer
+        title: Quarkus - Micrometer and monitoring
       - url: https://quarkus.io/guides/smallrye-health
         title: Quarkus - Smallrye Health
+      - url: https://docs.spring.io/spring-boot/reference/actuator/endpoints.html
+        title: Spring Boot Actuator endpoints reference
       effort: 5
+    springboot-annotations-to-quarkus-00001:
+      description: Replace Spring EnableAutoConfiguration with Quarkus extension-driven
+        configuration
+      category: mandatory
+      labels:
+      - konveyor.io/source=springboot
+      - konveyor.io/target=quarkus
+      incidents:
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/config/WebConfig.java
+        message: |-
+          Spring `@EnableAutoConfiguration` detected.
+
+          Quarkus does not use Spring Boot runtime auto-configuration. Select and configure the required Quarkus extensions explicitly (for example web, data, security, observability) and move related settings to `application.properties`.
+        codeSnip: "\n 1  package io.konveyor.demo.ordermanagement.config;\n 2  \n
+          3  import org.springframework.boot.autoconfigure.EnableAutoConfiguration;\n
+          4  import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;\n
+          5  import org.springframework.context.annotation.Configuration;\n 6  \n
+          7  @Configuration\n 8  @EnableAutoConfiguration(exclude = { DataSourceAutoConfiguration.class
+          })\n 9  public class WebConfig {\n10  \n11  }"
+        lineNumber: 8
+        variables:
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/config/WebConfig.java
+          kind: Property
+          name: Configuration
+          package: io.konveyor.demo.ordermanagement.config
+      links:
+      - url: https://quarkus.io/extensions/
+        title: Quarkus extensions catalog
+      effort: 1
     springboot-di-to-quarkus-00000:
       description: Replace the SpringBoot Dependency Injection artifact with Quarkus
         'spring-di' extension
-      category: potential
+      category: mandatory
       labels:
       - konveyor.io/source=springboot
       - konveyor.io/target=quarkus
@@ -2973,6 +3022,253 @@
       - url: https://quarkus.io/guides/spring-di
         title: Quarkus DI Guide
       effort: 1
+    springboot-di-to-quarkus-00003:
+      description: Apply Quarkus Spring DI conversion guidance for common Spring DI
+        annotations
+      category: mandatory
+      labels:
+      - konveyor.io/source=springboot
+      - konveyor.io/target=quarkus
+      incidents:
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+        message: |-
+          Spring DI annotation usage detected. Verify each annotation against Quarkus Spring DI compatibility and CDI equivalents.
+
+          Common conversions:
+          - `@Autowired` -> `@Inject`
+          - `@Component` / `@Service` / `@Repository` -> CDI bean-defining annotations (for example `@ApplicationScoped`, `@Singleton`)
+          - `@Qualifier` -> CDI `@Qualifier`
+          - `@Value` -> `@ConfigProperty` (MicroProfile Config)
+          - `@Bean` / `@Configuration` -> CDI producer methods (`@Produces`) and CDI bean scopes
+        codeSnip: "\n11  import org.springframework.data.web.config.EnableSpringDataWebSupport;\n12
+          \ import org.springframework.jdbc.datasource.DriverManagerDataSource;\n13
+          \ import org.springframework.orm.jpa.JpaTransactionManager;\n14  import
+          org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;\n15
+          \ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;\n16
+          \ import org.springframework.transaction.PlatformTransactionManager;\n17
+          \ import org.springframework.transaction.annotation.EnableTransactionManagement;\n18
+          \ \n19  import io.konveyor.demo.config.ApplicationConfiguration;\n20  \n21
+          \ @Configuration\n22  @EnableJpaRepositories(basePackages = {\n23  \"io.konveyor.demo.ordermanagement.repository\"\n24
+          \ })\n25  @EnableTransactionManagement\n26  @EnableSpringDataWebSupport\n27
+          \ public class PersistenceConfig {\n28  \n29  \n30  @Bean\n31  public LocalContainerEntityManagerFactoryBean
+          entityManagerFactory() {"
+        lineNumber: 21
+        variables:
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+          kind: Property
+          name: Configuration
+          package: io.konveyor.demo.ordermanagement.config
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+        message: |-
+          Spring DI annotation usage detected. Verify each annotation against Quarkus Spring DI compatibility and CDI equivalents.
+
+          Common conversions:
+          - `@Autowired` -> `@Inject`
+          - `@Component` / `@Service` / `@Repository` -> CDI bean-defining annotations (for example `@ApplicationScoped`, `@Singleton`)
+          - `@Qualifier` -> CDI `@Qualifier`
+          - `@Value` -> `@ConfigProperty` (MicroProfile Config)
+          - `@Bean` / `@Configuration` -> CDI producer methods (`@Produces`) and CDI bean scopes
+        codeSnip: "\n20  \n21  @Configuration\n22  @EnableJpaRepositories(basePackages
+          = {\n23  \"io.konveyor.demo.ordermanagement.repository\"\n24  })\n25  @EnableTransactionManagement\n26
+          \ @EnableSpringDataWebSupport\n27  public class PersistenceConfig {\n28
+          \ \n29  \n30  @Bean\n31  public LocalContainerEntityManagerFactoryBean entityManagerFactory()
+          {\n32  final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();\n33
+          \ em.setDataSource(dataSource());\n34  em.setPackagesToScan(\"io.konveyor.demo.ordermanagement.model\");\n35
+          \ em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());\n36  em.setJpaProperties(additionalProperties());\n37
+          \ \n38  return em;\n39  }\n40  "
+        lineNumber: 30
+        variables:
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+          kind: Property
+          name: Bean
+          package: io.konveyor.demo.ordermanagement.config
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+        message: |-
+          Spring DI annotation usage detected. Verify each annotation against Quarkus Spring DI compatibility and CDI equivalents.
+
+          Common conversions:
+          - `@Autowired` -> `@Inject`
+          - `@Component` / `@Service` / `@Repository` -> CDI bean-defining annotations (for example `@ApplicationScoped`, `@Singleton`)
+          - `@Qualifier` -> CDI `@Qualifier`
+          - `@Value` -> `@ConfigProperty` (MicroProfile Config)
+          - `@Bean` / `@Configuration` -> CDI producer methods (`@Produces`) and CDI bean scopes
+        codeSnip: "\n31  public LocalContainerEntityManagerFactoryBean entityManagerFactory()
+          {\n32  final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();\n33
+          \ em.setDataSource(dataSource());\n34  em.setPackagesToScan(\"io.konveyor.demo.ordermanagement.model\");\n35
+          \ em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());\n36  em.setJpaProperties(additionalProperties());\n37
+          \ \n38  return em;\n39  }\n40  \n41  @Bean\n42  public DataSource dataSource()
+          {\n43  ApplicationConfiguration config = new ApplicationConfiguration();\n44
+          \ final DriverManagerDataSource dataSource = new DriverManagerDataSource();\n45
+          \ dataSource.setDriverClassName(config.getProperty(\"jdbc.driverClassName\"));\n46
+          \ dataSource.setUrl(config.getProperty(\"jdbc.url\"));\n47  dataSource.setUsername(config.getProperty(\"jdbc.user\"));\n48
+          \ dataSource.setPassword(config.getProperty(\"jdbc.password\"));\n49  \n50
+          \ return dataSource;\n51  }"
+        lineNumber: 41
+        variables:
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+          kind: Property
+          name: Bean
+          package: io.konveyor.demo.ordermanagement.config
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+        message: |-
+          Spring DI annotation usage detected. Verify each annotation against Quarkus Spring DI compatibility and CDI equivalents.
+
+          Common conversions:
+          - `@Autowired` -> `@Inject`
+          - `@Component` / `@Service` / `@Repository` -> CDI bean-defining annotations (for example `@ApplicationScoped`, `@Singleton`)
+          - `@Qualifier` -> CDI `@Qualifier`
+          - `@Value` -> `@ConfigProperty` (MicroProfile Config)
+          - `@Bean` / `@Configuration` -> CDI producer methods (`@Produces`) and CDI bean scopes
+        codeSnip: "\n43  ApplicationConfiguration config = new ApplicationConfiguration();\n44
+          \ final DriverManagerDataSource dataSource = new DriverManagerDataSource();\n45
+          \ dataSource.setDriverClassName(config.getProperty(\"jdbc.driverClassName\"));\n46
+          \ dataSource.setUrl(config.getProperty(\"jdbc.url\"));\n47  dataSource.setUsername(config.getProperty(\"jdbc.user\"));\n48
+          \ dataSource.setPassword(config.getProperty(\"jdbc.password\"));\n49  \n50
+          \ return dataSource;\n51  }\n52  \n53  @Bean\n54  public PlatformTransactionManager
+          transactionManager() {\n55  final JpaTransactionManager transactionManager
+          = new JpaTransactionManager();\n56  transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());\n57
+          \ return transactionManager;\n58  }\n59  \n60  @Bean\n61  public PersistenceExceptionTranslationPostProcessor
+          exceptionTranslation() {\n62  return new PersistenceExceptionTranslationPostProcessor();\n63
+          \ }"
+        lineNumber: 53
+        variables:
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+          kind: Property
+          name: Bean
+          package: io.konveyor.demo.ordermanagement.config
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+        message: |-
+          Spring DI annotation usage detected. Verify each annotation against Quarkus Spring DI compatibility and CDI equivalents.
+
+          Common conversions:
+          - `@Autowired` -> `@Inject`
+          - `@Component` / `@Service` / `@Repository` -> CDI bean-defining annotations (for example `@ApplicationScoped`, `@Singleton`)
+          - `@Qualifier` -> CDI `@Qualifier`
+          - `@Value` -> `@ConfigProperty` (MicroProfile Config)
+          - `@Bean` / `@Configuration` -> CDI producer methods (`@Produces`) and CDI bean scopes
+        codeSnip: "\n50  return dataSource;\n51  }\n52  \n53  @Bean\n54  public PlatformTransactionManager
+          transactionManager() {\n55  final JpaTransactionManager transactionManager
+          = new JpaTransactionManager();\n56  transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());\n57
+          \ return transactionManager;\n58  }\n59  \n60  @Bean\n61  public PersistenceExceptionTranslationPostProcessor
+          exceptionTranslation() {\n62  return new PersistenceExceptionTranslationPostProcessor();\n63
+          \ }\n64  \n65  final Properties additionalProperties() {\n66  ApplicationConfiguration
+          config = new ApplicationConfiguration();\n67  final Properties hibernateProperties
+          = new Properties();\n68  hibernateProperties.setProperty(\"hibernate.hbm2ddl.auto\",
+          config.getProperty(\"hibernate.hbm2ddl.auto\"));\n69  hibernateProperties.setProperty(\"hibernate.dialect\",
+          config.getProperty(\"hibernate.dialect\"));\n70  hibernateProperties.setProperty(\"hibernate.cache.use_second_level_cache\",
+          \"false\");"
+        lineNumber: 60
+        variables:
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/config/PersistenceConfig.java
+          kind: Property
+          name: Bean
+          package: io.konveyor.demo.ordermanagement.config
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/config/WebConfig.java
+        message: |-
+          Spring DI annotation usage detected. Verify each annotation against Quarkus Spring DI compatibility and CDI equivalents.
+
+          Common conversions:
+          - `@Autowired` -> `@Inject`
+          - `@Component` / `@Service` / `@Repository` -> CDI bean-defining annotations (for example `@ApplicationScoped`, `@Singleton`)
+          - `@Qualifier` -> CDI `@Qualifier`
+          - `@Value` -> `@ConfigProperty` (MicroProfile Config)
+          - `@Bean` / `@Configuration` -> CDI producer methods (`@Produces`) and CDI bean scopes
+        codeSnip: "\n 1  package io.konveyor.demo.ordermanagement.config;\n 2  \n
+          3  import org.springframework.boot.autoconfigure.EnableAutoConfiguration;\n
+          4  import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;\n
+          5  import org.springframework.context.annotation.Configuration;\n 6  \n
+          7  @Configuration\n 8  @EnableAutoConfiguration(exclude = { DataSourceAutoConfiguration.class
+          })\n 9  public class WebConfig {\n10  \n11  }"
+        lineNumber: 7
+        variables:
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/config/WebConfig.java
+          kind: Property
+          name: Configuration
+          package: io.konveyor.demo.ordermanagement.config
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/controller/CustomerController.java
+        message: |-
+          Spring DI annotation usage detected. Verify each annotation against Quarkus Spring DI compatibility and CDI equivalents.
+
+          Common conversions:
+          - `@Autowired` -> `@Inject`
+          - `@Component` / `@Service` / `@Repository` -> CDI bean-defining annotations (for example `@ApplicationScoped`, `@Singleton`)
+          - `@Qualifier` -> CDI `@Qualifier`
+          - `@Value` -> `@ConfigProperty` (MicroProfile Config)
+          - `@Bean` / `@Configuration` -> CDI producer methods (`@Produces`) and CDI bean scopes
+        codeSnip: "\n10  import org.springframework.http.MediaType;\n11  import org.springframework.web.bind.annotation.GetMapping;\n12
+          \ import org.springframework.web.bind.annotation.PathVariable;\n13  import
+          org.springframework.web.bind.annotation.RequestMapping;\n14  import org.springframework.web.bind.annotation.RestController;\n15
+          \ \n16  @RestController\n17  @RequestMapping(\"/customers\")\n18  public
+          class CustomerController {\n19  \n20  @Autowired\n21  private CustomerService
+          customerService;\n22  \n23  private static Logger logger = Logger.getLogger(
+          CustomerController.class.getName() );\n24  \n25  @GetMapping(value = \"/{id}\",
+          produces = MediaType.APPLICATION_JSON_VALUE)\n26  public Customer getById(@PathVariable(\"id\")
+          Long id) {\n27  Customer c = customerService.findById(id);\n28  if (c ==
+          null) {\n29  throw new ResourceNotFoundException(\"Requested order doesn't
+          exist\");\n30  }"
+        lineNumber: 20
+        variables:
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/controller/CustomerController.java
+          kind: Property
+          name: Autowired
+          package: io.konveyor.demo.ordermanagement.controller
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/service/CustomerService.java
+        message: |-
+          Spring DI annotation usage detected. Verify each annotation against Quarkus Spring DI compatibility and CDI equivalents.
+
+          Common conversions:
+          - `@Autowired` -> `@Inject`
+          - `@Component` / `@Service` / `@Repository` -> CDI bean-defining annotations (for example `@ApplicationScoped`, `@Singleton`)
+          - `@Qualifier` -> CDI `@Qualifier`
+          - `@Value` -> `@ConfigProperty` (MicroProfile Config)
+          - `@Bean` / `@Configuration` -> CDI producer methods (`@Produces`) and CDI bean scopes
+        codeSnip: "\n 3  \n 4  import org.jboss.logging.Logger;\n 5  import io.konveyor.demo.ordermanagement.model.Customer;\n
+          6  import io.konveyor.demo.ordermanagement.repository.CustomerRepository;\n
+          7  import org.springframework.beans.factory.annotation.Autowired;\n 8  import
+          org.springframework.data.domain.Page;\n 9  import org.springframework.data.domain.Pageable;\n10
+          \ import org.springframework.stereotype.Service;\n11  import org.springframework.transaction.annotation.Transactional;\n12
+          \ \n13  @Service\n14  @Transactional\n15  public class CustomerService {\n16
+          \ \n17  @Autowired\n18  private CustomerRepository repository;\n19  \n20
+          \ private static Logger logger = Logger.getLogger( CustomerService.class.getName()
+          );\n21  \n22  public Customer findById(Long id) {\n23  logger.debug(\"Entering
+          CustomerService.findById()\");"
+        lineNumber: 13
+        variables:
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/service/CustomerService.java
+          kind: Property
+          name: Service
+          package: io.konveyor.demo.ordermanagement.service
+      - uri: file:///source/src/main/java/io/konveyor/demo/ordermanagement/service/CustomerService.java
+        message: |-
+          Spring DI annotation usage detected. Verify each annotation against Quarkus Spring DI compatibility and CDI equivalents.
+
+          Common conversions:
+          - `@Autowired` -> `@Inject`
+          - `@Component` / `@Service` / `@Repository` -> CDI bean-defining annotations (for example `@ApplicationScoped`, `@Singleton`)
+          - `@Qualifier` -> CDI `@Qualifier`
+          - `@Value` -> `@ConfigProperty` (MicroProfile Config)
+          - `@Bean` / `@Configuration` -> CDI producer methods (`@Produces`) and CDI bean scopes
+        codeSnip: "\n 7  import org.springframework.beans.factory.annotation.Autowired;\n
+          8  import org.springframework.data.domain.Page;\n 9  import org.springframework.data.domain.Pageable;\n10
+          \ import org.springframework.stereotype.Service;\n11  import org.springframework.transaction.annotation.Transactional;\n12
+          \ \n13  @Service\n14  @Transactional\n15  public class CustomerService {\n16
+          \ \n17  @Autowired\n18  private CustomerRepository repository;\n19  \n20
+          \ private static Logger logger = Logger.getLogger( CustomerService.class.getName()
+          );\n21  \n22  public Customer findById(Long id) {\n23  logger.debug(\"Entering
+          CustomerService.findById()\");\n24  Customer c = repository.findById(id).orElse(null);\n25
+          \ logger.debug(\"Returning element: \" + c);\n26  return c;\n27  }"
+        lineNumber: 17
+        variables:
+          file: file:///opt/input/source/src/main/java/io/konveyor/demo/ordermanagement/service/CustomerService.java
+          kind: Property
+          name: Autowired
+          package: io.konveyor.demo.ordermanagement.service
+      links:
+      - url: https://quarkus.io/guides/cdi-reference
+        title: Quarkus CDI reference
+      - url: https://quarkus.io/guides/spring-di#conversion-table
+        title: Quarkus Spring DI conversion table
+      effort: 3
     springboot-jpa-to-quarkus-00000:
       description: Replace the SpringBoot Data JPA artifact with Quarkus 'spring-data-jpa'
         extension
@@ -3213,12 +3509,19 @@
   - persistence-to-quarkus-00011
   - remote-ejb-to-quarkus-00000
   - springboot-actuator-to-quarkus-0200
+  - springboot-actuator-to-quarkus-0210
   - springboot-annotations-to-quarkus-00000
+  - springboot-annotations-to-quarkus-00002
+  - springboot-annotations-to-quarkus-00003
   - springboot-cache-to-quarkus-00000
   - springboot-cloud-config-client-to-quarkus-00000
+  - springboot-cloud-consul-to-quarkus-stork-00000
+  - springboot-cloud-consul-to-quarkus-stork-00001
+  - springboot-devservices-to-quarkus-00000
   - springboot-devtools-to-quarkus-0000
   - springboot-di-to-quarkus-00001
   - springboot-di-to-quarkus-00002
+  - springboot-di-to-quarkus-00004
   - springboot-generic-catchall-00100
   - springboot-integration-to-quarkus-00010
   - springboot-integration-to-quarkus-00020

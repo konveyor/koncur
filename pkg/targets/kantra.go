@@ -53,8 +53,14 @@ func NewKantraTarget(cfg *config.KantraConfig) (*KantraTarget, error) {
 		if cfg.JavaProviderImage != "" {
 			imageEnv = append(imageEnv, "JAVA_PROVIDER_IMG="+cfg.JavaProviderImage)
 		}
-		if cfg.GenericProviderImage != "" {
-			imageEnv = append(imageEnv, "GENERIC_PROVIDER_IMG="+cfg.GenericProviderImage)
+		if cfg.GoProviderImage != "" {
+			imageEnv = append(imageEnv, "GO_PROVIDER_IMG="+cfg.GoProviderImage)
+		}
+		if cfg.PythonProviderImage != "" {
+			imageEnv = append(imageEnv, "PYTHON_PROVIDER_IMG="+cfg.PythonProviderImage)
+		}
+		if cfg.NodejsProviderImage != "" {
+			imageEnv = append(imageEnv, "NODEJS_PROVIDER_IMG="+cfg.NodejsProviderImage)
 		}
 		if cfg.CsharpProviderImage != "" {
 			imageEnv = append(imageEnv, "CSHARP_PROVIDER_IMG="+cfg.CsharpProviderImage)
