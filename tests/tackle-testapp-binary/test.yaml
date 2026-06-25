@@ -1,5 +1,3 @@
-# SKIPPED: Skip binary test.
-
 name: tackle-testapp-binary
 analysis:
     application: mvn://io.konveyor.demo:customers-tomcat:0.0.1-SNAPSHOT:war
