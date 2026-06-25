@@ -265,17 +265,165 @@
   description: This ruleset provides analysis of logging libraries.
   tags:
   - Connect=Servlet
+  - Embedded Spring Data JPA
+  - Embedded framework - Micrometer
+  - Embedded framework - Spring DI
+  - Embedded framework - Spring MVC
+  - Embedded framework - Spring Web
+  - Embedded library - Spring Boot Actuator
+  - Embedded=Micrometer
   - Embedded=Properties
+  - Embedded=Spring Boot Actuator
+  - Embedded=Spring DI
+  - Embedded=Spring Data JPA
+  - Embedded=Spring MVC
+  - Embedded=Spring Web
+  - Execute=Micrometer
+  - Execute=Spring DI
   - HTTP=Servlet
+  - Integration=Micrometer
+  - Inversion of Control=Spring DI
   - Java EE=JPA named queries
   - Java EE=Servlet
   - Java Servlet
+  - MVC=Spring MVC
+  - Micrometer
+  - Observability=Spring Boot Actuator
   - Other=Properties
   - Persistence=JPA named queries
+  - Persistence=Spring Data JPA
   - Servlet
+  - Spring Boot Actuator
+  - Spring DI
+  - Spring Data JPA
+  - Spring MVC
+  - Spring Web
   - Store=JPA named queries
+  - Store=Spring Data JPA
   - Sustain=Properties
+  - Sustain=Spring Boot Actuator
+  - View=Spring MVC
+  - View=Spring Web
+  - Web=Spring Web
   insights:
+    database-03000:
+      description: Embedded Spring Data JPA
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded Spring Data JPA
+      - tag=Spring Data JPA
+      incidents:
+      - uri: file:///source/pom.xml
+        message: ""
+        codeSnip: "\n59  <dependency>\n60  <groupId>com.fasterxml.jackson.core</groupId>\n61
+          \ <artifactId>jackson-core</artifactId>\n62  </dependency>\n63  <dependency>\n64
+          \ <groupId>com.fasterxml.jackson.core</groupId>\n65  <artifactId>jackson-databind</artifactId>\n66
+          \ </dependency>\n67  <dependency>\n68  <groupId>org.springframework.data</groupId>\n69
+          \ <artifactId>spring-data-jpa</artifactId>\n70  </dependency>\n71  \n72
+          \ <dependency>\n73  <groupId>org.springframework</groupId>\n74  <artifactId>spring-jdbc</artifactId>\n75
+          \ <version>${spring-framework.version}</version>\n76  </dependency>\n77
+          \ <dependency>\n78  <groupId>org.springframework</groupId>\n79  <artifactId>spring-webmvc</artifactId>"
+        lineNumber: 68
+        variables:
+          name: org.springframework.data.spring-data-jpa
+          version: 2.5.1
+    embedded-framework-08200:
+      description: Embedded framework - Spring DI
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded framework - Spring DI
+      - tag=Spring DI
+      incidents:
+      - uri: file:///source/pom.xml
+        message: ""
+        codeSnip: "\n59  <dependency>\n60  <groupId>com.fasterxml.jackson.core</groupId>\n61
+          \ <artifactId>jackson-core</artifactId>\n62  </dependency>\n63  <dependency>\n64
+          \ <groupId>com.fasterxml.jackson.core</groupId>\n65  <artifactId>jackson-databind</artifactId>\n66
+          \ </dependency>\n67  <dependency>\n68  <groupId>org.springframework.data</groupId>\n69
+          \ <artifactId>spring-data-jpa</artifactId>\n70  </dependency>\n71  \n72
+          \ <dependency>\n73  <groupId>org.springframework</groupId>\n74  <artifactId>spring-jdbc</artifactId>\n75
+          \ <version>${spring-framework.version}</version>\n76  </dependency>\n77
+          \ <dependency>\n78  <groupId>org.springframework</groupId>\n79  <artifactId>spring-webmvc</artifactId>"
+        lineNumber: 68
+        variables:
+          name: org.springframework.spring-beans
+          version: 5.3.7
+    embedded-framework-08300:
+      description: Embedded framework - Micrometer
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded framework - Micrometer
+      - tag=Micrometer
+      incidents:
+      - uri: file:///source/pom.xml
+        message: ""
+        codeSnip: |2-
+
+          79  <artifactId>spring-webmvc</artifactId>
+          80  <version>${spring-framework.version}</version>
+          81  </dependency>
+          82  <dependency>
+          83  <groupId>org.springframework</groupId>
+          84  <artifactId>spring-web</artifactId>
+          85  <version>${spring-framework.version}</version>
+          86  </dependency>
+          87  <dependency>
+          88  <groupId>org.springframework.boot</groupId>
+          89  <artifactId>spring-boot-starter-actuator</artifactId>
+          90  <version>2.5.0</version>
+          91  </dependency>
+          92  <dependency>
+          93  <groupId>org.apache.tomcat</groupId>
+          94  <artifactId>tomcat-jdbc</artifactId>
+          95  <version>${tomcat.version}</version>
+          96  <scope>runtime</scope>
+          97  </dependency>
+          98  <dependency>
+          99  <groupId>org.hibernate</groupId>
+        lineNumber: 88
+        variables:
+          name: io.micrometer.micrometer-core
+          version: 1.7.0
+    embedded-framework-08400:
+      description: Embedded framework - Spring Web
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded framework - Spring Web
+      - tag=Spring Web
+      incidents:
+      - uri: file:///source/pom.xml
+        message: ""
+        codeSnip: |2-
+
+          74  <artifactId>spring-jdbc</artifactId>
+          75  <version>${spring-framework.version}</version>
+          76  </dependency>
+          77  <dependency>
+          78  <groupId>org.springframework</groupId>
+          79  <artifactId>spring-webmvc</artifactId>
+          80  <version>${spring-framework.version}</version>
+          81  </dependency>
+          82  <dependency>
+          83  <groupId>org.springframework</groupId>
+          84  <artifactId>spring-web</artifactId>
+          85  <version>${spring-framework.version}</version>
+          86  </dependency>
+          87  <dependency>
+          88  <groupId>org.springframework.boot</groupId>
+          89  <artifactId>spring-boot-starter-actuator</artifactId>
+          90  <version>2.5.0</version>
+          91  </dependency>
+          92  <dependency>
+          93  <groupId>org.apache.tomcat</groupId>
+          94  <artifactId>tomcat-jdbc</artifactId>
+        lineNumber: 83
+        variables:
+          name: org.springframework.spring-web
+          version: 5.3.7
     javaee-technology-usage-00120:
       description: Java Servlet
       labels:
@@ -347,6 +495,28 @@
         variables:
           tags:
           - Servlet
+    mvc-01220:
+      description: Embedded framework - Spring MVC
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded framework - Spring MVC
+      - tag=Spring MVC
+      incidents:
+      - uri: file:///source/pom.xml
+        message: ""
+        codeSnip: "\n69  <artifactId>spring-data-jpa</artifactId>\n70  </dependency>\n71
+          \ \n72  <dependency>\n73  <groupId>org.springframework</groupId>\n74  <artifactId>spring-jdbc</artifactId>\n75
+          \ <version>${spring-framework.version}</version>\n76  </dependency>\n77
+          \ <dependency>\n78  <groupId>org.springframework</groupId>\n79  <artifactId>spring-webmvc</artifactId>\n80
+          \ <version>${spring-framework.version}</version>\n81  </dependency>\n82
+          \ <dependency>\n83  <groupId>org.springframework</groupId>\n84  <artifactId>spring-web</artifactId>\n85
+          \ <version>${spring-framework.version}</version>\n86  </dependency>\n87
+          \ <dependency>\n88  <groupId>org.springframework.boot</groupId>\n89  <artifactId>spring-boot-starter-actuator</artifactId>"
+        lineNumber: 78
+        variables:
+          name: org.springframework.spring-webmvc
+          version: 5.3.7
     non-xml-technology-usage-20000:
       description: Properties
       labels:
@@ -361,6 +531,57 @@
         variables:
           tags:
           - Properties
+    observability-0100:
+      description: Embedded library - Spring Boot Actuator
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded library - Spring Boot Actuator
+      - tag=Spring Boot Actuator
+      incidents:
+      - uri: file:///source/pom.xml
+        message: ""
+        codeSnip: |2-
+
+          79  <artifactId>spring-webmvc</artifactId>
+          80  <version>${spring-framework.version}</version>
+          81  </dependency>
+          82  <dependency>
+          83  <groupId>org.springframework</groupId>
+          84  <artifactId>spring-web</artifactId>
+          85  <version>${spring-framework.version}</version>
+          86  </dependency>
+          87  <dependency>
+          88  <groupId>org.springframework.boot</groupId>
+          89  <artifactId>spring-boot-starter-actuator</artifactId>
+          90  <version>2.5.0</version>
+          91  </dependency>
+          92  <dependency>
+          93  <groupId>org.apache.tomcat</groupId>
+          94  <artifactId>tomcat-jdbc</artifactId>
+          95  <version>${tomcat.version}</version>
+          96  <scope>runtime</scope>
+          97  </dependency>
+          98  <dependency>
+          99  <groupId>org.hibernate</groupId>
+        lineNumber: 88
+        variables:
+          name: org.springframework.boot.spring-boot-starter-actuator
+          version: 2.5.0
+    observability-technology-usage-0100:
+      description: Spring Boot Actuator
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded=Spring Boot Actuator
+      - tag=Observability=Spring Boot Actuator
+      - tag=Sustain=Spring Boot Actuator
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - Spring Boot Actuator
     technology-usage-database-01200:
       description: JPA Queries
       labels:
@@ -405,6 +626,76 @@
           kind: Property
           name: Entity
           package: io.konveyor.demo.ordermanagement.model
+    technology-usage-database-03100:
+      description: Spring Data JPA
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded=Spring Data JPA
+      - tag=Persistence=Spring Data JPA
+      - tag=Store=Spring Data JPA
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - Spring Data JPA
+    technology-usage-embedded-framework-08200:
+      description: Spring DI
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded=Spring DI
+      - tag=Execute=Spring DI
+      - tag=Inversion of Control=Spring DI
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - Spring DI
+    technology-usage-embedded-framework-08300:
+      description: Micrometer
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded=Micrometer
+      - tag=Execute=Micrometer
+      - tag=Integration=Micrometer
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - Micrometer
+    technology-usage-embedded-framework-08400:
+      description: Spring Web
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded=Spring Web
+      - tag=View=Spring Web
+      - tag=Web=Spring Web
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - Spring Web
+    technology-usage-mvc-01200:
+      description: Spring MVC
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Embedded=Spring MVC
+      - tag=MVC=Spring MVC
+      - tag=View=Spring MVC
+      incidents:
+      - uri: ""
+        message: ""
+        variables:
+          tags:
+          - Spring MVC
   unmatched:
   - 3rd-party-01000
   - 3rd-party-02000
@@ -475,7 +766,6 @@
   - database-02700
   - database-02800
   - database-02900
-  - database-03000
   - database-03100
   - ejb-01000
   - embedded-cache-libraries-01000
@@ -544,9 +834,6 @@
   - embedded-framework-07900
   - embedded-framework-08000
   - embedded-framework-08100
-  - embedded-framework-08200
-  - embedded-framework-08300
-  - embedded-framework-08400
   - embedded-framework-08500
   - embedded-framework-08600
   - embedded-framework-08700
@@ -703,7 +990,6 @@
   - mvc-01100
   - mvc-01200
   - mvc-01210
-  - mvc-01220
   - mvc-01300
   - mvc-01400
   - mvc-01500
@@ -768,9 +1054,7 @@
   - non-xml-technology-usage-25000
   - non-xml-technology-usage-26000
   - non-xml-technology-usage-27000
-  - observability-0100
   - observability-0200
-  - observability-technology-usage-0100
   - observability-technology-usage-0200
   - security-01100
   - security-01200
@@ -870,7 +1154,6 @@
   - technology-usage-database-02800
   - technology-usage-database-02900
   - technology-usage-database-03000
-  - technology-usage-database-03100
   - technology-usage-database-03200
   - technology-usage-ejb-01400
   - technology-usage-embedded-framework-01000
@@ -918,9 +1201,6 @@
   - technology-usage-embedded-framework-07900
   - technology-usage-embedded-framework-08000
   - technology-usage-embedded-framework-08100
-  - technology-usage-embedded-framework-08200
-  - technology-usage-embedded-framework-08300
-  - technology-usage-embedded-framework-08400
   - technology-usage-embedded-framework-08500
   - technology-usage-embedded-framework-08600
   - technology-usage-embedded-framework-08700
@@ -995,7 +1275,6 @@
   - technology-usage-markup-01300
   - technology-usage-mvc-01000
   - technology-usage-mvc-01100
-  - technology-usage-mvc-01200
   - technology-usage-mvc-01300
   - technology-usage-mvc-01400
   - technology-usage-mvc-01500
