@@ -4,6 +4,9 @@ name: Koncur Repo premerge testing
 # This will allow us to safely use the maven credentials
 on:
   push:
+    branches:
+      - "main"
+      - "release-*"
   pull_request_target:
     types:
       - auto_merge_enabled
