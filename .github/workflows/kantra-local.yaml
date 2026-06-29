@@ -62,9 +62,13 @@ jobs:
         if: ${{ inputs.os == 'windows-latest' }}
         shell: bash
         run: |
-          choco install podman-cli
+          for i in {1..3}; do
+            choco install podman-cli && break
+            echo "Chocolatey install failed (attempt $i/3), retrying in 30s..."
+            sleep 30
+          done
           podman machine init --rootful --memory 10240 --cpus 3
-          podman machine start 
+          podman machine start
           CID=$(podman create quay.io/konveyor/kantra:${{ inputs.image_tag }})
           HOME_DIR="$HOME/.kantra/"
           mkdir -p $HOME_DIR

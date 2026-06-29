@@ -303,6 +303,7 @@ clean: ## Clean build artifacts and test outputs
 	@rm -f koncur
 	@rm -f koncur-tests.tar.gz
 	@rm -rf .koncur/output/*
+	@find tests -type d -name "source" -exec rm -rf {} +
 	@echo "Clean complete"
 
 ##@ Quick Setup
