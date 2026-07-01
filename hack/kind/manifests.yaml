@@ -1,0 +1,94 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: tackle-hub-ingress
+  namespace: __NAMESPACE__
+  labels:
+    app: tackle
+spec:
+  podSelector:
+    matchLabels:
+      role: tackle-hub
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: ingress-nginx
+    ports:
+    - port: 8080
+      protocol: TCP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tackle-hub-api
+  namespace: __NAMESPACE__
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      proxy_set_header Forwarded "for=$remote_addr;host=$http_host;proto=https";
+      proxy_set_header X-Forwarded-Proto "https";
+spec:
+  ingressClassName: nginx
+  tls:
+  - {}
+  rules:
+  - http:
+      paths:
+      - path: /hub(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: tackle-hub
+            port:
+              number: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tackle-hub-oidc
+  namespace: __NAMESPACE__
+  annotations:
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      proxy_set_header Forwarded "for=$remote_addr;host=$http_host;proto=https";
+      proxy_set_header X-Forwarded-Proto "https";
+spec:
+  ingressClassName: nginx
+  tls:
+  - {}
+  rules:
+  - http:
+      paths:
+      - path: /oidc
+        pathType: Prefix
+        backend:
+          service:
+            name: tackle-hub
+            port:
+              number: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tackle-external
+  namespace: __NAMESPACE__
+spec:
+  ports:
+  - port: __HOST_PORT_TLS__
+    targetPort: 443
+    protocol: TCP
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: tackle-external
+  namespace: __NAMESPACE__
+subsets:
+- addresses:
+  - ip: __INGRESS_POD_IP__
+  ports:
+  - port: 443
+    protocol: TCP
