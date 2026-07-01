@@ -1,5 +1,3 @@
-# SKIPPED
-# Will be part of https://github.com/konveyor/koncur/issues/82
 name: Tackle Testapp public with deps
 analysis:
     application: https://github.com/konveyor/tackle-testapp-public#ci-2024
