@@ -8,7 +8,7 @@ analysis:
     target: []
     rules: []
     disableDefaultRules: false
-    analysisMode: source-only
+    analysisMode: full
     logLevel: 9
 timeout: 15m0s
 expect:
