@@ -3,14 +3,14 @@ description: Binary analysis of acmeair webapp WAR file
 analysis:
     application: acmeair-webapp-1.0-SNAPSHOT.war
     labelSelector: konveyor.io/target=cloud-readiness || konveyor.io/target=jakarta-ee
-    logLevel: 9
     context_lines: 0
     incident_selector: ""
     source: []
     target: []
     rules: []
     disableDefaultRules: false
-    analysisMode: full
+    analysisMode: binary
+    logLevel: 9
 timeout: 10m0s
 expect:
     exitCode: 0
