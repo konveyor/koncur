@@ -127,6 +127,8 @@ func NewTackleHubTarget(cfg *config.TackleHubConfig) (*TackleHubTarget, error) {
 	} else if cfg.Username != "" && cfg.Password != "" {
 		client.Client.Use(auth.NewBasic(cfg.Username, cfg.Password))
 		hasCredentials = true
+	} else if cfg.Username != "" || cfg.Password != "" {
+		return nil, fmt.Errorf("both username and password are required when either is set")
 	}
 	// If no credentials provided, assume auth is disabled on the Tackle instance
 

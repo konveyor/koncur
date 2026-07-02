@@ -325,7 +325,7 @@ Once setup is complete, Tackle Hub is accessible via:
 
 **Ingress (HTTP):**
 - Hub API: `http://localhost:8080/hub`
-- Hub UI: `http://localhost:8080/hub`
+- Hub UI: `http://localhost:8080`
 
 **Port-forward (alternative):**
 ```bash
