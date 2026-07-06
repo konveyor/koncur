@@ -85,13 +85,11 @@ kind-delete: ## Delete the Kind cluster
 ##@ Tackle Hub Installation
 
 AUTH_ENABLED ?= false
-TACKLE_ADMIN_USER ?= admin
-TACKLE_ADMIN_PASS ?= Passw0rd!
 
 hub-install: ## Install Tackle Hub on the Kind cluster (auth disabled)
 	@$(MAKE) _hub-install AUTH_ENABLED=false
 
-hub-install-auth: ## Install Tackle Hub with authentication enabled
+hub-install-auth: ## Install Tackle Hub with authentication enabled (hub seeds default user admin/admin)
 	@$(MAKE) _hub-install AUTH_ENABLED=true
 
 _hub-install: ## Internal target for hub installation
@@ -170,64 +168,15 @@ _hub-install: ## Internal target for hub installation
 	@echo "Waiting for Tackle Hub to be ready (this may take a few minutes)..."
 	@sleep 30
 	@$(KUBECTL) wait --for=condition=ready pod -l app.kubernetes.io/name=tackle-hub -n ${KONVEYOR_NAMESPACE} --timeout=600s || true
-	@echo "Waiting for Tackle Hub to be ready (this may take a few minutes)..."
-	@sleep 30
-	@$(KUBECTL) wait --for=condition=ready pod -l app.kubernetes.io/name=tackle-hub -n ${KONVEYOR_NAMESPACE} --timeout=600s || true
-	@if [ "$(AUTH_ENABLED)" = "true" ]; then \
-		echo "Waiting for Keycloak deployment to be created..."; \
-		for i in $$(seq 1 120); do \
-			$(KUBECTL) get deployment tackle-keycloak-sso -n ${KONVEYOR_NAMESPACE} >/dev/null 2>&1 && break || sleep 5; \
-			if [ $$i -eq 120 ]; then echo "Timeout waiting for Keycloak deployment"; exit 1; fi; \
-		done; \
-		echo "Waiting for Keycloak to be ready..."; \
-		$(KUBECTL) wait --for=condition=ready pod -l app.kubernetes.io/name=tackle-keycloak-sso -n ${KONVEYOR_NAMESPACE} --timeout=600s; \
-		echo "Waiting for tackle ingress to be created..."; \
-		for i in $$(seq 1 60); do \
-			$(KUBECTL) get ingress tackle -n ${KONVEYOR_NAMESPACE} >/dev/null 2>&1 && break || sleep 5; \
-			if [ $$i -eq 60 ]; then echo "Timeout waiting for tackle ingress"; exit 1; fi; \
-		done; \
-		echo "Creating NetworkPolicy to allow ingress-nginx to reach Keycloak..."; \
-		printf 'apiVersion: networking.k8s.io/v1\nkind: NetworkPolicy\nmetadata:\n  name: tackle-keycloak-ingress\n  namespace: ${KONVEYOR_NAMESPACE}\n  labels:\n    app: tackle\nspec:\n  podSelector:\n    matchLabels:\n      role: tackle-keycloak-sso\n  policyTypes:\n  - Ingress\n  ingress:\n  - from:\n    - namespaceSelector:\n        matchLabels:\n          kubernetes.io/metadata.name: ingress-nginx\n    ports:\n    - port: 8080\n      protocol: TCP\n    - port: 8443\n      protocol: TCP\n' | $(KUBECTL) apply -f -; \
-		echo "Configuring Keycloak hostname for https://localhost:$(HOST_PORT_TLS)/auth..."; \
-		$(KUBECTL) set env deployment/tackle-keycloak-sso -n ${KONVEYOR_NAMESPACE} \
-			KC_HOSTNAME=https://localhost:$(HOST_PORT_TLS)/auth \
-			KC_HOSTNAME_BACKCHANNEL_DYNAMIC=true; \
-		$(KUBECTL) patch deployment tackle-keycloak-sso -n ${KONVEYOR_NAMESPACE} --type='json' -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/args", "value": ["-Djgroups.dns.query=mta-kc-discovery.openshift-mta", "--verbose", "start", "--hostname=https://localhost:$(HOST_PORT_TLS)/auth", "--hostname-backchannel-dynamic=true"]}]'; \
-		echo "Waiting for Keycloak to restart with new configuration..."; \
-		$(KUBECTL) rollout status deployment/tackle-keycloak-sso -n ${KONVEYOR_NAMESPACE} --timeout=180s; \
-		$(KUBECTL) set env deployment/tackle-hub -n ${KONVEYOR_NAMESPACE} KEYCLOAK_REQ_PASS_UPDATE=false; \
-		$(KUBECTL) rollout status deployment/tackle-hub -n ${KONVEYOR_NAMESPACE} --timeout=120s; \
-		KC_POD=$$($(KUBECTL) get pods -n ${KONVEYOR_NAMESPACE} -l app.kubernetes.io/name=tackle-keycloak-sso -o jsonpath='{.items[0].metadata.name}'); \
-		KC_PASS=$$($(KUBECTL) get secret tackle-keycloak-sso -n ${KONVEYOR_NAMESPACE} -o jsonpath='{.data.password}' | base64 -d); \
-		$(KUBECTL) exec -n ${KONVEYOR_NAMESPACE} $$KC_POD -- /opt/keycloak/bin/kcadm.sh config credentials --server http://localhost:8080/auth --realm master --user admin --password "$$KC_PASS"; \
-		echo "Waiting for admin user to be created in Keycloak..."; \
-		ADMIN_USER_ID=""; \
-		for i in $$(seq 1 30); do \
-			ADMIN_USER_ID=$$($(KUBECTL) exec -n ${KONVEYOR_NAMESPACE} $$KC_POD -- /opt/keycloak/bin/kcadm.sh get users -r tackle -q username=$(TACKLE_ADMIN_USER) --fields id 2>/dev/null | grep -o '"id" *: *"[^"]*"' | cut -d'"' -f4); \
-			if [ -n "$$ADMIN_USER_ID" ]; then \
-				break; \
-			fi; \
-			echo "  Admin user not yet created, waiting 5s..."; \
-			sleep 5; \
-		done; \
-		if [ -n "$$ADMIN_USER_ID" ]; then \
-			$(KUBECTL) exec -n ${KONVEYOR_NAMESPACE} $$KC_POD -- /opt/keycloak/bin/kcadm.sh update users/$$ADMIN_USER_ID -r tackle -s 'requiredActions=[]'; \
-		else \
-			echo "Error: Admin user '$(TACKLE_ADMIN_USER)' was not created in Keycloak after 150s."; \
-			exit 1; \
-		fi; \
-	fi
 	@echo ""
 	@echo "Tackle Hub installation complete!"
 	@echo ""
 	@if $(KUBECTL) get pods -n ingress-nginx --no-headers 2>/dev/null | grep -q ingress-nginx-controller; then \
-		if [ "$(AUTH_ENABLED)" = "true" ]; then \
-			echo "Access Tackle Hub via ingress at: https://localhost:$(HOST_PORT_TLS)"; \
-			echo "(Auth enabled - HTTPS with self-signed certificate)"; \
-		else \
-			echo "Access Tackle Hub via ingress at: http://localhost:$(HOST_PORT)"; \
-		fi; \
+		echo "Access Tackle Hub via ingress at: http://localhost:$(HOST_PORT)"; \
 		echo ""; \
+	fi
+	@if [ "$(AUTH_ENABLED)" = "true" ]; then \
+		echo "Auth is enabled - the hub's built-in OIDC provider seeds default user admin/admin"; \
 	fi
 	@echo "Or run 'make hub-forward' to access via port-forward at :8081"
 	@echo "Run 'make hub-status' to check the status"
@@ -322,18 +271,18 @@ setup: kind-create hub-install build ## Complete setup: create cluster, install 
 	@echo "2. In another terminal, run: make test-hub"
 	@echo ""
 
-setup-auth: kind-create hub-install-auth build ## Complete setup with auth: create cluster, install hub with Keycloak, build binary
+setup-auth: kind-create hub-install-auth build ## Complete setup with auth: create cluster, install hub with auth required, build binary
 	@echo ""
 	@echo "=========================================="
 	@echo "Auth setup complete!"
 	@echo "=========================================="
 	@echo ""
-	@echo "Access: https://localhost:$(HOST_PORT_TLS)"
-	@echo "  User: $(TACKLE_ADMIN_USER)"
-	@echo "  Pass: Passw0rd!
+	@echo "1. In one terminal, run: make hub-forward"
+	@echo "2. Access the hub at: http://localhost:8081"
+	@echo "  User: admin"
+	@echo "  Pass: admin"
 	@echo ""
-	@echo "Note: Uses a self-signed certificate. Accept the browser warning to proceed."
-	@echo "      Password is from the tackle-keycloak-sso secret in $(KONVEYOR_NAMESPACE)."
+	@echo "Note: Credentials are the defaults seeded by the hub's built-in OIDC provider."
 	@echo ""
 
 teardown: hub-uninstall kind-delete ## Complete teardown: uninstall hub, delete cluster

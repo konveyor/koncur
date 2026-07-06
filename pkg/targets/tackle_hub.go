@@ -14,6 +14,7 @@ import (
 	konveyor "github.com/konveyor/analyzer-lsp/output/v1/konveyor"
 	"github.com/konveyor/tackle2-hub/shared/api"
 	"github.com/konveyor/tackle2-hub/shared/binding"
+	"github.com/konveyor/tackle2-hub/shared/binding/auth"
 	"github.com/konveyor/test-harness/pkg/config"
 	"github.com/konveyor/test-harness/pkg/parser"
 	"github.com/konveyor/test-harness/pkg/util"
@@ -119,15 +120,26 @@ func NewTackleHubTarget(cfg *config.TackleHubConfig) (*TackleHubTarget, error) {
 	}
 
 	// Set authentication if provided (optional for instances with auth disabled)
+	hasCredentials := false
 	if cfg.Token != "" {
-		client.Client.Use(api.Login{Token: cfg.Token})
+		client.Client.Use(auth.NewBearer(cfg.Token))
+		hasCredentials = true
 	} else if cfg.Username != "" && cfg.Password != "" {
-		err := client.Login(cfg.Username, cfg.Password)
+		client.Client.Use(auth.NewBasic(cfg.Username, cfg.Password))
+		hasCredentials = true
+	} else if cfg.Username != "" || cfg.Password != "" {
+		return nil, fmt.Errorf("both username and password are required when either is set")
+	}
+	// If no credentials provided, assume auth is disabled on the Tackle instance
+
+	// Auth is applied lazily per-request; probe the API so bad credentials
+	// fail here rather than mid-test.
+	if hasCredentials {
+		_, err := client.Application.List()
 		if err != nil {
 			return nil, fmt.Errorf("failed to login: %w", err)
 		}
 	}
-	// If no credentials provided, assume auth is disabled on the Tackle instance
 
 	return &TackleHubTarget{
 		url:           cfg.URL,

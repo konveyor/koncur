@@ -121,7 +121,7 @@ type: tackle-hub
 tackleHub:
   url: http://localhost:8081
   username: admin
-  password: Passw0rd!
+  password: admin
   mavenSettings: /home/user/.m2/settings.xml
 ```
 
@@ -186,7 +186,7 @@ type: tackle-ui
 tackleUI:
   url: http://localhost:8080
   username: admin
-  password: Passw0rd!
+  password: admin
   browser: chrome
   headless: true
 ```

@@ -299,50 +299,43 @@ make setup
 
 ### Quick Setup (With Auth)
 
-To install Tackle Hub with Keycloak authentication enabled:
+To install Tackle Hub with authentication enabled:
 
 ```bash
-# Complete setup with auth: create cluster, install hub with Keycloak, build binary
+# Complete setup with auth: create cluster, install hub with auth required, build binary
 make setup-auth
 
 # This runs:
 # 1. make kind-create       - Creates Kind cluster with ingress
-# 2. make hub-install-auth  - Installs Tackle Hub with Keycloak (auth enabled)
+# 2. make hub-install-auth  - Installs Tackle Hub with auth required
 # 3. make build             - Builds the koncur binary
 ```
 
-When auth is enabled, the setup:
-- Deploys Keycloak SSO alongside Tackle Hub
-- Configures Keycloak hostname for `https://localhost:8443/auth`
-- Creates a NetworkPolicy to allow ingress traffic to Keycloak
-- Provisions an admin user with password from the `tackle-keycloak-sso` secret
-- Serves Tackle Hub over HTTPS with a self-signed certificate
+The hub provides its own built-in OIDC provider — no separate identity server
+is deployed. Enabling auth just sets `feature_auth_required: "true"` on the
+Tackle CR, which makes the hub reject unauthenticated API requests.
 
-**Default credentials:**
+**Default credentials** (seeded by the hub's built-in OIDC provider):
 - Username: `admin`
-- Password: `Passw0rd!`
-
-The Tackle application user password (`Passw0rd!`) is set by the hub when it
-seeds the admin user into Keycloak. This is separate from the Keycloak server
-admin password stored in the `tackle-keycloak-sso` secret.
+- Password: `admin`
 
 ### Accessing Tackle Hub
 
 Once setup is complete, Tackle Hub is accessible via:
 
-**Without auth (HTTP):**
+**Ingress (HTTP):**
 - Hub API: `http://localhost:8080/hub`
-- Hub UI: `http://localhost:8080/hub`
+- Hub UI: `http://localhost:8080`
 
-**With auth (HTTPS):**
-- Hub: `https://localhost:8443`
-- Accept the self-signed certificate warning in your browser
-
-**Port-forward (alternative, works for both):**
+**Port-forward (alternative):**
 ```bash
 make hub-forward
 # Hub will be available at http://localhost:8081
 ```
+
+Access is the same with or without auth; when auth is enabled, API requests
+must authenticate (koncur uses HTTP Basic auth with the credentials from the
+target config).
 
 ### Running Tests
 
@@ -374,7 +367,7 @@ See [Local Testing with Custom Images](docs/local-testing-custom-images.md) for 
 
 **Setup & Teardown:**
 - `make setup` - Complete setup (cluster + hub + build, no auth)
-- `make setup-auth` - Complete setup with Keycloak authentication
+- `make setup-auth` - Complete setup with authentication required
 - `make teardown` - Complete teardown (uninstall hub + delete cluster)
 
 **Cluster Management:**
@@ -383,7 +376,7 @@ See [Local Testing with Custom Images](docs/local-testing-custom-images.md) for 
 
 **Tackle Hub:**
 - `make hub-install` - Install Tackle Hub with auth disabled
-- `make hub-install-auth` - Install Tackle Hub with Keycloak auth enabled
+- `make hub-install-auth` - Install Tackle Hub with auth required (built-in OIDC, admin/admin)
 - `make hub-uninstall` - Uninstall Tackle Hub
 - `make hub-status` - Check Tackle Hub status
 - `make hub-forward` - Port-forward to access Hub at :8081
@@ -460,20 +453,21 @@ tackleHub:
 ```
 
 **With auth** - when using `make setup-auth`, the target config must include
-`username`, `password`, and `insecure: true` (for the self-signed certificate):
+`username` and `password` (koncur authenticates with HTTP Basic auth):
 
 ```yaml
 type: tackle-hub
 tackleHub:
-  url: https://localhost:8443/hub
+  url: http://localhost:8080/hub
   username: admin
-  password: "Passw0rd!"
-  insecure: true
+  password: admin
   mavenSettings: settings.xml
 ```
 
-The `insecure: true` field tells koncur to skip TLS certificate verification,
-which is required because the Kind cluster uses a self-signed certificate.
+A `token` may be provided instead of `username`/`password` to authenticate
+with a bearer token (e.g. a hub personal access token). When targeting a
+remote hub served over HTTPS with a self-signed certificate, set
+`insecure: true` to skip TLS verification.
 
 ### What Gets Installed
 
@@ -489,14 +483,10 @@ The `make hub-install` target automatically:
 4. **Patches ingress** to disable SSL redirect (allows HTTP access at `http://localhost:8080`)
 5. **Waits for readiness** with automatic health checks
 
-The `make hub-install-auth` target does all of the above, plus:
-
-1. **Enables authentication** (`feature_auth_required: "true"`)
-2. **Deploys Keycloak SSO** and waits for it to become ready
-3. **Creates a NetworkPolicy** allowing ingress-nginx to reach Keycloak
-4. **Configures Keycloak hostname** for `https://localhost:8443/auth` with backchannel dynamic routing
-5. **Disables forced password update** so the admin user can log in immediately
-6. **Provisions the admin user** in the `tackle` realm and clears any required actions
+The `make hub-install-auth` target does all of the above, but sets
+`feature_auth_required: "true"` on the Tackle CR instead. The hub's built-in
+OIDC provider seeds a default `admin`/`admin` user at startup — no additional
+setup is required.
 
 ### Troubleshooting
 
@@ -517,21 +507,11 @@ The `make hub-install-auth` target does all of the above, plus:
 - Check pod status: `make hub-status`
 - View pod logs: `kubectl logs -n konveyor-tackle -l app.kubernetes.io/name=tackle-hub`
 
-**Auth setup: Keycloak or Hub unreachable via ingress:**
-- The ingress-nginx controller may need to be restarted after Tackle and Keycloak
-  ingress resources are created. Delete the controller pod and let Kubernetes
-  recreate it:
-  ```bash
-  kubectl delete pod -n ingress-nginx -l app.kubernetes.io/component=controller
-  ```
-- Wait for the new pod to become ready:
-  ```bash
-  kubectl wait --namespace ingress-nginx \
-    --for=condition=ready pod \
-    --selector=app.kubernetes.io/component=controller \
-    --timeout=120s
-  ```
-- Then verify you can reach the Hub at `https://localhost:8443`
+**Auth setup: requests failing with 401:**
+- Verify the target config includes `username: admin` / `password: admin`
+  (or a valid `token`)
+- Confirm auth is enforced: `curl -s -o /dev/null -w '%{http_code}' http://localhost:8081/applications`
+  should return `401` without credentials and `200` with `-u admin:admin`
 
 ## License
 
