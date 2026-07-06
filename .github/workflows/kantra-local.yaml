@@ -62,7 +62,8 @@ jobs:
         if: ${{ inputs.os == 'windows-latest' }}
         shell: bash
         run: |
-          choco install podman-cli
+          # Pinned to 5.8.1 to work around SSH connection failures with Podman 6.0 on Windows
+          choco install podman-cli --version=5.8.1
           podman machine init --rootful --memory 10240 --cpus 3
           podman machine start 
           CID=$(podman create quay.io/konveyor/kantra:${{ inputs.image_tag }})
