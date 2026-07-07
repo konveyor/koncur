@@ -9,7 +9,7 @@ analysis:
     target: []
     rules: []
     disableDefaultRules: false
-    analysisMode: full
+    analysisMode: binary
     logLevel: 9
 timeout: 10m0s
 expect:
