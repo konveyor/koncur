@@ -118,11 +118,13 @@ func (c *TackleHubConfig) HasImageOverrides() bool {
 
 // TackleUIConfig for Tackle UI browser automation
 type TackleUIConfig struct {
-	URL      string `yaml:"url" validate:"required"`
-	Username string `yaml:"username" validate:"required"`
-	Password string `yaml:"password" validate:"required"`
-	Browser  string `yaml:"browser,omitempty"` // chrome, firefox
-	Headless bool   `yaml:"headless,omitempty"`
+	URL           string `yaml:"url" validate:"required"`
+	HubURL        string `yaml:"hubUrl,omitempty"` // Hub API URL (defaults to URL/hub if not specified)
+	Username      string `yaml:"username,omitempty"`
+	Password      string `yaml:"password,omitempty"`
+	Browser       string `yaml:"browser,omitempty"` // chrome, firefox
+	Headless      bool   `yaml:"headless,omitempty"`
+	MavenSettings string `yaml:"mavenSettings,omitempty"`
 }
 
 // KaiRPCConfig for Kai analyzer RPC
