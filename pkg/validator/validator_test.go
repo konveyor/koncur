@@ -241,6 +241,69 @@ func TestValidateFiles_WithTargetType(t *testing.T) {
 	}
 }
 
+func TestValidateFiles_HubSynthesizedDiscoveryRulesets(t *testing.T) {
+	expected := []konveyor.RuleSet{
+		{
+			Name: "dotnet-core-migration",
+			Violations: map[string]konveyor.Violation{
+				"rule1": {Description: "Test"},
+			},
+		},
+	}
+
+	actual := []konveyor.RuleSet{
+		{
+			Name: "dotnet-core-migration",
+			Violations: map[string]konveyor.Violation{
+				"rule1": {Description: "Test"},
+			},
+		},
+		{
+			Name: "technology-usage",
+			Tags: []string{".NET", "ASP.NET"},
+		},
+		{
+			Name: "discovery-rules",
+			Tags: []string{"C#", "JavaScript"},
+		},
+	}
+
+	// Tag-only synthesized rulesets must not fail hub validation, since their
+	// presence depends on discovery-task timing and tags are never compared
+	result, err := ValidateFiles("/test", "tackle-hub", actual, expected)
+	if err != nil {
+		t.Fatalf("ValidateFiles returned error: %v", err)
+	}
+	if !result.Passed {
+		t.Errorf("Expected tackle-hub validation to pass, got errors: %v", result.Errors)
+	}
+
+	// Other targets still report them as unexpected
+	result, err = ValidateFiles("/test", "kantra", actual, expected)
+	if err != nil {
+		t.Fatalf("ValidateFiles returned error: %v", err)
+	}
+	if result.Passed {
+		t.Error("Expected kantra validation to fail on unexpected rulesets")
+	}
+
+	// A synthesized-name ruleset that carries real content is still unexpected
+	actual = append(actual[:1], konveyor.RuleSet{
+		Name: "technology-usage",
+		Tags: []string{".NET"},
+		Insights: map[string]konveyor.Violation{
+			"tag-rule": {Description: "Test"},
+		},
+	})
+	result, err = ValidateFiles("/test", "tackle-hub", actual, expected)
+	if err != nil {
+		t.Fatalf("ValidateFiles returned error: %v", err)
+	}
+	if result.Passed {
+		t.Error("Expected tackle-hub validation to fail when synthesized ruleset has insights")
+	}
+}
+
 // Helper functions
 func intPtr(i int) *int {
 	return &i
