@@ -118,47 +118,34 @@ func TestAnalysisConfig_ParseGitURLs(t *testing.T) {
 		name        string
 		config      AnalysisConfig
 		wantAppComp *GitURLComponents
-		wantRules   int
 	}{
 		{
-			name: "Git application and mixed rules",
+			name: "Git application with branch and path",
 			config: AnalysisConfig{
 				Application: "https://github.com/konveyor/app#main/src",
-				Rules: []string{
-					"https://github.com/konveyor/rules#v1.0/java",
-					"/local/rules",
-					"https://github.com/konveyor/rules2#main",
-				},
 			},
 			wantAppComp: &GitURLComponents{
 				URL:  "https://github.com/konveyor/app",
 				Ref:  "main",
 				Path: "src",
 			},
-			wantRules: 3,
 		},
 		{
-			name: "Local application with Git rules",
+			name: "Local application",
 			config: AnalysisConfig{
 				Application: "/local/app",
-				Rules: []string{
-					"https://github.com/konveyor/rules#main/rulesets",
-				},
 			},
 			wantAppComp: nil,
-			wantRules:   1,
 		},
 		{
-			name: "No rules",
+			name: "Git application with branch only",
 			config: AnalysisConfig{
 				Application: "https://github.com/konveyor/app#main",
-				Rules:       []string{},
 			},
 			wantAppComp: &GitURLComponents{
 				URL: "https://github.com/konveyor/app",
 				Ref: "main",
 			},
-			wantRules: 0,
 		},
 	}
 
@@ -190,11 +177,56 @@ func TestAnalysisConfig_ParseGitURLs(t *testing.T) {
 					t.Error("Expected ApplicationGitComponents to be nil")
 				}
 			}
+		})
+	}
+}
 
-			// Check rules components
-			if len(ac.RulesGitComponents) != tt.wantRules {
-				t.Errorf("RulesGitComponents length = %v, want %v",
-					len(ac.RulesGitComponents), tt.wantRules)
+func TestGitRepoRule_GetCompents(t *testing.T) {
+	tests := []struct {
+		name     string
+		gitRepo  string
+		wantURL  string
+		wantRef  string
+		wantPath string
+	}{
+		{
+			name:     "URL with ref and path",
+			gitRepo:  "https://github.com/konveyor/rules#v1.0/java",
+			wantURL:  "https://github.com/konveyor/rules",
+			wantRef:  "v1.0",
+			wantPath: "java",
+		},
+		{
+			name:     "URL with ref only",
+			gitRepo:  "https://github.com/konveyor/rules#main",
+			wantURL:  "https://github.com/konveyor/rules",
+			wantRef:  "main",
+			wantPath: "",
+		},
+		{
+			name:     "URL with deep path",
+			gitRepo:  "https://github.com/konveyor/rules#main/rulesets/java",
+			wantURL:  "https://github.com/konveyor/rules",
+			wantRef:  "main",
+			wantPath: "rulesets/java",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			rule := GitRepoRule{GitRepo: tt.gitRepo}
+			got := rule.GetCompents()
+			if got == nil {
+				t.Fatal("Expected components to be set")
+			}
+			if got.URL != tt.wantURL {
+				t.Errorf("URL = %v, want %v", got.URL, tt.wantURL)
+			}
+			if got.Ref != tt.wantRef {
+				t.Errorf("Ref = %v, want %v", got.Ref, tt.wantRef)
+			}
+			if got.Path != tt.wantPath {
+				t.Errorf("Path = %v, want %v", got.Path, tt.wantPath)
 			}
 		})
 	}

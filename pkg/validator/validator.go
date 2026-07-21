@@ -59,6 +59,16 @@ func getComparer(targetType, testDir string) comparer {
 	return nil
 }
 
+// isSynthesizedTagRuleset reports whether rs is one of the rulesets the
+// tackle-hub target fabricates from application tags and contains nothing
+// but tags.
+func isSynthesizedTagRuleset(rs konveyor.RuleSet) bool {
+	if rs.Name != "discovery-rules" && rs.Name != "technology-usage" {
+		return false
+	}
+	return len(rs.Violations) == 0 && len(rs.Insights) == 0 && len(rs.Errors) == 0
+}
+
 // ValidationResult contains the result of validation
 type ValidationResult struct {
 	Passed bool
@@ -184,13 +194,22 @@ func ValidateFiles(testDir, targetType string, actual, expected []konveyor.RuleS
 		expectedRulesetNames[expectedRulesetName] = true
 	}
 	for _, rs := range actual {
-		if !expectedRulesetNames[rs.Name] {
-			errors = append(errors, ValidationError{
-				Path:    fmt.Sprintf("ruleset/%s", rs.Name),
-				Message: fmt.Sprintf("Unexpected ruleset found: %s", rs.Name),
-				Actual:  rs.Name,
-			})
+		if expectedRulesetNames[rs.Name] {
+			continue
 		}
+		// The tackle-hub target synthesizes discovery-rules/technology-usage
+		// rulesets from the hub's discovery-task tags, which have no kantra
+		// equivalent and whose presence depends on discovery-task timing.
+		// Tags are never compared for tackle-hub, so a tag-only synthesized
+		// ruleset carries no comparable content and is not a failure.
+		if targetType == "tackle-hub" && isSynthesizedTagRuleset(rs) {
+			continue
+		}
+		errors = append(errors, ValidationError{
+			Path:    fmt.Sprintf("ruleset/%s", rs.Name),
+			Message: fmt.Sprintf("Unexpected ruleset found: %s", rs.Name),
+			Actual:  rs.Name,
+		})
 	}
 
 	// If not equal, generate detailed diff
