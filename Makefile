@@ -7,6 +7,7 @@ KUBECTL ?= kubectl
 HOST_PORT ?= 8080
 HOST_PORT_TLS ?= 8443
 IMAGE_TAG ?= latest
+OPERATOR_BRANCH ?= release-0.9
 
 # Image FQINs with defaults
 HUB ?= quay.io/konveyor/tackle2-hub:$(IMAGE_TAG)
@@ -102,8 +103,8 @@ _hub-install: ## Internal target for hub installation
 	@$(KUBECTL) delete pod -n olm -l olm.catalogSource=operatorhubio-catalog --ignore-not-found=true || true
 	@sleep 5
 	@$(KUBECTL) wait --for=condition=ready pod -l olm.catalogSource=operatorhubio-catalog -n olm --timeout=120s || true
-	@echo "Installing Tackle operator from main branch..."
-	@$(KUBECTL) apply -f https://raw.githubusercontent.com/konveyor/tackle2-operator/main/tackle-k8s.yaml
+	@echo "Installing Tackle operator from $(OPERATOR_BRANCH) branch..."
+	@$(KUBECTL) apply -f https://raw.githubusercontent.com/konveyor/tackle2-operator/$(OPERATOR_BRANCH)/tackle-k8s.yaml
 	@echo "Waiting for Tackle CRD to be available..."
 	@for i in $$(seq 1 120); do \
 		$(KUBECTL) get crd tackles.tackle.konveyor.io >/dev/null 2>&1 && break || sleep 5; \
