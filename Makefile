@@ -172,6 +172,9 @@ _hub-install: ## Internal target for hub installation
 	@printf '  language_discovery_fqin: $(DISCOVERY_ADDON)\n' >> .koncur/config/tackle-cr.yaml
 	@printf '  platform_fqin: $(PLATFORM_ADDON)\n' >> .koncur/config/tackle-cr.yaml
 	@printf '  feature_auth_required: "$(AUTH_ENABLED)"\n' >> .koncur/config/tackle-cr.yaml
+	@if [ "$(AUTH_ENABLED)" = "true" ]; then \
+		printf '  feature_auth_type: "keycloak"\n' >> .koncur/config/tackle-cr.yaml; \
+	fi
 	@$(KUBECTL) apply -f .koncur/config/tackle-cr.yaml
 	@echo "Waiting for Tackle Hub to be ready (this may take a few minutes)..."
 	@sleep 30
