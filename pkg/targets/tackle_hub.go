@@ -8,6 +8,7 @@ import (
 	"os"
 	"path/filepath"
 	"slices"
+	"sort"
 	"strings"
 	"time"
 
@@ -203,7 +204,11 @@ func (t *TackleHubTarget) Execute(ctx context.Context, test *config.TestDefiniti
 	}
 	log.Info("Analysis task completed successfully", "taskID", task.ID)
 
-	// Use the binding's Analysis methods to fetch insights
+	completedTask, err := t.client.Task.Get(task.ID)
+	if err != nil {
+		return nil, err
+	}
+
 	insights, err := t.client.Application.Select(app.ID).Analysis.ListInsights()
 	if err != nil {
 		return nil, fmt.Errorf("failed to get analysis insights: %w", err)
@@ -302,11 +307,7 @@ func (t *TackleHubTarget) Execute(ctx context.Context, test *config.TestDefiniti
 		delete(rulesetToInsightConverted, "discovery-rules")
 		delete(rulesetToInsightConverted, "technology-usage")
 	}
-	a, err := t.client.Task.Get(task.ID)
-	if err != nil {
-		return nil, err
-	}
-	for _, e := range a.Errors {
+	for _, e := range completedTask.Errors {
 		if strings.Contains(e.Description, "[Analyzer]") {
 			analysisError := strings.TrimPrefix(e.Description, "[Analyzer]")
 			parts := strings.Split(analysisError, ":")
@@ -351,6 +352,12 @@ func (t *TackleHubTarget) Execute(ctx context.Context, test *config.TestDefiniti
 	}
 
 	log.Info("Successfully wrote analysis results", "file", outputFile)
+
+	if test.Expect.Output.DepFileHub != "" {
+		if err := t.writeHubDependenciesOutput(completedTask, task.ID, app.ID, outputDir); err != nil {
+			return nil, fmt.Errorf("failed to write dependencies output: %w", err)
+		}
+	}
 
 	duration := time.Since(start)
 	result := &ExecutionResult{
@@ -540,7 +547,11 @@ func (t *TackleHubTarget) createAnalysisTask(ctx context.Context, test *config.T
 		// Set analysis mode
 		switch test.Analysis.AnalysisMode {
 		case "source-only":
-			taskData.Mode.WithDeps = false
+			if test.Expect.Output.DepFileHub != "" {
+				taskData.Mode.WithDeps = true
+			} else {
+				taskData.Mode.WithDeps = false
+			}
 		default:
 			taskData.Mode.WithDeps = true
 		}
@@ -770,6 +781,41 @@ func (t *TackleHubTarget) attachMavenIdentity(app *api.Application) error {
 	}
 
 	return nil
+}
+
+// maps Hub dependencies ([]api.TechDependency from into konveyor’s flat list
+func hubTechDependenciesToDepsFlat(deps []api.TechDependency) []konveyor.DepsFlatItem {
+	byProv := map[string][]*konveyor.Dep{}
+	for _, td := range deps {
+		prov := td.Provider
+		d := &konveyor.Dep{
+			Name:     td.Name,
+			Version:  td.Version,
+			Indirect: td.Indirect,
+			Labels:   append([]string(nil), td.Labels...),
+		}
+		if td.SHA != "" {
+			d.ResolvedIdentifier = td.SHA
+		}
+		byProv[prov] = append(byProv[prov], d)
+	}
+	provs := slices.Sorted(maps.Keys(byProv))
+	out := make([]konveyor.DepsFlatItem, 0, len(provs))
+	for _, prov := range provs {
+		list := byProv[prov]
+		sort.Slice(list, func(i, j int) bool {
+			if list[i].Name != list[j].Name {
+				return list[i].Name < list[j].Name
+			}
+			return list[i].Version < list[j].Version
+		})
+		out = append(out, konveyor.DepsFlatItem{
+			FileURI:      "",
+			Provider:     prov,
+			Dependencies: list,
+		})
+	}
+	return out
 }
 
 // parseGitURL parses a git URL that may contain a branch reference (e.g., URL#branch)

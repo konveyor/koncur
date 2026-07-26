@@ -15,3 +15,5 @@ expect:
     exitCode: 0
     output:
         file: expected-output.yaml
+        dep-file-kantra: expected-deps-kantra.yaml
+        dep-file-hub: expected-deps-hub.yaml

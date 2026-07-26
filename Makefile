@@ -236,7 +236,7 @@ build: ## Build the koncur binary
 
 test-archive: ## Build a portable test archive (koncur-tests.tar.gz)
 	@echo "Building test archive..."
-	@files=$$(cd tests && find . -type f \( -name 'test.yaml' -o -name 'expected-output.yaml' \) | sed 's|^\./||' | sort); \
+	@files=$$(cd tests && find . -type f \( -name 'test.yaml' -o -name 'expected-output.yaml' -o -name 'expected-deps-kantra.yaml' -o -name 'expected-deps-hub.yaml' \) | sed 's|^\./||' | sort); \
 	if [ -z "$$files" ]; then \
 		echo "Error: no test files found in tests/"; \
 		exit 1; \

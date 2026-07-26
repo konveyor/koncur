@@ -229,6 +229,29 @@ This is useful when:
 
 				test.Expect.Output.File = "expected-output.yaml"
 
+				depsOutPath := filepath.Join(filepath.Dir(result.OutputFile), "dependencies.yaml")
+				if _, statErr := os.Stat(depsOutPath); statErr == nil {
+					depsList, err := parser.ParseDependencies(depsOutPath)
+					if err != nil {
+						color.Red("  ✗ Failed to parse dependencies.yaml: %v", err)
+						failCount++
+						continue
+					}
+					var expectedDepsFile string
+					if targetTypeGen == "tackle-hub" {
+						expectedDepsFile = filepath.Join(testDirPath, "expected-deps-hub.yaml")
+						test.Expect.Output.DepFileHub = "expected-deps-hub.yaml"
+					} else {
+						expectedDepsFile = filepath.Join(testDirPath, "expected-deps-kantra.yaml")
+						test.Expect.Output.DepFileKantra = "expected-deps-kantra.yaml"
+					}
+					if err := saveNormalizedDepsFlat(depsList, expectedDepsFile, testDirPath); err != nil {
+						color.Red("  ✗ Failed to save expected dependencies: %v", err)
+						failCount++
+						continue
+					}
+				}
+
 				// Save updated test definition
 				if err := saveSimpleTestDefinition(testFile, test); err != nil {
 					color.Red("  ✗ Failed to save: %v", err)
@@ -306,7 +329,9 @@ func validateTestForGeneration(test *config.TestDefinition) error {
 func saveSimpleTestDefinition(testFile string, test *config.TestDefinition) error {
 	// Create a simplified structure without the Result field
 	type SimpleExpectedOutput struct {
-		File string `yaml:"file,omitempty"`
+		File           string `yaml:"file,omitempty"`
+		DepFileKantra  string `yaml:"dep-file-kantra,omitempty"`
+		DepFileHub     string `yaml:"dep-file-hub,omitempty"`
 	}
 
 	type SimpleExpectConfig struct {
@@ -334,7 +359,9 @@ func saveSimpleTestDefinition(testFile string, test *config.TestDefinition) erro
 		Expect: SimpleExpectConfig{
 			ExitCode: test.Expect.ExitCode,
 			Output: SimpleExpectedOutput{
-				File: test.Expect.Output.File,
+				File:          test.Expect.Output.File,
+				DepFileKantra: test.Expect.Output.DepFileKantra,
+				DepFileHub:    test.Expect.Output.DepFileHub,
 			},
 		},
 	}
@@ -376,5 +403,20 @@ func saveFilteredOutput(rulesets []konveyor.RuleSet, path string, testDir string
 		return fmt.Errorf("failed to write file: %w", err)
 	}
 
+	return nil
+}
+
+func saveNormalizedDepsFlat(items []konveyor.DepsFlatItem, path string, testDir string) error {
+	normalized, err := parser.NormalizeDepsFlat(items, testDir)
+	if err != nil {
+		return err
+	}
+	data, err := yaml2.Marshal(normalized)
+	if err != nil {
+		return fmt.Errorf("failed to marshal dependencies: %w", err)
+	}
+	if err := os.WriteFile(path, data, 0644); err != nil {
+		return fmt.Errorf("failed to write dependencies file: %w", err)
+	}
 	return nil
 }
