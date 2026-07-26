@@ -8,6 +8,7 @@ HOST_PORT ?= 8080
 HOST_PORT_TLS ?= 8443
 IMAGE_TAG ?= latest
 OPERATOR_IMAGE ?= quay.io/konveyor/tackle2-operator:release-0.9
+OPERATOR_INDEX_TAG ?= $(lastword $(subst :, ,$(OPERATOR_IMAGE)))
 
 # Image FQINs with defaults
 HUB ?= quay.io/konveyor/tackle2-hub:$(IMAGE_TAG)
@@ -105,6 +106,11 @@ _hub-install: ## Internal target for hub installation
 	@$(KUBECTL) wait --for=condition=ready pod -l olm.catalogSource=operatorhubio-catalog -n olm --timeout=120s || true
 	@echo "Installing Tackle operator..."
 	@$(KUBECTL) apply -f https://raw.githubusercontent.com/konveyor/tackle2-operator/main/tackle-k8s.yaml
+	@if [ "$(OPERATOR_INDEX_TAG)" != "latest" ]; then \
+		echo "Patching CatalogSource to use index tag: $(OPERATOR_INDEX_TAG)..."; \
+		$(KUBECTL) patch catalogsource konveyor -n $(KONVEYOR_NAMESPACE) --type merge \
+			-p '{"spec":{"image":"quay.io/konveyor/tackle2-operator-index:$(OPERATOR_INDEX_TAG)"}}'; \
+	fi
 	@echo "Waiting for Tackle CRD to be available..."
 	@for i in $$(seq 1 120); do \
 		$(KUBECTL) get crd tackles.tackle.konveyor.io >/dev/null 2>&1 && break || sleep 5; \
@@ -120,9 +126,6 @@ _hub-install: ## Internal target for hub installation
 		if [ $$i -eq 120 ]; then echo "Timeout waiting for operator to be ready"; exit 1; fi; \
 		sleep 3; \
 	done
-	@echo "Patching operator deployment to use image: $(OPERATOR_IMAGE)..."
-	@$(KUBECTL) set image deployment/tackle-operator -n ${KONVEYOR_NAMESPACE} tackle-operator=$(OPERATOR_IMAGE)
-	@$(KUBECTL) rollout status deployment/tackle-operator -n ${KONVEYOR_NAMESPACE} --timeout=300s
 	@echo "Pre-creating cache PV with fixed path..."
 	@mkdir -m 777 -p cache/hub-cache
 	@mkdir -p .koncur/config
