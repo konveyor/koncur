@@ -128,6 +128,28 @@ _hub-install: ## Internal target for hub installation
 		if [ $$i -eq 120 ]; then echo "Timeout waiting for operator to be ready"; exit 1; fi; \
 		sleep 3; \
 	done
+	@if [ "$(OPERATOR_INDEX_TAG)" != "latest" ]; then \
+		CURRENT_IMG=$$($(KUBECTL) get deployment tackle-operator -n ${KONVEYOR_NAMESPACE} -o jsonpath='{.spec.template.spec.containers[0].image}'); \
+		if [ "$$CURRENT_IMG" != "$(OPERATOR_IMAGE)" ]; then \
+			echo "Operator index references $$CURRENT_IMG, patching CSV to use $(OPERATOR_IMAGE)..."; \
+			CSV_NAME=$$($(KUBECTL) get csv -n ${KONVEYOR_NAMESPACE} -o jsonpath='{.items[0].metadata.name}'); \
+			$(KUBECTL) patch csv $$CSV_NAME -n ${KONVEYOR_NAMESPACE} --type='json' \
+				-p='[{"op": "replace", "path": "/spec/install/spec/deployments/0/spec/template/spec/containers/0/image", "value": "$(OPERATOR_IMAGE)"}]'; \
+			echo "Waiting for operator to restart with correct image..."; \
+			sleep 5; \
+			for i in $$(seq 1 60); do \
+				if $(KUBECTL) wait --namespace ${KONVEYOR_NAMESPACE} --for=condition=ready pod --selector=name=tackle-operator --timeout=5s >/dev/null 2>&1; then \
+					NEW_IMG=$$($(KUBECTL) get deployment tackle-operator -n ${KONVEYOR_NAMESPACE} -o jsonpath='{.spec.template.spec.containers[0].image}'); \
+					if [ "$$NEW_IMG" = "$(OPERATOR_IMAGE)" ]; then \
+						echo "Operator now running $(OPERATOR_IMAGE)"; \
+						break; \
+					fi; \
+				fi; \
+				if [ $$i -eq 60 ]; then echo "Timeout waiting for operator image update"; exit 1; fi; \
+				sleep 3; \
+			done; \
+		fi; \
+	fi
 	@echo "Pre-creating cache PV with fixed path..."
 	@mkdir -m 777 -p cache/hub-cache
 	@mkdir -p .koncur/config
