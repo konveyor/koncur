@@ -28,6 +28,7 @@ jobs:
     uses: ./.github/workflows/kantra.yaml
     with:
       os: ${{ matrix.os }}
+      skip_maven: false
       image_tag: ${{ needs.setup.outputs.image_tag }}
 
   # Java-analysis tests only, Kantra --run-local=true (see kantra-local.yaml). Skips nerd-dinner / python-sample.
@@ -42,13 +43,13 @@ jobs:
     uses: ./.github/workflows/kantra-local.yaml
     with:
       os: ${{ matrix.os }}
+      skip_maven: false
       image_tag: ${{ needs.setup.outputs.image_tag }}
 
 
   run-hub-test:
     needs: setup
-    secrets: inherit
     uses: ./.github/workflows/hub.yaml
     with:
-      skip_maven: true
+      skip_maven: false
       image_tag: ${{ needs.setup.outputs.image_tag }}
