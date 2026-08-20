@@ -15,41 +15,41 @@
       - konveyor.io/target=discovery
       - tag=Java Source
       incidents:
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/Authenticator.java
+      - uri: file:///source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/Authenticator.java
         message: ""
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/AuthenticatorAction.java
+      - uri: file:///source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/AuthenticatorAction.java
         message: ""
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/Booking.java
+      - uri: file:///source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/Booking.java
         message: ""
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/BookingList.java
+      - uri: file:///source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/BookingList.java
         message: ""
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/BookingListAction.java
+      - uri: file:///source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/BookingListAction.java
         message: ""
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/ChangePassword.java
+      - uri: file:///source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/ChangePassword.java
         message: ""
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/ChangePasswordAction.java
+      - uri: file:///source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/ChangePasswordAction.java
         message: ""
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/Hotel.java
+      - uri: file:///source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/Hotel.java
         message: ""
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/HotelBooking.java
+      - uri: file:///source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/HotelBooking.java
         message: ""
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/HotelBookingAction.java
+      - uri: file:///source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/HotelBookingAction.java
         message: ""
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/HotelSearching.java
+      - uri: file:///source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/HotelSearching.java
         message: ""
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/HotelSearchingAction.java
+      - uri: file:///source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/HotelSearchingAction.java
         message: ""
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/Register.java
+      - uri: file:///source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/Register.java
         message: ""
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/RegisterAction.java
+      - uri: file:///source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/RegisterAction.java
         message: ""
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/User.java
+      - uri: file:///source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/User.java
         message: ""
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/test/BookingTest.java
+      - uri: file:///source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/test/BookingTest.java
         message: ""
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/test/ChangePasswordTest.java
+      - uri: file:///source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/test/ChangePasswordTest.java
         message: ""
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/test/LoginTest.java
+      - uri: file:///source/test-files/seam-booking-5.2/src/org/jboss/seam/example/booking/test/LoginTest.java
         message: ""
     discover-maven-xml:
       description: Maven XML file
@@ -59,7 +59,7 @@
       - konveyor.io/target=discovery
       - tag=Maven XML
       incidents:
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/pom.xml
+      - uri: file:///source/test-files/seam-booking-5.2/pom.xml
         message: ""
     discover-properties-file:
       description: Properties file
@@ -69,11 +69,11 @@
       - konveyor.io/target=discovery
       - tag=Properties
       incidents:
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/resources/components.properties
+      - uri: file:///source/test-files/seam-booking-5.2/resources/components.properties
         message: ""
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/resources/messages.properties
+      - uri: file:///source/test-files/seam-booking-5.2/resources/messages.properties
         message: ""
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/resources/seam.properties
+      - uri: file:///source/test-files/seam-booking-5.2/resources/seam.properties
         message: ""
     windup-discover-ejb-configuration:
       description: EJB XML Configuration
@@ -83,7 +83,7 @@
       - konveyor.io/target=discovery
       - tag=EJB XML
       incidents:
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/resources/META-INF/ejb-jar.xml
+      - uri: file:///source/test-files/seam-booking-5.2/resources/META-INF/ejb-jar.xml
         message: ""
         codeSnip: 7     <interceptors>
         lineNumber: 6
@@ -101,7 +101,7 @@
       - konveyor.io/target=discovery
       - tag=JPA XML
       incidents:
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/resources/META-INF/persistence.xml
+      - uri: file:///source/test-files/seam-booking-5.2/resources/META-INF/persistence.xml
         message: ""
         codeSnip: 8        <jta-data-source>java:/bookingDatasource</jta-data-source>
         lineNumber: 7
@@ -124,7 +124,7 @@
       - konveyor.io/target=discovery
       - tag=Web XML
       incidents:
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/resources/WEB-INF/web.xml
+      - uri: file:///source/test-files/seam-booking-5.2/resources/WEB-INF/web.xml
         message: ""
         codeSnip: "7  \t<!-- <distributable/> -->"
         lineNumber: 6
@@ -1148,7 +1148,7 @@
       - konveyor.io/target=eap7
       - seam
       incidents:
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/book.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/book.xhtml
         message: |-
           Seam UI's `<s:button>` JSF control should be replaced by `<h:button>`.
            There are differences in attributes, for example the _action_ attribute maps to _outcome_ and there is no _propagation_ attribute.
@@ -1158,7 +1158,7 @@
           data: button
           innerText: ""
           matchingXML: ""
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/confirm.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/confirm.xhtml
         message: |-
           Seam UI's `<s:button>` JSF control should be replaced by `<h:button>`.
            There are differences in attributes, for example the _action_ attribute maps to _outcome_ and there is no _propagation_ attribute.
@@ -1168,7 +1168,7 @@
           data: button
           innerText: ""
           matchingXML: ""
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/password.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/password.xhtml
         message: |-
           Seam UI's `<s:button>` JSF control should be replaced by `<h:button>`.
            There are differences in attributes, for example the _action_ attribute maps to _outcome_ and there is no _propagation_ attribute.
@@ -1178,7 +1178,7 @@
           data: button
           innerText: ""
           matchingXML: ""
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/register.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/register.xhtml
         message: |-
           Seam UI's `<s:button>` JSF control should be replaced by `<h:button>`.
            There are differences in attributes, for example the _action_ attribute maps to _outcome_ and there is no _propagation_ attribute.
@@ -1208,7 +1208,7 @@
       - konveyor.io/target=eap7
       - seam
       incidents:
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/home.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/home.xhtml
         message: |-
           Seam UI's `<s:link>` should be replaced by `<h:link>`.
            There are differences in attributes, for example the _action_ attribute maps to _outcome_ and there is no _propagation_ attribute.
@@ -1218,7 +1218,7 @@
           data: link
           innerText: ""
           matchingXML: ""
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/main.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/main.xhtml
         message: |-
           Seam UI's `<s:link>` should be replaced by `<h:link>`.
            There are differences in attributes, for example the _action_ attribute maps to _outcome_ and there is no _propagation_ attribute.
@@ -1228,7 +1228,7 @@
           data: link
           innerText: ""
           matchingXML: ""
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/template.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/template.xhtml
         message: |-
           Seam UI's `<s:link>` should be replaced by `<h:link>`.
            There are differences in attributes, for example the _action_ attribute maps to _outcome_ and there is no _propagation_ attribute.
@@ -1257,7 +1257,7 @@
       - konveyor.io/target=eap7
       - seam
       incidents:
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/conversations.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/conversations.xhtml
         message: |-
           Seam UI's `<f:convertDateTime type="time" pattern="kk:mm:ss">` should be replaced by `<f:convertDateTime>`.
 
@@ -1288,7 +1288,7 @@
       - konveyor.io/target=eap7
       - seam
       incidents:
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/edit.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/edit.xhtml
         message: There is no direct mapping for `<s:validateAll>` in JSF UI controls,
           but you can achieve a similar effect by using `<f:validateBean>` or [Richfaces](http://richfaces.jboss.org/)
           `<rich:validator>`.
@@ -1317,7 +1317,7 @@
       - konveyor.io/target=eap7
       - seam
       incidents:
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/book.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/book.xhtml
         message: |-
           There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
            [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
@@ -1331,7 +1331,7 @@
           matchingXML: '<ui:define name="label">Check In Date:</ui:define><rich:calendar
             id="checkinDate" value="#{booking.checkinDate}" required="true" datePattern="MM/dd/yyyy"
             event="onblur" reRender="checkinDateDecorate" style="width: auto;"></rich:calendar>'
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/book.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/book.xhtml
         message: |-
           There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
            [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
@@ -1345,7 +1345,7 @@
           matchingXML: '<ui:define name="label">Check Out Date:</ui:define><rich:calendar
             id="checkoutDate" value="#{booking.checkoutDate}" required="true" datePattern="MM/dd/yyyy"
             event="onblur" reRender="checkoutDateDecorate" style="width: auto;"></rich:calendar>'
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/book.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/book.xhtml
         message: |-
           There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
            [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
@@ -1359,7 +1359,7 @@
             king-size bed" itemValue="1"></f:selectItem><f:selectItem id="TwoDoubleBeds"
             itemLabel="Two double beds" itemValue="2"></f:selectItem><f:selectItem
             id="ThreeBeds" itemLabel="Three beds" itemValue="3"></f:selectItem></h:selectOneMenu>
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/book.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/book.xhtml
         message: |-
           There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
            [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
@@ -1373,7 +1373,7 @@
             id="smoking" value="#{booking.smoking}" layout="pageDirection" styleClass="radio"><f:selectItem
             id="Smoking" itemLabel="Smoking" itemValue="true"></f:selectItem><f:selectItem
             id="NonSmoking" itemLabel="Non Smoking" itemValue="false"></f:selectItem></h:selectOneRadio>
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/book.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/book.xhtml
         message: |-
           There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
            [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
@@ -1386,7 +1386,7 @@
           matchingXML: '<ui:define name="label">Credit Card #:</ui:define><h:inputText
             id="creditCard" value="#{booking.creditCard}" required="true"><a:support
             id="onblur" event="onblur" reRender="creditCardDecorate"></a:support></h:inputText>'
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/book.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/book.xhtml
         message: |-
           There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
            [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
@@ -1399,7 +1399,7 @@
           matchingXML: <ui:define name="label">Credit Card Name:</ui:define><h:inputText
             id="creditCardName" value="#{booking.creditCardName}" required="true"><a:support
             id="onblur" event="onblur" reRender="creditCardNameDecorate"></a:support></h:inputText>
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/book.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/book.xhtml
         message: |-
           There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
            [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
@@ -1425,7 +1425,7 @@
             id="Year2007" itemLabel="2007" itemValue="2007"></f:selectItem><f:selectItem
             id="Year2008" itemLabel="2008" itemValue="2008"></f:selectItem><f:selectItem
             id="Year2009" itemLabel="2009" itemValue="2009"></f:selectItem></h:selectOneMenu>
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/confirm.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/confirm.xhtml
         message: |-
           There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
            [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
@@ -1437,7 +1437,7 @@
           matchingXML: <ui:define name="label">Total Payment:</ui:define><h:outputText
             id="BookingTotal" value="#{booking.total}"><f:convertNumber type="currency"
             currencySymbol="$"></f:convertNumber></h:outputText>
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/confirm.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/confirm.xhtml
         message: |-
           There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
            [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
@@ -1448,7 +1448,7 @@
           innerText: "\n\t\tCheck In Date:\n\t\t\n\t"
           matchingXML: <ui:define name="label">Check In Date:</ui:define><h:outputText
             id="BookingCheckinDate" value="#{booking.checkinDate}"></h:outputText>
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/confirm.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/confirm.xhtml
         message: |-
           There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
            [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
@@ -1459,7 +1459,7 @@
           innerText: "\n\t\tCheck Out Date:\n\t\t\n\t"
           matchingXML: <ui:define name="label">Check Out Date:</ui:define><h:outputText
             id="BookingCheckoutDate" value="#{booking.checkoutDate}"></h:outputText>
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/confirm.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/confirm.xhtml
         message: |-
           There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
            [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
@@ -1469,7 +1469,7 @@
           data: decorate
           innerText: "\n\t\tCredit Card #:\n\t\t#{booking.creditCard}\n\t"
           matchingXML: "<ui:define name=\"label\">Credit Card #:</ui:define>\n\t\t#{booking.creditCard}"
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/hotelview.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotelview.xhtml
         message: |-
           There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
            [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
@@ -1479,7 +1479,7 @@
           data: decorate
           innerText: "             \n\t\tName:\n\t\t#{hotel.name}\n\t"
           matchingXML: "<ui:define name=\"label\">Name:</ui:define>\n\t\t#{hotel.name}"
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/hotelview.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotelview.xhtml
         message: |-
           There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
            [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
@@ -1489,7 +1489,7 @@
           data: decorate
           innerText: "             \n\t\tAddress:\n\t\t#{hotel.address}\n\t"
           matchingXML: "<ui:define name=\"label\">Address:</ui:define>\n\t\t#{hotel.address}"
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/hotelview.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotelview.xhtml
         message: |-
           There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
            [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
@@ -1499,7 +1499,7 @@
           data: decorate
           innerText: "             \n\t\tCity:\n\t\t#{hotel.city}\n\t"
           matchingXML: "<ui:define name=\"label\">City:</ui:define>\n\t\t#{hotel.city}"
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/hotelview.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotelview.xhtml
         message: |-
           There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
            [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
@@ -1509,7 +1509,7 @@
           data: decorate
           innerText: "             \n\t\tState:\n\t\t#{hotel.state}\n\t"
           matchingXML: "<ui:define name=\"label\">State:</ui:define>\n\t\t#{hotel.state}"
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/hotelview.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotelview.xhtml
         message: |-
           There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
            [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
@@ -1519,7 +1519,7 @@
           data: decorate
           innerText: "             \n\t\tZip:\n\t\t#{hotel.zip}\n\t"
           matchingXML: "<ui:define name=\"label\">Zip:</ui:define>\n\t\t#{hotel.zip}"
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/hotelview.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotelview.xhtml
         message: |-
           There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
            [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
@@ -1529,7 +1529,7 @@
           data: decorate
           innerText: "             \n\t\tCountry:\n\t\t#{hotel.country}\n\t"
           matchingXML: "<ui:define name=\"label\">Country:</ui:define>\n\t\t#{hotel.country}"
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/hotelview.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotelview.xhtml
         message: |-
           There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
            [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
@@ -1541,7 +1541,7 @@
           matchingXML: <ui:define name="label">Nightly rate:</ui:define><h:outputText
             id="HotelPrice" value="#{hotel.price}"><f:convertNumber type="currency"
             currencySymbol="$"></f:convertNumber></h:outputText>
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/password.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/password.xhtml
         message: |-
           There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
            [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
@@ -1553,7 +1553,7 @@
           innerText: "\n\t\t\t\tPassword:\n\t\t\t\t\n\t\t\t"
           matchingXML: <ui:define name="label">Password:</ui:define><h:inputSecret
             id="password" value="#{user.password}" required="true"></h:inputSecret>
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/password.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/password.xhtml
         message: |-
           There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
            [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
@@ -1565,7 +1565,7 @@
           innerText: "\n\t\t\t\tVerify:\n\t\t\t\t\n\t\t\t"
           matchingXML: <ui:define name="label">Verify:</ui:define><h:inputSecret id="verify"
             value="#{changePassword.verify}" required="true"></h:inputSecret>
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/register.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/register.xhtml
         message: |-
           There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
            [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
@@ -1578,7 +1578,7 @@
           matchingXML: <ui:define name="label">Username:</ui:define><h:inputText id="username"
             value="#{user.username}" required="true"><a:support id="onblur" event="onblur"
             reRender="usernameDecorate"></a:support></h:inputText>
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/register.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/register.xhtml
         message: |-
           There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
            [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
@@ -1591,7 +1591,7 @@
           matchingXML: <ui:define name="label">Real Name:</ui:define><h:inputText
             id="name" value="#{user.name}" required="true"><a:support id="onblur"
             event="onblur" reRender="nameDecorate"></a:support></h:inputText>
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/register.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/register.xhtml
         message: |-
           There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
            [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
@@ -1603,7 +1603,7 @@
           innerText: "\n\t\t\t\t\t\tPassword:\n\t\t\t\t\t\t\n\t\t\t\t\t"
           matchingXML: <ui:define name="label">Password:</ui:define><h:inputSecret
             id="password" value="#{user.password}" required="true"></h:inputSecret>
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/register.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/register.xhtml
         message: |-
           There is no direct mapping for `<s:decorate>` in JSF UI controls, but you can achieve the same functionality by using the UIInputContainer and a composite container, both of which are demonstrated in the [Open18 migration example](https://github.com/seam/migration/blob/develop/open18_java_ee_6)
            [input.xhtml](https://raw.githubusercontent.com/seam/migration/develop/open18_java_ee_6/src/main/webapp/resources/components/input.xhtml) file.
@@ -1634,7 +1634,7 @@
       - konveyor.io/target=eap7
       - seam
       incidents:
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/edit.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/edit.xhtml
         message: There is no direct mapping for `<s:span>` in JSF UI controls, but
           you can achieve a similar effect by using `<h:panelGroup>` or a `<ui:fragment>`
           with a span element.
@@ -1663,7 +1663,7 @@
       - konveyor.io/target=eap7
       - seam
       incidents:
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/edit.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/edit.xhtml
         message: There is no direct mapping for `<s:label>` in JSF UI controls, but
           `<h:outputLabel>` is similar.
         codeSnip: 12          </s:label>
@@ -1692,7 +1692,7 @@
       - konveyor.io/target=eap7
       - seam
       incidents:
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/edit.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/edit.xhtml
         message: Use `<h:message for="name" errorClass="invalid">` or [Richfaces](http://richfaces.jboss.org/)
           `<rich:message>`.
         codeSnip: 19      </div>
@@ -3329,7 +3329,7 @@
       - tag=jboss-eap5
       - tag=seam
       incidents:
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/resources/WEB-INF/components.xml
+      - uri: file:///source/test-files/seam-booking-5.2/resources/WEB-INF/components.xml
         message: ""
         codeSnip: 3              xmlns:core="http://jboss.com/products/seam/core"
         lineNumber: 2
@@ -3353,7 +3353,7 @@
       - tag=jboss-eap5
       - tag=seam
       incidents:
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/resources/WEB-INF/pages.xml
+      - uri: file:///source/test-files/seam-booking-5.2/resources/WEB-INF/pages.xml
         message: ""
         codeSnip: 64            login-required="true">
         lineNumber: 63
@@ -3416,7 +3416,7 @@
       - tag=descriptor
       - tag=jboss-eap5
       incidents:
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/resources/META-INF/jboss-app.xml
+      - uri: file:///source/test-files/seam-booking-5.2/resources/META-INF/jboss-app.xml
         message: ""
         codeSnip: '9        </loader-repository> '
         lineNumber: 8
@@ -3439,7 +3439,7 @@
       - tag=descriptor
       - tag=jboss-eap5
       incidents:
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/resources/META-INF/jboss.xml
+      - uri: file:///source/test-files/seam-booking-5.2/resources/META-INF/jboss.xml
         message: ""
         codeSnip: 7           <clustered>@distributable@</clustered>
         lineNumber: 6
@@ -6195,7 +6195,7 @@
       - tag=jsf
       - tag=seam
       incidents:
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/book.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/book.xhtml
         message: ""
         codeSnip: "30  \t\t\t<rich:calendar id=\"checkinDate\" value=\"#{booking.checkinDate}\"
           required=\"true\" datePattern=\"MM/dd/yyyy\" event=\"onblur\" reRender=\"checkinDateDecorate\"
@@ -6207,7 +6207,7 @@
           matchingXML: '<ui:define name="label">Check In Date:</ui:define><rich:calendar
             id="checkinDate" value="#{booking.checkinDate}" required="true" datePattern="MM/dd/yyyy"
             event="onblur" reRender="checkinDateDecorate" style="width: auto;"></rich:calendar>'
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/book.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/book.xhtml
         message: ""
         codeSnip: "35  \t\t\t<rich:calendar id=\"checkoutDate\" value=\"#{booking.checkoutDate}\"
           required=\"true\" datePattern=\"MM/dd/yyyy\" event=\"onblur\" reRender=\"checkoutDateDecorate\"
@@ -6219,7 +6219,7 @@
           matchingXML: '<ui:define name="label">Check Out Date:</ui:define><rich:calendar
             id="checkoutDate" value="#{booking.checkoutDate}" required="true" datePattern="MM/dd/yyyy"
             event="onblur" reRender="checkoutDateDecorate" style="width: auto;"></rich:calendar>'
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/book.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/book.xhtml
         message: ""
         codeSnip: "40  \t\t\t<h:selectOneMenu id=\"beds\" value=\"#{booking.beds}\">"
         lineNumber: 39
@@ -6231,7 +6231,7 @@
             king-size bed" itemValue="1"></f:selectItem><f:selectItem id="TwoDoubleBeds"
             itemLabel="Two double beds" itemValue="2"></f:selectItem><f:selectItem
             id="ThreeBeds" itemLabel="Three beds" itemValue="3"></f:selectItem></h:selectOneMenu>
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/book.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/book.xhtml
         message: ""
         codeSnip: "49  \t\t\t<h:selectOneRadio id=\"smoking\" value=\"#{booking.smoking}\"
           layout=\"pageDirection\" styleClass=\"radio\">"
@@ -6243,7 +6243,7 @@
             id="smoking" value="#{booking.smoking}" layout="pageDirection" styleClass="radio"><f:selectItem
             id="Smoking" itemLabel="Smoking" itemValue="true"></f:selectItem><f:selectItem
             id="NonSmoking" itemLabel="Non Smoking" itemValue="false"></f:selectItem></h:selectOneRadio>
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/book.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/book.xhtml
         message: ""
         codeSnip: "57  \t\t\t<h:inputText id=\"creditCard\" value=\"#{booking.creditCard}\"
           required=\"true\">"
@@ -6254,7 +6254,7 @@
           matchingXML: '<ui:define name="label">Credit Card #:</ui:define><h:inputText
             id="creditCard" value="#{booking.creditCard}" required="true"><a:support
             id="onblur" event="onblur" reRender="creditCardDecorate"></a:support></h:inputText>'
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/book.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/book.xhtml
         message: ""
         codeSnip: "64  \t\t\t<h:inputText id=\"creditCardName\" value=\"#{booking.creditCardName}\"
           required=\"true\">"
@@ -6265,7 +6265,7 @@
           matchingXML: <ui:define name="label">Credit Card Name:</ui:define><h:inputText
             id="creditCardName" value="#{booking.creditCardName}" required="true"><a:support
             id="onblur" event="onblur" reRender="creditCardNameDecorate"></a:support></h:inputText>
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/book.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/book.xhtml
         message: ""
         codeSnip: "71  \t\t\t<h:selectOneMenu id=\"creditCardExpiryMonth\" value=\"#{booking.creditCardExpiryMonth}\">"
         lineNumber: 70
@@ -6289,7 +6289,7 @@
             id="Year2007" itemLabel="2007" itemValue="2007"></f:selectItem><f:selectItem
             id="Year2008" itemLabel="2008" itemValue="2008"></f:selectItem><f:selectItem
             id="Year2009" itemLabel="2009" itemValue="2009"></f:selectItem></h:selectOneMenu>
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/book.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/book.xhtml
         message: ""
         codeSnip: "95  \t\t\t<h:commandButton id=\"proceed\" value=\"Proceed\" action=\"#{hotelBooking.setBookingDetails}\"/>"
         lineNumber: 94
@@ -6297,7 +6297,7 @@
           data: button
           innerText: ""
           matchingXML: ""
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/confirm.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/confirm.xhtml
         message: ""
         codeSnip: "22  \t\t<h:outputText id=\"BookingTotal\" value=\"#{booking.total}\">"
         lineNumber: 21
@@ -6307,7 +6307,7 @@
           matchingXML: <ui:define name="label">Total Payment:</ui:define><h:outputText
             id="BookingTotal" value="#{booking.total}"><f:convertNumber type="currency"
             currencySymbol="$"></f:convertNumber></h:outputText>
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/confirm.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/confirm.xhtml
         message: ""
         codeSnip: "29  \t\t<h:outputText id=\"BookingCheckinDate\" value=\"#{booking.checkinDate}\"/>"
         lineNumber: 28
@@ -6316,7 +6316,7 @@
           innerText: "\n\t\tCheck In Date:\n\t\t\n\t"
           matchingXML: <ui:define name="label">Check In Date:</ui:define><h:outputText
             id="BookingCheckinDate" value="#{booking.checkinDate}"></h:outputText>
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/confirm.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/confirm.xhtml
         message: ""
         codeSnip: "34  \t\t<h:outputText id=\"BookingCheckoutDate\" value=\"#{booking.checkoutDate}\"/>"
         lineNumber: 33
@@ -6325,7 +6325,7 @@
           innerText: "\n\t\tCheck Out Date:\n\t\t\n\t"
           matchingXML: <ui:define name="label">Check Out Date:</ui:define><h:outputText
             id="BookingCheckoutDate" value="#{booking.checkoutDate}"></h:outputText>
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/confirm.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/confirm.xhtml
         message: ""
         codeSnip: "39  \t\t#{booking.creditCard}"
         lineNumber: 38
@@ -6333,7 +6333,7 @@
           data: decorate
           innerText: "\n\t\tCredit Card #:\n\t\t#{booking.creditCard}\n\t"
           matchingXML: "<ui:define name=\"label\">Credit Card #:</ui:define>\n\t\t#{booking.creditCard}"
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/confirm.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/confirm.xhtml
         message: ""
         codeSnip: "43  \t\t<h:form id=\"confirm\">"
         lineNumber: 42
@@ -6341,7 +6341,7 @@
           data: button
           innerText: ""
           matchingXML: ""
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/conversations.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/conversations.xhtml
         message: ""
         codeSnip: "25  \t                </h:outputText>"
         lineNumber: 24
@@ -6349,7 +6349,7 @@
           data: convertDateTime
           innerText: ""
           matchingXML: ""
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/edit.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/edit.xhtml
         message: ""
         codeSnip: 12          </s:label>
         lineNumber: 11
@@ -6358,7 +6358,7 @@
           innerText: "\n            \n            *\n        "
           matchingXML: <ui:insert name="label"></ui:insert><s:span id="RequiredStyle"
             styleClass="required" rendered="#{required}">*</s:span>
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/edit.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/edit.xhtml
         message: ""
         codeSnip: 15                  <ui:insert/>
         lineNumber: 14
@@ -6366,7 +6366,7 @@
           data: validateAll
           innerText: "\n                \n            "
           matchingXML: <ui:insert></ui:insert>
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/edit.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/edit.xhtml
         message: ""
         codeSnip: 19      </div>
         lineNumber: 18
@@ -6374,7 +6374,7 @@
           data: message
           innerText: ""
           matchingXML: ""
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/home.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/home.xhtml
         message: ""
         codeSnip: 11  </head>
         lineNumber: 10
@@ -6382,7 +6382,7 @@
           data: link
           innerText: ""
           matchingXML: ""
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/hotelview.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotelview.xhtml
         message: ""
         codeSnip: "10  \t\t#{hotel.name}"
         lineNumber: 9
@@ -6390,7 +6390,7 @@
           data: decorate
           innerText: "             \n\t\tName:\n\t\t#{hotel.name}\n\t"
           matchingXML: "<ui:define name=\"label\">Name:</ui:define>\n\t\t#{hotel.name}"
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/hotelview.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotelview.xhtml
         message: ""
         codeSnip: "15  \t\t#{hotel.address}"
         lineNumber: 14
@@ -6398,7 +6398,7 @@
           data: decorate
           innerText: "             \n\t\tAddress:\n\t\t#{hotel.address}\n\t"
           matchingXML: "<ui:define name=\"label\">Address:</ui:define>\n\t\t#{hotel.address}"
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/hotelview.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotelview.xhtml
         message: ""
         codeSnip: "20  \t\t#{hotel.city}"
         lineNumber: 19
@@ -6406,7 +6406,7 @@
           data: decorate
           innerText: "             \n\t\tCity:\n\t\t#{hotel.city}\n\t"
           matchingXML: "<ui:define name=\"label\">City:</ui:define>\n\t\t#{hotel.city}"
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/hotelview.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotelview.xhtml
         message: ""
         codeSnip: "25  \t\t#{hotel.state}"
         lineNumber: 24
@@ -6414,7 +6414,7 @@
           data: decorate
           innerText: "             \n\t\tState:\n\t\t#{hotel.state}\n\t"
           matchingXML: "<ui:define name=\"label\">State:</ui:define>\n\t\t#{hotel.state}"
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/hotelview.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotelview.xhtml
         message: ""
         codeSnip: "30  \t\t#{hotel.zip}"
         lineNumber: 29
@@ -6422,7 +6422,7 @@
           data: decorate
           innerText: "             \n\t\tZip:\n\t\t#{hotel.zip}\n\t"
           matchingXML: "<ui:define name=\"label\">Zip:</ui:define>\n\t\t#{hotel.zip}"
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/hotelview.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotelview.xhtml
         message: ""
         codeSnip: "35  \t\t#{hotel.country}"
         lineNumber: 34
@@ -6430,7 +6430,7 @@
           data: decorate
           innerText: "             \n\t\tCountry:\n\t\t#{hotel.country}\n\t"
           matchingXML: "<ui:define name=\"label\">Country:</ui:define>\n\t\t#{hotel.country}"
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/hotelview.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotelview.xhtml
         message: ""
         codeSnip: "40  \t\t<h:outputText id=\"HotelPrice\" value=\"#{hotel.price}\">"
         lineNumber: 39
@@ -6440,7 +6440,7 @@
           matchingXML: <ui:define name="label">Nightly rate:</ui:define><h:outputText
             id="HotelPrice" value="#{hotel.price}"><f:convertNumber type="currency"
             currencySymbol="$"></f:convertNumber></h:outputText>
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/main.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/main.xhtml
         message: ""
         codeSnip: "69  \t\t</h:column>"
         lineNumber: 68
@@ -6448,7 +6448,7 @@
           data: link
           innerText: ""
           matchingXML: ""
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/password.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/password.xhtml
         message: ""
         codeSnip: "28  \t\t\t\t<h:inputSecret id=\"password\" value=\"#{user.password}\"
           required=\"true\"/>"
@@ -6458,7 +6458,7 @@
           innerText: "\n\t\t\t\tPassword:\n\t\t\t\t\n\t\t\t"
           matchingXML: <ui:define name="label">Password:</ui:define><h:inputSecret
             id="password" value="#{user.password}" required="true"></h:inputSecret>
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/password.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/password.xhtml
         message: ""
         codeSnip: "33  \t\t\t\t<h:inputSecret id=\"verify\" value=\"#{changePassword.verify}\"
           required=\"true\"/>"
@@ -6468,7 +6468,7 @@
           innerText: "\n\t\t\t\tVerify:\n\t\t\t\t\n\t\t\t"
           matchingXML: <ui:define name="label">Verify:</ui:define><h:inputSecret id="verify"
             value="#{changePassword.verify}" required="true"></h:inputSecret>
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/password.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/password.xhtml
         message: ""
         codeSnip: "37  \t\t\t\t<h:commandButton id=\"change\" value=\"Change\" action=\"#{changePassword.changePassword}\"/>"
         lineNumber: 36
@@ -6476,7 +6476,7 @@
           data: button
           innerText: ""
           matchingXML: ""
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/register.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/register.xhtml
         message: ""
         codeSnip: "59  \t\t\t\t\t\t<h:inputText id=\"username\" value=\"#{user.username}\"
           required=\"true\">"
@@ -6487,7 +6487,7 @@
           matchingXML: <ui:define name="label">Username:</ui:define><h:inputText id="username"
             value="#{user.username}" required="true"><a:support id="onblur" event="onblur"
             reRender="usernameDecorate"></a:support></h:inputText>
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/register.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/register.xhtml
         message: ""
         codeSnip: "66  \t\t\t\t\t\t<h:inputText id=\"name\" value=\"#{user.name}\"
           required=\"true\">"
@@ -6498,7 +6498,7 @@
           matchingXML: <ui:define name="label">Real Name:</ui:define><h:inputText
             id="name" value="#{user.name}" required="true"><a:support id="onblur"
             event="onblur" reRender="nameDecorate"></a:support></h:inputText>
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/register.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/register.xhtml
         message: ""
         codeSnip: "73  \t\t\t\t\t\t<h:inputSecret id=\"password\" value=\"#{user.password}\"
           required=\"true\"/>"
@@ -6508,7 +6508,7 @@
           innerText: "\n\t\t\t\t\t\tPassword:\n\t\t\t\t\t\t\n\t\t\t\t\t"
           matchingXML: <ui:define name="label">Password:</ui:define><h:inputSecret
             id="password" value="#{user.password}" required="true"></h:inputSecret>
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/register.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/register.xhtml
         message: ""
         codeSnip: "78  \t\t\t\t\t\t<h:inputSecret id=\"verify\" value=\"#{register.verify}\"
           required=\"true\"/>"
@@ -6518,7 +6518,7 @@
           innerText: "\n\t\t\t\t\t\tVerify Password:\n\t\t\t\t\t\t\n\t\t\t\t\t"
           matchingXML: <ui:define name="label">Verify Password:</ui:define><h:inputSecret
             id="verify" value="#{register.verify}" required="true"></h:inputSecret>
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/register.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/register.xhtml
         message: ""
         codeSnip: "82  \t\t\t\t\t\t<h:commandButton id=\"register\" value=\"Register\"
           action=\"#{register.register}\"/>"
@@ -6527,7 +6527,7 @@
           data: button
           innerText: ""
           matchingXML: ""
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/template.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/template.xhtml
         message: ""
         codeSnip: 14  </head>
         lineNumber: 13
@@ -6799,7 +6799,7 @@
       - konveyor.io/target=hibernate
       - konveyor.io/target=hibernate5.3+
       incidents:
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/resources/META-INF/persistence.xml
+      - uri: file:///source/test-files/seam-booking-5.2/resources/META-INF/persistence.xml
         message: Define `hibernate.default_schema` or `hibernate.default_catalog`
           (whichever is used by the selected dialect), or, alternatively, set `hibernate.hbm2ddl.jdbc_metadata_extraction_strategy=individually`.
         codeSnip: 8        <jta-data-source>java:/bookingDatasource</jta-data-source>
@@ -6808,7 +6808,7 @@
           data: provider
           innerText: org.hibernate.ejb.HibernatePersistence
           matchingXML: org.hibernate.ejb.HibernatePersistence
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/resources/META-INF/persistence.xml
+      - uri: file:///source/test-files/seam-booking-5.2/resources/META-INF/persistence.xml
         message: Define `hibernate.default_schema` or `hibernate.default_catalog`
           (whichever is used by the selected dialect), or, alternatively, set `hibernate.hbm2ddl.jdbc_metadata_extraction_strategy=individually`.
         codeSnip: 10           <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
@@ -6835,7 +6835,7 @@
       - konveyor.io/target=jakarta-ee
       - konveyor.io/target=jakarta-ee8
       incidents:
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/pom.xml
+      - uri: file:///source/test-files/seam-booking-5.2/pom.xml
         message: If you migrate your application to JBoss EAP 7.3, or later, and want
           to ensure its Maven building, running or testing works as expected, use
           instead the Jakarta EE dependency - groupId `jakarta.`.
@@ -6863,7 +6863,7 @@
       - tag=descriptor
       - tag=jboss-eap5
       incidents:
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/resources/META-INF/jboss.xml
+      - uri: file:///source/test-files/seam-booking-5.2/resources/META-INF/jboss.xml
         message: "\n                        The `jboss.xml` descriptor in deployments
           is ignored by JBoss AS 7+ or JBoss EAP 6+.\n                        Replace
           it with `jboss-ejb3.xml`.\n                    "
@@ -6900,7 +6900,7 @@
       - tag=jboss-eap5
       - tag=seam2
       incidents:
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/resources/WEB-INF/components.xml
+      - uri: file:///source/test-files/seam-booking-5.2/resources/WEB-INF/components.xml
         message: You should migrate from Seam 2 Framework to Context Dependency Injection
           technology.
         codeSnip: 3              xmlns:core="http://jboss.com/products/seam/core"
@@ -6931,7 +6931,7 @@
       - tag=jboss-eap5
       - tag=seam
       incidents:
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/resources/WEB-INF/pages.xml
+      - uri: file:///source/test-files/seam-booking-5.2/resources/WEB-INF/pages.xml
         message: "You should migrate from Seam 2 Framework to Context Dependency Injection
           technology.\n                        The most features from `pages.xml`
           file where it is specified a page flow and other configuration of the Seam
@@ -8398,7 +8398,7 @@
       - konveyor.io/target=jws
       - konveyor.io/target=jws6+
       incidents:
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/resources/WEB-INF/web.xml
+      - uri: file:///source/test-files/seam-booking-5.2/resources/WEB-INF/web.xml
         message: web.xml element references a javax-prefixed class name
         codeSnip: 41          <param-value>.xhtml</param-value>
         lineNumber: 40
@@ -8406,7 +8406,7 @@
           data: param-name
           innerText: javax.faces.DEFAULT_SUFFIX
           matchingXML: javax.faces.DEFAULT_SUFFIX
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/resources/WEB-INF/web.xml
+      - uri: file:///source/test-files/seam-booking-5.2/resources/WEB-INF/web.xml
         message: web.xml element references a javax-prefixed class name
         codeSnip: 52          <load-on-startup>1</load-on-startup>
         lineNumber: 51
@@ -9010,7 +9010,7 @@
       - konveyor.io/include=always
       - tag=Clustering EJB
       incidents:
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/resources/META-INF/jboss.xml
+      - uri: file:///source/test-files/seam-booking-5.2/resources/META-INF/jboss.xml
         message: ""
         lineNumber: 7
         variables:
@@ -9024,7 +9024,7 @@
       - konveyor.io/include=always
       - tag=Java EE XML
       incidents:
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/resources/META-INF/application.xml
+      - uri: file:///source/test-files/seam-booking-5.2/resources/META-INF/application.xml
         message: ""
         codeSnip: 5               version="5">
         lineNumber: 4
@@ -9039,7 +9039,7 @@
       - konveyor.io/include=always
       - tag=JSF XML
       incidents:
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/resources/WEB-INF/faces-config.xml
+      - uri: file:///source/test-files/seam-booking-5.2/resources/WEB-INF/faces-config.xml
         message: ""
         codeSnip: 3                xmlns="http://java.sun.com/xml/ns/javaee"
         lineNumber: 2
@@ -9140,13 +9140,13 @@
       - tag=Persistence=JPA entities
       - tag=Store=JPA entities
       incidents:
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/resources/META-INF/persistence.xml
+      - uri: file:///source/test-files/seam-booking-5.2/resources/META-INF/persistence.xml
         message: ""
         codeSnip: 3               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         lineNumber: 2
         variables:
           matchingText: http://java.sun.com/xml/ns/persistence
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/resources/META-INF/persistence.xml
+      - uri: file:///source/test-files/seam-booking-5.2/resources/META-INF/persistence.xml
         message: ""
         codeSnip: 5               version="1.0">
         lineNumber: 4
@@ -9276,7 +9276,7 @@
       - tag=Persistence=Persistence units
       - tag=Store=Persistence units
       incidents:
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/resources/META-INF/persistence.xml
+      - uri: file:///source/test-files/seam-booking-5.2/resources/META-INF/persistence.xml
         message: ""
     technology-usage-embedded-framework-01500:
       description: Hibernate
@@ -9328,217 +9328,217 @@
       - tag=Embedded technology - Java Server Faces
       - tag=JSF
       incidents:
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/book.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/book.xhtml
         message: ""
         codeSnip: "4  \t  \t\t\txmlns:h=\"http://java.sun.com/jsf/html\""
         lineNumber: 3
         variables:
           matchingText: java.sun.com/jsf/
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/book.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/book.xhtml
         message: ""
         codeSnip: "5  \t  \t\t\txmlns:f=\"http://java.sun.com/jsf/core\""
         lineNumber: 4
         variables:
           matchingText: java.sun.com/jsf/
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/book.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/book.xhtml
         message: ""
         codeSnip: "6  \t  \t\t\txmlns:s=\"http://jboss.com/products/seam/taglib\""
         lineNumber: 5
         variables:
           matchingText: java.sun.com/jsf/
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/confirm.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/confirm.xhtml
         message: ""
         codeSnip: "4  \t  \t\t\txmlns:h=\"http://java.sun.com/jsf/html\""
         lineNumber: 3
         variables:
           matchingText: java.sun.com/jsf/
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/confirm.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/confirm.xhtml
         message: ""
         codeSnip: "5  \t  \t\t\txmlns:f=\"http://java.sun.com/jsf/core\""
         lineNumber: 4
         variables:
           matchingText: java.sun.com/jsf/
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/confirm.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/confirm.xhtml
         message: ""
         codeSnip: 6                  xmlns:s="http://jboss.com/products/seam/taglib"
         lineNumber: 5
         variables:
           matchingText: java.sun.com/jsf/
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/conversations.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/conversations.xhtml
         message: ""
         codeSnip: 5       xmlns:f="http://java.sun.com/jsf/core"
         lineNumber: 4
         variables:
           matchingText: java.sun.com/jsf/
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/conversations.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/conversations.xhtml
         message: ""
         codeSnip: 6       xmlns:h="http://java.sun.com/jsf/html"
         lineNumber: 5
         variables:
           matchingText: java.sun.com/jsf/
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/conversations.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/conversations.xhtml
         message: ""
         codeSnip: 7       xmlns:s="http://jboss.com/products/seam/taglib">
         lineNumber: 6
         variables:
           matchingText: java.sun.com/jsf/
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/display.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/display.xhtml
         message: ""
         codeSnip: 3                   xmlns:h="http://java.sun.com/jsf/html"
         lineNumber: 2
         variables:
           matchingText: java.sun.com/jsf/
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/display.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/display.xhtml
         message: ""
         codeSnip: 4                   xmlns:f="http://java.sun.com/jsf/core"
         lineNumber: 3
         variables:
           matchingText: java.sun.com/jsf/
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/display.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/display.xhtml
         message: ""
         codeSnip: 5                   xmlns:s="http://jboss.com/products/seam/taglib">
         lineNumber: 4
         variables:
           matchingText: java.sun.com/jsf/
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/edit.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/edit.xhtml
         message: ""
         codeSnip: 4                  xmlns:h="http://java.sun.com/jsf/html"
         lineNumber: 3
         variables:
           matchingText: java.sun.com/jsf/
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/edit.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/edit.xhtml
         message: ""
         codeSnip: 5                  xmlns:f="http://java.sun.com/jsf/core"
         lineNumber: 4
         variables:
           matchingText: java.sun.com/jsf/
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/edit.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/edit.xhtml
         message: ""
         codeSnip: 6                  xmlns:s="http://jboss.com/products/seam/taglib">
         lineNumber: 5
         variables:
           matchingText: java.sun.com/jsf/
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/home.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/home.xhtml
         message: ""
         codeSnip: "4  \t  xmlns:h=\"http://java.sun.com/jsf/html\""
         lineNumber: 3
         variables:
           matchingText: java.sun.com/jsf/
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/home.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/home.xhtml
         message: ""
         codeSnip: "5  \t  xmlns:f=\"http://java.sun.com/jsf/core\""
         lineNumber: 4
         variables:
           matchingText: java.sun.com/jsf/
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/home.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/home.xhtml
         message: ""
         codeSnip: 6        xmlns:s="http://jboss.com/products/seam/taglib">
         lineNumber: 5
         variables:
           matchingText: java.sun.com/jsf/
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/hotel.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotel.xhtml
         message: ""
         codeSnip: "4  \t  \t\t\txmlns:h=\"http://java.sun.com/jsf/html\""
         lineNumber: 3
         variables:
           matchingText: java.sun.com/jsf/
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/hotel.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotel.xhtml
         message: ""
         codeSnip: "5  \t  \t\t\txmlns:f=\"http://java.sun.com/jsf/core\""
         lineNumber: 4
         variables:
           matchingText: java.sun.com/jsf/
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/hotel.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotel.xhtml
         message: ""
         codeSnip: 6                  xmlns:s="http://jboss.com/products/seam/taglib"
         lineNumber: 5
         variables:
           matchingText: java.sun.com/jsf/
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/hotelview.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotelview.xhtml
         message: ""
         codeSnip: "4  \t  \t\t\t xmlns:h=\"http://java.sun.com/jsf/html\""
         lineNumber: 3
         variables:
           matchingText: java.sun.com/jsf/
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/hotelview.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotelview.xhtml
         message: ""
         codeSnip: "5  \t  \t\t\t xmlns:f=\"http://java.sun.com/jsf/core\""
         lineNumber: 4
         variables:
           matchingText: java.sun.com/jsf/
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/hotelview.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/hotelview.xhtml
         message: ""
         codeSnip: 6                   xmlns:s="http://jboss.com/products/seam/taglib">
         lineNumber: 5
         variables:
           matchingText: java.sun.com/jsf/
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/main.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/main.xhtml
         message: ""
         codeSnip: "4  \t  \t\t\txmlns:h=\"http://java.sun.com/jsf/html\""
         lineNumber: 3
         variables:
           matchingText: java.sun.com/jsf/
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/main.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/main.xhtml
         message: ""
         codeSnip: "5  \t  \t\t\txmlns:f=\"http://java.sun.com/jsf/core\""
         lineNumber: 4
         variables:
           matchingText: java.sun.com/jsf/
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/main.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/main.xhtml
         message: ""
         codeSnip: "6  \t  \t\t\txmlns:s=\"http://jboss.com/products/seam/taglib\""
         lineNumber: 5
         variables:
           matchingText: java.sun.com/jsf/
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/password.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/password.xhtml
         message: ""
         codeSnip: "4  \t  \t\t\txmlns:h=\"http://java.sun.com/jsf/html\""
         lineNumber: 3
         variables:
           matchingText: java.sun.com/jsf/
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/password.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/password.xhtml
         message: ""
         codeSnip: "5  \t  \t\t\txmlns:f=\"http://java.sun.com/jsf/core\""
         lineNumber: 4
         variables:
           matchingText: java.sun.com/jsf/
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/password.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/password.xhtml
         message: ""
         codeSnip: "6  \t  \t\t\txmlns:s=\"http://jboss.com/products/seam/taglib\""
         lineNumber: 5
         variables:
           matchingText: java.sun.com/jsf/
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/register.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/register.xhtml
         message: ""
         codeSnip: "4  \t  xmlns:h=\"http://java.sun.com/jsf/html\""
         lineNumber: 3
         variables:
           matchingText: java.sun.com/jsf/
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/register.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/register.xhtml
         message: ""
         codeSnip: "5  \t  xmlns:f=\"http://java.sun.com/jsf/core\""
         lineNumber: 4
         variables:
           matchingText: java.sun.com/jsf/
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/register.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/register.xhtml
         message: ""
         codeSnip: "6  \t  xmlns:s=\"http://jboss.com/products/seam/taglib\""
         lineNumber: 5
         variables:
           matchingText: java.sun.com/jsf/
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/template.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/template.xhtml
         message: ""
         codeSnip: 5          xmlns:h="http://java.sun.com/jsf/html"
         lineNumber: 4
         variables:
           matchingText: java.sun.com/jsf/
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/template.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/template.xhtml
         message: ""
         codeSnip: 6          xmlns:f="http://java.sun.com/jsf/core"
         lineNumber: 5
         variables:
           matchingText: java.sun.com/jsf/
-      - uri: file:///tmp/koncur/tests/seam-booking/source/test-files/seam-booking-5.2/view/template.xhtml
+      - uri: file:///source/test-files/seam-booking-5.2/view/template.xhtml
         message: ""
         codeSnip: 7          xmlns:s="http://jboss.com/products/seam/taglib">
         lineNumber: 6
