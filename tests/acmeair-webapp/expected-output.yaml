@@ -480,7 +480,7 @@
           \ \n13  @Path(\"/flights\")\n14  public class FlightsREST {\n15  private
           FlightService flightService = (FlightService)ServiceLocator.getService(FlightService.class);\n16
           \ \n17  @POST"
-        lineNumber: 7
+        lineNumber: 8
         variables:
           file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/FlightsREST.java
           kind: Module
@@ -496,7 +496,7 @@
           \ \n13  @Path(\"/flights\")\n14  public class FlightsREST {\n15  private
           FlightService flightService = (FlightService)ServiceLocator.getService(FlightService.class);\n16
           \ \n17  @POST\n18  @Path(\"/queryflights\")"
-        lineNumber: 8
+        lineNumber: 9
         variables:
           file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/FlightsREST.java
           kind: Module
@@ -512,7 +512,7 @@
           \ \n13  @Path(\"/flights\")\n14  public class FlightsREST {\n15  private
           FlightService flightService = (FlightService)ServiceLocator.getService(FlightService.class);\n16
           \ \n17  @POST\n18  @Path(\"/queryflights\")\n19  @Consumes({\"application/x-www-form-urlencoded\"})"
-        lineNumber: 9
+        lineNumber: 10
         variables:
           file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/FlightsREST.java
           kind: Module
@@ -529,7 +529,7 @@
           FlightService flightService = (FlightService)ServiceLocator.getService(FlightService.class);\n16
           \ \n17  @POST\n18  @Path(\"/queryflights\")\n19  @Consumes({\"application/x-www-form-urlencoded\"})\n20
           \ @Produces({\"application/json\"})"
-        lineNumber: 10
+        lineNumber: 11
         variables:
           file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/FlightsREST.java
           kind: Module
@@ -549,7 +549,7 @@
           String fromAirport, @FormParam(\"toAirport\") String toAirport, @FormParam(\"fromDate\")
           Date fromDate, @FormParam(\"returnDate\") Date returnDate, @FormParam(\"oneWay\")
           boolean oneWay) {"
-        lineNumber: 11
+        lineNumber: 12
         variables:
           file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/FlightsREST.java
           kind: Module
@@ -1889,7 +1889,7 @@
           String number, @FormParam(\"userid\") String userid) {\n52  try {\n53  Booking
           b = this.bs.getBooking(userid, number);\n54  return b;\n55  } catch (Exception
           var4) {\n56  var4.printStackTrace();\n57  return null;\n58  }\n59  }"
-        lineNumber: 49
+        lineNumber: 56
         variables:
           file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/BookingsREST.java
           kind: Property
@@ -1904,7 +1904,7 @@
           String user) {\n65  try {\n66  return this.bs.getBookingsByUser(user);\n67
           \ } catch (Exception var3) {\n68  var3.printStackTrace();\n69  return null;\n70
           \ }\n71  }\n72  "
-        lineNumber: 62
+        lineNumber: 68
         variables:
           file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/BookingsREST.java
           kind: Property
@@ -1921,7 +1921,7 @@
           \ return Response.ok(\"booking \" + number + \" deleted.\").build();\n81
           \ } catch (Exception var4) {\n82  var4.printStackTrace();\n83  return Response.status(Status.INTERNAL_SERVER_ERROR).build();\n84
           \ }\n85  }"
-        lineNumber: 75
+        lineNumber: 81
         variables:
           file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/BookingsREST.java
           kind: Property
@@ -1996,7 +1996,7 @@
           Date fromDate, @FormParam(\"returnDate\") Date returnDate, @FormParam(\"oneWay\")
           boolean oneWay) {\n22  TripFlightOptions options = new TripFlightOptions();\n23
           \ ArrayList legs = new ArrayList();"
-        lineNumber: 13
+        lineNumber: 14
         variables:
           file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/FlightsREST.java
           kind: Property
@@ -2017,7 +2017,7 @@
           \ List toFlights = this.flightService.getFlightByAirportsAndDepartureDate(fromAirport,
           toAirport, fromDate);\n26  toInfo.setFlightsOptions(toFlights);\n27  legs.add(toInfo);\n28
           \ toInfo.setCurrentPage(0);"
-        lineNumber: 18
+        lineNumber: 19
         variables:
           file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/FlightsREST.java
           kind: Property
@@ -2034,7 +2034,7 @@
           \ ArrayList legs = new ArrayList();\n57  TripLegInfo toInfo = new TripLegInfo();\n58
           \ List toFlights = this.flightService.getFlightByAirports(fromAirport, toAirport);\n59
           \ toInfo.setFlightsOptions(toFlights);\n60  legs.add(toInfo);\n61  toInfo.setCurrentPage(0);"
-        lineNumber: 51
+        lineNumber: 58
         variables:
           file: file:///opt/input/source/java-project/src/main/java/com/acmeair/web/FlightsREST.java
           kind: Property
