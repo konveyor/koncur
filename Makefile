@@ -105,6 +105,9 @@ _hub-install: ## Internal target for hub installation
 	@$(KUBECTL) wait --for=condition=ready pod -l olm.catalogSource=operatorhubio-catalog -n olm --timeout=120s || true
 	@echo "Installing Tackle operator from $(OPERATOR_REF) branch..."
 	@$(KUBECTL) apply -f https://raw.githubusercontent.com/konveyor/tackle2-operator/$(OPERATOR_REF)/tackle-k8s.yaml
+	@echo "Patching CatalogSource to use operator-index:$(OPERATOR_REF)..."
+	@$(KUBECTL) patch catalogsource konveyor -n ${KONVEYOR_NAMESPACE} --type=merge \
+		-p '{"spec":{"image":"quay.io/konveyor/tackle2-operator-index:$(OPERATOR_REF)"}}'
 	@echo "Waiting for Tackle CRD to be available..."
 	@for i in $$(seq 1 120); do \
 		$(KUBECTL) get crd tackles.tackle.konveyor.io >/dev/null 2>&1 && break || sleep 5; \
