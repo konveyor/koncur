@@ -4,6 +4,9 @@ import (
 	"context"
 	"net/http"
 	"net/http/httptest"
+	"os"
+	"path/filepath"
+	"strings"
 	"testing"
 	"time"
 
@@ -73,6 +76,85 @@ func TestNewTackleHubTarget(t *testing.T) {
 				if target.url != tt.cfg.URL {
 					t.Errorf("Expected URL '%s', got '%s'", tt.cfg.URL, target.url)
 				}
+			}
+		})
+	}
+}
+
+// TestTackleHubTarget_CreateApplication_MavenIdentityGating verifies that the
+// maven identity is only attached to an application when the test itself declares
+// RequireMavenSettings. Having maven settings configured on the target must not
+// cause the credential to leak onto tests that never asked for it.
+func TestTackleHubTarget_CreateApplication_MavenIdentityGating(t *testing.T) {
+	// Temp maven settings file so attachMavenIdentity can read it if reached.
+	tmpDir := t.TempDir()
+	settingsPath := filepath.Join(tmpDir, "settings.xml")
+	if err := os.WriteFile(settingsPath, []byte("<settings></settings>"), 0644); err != nil {
+		t.Fatalf("failed to write settings file: %v", err)
+	}
+
+	tests := []struct {
+		name                 string
+		requireMavenSettings bool
+		wantIdentityAttached bool
+	}{
+		{
+			name:                 "test does not require maven settings - identity must not be attached",
+			requireMavenSettings: false,
+			wantIdentityAttached: false,
+		},
+		{
+			name:                 "test requires maven settings - identity attached",
+			requireMavenSettings: true,
+			wantIdentityAttached: true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			var identityEndpointHit bool
+			server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				w.Header().Set("Content-Type", "application/json")
+				switch {
+				case strings.Contains(r.URL.Path, "/identities"):
+					identityEndpointHit = true
+					if r.Method == http.MethodPost {
+						w.Write([]byte(`{"id":1,"name":"maven","kind":"maven"}`))
+					} else {
+						w.Write([]byte("[]"))
+					}
+				case r.URL.Path == "/applications" && r.Method == http.MethodGet:
+					w.Write([]byte("[]"))
+				case r.URL.Path == "/applications" && r.Method == http.MethodPost:
+					w.Write([]byte(`{"id":1,"name":"test-app"}`))
+				default:
+					// e.g. PUT /applications/1 when attaching the identity
+					w.Write([]byte("{}"))
+				}
+			}))
+			defer server.Close()
+
+			cfg := &config.TackleHubConfig{
+				URL:           server.URL,
+				MavenSettings: settingsPath,
+			}
+			target, err := NewTackleHubTarget(cfg)
+			if err != nil {
+				t.Fatalf("failed to create target: %v", err)
+			}
+
+			test := &config.TestDefinition{
+				Name:                 "test-app",
+				RequireMavenSettings: tt.requireMavenSettings,
+			}
+
+			if _, err := target.createApplication(test); err != nil {
+				t.Fatalf("createApplication() error = %v", err)
+			}
+
+			if identityEndpointHit != tt.wantIdentityAttached {
+				t.Errorf("maven identity attached = %v, want %v (RequireMavenSettings=%v)",
+					identityEndpointHit, tt.wantIdentityAttached, tt.requireMavenSettings)
 			}
 		})
 	}
