@@ -378,8 +378,8 @@ func (t *TackleHubTarget) createApplication(test *config.TestDefinition) (*api.A
 		if existingApp.Name == test.Name {
 			log.Info("Found existing application", "id", existingApp.ID, "name", existingApp.Name)
 
-			// Update identities if maven settings configured
-			if t.mavenSettings != "" {
+			// Update identities only when the test requires maven settings
+			if test.RequireMavenSettings && t.mavenSettings != "" {
 				err = t.attachMavenIdentity(&existingApp)
 				if err != nil {
 					return nil, fmt.Errorf("failed to attach maven identity: %w", err)
@@ -429,8 +429,8 @@ func (t *TackleHubTarget) createApplication(test *config.TestDefinition) (*api.A
 		return nil, err
 	}
 
-	// Attach maven identity if configured
-	if t.mavenSettings != "" {
+	// Attach maven identity only when the test requires maven settings
+	if test.RequireMavenSettings && t.mavenSettings != "" {
 		err = t.attachMavenIdentity(app)
 		if err != nil {
 			return nil, fmt.Errorf("failed to attach maven identity: %w", err)
