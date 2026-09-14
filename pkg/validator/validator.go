@@ -47,10 +47,9 @@ func getComparer(targetType, testDir string) comparer {
 	switch targetType {
 	case "kantra":
 		return &kantraValidator{baseValidator: *base}
-	case "tackle-hub":
+	case "tackle-hub", "tackle-ui":
+		// tackle-ui uses Hub API for extraction, so use same validator as tackle-hub
 		return &tackleHubValidator{baseValidator: *base}
-	case "tackle-ui":
-		return &kantraValidator{baseValidator: *base}
 	case "kai-rpc":
 		return &kantraValidator{baseValidator: *base}
 	case "vscode":

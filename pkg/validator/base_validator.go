@@ -142,10 +142,16 @@ func (b *baseValidator) compareViolationDetails(expected, actual konveyor.Violat
 			}
 		}
 		if !found {
-			fieldError := slices.Sorted(maps.Keys(faildFields))[len(faildFields)-1]
-			errors = append(errors, ValidationError{
-				Message: fmt.Sprintf("Did not find expected incident:  %s:%d failed to match on: %s", i.URI, lineNumberOrZero(i.LineNumber), fieldError.String()),
-			})
+			if len(faildFields) > 0 {
+				fieldError := slices.Sorted(maps.Keys(faildFields))[len(faildFields)-1]
+				errors = append(errors, ValidationError{
+					Message: fmt.Sprintf("Did not find expected incident:  %s:%d failed to match on: %s", i.URI, lineNumberOrZero(i.LineNumber), fieldError.String()),
+				})
+			} else {
+				errors = append(errors, ValidationError{
+					Message: fmt.Sprintf("Did not find expected incident:  %s:%d", i.URI, lineNumberOrZero(i.LineNumber)),
+				})
+			}
 		}
 	}
 
@@ -161,10 +167,16 @@ func (b *baseValidator) compareViolationDetails(expected, actual konveyor.Violat
 			}
 		}
 		if !found {
-			fieldError := slices.Sorted(maps.Keys(faildFields))[len(faildFields)-1]
-			errors = append(errors, ValidationError{
-				Message: fmt.Sprintf("Unexpected incident found: %s:%d failed to match on: %s", ai.URI, lineNumberOrZero(ai.LineNumber), fieldError),
-			})
+			if len(faildFields) > 0 {
+				fieldError := slices.Sorted(maps.Keys(faildFields))[len(faildFields)-1]
+				errors = append(errors, ValidationError{
+					Message: fmt.Sprintf("Unexpected incident found: %s:%d failed to match on: %s", ai.URI, lineNumberOrZero(ai.LineNumber), fieldError),
+				})
+			} else {
+				errors = append(errors, ValidationError{
+					Message: fmt.Sprintf("Unexpected incident found: %s:%d", ai.URI, lineNumberOrZero(ai.LineNumber)),
+				})
+			}
 		}
 	}
 

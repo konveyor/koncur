@@ -143,16 +143,16 @@ tackleHub:
 When `images` is specified, koncur patches the Tackle Custom Resource on the cluster via `kubectl` and waits for the Hub to become ready before running tests. See [Local Testing with Custom Images](docs/local-testing-custom-images.md) for detailed workflows.
 
 ### Tackle UI (Browser Automation)
-**Not Implemented**
 
 ```yaml
 type: tackle-ui
 tackleUI:
-  url: https://tackle.example.com
-  username: admin
-  password: secret
+  url: http://localhost:8080
+  username: ""  # Optional - for auth-enabled instances
+  password: ""  # Optional - for auth-enabled instances
   browser: chrome  # chrome or firefox
-  headless: true
+  headless: false  # true for CI/CD
+  mavenSettings: /path/to/settings.xml  # Optional
 ```
 
 ### Kai RPC

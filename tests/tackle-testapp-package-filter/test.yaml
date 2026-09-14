@@ -9,7 +9,7 @@ analysis:
     rules: []
     disableDefaultRules: false
     analysisMode: source-only
-timeout: 10m0s
+timeout: 3m0s
 requireMavenSettings: true
 expect:
     exitCode: 0
