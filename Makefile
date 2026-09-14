@@ -104,22 +104,13 @@ _hub-install: ## Internal target for hub installation
 	@sleep 5
 	@$(KUBECTL) wait --for=condition=ready pod -l olm.catalogSource=operatorhubio-catalog -n olm --timeout=120s || true
 	@echo "Installing Tackle operator from $(OPERATOR_REF) branch..."
-	@$(KUBECTL) apply -f https://raw.githubusercontent.com/konveyor/tackle2-operator/$(OPERATOR_REF)/tackle-k8s.yaml
-	@echo "Patching CatalogSource to use operator-index:$(OPERATOR_REF)..."
-	@$(KUBECTL) patch catalogsource konveyor -n ${KONVEYOR_NAMESPACE} --type=merge \
-		-p '{"spec":{"image":"quay.io/konveyor/tackle2-operator-index:$(OPERATOR_REF)"}}'
-	@echo "Restarting CatalogSource pod to pick up new image..."
-	@$(KUBECTL) delete pod -n ${KONVEYOR_NAMESPACE} -l olm.catalogSource=konveyor --ignore-not-found=true
-	@sleep 5
-	@echo "Waiting for CatalogSource pod to be ready..."
-	@for i in $$(seq 1 30); do \
-		if $(KUBECTL) wait --for=condition=ready pod -l olm.catalogSource=konveyor -n ${KONVEYOR_NAMESPACE} --timeout=5s >/dev/null 2>&1; then \
-			echo "CatalogSource pod is ready with updated image"; \
-			break; \
-		fi; \
-		if [ $$i -eq 30 ]; then echo "Timeout waiting for CatalogSource pod"; exit 1; fi; \
-		sleep 3; \
-	done
+	@echo "Downloading and patching tackle-k8s.yaml to use operator-index:$(OPERATOR_REF)..."
+	@mkdir -p .koncur/config
+	@curl -sL https://raw.githubusercontent.com/konveyor/tackle2-operator/$(OPERATOR_REF)/tackle-k8s.yaml | \
+		sed 's|\(image: quay.io/konveyor/tackle2-operator-index:\).*|\1$(OPERATOR_REF)|g' \
+		> .koncur/config/tackle-k8s-patched.yaml
+	@echo "Applying patched tackle-k8s.yaml..."
+	@$(KUBECTL) apply -f .koncur/config/tackle-k8s-patched.yaml
 	@echo "Waiting for Tackle CRD to be available..."
 	@for i in $$(seq 1 120); do \
 		$(KUBECTL) get crd tackles.tackle.konveyor.io >/dev/null 2>&1 && break || sleep 5; \
