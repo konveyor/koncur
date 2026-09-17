@@ -319,16 +319,16 @@ func (t *TackleHubTarget) Execute(ctx context.Context, test *config.TestDefiniti
 			if len(ruleParts) != 2 {
 				continue
 			}
-			r, ok := rulesetToInsightConverted[ruleParts[0]]
-			log.Info("searching rulesetToInsightConverted for ruleset", "ok", ok, "r", r, "name", ruleParts[0], "keys", slices.Sorted(maps.Keys(rulesetToInsightConverted)))
-			if r, ok := rulesetToInsightConverted[ruleParts[0]]; ok {
-				log.Info("got ruleset", "error part1", parts[0], "error part 2", parts[1])
-				if r.Errors == nil {
-					r.Errors = map[string]string{}
-				}
-				r.Errors[ruleParts[1]] = strings.TrimSpace(strings.Join(parts[1:], ":"))
-				rulesetToInsightConverted[ruleParts[0]] = r
+			// Attach the error to its ruleset, creating the ruleset if it does
+			// not already exist so that error-only rulesets are preserved in
+			// the output (and can be detected as "completed with errors").
+			r := rulesetToInsightConverted[ruleParts[0]]
+			r.Name = ruleParts[0]
+			if r.Errors == nil {
+				r.Errors = map[string]string{}
 			}
+			r.Errors[ruleParts[1]] = strings.TrimSpace(strings.Join(parts[1:], ":"))
+			rulesetToInsightConverted[ruleParts[0]] = r
 		}
 	}
 

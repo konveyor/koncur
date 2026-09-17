@@ -8,10 +8,12 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
 	"time"
 
 	"github.com/fatih/color"
+	konveyor "github.com/konveyor/analyzer-lsp/output/v1/konveyor"
 	"github.com/konveyor/test-harness/pkg/config"
 	"github.com/konveyor/test-harness/pkg/parser"
 	"github.com/konveyor/test-harness/pkg/targets"
@@ -292,6 +294,20 @@ will be extracted to a temporary directory and all tests will be run from it.`,
 	return runCmd
 }
 
+// collectAnalysisErrors returns a sorted, human-readable list of the per-ruleset
+// analysis errors found in the output. An empty result means the analysis
+// completed cleanly.
+func collectAnalysisErrors(rulesets []konveyor.RuleSet) []string {
+	var msgs []string
+	for _, rs := range rulesets {
+		for rule, msg := range rs.Errors {
+			msgs = append(msgs, fmt.Sprintf("%s.%s: %s", rs.Name, rule, msg))
+		}
+	}
+	sort.Strings(msgs)
+	return msgs
+}
+
 // runSingleTest executes a single test and returns the test result
 func runSingleTest(test *config.TestDefinition, target targets.Target, targetConfig *config.TargetConfig) (*TestResult, error) {
 
@@ -332,6 +348,22 @@ func runSingleTest(test *config.TestDefinition, target targets.Target, targetCon
 		testResult.Status = "failed"
 		testResult.ErrorMessage = fmt.Sprintf("failed to parse output: %v", err)
 		return testResult, fmt.Errorf("failed to parse output: %w", err)
+	}
+
+	// Fail the test if the analysis completed with errors. Analyzer errors are
+	// recorded per ruleset in the output (Tackle Hub renders this as "Completed
+	// with errors"); their presence means the analysis did not complete cleanly,
+	// so the test must fail instead of silently passing. This is checked on the
+	// raw output, before filtering, so error-only rulesets are not dropped, and
+	// it applies to every target since they share this output format.
+	if analysisErrors := collectAnalysisErrors(actualOutput); len(analysisErrors) > 0 {
+		msg := fmt.Sprintf("analysis completed with errors: %s", strings.Join(analysisErrors, "; "))
+		testResult.Status = "failed"
+		testResult.ErrorMessage = msg
+		if outputFormat == "console" {
+			color.Red("  ✗ %s", msg)
+		}
+		return testResult, nil
 	}
 
 	// Filter actual output to match how expected output is filtered during generation
