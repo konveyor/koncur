@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Maven settings attached (as a Kind:"maven" Identity) to the application analyzed by the
+  `insecure-maven-repo` test. It mirrors ALL repositories to the in-cluster self-signed-TLS
+  nginx proxy (see mirror.yaml). Resolving anything through this mirror requires the analyzer
+  to honor insecure mode (analyzer-lsp #1190 / #1191); otherwise resolution fails PKIX.
+-->
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+  <mirrors>
+    <mirror>
+      <id>insecure-maven-mirror</id>
+      <name>Insecure in-cluster mirror</name>
+      <mirrorOf>*</mirrorOf>
+      <url>https://maven-mirror.konveyor-tackle.svc:8443/</url>
+    </mirror>
+  </mirrors>
+</settings>

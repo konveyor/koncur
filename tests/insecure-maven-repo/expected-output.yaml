@@ -1,0 +1,212 @@
+- name: discovery-rules
+  tags:
+  - Java
+  - Maven
+  insights:
+    discover-java-files:
+      description: Java source files
+      category: ""
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - konveyor.io/target=discovery
+      - tag=Java Source
+      incidents:
+      - uri: file:///source/mta-insecure-maven-test/src/main/java/com/example/HelloServlet.java
+        message: ""
+        lineNumber: 0
+      effort: 0
+    discover-maven-xml:
+      description: Maven XML file
+      category: ""
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - konveyor.io/target=discovery
+      - tag=Maven XML
+      incidents:
+      - uri: file:///source/mta-insecure-maven-test/pom.xml
+        message: ""
+        lineNumber: 0
+      effort: 0
+- name: eap8/eap7
+  violations:
+    javax-to-jakarta-dependencies-00001:
+      description: The 'javax' groupId has been replaced by 'jakarta' group id in
+        dependencies.
+      category: mandatory
+      labels:
+      - konveyor.io/source
+      - konveyor.io/source=spring5
+      - konveyor.io/target=eap
+      - konveyor.io/target=eap8
+      - konveyor.io/target=jakarta-ee
+      - konveyor.io/target=jakarta-ee9+
+      - konveyor.io/target=jws
+      - konveyor.io/target=jws6+
+      - konveyor.io/target=spring6+
+      incidents:
+      - uri: file:///source/mta-insecure-maven-test/pom.xml
+        message: Update the group dependency by replacing the `javax.` groupId with
+          `jakarta.`
+        codeSnip: 31        <artifactId>javax.servlet-api</artifactId>
+        lineNumber: 30
+      links:
+      - url: https://jakarta.ee/
+        title: Jakarta EE
+      effort: 1
+    javax-to-jakarta-dependencies-00002:
+      description: The artifactIds starting with javax.*-api must be updated to their
+        corresponding jakarta.*-api versions in dependency files
+      category: mandatory
+      labels:
+      - konveyor.io/source
+      - konveyor.io/source=spring5
+      - konveyor.io/target=eap
+      - konveyor.io/target=eap8
+      - konveyor.io/target=jakarta-ee
+      - konveyor.io/target=jakarta-ee9+
+      - konveyor.io/target=jws
+      - konveyor.io/target=jws6+
+      - konveyor.io/target=spring6+
+      incidents:
+      - uri: file:///source/mta-insecure-maven-test/pom.xml
+        message: Update artifact dependency by replacing the `javax.-api` artifactId
+          with `jakarta.-api`
+        codeSnip: 32        <version>4.0.1</version>
+        lineNumber: 31
+      links:
+      - url: https://jakarta.ee/
+        title: Jakarta EE
+      effort: 1
+    javax-to-jakarta-import-00001:
+      description: The package 'javax' has been replaced by 'jakarta'.
+      category: mandatory
+      labels:
+      - konveyor.io/source
+      - konveyor.io/source=spring5
+      - konveyor.io/target=eap
+      - konveyor.io/target=eap8
+      - konveyor.io/target=jakarta-ee
+      - konveyor.io/target=jakarta-ee9+
+      - konveyor.io/target=jws
+      - konveyor.io/target=jws6+
+      - konveyor.io/target=spring6+
+      incidents:
+      - uri: file:///source/mta-insecure-maven-test/src/main/java/com/example/HelloServlet.java
+        message: Replace the `javax.servlet` import statement with `jakarta.servlet`
+        codeSnip: "\n 1  package com.example;\n 2  \n 3  import java.io.IOException;\n
+          4  \n 5  import javax.servlet.ServletException;\n 6  import javax.servlet.http.HttpServlet;\n
+          7  import javax.servlet.http.HttpServletRequest;\n 8  import javax.servlet.http.HttpServletResponse;\n
+          9  \n10  /**\n11  * A trivial servlet using the javax.servlet (Java EE)
+          API. The MTA \"jakarta-ee\"\n12  * target flags these javax.servlet references
+          as needing migration to jakarta.*\n13  * — but only if the javax.servlet-api
+          dependency resolves so JDTLS can index the types.\n14  */\n15  public class
+          HelloServlet extends HttpServlet {"
+        lineNumber: 5
+      - uri: file:///source/mta-insecure-maven-test/src/main/java/com/example/HelloServlet.java
+        message: Replace the `javax.servlet` import statement with `jakarta.servlet`
+        codeSnip: "\n 1  package com.example;\n 2  \n 3  import java.io.IOException;\n
+          4  \n 5  import javax.servlet.ServletException;\n 6  import javax.servlet.http.HttpServlet;\n
+          7  import javax.servlet.http.HttpServletRequest;\n 8  import javax.servlet.http.HttpServletResponse;\n
+          9  \n10  /**\n11  * A trivial servlet using the javax.servlet (Java EE)
+          API. The MTA \"jakarta-ee\"\n12  * target flags these javax.servlet references
+          as needing migration to jakarta.*\n13  * — but only if the javax.servlet-api
+          dependency resolves so JDTLS can index the types.\n14  */\n15  public class
+          HelloServlet extends HttpServlet {\n16  "
+        lineNumber: 6
+      - uri: file:///source/mta-insecure-maven-test/src/main/java/com/example/HelloServlet.java
+        message: Replace the `javax.servlet` import statement with `jakarta.servlet`
+        codeSnip: "\n 1  package com.example;\n 2  \n 3  import java.io.IOException;\n
+          4  \n 5  import javax.servlet.ServletException;\n 6  import javax.servlet.http.HttpServlet;\n
+          7  import javax.servlet.http.HttpServletRequest;\n 8  import javax.servlet.http.HttpServletResponse;\n
+          9  \n10  /**\n11  * A trivial servlet using the javax.servlet (Java EE)
+          API. The MTA \"jakarta-ee\"\n12  * target flags these javax.servlet references
+          as needing migration to jakarta.*\n13  * — but only if the javax.servlet-api
+          dependency resolves so JDTLS can index the types.\n14  */\n15  public class
+          HelloServlet extends HttpServlet {\n16  \n17  @Override"
+        lineNumber: 7
+      - uri: file:///source/mta-insecure-maven-test/src/main/java/com/example/HelloServlet.java
+        message: Replace the `javax.servlet` import statement with `jakarta.servlet`
+        codeSnip: "\n 1  package com.example;\n 2  \n 3  import java.io.IOException;\n
+          4  \n 5  import javax.servlet.ServletException;\n 6  import javax.servlet.http.HttpServlet;\n
+          7  import javax.servlet.http.HttpServletRequest;\n 8  import javax.servlet.http.HttpServletResponse;\n
+          9  \n10  /**\n11  * A trivial servlet using the javax.servlet (Java EE)
+          API. The MTA \"jakarta-ee\"\n12  * target flags these javax.servlet references
+          as needing migration to jakarta.*\n13  * — but only if the javax.servlet-api
+          dependency resolves so JDTLS can index the types.\n14  */\n15  public class
+          HelloServlet extends HttpServlet {\n16  \n17  @Override\n18  protected void
+          doGet(HttpServletRequest request, HttpServletResponse response)"
+        lineNumber: 8
+      effort: 1
+- name: technology-usage
+  insights:
+    javaee-technology-usage-00120:
+      description: Java Servlet
+      category: ""
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Java Servlet
+      - tag=Servlet
+      incidents:
+      - uri: file:///source/mta-insecure-maven-test/src/main/java/com/example/HelloServlet.java
+        message: ""
+        codeSnip: "\n 1  package com.example;\n 2  \n 3  import java.io.IOException;\n
+          4  \n 5  import javax.servlet.ServletException;\n 6  import javax.servlet.http.HttpServlet;\n
+          7  import javax.servlet.http.HttpServletRequest;\n 8  import javax.servlet.http.HttpServletResponse;\n
+          9  \n10  /**\n11  * A trivial servlet using the javax.servlet (Java EE)
+          API. The MTA \"jakarta-ee\"\n12  * target flags these javax.servlet references
+          as needing migration to jakarta.*\n13  * — but only if the javax.servlet-api
+          dependency resolves so JDTLS can index the types.\n14  */\n15  public class
+          HelloServlet extends HttpServlet {"
+        lineNumber: 5
+      - uri: file:///source/mta-insecure-maven-test/src/main/java/com/example/HelloServlet.java
+        message: ""
+        codeSnip: "\n 1  package com.example;\n 2  \n 3  import java.io.IOException;\n
+          4  \n 5  import javax.servlet.ServletException;\n 6  import javax.servlet.http.HttpServlet;\n
+          7  import javax.servlet.http.HttpServletRequest;\n 8  import javax.servlet.http.HttpServletResponse;\n
+          9  \n10  /**\n11  * A trivial servlet using the javax.servlet (Java EE)
+          API. The MTA \"jakarta-ee\"\n12  * target flags these javax.servlet references
+          as needing migration to jakarta.*\n13  * — but only if the javax.servlet-api
+          dependency resolves so JDTLS can index the types.\n14  */\n15  public class
+          HelloServlet extends HttpServlet {\n16  "
+        lineNumber: 6
+      - uri: file:///source/mta-insecure-maven-test/src/main/java/com/example/HelloServlet.java
+        message: ""
+        codeSnip: "\n 1  package com.example;\n 2  \n 3  import java.io.IOException;\n
+          4  \n 5  import javax.servlet.ServletException;\n 6  import javax.servlet.http.HttpServlet;\n
+          7  import javax.servlet.http.HttpServletRequest;\n 8  import javax.servlet.http.HttpServletResponse;\n
+          9  \n10  /**\n11  * A trivial servlet using the javax.servlet (Java EE)
+          API. The MTA \"jakarta-ee\"\n12  * target flags these javax.servlet references
+          as needing migration to jakarta.*\n13  * — but only if the javax.servlet-api
+          dependency resolves so JDTLS can index the types.\n14  */\n15  public class
+          HelloServlet extends HttpServlet {\n16  \n17  @Override"
+        lineNumber: 7
+      - uri: file:///source/mta-insecure-maven-test/src/main/java/com/example/HelloServlet.java
+        message: ""
+        codeSnip: "\n 1  package com.example;\n 2  \n 3  import java.io.IOException;\n
+          4  \n 5  import javax.servlet.ServletException;\n 6  import javax.servlet.http.HttpServlet;\n
+          7  import javax.servlet.http.HttpServletRequest;\n 8  import javax.servlet.http.HttpServletResponse;\n
+          9  \n10  /**\n11  * A trivial servlet using the javax.servlet (Java EE)
+          API. The MTA \"jakarta-ee\"\n12  * target flags these javax.servlet references
+          as needing migration to jakarta.*\n13  * — but only if the javax.servlet-api
+          dependency resolves so JDTLS can index the types.\n14  */\n15  public class
+          HelloServlet extends HttpServlet {\n16  \n17  @Override\n18  protected void
+          doGet(HttpServletRequest request, HttpServletResponse response)"
+        lineNumber: 8
+      effort: 0
+    javaee-technology-usage-00230:
+      description: Servlet
+      category: ""
+      labels:
+      - discovery
+      - konveyor.io/include=always
+      - tag=Connect=Servlet
+      - tag=HTTP=Servlet
+      - tag=Java EE=Servlet
+      incidents:
+      - uri: ""
+        message: ""
+        lineNumber: 0
+      effort: 0

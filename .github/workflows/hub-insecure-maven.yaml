@@ -1,0 +1,141 @@
+name: Koncur Insecure Maven Repository Test
+
+# Regression test for konveyor/analyzer-lsp#1190 (fixed by #1191): analysis against a Maven
+# repository with an untrusted (self-signed) TLS certificate. Stands up an in-cluster nginx
+# reverse-proxy to Maven Central served over a self-signed cert, enables mvn.insecure.enabled,
+# and runs ONLY tests/insecure-maven-repo.
+#
+# With the default (unfixed) java provider image this test FAILS: resolution fails PKIX and the
+# analysis produces no incidents. Provide `java_provider_image` pointing at a build that contains
+# the #1190 fix to see it pass.
+
+on:
+  workflow_call:
+    inputs:
+      image_tag:
+        description: "Image tag for Konveyor images"
+        default: "latest"
+        type: string
+      java_provider_image:
+        description: "Override for the java-external-provider image (a build containing the analyzer-lsp #1190 fix)"
+        default: ""
+        type: string
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: "Image tag for Konveyor images"
+        default: "latest"
+        type: string
+      java_provider_image:
+        description: "Override for the java-external-provider image (a build containing the analyzer-lsp #1190 fix)"
+        default: ""
+        type: string
+
+jobs:
+  hub-insecure-maven-test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Setup Go
+        uses: actions/setup-go@v6
+        with:
+          go-version: '1.25'
+
+      - name: Install Kind
+        run: |
+          curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.25.0/kind-linux-amd64
+          chmod +x ./kind
+          sudo mv ./kind /usr/local/bin/kind
+          kind version
+
+      - name: Install kubectl
+        run: |
+          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+          chmod +x kubectl
+          sudo mv kubectl /usr/local/bin/kubectl
+          kubectl version --client
+
+      - name: Create Kind cluster
+        run: make kind-create
+        timeout-minutes: 10
+
+      - name: Install Tackle Hub
+        timeout-minutes: 20
+        run: |
+          if [ -n "${{ inputs.java_provider_image }}" ]; then
+            echo "Using java provider image override: ${{ inputs.java_provider_image }}"
+            make hub-install IMAGE_TAG=${{ inputs.image_tag }} JAVA_PROVIDER_IMG=${{ inputs.java_provider_image }}
+          else
+            echo "Using default java provider image (expected to reproduce the #1190 bug)"
+            make hub-install IMAGE_TAG=${{ inputs.image_tag }}
+          fi
+
+      - name: Wait for Hub readiness
+        run: |
+          kubectl wait --for=condition=ready pod -l app.kubernetes.io/name=tackle-hub \
+            -n konveyor-tackle --timeout=300s
+
+      - name: Start port-forward
+        run: |
+          kubectl port-forward -n konveyor-tackle svc/tackle-hub 8081:8080 &
+          sleep 5
+          for i in $(seq 1 30); do
+            if curl -sf http://localhost:8081/applications > /dev/null 2>&1; then
+              echo "Hub API is ready"; exit 0
+            fi
+            echo "Waiting for Hub API... attempt $i"; sleep 5
+          done
+          echo "Hub API never became ready"; exit 1
+
+      - name: Build Koncur
+        run: |
+          go build -o $HOME/.local/bin/koncur ./cmd/koncur/main.go
+          echo $HOME/.local/bin >> $GITHUB_PATH
+
+      - name: Deploy in-cluster insecure Maven mirror
+        run: make maven-insecure-mirror
+
+      - name: Enable mvn.insecure.enabled hub setting
+        run: |
+          curl -sf -X PUT -H 'Content-Type: application/json' -d 'true' \
+            http://localhost:8081/settings/mvn.insecure.enabled
+          echo "mvn.insecure.enabled=true"
+
+      - name: Run insecure-maven-repo test
+        run: make test-hub-insecure
+
+      - name: Show Hub status on failure
+        if: failure()
+        run: |
+          echo "=== Pod Status ==="
+          kubectl get pods -n konveyor-tackle
+          echo "=== maven-mirror logs ==="
+          kubectl logs -n konveyor-tackle -l app=maven-mirror --tail=100 || true
+          echo "=== Tackle CR ==="
+          kubectl get tackle -n konveyor-tackle -o yaml || true
+
+      - name: Upload output on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: koncur-hub-insecure-failures
+          path: .koncur/output
+          retention-days: 5
+
+      - name: Upload result yaml
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: koncur-hub-insecure-summary
+          path: test-hub-insecure.yaml
+          retention-days: 3
+
+      - name: Cleanup Kind cluster
+        if: always()
+        run: kind delete cluster --name koncur-test || true

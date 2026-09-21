@@ -1,0 +1,54 @@
+# In-cluster insecure (self-signed TLS) Maven mirror used by the `insecure-maven-repo` test.
+#
+# nginx terminates TLS with a self-signed certificate and reverse-proxies every request to
+# Maven Central. Because the certificate is untrusted, a Maven client can only resolve
+# dependencies through it when insecure mode is genuinely honored (analyzer-lsp #1190 / #1191).
+#
+# The `maven-mirror-conf` ConfigMap (nginx.conf) and `maven-mirror-tls` Secret (self-signed
+# cert/key with SAN = maven-mirror.konveyor-tackle.svc) are created by the
+# `maven-insecure-mirror` Makefile target before this manifest is applied.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: maven-mirror
+  namespace: konveyor-tackle
+  labels: { app: maven-mirror }
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: maven-mirror }
+  template:
+    metadata:
+      labels: { app: maven-mirror }
+    spec:
+      containers:
+        - name: nginx
+          image: registry.access.redhat.com/ubi9/nginx-124:latest
+          command: ["nginx", "-c", "/etc/nginx/nginx.conf", "-g", "daemon off;"]
+          ports:
+            - containerPort: 8443
+          volumeMounts:
+            - { name: nginx-conf, mountPath: /etc/nginx/nginx.conf, subPath: nginx.conf, readOnly: true }
+            - { name: certs, mountPath: /certs, readOnly: true }
+          readinessProbe:
+            tcpSocket: { port: 8443 }
+            initialDelaySeconds: 3
+            periodSeconds: 5
+      volumes:
+        - name: nginx-conf
+          configMap: { name: maven-mirror-conf }
+        - name: certs
+          secret: { secretName: maven-mirror-tls }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: maven-mirror
+  namespace: konveyor-tackle
+  labels: { app: maven-mirror }
+spec:
+  selector: { app: maven-mirror }
+  ports:
+    - name: https
+      port: 8443
+      targetPort: 8443
