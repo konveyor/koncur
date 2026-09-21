@@ -289,7 +289,7 @@ test-hub-insecure: build ## Run only the insecure-maven-repo test (requires a ru
 	@printf 'tackleHub:\n' >> .koncur/config/target-tackle-hub-insecure.yaml
 	@printf '  url: http://localhost:$(HUB_LOCAL_PORT)\n' >> .koncur/config/target-tackle-hub-insecure.yaml
 	@printf '  mavenSettings: "%s"\n' "$(MIRROR_DIR)/settings.xml" >> .koncur/config/target-tackle-hub-insecure.yaml
-	./koncur run tests/insecure-maven-repo -t tackle-hub --target-config .koncur/config/target-tackle-hub-insecure.yaml -o yaml --output-file test-hub-insecure.yaml
+	./koncur run hub-insecure-tests/insecure-maven-repo -t tackle-hub --target-config .koncur/config/target-tackle-hub-insecure.yaml -o yaml --output-file test-hub-insecure.yaml
 
 ##@ Build
 

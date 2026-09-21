@@ -22,10 +22,13 @@ exact-match validation fails.
 
 ## Running it
 
-This test is not part of the default hub run. It is driven by the dedicated
-`maven-insecure-*` Makefile targets and the `hub-insecure-maven` CI workflow, which stand up
-the mirror, enable the hub setting, and run only this test. Point the java provider image at a
-build that contains the #1190 fix to see it pass:
+This test lives **outside** the `tests/` directory (under `hub-insecure-tests/`) on purpose:
+the generic suites run `koncur run tests` and would otherwise pick it up, but it needs the
+in-cluster self-signed mirror and the global `mvn.insecure.enabled` hub setting that only the
+dedicated job provides. It is driven by the dedicated `maven-insecure-*` Makefile targets and
+the `hub-insecure-maven` CI workflow, which stand up the mirror, enable the hub setting, and
+run only this test. Point the java provider image at a build that contains the #1190 fix to
+see it pass:
 
 ```
 make hub-install JAVA_PROVIDER_IMG=<java-provider image with the #1190 fix>

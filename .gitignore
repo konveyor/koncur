@@ -1,5 +1,6 @@
 # Cloned source code repositories
 tests/*/source/
+hub-insecure-tests/*/source/
 
 # Koncur output directory
 .koncur/
