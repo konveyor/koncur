@@ -1,4 +1,4 @@
-.PHONY: help kind-create kind-delete hub-install hub-install-auth _hub-install hub-uninstall hub-forward hub-status hub-logs test-hub clean build setup setup-auth teardown test-archive
+.PHONY: help kind-create kind-delete hub-install hub-install-auth _hub-install hub-uninstall hub-forward hub-status hub-logs test-hub clean build setup setup-auth teardown test-archive maven-insecure-mirror maven-insecure-enable test-hub-insecure
 
 # Configuration
 KIND_CLUSTER_NAME ?= koncur-test
@@ -242,6 +242,65 @@ test-hub: build ## Test the Tackle Hub integration with koncur (matches CI)
 	@printf '  url: http://localhost:8081\n' >> .koncur/config/target-tackle-hub.yaml
 	@echo "Running all tests with Tackle Hub target..."
 	./koncur run tests -t tackle-hub --target-config .koncur/config/target-tackle-hub.yaml -o yaml --output-file test-hub.yaml
+
+##@ Insecure Maven repository test (analyzer-lsp #1190 / #1191)
+
+MIRROR_DIR ?= local-maven-resources/insecure-mirror
+MIRROR_DNS ?= maven-mirror.$(KONVEYOR_NAMESPACE).svc
+HUB_LOCAL_PORT ?= 8081
+
+maven-insecure-mirror: ## Deploy an in-cluster self-signed-TLS Maven mirror (reverse-proxy to Maven Central)
+	@echo "Generating self-signed certificate for $(MIRROR_DNS)..."
+	@mkdir -p .koncur/config
+	@openssl req -x509 -nodes -newkey rsa:2048 -days 3650 \
+		-keyout .koncur/config/maven-mirror.key -out .koncur/config/maven-mirror.crt \
+		-subj "/CN=$(MIRROR_DNS)" \
+		-addext "subjectAltName=DNS:$(MIRROR_DNS),DNS:$(MIRROR_DNS).cluster.local" 2>/dev/null
+	@echo "Creating ConfigMap and TLS Secret in $(KONVEYOR_NAMESPACE)..."
+	@$(KUBECTL) create configmap maven-mirror-conf -n $(KONVEYOR_NAMESPACE) \
+		--from-file=nginx.conf=$(MIRROR_DIR)/nginx.conf \
+		--dry-run=client -o yaml | $(KUBECTL) apply -f -
+	@$(KUBECTL) create secret tls maven-mirror-tls -n $(KONVEYOR_NAMESPACE) \
+		--cert=.koncur/config/maven-mirror.crt --key=.koncur/config/maven-mirror.key \
+		--dry-run=client -o yaml | $(KUBECTL) apply -f -
+	@$(KUBECTL) apply -n $(KONVEYOR_NAMESPACE) -f $(MIRROR_DIR)/mirror.yaml
+	@echo "Rendering namespace-aware Maven settings for $(MIRROR_DNS)..."
+	@sed 's|maven-mirror\.konveyor-tackle\.svc|$(MIRROR_DNS)|g' \
+		$(MIRROR_DIR)/settings.xml > .koncur/config/insecure-maven-settings.xml
+	@echo "Waiting for maven-mirror to be ready..."
+	@for i in $$(seq 1 60); do \
+		if $(KUBECTL) wait --namespace $(KONVEYOR_NAMESPACE) --for=condition=ready pod --selector=app=maven-mirror --timeout=5s >/dev/null 2>&1; then \
+			echo "maven-mirror is ready"; break; \
+		fi; \
+		if [ $$i -eq 60 ]; then echo "Timeout waiting for maven-mirror"; exit 1; fi; \
+		sleep 3; \
+	done
+
+maven-insecure-enable: ## Enable the global mvn.insecure.enabled hub setting (auth must be disabled)
+	@echo "Enabling mvn.insecure.enabled on the hub..."
+	@$(KUBECTL) port-forward -n $(KONVEYOR_NAMESPACE) svc/tackle-hub $(HUB_LOCAL_PORT):8080 >/dev/null 2>&1 & \
+	PF_PID=$$!; \
+	trap "kill $$PF_PID 2>/dev/null || true" EXIT; \
+	sleep 5; \
+	curl -sf -X PUT -H 'Content-Type: application/json' -d 'true' \
+		http://localhost:$(HUB_LOCAL_PORT)/settings/mvn.insecure.enabled && echo "  -> mvn.insecure.enabled=true"
+
+test-hub-insecure: build ## Run only the insecure-maven-repo test (starts a hub port-forward if one is not already up)
+	@echo "Running insecure-maven-repo test against Tackle Hub..."
+	@mkdir -p .koncur/config
+	@printf 'type: tackle-hub\n' > .koncur/config/target-tackle-hub-insecure.yaml
+	@printf 'tackleHub:\n' >> .koncur/config/target-tackle-hub-insecure.yaml
+	@printf '  url: http://localhost:$(HUB_LOCAL_PORT)\n' >> .koncur/config/target-tackle-hub-insecure.yaml
+	@printf '  mavenSettings: "%s"\n' ".koncur/config/insecure-maven-settings.xml" >> .koncur/config/target-tackle-hub-insecure.yaml
+	@set -e; \
+	if ! curl -sf http://localhost:$(HUB_LOCAL_PORT)/applications >/dev/null 2>&1; then \
+		echo "Starting hub port-forward on $(HUB_LOCAL_PORT)..."; \
+		$(KUBECTL) port-forward -n $(KONVEYOR_NAMESPACE) svc/tackle-hub $(HUB_LOCAL_PORT):8080 >/dev/null 2>&1 & \
+		PF_PID=$$!; \
+		trap "kill $$PF_PID 2>/dev/null || true" EXIT; \
+		sleep 5; \
+	fi; \
+	./koncur run hub-insecure-tests/insecure-maven-repo -t tackle-hub --target-config .koncur/config/target-tackle-hub-insecure.yaml -o yaml --output-file test-hub-insecure.yaml
 
 ##@ Build
 
