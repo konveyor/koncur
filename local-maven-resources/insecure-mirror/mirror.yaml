@@ -5,13 +5,13 @@
 # dependencies through it when insecure mode is genuinely honored (analyzer-lsp #1190 / #1191).
 #
 # The `maven-mirror-conf` ConfigMap (nginx.conf) and `maven-mirror-tls` Secret (self-signed
-# cert/key with SAN = maven-mirror.konveyor-tackle.svc) are created by the
-# `maven-insecure-mirror` Makefile target before this manifest is applied.
+# cert/key with SAN = maven-mirror.<namespace>.svc) are created by the `maven-insecure-mirror`
+# Makefile target before this manifest is applied. The target applies this manifest into
+# $(KONVEYOR_NAMESPACE), so no namespace is hardcoded here.
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: maven-mirror
-  namespace: konveyor-tackle
   labels: { app: maven-mirror }
 spec:
   replicas: 1
@@ -44,7 +44,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: maven-mirror
-  namespace: konveyor-tackle
   labels: { app: maven-mirror }
 spec:
   selector: { app: maven-mirror }

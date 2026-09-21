@@ -1,6 +1,6 @@
 name: Insecure Maven Repository
 analysis:
-    application: https://github.com/dymurray/mta-insecure-maven-test#main
+    application: https://github.com/dymurray/mta-insecure-maven-test#15c004be5d9dfe7afc14f58c37f638a30f6b8e71
     labelSelector: konveyor.io/target=jakarta-ee
     context_lines: 0
     incident_selector: ""
