@@ -1,7 +1,7 @@
 name: Tackle Testapp public with deps
 analysis:
     application: https://github.com/konveyor/tackle-testapp-public#ci-2024
-    labelSelector: konveyor.io/target
+    labelSelector: konveyor.io/target=cloud-readiness
     context_lines: 0
     incident_selector: ""
     source: []
