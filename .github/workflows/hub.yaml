@@ -81,12 +81,14 @@ jobs:
           echo $HOME/.local/bin >> $GITHUB_PATH
 
       # Maven setup - mirrors kantra.yaml approach using local HTTP server
+      # Port 8082 is in the operator's egress NetworkPolicy allow-list so the
+      # analyzer addon pod can reach this server from inside the Kind cluster.
       - name: Run server for maven-local-resources
         if: ${{ !inputs.skip_maven }}
         uses: Eun/http-server-action@v1
         with:
           directory: local-maven-resources
-          port: 8085
+          port: 8082
 
       - name: Get Kind network gateway
         if: ${{ !inputs.skip_maven }}
@@ -102,8 +104,8 @@ jobs:
         uses: s4u/maven-settings-action@v4.0.0
         with:
           githubServer: false
-          repositories: '[{"id": "tackle-testapp-public", "name": "Local tackle-testapp repo", "url": "http://${{ env.KIND_GATEWAY }}:8085"}]'
-          mirrors: '[{"id": "maven-default-http-blocker", "name": "disable http block", "mirrorOf": "tackle-testapp-public", "url": "http://${{ env.KIND_GATEWAY }}:8085", "blocked": false}]'
+          repositories: '[{"id": "tackle-testapp-public", "name": "Local tackle-testapp repo", "url": "http://${{ env.KIND_GATEWAY }}:8082"}]'
+          mirrors: '[{"id": "maven-default-http-blocker", "name": "disable http block", "mirrorOf": "tackle-testapp-public", "url": "http://${{ env.KIND_GATEWAY }}:8082", "blocked": false}]'
           path: "${{ runner.temp }}/settings.xml"
 
       - name: Create Hub target config
