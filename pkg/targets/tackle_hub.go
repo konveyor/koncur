@@ -313,9 +313,7 @@ func (t *TackleHubTarget) Execute(ctx context.Context, test *config.TestDefiniti
 			if len(parts) < 2 {
 				continue
 			}
-			log.Info("got error parts", "error part1", parts[0], "error part 2", parts[1])
 			ruleParts := strings.Split(strings.TrimSpace(parts[0]), ".")
-			log.Info("got rule parts", "rule part", ruleParts)
 			if len(ruleParts) != 2 {
 				continue
 			}
