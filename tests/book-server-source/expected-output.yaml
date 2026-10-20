@@ -237,7 +237,7 @@
           dependencies. \n Add the following sections to the `pom.xml` file: \n\n
           ```xml\n <properties> \n <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
           \n <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-          \n <quarkus.platform.version>3.1.0.Final</quarkus.platform.version>\n </properties>
+          \n <quarkus.platform.version>3.40.1</quarkus.platform.version>\n </properties>
           \n <dependencyManagement> \n <dependencies> \n <dependency> \n <groupId>${quarkus.platform.group-id}</groupId>
           \n <artifactId>${quarkus.platform.artifact-id}</artifactId> \n <version>${quarkus.platform.version}</version>
           \n <type>pom</type> \n <scope>import</scope> \n </dependency> \n </dependencies>
@@ -268,8 +268,8 @@
             <version>8.0.12</version> &ndash;&gt;               &lt;!&ndash; TimeZone
             bug not fixed since 5.1.39 &ndash;&gt;--><!--<version>5.1.39</version>--><!--</dependency>--></dependencies>
       links:
-      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven;
-        title: Quarkus - Guide;
+      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven
+        title: Quarkus - Guide
       - url: https://quarkus.io/blog/tag/release/
         title: Quarkus - Releases
       effort: 1
@@ -283,7 +283,7 @@
       - uri: file:///source/pom.xml
         message: "Use the Quarkus Maven plugin adding the following sections to the
           `pom.xml` file: \n\n ```xml\n <properties> \n <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-          \n <quarkus.platform.version>3.1.0.Final</quarkus.platform.version>\n </properties>
+          \n <quarkus.platform.version>3.40.1</quarkus.platform.version>\n </properties>
           \n <build>\n <plugins>\n <plugin>\n <groupId>${quarkus.platform.group-id}</groupId>\n
           <artifactId>quarkus-maven-plugin</artifactId>\n <version>${quarkus.platform.version}</version>\n
           <extensions>true</extensions>\n <executions>\n <execution>\n <goals>\n <goal>build</goal>\n
@@ -314,8 +314,8 @@
             <version>8.0.12</version> &ndash;&gt;               &lt;!&ndash; TimeZone
             bug not fixed since 5.1.39 &ndash;&gt;--><!--<version>5.1.39</version>--><!--</dependency>--></dependencies>
       links:
-      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven;
-        title: Quarkus - Guide;
+      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven
+        title: Quarkus - Guide
       effort: 1
     javaee-pom-to-quarkus-00030:
       description: Adopt Maven Compiler plugin
@@ -326,8 +326,8 @@
       incidents:
       - uri: file:///source/pom.xml
         message: "Use the Maven Compiler plugin adding the following sections to the
-          `pom.xml` file: \n\n ```xml\n <properties> \n <compiler-plugin.version>3.10.1</compiler-plugin.version>\n
-          <maven.compiler.release>11</maven.compiler.release>\n </properties> \n <build>\n
+          `pom.xml` file: \n\n ```xml\n <properties> \n <compiler-plugin.version>3.14.0</compiler-plugin.version>\n
+          <maven.compiler.release>17</maven.compiler.release>\n </properties> \n <build>\n
           <plugins>\n <plugin>\n <artifactId>maven-compiler-plugin</artifactId>\n
           <version>${compiler-plugin.version}</version>\n <configuration>\n <compilerArgs>\n
           <arg>-parameters</arg>\n </compilerArgs>\n </configuration>\n </plugin>\n
@@ -357,8 +357,8 @@
             <version>8.0.12</version> &ndash;&gt;               &lt;!&ndash; TimeZone
             bug not fixed since 5.1.39 &ndash;&gt;--><!--<version>5.1.39</version>--><!--</dependency>--></dependencies>
       links:
-      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven;
-        title: Quarkus - Guide;
+      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven
+        title: Quarkus - Guide
       effort: 1
     javaee-pom-to-quarkus-00040:
       description: Adopt Maven Surefire plugin
@@ -369,7 +369,7 @@
       incidents:
       - uri: file:///source/pom.xml
         message: "Use the Maven Surefire plugin adding the following sections to the
-          `pom.xml` file: \n\n ```xml\n <properties> \n <surefire-plugin.version>3.0.0</compiler-plugin.version>\n
+          `pom.xml` file: \n\n ```xml\n <properties> \n <surefire-plugin.version>3.6.0</surefire-plugin.version>\n
           </properties> \n <build>\n <plugins>\n <plugin>\n <artifactId>maven-surefire-plugin</artifactId>\n
           <version>${surefire-plugin.version}</version>\n <configuration>\n <systemPropertyVariables>\n
           <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>\n
@@ -400,8 +400,8 @@
             <version>8.0.12</version> &ndash;&gt;               &lt;!&ndash; TimeZone
             bug not fixed since 5.1.39 &ndash;&gt;--><!--<version>5.1.39</version>--><!--</dependency>--></dependencies>
       links:
-      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven;
-        title: Quarkus - Guide;
+      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven
+        title: Quarkus - Guide
       effort: 1
     javaee-pom-to-quarkus-00050:
       description: Adopt Maven Failsafe plugin
@@ -412,7 +412,7 @@
       incidents:
       - uri: file:///source/pom.xml
         message: "Use the Maven Failsafe plugin adding the following sections to the
-          `pom.xml` file: \n\n ```xml\n <properties> \n <surefire-plugin.version>3.0.0</compiler-plugin.version>\n
+          `pom.xml` file: \n\n ```xml\n <properties> \n <surefire-plugin.version>3.6.0</surefire-plugin.version>\n
           </properties> \n <build>\n <plugins>\n <plugin>\n <artifactId>maven-failsafe-plugin</artifactId>\n
           <version>${surefire-plugin.version}</version>\n <executions>\n <execution>\n
           <goals>\n <goals>integration-test</goal>\n <goals>verify</goal>\n </goals>\n
@@ -445,8 +445,8 @@
             <version>8.0.12</version> &ndash;&gt;               &lt;!&ndash; TimeZone
             bug not fixed since 5.1.39 &ndash;&gt;--><!--<version>5.1.39</version>--><!--</dependency>--></dependencies>
       links:
-      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven;
-        title: Quarkus - Guide;
+      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven
+        title: Quarkus - Guide
       effort: 1
     javaee-pom-to-quarkus-00060:
       description: Add Maven profile to run the Quarkus native build
@@ -460,7 +460,7 @@
           the following section to the `pom.xml` file: \n\n ```xml\n <profiles>\n
           <profile>\n <id>native</id>\n <activation>\n <property>\n <name>native</name>\n
           </property>\n </activation>\n <properties>\n <skipITs>false</skipITs>\n
-          <quarkus.package.type>native</quarkus.package.type>\n </properties>\n </profile>\n
+          <quarkus.native.enabled>true</quarkus.native.enabled>\n </properties>\n </profile>\n
           </profiles>\n ```"
         codeSnip: '6  '
         lineNumber: 5
@@ -487,8 +487,8 @@
             <version>8.0.12</version> &ndash;&gt;               &lt;!&ndash; TimeZone
             bug not fixed since 5.1.39 &ndash;&gt;--><!--<version>5.1.39</version>--><!--</dependency>--></dependencies>
       links:
-      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven;
-        title: Quarkus - Guide;
+      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven
+        title: Quarkus - Guide
       effort: 1
     springboot-annotations-to-quarkus-00000:
       description: Replace SpringBootApplication bootstrap model with Quarkus bootstrap
@@ -648,6 +648,15 @@
   - cdi-to-quarkus-00030
   - cdi-to-quarkus-00040
   - dependency-removal-for-quarkus-00000
+  - hibernate-orm7-to-quarkus-00010
+  - hibernate-orm7-to-quarkus-00020
+  - hibernate-orm7-to-quarkus-00030
+  - hibernate-orm7-to-quarkus-00040
+  - hibernate-orm7-to-quarkus-00050
+  - hibernate-orm7-to-quarkus-00060
+  - hibernate-orm7-to-quarkus-00070
+  - hibernate-orm7-to-quarkus-00080
+  - hibernate-orm7-to-quarkus-00090
   - ee-to-quarkus-00000
   - ee-to-quarkus-00010
   - ee-to-quarkus-00020
