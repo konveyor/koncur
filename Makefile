@@ -218,11 +218,17 @@ hub-status: ## Check Tackle Hub status
 	@echo "Tackle CR:"
 	@$(KUBECTL) get tackle -n $(KONVEYOR_NAMESPACE) 2>/dev/null || echo "No Tackle CR found"
 
+# hub-forward settles briefly before forwarding: the hub pod can report Ready
+# and accept a TCP connection before it is actually serving HTTP, and an early
+# failed request can drop kubectl port-forward, leaving nothing on :8081 so
+# every later request is refused (see konveyor/ci#277).
 hub-forward: ## Port-forward to access Tackle Hub UI and API
 	@echo "Port-forwarding Tackle Hub..."
 	@echo "Hub API will be available at: http://localhost:8081"
 	@echo "Hub UI will be available at: http://localhost:8081/hub"
 	@echo ""
+	@echo "Waiting for the hub to settle before forwarding..."
+	@sleep 10
 	@echo "Press Ctrl+C to stop port-forwarding"
 	@$(KUBECTL) port-forward -n $(KONVEYOR_NAMESPACE) svc/tackle-hub 8081:8080
 
