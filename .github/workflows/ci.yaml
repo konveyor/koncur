@@ -73,3 +73,12 @@ jobs:
     with:
       skip_maven: false
       image_tag: ${{ needs.setup.outputs.image_tag }}
+
+  # Insecure (self-signed TLS) Maven repository regression test for analyzer-lsp #1190 / #1191.
+  # Runs with the default java provider image, which lacks the fix, so this job is expected to
+  # fail until the java provider image is overridden with a build that contains the fix.
+  run-hub-insecure-maven-test:
+    needs: setup
+    uses: ./.github/workflows/hub-insecure-maven.yaml
+    with:
+      image_tag: ${{ needs.setup.outputs.image_tag }}

@@ -1,0 +1,18 @@
+name: Insecure Maven Repository
+analysis:
+    application: https://github.com/dymurray/mta-insecure-maven-test#15c004be5d9dfe7afc14f58c37f638a30f6b8e71
+    labelSelector: konveyor.io/target=jakarta-ee
+    context_lines: 0
+    incident_selector: ""
+    source: []
+    target: []
+    rules: []
+    disableDefaultRules: false
+    analysisMode: full
+    logLevel: 9
+timeout: 10m0s
+requireMavenSettings: true
+expect:
+    exitCode: 0
+    output:
+        file: expected-output.yaml
