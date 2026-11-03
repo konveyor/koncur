@@ -7,7 +7,15 @@ on:
       - "release-*"
 
 jobs:
+  gate:
+    # Only run on the konveyor/koncur repo, not forks.
+    if: github.repository == 'konveyor/koncur'
+    runs-on: ubuntu-latest
+    steps:
+      - run: "true"
+
   unit-tests:
+    needs: gate
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -28,6 +36,7 @@ jobs:
         run: go test ./...
 
   setup:
+    needs: gate
     runs-on: ubuntu-latest
     outputs:
       image_tag: ${{ steps.set-tag.outputs.image_tag }}
@@ -38,11 +47,12 @@ jobs:
   # Full kantra tests run via the reusable workflow in konveyor/ci. It builds
   # the images under test and runs the OS matrix internally.
   run-kantra-test:
+    needs: gate
     uses: konveyor/ci/.github/workflows/e2e-kantra-koncur.yaml@main
 
   # Java-analysis tests only, Kantra --run-local=true (see kantra-local.yaml). Skips nerd-dinner / python-sample.
   run-kantra-java-local-test:
-    needs: setup
+    needs: [setup, gate]
     strategy:
       fail-fast: false
       matrix:
@@ -58,4 +68,5 @@ jobs:
   # Tackle Hub tests run via the reusable workflow in konveyor/ci. It builds
   # the images under test and runs the test internally.
   run-hub-test:
+    needs: gate
     uses: konveyor/ci/.github/workflows/e2e-hub-koncur.yaml@main
