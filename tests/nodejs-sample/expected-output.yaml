@@ -1,0 +1,52 @@
+- name: konveyor-analysis
+  violations:
+    node-sample-rule-001:
+      description: Testing that the node provider works - type
+      category: potential
+      incidents:
+      - uri: file:///source/test_a.ts
+        message: nodejs sample rule 001
+        lineNumber: 6
+        variables:
+          file: file:///opt/input/source/test_a.ts
+      - uri: file:///source/test_b.ts
+        message: nodejs sample rule 001
+        lineNumber: 1
+        variables:
+          file: file:///opt/input/source/test_b.ts
+      - uri: file:///source/test_b.ts
+        message: nodejs sample rule 001
+        lineNumber: 3
+        variables:
+          file: file:///opt/input/source/test_b.ts
+      effort: 1
+    node-sample-rule-002:
+      description: Testing that the node provider works - function
+      category: potential
+      incidents:
+      - uri: file:///source/test_a.ts
+        message: nodejs sample rule 002
+        lineNumber: 3
+        variables:
+          file: file:///opt/input/source/test_a.ts
+      - uri: file:///source/test_a.ts
+        message: nodejs sample rule 002
+        lineNumber: 8
+        variables:
+          file: file:///opt/input/source/test_a.ts
+      - uri: file:///source/test_b.ts
+        message: nodejs sample rule 002
+        lineNumber: 3
+        variables:
+          file: file:///opt/input/source/test_b.ts
+      effort: 1
+    node-sample-rule-003:
+      description: Testing that the node module files are not matched
+      category: potential
+      incidents:
+      - uri: file:///source/test_b.ts
+        message: nodejs sample rule 003
+        lineNumber: 3
+        variables:
+          file: file:///opt/input/source/test_b.ts
+      effort: 1
