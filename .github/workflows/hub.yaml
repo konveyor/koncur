@@ -11,6 +11,10 @@ on:
         description: "Image tag for Konveyor images"
         default: "latest"
         type: string
+      operator_ref:
+        description: "Git ref of tackle2-operator to install (branch under test)"
+        default: "main"
+        type: string
 
 jobs:
   hub-test:
@@ -47,7 +51,7 @@ jobs:
         timeout-minutes: 10
 
       - name: Install Tackle Hub
-        run: make hub-install IMAGE_TAG=${{ inputs.image_tag }}
+        run: make hub-install IMAGE_TAG=${{ inputs.image_tag }} OPERATOR_REF=${{ inputs.operator_ref }}
         timeout-minutes: 20
 
       - name: Wait for Hub readiness

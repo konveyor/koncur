@@ -31,9 +31,15 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       image_tag: ${{ steps.set-tag.outputs.image_tag }}
+      operator_ref: ${{ steps.set-tag.outputs.operator_ref }}
     steps:
       - id: set-tag
-        run: echo "image_tag=${{ github.base_ref == 'main' && 'latest' || github.base_ref }}" >> $GITHUB_OUTPUT
+        run: |
+          echo "image_tag=${{ github.base_ref == 'main' && 'latest' || github.base_ref }}" >> $GITHUB_OUTPUT
+          # Install the operator from the branch under test (not main), so the
+          # operator's extension template matches the branch's hub/addon images.
+          # On main base_ref=main; on release-* it's the release branch name.
+          echo "operator_ref=${{ github.base_ref }}" >> $GITHUB_OUTPUT
 
   run-kantra-test:
     needs: setup
@@ -73,3 +79,4 @@ jobs:
     with:
       skip_maven: false
       image_tag: ${{ needs.setup.outputs.image_tag }}
+      operator_ref: ${{ needs.setup.outputs.operator_ref }}
