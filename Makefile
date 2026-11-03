@@ -7,6 +7,7 @@ KUBECTL ?= kubectl
 HOST_PORT ?= 8080
 HOST_PORT_TLS ?= 8443
 IMAGE_TAG ?= latest
+OPERATOR_REF ?= main
 
 # Image FQINs with defaults
 HUB ?= quay.io/konveyor/tackle2-hub:$(IMAGE_TAG)
@@ -102,8 +103,23 @@ _hub-install: ## Internal target for hub installation
 	@$(KUBECTL) delete pod -n olm -l olm.catalogSource=operatorhubio-catalog --ignore-not-found=true || true
 	@sleep 5
 	@$(KUBECTL) wait --for=condition=ready pod -l olm.catalogSource=operatorhubio-catalog -n olm --timeout=120s || true
-	@echo "Installing Tackle operator from main branch..."
-	@$(KUBECTL) apply -f https://raw.githubusercontent.com/konveyor/tackle2-operator/main/tackle-k8s.yaml
+	@echo "Installing Tackle operator from $(OPERATOR_REF) branch..."
+	@$(KUBECTL) apply -f https://raw.githubusercontent.com/konveyor/tackle2-operator/$(OPERATOR_REF)/tackle-k8s.yaml
+	@echo "Patching CatalogSource to use operator-index:$(OPERATOR_REF)..."
+	@$(KUBECTL) patch catalogsource konveyor -n ${KONVEYOR_NAMESPACE} --type=merge \
+		-p '{"spec":{"image":"quay.io/konveyor/tackle2-operator-index:$(OPERATOR_REF)"}}'
+	@echo "Restarting CatalogSource pod to pick up new image..."
+	@$(KUBECTL) delete pod -n ${KONVEYOR_NAMESPACE} -l olm.catalogSource=konveyor --ignore-not-found=true
+	@sleep 5
+	@echo "Waiting for CatalogSource pod to be ready..."
+	@for i in $$(seq 1 30); do \
+		if $(KUBECTL) wait --for=condition=ready pod -l olm.catalogSource=konveyor -n ${KONVEYOR_NAMESPACE} --timeout=5s >/dev/null 2>&1; then \
+			echo "CatalogSource pod is ready with updated image"; \
+			break; \
+		fi; \
+		if [ $$i -eq 30 ]; then echo "Timeout waiting for CatalogSource pod"; exit 1; fi; \
+		sleep 3; \
+	done
 	@echo "Waiting for Tackle CRD to be available..."
 	@for i in $$(seq 1 120); do \
 		$(KUBECTL) get crd tackles.tackle.konveyor.io >/dev/null 2>&1 && break || sleep 5; \
