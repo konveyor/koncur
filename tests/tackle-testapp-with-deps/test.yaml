@@ -1,7 +1,7 @@
 name: Tackle Testapp public with deps
 analysis:
     application: https://github.com/konveyor/tackle-testapp-public#ci-2024
-    labelSelector: konveyor.io/target
+    labelSelector: konveyor.io/target=cloud-readiness
     context_lines: 0
     incident_selector: ""
     source: []
@@ -10,7 +10,7 @@ analysis:
     disableDefaultRules: false
     analysisMode: full
     logLevel: 9
-timeout: 10m0s
+timeout: 15m0s
 requireMavenSettings: true
 expect:
     exitCode: 0

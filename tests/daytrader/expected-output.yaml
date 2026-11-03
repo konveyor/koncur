@@ -3107,8 +3107,8 @@
           innerText: pom
           matchingXML: ""
       links:
-      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven;
-        title: Quarkus - Guide;
+      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven
+        title: Quarkus - Guide
       effort: 1
     javaee-pom-to-quarkus-00010:
       description: Adopt Quarkus BOM
@@ -3122,7 +3122,7 @@
           dependencies. \n Add the following sections to the `pom.xml` file: \n\n
           ```xml\n <properties> \n <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
           \n <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-          \n <quarkus.platform.version>3.1.0.Final</quarkus.platform.version>\n </properties>
+          \n <quarkus.platform.version>3.40.1</quarkus.platform.version>\n </properties>
           \n <dependencyManagement> \n <dependencies> \n <dependency> \n <groupId>${quarkus.platform.group-id}</groupId>
           \n <artifactId>${quarkus.platform.artifact-id}</artifactId> \n <version>${quarkus.platform.version}</version>
           \n <type>pom</type> \n <scope>import</scope> \n </dependency> \n </dependencies>
@@ -3144,7 +3144,7 @@
           dependencies. \n Add the following sections to the `pom.xml` file: \n\n
           ```xml\n <properties> \n <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
           \n <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-          \n <quarkus.platform.version>3.1.0.Final</quarkus.platform.version>\n </properties>
+          \n <quarkus.platform.version>3.40.1</quarkus.platform.version>\n </properties>
           \n <dependencyManagement> \n <dependencies> \n <dependency> \n <groupId>${quarkus.platform.group-id}</groupId>
           \n <artifactId>${quarkus.platform.artifact-id}</artifactId> \n <version>${quarkus.platform.version}</version>
           \n <type>pom</type> \n <scope>import</scope> \n </dependency> \n </dependencies>
@@ -3169,7 +3169,7 @@
           dependencies. \n Add the following sections to the `pom.xml` file: \n\n
           ```xml\n <properties> \n <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
           \n <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-          \n <quarkus.platform.version>3.1.0.Final</quarkus.platform.version>\n </properties>
+          \n <quarkus.platform.version>3.40.1</quarkus.platform.version>\n </properties>
           \n <dependencyManagement> \n <dependencies> \n <dependency> \n <groupId>${quarkus.platform.group-id}</groupId>
           \n <artifactId>${quarkus.platform.artifact-id}</artifactId> \n <version>${quarkus.platform.version}</version>
           \n <type>pom</type> \n <scope>import</scope> \n </dependency> \n </dependencies>
@@ -3230,7 +3230,7 @@
           dependencies. \n Add the following sections to the `pom.xml` file: \n\n
           ```xml\n <properties> \n <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
           \n <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-          \n <quarkus.platform.version>3.1.0.Final</quarkus.platform.version>\n </properties>
+          \n <quarkus.platform.version>3.40.1</quarkus.platform.version>\n </properties>
           \n <dependencyManagement> \n <dependencies> \n <dependency> \n <groupId>${quarkus.platform.group-id}</groupId>
           \n <artifactId>${quarkus.platform.artifact-id}</artifactId> \n <version>${quarkus.platform.version}</version>
           \n <type>pom</type> \n <scope>import</scope> \n </dependency> \n </dependencies>
@@ -3250,8 +3250,8 @@
             Liberty Sample - Java EE7 Benchmark Sample</name><licenses><license><name>The
             Apache Software License, Version 2.0</name><url>https://raw.github.com/WASdev/sample.daytrader7/master/LICENSE</url><distribution>repo</distribution></license></licenses><modules><module>daytrader-ee7-ejb</module><module>daytrader-ee7-web</module><module>daytrader-ee7</module></modules>
       links:
-      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven;
-        title: Quarkus - Guide;
+      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven
+        title: Quarkus - Guide
       - url: https://quarkus.io/blog/tag/release/
         title: Quarkus - Releases
       effort: 1
@@ -3265,7 +3265,7 @@
       - uri: file:///source/daytrader-ee7-ejb/pom.xml
         message: "Use the Quarkus Maven plugin adding the following sections to the
           `pom.xml` file: \n\n ```xml\n <properties> \n <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-          \n <quarkus.platform.version>3.1.0.Final</quarkus.platform.version>\n </properties>
+          \n <quarkus.platform.version>3.40.1</quarkus.platform.version>\n </properties>
           \n <build>\n <plugins>\n <plugin>\n <groupId>${quarkus.platform.group-id}</groupId>\n
           <artifactId>quarkus-maven-plugin</artifactId>\n <version>${quarkus.platform.version}</version>\n
           <extensions>true</extensions>\n <executions>\n <execution>\n <goals>\n <goal>build</goal>\n
@@ -3285,7 +3285,7 @@
       - uri: file:///source/daytrader-ee7-web/pom.xml
         message: "Use the Quarkus Maven plugin adding the following sections to the
           `pom.xml` file: \n\n ```xml\n <properties> \n <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-          \n <quarkus.platform.version>3.1.0.Final</quarkus.platform.version>\n </properties>
+          \n <quarkus.platform.version>3.40.1</quarkus.platform.version>\n </properties>
           \n <build>\n <plugins>\n <plugin>\n <groupId>${quarkus.platform.group-id}</groupId>\n
           <artifactId>quarkus-maven-plugin</artifactId>\n <version>${quarkus.platform.version}</version>\n
           <extensions>true</extensions>\n <executions>\n <execution>\n <goals>\n <goal>build</goal>\n
@@ -3308,7 +3308,7 @@
       - uri: file:///source/daytrader-ee7/pom.xml
         message: "Use the Quarkus Maven plugin adding the following sections to the
           `pom.xml` file: \n\n ```xml\n <properties> \n <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-          \n <quarkus.platform.version>3.1.0.Final</quarkus.platform.version>\n </properties>
+          \n <quarkus.platform.version>3.40.1</quarkus.platform.version>\n </properties>
           \n <build>\n <plugins>\n <plugin>\n <groupId>${quarkus.platform.group-id}</groupId>\n
           <artifactId>quarkus-maven-plugin</artifactId>\n <version>${quarkus.platform.version}</version>\n
           <extensions>true</extensions>\n <executions>\n <execution>\n <goals>\n <goal>build</goal>\n
@@ -3367,7 +3367,7 @@
       - uri: file:///source/pom.xml
         message: "Use the Quarkus Maven plugin adding the following sections to the
           `pom.xml` file: \n\n ```xml\n <properties> \n <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-          \n <quarkus.platform.version>3.1.0.Final</quarkus.platform.version>\n </properties>
+          \n <quarkus.platform.version>3.40.1</quarkus.platform.version>\n </properties>
           \n <build>\n <plugins>\n <plugin>\n <groupId>${quarkus.platform.group-id}</groupId>\n
           <artifactId>quarkus-maven-plugin</artifactId>\n <version>${quarkus.platform.version}</version>\n
           <extensions>true</extensions>\n <executions>\n <execution>\n <goals>\n <goal>build</goal>\n
@@ -3387,8 +3387,8 @@
             Liberty Sample - Java EE7 Benchmark Sample</name><licenses><license><name>The
             Apache Software License, Version 2.0</name><url>https://raw.github.com/WASdev/sample.daytrader7/master/LICENSE</url><distribution>repo</distribution></license></licenses><modules><module>daytrader-ee7-ejb</module><module>daytrader-ee7-web</module><module>daytrader-ee7</module></modules>
       links:
-      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven;
-        title: Quarkus - Guide;
+      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven
+        title: Quarkus - Guide
       effort: 1
     javaee-pom-to-quarkus-00030:
       description: Adopt Maven Compiler plugin
@@ -3399,8 +3399,8 @@
       incidents:
       - uri: file:///source/daytrader-ee7-ejb/pom.xml
         message: "Use the Maven Compiler plugin adding the following sections to the
-          `pom.xml` file: \n\n ```xml\n <properties> \n <compiler-plugin.version>3.10.1</compiler-plugin.version>\n
-          <maven.compiler.release>11</maven.compiler.release>\n </properties> \n <build>\n
+          `pom.xml` file: \n\n ```xml\n <properties> \n <compiler-plugin.version>3.14.0</compiler-plugin.version>\n
+          <maven.compiler.release>17</maven.compiler.release>\n </properties> \n <build>\n
           <plugins>\n <plugin>\n <artifactId>maven-compiler-plugin</artifactId>\n
           <version>${compiler-plugin.version}</version>\n <configuration>\n <compilerArgs>\n
           <arg>-parameters</arg>\n </compilerArgs>\n </configuration>\n </plugin>\n
@@ -3418,8 +3418,8 @@
             Liberty Sample - Java EE7 Benchmark Sample - EJB Module</name><artifactId>daytrader-ee7-ejb</artifactId><version>1.0-SNAPSHOT</version><properties><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding><maven.compiler.source>1.8</maven.compiler.source><maven.compiler.target>1.8</maven.compiler.target></properties><dependencies><dependency><groupId>javax</groupId><artifactId>javaee-api</artifactId><version>7.0</version><scope>provided</scope></dependency><dependency><groupId>javax.annotation</groupId><artifactId>javax.annotation-api</artifactId><version>1.3.2</version><scope>provided</scope></dependency></dependencies>
       - uri: file:///source/daytrader-ee7-web/pom.xml
         message: "Use the Maven Compiler plugin adding the following sections to the
-          `pom.xml` file: \n\n ```xml\n <properties> \n <compiler-plugin.version>3.10.1</compiler-plugin.version>\n
-          <maven.compiler.release>11</maven.compiler.release>\n </properties> \n <build>\n
+          `pom.xml` file: \n\n ```xml\n <properties> \n <compiler-plugin.version>3.14.0</compiler-plugin.version>\n
+          <maven.compiler.release>17</maven.compiler.release>\n </properties> \n <build>\n
           <plugins>\n <plugin>\n <artifactId>maven-compiler-plugin</artifactId>\n
           <version>${compiler-plugin.version}</version>\n <configuration>\n <compilerArgs>\n
           <arg>-parameters</arg>\n </compilerArgs>\n </configuration>\n </plugin>\n
@@ -3440,8 +3440,8 @@
             Liberty Sample - Java EE7 Benchmark Sample - Web Module</name><artifactId>daytrader-ee7-web</artifactId><version>1.0-SNAPSHOT</version><properties><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding><maven.compiler.source>1.8</maven.compiler.source><maven.compiler.target>1.8</maven.compiler.target></properties><dependencies><dependency><groupId>javax</groupId><artifactId>javaee-api</artifactId><version>7.0</version><scope>provided</scope></dependency><dependency><groupId>taglibs</groupId><artifactId>standard</artifactId><version>1.1.1</version><scope>compile</scope></dependency><dependency><groupId>javax.annotation</groupId><artifactId>javax.annotation-api</artifactId><version>1.3.2</version><scope>provided</scope></dependency><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-ejb</artifactId><version>1.0-SNAPSHOT</version><type>jar</type><scope>provided</scope></dependency></dependencies>
       - uri: file:///source/daytrader-ee7/pom.xml
         message: "Use the Maven Compiler plugin adding the following sections to the
-          `pom.xml` file: \n\n ```xml\n <properties> \n <compiler-plugin.version>3.10.1</compiler-plugin.version>\n
-          <maven.compiler.release>11</maven.compiler.release>\n </properties> \n <build>\n
+          `pom.xml` file: \n\n ```xml\n <properties> \n <compiler-plugin.version>3.14.0</compiler-plugin.version>\n
+          <maven.compiler.release>17</maven.compiler.release>\n </properties> \n <build>\n
           <plugins>\n <plugin>\n <artifactId>maven-compiler-plugin</artifactId>\n
           <version>${compiler-plugin.version}</version>\n <configuration>\n <compilerArgs>\n
           <arg>-parameters</arg>\n </compilerArgs>\n </configuration>\n </plugin>\n
@@ -3498,8 +3498,8 @@
             \                       ${project.build.directory}/liberty/wlp/usr/shared/resources/data</outputDirectory><resources><resource><directory>resources/data</directory><filtering>false</filtering></resource></resources></configuration></execution></executions></plugin></plugins></build>"
       - uri: file:///source/pom.xml
         message: "Use the Maven Compiler plugin adding the following sections to the
-          `pom.xml` file: \n\n ```xml\n <properties> \n <compiler-plugin.version>3.10.1</compiler-plugin.version>\n
-          <maven.compiler.release>11</maven.compiler.release>\n </properties> \n <build>\n
+          `pom.xml` file: \n\n ```xml\n <properties> \n <compiler-plugin.version>3.14.0</compiler-plugin.version>\n
+          <maven.compiler.release>17</maven.compiler.release>\n </properties> \n <build>\n
           <plugins>\n <plugin>\n <artifactId>maven-compiler-plugin</artifactId>\n
           <version>${compiler-plugin.version}</version>\n <configuration>\n <compilerArgs>\n
           <arg>-parameters</arg>\n </compilerArgs>\n </configuration>\n </plugin>\n
@@ -3518,8 +3518,8 @@
             Liberty Sample - Java EE7 Benchmark Sample</name><licenses><license><name>The
             Apache Software License, Version 2.0</name><url>https://raw.github.com/WASdev/sample.daytrader7/master/LICENSE</url><distribution>repo</distribution></license></licenses><modules><module>daytrader-ee7-ejb</module><module>daytrader-ee7-web</module><module>daytrader-ee7</module></modules>
       links:
-      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven;
-        title: Quarkus - Guide;
+      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven
+        title: Quarkus - Guide
       effort: 1
     javaee-pom-to-quarkus-00040:
       description: Adopt Maven Surefire plugin
@@ -3530,7 +3530,7 @@
       incidents:
       - uri: file:///source/daytrader-ee7-ejb/pom.xml
         message: "Use the Maven Surefire plugin adding the following sections to the
-          `pom.xml` file: \n\n ```xml\n <properties> \n <surefire-plugin.version>3.0.0</compiler-plugin.version>\n
+          `pom.xml` file: \n\n ```xml\n <properties> \n <surefire-plugin.version>3.6.0</surefire-plugin.version>\n
           </properties> \n <build>\n <plugins>\n <plugin>\n <artifactId>maven-surefire-plugin</artifactId>\n
           <version>${surefire-plugin.version}</version>\n <configuration>\n <systemPropertyVariables>\n
           <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>\n
@@ -3549,7 +3549,7 @@
             Liberty Sample - Java EE7 Benchmark Sample - EJB Module</name><artifactId>daytrader-ee7-ejb</artifactId><version>1.0-SNAPSHOT</version><properties><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding><maven.compiler.source>1.8</maven.compiler.source><maven.compiler.target>1.8</maven.compiler.target></properties><dependencies><dependency><groupId>javax</groupId><artifactId>javaee-api</artifactId><version>7.0</version><scope>provided</scope></dependency><dependency><groupId>javax.annotation</groupId><artifactId>javax.annotation-api</artifactId><version>1.3.2</version><scope>provided</scope></dependency></dependencies>
       - uri: file:///source/daytrader-ee7-web/pom.xml
         message: "Use the Maven Surefire plugin adding the following sections to the
-          `pom.xml` file: \n\n ```xml\n <properties> \n <surefire-plugin.version>3.0.0</compiler-plugin.version>\n
+          `pom.xml` file: \n\n ```xml\n <properties> \n <surefire-plugin.version>3.6.0</surefire-plugin.version>\n
           </properties> \n <build>\n <plugins>\n <plugin>\n <artifactId>maven-surefire-plugin</artifactId>\n
           <version>${surefire-plugin.version}</version>\n <configuration>\n <systemPropertyVariables>\n
           <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>\n
@@ -3571,7 +3571,7 @@
             Liberty Sample - Java EE7 Benchmark Sample - Web Module</name><artifactId>daytrader-ee7-web</artifactId><version>1.0-SNAPSHOT</version><properties><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding><maven.compiler.source>1.8</maven.compiler.source><maven.compiler.target>1.8</maven.compiler.target></properties><dependencies><dependency><groupId>javax</groupId><artifactId>javaee-api</artifactId><version>7.0</version><scope>provided</scope></dependency><dependency><groupId>taglibs</groupId><artifactId>standard</artifactId><version>1.1.1</version><scope>compile</scope></dependency><dependency><groupId>javax.annotation</groupId><artifactId>javax.annotation-api</artifactId><version>1.3.2</version><scope>provided</scope></dependency><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-ejb</artifactId><version>1.0-SNAPSHOT</version><type>jar</type><scope>provided</scope></dependency></dependencies>
       - uri: file:///source/daytrader-ee7/pom.xml
         message: "Use the Maven Surefire plugin adding the following sections to the
-          `pom.xml` file: \n\n ```xml\n <properties> \n <surefire-plugin.version>3.0.0</compiler-plugin.version>\n
+          `pom.xml` file: \n\n ```xml\n <properties> \n <surefire-plugin.version>3.6.0</surefire-plugin.version>\n
           </properties> \n <build>\n <plugins>\n <plugin>\n <artifactId>maven-surefire-plugin</artifactId>\n
           <version>${surefire-plugin.version}</version>\n <configuration>\n <systemPropertyVariables>\n
           <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>\n
@@ -3629,7 +3629,7 @@
             \                       ${project.build.directory}/liberty/wlp/usr/shared/resources/data</outputDirectory><resources><resource><directory>resources/data</directory><filtering>false</filtering></resource></resources></configuration></execution></executions></plugin></plugins></build>"
       - uri: file:///source/pom.xml
         message: "Use the Maven Surefire plugin adding the following sections to the
-          `pom.xml` file: \n\n ```xml\n <properties> \n <surefire-plugin.version>3.0.0</compiler-plugin.version>\n
+          `pom.xml` file: \n\n ```xml\n <properties> \n <surefire-plugin.version>3.6.0</surefire-plugin.version>\n
           </properties> \n <build>\n <plugins>\n <plugin>\n <artifactId>maven-surefire-plugin</artifactId>\n
           <version>${surefire-plugin.version}</version>\n <configuration>\n <systemPropertyVariables>\n
           <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>\n
@@ -3649,8 +3649,8 @@
             Liberty Sample - Java EE7 Benchmark Sample</name><licenses><license><name>The
             Apache Software License, Version 2.0</name><url>https://raw.github.com/WASdev/sample.daytrader7/master/LICENSE</url><distribution>repo</distribution></license></licenses><modules><module>daytrader-ee7-ejb</module><module>daytrader-ee7-web</module><module>daytrader-ee7</module></modules>
       links:
-      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven;
-        title: Quarkus - Guide;
+      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven
+        title: Quarkus - Guide
       effort: 1
     javaee-pom-to-quarkus-00050:
       description: Adopt Maven Failsafe plugin
@@ -3661,7 +3661,7 @@
       incidents:
       - uri: file:///source/daytrader-ee7-ejb/pom.xml
         message: "Use the Maven Failsafe plugin adding the following sections to the
-          `pom.xml` file: \n\n ```xml\n <properties> \n <surefire-plugin.version>3.0.0</compiler-plugin.version>\n
+          `pom.xml` file: \n\n ```xml\n <properties> \n <surefire-plugin.version>3.6.0</surefire-plugin.version>\n
           </properties> \n <build>\n <plugins>\n <plugin>\n <artifactId>maven-failsafe-plugin</artifactId>\n
           <version>${surefire-plugin.version}</version>\n <executions>\n <execution>\n
           <goals>\n <goals>integration-test</goal>\n <goals>verify</goal>\n </goals>\n
@@ -3682,7 +3682,7 @@
             Liberty Sample - Java EE7 Benchmark Sample - EJB Module</name><artifactId>daytrader-ee7-ejb</artifactId><version>1.0-SNAPSHOT</version><properties><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding><maven.compiler.source>1.8</maven.compiler.source><maven.compiler.target>1.8</maven.compiler.target></properties><dependencies><dependency><groupId>javax</groupId><artifactId>javaee-api</artifactId><version>7.0</version><scope>provided</scope></dependency><dependency><groupId>javax.annotation</groupId><artifactId>javax.annotation-api</artifactId><version>1.3.2</version><scope>provided</scope></dependency></dependencies>
       - uri: file:///source/daytrader-ee7-web/pom.xml
         message: "Use the Maven Failsafe plugin adding the following sections to the
-          `pom.xml` file: \n\n ```xml\n <properties> \n <surefire-plugin.version>3.0.0</compiler-plugin.version>\n
+          `pom.xml` file: \n\n ```xml\n <properties> \n <surefire-plugin.version>3.6.0</surefire-plugin.version>\n
           </properties> \n <build>\n <plugins>\n <plugin>\n <artifactId>maven-failsafe-plugin</artifactId>\n
           <version>${surefire-plugin.version}</version>\n <executions>\n <execution>\n
           <goals>\n <goals>integration-test</goal>\n <goals>verify</goal>\n </goals>\n
@@ -3706,7 +3706,7 @@
             Liberty Sample - Java EE7 Benchmark Sample - Web Module</name><artifactId>daytrader-ee7-web</artifactId><version>1.0-SNAPSHOT</version><properties><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding><maven.compiler.source>1.8</maven.compiler.source><maven.compiler.target>1.8</maven.compiler.target></properties><dependencies><dependency><groupId>javax</groupId><artifactId>javaee-api</artifactId><version>7.0</version><scope>provided</scope></dependency><dependency><groupId>taglibs</groupId><artifactId>standard</artifactId><version>1.1.1</version><scope>compile</scope></dependency><dependency><groupId>javax.annotation</groupId><artifactId>javax.annotation-api</artifactId><version>1.3.2</version><scope>provided</scope></dependency><dependency><groupId>net.wasdev.wlp.sample</groupId><artifactId>daytrader-ee7-ejb</artifactId><version>1.0-SNAPSHOT</version><type>jar</type><scope>provided</scope></dependency></dependencies>
       - uri: file:///source/daytrader-ee7/pom.xml
         message: "Use the Maven Failsafe plugin adding the following sections to the
-          `pom.xml` file: \n\n ```xml\n <properties> \n <surefire-plugin.version>3.0.0</compiler-plugin.version>\n
+          `pom.xml` file: \n\n ```xml\n <properties> \n <surefire-plugin.version>3.6.0</surefire-plugin.version>\n
           </properties> \n <build>\n <plugins>\n <plugin>\n <artifactId>maven-failsafe-plugin</artifactId>\n
           <version>${surefire-plugin.version}</version>\n <executions>\n <execution>\n
           <goals>\n <goals>integration-test</goal>\n <goals>verify</goal>\n </goals>\n
@@ -3766,7 +3766,7 @@
             \                       ${project.build.directory}/liberty/wlp/usr/shared/resources/data</outputDirectory><resources><resource><directory>resources/data</directory><filtering>false</filtering></resource></resources></configuration></execution></executions></plugin></plugins></build>"
       - uri: file:///source/pom.xml
         message: "Use the Maven Failsafe plugin adding the following sections to the
-          `pom.xml` file: \n\n ```xml\n <properties> \n <surefire-plugin.version>3.0.0</compiler-plugin.version>\n
+          `pom.xml` file: \n\n ```xml\n <properties> \n <surefire-plugin.version>3.6.0</surefire-plugin.version>\n
           </properties> \n <build>\n <plugins>\n <plugin>\n <artifactId>maven-failsafe-plugin</artifactId>\n
           <version>${surefire-plugin.version}</version>\n <executions>\n <execution>\n
           <goals>\n <goals>integration-test</goal>\n <goals>verify</goal>\n </goals>\n
@@ -3788,8 +3788,8 @@
             Liberty Sample - Java EE7 Benchmark Sample</name><licenses><license><name>The
             Apache Software License, Version 2.0</name><url>https://raw.github.com/WASdev/sample.daytrader7/master/LICENSE</url><distribution>repo</distribution></license></licenses><modules><module>daytrader-ee7-ejb</module><module>daytrader-ee7-web</module><module>daytrader-ee7</module></modules>
       links:
-      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven;
-        title: Quarkus - Guide;
+      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven
+        title: Quarkus - Guide
       effort: 1
     javaee-pom-to-quarkus-00060:
       description: Add Maven profile to run the Quarkus native build
@@ -3803,7 +3803,7 @@
           the following section to the `pom.xml` file: \n\n ```xml\n <profiles>\n
           <profile>\n <id>native</id>\n <activation>\n <property>\n <name>native</name>\n
           </property>\n </activation>\n <properties>\n <skipITs>false</skipITs>\n
-          <quarkus.package.type>native</quarkus.package.type>\n </properties>\n </profile>\n
+          <quarkus.native.enabled>true</quarkus.native.enabled>\n </properties>\n </profile>\n
           </profiles>\n ```"
         codeSnip: 4    <groupId>net.wasdev.wlp.sample</groupId>
         lineNumber: 3
@@ -3821,7 +3821,7 @@
           the following section to the `pom.xml` file: \n\n ```xml\n <profiles>\n
           <profile>\n <id>native</id>\n <activation>\n <property>\n <name>native</name>\n
           </property>\n </activation>\n <properties>\n <skipITs>false</skipITs>\n
-          <quarkus.package.type>native</quarkus.package.type>\n </properties>\n </profile>\n
+          <quarkus.native.enabled>true</quarkus.native.enabled>\n </properties>\n </profile>\n
           </profiles>\n ```"
         codeSnip: 4    <groupId>net.wasdev.wlp.sample</groupId>
         lineNumber: 3
@@ -3842,7 +3842,7 @@
           the following section to the `pom.xml` file: \n\n ```xml\n <profiles>\n
           <profile>\n <id>native</id>\n <activation>\n <property>\n <name>native</name>\n
           </property>\n </activation>\n <properties>\n <skipITs>false</skipITs>\n
-          <quarkus.package.type>native</quarkus.package.type>\n </properties>\n </profile>\n
+          <quarkus.native.enabled>true</quarkus.native.enabled>\n </properties>\n </profile>\n
           </profiles>\n ```"
         codeSnip: '5  '
         lineNumber: 4
@@ -3899,7 +3899,7 @@
           the following section to the `pom.xml` file: \n\n ```xml\n <profiles>\n
           <profile>\n <id>native</id>\n <activation>\n <property>\n <name>native</name>\n
           </property>\n </activation>\n <properties>\n <skipITs>false</skipITs>\n
-          <quarkus.package.type>native</quarkus.package.type>\n </properties>\n </profile>\n
+          <quarkus.native.enabled>true</quarkus.native.enabled>\n </properties>\n </profile>\n
           </profiles>\n ```"
         codeSnip: '6  '
         lineNumber: 5
@@ -3915,8 +3915,8 @@
             Liberty Sample - Java EE7 Benchmark Sample</name><licenses><license><name>The
             Apache Software License, Version 2.0</name><url>https://raw.github.com/WASdev/sample.daytrader7/master/LICENSE</url><distribution>repo</distribution></license></licenses><modules><module>daytrader-ee7-ejb</module><module>daytrader-ee7-web</module><module>daytrader-ee7</module></modules>
       links:
-      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven;
-        title: Quarkus - Guide;
+      - url: https://quarkus.io/guides/maven-tooling#build-tool-maven
+        title: Quarkus - Guide
       effort: 1
     jdbc-jpa-mixed-to-quarkus-00001:
       description: Mixed JDBC and JPA usage detected
@@ -4464,8 +4464,8 @@
           name: tradeBrokerQueue
           package: com.ibm.websphere.samples.daytrader.web.prims.ejb3
       links:
-      - url: https://smallrye.io/smallrye-reactive-messaging/2.0.2/apidocs/org/eclipse/microprofile/reactive/messaging/Emitter.html
-        title: Emitter (Microprofile Reactive Streams Messaging)
+      - url: https://javadoc.io/doc/org.eclipse.microprofile.reactive.messaging/microprofile-reactive-messaging-api/latest/org/eclipse/microprofile/reactive/messaging/Emitter.html
+        title: Emitter (MicroProfile Reactive Messaging API)
       - url: https://quarkus.io/guides
         title: Quarkus - Guide
       effort: 3
@@ -4542,8 +4542,8 @@
           name: tradeStreamerTopic
           package: com.ibm.websphere.samples.daytrader.web.prims.ejb3
       links:
-      - url: https://smallrye.io/smallrye-reactive-messaging/2.0.2/apidocs/org/eclipse/microprofile/reactive/messaging/Emitter.html
-        title: Emitter (Microprofile Reactive Streams Messaging)
+      - url: https://javadoc.io/doc/org.eclipse.microprofile.reactive.messaging/microprofile-reactive-messaging-api/latest/org/eclipse/microprofile/reactive/messaging/Emitter.html
+        title: Emitter (MicroProfile Reactive Messaging API)
       - url: https://quarkus.io/guides
         title: Quarkus - Guide
       effort: 3
@@ -6087,6 +6087,15 @@
   - cdi-to-quarkus-00000
   - cdi-to-quarkus-00020
   - dependency-removal-for-quarkus-00000
+  - hibernate-orm7-to-quarkus-00010
+  - hibernate-orm7-to-quarkus-00020
+  - hibernate-orm7-to-quarkus-00030
+  - hibernate-orm7-to-quarkus-00040
+  - hibernate-orm7-to-quarkus-00050
+  - hibernate-orm7-to-quarkus-00060
+  - hibernate-orm7-to-quarkus-00070
+  - hibernate-orm7-to-quarkus-00080
+  - hibernate-orm7-to-quarkus-00090
   - jakarta-cdi-to-quarkus-00000
   - jakarta-cdi-to-quarkus-00020
   - jakarta-cdi-to-quarkus-00030

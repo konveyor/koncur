@@ -474,7 +474,7 @@ remote hub served over HTTPS with a self-signed certificate, set
 The `make hub-install` target automatically:
 
 1. **Installs OLM** (Operator Lifecycle Manager)
-2. **Installs Tackle Operator** from main branch
+2. **Installs Tackle Operator** from the `OPERATOR_REF` branch (defaults to `main`; set it to a release branch, e.g. `OPERATOR_REF=release-0.10`, to install that branch's operator)
 3. **Creates Tackle CR** with:
    - Authentication disabled (`feature_auth_required: "false"`)
    - Cache storage configured (10Gi RWX PV)

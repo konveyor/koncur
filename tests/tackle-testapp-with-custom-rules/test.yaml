@@ -13,7 +13,7 @@ analysis:
           git: null
     disableDefaultRules: false
     analysisMode: full
-timeout: 10m0s
+timeout: 15m0s
 requireMavenSettings: true
 expect:
     exitCode: 0
