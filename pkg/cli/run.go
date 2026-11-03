@@ -361,6 +361,33 @@ func runSingleTest(test *config.TestDefinition, target targets.Target, targetCon
 		return testResult, fmt.Errorf("validation error: %w", err)
 	}
 
+	if expectedDepItems, ok := test.Expect.Output.ExpectedDepItemsForTarget(tgtType); ok {
+		depsPath := filepath.Join(filepath.Dir(result.OutputFile), "dependencies.yaml")
+		actualDeps, err := parser.ParseDependencies(depsPath)
+		if err != nil {
+			testResult.Status = "failed"
+			testResult.ErrorMessage = fmt.Sprintf("failed to read dependencies output: %v", err)
+			return testResult, fmt.Errorf("failed to read dependencies output: %w", err)
+		}
+		normActualDeps, err := parser.NormalizeDepsFlat(actualDeps, test.GetTestDir())
+		if err != nil {
+			testResult.Status = "failed"
+			testResult.ErrorMessage = fmt.Sprintf("failed to normalize dependencies output: %v", err)
+			return testResult, fmt.Errorf("failed to normalize dependencies output: %w", err)
+		}
+		normExpectedDeps, err := parser.NormalizeDepsFlat(expectedDepItems, test.GetTestDir())
+		if err != nil {
+			testResult.Status = "failed"
+			testResult.ErrorMessage = fmt.Sprintf("failed to normalize expected dependencies: %v", err)
+			return testResult, fmt.Errorf("failed to normalize expected dependencies: %w", err)
+		}
+		depsVal := validator.ValidateDependenciesFlat(normActualDeps, normExpectedDeps)
+		if !depsVal.Passed {
+			validation.Passed = false
+			validation.Errors = append(validation.Errors, depsVal.Errors...)
+		}
+	}
+
 	// Report results
 	if validation.Passed {
 		testResult.Status = "passed"
