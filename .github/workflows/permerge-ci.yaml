@@ -20,21 +20,10 @@ jobs:
       - id: set-tag
         run: echo "image_tag=${{ (github.base_ref || github.ref_name) == 'main' && 'latest' || (github.base_ref || github.ref_name) }}" >> $GITHUB_OUTPUT
 
+  # Full kantra tests run via the reusable workflow in konveyor/ci. It builds
+  # the images under test and runs the OS matrix internally.
   run-kantra-test:
-    needs: setup
-    strategy:
-      fail-fast: false
-      matrix:
-        # Using macos to test amd64 and ubuntu to test arm
-        # This is because you can't use container's on mac os arm runners.
-        os: [macos-15-intel, ubuntu-24.04-arm, windows-latest]
-        exclude:
-          - os: macos-15-intel
-    uses: ./.github/workflows/kantra.yaml
-    with:
-      os: ${{ matrix.os }}
-      skip_maven: false
-      image_tag: ${{ needs.setup.outputs.image_tag }}
+    uses: konveyor/ci/.github/workflows/e2e-kantra-koncur.yaml@main
 
   run-kantra-java-local-test:
     needs: setup
@@ -50,9 +39,7 @@ jobs:
       skip_maven: false
       image_tag: ${{ needs.setup.outputs.image_tag }}
 
+  # Tackle Hub tests run via the reusable workflow in konveyor/ci. It builds
+  # the images under test and runs the test internally.
   run-hub-test:
-    needs: setup
-    uses: ./.github/workflows/hub.yaml
-    with:
-      skip_maven: false
-      image_tag: ${{ needs.setup.outputs.image_tag }}
+    uses: konveyor/ci/.github/workflows/e2e-hub-koncur.yaml@main
