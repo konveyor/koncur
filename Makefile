@@ -9,6 +9,19 @@ HOST_PORT_TLS ?= 8443
 IMAGE_TAG ?= latest
 OPERATOR_REF ?= main
 
+# The install logic is maintained upstream in konveyor/operator's
+# hack/install-konveyor.sh. OPERATOR_REF selects the operator repo ref the
+# script is fetched from and, through OPERATOR_BUNDLE_TAG, the operator bundle
+# image: main is published as :latest while branches and tags keep their name
+# (release-0.10 -> :release-0.10), matching how the images under test are chosen.
+OPERATOR_REPO ?= konveyor/operator
+OPERATOR_BUNDLE_TAG ?= $(if $(filter main,$(OPERATOR_REF)),latest,$(OPERATOR_REF))
+OPERATOR_BUNDLE_IMAGE ?= quay.io/konveyor/tackle2-operator-bundle:$(OPERATOR_BUNDLE_TAG)
+OPERATOR_SDK ?= operator-sdk
+# Only used by koncur's bootstrap below; the installer requires operator-sdk but
+# does not install it. Matches the version konveyor/operator's own CI installs.
+OPERATOR_SDK_VERSION ?= v1.35.0
+
 # Image FQINs with defaults
 HUB ?= quay.io/konveyor/tackle2-hub:$(IMAGE_TAG)
 ANALYZER_ADDON ?= quay.io/konveyor/tackle2-addon-analyzer:$(IMAGE_TAG)
@@ -94,47 +107,7 @@ hub-install-auth: ## Install Tackle Hub with authentication enabled (hub seeds d
 	@$(MAKE) _hub-install AUTH_ENABLED=true
 
 _hub-install: ## Internal target for hub installation
-	@echo "Installing OLM..."
-	@curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v0.38.0/install.sh | bash -s v0.38.0 || true
-	@echo "Waiting for OLM to be ready..."
-	@$(KUBECTL) wait --for=condition=ready pod -l app=olm-operator -n olm --timeout=300s
-	@$(KUBECTL) wait --for=condition=ready pod -l app=catalog-operator -n olm --timeout=300s
-	@echo "Restarting operatorhubio-catalog to ensure gRPC connectivity..."
-	@$(KUBECTL) delete pod -n olm -l olm.catalogSource=operatorhubio-catalog --ignore-not-found=true || true
-	@sleep 5
-	@$(KUBECTL) wait --for=condition=ready pod -l olm.catalogSource=operatorhubio-catalog -n olm --timeout=120s || true
 	@echo "Installing Tackle operator from $(OPERATOR_REF) branch..."
-	@$(KUBECTL) apply -f https://raw.githubusercontent.com/konveyor/tackle2-operator/$(OPERATOR_REF)/tackle-k8s.yaml
-	@echo "Patching CatalogSource to use operator-index:$(OPERATOR_REF)..."
-	@$(KUBECTL) patch catalogsource konveyor -n ${KONVEYOR_NAMESPACE} --type=merge \
-		-p '{"spec":{"image":"quay.io/konveyor/tackle2-operator-index:$(OPERATOR_REF)"}}'
-	@echo "Restarting CatalogSource pod to pick up new image..."
-	@$(KUBECTL) delete pod -n ${KONVEYOR_NAMESPACE} -l olm.catalogSource=konveyor --ignore-not-found=true
-	@sleep 5
-	@echo "Waiting for CatalogSource pod to be ready..."
-	@for i in $$(seq 1 30); do \
-		if $(KUBECTL) wait --for=condition=ready pod -l olm.catalogSource=konveyor -n ${KONVEYOR_NAMESPACE} --timeout=5s >/dev/null 2>&1; then \
-			echo "CatalogSource pod is ready with updated image"; \
-			break; \
-		fi; \
-		if [ $$i -eq 30 ]; then echo "Timeout waiting for CatalogSource pod"; exit 1; fi; \
-		sleep 3; \
-	done
-	@echo "Waiting for Tackle CRD to be available..."
-	@for i in $$(seq 1 120); do \
-		$(KUBECTL) get crd tackles.tackle.konveyor.io >/dev/null 2>&1 && break || sleep 5; \
-		if [ $$i -eq 120 ]; then echo "Timeout waiting for CRD to be created"; exit 1; fi; \
-	done
-	@$(KUBECTL) wait --for condition=established --timeout=300s crd/tackles.tackle.konveyor.io
-	@echo "Waiting for operator to be ready..."
-	@for i in $$(seq 1 120); do \
-		if $(KUBECTL) wait --namespace ${KONVEYOR_NAMESPACE} --for=condition=ready pod --selector=name=tackle-operator --timeout=5s >/dev/null 2>&1; then \
-			echo "Tackle operator is ready"; \
-			break; \
-		fi; \
-		if [ $$i -eq 120 ]; then echo "Timeout waiting for operator to be ready"; exit 1; fi; \
-		sleep 3; \
-	done
 	@echo "Pre-creating cache PV with fixed path..."
 	@mkdir -m 777 -p cache/hub-cache
 	@mkdir -p .koncur/config
@@ -180,10 +153,36 @@ _hub-install: ## Internal target for hub installation
 	@printf '  language_discovery_fqin: $(DISCOVERY_ADDON)\n' >> .koncur/config/tackle-cr.yaml
 	@printf '  platform_fqin: $(PLATFORM_ADDON)\n' >> .koncur/config/tackle-cr.yaml
 	@printf '  feature_auth_required: "$(AUTH_ENABLED)"\n' >> .koncur/config/tackle-cr.yaml
-	@$(KUBECTL) apply -f .koncur/config/tackle-cr.yaml
-	@echo "Waiting for Tackle Hub to be ready (this may take a few minutes)..."
-	@sleep 30
-	@$(KUBECTL) wait --for=condition=ready pod -l app.kubernetes.io/name=tackle-hub -n ${KONVEYOR_NAMESPACE} --timeout=600s || true
+	@echo "Ensuring operator-sdk is available..."
+	@mkdir -p .koncur/bin
+	@if ! command -v $(OPERATOR_SDK) >/dev/null 2>&1; then \
+		echo "operator-sdk not found; downloading $(OPERATOR_SDK_VERSION)..."; \
+		os=$$(uname -s | tr '[:upper:]' '[:lower:]'); \
+		arch=$$(uname -m); \
+		case "$$arch" in \
+			x86_64) arch=amd64 ;; \
+			aarch64|arm64) arch=arm64 ;; \
+			ppc64le) arch=ppc64le ;; \
+			s390x) arch=s390x ;; \
+		esac; \
+		curl -fsSL -o .koncur/bin/operator-sdk \
+			"https://github.com/operator-framework/operator-sdk/releases/download/$(OPERATOR_SDK_VERSION)/operator-sdk_$${os}_$${arch}" || exit 1; \
+		chmod +x .koncur/bin/operator-sdk; \
+	else \
+		echo "Using $$($(OPERATOR_SDK) version 2>/dev/null | head -1)"; \
+	fi
+	@echo "Downloading konveyor/operator install script ($(OPERATOR_REPO)@$(OPERATOR_REF))..."
+	@curl -fsSL -o .koncur/config/install-konveyor.sh \
+		"https://raw.githubusercontent.com/$(OPERATOR_REPO)/$(OPERATOR_REF)/hack/install-konveyor.sh"
+	@echo "Installing Konveyor (this may take a few minutes)..."
+	@PATH="$(CURDIR)/.koncur/bin:$$PATH" \
+		NAMESPACE="$(KONVEYOR_NAMESPACE)" \
+		OPERATOR_BUNDLE_IMAGE="$(OPERATOR_BUNDLE_IMAGE)" \
+		TACKLE_CR="$$(cat .koncur/config/tackle-cr.yaml)" \
+		FEATURE_AUTH_REQUIRED="$(AUTH_ENABLED)" \
+		bash .koncur/config/install-konveyor.sh
+	@echo "Waiting for the Tackle Hub pod to be ready..."
+	@$(KUBECTL) wait --for=condition=ready pod -l app.kubernetes.io/name=tackle-hub -n $(KONVEYOR_NAMESPACE) --timeout=600s
 	@echo ""
 	@echo "Tackle Hub installation complete!"
 	@echo ""
