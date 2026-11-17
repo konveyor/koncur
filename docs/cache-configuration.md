@@ -121,12 +121,13 @@ koncur/
 
 ### Tackle Installation (`make hub-install`)
 
-1. Install OLM
-2. Install Tackle operator
-3. Create cache directory: `./cache/hub-cache`
-4. Create PersistentVolume with fixed path
-5. Create Tackle CR with manual storage class
-6. Wait for Tackle Hub to be ready
+1. Create cache directory: `./cache/hub-cache`
+2. Create the PersistentVolume with the fixed path (before the Tackle CR, so the
+   cache claim binds to it)
+3. Generate the Tackle CR with the manual storage class
+4. Run `konveyor/operator`'s `hack/install-konveyor.sh`, which installs OLM and
+   the operator bundle, applies the Tackle CR (passed as `TACKLE_CR`), and waits
+   for all Tackle deployments to become available
 
 ### Cluster Deletion (`make kind-delete`)
 
