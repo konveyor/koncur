@@ -471,17 +471,32 @@ remote hub served over HTTPS with a self-signed certificate, set
 
 ### What Gets Installed
 
-The `make hub-install` target automatically:
+The `make hub-install` target delegates the cluster installation to
+[`konveyor/operator`'s `hack/install-konveyor.sh`](https://github.com/konveyor/operator/blob/main/hack/install-konveyor.sh),
+pinned to `OPERATOR_REF` (defaults to `main`), so koncur tracks the upstream
+install flow instead of maintaining its own copy. It:
 
-1. **Installs OLM** (Operator Lifecycle Manager)
-2. **Installs Tackle Operator** from the `OPERATOR_REF` branch (defaults to `main`; set it to a release branch, e.g. `OPERATOR_REF=release-0.10`, to install that branch's operator)
-3. **Creates Tackle CR** with:
+1. **Installs OLM and the Tackle operator bundle**
+   (`quay.io/konveyor/tackle2-operator-bundle:<OPERATOR_REF>`) using
+   `operator-sdk`. If `operator-sdk` is not already installed, it is downloaded
+   into `.koncur/bin` (pinned by `OPERATOR_SDK_VERSION`).
+2. **Pre-creates the cache PV** — a 10Gi RWX `manual`-class volume backed by
+   `./cache/hub-cache`, applied before the Tackle CR so the hub's cache claim
+   binds to it.
+3. **Creates the Tackle CR** (passed to the installer via `TACKLE_CR`) with:
    - Authentication disabled (`feature_auth_required: "false"`)
    - Cache storage configured (10Gi RWX PV)
    - Resource limits optimized for testing (100m CPU for providers)
    - All component images configurable via environment variables
-4. **Patches ingress** to disable SSL redirect (allows HTTP access at `http://localhost:8080`)
-5. **Waits for readiness** with automatic health checks
+4. **Waits for readiness** — the installer waits for the operator, the Tackle
+   CR, and every `app.kubernetes.io/part-of=tackle` deployment.
+
+`OPERATOR_REF` selects the operator repo ref and the bundle image tag (`main`
+maps to `latest`; branches and tags keep their name, e.g. `release-0.10`).
+`OPERATOR_BUNDLE_IMAGE` overrides the image directly. Other install-script
+variables (`OLM_VERSION`, `TIMEOUT`, `GLOBAL_TIMEOUT_SECONDS`, ...) keep the
+script's own defaults; set them in the environment to override, since make
+passes environment variables through to the script.
 
 The `make hub-install-auth` target does all of the above, but sets
 `feature_auth_required: "true"` on the Tackle CR instead. The hub's built-in
@@ -491,8 +506,8 @@ setup is required.
 ### Troubleshooting
 
 **Ingress redirecting to HTTPS:**
-- The Makefile automatically patches the ingress to disable SSL redirect
-- If you see 308 redirects, run: `kubectl annotate ingress tackle -n konveyor-tackle nginx.ingress.kubernetes.io/ssl-redirect="false" --overwrite`
+- If you see 308 redirects, disable the SSL redirect on the ingress:
+  `kubectl annotate ingress tackle -n konveyor-tackle nginx.ingress.kubernetes.io/ssl-redirect="false" --overwrite`
 
 **Ingress not working:**
 - Ensure Kind cluster was created with ingress support: `kubectl get pods -n ingress-nginx`
