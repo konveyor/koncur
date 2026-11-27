@@ -321,6 +321,8 @@ func saveSimpleTestDefinition(testFile string, test *config.TestDefinition) erro
 		Timeout              *config.Duration      `yaml:"timeout,omitempty"`
 		WorkDir              string                `yaml:"workDir,omitempty"`
 		RequireMavenSettings bool                  `yaml:"requireMavenSettings,omitempty"`
+		ForceLocal           bool                  `yaml:"forceLocal,omitempty"`
+		Skipped              bool                  `yaml:"skipped,omitempty"`
 		Expect               SimpleExpectConfig    `yaml:"expect"`
 	}
 
@@ -331,6 +333,8 @@ func saveSimpleTestDefinition(testFile string, test *config.TestDefinition) erro
 		Timeout:              test.Timeout,
 		WorkDir:              test.WorkDir,
 		RequireMavenSettings: test.RequireMavenSettings,
+		ForceLocal:           test.ForceLocal,
+		Skipped:              test.Skipped,
 		Expect: SimpleExpectConfig{
 			ExitCode: test.Expect.ExitCode,
 			Output: SimpleExpectedOutput{
@@ -345,12 +349,53 @@ func saveSimpleTestDefinition(testFile string, test *config.TestDefinition) erro
 		return fmt.Errorf("failed to marshal test: %w", err)
 	}
 
+	// Marshalling drops comments, and the "# SKIPPED" markers that koncur reads
+	// back from the top of the file live in comments. Carry the existing
+	// header over so regenerating a test does not silently re-enable it.
+	if existing, readErr := os.ReadFile(testFile); readErr == nil {
+		if header := leadingCommentBlock(existing); header != "" {
+			updatedContent = append([]byte(header+"\n"), updatedContent...)
+		}
+	}
+
 	// Write to file
 	if err := os.WriteFile(testFile, updatedContent, 0644); err != nil {
 		return fmt.Errorf("failed to write file: %w", err)
 	}
 
 	return nil
+}
+
+// leadingCommentBlock returns the comment lines at the top of a test.yaml,
+// skipping blank lines and a YAML document marker, with each line ending in a
+// newline. It returns an empty string when the file does not start with a
+// comment. Blank lines between comments are kept, trailing ones are not.
+func leadingCommentBlock(data []byte) string {
+	var kept []string
+	for _, line := range strings.Split(string(data), "\n") {
+		trimmed := strings.TrimSpace(line)
+		if strings.HasPrefix(trimmed, "#") {
+			kept = append(kept, strings.TrimRight(line, " \t\r"))
+			continue
+		}
+		if trimmed == "" {
+			if len(kept) > 0 {
+				kept = append(kept, "")
+			}
+			continue
+		}
+		if trimmed == "---" {
+			continue
+		}
+		break
+	}
+	for len(kept) > 0 && kept[len(kept)-1] == "" {
+		kept = kept[:len(kept)-1]
+	}
+	if len(kept) == 0 {
+		return ""
+	}
+	return strings.Join(kept, "\n") + "\n"
 }
 
 // saveFilteredOutput saves the filtered rulesets to a YAML file with path normalization
